@@ -8,6 +8,13 @@ module.exports = {
     },
   },
   rules: {
+    'prettier/prettier': [
+      'error',
+      {
+        singleQuote: true,
+        trailingComma: 'es5',
+      },
+    ],
     'no-console': 0,
     quotes: ['warn', 'single', { avoidEscape: true }],
     semi: ['warn', 'never'],
@@ -19,20 +26,10 @@ module.exports = {
       { vars: 'all', args: 'after-used', ignoreRestSiblings: false },
     ],
   },
-  plugins: ['prettier'],
-  rules: {
-    'prettier/prettier': [
-      'error',
-      {
-        singleQuote: true,
-        trailingComma: 'es5',
-      },
-    ],
-  },
   env: {
     browser: true,
     es6: true,
   },
-  extends: ['eslint:recommended', 'plugin:react/recommended'],
-  plugins: ['react'],
-};
+  extends: ['eslint:recommended', 'plugin:react/recommended', 'prettier'],
+  plugins: ['react', 'prettier'],
+}
