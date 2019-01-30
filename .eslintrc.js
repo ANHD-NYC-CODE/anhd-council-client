@@ -2,16 +2,17 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2017,
     sourceType: 'module',
-    ecmaFeatures: {
-      jsx: true,
-      experimentalObjectRestSpread: true,
-    },
   },
   globals: {
     require: true,
     process: true,
     module: true,
     it: true,
+  },
+  settings: {
+    react: {
+      version: '16.7',
+    },
   },
   rules: {
     'prettier/prettier': [
