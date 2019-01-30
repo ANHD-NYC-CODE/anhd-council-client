@@ -7,6 +7,12 @@ module.exports = {
       experimentalObjectRestSpread: true,
     },
   },
+  globals: {
+    require: true,
+    process: true,
+    module: true,
+    it: true,
+  },
   rules: {
     'prettier/prettier': [
       'error',
