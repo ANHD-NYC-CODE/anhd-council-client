@@ -13,10 +13,17 @@ export const handleErrorResponse = response => ({
   data: { status: response.status, message: (response.data || {}).results || response },
 })
 
-export const handleReadSearchResponse = response => ({
-  type: HANDLE_READ_SEARCH_RESPONSE,
-  data: response.data,
-})
+export const handleReadSearchResponse = response => {
+  let results = response.data
+  if (!results.length) {
+    results = [{ bin: undefined, housenumber: '', street: 'No results', borough: '' }]
+  }
+
+  return {
+    type: HANDLE_READ_SEARCH_RESPONSE,
+    data: results,
+  }
+}
 export const clearSearch = () => {
   return {
     type: CLEAR_SEARCH,
