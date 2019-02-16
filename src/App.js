@@ -1,12 +1,36 @@
 import React, { Component } from 'react'
+import { Provider } from 'react-redux'
+import { Route, Switch } from 'react-router' // react-router v4
+import { ConnectedRouter } from 'connected-react-router'
+import configureStore, { history } from './Store/configureStore'
+
+const store = configureStore({})
+
 import Header from './navigation/Header'
 import Map from './map/Map'
+
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <Header />
-        <Map />
+        <Provider store={store}>
+          <ConnectedRouter history={history}>
+            <Switch>
+              <Route
+                exact
+                path="/"
+                render={() => (
+                  <div>
+                    <Header />
+                    <Map />
+                  </div>
+                )}
+              />
+              <Route render={() => <div>404</div>} />
+            </Switch>
+          </ConnectedRouter>
+        </Provider>
+        ,
       </div>
     )
   }
