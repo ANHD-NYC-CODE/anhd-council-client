@@ -27,6 +27,11 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
+## Setup
+
+1. install packages `npm install`
+2. get the appropriate `.env` file (`.env.production.local` for production, `.env.development.local` and `.env.test.local` for development)
+
 ## Continuous Deployment
 
 1. Merge to master on github

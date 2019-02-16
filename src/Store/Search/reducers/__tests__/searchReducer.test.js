@@ -1,22 +1,12 @@
-import * as reducer from '../index'
-import * as actions from '../../actions'
+import * as reducer from 'Store/Search/reducers'
+import * as actions from 'Store/Search/actions'
 
 describe('Search reducer', () => {
   it('should return the initial state', () => {
     expect(reducer.searchReducer(undefined, {})).toEqual(reducer.initialState)
   })
 
-  describe('AWAITING_X_RESPONSE', () => {
-    const expectedState = { ...reducer.initialState, awaitingResponse: true }
-
-    it('sets awaitingResponse to true', () => {
-      expect(reducer.searchReducer(undefined, actions.awaitingSearchResponse())).toEqual(expectedState)
-    })
-  })
-
   describe('HANDLE_ERROR_RESPONSE', () => {
-    actions.awaitingSearchResponse()
-
     it('sets awaitingResponse to false', () => {
       const expectedState = { ...reducer.initialState, error: { status: 500, message: 'hello' } }
       expect(
