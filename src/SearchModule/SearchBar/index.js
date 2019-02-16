@@ -9,7 +9,7 @@ export default class SearchBar extends React.Component {
 
     this.state = {
       searchValue: '',
-      autoCompleteValue: 'asdf',
+      autoCompleteValue: '',
     }
 
     this.onFormSubmit = this.onFormSubmit.bind(this)
@@ -60,6 +60,7 @@ export default class SearchBar extends React.Component {
 }
 
 SearchBar.propTypes = {
+  clearSelectedSearch: PropTypes.func,
   dispatch: PropTypes.func,
   searchTimeout: PropTypes.number,
   selectBuildingResult: PropTypes.func,

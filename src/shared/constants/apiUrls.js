@@ -1,1 +1,1 @@
-export const SEARCH_URL = '/search/buildings'
+export const SEARCH_URL = '/search/buildings/'

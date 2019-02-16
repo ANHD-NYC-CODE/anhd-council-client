@@ -3,24 +3,16 @@ import { createBrowserHistory } from 'history'
 import { applyMiddleware, compose, createStore } from 'redux'
 import { routerMiddleware } from 'connected-react-router'
 import createRootReducer from './reducers'
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
 export const history = createBrowserHistory()
-const middleware = [routerMiddleware, thunk]
-const enhancers = []
-
-if (process.env.NODE_ENV === 'development') {
-  const devToolsExtension = window.devToolsExtension
-
-  if (typeof devToolsExtension === 'function') {
-    enhancers.push(devToolsExtension())
-  }
-}
+const middleware = [routerMiddleware(history), thunk]
 
 export default function configureStore(preloadedState) {
   const store = createStore(
     createRootReducer(history), // root reducer with router state
     preloadedState,
-    compose(applyMiddleware(routerMiddleware(history), ...middleware, ...enhancers))
+    composeEnhancers(applyMiddleware(...middleware))
   )
 
   return store

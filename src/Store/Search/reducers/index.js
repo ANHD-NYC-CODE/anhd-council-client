@@ -17,17 +17,18 @@ export const searchReducer = (searchState = Object.freeze(initialState), action 
         ...searchState,
         awaitingResponse: false,
         results: [],
-        errors: action.data.errors,
+        error: action.data,
       }
     }
     case searchActions.SET_SEARCH_TIMEOUT: {
+      console.log(action.data)
       return { ...searchState, searchTimeout: action.data }
     }
     case searchActions.HANDLE_READ_SEARCH_RESPONSE: {
       return {
         ...searchState,
         awaitingResponse: false,
-        results: action.data['results'] || [],
+        results: action.data || [],
       }
     }
     case searchActions.CLEAR_SEARCH: {

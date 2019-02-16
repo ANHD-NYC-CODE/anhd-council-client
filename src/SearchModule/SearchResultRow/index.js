@@ -13,7 +13,7 @@ const SearchResultRow = props => {
       <i>
         <MapMarkerIcon />
       </i>
-      <div>{`${props.result.address}, ${props.result.boroughName}`}</div>
+      <div>{`${props.result.housenumber} ${props.result.street}, ${props.result.borough}`}</div>
     </div>
   )
 }
