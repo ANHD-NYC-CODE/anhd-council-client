@@ -1,16 +1,12 @@
 import configureStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import { Axios } from 'shared/utilities/Axios'
-import { SEARCH_URL } from 'shared/constants/apiUrls'
+import { SEARCH_URL } from 'shared/constants/urls'
 import MockAdapter from 'axios-mock-adapter'
 import * as loading from 'Store/Loading/actions'
+import { GET_BUILDING_SEARCH } from 'shared/constants/actions'
 
-import {
-  queryBuildingAddress,
-  handleReadSearchResponse,
-  awaitingSearchResponse,
-  handleErrorResponse,
-} from '../index.js'
+import { queryBuildingAddress, handleReadSearchResponse, handleErrorResponse } from '../index.js'
 const middlewares = [thunk]
 const mockStore = configureStore(middlewares)
 
@@ -28,8 +24,8 @@ describe('queryBuildingAddress', () => {
 
     await store.dispatch(queryBuildingAddress('50 broad')).then(() => {
       const expectedActions = [
-        loading.handleRequest('GET_BUILDING_SEARCH'),
-        loading.handleSuccess('GET_BUILDING_SEARCH'),
+        loading.handleRequest(GET_BUILDING_SEARCH),
+        loading.handleSuccess(GET_BUILDING_SEARCH),
         handleReadSearchResponse({ data: data }),
       ]
 
@@ -46,8 +42,8 @@ describe('queryBuildingAddress', () => {
 
     await store.dispatch(queryBuildingAddress('50 broad')).then(() => {
       const expectedActions = [
-        loading.handleRequest('GET_BUILDING_SEARCH'),
-        loading.handleFailure('GET_BUILDING_SEARCH'),
+        loading.handleRequest(GET_BUILDING_SEARCH),
+        loading.handleFailure(GET_BUILDING_SEARCH),
         handleErrorResponse({ status: 500, data: errorData }),
       ]
 

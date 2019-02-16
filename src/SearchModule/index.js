@@ -5,6 +5,8 @@ import SearchBar from './SearchBar'
 import SearchResults from './SearchResults'
 // import { readBuildingById } from '../Store/Buildings/actions'
 import { clearSearch } from '../Store/Search/actions'
+import { createLoadingSelector } from 'Store/Loading/selectors'
+import { GET_BUILDING_SEARCH } from 'shared/constants/actions'
 
 import './style.scss'
 
@@ -50,7 +52,11 @@ class SearchModule extends React.Component {
           selectBuildingResult={this.selectBuildingResult}
           selectedResult={this.state.selectedResult}
         />
-        <SearchResults selectBuildingResult={this.selectBuildingResult} results={this.props.search.results} />
+        <SearchResults
+          loading={this.props.loading}
+          selectBuildingResult={this.selectBuildingResult}
+          results={this.props.search.results}
+        />
       </div>
     )
   }
@@ -62,9 +68,12 @@ SearchModule.propTypes = {
   dispatch: PropTypes.func,
 }
 
+const loadingSelector = createLoadingSelector([GET_BUILDING_SEARCH])
+
 const mapStateToProps = state => {
   return {
     search: state.search,
+    loading: loadingSelector(state),
   }
 }
 

@@ -1,9 +1,4 @@
-export const initialState = {
-  awaitingResponse: false,
-  results: [],
-  errors: [],
-  searchTimeout: undefined,
-}
+export const initialState = {}
 
 export const loadingReducer = (state = Object.freeze(initialState), action = { data: [] }) => {
   const { type } = action
