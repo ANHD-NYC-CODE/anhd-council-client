@@ -7,7 +7,7 @@ import configureStore, { history } from './Store/configureStore'
 const store = configureStore({})
 
 import Header from './navigation/Header'
-import Map from './map/Map'
+import LeafletMap from './LeafletMap'
 
 class App extends Component {
   render() {
@@ -22,7 +22,7 @@ class App extends Component {
                 render={() => (
                   <div>
                     <Header />
-                    <Map />
+                    <LeafletMap />
                   </div>
                 )}
               />
@@ -30,7 +30,6 @@ class App extends Component {
             </Switch>
           </ConnectedRouter>
         </Provider>
-        ,
       </div>
     )
   }

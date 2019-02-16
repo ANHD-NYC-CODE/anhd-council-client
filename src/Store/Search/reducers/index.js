@@ -7,10 +7,7 @@ export const initialState = {
   searchTimeout: undefined,
 }
 
-export const searchReducer = (
-  searchState = Object.freeze(initialState),
-  action = { data: [] }
-) => {
+export const searchReducer = (searchState = Object.freeze(initialState), action = { data: [] }) => {
   switch (action.type) {
     case searchActions.AWAITING_SEARCH_RESPONSE: {
       return { ...searchState, awaitingResponse: true, errors: [] }

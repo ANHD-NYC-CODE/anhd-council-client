@@ -1,4 +1,5 @@
-import { Axios } from '../../../SharedUtilities/Axios'
+import { Axios } from 'shared/utilities/Axios'
+import { SEARCH_URL } from 'shared/constants/apiUrls'
 
 export const AWAITING_SEARCH_RESPONSE = 'AWAITING_SEARCH_RESPONSE'
 export const HANDLE_READ_SEARCH_RESPONSE = 'HANDLE_READ_SEARCH_RESPONSE'
@@ -29,7 +30,7 @@ export const setSearchTimeout = event => ({
 
 export const queryBuildingAddress = data => dispatch => {
   dispatch(awaitingSearchResponse())
-  Axios.post('/buildings/search', { query: data })
+  Axios.post(SEARCH_URL, { query: data })
     .then(response => {
       dispatch(handleReadSearchResponse(response))
     })

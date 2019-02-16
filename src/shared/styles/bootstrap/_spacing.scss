@@ -108,3 +108,9 @@ $container-max-widths: map-merge(
 );
 
 @include _assert-ascending($container-max-widths, '$container-max-widths');
+
+$mini-spacing: 5px;
+$tiny-spacing: 10px;
+$small-spacing: 20px;
+$medium-spacing: 40px;
+$large-spacing: 80px;
