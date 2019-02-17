@@ -7,6 +7,6 @@ export const errorReducer = (state = Object.freeze(initialState), action = { dat
   const [, requestName, requestState] = matches
   return {
     ...state,
-    [requestName]: requestState === 'FAILURE' ? { status: action.status, message: action.message } : '',
+    [requestName]: requestState === 'FAILURE' ? { status: action.status, message: action.message } : null,
   }
 }

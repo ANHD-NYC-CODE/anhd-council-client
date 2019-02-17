@@ -35,6 +35,7 @@ export const setSearchTimeout = event => {
 
 export const queryBuildingAddress = data => dispatch => {
   dispatch(loadingActions.handleRequest(GET_BUILDING_SEARCH))
+  dispatch(errorActions.handleRequest(GET_BUILDING_SEARCH))
   return Axios.get(SEARCH_URL, { params: { fts: data, format: 'json' } })
     .then(response => {
       dispatch(loadingActions.handleCompletedRequest(GET_BUILDING_SEARCH))

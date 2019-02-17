@@ -7,10 +7,6 @@ export default class SearchBar extends React.Component {
   constructor(props) {
     super(props)
 
-    this.state = {
-      searchValue: '',
-    }
-
     this.onFormSubmit = this.onFormSubmit.bind(this)
     this.dispatchQuery = this.dispatchQuery.bind(this)
     this.onInputChange = this.onInputChange.bind(this)
@@ -18,11 +14,11 @@ export default class SearchBar extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.selectedResult) {
-      this.setState({
-        searchValue: `${nextProps.selectedResult.housenumber} ${nextProps.selectedResult.street}, ${
+      this.props.setSearchValue(
+        `${nextProps.selectedResult.housenumber} ${nextProps.selectedResult.street}, ${
           nextProps.selectedResult.boroughName
-        }`,
-      })
+        }`
+      )
     }
   }
 
@@ -38,9 +34,11 @@ export default class SearchBar extends React.Component {
   onInputChange(event) {
     this.props.clearSelectedSearch()
 
-    this.setState({ searchValue: event.target.value })
+    this.props.setSearchValue(event.target.value)
     clearTimeout(this.props.searchTimeout)
-    this.props.dispatch(setSearchTimeout(setTimeout(this.dispatchQuery, 250, event.target.value)))
+    if (event.target.value) {
+      this.props.dispatch(setSearchTimeout(setTimeout(this.dispatchQuery, 250, event.target.value)))
+    }
   }
 
   render() {
@@ -52,7 +50,7 @@ export default class SearchBar extends React.Component {
             placeholder="Type an address to search"
             type="text"
             onChange={this.onInputChange}
-            value={this.state.searchValue}
+            value={this.props.searchValue}
           />
         </form>
       </div>
@@ -66,4 +64,6 @@ SearchBar.propTypes = {
   searchTimeout: PropTypes.number,
   selectBuildingResult: PropTypes.func,
   selectedResult: PropTypes.object,
+  searchValue: PropTypes.string,
+  setSearchValue: PropTypes.func,
 }

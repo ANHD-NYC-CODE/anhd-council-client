@@ -19,9 +19,21 @@ class SearchModule extends React.Component {
     this.selectBuildingResult = this.selectBuildingResult.bind(this)
     this.dispatchSelectedBuildingResult = this.dispatchSelectedBuildingResult.bind(this)
     this.clearSelectedSearch = this.clearSelectedSearch.bind(this)
+    this.setSearchValue = this.setSearchValue.bind(this)
+
     this.state = {
       selectedResult: null,
+      searchValue: '',
     }
+  }
+
+  setSearchValue(value) {
+    if (!value) {
+      this.props.dispatch(clearSearch())
+    }
+    this.setState({
+      searchValue: value,
+    })
   }
 
   clearSelectedSearch() {
@@ -53,6 +65,8 @@ class SearchModule extends React.Component {
           searchTimeout={this.props.search.searchTimeout}
           selectBuildingResult={this.selectBuildingResult}
           selectedResult={this.state.selectedResult}
+          searchValue={this.state.searchValue}
+          setSearchValue={this.setSearchValue}
         />
         <SearchResults
           loading={this.props.loading}
@@ -68,6 +82,8 @@ class SearchModule extends React.Component {
 SearchModule.propTypes = {
   setViewCoordinates: PropTypes.func,
   search: PropTypes.object,
+  error: PropTypes.object,
+  loading: PropTypes.bool,
   dispatch: PropTypes.func,
 }
 
