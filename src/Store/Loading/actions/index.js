@@ -1,11 +1,7 @@
-export const handleRequest = data => ({
-  type: data + '_REQUEST',
+export const handleRequest = type => ({
+  type: type + '_PENDING',
 })
 
-export const handleSuccess = data => ({
-  type: data + '_SUCCESS',
-})
-
-export const handleFailure = data => ({
-  type: data + '_FAILURE',
+export const handleCompletedRequest = type => ({
+  type: type + '_COMPLETE',
 })

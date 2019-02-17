@@ -4,9 +4,11 @@ import { Axios } from 'shared/utilities/Axios'
 import { SEARCH_URL } from 'shared/constants/urls'
 import MockAdapter from 'axios-mock-adapter'
 import * as loading from 'Store/Loading/actions'
+import * as errorActions from 'Store/Error/actions'
+
 import { GET_BUILDING_SEARCH } from 'shared/constants/actions'
 
-import { queryBuildingAddress, handleReadSearchResponse, handleErrorResponse } from '../index.js'
+import { queryBuildingAddress, handleReadSearchResponse } from '../index.js'
 const middlewares = [thunk]
 const mockStore = configureStore(middlewares)
 
@@ -25,7 +27,7 @@ describe('queryBuildingAddress', () => {
     await store.dispatch(queryBuildingAddress('50 broad')).then(() => {
       const expectedActions = [
         loading.handleRequest(GET_BUILDING_SEARCH),
-        loading.handleSuccess(GET_BUILDING_SEARCH),
+        loading.handleCompletedRequest(GET_BUILDING_SEARCH),
         handleReadSearchResponse({ data: data }),
       ]
 
@@ -34,17 +36,15 @@ describe('queryBuildingAddress', () => {
   })
 
   it('on ERROR - dispatches GET_BUILDING_SEARCH_REQUEST, GET_BUILDING_SEARCH_FAILURE and HANDLE_ERROR_RESPONSE on error', async () => {
-    const errorData = {
-      results: 'hello',
-    }
-
-    mock.onGet(SEARCH_URL).reply(500, errorData)
+    const errorData = { results: 'forbidden' }
+    const errorResponse = { status: 400, data: errorData }
+    mock.onGet(SEARCH_URL).reply(400, errorData)
 
     await store.dispatch(queryBuildingAddress('50 broad')).then(() => {
       const expectedActions = [
         loading.handleRequest(GET_BUILDING_SEARCH),
-        loading.handleFailure(GET_BUILDING_SEARCH),
-        handleErrorResponse({ status: 500, data: errorData }),
+        loading.handleCompletedRequest(GET_BUILDING_SEARCH),
+        errorActions.handleFailure(GET_BUILDING_SEARCH, errorResponse),
       ]
 
       expect(store.getActions()).toEqual(expectedActions)
