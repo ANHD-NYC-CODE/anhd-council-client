@@ -6,6 +6,8 @@ import SearchResults from './SearchResults'
 // import { readBuildingById } from '../Store/Buildings/actions'
 import { clearSearch } from '../Store/Search/actions'
 import { createLoadingSelector } from 'Store/Loading/selectors'
+import { createErrorSelector } from 'Store/Error/selectors'
+
 import { GET_BUILDING_SEARCH } from 'shared/constants/actions'
 
 import './style.scss'
@@ -54,6 +56,7 @@ class SearchModule extends React.Component {
         />
         <SearchResults
           loading={this.props.loading}
+          error={this.props.error}
           selectBuildingResult={this.selectBuildingResult}
           results={this.props.search.results}
         />
@@ -69,11 +72,12 @@ SearchModule.propTypes = {
 }
 
 const loadingSelector = createLoadingSelector([GET_BUILDING_SEARCH])
-
+const errorSelector = createErrorSelector([GET_BUILDING_SEARCH])
 const mapStateToProps = state => {
   return {
     search: state.search,
     loading: loadingSelector(state),
+    error: errorSelector(state),
   }
 }
 

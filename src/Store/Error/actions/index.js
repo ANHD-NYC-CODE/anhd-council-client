@@ -3,9 +3,10 @@ export const handleRequest = type => ({
 })
 
 export const handleFailure = (type, response) => {
+  let message = (response.data || {}).detail
   return {
     type: type + '_FAILURE',
     status: response.status,
-    message: response.data.results,
+    message: message,
   }
 }

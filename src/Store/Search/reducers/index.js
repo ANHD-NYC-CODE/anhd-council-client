@@ -8,13 +8,6 @@ export const initialState = {
 
 export const searchReducer = (state = Object.freeze(initialState), action = { data: [] }) => {
   switch (action.type) {
-    case searchActions.HANDLE_ERROR_RESPONSE: {
-      return {
-        ...state,
-        results: [],
-        error: action.data,
-      }
-    }
     case searchActions.SET_SEARCH_TIMEOUT: {
       return { ...state, searchTimeout: action.data }
     }

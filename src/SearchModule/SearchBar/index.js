@@ -9,7 +9,6 @@ export default class SearchBar extends React.Component {
 
     this.state = {
       searchValue: '',
-      autoCompleteValue: '',
     }
 
     this.onFormSubmit = this.onFormSubmit.bind(this)
@@ -20,7 +19,9 @@ export default class SearchBar extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.selectedResult) {
       this.setState({
-        searchValue: `${nextProps.selectedResult.address}, ${nextProps.selectedResult.boroughName}`,
+        searchValue: `${nextProps.selectedResult.housenumber} ${nextProps.selectedResult.street}, ${
+          nextProps.selectedResult.boroughName
+        }`,
       })
     }
   }
