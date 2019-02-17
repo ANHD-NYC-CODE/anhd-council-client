@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { setSearchTimeout, queryBuildingAddress } from '../../Store/Search/actions'
+import { setSearchTimeout, queryBuildingAddress } from 'Store/Search/actions'
 import './style.scss'
 
 export default class SearchBar extends React.Component {

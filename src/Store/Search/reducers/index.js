@@ -2,7 +2,6 @@ import * as searchActions from '../actions'
 
 export const initialState = {
   results: [],
-  errors: [],
   searchTimeout: undefined,
 }
 

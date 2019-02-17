@@ -1,5 +1,5 @@
-export const handleRequest = type => ({
-  type: type + '_REQUEST',
+export const handleClearErrors = type => ({
+  type: type + '_CLEAR_ERRORS',
 })
 
 export const handleFailure = (type, response) => {

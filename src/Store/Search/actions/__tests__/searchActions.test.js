@@ -20,13 +20,14 @@ beforeEach(() => {
 })
 
 describe('queryBuildingAddress', () => {
-  it('on SUCCESS - dispatches GET_BUILDING_SEARCH_REQUEST, GET_BUILDING_SEARCH_SUCCESS, HANDLE_READ_SEARCH_RESPONSE', async () => {
+  it('on SUCCESS - dispatches GET_BUILDING_SEARCH_PENDING, GET_BUILDING_SEARCH_SUCCESS, HANDLE_READ_SEARCH_RESPONSE', async () => {
     const data = { results: [] }
     mock.onGet(SEARCH_URL).reply(200, data)
 
     await store.dispatch(queryBuildingAddress('50 broad')).then(() => {
       const expectedActions = [
         loading.handleRequest(GET_BUILDING_SEARCH),
+        errorActions.handleClearErrors(GET_BUILDING_SEARCH),
         loading.handleCompletedRequest(GET_BUILDING_SEARCH),
         handleReadSearchResponse({ data: data }),
       ]
@@ -35,7 +36,7 @@ describe('queryBuildingAddress', () => {
     })
   })
 
-  it('on ERROR - dispatches GET_BUILDING_SEARCH_REQUEST, GET_BUILDING_SEARCH_FAILURE and HANDLE_ERROR_RESPONSE on error', async () => {
+  it('on ERROR - dispatches GET_BUILDING_SEARCH_PENDING, GET_BUILDING_SEARCH_FAILURE and HANDLE_ERROR_RESPONSE on error', async () => {
     const errorData = { results: 'forbidden' }
     const errorResponse = { status: 400, data: errorData }
     mock.onGet(SEARCH_URL).reply(400, errorData)
@@ -43,6 +44,7 @@ describe('queryBuildingAddress', () => {
     await store.dispatch(queryBuildingAddress('50 broad')).then(() => {
       const expectedActions = [
         loading.handleRequest(GET_BUILDING_SEARCH),
+        errorActions.handleClearErrors(GET_BUILDING_SEARCH),
         loading.handleCompletedRequest(GET_BUILDING_SEARCH),
         errorActions.handleFailure(GET_BUILDING_SEARCH, errorResponse),
       ]

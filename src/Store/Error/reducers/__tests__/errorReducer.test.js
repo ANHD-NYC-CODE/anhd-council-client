@@ -3,10 +3,10 @@ import * as actions from 'Store/Error/actions'
 
 describe('Error reducer', () => {
   describe('GET_RESOURCE_REQUEST', () => {
-    const action = actions.handleRequest('GET_RESOURCE')
-    const expectedState = { ...reducer.initialState, GET_RESOURCE: '' }
+    const action = actions.handleClearErrors('GET_RESOURCE')
+    const expectedState = { ...reducer.initialState }
 
-    it('sets GET_RESOURCE to blank', () => {
+    it('sets GET_RESOURCE to null', () => {
       expect(reducer.errorReducer(reducer.initialState, action)).toEqual(expectedState)
     })
   })
