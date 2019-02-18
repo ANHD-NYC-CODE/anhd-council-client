@@ -9,7 +9,7 @@ import { createLoadingSelector } from 'Store/Loading/selectors'
 
 import { GET_TOKEN, GET_USER_PROFILE } from 'shared/constants/actions'
 import { handleClearErrors } from 'Store/Error/actions'
-import { handleUserLogout } from 'Store/Auth/actions'
+import { logoutUser } from 'Store/Auth/actions'
 
 class Auth extends React.Component {
   constructor(props) {
@@ -33,11 +33,10 @@ class Auth extends React.Component {
   }
 
   render() {
-    console.log(this.props.user)
     return (
       <div className="auth">
         {this.props.user ? (
-          <Nav.Link onClick={() => this.props.dispatch(handleUserLogout())}>Logout</Nav.Link>
+          <Nav.Link onClick={() => this.props.dispatch(logoutUser())}>Logout</Nav.Link>
         ) : (
           <Nav.Link onClick={() => this.setState({ modalShow: true })}>Login</Nav.Link>
         )}

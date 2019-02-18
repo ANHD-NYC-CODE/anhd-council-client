@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Navbar, Nav, Button } from 'react-bootstrap'
 import Auth from 'Auth'
+import UserContext from 'Auth/UserContext'
 
 const Header = props => {
   return (
@@ -13,6 +14,8 @@ const Header = props => {
           <Nav className="mr-auto">
             <Nav.Link href="#home">Home</Nav.Link>
             <Nav.Link href="#link">Link</Nav.Link>
+            {props.user && <Nav.Link>{props.user.username}</Nav.Link>}
+
             <Auth />
           </Nav>
         </Navbar.Collapse>
@@ -21,6 +24,8 @@ const Header = props => {
   )
 }
 
-Header.propTypes = {}
+Header.propTypes = {
+  user: PropTypes.object,
+}
 
 export default Header

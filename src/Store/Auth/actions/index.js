@@ -2,7 +2,7 @@ import { Axios } from 'shared/utilities/Axios'
 import * as loadingActions from 'Store/Loading/actions'
 import * as errorActions from 'Store/Error/actions'
 import { TOKEN_URL, CURRENT_USER_URL } from 'shared/constants/urls'
-import { GET_TOKEN, GET_USER_PROFILE } from 'shared/constants/actions'
+import { USER_STORAGE, GET_TOKEN, GET_USER_PROFILE } from 'shared/constants/actions'
 import { handleCatchError } from 'shared/utilities/actionUtils'
 
 export const HANDLE_GET_USER_PROFILE = 'HANDLE_GET_USER_PROFILE'
@@ -29,13 +29,14 @@ export const handleUserLogout = () => {
   }
 }
 
-export const getUserProfile = token => dispatch => {
+export const getUserProfile = () => dispatch => {
   dispatch(loadingActions.handleRequest(GET_USER_PROFILE))
   dispatch(errorActions.handleClearErrors(GET_USER_PROFILE))
+  const token = localStorage.getItem(USER_STORAGE)
 
   return Axios.get(CURRENT_USER_URL, {
     headers: {
-      authorization: `Bearer ${token}`,
+      authorization: `Bearer ${JSON.parse(token).access}`,
     },
   })
     .then(response => {
@@ -54,10 +55,15 @@ export const loginUser = data => dispatch => {
     .then(response => {
       dispatch(loadingActions.handleCompletedRequest(GET_TOKEN))
       dispatch(handleGetToken(response))
-      dispatch(getUserProfile(response.data.access))
-      console.log(response)
+      localStorage.setItem(USER_STORAGE, JSON.stringify(response.data))
+      dispatch(getUserProfile())
     })
     .catch(error => {
       handleCatchError(error, GET_TOKEN, dispatch)
     })
+}
+
+export const logoutUser = () => dispatch => {
+  localStorage.removeItem(USER_STORAGE)
+  dispatch(handleUserLogout())
 }
