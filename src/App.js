@@ -8,15 +8,14 @@ import { history } from './Store/configureStore'
 import Header from 'Navigation/Header'
 import LeafletMap from 'LeafletMap'
 import UserContext from 'Auth/UserContext'
-import { USER_STORAGE } from 'shared/constants/actions'
-import { getUserProfile } from 'Store/Auth/actions'
+import { refreshTokens } from 'Store/Auth/actions'
 
 class App extends React.Component {
   constructor(props) {
     super(props)
-    const token = localStorage.getItem(USER_STORAGE)
-    if (token) {
-      props.dispatch(getUserProfile())
+    // Refresh the access token on app load
+    if (props.auth.refresh_token) {
+      props.dispatch(refreshTokens(props.auth))
     }
   }
   render() {
@@ -28,7 +27,7 @@ class App extends React.Component {
               exact
               path="/"
               render={() => (
-                <UserContext.Provider value={this.props.user}>
+                <UserContext.Provider value={this.props.auth.user}>
                   <UserContext.Consumer>{user => <Header user={user} />}</UserContext.Consumer>
                   <LeafletMap />
                 </UserContext.Provider>
@@ -44,7 +43,7 @@ class App extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.auth.user,
+    auth: state.auth,
   }
 }
 
