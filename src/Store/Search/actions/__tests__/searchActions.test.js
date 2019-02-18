@@ -3,7 +3,7 @@ import thunk from 'redux-thunk'
 import { Axios } from 'shared/utilities/Axios'
 import { SEARCH_URL } from 'shared/constants/urls'
 import MockAdapter from 'axios-mock-adapter'
-import * as loading from 'Store/Loading/actions'
+import * as loadingActions from 'Store/Loading/actions'
 import * as errorActions from 'Store/Error/actions'
 
 import { GET_BUILDING_SEARCH } from 'shared/constants/actions'
@@ -26,9 +26,9 @@ describe('queryBuildingAddress', () => {
 
     await store.dispatch(queryBuildingAddress('50 broad')).then(() => {
       const expectedActions = [
-        loading.handleRequest(GET_BUILDING_SEARCH),
+        loadingActions.handleRequest(GET_BUILDING_SEARCH),
         errorActions.handleClearErrors(GET_BUILDING_SEARCH),
-        loading.handleCompletedRequest(GET_BUILDING_SEARCH),
+        loadingActions.handleCompletedRequest(GET_BUILDING_SEARCH),
         handleReadSearchResponse({ data: data }),
       ]
 
@@ -37,16 +37,16 @@ describe('queryBuildingAddress', () => {
   })
 
   it('on ERROR - dispatches GET_BUILDING_SEARCH_PENDING, GET_BUILDING_SEARCH_FAILURE and HANDLE_ERROR_RESPONSE on error', async () => {
-    const errorData = { results: 'forbidden' }
+    const errorData = { detail: 'forbidden' }
     const errorResponse = { status: 400, data: errorData }
     mock.onGet(SEARCH_URL).reply(400, errorData)
 
     await store.dispatch(queryBuildingAddress('50 broad')).then(() => {
       const expectedActions = [
-        loading.handleRequest(GET_BUILDING_SEARCH),
+        loadingActions.handleRequest(GET_BUILDING_SEARCH),
         errorActions.handleClearErrors(GET_BUILDING_SEARCH),
-        loading.handleCompletedRequest(GET_BUILDING_SEARCH),
-        errorActions.handleFailure(GET_BUILDING_SEARCH, errorResponse),
+        loadingActions.handleCompletedRequest(GET_BUILDING_SEARCH),
+        errorActions.handleFailure(GET_BUILDING_SEARCH, errorResponse.status, errorResponse.data.detail),
       ]
 
       expect(store.getActions()).toEqual(expectedActions)

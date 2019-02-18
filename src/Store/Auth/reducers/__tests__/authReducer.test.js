@@ -13,7 +13,7 @@ describe('Auth reducer', () => {
       expect(
         reducer.authReducer(
           undefined,
-          actions.handleUserLogin({ data: { access_token: access_token, refresh_token: refresh_token } })
+          actions.handleGetToken({ data: { access: access_token, refresh: refresh_token } })
         )
       ).toEqual({
         ...reducer.initialState,

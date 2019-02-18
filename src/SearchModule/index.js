@@ -9,6 +9,7 @@ import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
 
 import { GET_BUILDING_SEARCH } from 'shared/constants/actions'
+import { handleClearErrors } from 'Store/Error/actions'
 
 import './style.scss'
 
@@ -29,6 +30,7 @@ class SearchModule extends React.Component {
 
   setSearchValue(value) {
     if (!value) {
+      this.props.dispatch(handleClearErrors(GET_BUILDING_SEARCH))
       this.props.dispatch(clearSearch())
     }
     this.setState({

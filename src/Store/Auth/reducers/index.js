@@ -11,8 +11,8 @@ export const authReducer = (state = Object.freeze(initialState), action = { data
     case actions.HANDLE_USER_LOGIN_SUCCESS: {
       return {
         ...state,
-        access_token: (action.data || {}).access_token || {},
-        refresh_token: (action.data || {}).refresh_token || {},
+        access_token: (action.data || {}).access || {},
+        refresh_token: (action.data || {}).refresh || {},
       }
     }
     case actions.HANDLE_GET_USER: {

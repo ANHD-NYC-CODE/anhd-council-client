@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Navbar, Nav } from 'react-bootstrap'
+import { Navbar, Nav, Button } from 'react-bootstrap'
+import Auth from 'Auth'
 
 const Header = props => {
   return (
@@ -12,6 +13,7 @@ const Header = props => {
           <Nav className="mr-auto">
             <Nav.Link href="#home">Home</Nav.Link>
             <Nav.Link href="#link">Link</Nav.Link>
+            <Auth />
           </Nav>
         </Navbar.Collapse>
       </Navbar>

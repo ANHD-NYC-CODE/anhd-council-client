@@ -6,8 +6,8 @@ import configureStore, { history } from './Store/configureStore'
 
 const store = configureStore({})
 
-import Header from './navigation/Header'
-import LeafletMap from './LeafletMap'
+import Header from 'Navigation/Header'
+import LeafletMap from 'LeafletMap'
 
 class App extends Component {
   render() {

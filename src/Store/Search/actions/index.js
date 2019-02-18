@@ -7,6 +7,7 @@ import { GET_BUILDING_SEARCH } from 'shared/constants/actions'
 export const HANDLE_READ_SEARCH_RESPONSE = 'HANDLE_READ_SEARCH_RESPONSE'
 export const CLEAR_SEARCH = 'CLEAR_SEARCH'
 export const SET_SEARCH_TIMEOUT = 'SET_SEARCH_TIMEOUT'
+import { handleCatchError } from 'shared/utilities/actionUtils'
 
 export const handleReadSearchResponse = response => {
   let results = response.data
@@ -37,7 +38,6 @@ export const queryBuildingAddress = data => dispatch => {
       dispatch(handleReadSearchResponse(response))
     })
     .catch(error => {
-      dispatch(loadingActions.handleCompletedRequest(GET_BUILDING_SEARCH))
-      dispatch(errorActions.handleFailure(GET_BUILDING_SEARCH, error.response))
+      handleCatchError(error, GET_BUILDING_SEARCH, dispatch)
     })
 }

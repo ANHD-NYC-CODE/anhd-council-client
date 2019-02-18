@@ -2,11 +2,10 @@ export const handleClearErrors = type => ({
   type: type + '_CLEAR_ERRORS',
 })
 
-export const handleFailure = (type, response) => {
-  let message = (response.data || {}).detail
+export const handleFailure = (type, status, message) => {
   return {
     type: type + '_FAILURE',
-    status: response.status,
+    status: status,
     message: message,
   }
 }

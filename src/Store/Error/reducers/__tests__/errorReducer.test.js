@@ -13,7 +13,7 @@ describe('Error reducer', () => {
 
   describe('GET_RESOURCE_FAILURE', () => {
     const errorResponse = { status: 400, data: { detail: 'forbidden' } }
-    const action = actions.handleFailure('GET_RESOURCE', errorResponse)
+    const action = actions.handleFailure('GET_RESOURCE', errorResponse.status, errorResponse.data.detail)
     const expectedState = { ...reducer.initialState, GET_RESOURCE: { status: 400, message: 'forbidden' } }
 
     it('sets GET_RESOURCE to true', () => {
