@@ -1,7 +1,7 @@
 import * as actions from '../actions'
 
 export const initialState = {
-  user: {},
+  user: undefined,
   access_token: undefined,
   refresh_token: undefined,
 }
@@ -15,7 +15,7 @@ export const authReducer = (state = Object.freeze(initialState), action = { data
         refresh_token: (action.data || {}).refresh || {},
       }
     }
-    case actions.HANDLE_GET_USER: {
+    case actions.HANDLE_GET_USER_PROFILE: {
       return {
         ...state,
         user: action.data || {},

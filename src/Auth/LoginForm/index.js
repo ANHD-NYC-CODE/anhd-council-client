@@ -36,7 +36,7 @@ class LoginForm extends React.Component {
   render() {
     return (
       <Formik validationSchema={schema}>
-        {({ handleChange, handleBlur, values, touched, errors }) => (
+        {({ handleChange, handleBlur, touched, errors }) => (
           <Form className="auth-login-form" validated={this.state.validated} onSubmit={e => this.handleSubmit(e)}>
             {this.props.error && (
               <Form.Text className="text-danger" type="invalid">
@@ -54,7 +54,6 @@ class LoginForm extends React.Component {
                 isInvalid={touched.username && errors.username}
                 type="text"
                 placeholder="Enter username"
-                value={values.username}
               />
               {touched.username && errors.username && (
                 <Form.Text className="text-danger" type="invalid">
@@ -73,7 +72,6 @@ class LoginForm extends React.Component {
                 isValid={touched.password && !errors.password}
                 placeholder="Password"
                 type="password"
-                value={values.password}
               />
               {touched.password && errors.password && (
                 <Form.Text className="text-danger" type="invalid">

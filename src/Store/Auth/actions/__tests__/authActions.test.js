@@ -6,9 +6,9 @@ import MockAdapter from 'axios-mock-adapter'
 import * as loadingActions from 'Store/Loading/actions'
 import * as errorActions from 'Store/Error/actions'
 
-import { GET_TOKEN } from 'shared/constants/actions'
+import { GET_TOKEN, GET_USER_PROFILE } from 'shared/constants/actions'
 
-import { loginUser, handleGetToken, handleGetUser } from 'Store/Auth/actions'
+import { loginUser, handleGetToken } from 'Store/Auth/actions'
 const middlewares = [thunk]
 const mockStore = configureStore(middlewares)
 

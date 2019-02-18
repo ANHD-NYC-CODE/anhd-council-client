@@ -23,10 +23,10 @@ describe('Auth reducer', () => {
     })
   })
 
-  describe('HANDLE_GET_USER', () => {
+  describe('HANDLE_GET_USER_PROFILE', () => {
     const user = { email: 'test@test.com' }
     it('saves the current user', () => {
-      expect(reducer.authReducer(undefined, actions.handleGetUser({ data: user }))).toEqual({
+      expect(reducer.authReducer(undefined, actions.handleGetUserProfile({ data: user }))).toEqual({
         ...reducer.initialState,
         user: user,
       })
