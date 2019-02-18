@@ -32,7 +32,7 @@ export const handleUserLogout = () => {
 export const loginUser = data => dispatch => {
   dispatch(loadingActions.handleRequest(GET_TOKEN))
   dispatch(errorActions.handleClearErrors(GET_TOKEN))
-  Axios.post(TOKEN_URL, { username: data.username, password: data.password })
+  return Axios.post(TOKEN_URL, { username: data.username, password: data.password })
     .then(response => {
       dispatch(loadingActions.handleCompletedRequest(GET_TOKEN))
       dispatch(handleGetToken(response))

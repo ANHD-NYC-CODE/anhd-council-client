@@ -36,7 +36,7 @@ describe('queryBuildingAddress', () => {
     })
   })
 
-  it('on ERROR - dispatches GET_BUILDING_SEARCH_PENDING, GET_BUILDING_SEARCH_FAILURE and HANDLE_ERROR_RESPONSE on error', async () => {
+  it('on ERROR - dispatches GET_BUILDING_SEARCH_PENDING, GET_BUILDING_SEARCH_FAILURE and HANDLE_ERROR_RESPONSE', async () => {
     const errorData = { detail: 'forbidden' }
     const errorResponse = { status: 400, data: errorData }
     mock.onGet(SEARCH_URL).reply(400, errorData)

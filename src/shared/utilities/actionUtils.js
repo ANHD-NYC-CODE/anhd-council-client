@@ -2,6 +2,7 @@ import * as loadingActions from 'Store/Loading/actions'
 import * as errorActions from 'Store/Error/actions'
 
 const findErrorKeyValue = data => {
+  if (!data) return 'unknown'
   return data.detail || data.non_field_errors[0] || 'unknown'
 }
 
