@@ -1,8 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Navbar, Nav, Button } from 'react-bootstrap'
+import { Navbar, Nav } from 'react-bootstrap'
 import Auth from 'Auth'
-import UserContext from 'Auth/UserContext'
 
 const Header = props => {
   return (

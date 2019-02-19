@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { setSearchTimeout, queryBuildingAddress } from 'Store/Search/actions'
+import { requestWithAuth } from 'shared/utilities/authUtils'
+
 import './style.scss'
 
 export default class SearchBar extends React.Component {
@@ -28,7 +30,7 @@ export default class SearchBar extends React.Component {
   }
 
   dispatchQuery(value) {
-    this.props.dispatch(queryBuildingAddress(value))
+    this.props.dispatch(requestWithAuth(queryBuildingAddress(value)))
   }
 
   onInputChange(event) {

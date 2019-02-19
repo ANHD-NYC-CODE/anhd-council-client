@@ -8,8 +8,7 @@ import { USER_STORAGE } from 'shared/constants/actions'
 const getAuthState = () => {
   try {
     const storage = JSON.parse(localStorage.getItem(USER_STORAGE)) || undefined
-
-    return { auth: { user: storage.user, access_token: storage.access.token, refresh_token: storage.refresh.token } }
+    return { auth: { user: storage.user, access: storage.access, refresh: storage.refresh } }
   } catch (err) {
     return undefined
   }

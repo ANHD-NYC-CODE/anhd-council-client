@@ -6,7 +6,7 @@ const ERROR_500_MESSAGE = 'Oops, something went wrong.'
 const findErrorKeyValue = data => {
   if (!data) return ERROR_500_MESSAGE
   try {
-    return data.detail || data.non_field_errors[0] || ERROR_500_MESSAGE
+    return data.detail || data.non_field_errors[0] || data.refresh[0] || ERROR_500_MESSAGE
   } catch (err) {
     return ERROR_500_MESSAGE
   }

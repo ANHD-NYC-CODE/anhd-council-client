@@ -16,8 +16,8 @@ class Router extends React.Component {
     super(props)
 
     // Refresh the access token on app load
-    if (props.auth && props.auth.refresh_token) {
-      props.dispatch(refreshTokens(props.auth))
+    if (props.auth && props.auth.refresh) {
+      props.dispatch(refreshTokens(props.auth.refresh.token))
     }
   }
 

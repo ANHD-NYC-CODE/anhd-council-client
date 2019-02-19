@@ -29,10 +29,13 @@ export const setSearchTimeout = event => ({
   data: event,
 })
 
-export const queryBuildingAddress = data => dispatch => {
+export const queryBuildingAddress = value => (dispatch, access_token) => {
   dispatch(loadingActions.handleRequest(GET_BUILDING_SEARCH))
   dispatch(errorActions.handleClearErrors(GET_BUILDING_SEARCH))
-  return Axios.get(SEARCH_URL, { params: { fts: data, format: 'json' } })
+  return Axios.get(SEARCH_URL, {
+    params: { fts: value, format: 'json' },
+    headers: { authorization: `Bearer ${access_token}` },
+  })
     .then(response => {
       dispatch(loadingActions.handleCompletedRequest(GET_BUILDING_SEARCH))
       dispatch(handleReadSearchResponse(response))

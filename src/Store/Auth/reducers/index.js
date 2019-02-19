@@ -2,8 +2,8 @@ import * as actions from '../actions'
 
 export const initialState = {
   user: undefined,
-  access_token: undefined,
-  refresh_token: undefined,
+  access: undefined,
+  refresh: undefined,
 }
 
 export const authReducer = (state = Object.freeze(initialState), action = { data: [] }) => {
