@@ -4,7 +4,7 @@ import * as actions from 'Store/Error/actions'
 describe('Error reducer', () => {
   describe('GET_RESOURCE_REQUEST', () => {
     const action = actions.handleClearErrors('GET_RESOURCE')
-    const expectedState = { ...reducer.initialState }
+    const expectedState = { ...reducer.initialState, GET_RESOURCE: null }
 
     it('sets GET_RESOURCE to null', () => {
       expect(reducer.errorReducer(reducer.initialState, action)).toEqual(expectedState)

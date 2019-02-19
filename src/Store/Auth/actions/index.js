@@ -67,11 +67,14 @@ export const refreshTokens = data => dispatch => {
   dispatch(errorActions.handleClearErrors(GET_TOKEN_REFRESH))
   return Axios.post(TOKEN_REFRESH_URL, { refresh: data.refresh_token })
     .then(response => {
-      dispatch(loadingActions.handleCompletedRequest(GET_TOKEN))
+      dispatch(loadingActions.handleCompletedRequest(GET_TOKEN_REFRESH))
       dispatch(handleRefreshToken(response))
       const storage = JSON.parse(localStorage.getItem(USER_STORAGE))
-      storage.access = response.data
-      localStorage.setItem(USER_STORAGE, JSON.stringify(storage))
+      if (storage) {
+        storage.access = response.data.access
+        storage.refresh = response.data.refresh
+        localStorage.setItem(USER_STORAGE, JSON.stringify(storage))
+      }
     })
     .catch(error => {
       handleCatchError(error, GET_TOKEN_REFRESH, dispatch)
