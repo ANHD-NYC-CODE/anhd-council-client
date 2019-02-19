@@ -44,6 +44,10 @@ const Header = props => {
   )
 }
 
+Header.propTypes = {
+  auth: PropTypes.object,
+}
+
 const mapStateToProps = state => {
   return {
     auth: state.auth,
