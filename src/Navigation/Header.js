@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Navbar, Nav } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 
 const Header = props => {
   return (
@@ -11,10 +12,31 @@ const Header = props => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#link">Link</Nav.Link>
-            {props.user && <Nav.Link>{props.user.username}</Nav.Link>}
-            {props.user ? <Nav.Link href="/logout">Logout</Nav.Link> : <Nav.Link href="/login">Login</Nav.Link>}
+            <Nav.Link as="li">
+              <Link className="text-light" to="/">
+                Home
+              </Link>
+            </Nav.Link>
+            {props.user && (
+              <Nav.Link as="li">
+                <Link className="text-light" to="/profile">
+                  {props.user.username}
+                </Link>
+              </Nav.Link>
+            )}
+            {props.user ? (
+              <Nav.Link as="li">
+                <Link className="text-light" to="/logout">
+                  Logout
+                </Link>
+              </Nav.Link>
+            ) : (
+              <Nav.Link as="li">
+                <Link className="text-light" to="/login">
+                  Login
+                </Link>
+              </Nav.Link>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Navbar>
