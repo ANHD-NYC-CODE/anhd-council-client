@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import { Navbar, Nav } from 'react-bootstrap'
-import Auth from 'Auth'
 
 const Header = props => {
   return (
@@ -14,8 +14,7 @@ const Header = props => {
             <Nav.Link href="#home">Home</Nav.Link>
             <Nav.Link href="#link">Link</Nav.Link>
             {props.user && <Nav.Link>{props.user.username}</Nav.Link>}
-
-            <Auth />
+            {props.user ? <Nav.Link href="/logout">Logout</Nav.Link> : <Nav.Link href="/login">Login</Nav.Link>}
           </Nav>
         </Navbar.Collapse>
       </Navbar>
@@ -23,8 +22,10 @@ const Header = props => {
   )
 }
 
-Header.propTypes = {
-  user: PropTypes.object,
+const mapStateToProps = state => {
+  return {
+    auth: state.auth,
+  }
 }
 
-export default Header
+export default connect(mapStateToProps)(Header)

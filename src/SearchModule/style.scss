@@ -1,10 +1,9 @@
 @import './src/shared/styles/bootstrap/index.scss';
 
 .search-module {
-  position: fixed;
-  top: $small-spacing;
-  right: $large-spacing;
+  display: inline-block;
   height: 60px;
+  position: relative;
   width: 400px;
   z-index: 500;
 }
