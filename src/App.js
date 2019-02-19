@@ -1,9 +1,13 @@
 import React from 'react'
-import { Provider } from 'react-redux'
-
 import Router from 'Router'
+
 import configureStore from 'Store/configureStore'
 import { USER_STORAGE } from 'shared/constants/actions'
+import { ToastContainer } from 'react-toastify'
+import { Provider } from 'react-redux'
+
+import 'react-toastify/dist/ReactToastify.css'
+
 // Login user with browser refresh, if token fresh and available
 const getAuthState = () => {
   try {
@@ -17,14 +21,12 @@ const getAuthState = () => {
 const store = configureStore({ ...getAuthState() })
 
 export class App extends React.Component {
-  constructor(props) {
-    super(props)
-  }
   render() {
     return (
       <div className="App">
         <Provider store={store}>
           <Router />
+          <ToastContainer />
         </Provider>
       </div>
     )

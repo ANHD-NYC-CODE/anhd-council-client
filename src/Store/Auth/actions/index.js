@@ -5,6 +5,8 @@ import { TOKEN_URL, TOKEN_REFRESH_URL, CURRENT_USER_URL } from 'shared/constants
 import { USER_STORAGE, GET_TOKEN, GET_TOKEN_REFRESH, GET_USER_PROFILE } from 'shared/constants/actions'
 import { handleCatchError } from 'shared/utilities/actionUtils'
 import { updateLocalStorage, requestWithAuth } from 'shared/utilities/authUtils'
+import { toast } from 'react-toastify'
+import { push } from 'connected-react-router'
 
 export const HANDLE_SYNC_STORAGE = 'HANDLE_SYNC_STORAGE'
 export const HANDLE_USER_LOGOUT = 'HANDLE_USER_LOGOUT'
@@ -36,6 +38,7 @@ export const getUserProfile = () => (dispatch, access_token) => {
         dispatch(loadingActions.handleCompletedRequest(GET_USER_PROFILE))
         updateLocalStorage(null, null, response.data, dispatch)
         dispatch(handleSyncStorage(JSON.parse(localStorage.getItem(USER_STORAGE))))
+        toast.success(`Welcome, ${response.data.username}!`)
       })
       .catch(error => {
         handleCatchError(error, GET_USER_PROFILE, dispatch)
@@ -81,4 +84,6 @@ export const loginUser = data => dispatch => {
 export const logoutUser = () => dispatch => {
   localStorage.removeItem(USER_STORAGE)
   dispatch(handleUserLogout())
+  dispatch(push('/'))
+  toast.info("You've been logged out.")
 }
