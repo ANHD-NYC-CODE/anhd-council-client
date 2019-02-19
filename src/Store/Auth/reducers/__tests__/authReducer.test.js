@@ -1,34 +1,26 @@
 import * as reducer from 'Store/Auth/reducers'
 import * as actions from 'Store/Auth/actions'
+import moment from 'moment'
 
 describe('Auth reducer', () => {
   it('should return the initial state', () => {
     expect(reducer.authReducer(undefined, {})).toEqual(reducer.initialState)
   })
 
-  describe('HANDLE_USER_LOGIN_SUCCESS', () => {
+  describe('HANDLE_SYNC_STORAGE', () => {
     const access_token = '1234'
     const refresh_token = 'abcd'
-    it('saves the tokens', () => {
-      expect(
-        reducer.authReducer(
-          undefined,
-          actions.handleGetToken({ data: { access: access_token, refresh: refresh_token } })
-        )
-      ).toEqual({
+    it('saves the tokens and user', () => {
+      const storage = {
+        access: { token: access_token, expiration: moment().format() },
+        refresh: { token: refresh_token, expiration: moment().format() },
+        user: { id: 1 },
+      }
+      expect(reducer.authReducer(undefined, actions.handleSyncStorage(storage))).toEqual({
         ...reducer.initialState,
-        access_token: access_token,
-        refresh_token: refresh_token,
-      })
-    })
-  })
-
-  describe('HANDLE_GET_USER_PROFILE', () => {
-    const user = { email: 'test@test.com' }
-    it('saves the current user', () => {
-      expect(reducer.authReducer(undefined, actions.handleGetUserProfile({ data: user }))).toEqual({
-        ...reducer.initialState,
-        user: user,
+        access: storage.access,
+        refresh: storage.refresh,
+        user: storage.user,
       })
     })
   })

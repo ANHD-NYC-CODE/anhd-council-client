@@ -8,23 +8,12 @@ export const initialState = {
 
 export const authReducer = (state = Object.freeze(initialState), action = { data: [] }) => {
   switch (action.type) {
-    case actions.HANDLE_USER_LOGIN_SUCCESS: {
+    case actions.HANDLE_SYNC_STORAGE: {
       return {
         ...state,
-        access_token: (action.data || {}).access,
-        refresh_token: (action.data || {}).refresh,
-      }
-    }
-    case actions.HANDLE_REFRESH_TOKEN: {
-      return {
-        ...state,
-        access_token: (action.data || {}).refresh,
-      }
-    }
-    case actions.HANDLE_GET_USER_PROFILE: {
-      return {
-        ...state,
-        user: action.data || {},
+        access: (action.data || {}).access,
+        refresh: (action.data || {}).refresh,
+        user: (action.data || {}).user,
       }
     }
     case actions.HANDLE_USER_LOGOUT: {

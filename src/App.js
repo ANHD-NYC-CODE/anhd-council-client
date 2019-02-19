@@ -9,7 +9,7 @@ const getAuthState = () => {
   try {
     const storage = JSON.parse(localStorage.getItem(USER_STORAGE)) || undefined
 
-    return { auth: { user: storage.user, access_token: storage.access, refresh_token: storage.refresh } }
+    return { auth: { user: storage.user, access_token: storage.access.token, refresh_token: storage.refresh.token } }
   } catch (err) {
     return undefined
   }

@@ -8,14 +8,7 @@ import * as errorActions from 'Store/Error/actions'
 
 import { GET_TOKEN, GET_USER_PROFILE, GET_TOKEN_REFRESH } from 'shared/constants/actions'
 
-import {
-  loginUser,
-  handleGetToken,
-  handleUserLogout,
-  logoutUser,
-  refreshTokens,
-  handleRefreshToken,
-} from 'Store/Auth/actions'
+import { loginUser, handleSyncStorage, handleUserLogout, logoutUser, refreshTokens } from 'Store/Auth/actions'
 const middlewares = [thunk]
 const mockStore = configureStore(middlewares)
 
@@ -37,7 +30,7 @@ describe('loginUser', () => {
         loadingActions.handleRequest(GET_TOKEN),
         errorActions.handleClearErrors(GET_TOKEN),
         loadingActions.handleCompletedRequest(GET_TOKEN),
-        handleGetToken({ data: data }),
+        handleSyncStorage(null),
         loadingActions.handleRequest(GET_USER_PROFILE),
         errorActions.handleClearErrors(GET_USER_PROFILE),
       ]
@@ -84,7 +77,7 @@ describe('refreshTokens', () => {
         loadingActions.handleRequest(GET_TOKEN_REFRESH),
         errorActions.handleClearErrors(GET_TOKEN_REFRESH),
         loadingActions.handleCompletedRequest(GET_TOKEN_REFRESH),
-        handleRefreshToken({ data: data }),
+        handleSyncStorage(null),
       ]
 
       expect(store.getActions()).toEqual(expectedActions)

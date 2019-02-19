@@ -4,30 +4,15 @@ import * as errorActions from 'Store/Error/actions'
 import { TOKEN_URL, TOKEN_REFRESH_URL, CURRENT_USER_URL } from 'shared/constants/urls'
 import { USER_STORAGE, GET_TOKEN, GET_TOKEN_REFRESH, GET_USER_PROFILE } from 'shared/constants/actions'
 import { handleCatchError } from 'shared/utilities/actionUtils'
+import { updateLocalStorage } from 'shared/utilities/authUtils'
 
-export const HANDLE_GET_USER_PROFILE = 'HANDLE_GET_USER_PROFILE'
-export const HANDLE_USER_LOGIN_SUCCESS = 'HANDLE_USER_LOGIN_SUCCESS'
-export const HANDLE_REFRESH_TOKEN = 'HANDLE_REFRESH_TOKEN'
+export const HANDLE_SYNC_STORAGE = 'HANDLE_SYNC_STORAGE'
 export const HANDLE_USER_LOGOUT = 'HANDLE_USER_LOGOUT'
 
-export const handleGetToken = response => {
+export const handleSyncStorage = storage => {
   return {
-    type: HANDLE_USER_LOGIN_SUCCESS,
-    data: response.data,
-  }
-}
-
-export const handleRefreshToken = response => {
-  return {
-    type: HANDLE_REFRESH_TOKEN,
-    data: response.data,
-  }
-}
-
-export const handleGetUserProfile = response => {
-  return {
-    type: HANDLE_GET_USER_PROFILE,
-    data: response.data,
+    type: HANDLE_SYNC_STORAGE,
+    data: storage,
   }
 }
 
@@ -40,18 +25,17 @@ export const handleUserLogout = () => {
 export const getUserProfile = () => dispatch => {
   dispatch(loadingActions.handleRequest(GET_USER_PROFILE))
   dispatch(errorActions.handleClearErrors(GET_USER_PROFILE))
-  const storage = JSON.parse(localStorage.getItem(USER_STORAGE)) || undefined
+  const storage = JSON.parse(localStorage.getItem(USER_STORAGE))
   try {
     return Axios.get(CURRENT_USER_URL, {
       headers: {
-        authorization: `Bearer ${storage.access}`,
+        authorization: `Bearer ${storage.access.token}`,
       },
     })
       .then(response => {
         dispatch(loadingActions.handleCompletedRequest(GET_USER_PROFILE))
-        dispatch(handleGetUserProfile(response))
-        storage.user = response.data
-        localStorage.setItem(USER_STORAGE, JSON.stringify(storage))
+        updateLocalStorage(null, null, response.data)
+        dispatch(handleSyncStorage(JSON.parse(localStorage.getItem(USER_STORAGE))))
       })
       .catch(error => {
         handleCatchError(error, GET_USER_PROFILE, dispatch)
@@ -68,13 +52,8 @@ export const refreshTokens = data => dispatch => {
   return Axios.post(TOKEN_REFRESH_URL, { refresh: data.refresh_token })
     .then(response => {
       dispatch(loadingActions.handleCompletedRequest(GET_TOKEN_REFRESH))
-      dispatch(handleRefreshToken(response))
-      const storage = JSON.parse(localStorage.getItem(USER_STORAGE))
-      if (storage) {
-        storage.access = response.data.access
-        storage.refresh = response.data.refresh
-        localStorage.setItem(USER_STORAGE, JSON.stringify(storage))
-      }
+      dispatch(handleSyncStorage(JSON.parse(localStorage.getItem(USER_STORAGE))))
+      updateLocalStorage(response.data.access, response.data.refresh, null)
     })
     .catch(error => {
       handleCatchError(error, GET_TOKEN_REFRESH, dispatch)
@@ -88,8 +67,9 @@ export const loginUser = data => dispatch => {
   return Axios.post(TOKEN_URL, { username: data.username, password: data.password })
     .then(response => {
       dispatch(loadingActions.handleCompletedRequest(GET_TOKEN))
-      dispatch(handleGetToken(response))
-      localStorage.setItem(USER_STORAGE, JSON.stringify(response.data))
+
+      dispatch(handleSyncStorage(JSON.parse(localStorage.getItem(USER_STORAGE))))
+      updateLocalStorage(response.data.access, response.data.refresh, null)
       dispatch(getUserProfile())
     })
     .catch(error => {
