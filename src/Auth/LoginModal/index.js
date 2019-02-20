@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import BaseModal from 'shared/components/BaseModal'
+import LoginForm from 'Auth/LoginForm'
 
 const LoginModal = props => {
   return (
@@ -13,7 +14,7 @@ const LoginModal = props => {
       show={props.show}
       title="Login"
     >
-      {props.children}
+      <LoginForm dispatch={props.dispatch} error={props.error} loading={props.loading} />
     </BaseModal>
   )
 }
@@ -22,6 +23,7 @@ LoginModal.propTypes = {
   centered: PropTypes.bool,
   className: PropTypes.string,
   dialogClassName: PropTypes.string,
+  dispatch: PropTypes.func,
   labelId: PropTypes.string,
   modalFooter: PropTypes.object,
   onHide: PropTypes.func,

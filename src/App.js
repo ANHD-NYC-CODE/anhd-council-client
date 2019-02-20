@@ -5,8 +5,9 @@ import configureStore from 'Store/configureStore'
 import { USER_STORAGE } from 'shared/constants/actions'
 import { ToastContainer } from 'react-toastify'
 import { Provider } from 'react-redux'
-import Auth2 from 'Auth2'
 
+import Auth from 'Auth'
+import ModalContainer from 'ModalContainer'
 import 'react-toastify/dist/ReactToastify.css'
 
 // Login user with browser refresh, if token fresh and available
@@ -29,10 +30,11 @@ export class App extends React.Component {
     return (
       <div className="App">
         <Provider store={store}>
-          <Auth2>
+          <Auth>
             <Router />
             <ToastContainer />
-          </Auth2>
+            <ModalContainer />
+          </Auth>
         </Provider>
       </div>
     )

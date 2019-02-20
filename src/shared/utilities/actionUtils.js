@@ -29,7 +29,6 @@ export const handleCatchError = (error, type, dispatch) => {
   } else if (error.response.status > 200) {
     errorMessage = findErrorKeyValue(error.response.status, error.response.data)
   }
-  console.log(error)
   dispatch(errorActions.handleFailure(type, error.response.status, errorMessage))
   toast.error(`Error: ${error.response.status} - ${errorMessage}`)
 }
