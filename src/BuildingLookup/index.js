@@ -2,16 +2,26 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Layout from 'Layout'
+import LeafletMap from 'LeafletMap'
+import SearchModule from '../SearchModule'
 
 class BuildingLookup extends React.Component {
   constructor(props) {
     super(props)
+
+    this.configureForRoute = this.configureForRoute.bind(this)
+  }
+
+  configureForRoute(props) {
+    console.log(props.path)
   }
 
   render() {
     return (
       <Layout>
         <h1>Building Lookup</h1>
+        <SearchModule />
+        <LeafletMap />
       </Layout>
     )
   }
@@ -23,7 +33,7 @@ BuildingLookup.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    store: state,
+    path: state.router.location.pathname,
   }
 }
 

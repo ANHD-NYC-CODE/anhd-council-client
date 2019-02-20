@@ -18,10 +18,11 @@ class Router extends React.Component {
       <ConnectedRouter history={history}>
         <Switch>
           <Route exact path="/" render={() => <Main />} />
+          <Route exact path="/buildings/" render={() => <BuildingLookup />} />
           <Route exact path="/buildings/:id" render={() => <BuildingLookup />} />
           <Route exact path="/districts" render={() => <DistrictMap />} />
           <Route exact path="/districts/:id" render={() => <DistrictMap />} />
-          <Route exact path="/advanced-search" render={() => <AdvancedSearch />} />
+          <Route exact path="/search" render={() => <AdvancedSearch />} />
           <Route exact path="/login" render={() => <Main showLoginModal={true} />} />
           <Route exact path="/logout" render={() => <Main />} />
           <Route render={() => <Page404 />} />

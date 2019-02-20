@@ -1,57 +1,36 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { Navbar, Nav } from 'react-bootstrap'
+import { Row, Nav, Col } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
 const Header = props => {
   return (
     <div className="header">
-      <Navbar bg="dark" variant="dark" expand="lg">
-        <Navbar.Brand href="#home">DAP Council</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="mr-auto">
-            <Nav.Link as="li">
-              <Link className="text-light" to="/">
-                Home
-              </Link>
-            </Nav.Link>
-            {props.user && (
+      <Row>
+        <Col sm={12} md={6}>
+          <Nav variant="tabs" defaultActiveKey="/buildings">
+            <Nav.Item>
               <Nav.Link as="li">
-                <Link className="text-light" to="/profile">
-                  {props.user.username}
-                </Link>
+                <Link to="buildings">Building Lookup</Link>
               </Nav.Link>
-            )}
-            {props.user ? (
+            </Nav.Item>
+            <Nav.Item>
               <Nav.Link as="li">
-                <Link className="text-light" to="/logout">
-                  Logout
-                </Link>
+                <Link to="districts">District Alerts</Link>
               </Nav.Link>
-            ) : (
+            </Nav.Item>
+            <Nav.Item>
               <Nav.Link as="li">
-                <Link className="text-light" to="/login">
-                  Login
-                </Link>
+                <Link to="search">Advanced Search</Link>
               </Nav.Link>
-            )}
+            </Nav.Item>
           </Nav>
-        </Navbar.Collapse>
-      </Navbar>
+        </Col>
+      </Row>
     </div>
   )
 }
 
-Header.propTypes = {
-  auth: PropTypes.object,
-}
+Header.propTypes = {}
 
-const mapStateToProps = state => {
-  return {
-    auth: state.auth,
-  }
-}
-
-export default connect(mapStateToProps)(Header)
+export default Header

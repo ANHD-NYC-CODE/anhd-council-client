@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Map, TileLayer } from 'react-leaflet'
-import SearchModule from '../SearchModule'
 
 import './style.scss'
 
@@ -10,7 +9,6 @@ export default class LeafletMap extends Component {
   render() {
     return (
       <div id="map">
-        <SearchModule />
         <Map
           doubleClickZoom={false}
           id="leaflet-map"

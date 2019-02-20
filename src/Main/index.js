@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import LeafletMap from 'LeafletMap'
 import Layout from 'Layout'
+import SearchModule from '../SearchModule'
 
 class Main extends React.Component {
   constructor(props) {
@@ -12,7 +12,7 @@ class Main extends React.Component {
   render() {
     return (
       <Layout>
-        <LeafletMap />
+        <SearchModule />
       </Layout>
     )
   }

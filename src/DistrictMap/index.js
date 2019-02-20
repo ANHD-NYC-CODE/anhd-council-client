@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Layout from 'Layout'
+import LeafletMap from 'LeafletMap'
 
 class DistrictMap extends React.Component {
   constructor(props) {
@@ -12,6 +13,7 @@ class DistrictMap extends React.Component {
     return (
       <Layout>
         <h1>District Map</h1>
+        <LeafletMap />
       </Layout>
     )
   }
