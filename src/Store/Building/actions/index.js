@@ -12,22 +12,8 @@ export const handleGetBuilding = response => ({
 })
 
 export const handleGetBuildingResource = (type, response) => ({
-  type: `HANDLE_${type}`,
-  data: response.data,
-})
-
-export const handleGetBuildingHpdComplaints = response => ({
-  type: c.HANDLE_GET_BUILDING_HPD_COMPLAINTS,
-  data: response.data,
-})
-
-export const handleGetBuildingHpdViolations = response => ({
-  type: c.HANDLE_GET_BUILDING_HPD_VIOLATIONS,
-  data: response.data,
-})
-
-export const handleGetBuildingDobViolations = response => ({
-  type: c.HANDLE_GET_BUILDING_DOB_VIOLATIONS,
+  type: c.HANDLE_GET_BUILDING_RESOURCE,
+  key: `${type.split('GET_BUILDING_')[1].toLowerCase()}`,
   data: response.data,
 })
 

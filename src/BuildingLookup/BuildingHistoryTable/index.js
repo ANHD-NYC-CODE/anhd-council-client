@@ -22,7 +22,7 @@ class BuildingHistoryTable extends React.Component {
 
   getRecords(props) {
     if (!(props.loading || props.error || props.records) || props.parentId !== this.props.parentId) {
-      props.dispatch(requestWithAuth(getBuildingResource(props.getRecordsConstant, props.parentId)))
+      props.dispatch(requestWithAuth(getBuildingResource(props.recordsConstant, props.parentId)))
     }
   }
 
@@ -54,7 +54,7 @@ class BuildingHistoryTable extends React.Component {
 }
 
 BuildingHistoryTable.propTypes = {
-  getRecordsConstant: PropTypes.string,
+  recordsConstant: PropTypes.string,
   error: PropTypes.object,
   loading: PropTypes.bool,
   parentId: PropTypes.string,
@@ -64,12 +64,12 @@ BuildingHistoryTable.propTypes = {
 }
 
 const mapStateToProps = (state, props) => {
-  const loadingSelector = createLoadingSelector([props.getRecordsConstant])
-  const errorSelector = createErrorSelector([props.getRecordsConstant])
+  const loadingSelector = createLoadingSelector([props.recordsConstant])
+  const errorSelector = createErrorSelector([props.recordsConstant])
   return {
     loading: loadingSelector(state),
     error: errorSelector(state),
-    records: state.building[props.recordsKey],
+    records: state.building[props.recordsConstant.split('GET_BUILDING_')[1].toLowerCase()],
   }
 }
 
