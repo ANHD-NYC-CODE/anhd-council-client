@@ -11,17 +11,17 @@ const Header = props => {
           <Nav variant="tabs" defaultActiveKey="/buildings">
             <Nav.Item>
               <Nav.Link as="li">
-                <Link to="buildings">Building Lookup</Link>
+                <Link to="/buildings">Building Lookup</Link>
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
               <Nav.Link as="li">
-                <Link to="districts">District Alerts</Link>
+                <Link to="/districts">District Alerts</Link>
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
               <Nav.Link as="li">
-                <Link to="search">Advanced Search</Link>
+                <Link to="/search">Advanced Search</Link>
               </Nav.Link>
             </Nav.Item>
           </Nav>
