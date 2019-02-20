@@ -18,6 +18,12 @@ export const buildingReducer = (state = Object.freeze(initialState), action = { 
         hpdViolations: action.data,
       }
     }
+    case c.HANDLE_GET_BUILDING_DOB_VIOLATIONS: {
+      return {
+        ...state,
+        dobViolations: action.data,
+      }
+    }
     default:
       return state
   }

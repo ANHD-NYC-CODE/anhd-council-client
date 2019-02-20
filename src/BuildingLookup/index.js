@@ -11,6 +11,7 @@ import Layout from 'Layout'
 import LeafletMap from 'LeafletMap'
 import BuildingSearchModule from '../BuildingSearchModule'
 import { Row, Col, Jumbotron } from 'react-bootstrap'
+import BuildingHistoryTable from 'BuildingLookup/BuildingHistoryTable'
 
 class BuildingLookup extends React.Component {
   constructor(props) {
@@ -18,13 +19,13 @@ class BuildingLookup extends React.Component {
 
     this.getBuildingById = this.getBuildingById.bind(this)
 
-    if (props.id && !props.getBuildingLoading) {
+    if (props.id && !props.loading) {
       this.getBuildingById(props)
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.id && !nextProps.getBuildingLoading) {
+    if (nextProps.id && !nextProps.loading) {
       this.getBuildingById(nextProps)
     }
   }
@@ -32,7 +33,6 @@ class BuildingLookup extends React.Component {
   getBuildingById(props) {
     if (!(props.building || {}).currentBuilding || props.building.currentBuilding.bin !== props.id) {
       props.dispatch(requestWithAuth(a.getBuilding(props.id)))
-      props.dispatch(requestWithAuth(a.getBuildingHpdViolations(props.id)))
     }
   }
 
@@ -49,26 +49,21 @@ class BuildingLookup extends React.Component {
           <Col sm={12} md={8}>
             <h2>Building Info</h2>
             <Jumbotron style={{ maxHeight: '500px' }}>
-              {this.props.getBuildingLoading ? (
-                <div>Loading</div>
-              ) : (
-                JSON.stringify(this.props.building.currentBuilding, null, 2)
-              )}
+              {this.props.loading ? <div>Loading</div> : JSON.stringify(this.props.building.currentBuilding, null, 2)}
             </Jumbotron>
             <h2>Building History</h2>
-            <Jumbotron
-              style={{ maxHeight: '500px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}
-            >
-              <h4>HPD Violations</h4>
-              {this.props.getHPDViolationsLoading || !this.props.hpdViolations ? (
-                <div>Loading</div>
-              ) : (
-                <div>
-                  <h5>Total: {this.props.hpdViolations.length}</h5>
-                  <div>{JSON.stringify(this.props.hpdViolations, null, 2)}</div>
-                </div>
-              )}
-            </Jumbotron>
+            <BuildingHistoryTable
+              getRecords={a.getBuildingHpdViolations}
+              parentId={this.props.id}
+              recordsKey="hpdViolations"
+              title="HPD Violations"
+            />
+            <BuildingHistoryTable
+              getRecords={a.getBuildingDobViolations}
+              parentId={this.props.id}
+              recordsKey="dobViolations"
+              title="DOB Violations"
+            />
           </Col>
         </Row>
       </Layout>
@@ -81,10 +76,8 @@ BuildingLookup.propTypes = {
   id: PropTypes.string,
 }
 
-const getBuildingLS = createLoadingSelector([c.GET_BUILDING])
-const getBuildingES = createErrorSelector([c.GET_BUILDING])
-const getHPDViolationLS = createLoadingSelector([c.GET_BUILDING_HPD_VIOLATIONS])
-const getHPDViolationES = createErrorSelector([c.GET_BUILDING_HPD_VIOLATIONS])
+const loadingSelector = createLoadingSelector([c.GET_BUILDING])
+const errorSelector = createErrorSelector([c.GET_BUILDING])
 
 const mapStateToProps = state => {
   const matchSelector = createMatchSelector({ path: '/buildings/:id' })
@@ -93,11 +86,8 @@ const mapStateToProps = state => {
   return {
     id: match ? match.params.id : null,
     building: state.building,
-    hpdViolations: state.building.hpdViolations,
-    getBuildingLoading: getBuildingLS(state),
-    getBuildingError: getBuildingES(state),
-    getHPDViolationLoading: getHPDViolationLS(state),
-    getHPDViolationError: getHPDViolationES(state),
+    loading: loadingSelector(state),
+    error: errorSelector(state),
   }
 }
 
