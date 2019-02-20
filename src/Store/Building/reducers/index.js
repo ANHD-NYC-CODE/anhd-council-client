@@ -1,4 +1,4 @@
-import * as actions from '../actions'
+import * as constants from '../constants'
 
 export const initialState = {
   building: undefined,
@@ -6,7 +6,7 @@ export const initialState = {
 
 export const buildingReducer = (state = Object.freeze(initialState), action = { data: [] }) => {
   switch (action.type) {
-    case actions.HANDLE_MODAL_ACTION: {
+    case constants.HANDLE_GET_BUILDING: {
       return {
         ...state,
         building: action.data,

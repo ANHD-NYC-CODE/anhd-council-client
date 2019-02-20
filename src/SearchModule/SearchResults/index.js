@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import SearchResultRow from 'SearchModule/SearchResultRow'
-import { convertToErrorMessage } from 'shared/utilities/copyUtils'
 
 import './style.scss'
 
@@ -9,7 +8,7 @@ const SearchResults = props => {
   return (
     <div className="search-results">
       {props.loading && <div className="text-info">loading</div>}
-      {props.error && <div className="text-danger">{convertToErrorMessage(props.error)}</div>}
+      {props.error && <div className="text-danger">{props.error.message}</div>}
       {props.results.map((result, index) => (
         <SearchResultRow selectBuildingResult={props.selectBuildingResult} key={`result-${index}`} result={result} />
       ))}

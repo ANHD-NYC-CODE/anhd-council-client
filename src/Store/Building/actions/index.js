@@ -12,11 +12,12 @@ export const handleGetBuilding = response => ({
 })
 
 export const getBuilding = id => (dispatch, access_token) => {
+  console.log(access_token)
   dispatch(loadingActions.handleRequest(GET_BUILDING))
   dispatch(errorActions.handleClearErrors(GET_BUILDING))
   return Axios.get(`${BUILDING_URL}${id}`, {
     params: { format: 'json' },
-    headers: { authorization: `Bearer ${access_token}` },
+    headers: access_token ? { authorization: `Bearer ${access_token}` } : null,
   })
     .then(response => {
       dispatch(loadingActions.handleCompletedRequest(GET_BUILDING))
