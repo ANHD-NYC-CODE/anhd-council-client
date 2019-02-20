@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import Layout from 'Layout'
 
 class BuildingLookup extends React.Component {
   constructor(props) {
@@ -9,9 +10,9 @@ class BuildingLookup extends React.Component {
 
   render() {
     return (
-      <div className="buildingLookup">
+      <Layout>
         <h1>Building Lookup</h1>
-      </div>
+      </Layout>
     )
   }
 }

@@ -1,9 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import Header from 'Navigation/Header'
 import LeafletMap from 'LeafletMap'
-import UserContext from 'Auth/UserContext'
+import Layout from 'Layout'
 
 class Main extends React.Component {
   constructor(props) {
@@ -12,12 +11,9 @@ class Main extends React.Component {
 
   render() {
     return (
-      <UserContext.Provider value={this.props.auth.user}>
-        <UserContext.Consumer>
-          {user => <Header openLoginModal={this.openLoginModal} user={user} />}
-        </UserContext.Consumer>
+      <Layout>
         <LeafletMap />
-      </UserContext.Provider>
+      </Layout>
     )
   }
 }

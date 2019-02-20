@@ -6,6 +6,8 @@ import { history } from 'Store/configureStore'
 import { ConnectedRouter } from 'connected-react-router'
 import { Route, Switch } from 'react-router'
 import Main from 'Main'
+import BuildingLookup from 'BuildingLookup'
+
 import Page404 from 'shared/components/Page404'
 
 class Router extends React.Component {
@@ -14,6 +16,7 @@ class Router extends React.Component {
       <ConnectedRouter history={history}>
         <Switch>
           <Route exact path="/" render={() => <Main />} />
+          <Route exact path="/buildings/:id" render={() => <BuildingLookup />} />
           <Route exact path="/login" render={() => <Main showLoginModal={true} />} />
           <Route exact path="/logout" render={() => <Main />} />
           <Route render={() => <Page404 />} />

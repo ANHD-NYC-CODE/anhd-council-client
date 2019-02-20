@@ -8,6 +8,7 @@ import { Provider } from 'react-redux'
 
 import Auth from 'Auth'
 import ModalContainer from 'ModalContainer'
+
 import 'react-toastify/dist/ReactToastify.css'
 
 // Login user with browser refresh, if token fresh and available

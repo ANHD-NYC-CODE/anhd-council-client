@@ -10,7 +10,7 @@ import { logoutUser } from 'Store/Auth/actions'
 
 import { handleClearErrors } from 'Store/Error/actions'
 import { openModal, closeModal } from 'Store/Modal/actions'
-
+import UserContext from 'Auth/UserContext'
 import LoginModal from 'Auth/LoginModal'
 
 class Auth extends React.Component {
@@ -85,7 +85,7 @@ class Auth extends React.Component {
   }
 
   render() {
-    return <div>{this.props.children}</div>
+    return <UserContext.Provider value={this.props.auth.user}>{this.props.children}</UserContext.Provider>
   }
 }
 
