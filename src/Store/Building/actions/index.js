@@ -11,6 +11,16 @@ export const handleGetBuilding = response => ({
   data: response.data,
 })
 
+export const handleGetBuildingResource = (type, response) => ({
+  type: `HANDLE_${type}`,
+  data: response.data,
+})
+
+export const handleGetBuildingHpdComplaints = response => ({
+  type: c.HANDLE_GET_BUILDING_HPD_COMPLAINTS,
+  data: response.data,
+})
+
 export const handleGetBuildingHpdViolations = response => ({
   type: c.HANDLE_GET_BUILDING_HPD_VIOLATIONS,
   data: response.data,
@@ -37,34 +47,19 @@ export const getBuilding = id => (dispatch, access_token) => {
     })
 }
 
-export const getBuildingHpdViolations = id => (dispatch, access_token) => {
-  dispatch(loadingActions.handleRequest(c.GET_BUILDING_HPD_VIOLATIONS))
-  dispatch(errorActions.handleClearErrors(c.GET_BUILDING_HPD_VIOLATIONS))
-  return Axios.get(`${u.BUILDING_URL}${id}${u.HPD_VIOLATIONS_URL}`, {
+export const getBuildingResource = (constant, id) => (dispatch, access_token) => {
+  dispatch(loadingActions.handleRequest(constant))
+  dispatch(errorActions.handleClearErrors(constant))
+  const resourceUrl = constant.split('GET_BUILDING_')[1] + '_URL'
+  return Axios.get(`${u.BUILDING_URL}${id}${u[resourceUrl]}`, {
     params: { format: 'json' },
-    headers: access_token ? { authorization: `Bearer ${access_token}` } : null,
+    headers: typeof access_token === 'string' ? { authorization: `Bearer ${access_token}` } : null,
   })
     .then(response => {
-      dispatch(loadingActions.handleCompletedRequest(c.GET_BUILDING_HPD_VIOLATIONS))
-      dispatch(handleGetBuildingHpdViolations(response))
+      dispatch(loadingActions.handleCompletedRequest(constant))
+      dispatch(handleGetBuildingResource(constant, response))
     })
     .catch(error => {
-      handleCatchError(error, c.GET_BUILDING_HPD_VIOLATIONS, dispatch)
-    })
-}
-
-export const getBuildingDobViolations = id => (dispatch, access_token) => {
-  dispatch(loadingActions.handleRequest(c.GET_BUILDING_DOB_VIOLATIONS))
-  dispatch(errorActions.handleClearErrors(c.GET_BUILDING_DOB_VIOLATIONS))
-  return Axios.get(`${u.BUILDING_URL}${id}${u.DOB_VIOLATIONS_URL}`, {
-    params: { format: 'json' },
-    headers: access_token ? { authorization: `Bearer ${access_token}` } : null,
-  })
-    .then(response => {
-      dispatch(loadingActions.handleCompletedRequest(c.GET_BUILDING_DOB_VIOLATIONS))
-      dispatch(handleGetBuildingDobViolations(response))
-    })
-    .catch(error => {
-      handleCatchError(error, c.GET_BUILDING_DOB_VIOLATIONS, dispatch)
+      handleCatchError(error, constant, dispatch)
     })
 }

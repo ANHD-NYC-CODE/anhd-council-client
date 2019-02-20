@@ -12,6 +12,12 @@ export const buildingReducer = (state = Object.freeze(initialState), action = { 
         currentBuilding: action.data,
       }
     }
+    case c.HANDLE_GET_BUILDING_HPD_COMPLAINTS: {
+      return {
+        ...state,
+        hpdComplaints: action.data,
+      }
+    }
     case c.HANDLE_GET_BUILDING_HPD_VIOLATIONS: {
       return {
         ...state,

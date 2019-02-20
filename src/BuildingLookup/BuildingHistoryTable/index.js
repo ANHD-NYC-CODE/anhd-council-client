@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { Jumbotron } from 'react-bootstrap'
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
-import * as c from 'Store/Building/constants'
+import { getBuildingResource } from 'Store/Building/actions'
 import { requestWithAuth } from 'shared/utilities/authUtils'
 
 class BuildingHistoryTable extends React.Component {
@@ -21,24 +21,32 @@ class BuildingHistoryTable extends React.Component {
   }
 
   getRecords(props) {
-    if (!(props.loading || props.records) || props.parentId !== this.props.parentId) {
-      props.dispatch(requestWithAuth(props.getRecords(props.parentId)))
+    if (!(props.loading || props.error || props.records) || props.parentId !== this.props.parentId) {
+      props.dispatch(requestWithAuth(getBuildingResource(props.getRecordsConstant, props.parentId)))
     }
   }
 
   render() {
+    const showTable = () => {
+      if (this.props.loading) {
+        return <div>Loading</div>
+      } else if (this.props.error) {
+        return <div className="text-error">{this.props.error.message}</div>
+      } else {
+        return (
+          <div>
+            <h5>Total: {(this.props.records || {}).length}</h5>
+            <div>{JSON.stringify(this.props.records, null, 2)}</div>
+          </div>
+        )
+      }
+    }
+
     return (
       <div className="building-history-table">
         <Jumbotron style={{ maxHeight: '500px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
           <h4>{this.props.title}</h4>
-          {this.props.loading || !this.props.records ? (
-            <div>Loading</div>
-          ) : (
-            <div>
-              <h5>Total: {this.props.records.length}</h5>
-              <div>{JSON.stringify(this.props.records, null, 2)}</div>
-            </div>
-          )}
+          {showTable()}
         </Jumbotron>
       </div>
     )
@@ -46,7 +54,7 @@ class BuildingHistoryTable extends React.Component {
 }
 
 BuildingHistoryTable.propTypes = {
-  getRecords: PropTypes.func,
+  getRecordsConstant: PropTypes.string,
   error: PropTypes.object,
   loading: PropTypes.bool,
   parentId: PropTypes.string,
@@ -55,10 +63,9 @@ BuildingHistoryTable.propTypes = {
   title: PropTypes.string,
 }
 
-const loadingSelector = createLoadingSelector([c.GET_BUILDING_HPD_VIOLATIONS])
-const errorSelector = createErrorSelector([c.GET_BUILDING_HPD_VIOLATIONS])
-
 const mapStateToProps = (state, props) => {
+  const loadingSelector = createLoadingSelector([props.getRecordsConstant])
+  const errorSelector = createErrorSelector([props.getRecordsConstant])
   return {
     loading: loadingSelector(state),
     error: errorSelector(state),

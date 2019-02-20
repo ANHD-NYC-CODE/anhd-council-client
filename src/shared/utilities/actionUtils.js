@@ -4,6 +4,7 @@ import { toast } from 'react-toastify'
 
 const ERROR_400_MESSAGE = 'Incorrect username or password.'
 const ERROR_401_MESSAGE = 'Please login for access.'
+const ERROR_404_MESSAGE = 'Not found.'
 const ERROR_500_MESSAGE = 'Oops, something went wrong.'
 
 const findErrorKeyValue = (status, data) => {
@@ -13,6 +14,8 @@ const findErrorKeyValue = (status, data) => {
       return ERROR_400_MESSAGE
     } else if (status === 401) {
       return ERROR_401_MESSAGE
+    } else if (status === 404) {
+      return ERROR_404_MESSAGE
     } else if (status === 500) {
       return ERROR_500_MESSAGE
     }
@@ -23,7 +26,6 @@ const findErrorKeyValue = (status, data) => {
 }
 
 export const handleCatchError = (error, type, dispatch) => {
-  dispatch(loadingActions.handleCompletedRequest(type))
   let errorMessage = ''
   if (!error.response) {
     errorMessage = ERROR_500_MESSAGE
@@ -34,4 +36,5 @@ export const handleCatchError = (error, type, dispatch) => {
   }
   dispatch(errorActions.handleFailure(type, error.response.status, errorMessage))
   toast.error(`Error: ${error.response.status} - ${errorMessage}`)
+  dispatch(loadingActions.handleCompletedRequest(type))
 }

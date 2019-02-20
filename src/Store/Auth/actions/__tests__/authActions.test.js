@@ -8,7 +8,7 @@ import * as errorActions from 'Store/Error/actions'
 import { push } from 'connected-react-router'
 import { USER_STORAGE } from 'shared/constants/actions'
 import { requestWithAuth } from 'shared/utilities/authUtils'
-import { GET_TOKEN, GET_USER_PROFILE, GET_TOKEN_REFRESH } from 'shared/constants/actions'
+import { GET_TOKEN, GET_TOKEN_REFRESH } from 'shared/constants/actions'
 
 import {
   loginUser,
@@ -57,8 +57,8 @@ describe('loginUser', () => {
       const expectedActions = [
         loadingActions.handleRequest(GET_TOKEN),
         errorActions.handleClearErrors(GET_TOKEN),
-        loadingActions.handleCompletedRequest(GET_TOKEN),
         errorActions.handleFailure(GET_TOKEN, errorResponse.status, 'Incorrect username or password.'),
+        loadingActions.handleCompletedRequest(GET_TOKEN),
       ]
 
       expect(store.getActions()).toEqual(expectedActions)
@@ -102,8 +102,8 @@ describe('refreshTokens', () => {
       const expectedActions = [
         loadingActions.handleRequest(GET_TOKEN_REFRESH),
         errorActions.handleClearErrors(GET_TOKEN_REFRESH),
-        loadingActions.handleCompletedRequest(GET_TOKEN_REFRESH),
         errorActions.handleFailure(GET_TOKEN_REFRESH, errorResponse.status, 'Please login for access.'),
+        loadingActions.handleCompletedRequest(GET_TOKEN_REFRESH),
         handleUserLogout(),
         push('/'),
       ]

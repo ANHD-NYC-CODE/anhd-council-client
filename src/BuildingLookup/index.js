@@ -53,13 +53,13 @@ class BuildingLookup extends React.Component {
             </Jumbotron>
             <h2>Building History</h2>
             <BuildingHistoryTable
-              getRecords={a.getBuildingHpdViolations}
+              getRecordsConstant={c.GET_BUILDING_HPD_VIOLATIONS}
               parentId={this.props.id}
               recordsKey="hpdViolations"
               title="HPD Violations"
             />
             <BuildingHistoryTable
-              getRecords={a.getBuildingDobViolations}
+              getRecordsConstant={c.GET_BUILDING_DOB_VIOLATIONS}
               parentId={this.props.id}
               recordsKey="dobViolations"
               title="DOB Violations"

@@ -45,8 +45,8 @@ describe('queryBuildingAddress', () => {
       const expectedActions = [
         loadingActions.handleRequest(GET_BUILDING_SEARCH),
         errorActions.handleClearErrors(GET_BUILDING_SEARCH),
-        loadingActions.handleCompletedRequest(GET_BUILDING_SEARCH),
         errorActions.handleFailure(GET_BUILDING_SEARCH, errorResponse.status, 'Incorrect username or password.'),
+        loadingActions.handleCompletedRequest(GET_BUILDING_SEARCH),
       ]
 
       expect(store.getActions()).toEqual(expectedActions)
