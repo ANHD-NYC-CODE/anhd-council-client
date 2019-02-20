@@ -13,7 +13,7 @@ import { handleClearErrors } from 'Store/Error/actions'
 
 import './style.scss'
 
-class SearchModule extends React.Component {
+class BuildingSearchModule extends React.Component {
   constructor(props) {
     super(props)
 
@@ -81,7 +81,7 @@ class SearchModule extends React.Component {
   }
 }
 
-SearchModule.propTypes = {
+BuildingSearchModule.propTypes = {
   setViewCoordinates: PropTypes.func,
   search: PropTypes.object,
   error: PropTypes.object,
@@ -99,4 +99,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(SearchModule)
+export default connect(mapStateToProps)(BuildingSearchModule)

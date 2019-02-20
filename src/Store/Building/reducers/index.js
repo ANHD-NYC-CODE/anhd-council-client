@@ -9,7 +9,7 @@ export const buildingReducer = (state = Object.freeze(initialState), action = { 
     case constants.HANDLE_GET_BUILDING: {
       return {
         ...state,
-        building: action.data,
+        currentBuilding: action.data,
       }
     }
     default:

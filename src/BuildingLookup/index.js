@@ -6,7 +6,7 @@ import { getBuilding } from 'Store/Building/actions'
 import { requestWithAuth } from 'shared/utilities/authUtils'
 import Layout from 'Layout'
 import LeafletMap from 'LeafletMap'
-import SearchModule from '../SearchModule'
+import BuildingSearchModule from '../BuildingSearchModule'
 import { Row, Col } from 'react-bootstrap'
 
 class BuildingLookup extends React.Component {
@@ -23,7 +23,7 @@ class BuildingLookup extends React.Component {
   }
 
   configureForRoute(props) {
-    if (props.id) {
+    if (props.id && (!props.building.currentBuilding || props.building.currentBuilding.bin !== props.id)) {
       props.dispatch(requestWithAuth(getBuilding(props.id)))
     }
   }
@@ -35,7 +35,7 @@ class BuildingLookup extends React.Component {
 
         <Row>
           <Col sm={12} md={4}>
-            <SearchModule />
+            <BuildingSearchModule />
             <LeafletMap />
           </Col>
           <Col sm={12} md={8}>

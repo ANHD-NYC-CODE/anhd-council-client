@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import SearchResultRow from 'SearchModule/SearchResultRow'
+import SearchResultRow from 'BuildingSearchModule/SearchResultRow'
 
 import './style.scss'
 
