@@ -46,7 +46,7 @@ describe('queryBuildingAddress', () => {
         loadingActions.handleRequest(GET_BUILDING_SEARCH),
         errorActions.handleClearErrors(GET_BUILDING_SEARCH),
         loadingActions.handleCompletedRequest(GET_BUILDING_SEARCH),
-        errorActions.handleFailure(GET_BUILDING_SEARCH, errorResponse.status, errorResponse.data.detail),
+        errorActions.handleFailure(GET_BUILDING_SEARCH, errorResponse.status, 'Incorrect username or password.'),
       ]
 
       expect(store.getActions()).toEqual(expectedActions)

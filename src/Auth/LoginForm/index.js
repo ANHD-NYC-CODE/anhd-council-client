@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Form, Button } from 'react-bootstrap'
 import { loginUser } from 'Store/Auth/actions'
-import { convertToErrorMessage } from 'shared/utilities/copyUtils'
 import { Formik } from 'formik'
 import * as yup from 'yup'
 
@@ -40,7 +39,7 @@ class LoginForm extends React.Component {
           <Form className="auth-login-form" validated={this.state.validated} onSubmit={e => this.handleSubmit(e)}>
             {this.props.error && (
               <Form.Text className="text-danger" type="invalid">
-                {convertToErrorMessage(this.props.error)}
+                {this.props.error.message}
               </Form.Text>
             )}
             <Form.Group controlId="loginUsername">

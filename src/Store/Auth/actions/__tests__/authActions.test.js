@@ -5,10 +5,19 @@ import { TOKEN_URL, TOKEN_REFRESH_URL } from 'shared/constants/urls'
 import MockAdapter from 'axios-mock-adapter'
 import * as loadingActions from 'Store/Loading/actions'
 import * as errorActions from 'Store/Error/actions'
-
+import { push } from 'connected-react-router'
+import { USER_STORAGE } from 'shared/constants/actions'
+import { requestWithAuth } from 'shared/utilities/authUtils'
 import { GET_TOKEN, GET_USER_PROFILE, GET_TOKEN_REFRESH } from 'shared/constants/actions'
 
-import { loginUser, handleSyncStorage, handleUserLogout, logoutUser, refreshTokens } from 'Store/Auth/actions'
+import {
+  loginUser,
+  getUserProfile,
+  handleSyncStorage,
+  handleUserLogout,
+  logoutUser,
+  refreshTokens,
+} from 'Store/Auth/actions'
 const middlewares = [thunk]
 const mockStore = configureStore(middlewares)
 
@@ -26,16 +35,15 @@ describe('loginUser', () => {
     mock.onPost(TOKEN_URL).reply(200, data)
 
     await store.dispatch(loginUser(formData)).then(() => {
-      const expectedActions = [
+      const expectedActions = JSON.stringify([
         loadingActions.handleRequest(GET_TOKEN),
         errorActions.handleClearErrors(GET_TOKEN),
         loadingActions.handleCompletedRequest(GET_TOKEN),
-        handleSyncStorage(null),
-        loadingActions.handleRequest(GET_USER_PROFILE),
-        errorActions.handleClearErrors(GET_USER_PROFILE),
-      ]
+        handleSyncStorage(JSON.parse(localStorage.getItem(USER_STORAGE))),
+        requestWithAuth(getUserProfile()),
+      ])
 
-      expect(store.getActions()).toEqual(expectedActions)
+      expect(JSON.stringify(store.getActions())).toEqual(expectedActions)
     })
   })
 
@@ -50,7 +58,7 @@ describe('loginUser', () => {
         loadingActions.handleRequest(GET_TOKEN),
         errorActions.handleClearErrors(GET_TOKEN),
         loadingActions.handleCompletedRequest(GET_TOKEN),
-        errorActions.handleFailure(GET_TOKEN, errorResponse.status, errorResponse.data.non_field_errors[0]),
+        errorActions.handleFailure(GET_TOKEN, errorResponse.status, 'Incorrect username or password.'),
       ]
 
       expect(store.getActions()).toEqual(expectedActions)
@@ -61,23 +69,23 @@ describe('loginUser', () => {
 describe('logoutUser', () => {
   it('on SUCCESS - dispatches HANDLE_USER_LOGOUT', async () => {
     store.dispatch(logoutUser())
-    const expectedActions = [handleUserLogout()]
+    const expectedActions = [handleUserLogout(), push('/')]
     expect(store.getActions()).toEqual(expectedActions)
   })
 })
 
 describe('refreshTokens', () => {
-  it('on SUCCESS - dispatches GET_TOKEN_REFRESH_PENDING, GET_TOKEN_REFRESH_SUCCESS, GET_TOKEN_REFRESH_CLEAR_ERRORS HANDLE_USER_LOGIN_SUCCESS', async () => {
-    const tokens = { refresh_token: 'abcd' }
+  it('on SUCCESS - dispatches GET_TOKEN_REFRESH_PENDING, GET_TOKEN_REFRESH_SUCCESS, GET_TOKEN_REFRESH_CLEAR_ERRORS HANDLE_SYNC_STORAGE', async () => {
+    const token = { refresh_token: 'abcd' }
     const data = { access: '4321', refresh: 'zyxw' }
     mock.onPost(TOKEN_REFRESH_URL).reply(200, data)
 
-    await store.dispatch(refreshTokens(tokens)).then(() => {
+    await store.dispatch(refreshTokens(token)).then(() => {
       const expectedActions = [
         loadingActions.handleRequest(GET_TOKEN_REFRESH),
         errorActions.handleClearErrors(GET_TOKEN_REFRESH),
         loadingActions.handleCompletedRequest(GET_TOKEN_REFRESH),
-        handleSyncStorage(null),
+        handleSyncStorage(JSON.parse(localStorage.getItem(USER_STORAGE))),
       ]
 
       expect(store.getActions()).toEqual(expectedActions)
@@ -95,8 +103,9 @@ describe('refreshTokens', () => {
         loadingActions.handleRequest(GET_TOKEN_REFRESH),
         errorActions.handleClearErrors(GET_TOKEN_REFRESH),
         loadingActions.handleCompletedRequest(GET_TOKEN_REFRESH),
-        errorActions.handleFailure(GET_TOKEN_REFRESH, errorResponse.status, errorResponse.data.non_field_errors[0]),
+        errorActions.handleFailure(GET_TOKEN_REFRESH, errorResponse.status, 'Please login for access.'),
         handleUserLogout(),
+        push('/'),
       ]
 
       expect(store.getActions()).toEqual(expectedActions)

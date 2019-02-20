@@ -52,7 +52,7 @@ class Auth extends React.Component {
         props.dispatch(push('/'))
       }
     } else if (props.path === '/login') {
-      this.openLoginModal()
+      this.openLoginModal(props)
     }
   }
 
@@ -73,8 +73,15 @@ class Auth extends React.Component {
     }
   }
 
-  openLoginModal() {
-    this.props.dispatch(openModal(LoginModal, { onHide: this.hideModal, dispatch: this.props.dispatch }))
+  openLoginModal(props) {
+    props.dispatch(
+      openModal(LoginModal, {
+        onHide: this.hideModal,
+        dispatch: props.dispatch,
+        error: props.loginError,
+        loading: props.loginLoading,
+      })
+    )
   }
 
   render() {

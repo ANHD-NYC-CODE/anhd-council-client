@@ -2,13 +2,16 @@ import * as loadingActions from 'Store/Loading/actions'
 import * as errorActions from 'Store/Error/actions'
 import { toast } from 'react-toastify'
 
+const ERROR_400_MESSAGE = 'Incorrect username or password.'
 const ERROR_401_MESSAGE = 'Please login for access.'
 const ERROR_500_MESSAGE = 'Oops, something went wrong.'
 
 const findErrorKeyValue = (status, data) => {
   if (!data) return ERROR_500_MESSAGE
   try {
-    if (status === 401) {
+    if (status === 400) {
+      return ERROR_400_MESSAGE
+    } else if (status === 401) {
       return ERROR_401_MESSAGE
     } else if (status === 500) {
       return ERROR_500_MESSAGE

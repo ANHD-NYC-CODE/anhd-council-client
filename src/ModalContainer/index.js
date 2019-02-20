@@ -9,10 +9,7 @@ class ModalContainer extends React.Component {
 
   render() {
     return (
-      <div className="modal-container">
-        <h1>modal</h1>
-        {this.props.render ? this.props.render(this.props.modal.modalProps) : null}
-      </div>
+      <div className="modal-container">{this.props.render ? this.props.render(this.props.modal.modalProps) : null}</div>
     )
   }
 }
@@ -25,7 +22,7 @@ ModalContainer.propTypes = {
 const mapStateToProps = state => {
   return {
     modal: state.modal,
-    render: state.modal.type ? modalProps => state.modal.type(modalProps) : '',
+    render: state.modal.type ? modalProps => state.modal.type(modalProps) : null,
   }
 }
 
