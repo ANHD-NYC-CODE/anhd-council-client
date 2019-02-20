@@ -22,7 +22,7 @@ export const getBuilding = id => (dispatch, access_token) => {
   dispatch(errorActions.handleClearErrors(c.GET_BUILDING))
   return Axios.get(`${u.BUILDING_URL}${id}`, {
     params: { format: 'json' },
-    headers: access_token ? { authorization: `Bearer ${access_token}` } : null,
+    headers: typeof access_token === 'string' ? { authorization: `Bearer ${access_token}` } : null,
   })
     .then(response => {
       dispatch(loadingActions.handleCompletedRequest(c.GET_BUILDING))

@@ -6,6 +6,7 @@ import { errorReducer } from 'Store/Error/reducers'
 import { loadingReducer } from 'Store/Loading/reducers'
 import { modalReducer } from 'Store/Modal/reducers'
 import { authReducer } from 'Store/Auth/reducers'
+import { councilReducer } from 'Store/Council/reducers'
 import { buildingReducer } from 'Store/Building/reducers'
 
 export default history =>
@@ -16,5 +17,6 @@ export default history =>
     modal: modalReducer,
     auth: authReducer,
     search: searchReducer,
+    council: councilReducer,
     building: buildingReducer,
   })

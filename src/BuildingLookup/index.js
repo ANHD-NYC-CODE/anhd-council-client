@@ -17,20 +17,20 @@ class BuildingLookup extends React.Component {
   constructor(props) {
     super(props)
 
-    this.getBuildingById = this.getBuildingById.bind(this)
+    this.fetchBuildingById = this.fetchBuildingById.bind(this)
 
     if (props.id && !props.loading) {
-      this.getBuildingById(props)
+      this.fetchBuildingById(props)
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.id && !nextProps.loading) {
-      this.getBuildingById(nextProps)
+      this.fetchBuildingById(nextProps)
     }
   }
 
-  getBuildingById(props) {
+  fetchBuildingById(props) {
     if (!(props.building || {}).currentBuilding || props.building.currentBuilding.bin !== props.id) {
       props.dispatch(requestWithAuth(a.getBuilding(props.id)))
     }
