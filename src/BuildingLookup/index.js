@@ -3,10 +3,11 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { createMatchSelector } from 'connected-react-router'
 import * as a from 'Store/Building/actions'
+import * as c from 'Store/Building/constants'
 import { requestWithAuth } from 'shared/utilities/authUtils'
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
-import * as c from 'Store/Building/constants'
+import { resourceRouteChanged } from 'shared/utilities/routeUtils'
 import Layout from 'Layout'
 import LeafletMap from 'LeafletMap'
 import BuildingSearchModule from '../BuildingSearchModule'
@@ -31,7 +32,7 @@ class BuildingLookup extends React.Component {
   }
 
   fetchBuildingById(props) {
-    if (!(props.building || {}).currentBuilding || props.building.currentBuilding.bin !== props.id) {
+    if (!(props.building || {}).currentBuilding || resourceRouteChanged(this.props, props)) {
       props.dispatch(requestWithAuth(a.getBuilding(props.id)))
     }
   }
@@ -54,12 +55,12 @@ class BuildingLookup extends React.Component {
             <h2>Building History</h2>
             <BuildingHistoryTable
               recordsConstant={c.buildingResourceConstant('HPD_VIOLATIONS')}
-              parentId={this.props.id}
+              id={this.props.id}
               title="HPD Violations"
             />
             <BuildingHistoryTable
               recordsConstant={c.buildingResourceConstant('DOB_VIOLATIONS')}
-              parentId={this.props.id}
+              id={this.props.id}
               title="DOB Violations"
             />
           </Col>

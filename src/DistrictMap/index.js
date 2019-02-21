@@ -1,9 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { getCouncils } from 'Store/Council/actions'
+import * as a from 'Store/Council/actions'
+import * as u from 'shared/constants/urls'
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
+import { createMatchSelector } from 'connected-react-router'
+import { resourceRouteChanged } from 'shared/utilities/routeUtils'
+import { push } from 'connected-react-router'
+
 import * as c from 'Store/Council/constants'
 
 import Layout from 'Layout'
@@ -15,20 +20,39 @@ class DistrictMap extends React.Component {
     super(props)
 
     this.fetchCouncils = this.fetchCouncils.bind(this)
+    this.fetchCouncilById = this.fetchCouncilById.bind(this)
+    this.handleDistrictChange = this.handleDistrictChange.bind(this)
 
     this.fetchCouncils(props)
+    if (props.id) {
+      this.fetchCouncilById(props)
+    }
   }
 
   componentWillReceiveProps(nextProps) {
     if (!nextProps.loading) {
       this.fetchCouncils(nextProps)
     }
+
+    if (nextProps.id) {
+      this.fetchCouncilById(nextProps)
+    }
   }
 
   fetchCouncils(props) {
     if (!((props.districts || {}).length || props.error)) {
-      this.props.dispatch(getCouncils())
+      this.props.dispatch(a.getCouncils())
     }
+  }
+
+  fetchCouncilById(props) {
+    if (!(props.selectedDistrict || props.error) || resourceRouteChanged(this.props, props)) {
+      this.props.dispatch(a.getCouncil(props.id))
+    }
+  }
+
+  handleDistrictChange(district) {
+    this.props.dispatch(push(`/districts/${district.value}`))
   }
 
   render() {
@@ -43,8 +67,11 @@ class DistrictMap extends React.Component {
             <LeafletMap />
             <Form.Group>
               <Form.Label>Select your district</Form.Label>
-              <Select options={options} />
+              <Select options={options} onChange={this.handleDistrictChange} />
             </Form.Group>
+          </Col>
+          <Col sm={12} md={8}>
+            {JSON.stringify(this.props.selectedDistrict, null, 2)}
           </Col>
         </Row>
       </Layout>
@@ -60,10 +87,16 @@ const loadingSelector = createLoadingSelector([c.GET_COUNCILS])
 const errorSelector = createErrorSelector([c.GET_COUNCILS])
 
 const mapStateToProps = state => {
+  const matchSelector = createMatchSelector({ path: '/districts/:id' })
+  const match = matchSelector(state)
+
   return {
     districts: state.council.districts,
+    selectedDistrict: state.council.selectedDistrict,
+    selectedDistrictHousing: state.council.selectedDistrictHousing,
     loading: loadingSelector(state),
     error: errorSelector(state),
+    id: match ? match.params.id : null,
   }
 }
 

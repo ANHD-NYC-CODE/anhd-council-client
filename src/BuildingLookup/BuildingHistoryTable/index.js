@@ -6,6 +6,7 @@ import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
 import { getBuildingResource } from 'Store/Building/actions'
 import { requestWithAuth } from 'shared/utilities/authUtils'
+import { resourceRouteChanged } from 'shared/utilities/routeUtils'
 
 class BuildingHistoryTable extends React.Component {
   constructor(props) {
@@ -21,8 +22,8 @@ class BuildingHistoryTable extends React.Component {
   }
 
   getRecords(props) {
-    if (!(props.loading || props.error || props.records) || props.parentId !== this.props.parentId) {
-      props.dispatch(requestWithAuth(getBuildingResource(props.recordsConstant, props.parentId)))
+    if (!(props.loading || props.error || props.records) || resourceRouteChanged(this.props, props)) {
+      props.dispatch(requestWithAuth(getBuildingResource(props.recordsConstant, props.id)))
     }
   }
 
@@ -57,7 +58,7 @@ BuildingHistoryTable.propTypes = {
   recordsConstant: PropTypes.string,
   error: PropTypes.object,
   loading: PropTypes.bool,
-  parentId: PropTypes.string,
+  id: PropTypes.string,
   recordsKey: PropTypes.string,
   records: PropTypes.array,
   title: PropTypes.string,
