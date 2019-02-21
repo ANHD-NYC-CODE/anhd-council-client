@@ -42,11 +42,11 @@ class BuildingLookup extends React.Component {
         <h1>Building Lookup</h1>
 
         <Row>
-          <Col sm={12} md={4}>
+          <Col sm={12} md={5}>
             <BuildingSearchModule />
             <LeafletMap />
           </Col>
-          <Col sm={12} md={8}>
+          <Col sm={12} md={7}>
             <h2>Building Info</h2>
             <Jumbotron style={{ maxHeight: '500px' }}>
               {this.props.loading ? <div>Loading</div> : JSON.stringify(this.props.building.currentBuilding, null, 2)}
