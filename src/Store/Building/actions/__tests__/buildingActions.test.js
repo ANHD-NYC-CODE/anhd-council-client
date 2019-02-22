@@ -19,7 +19,7 @@ beforeEach(() => {
   store.clearActions()
 })
 
-describe('queryBuildingAddress', () => {
+describe('getBuilding', () => {
   it('on SUCCESS - dispatches GET_BUILDING_PENDING, GET_BUILDING_SUCCESS, HANDLE_READ_RESPONSE', async () => {
     const data = { bin: '1234' }
     const id = '1'

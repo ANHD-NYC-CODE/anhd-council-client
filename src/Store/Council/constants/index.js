@@ -11,8 +11,9 @@ export const HANDLE_GET_COUNCIL_PROPERTY_SUMMARY = 'HANDLE_GET_COUNCIL_PROPERTY_
 export const GET_COUNCIL_PROPERTY_SUMMARY = 'GET_COUNCIL_PROPERTY_SUMMARY'
 
 export const constructSummaryConstant = (constant, params) => {
-  const { type, value, comparison, sinceDate, endDate } = params
-  return [constant, type, comparison, value, sinceDate, endDate]
+  const { type, value, comparison, startDate, endDate } = params
+
+  return [constant, type, comparison, value, startDate, endDate]
     .filter(el => el)
     .map(el => el.toUpperCase())
     .join('_')

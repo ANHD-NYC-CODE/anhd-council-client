@@ -7,6 +7,11 @@ const ERROR_401_MESSAGE = 'Please login for access.'
 const ERROR_404_MESSAGE = 'Not found.'
 const ERROR_500_MESSAGE = 'Oops, something went wrong.'
 
+export const handleActionDispatch = (dispatch, constant) => {
+  dispatch(loadingActions.handleRequest(constant))
+  dispatch(errorActions.handleClearErrors(constant))
+}
+
 const findErrorKeyValue = (status, data) => {
   if (!data) return ERROR_500_MESSAGE
   try {
@@ -53,7 +58,6 @@ export const constructSimplePropertyParams = params => {
   // { type: 'hpdviolations', comparison: 'gte', value: 10, startDate: '2017-01-01', endDate: '2018-01-01'}
   // And converts it to url param object:
   // { hpdviolations__gte: 10, hpdviolations__start: '2017-01-01', hpdviolations__end: '2018-01-01'}
-
   return {
     [`${params.type}__${params.comparison}`]: params.value,
     [`${params.type}__start`]: params.startDate,

@@ -1,15 +1,12 @@
 import { constructAxiosGet } from 'shared/utilities/Axios'
 import { SEARCH_URL } from 'shared/constants/urls'
 import * as loadingActions from 'Store/Loading/actions'
-import * as errorActions from 'Store/Error/actions'
-
 import { GET_BUILDING_SEARCH } from 'shared/constants/actions'
 export const HANDLE_READ_SEARCH_RESPONSE = 'HANDLE_READ_SEARCH_RESPONSE'
 export const CLEAR_SEARCH = 'CLEAR_SEARCH'
 export const SET_SEARCH_TIMEOUT = 'SET_SEARCH_TIMEOUT'
-import { handleCatchError } from 'shared/utilities/actionUtils'
 
-export const handleReadSearchResponse = response => {
+export const handleReadSearchResponse = (response, key = null) => {
   let results = response.data
   if (!results.length) {
     results = [{ bin: undefined, housenumber: '', street: 'No results', borough: '' }]
@@ -30,14 +27,12 @@ export const setSearchTimeout = event => ({
 })
 
 export const queryBuildingAddress = value => (dispatch, access_token) => {
-  dispatch(loadingActions.handleRequest(GET_BUILDING_SEARCH))
-  dispatch(errorActions.handleClearErrors(GET_BUILDING_SEARCH))
-  return constructAxiosGet(SEARCH_URL, { fts: value }, access_token)
-    .then(response => {
-      dispatch(loadingActions.handleCompletedRequest(GET_BUILDING_SEARCH))
-      dispatch(handleReadSearchResponse(response))
-    })
-    .catch(error => {
-      handleCatchError(error, GET_BUILDING_SEARCH, dispatch)
-    })
+  return constructAxiosGet(
+    SEARCH_URL,
+    { fts: value },
+    access_token,
+    dispatch,
+    GET_BUILDING_SEARCH,
+    handleReadSearchResponse
+  )
 }

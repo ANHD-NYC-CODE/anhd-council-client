@@ -4,42 +4,31 @@ import * as loadingActions from 'Store/Loading/actions'
 import * as errorActions from 'Store/Error/actions'
 
 import * as c from '../constants'
-import { handleCatchError } from 'shared/utilities/actionUtils'
+import { handleCatchError, handleActionDispatch } from 'shared/utilities/actionUtils'
 
-export const handleGetBuilding = response => ({
+export const handleGetBuilding = (response, key = null) => ({
   type: c.HANDLE_GET_BUILDING,
   data: response.data,
 })
 
-export const handleGetBuildingResource = (type, response) => ({
+export const handleGetBuildingResource = (response, key = null) => ({
   type: c.HANDLE_GET_BUILDING_RESOURCE,
-  key: type,
+  key: key,
   data: response.data,
 })
 
 export const getBuilding = id => (dispatch, access_token) => {
-  dispatch(loadingActions.handleRequest(c.GET_BUILDING))
-  dispatch(errorActions.handleClearErrors(c.GET_BUILDING))
-  return constructAxiosGet(`${u.BUILDING_URL}${id}`, null, access_token)
-    .then(response => {
-      dispatch(loadingActions.handleCompletedRequest(c.GET_BUILDING))
-      dispatch(handleGetBuilding(response))
-    })
-    .catch(error => {
-      handleCatchError(error, c.GET_BUILDING, dispatch)
-    })
+  return constructAxiosGet(`${u.BUILDING_URL}${id}`, null, access_token, dispatch, c.GET_BUILDING, handleGetBuilding)
 }
 
 export const getBuildingResource = (constant, id) => (dispatch, access_token) => {
-  dispatch(loadingActions.handleRequest(constant))
-  dispatch(errorActions.handleClearErrors(constant))
   const resourceUrl = constant.split('GET_BUILDING_')[1] + '_URL'
-  return constructAxiosGet(`${u.BUILDING_URL}${id}${u[resourceUrl]}`, null, access_token)
-    .then(response => {
-      dispatch(loadingActions.handleCompletedRequest(constant))
-      dispatch(handleGetBuildingResource(constant, response))
-    })
-    .catch(error => {
-      handleCatchError(error, constant, dispatch)
-    })
+  return constructAxiosGet(
+    `${u.BUILDING_URL}${id}${u[resourceUrl]}`,
+    null,
+    access_token,
+    dispatch,
+    constant,
+    handleGetBuildingResource
+  )
 }

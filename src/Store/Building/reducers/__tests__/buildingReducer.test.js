@@ -1,14 +1,13 @@
 import * as r from '../'
 import * as a from '../../actions'
-import * as c from '../../constants'
 
-describe('Search reducer', () => {
+describe('Building reducer', () => {
   it('should return the initial state', () => {
     expect(r.buildingReducer(undefined, {})).toEqual(r.initialState)
   })
 
   describe('HANDLE_GET_BUILDING', () => {
-    const response = { bin: 1 }
+    const response = { id: 1 }
     it('fetches the resource', () => {
       expect(r.buildingReducer(undefined, a.handleGetBuilding({ data: response }))).toEqual({
         ...r.initialState,
@@ -23,13 +22,16 @@ describe('Search reducer', () => {
       expect(
         r.buildingReducer(
           undefined,
-          a.handleGetBuildingResource(c.buildingResourceConstant('HPD_VIOLATIONS'), {
-            data: response,
-          })
+          a.handleGetBuildingResource(
+            {
+              data: response,
+            },
+            'GET_BUILDING_RESOURCE_HPD_VIOLATIONS'
+          )
         )
       ).toEqual({
         ...r.initialState,
-        hpd_violations: response,
+        GET_BUILDING_RESOURCE_HPD_VIOLATIONS: response,
       })
     })
   })
