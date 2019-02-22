@@ -1,20 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import MapMarkerIcon from '../../shared/styles/icons/MapMarkerIcon'
-import { Link } from 'react-router-dom'
+import { LinkContainer } from 'react-router-bootstrap'
 
 import './style.scss'
 
 const SearchResultRow = props => {
   return (
-    <div className="search-result-row">
-      <i>
+    <tr className="search-result-row">
+      <td>
         <MapMarkerIcon />
-      </i>
-      <Link to={`/buildings/${props.result.bin}`}>{`${props.result.housenumber} ${props.result.street}, ${
-        props.result.borough
-      }`}</Link>
-    </div>
+      </td>
+      <LinkContainer to={`/buildings/${props.result.bin}`}>
+        <td>{`${props.result.housenumber} ${props.result.street}, ${props.result.borough}`}</td>
+      </LinkContainer>
+    </tr>
   )
 }
 

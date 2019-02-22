@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import UserContext from 'Auth/UserContext'
 import NavigationBar from 'Layout/NavigationBar'
 import Header from 'Layout/Header'
+import { Container } from 'react-bootstrap'
 
 const Layout = props => {
   return (
@@ -15,7 +16,7 @@ const Layout = props => {
           </div>
         )}
       </UserContext.Consumer>
-      {props.children}
+      <Container>{props.children}</Container>
     </div>
   )
 }

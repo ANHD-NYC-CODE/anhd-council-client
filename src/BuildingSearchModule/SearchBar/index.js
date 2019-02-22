@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { setSearchTimeout, queryBuildingAddress } from 'Store/Search/actions'
 import { requestWithAuth } from 'shared/utilities/authUtils'
-
+import { Form } from 'react-bootstrap'
 import './style.scss'
 
 export default class SearchBar extends React.Component {
@@ -46,15 +46,17 @@ export default class SearchBar extends React.Component {
   render() {
     return (
       <div className="search-bar">
-        <form autoComplete="off" className="search-form" onSubmit={this.onFormSubmit}>
-          <input
-            tabIndex={0}
-            placeholder="Type an address to search"
-            type="text"
+        <Form autoComplete="off" className="search-form" onSubmit={this.onFormSubmit}>
+          <Form.Label>Search an address</Form.Label>
+          <Form.Control
+            size="lg"
             onChange={this.onInputChange}
+            placeholder="Type an address to search"
+            tabIndex={0}
+            type="text"
             value={this.props.searchValue}
           />
-        </form>
+        </Form>
       </div>
     )
   }

@@ -3,16 +3,16 @@ import PropTypes from 'prop-types'
 import SearchResultRow from 'BuildingSearchModule/SearchResultRow'
 
 import './style.scss'
-
+import { Table } from 'react-bootstrap'
 const SearchResults = props => {
   return (
-    <div className="search-results">
+    <Table className="search-results" size="sm" bordered hover stiped>
       {props.loading && <div className="text-info">loading</div>}
       {props.error && <div className="text-danger">{props.error.message}</div>}
       {props.results.map((result, index) => (
         <SearchResultRow selectBuildingResult={props.selectBuildingResult} key={`result-${index}`} result={result} />
       ))}
-    </div>
+    </Table>
   )
 }
 
