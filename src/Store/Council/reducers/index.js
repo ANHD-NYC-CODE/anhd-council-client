@@ -4,7 +4,7 @@ export const initialState = {
   districts: undefined,
   district: undefined,
   districtHousing: undefined,
-  districtPropertySummaries: undefined,
+  districtPropertySummaries: {},
 }
 
 export const councilReducer = (state = Object.freeze(initialState), action = { data: [] }) => {
@@ -32,7 +32,7 @@ export const councilReducer = (state = Object.freeze(initialState), action = { d
         ...state,
         districtPropertySummaries: {
           ...state.districtPropertySummaries,
-          ...action.data,
+          [action.key]: action.data,
         },
       }
     }

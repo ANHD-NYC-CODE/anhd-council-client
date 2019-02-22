@@ -2,18 +2,23 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import * as a from 'Store/Council/actions'
+import * as c from 'Store/Council/constants'
+
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
 import { createMatchSelector } from 'connected-react-router'
 import { resourceRouteChanged } from 'shared/utilities/routeUtils'
+import { getCouncilPropertySummary } from 'Store/Council/actions'
+import { constructActionKey } from 'shared/utilities/actionUtils'
 import { push } from 'connected-react-router'
-
-import * as c from 'Store/Council/constants'
 
 import Layout from 'Layout'
 import LeafletMap from 'LeafletMap'
 import Select from 'react-select'
 import { Row, Col, Form } from 'react-bootstrap'
+import RecordsFetchModule from 'shared/components/RecordsFetchModule'
+import BuildingHistoryTable from 'BuildingLookup/BuildingHistoryTable'
+
 class DistrictMap extends React.Component {
   constructor(props) {
     super(props)
@@ -70,7 +75,22 @@ class DistrictMap extends React.Component {
             </Form.Group>
           </Col>
           <Col sm={12} md={8}>
-            {JSON.stringify(this.props.district, null, 2)}
+            <div style={{ maxHeight: '400px', overflow: 'scroll' }}>{JSON.stringify(this.props.district, null, 2)}</div>
+
+            <RecordsFetchModule
+              id={this.props.id}
+              recordsConstant="GET_COUNCIL_PROPERTY_SUMMARY"
+              recordsFetch={getCouncilPropertySummary}
+              reducerPath={`council.districtPropertySummaries.${constructActionKey(c.GET_COUNCIL_PROPERTY_SUMMARY, {
+                type: 'hpdviolations',
+                comparison: 'gte',
+                value: '10',
+                startDate: '2017-01-31',
+              })}`}
+              render={(title, records) => <BuildingHistoryTable title={title} records={records} />}
+              title="Properties with +10 HPD Violations Last Month"
+              urlParams={{ type: 'hpdviolations', comparison: 'gte', value: '10', startDate: '2019-01-01' }}
+            />
           </Col>
         </Row>
       </Layout>

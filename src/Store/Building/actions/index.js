@@ -13,7 +13,7 @@ export const handleGetBuilding = response => ({
 
 export const handleGetBuildingResource = (type, response) => ({
   type: c.HANDLE_GET_BUILDING_RESOURCE,
-  key: `${type.split('GET_BUILDING_')[1].toLowerCase()}`,
+  key: type,
   data: response.data,
 })
 

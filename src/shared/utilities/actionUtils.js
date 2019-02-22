@@ -38,3 +38,25 @@ export const handleCatchError = (error, type, dispatch) => {
   toast.error(`Error: ${error.response.status} - ${errorMessage}`)
   dispatch(loadingActions.handleCompletedRequest(type))
 }
+
+export const constructActionKey = (constant, params) => {
+  if (!params) return constant
+  const { type, value, comparison, sinceDate, endDate } = params
+  return [constant, type, comparison, value, sinceDate, endDate]
+    .filter(el => el)
+    .map(el => el.toUpperCase())
+    .join('_')
+}
+
+export const constructSimplePropertyParams = params => {
+  // Takes an objects like:
+  // { type: 'hpdviolations', comparison: 'gte', value: 10, startDate: '2017-01-01', endDate: '2018-01-01'}
+  // And converts it to url param object:
+  // { hpdviolations__gte: 10, hpdviolations__start: '2017-01-01', hpdviolations__end: '2018-01-01'}
+
+  return {
+    [`${params.type}__${params.comparison}`]: params.value,
+    [`${params.type}__start`]: params.startDate,
+    [`${params.type}__end`]: params.endDate,
+  }
+}

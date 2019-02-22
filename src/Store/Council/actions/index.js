@@ -4,7 +4,7 @@ import * as loadingActions from 'Store/Loading/actions'
 import * as errorActions from 'Store/Error/actions'
 
 import * as c from '../constants'
-import { handleCatchError } from 'shared/utilities/actionUtils'
+import { handleCatchError, constructActionKey, constructSimplePropertyParams } from 'shared/utilities/actionUtils'
 
 export const handleGetCouncils = response => ({
   type: c.HANDLE_GET_COUNCILS,
@@ -21,10 +21,10 @@ export const handleGetCouncilHousing = response => ({
   data: response.data,
 })
 
-export const handleGetCouncilPropertySummary = response => ({
+export const handleGetCouncilPropertySummary = (type, response) => ({
   type: c.HANDLE_GET_COUNCIL_PROPERTY_SUMMARY,
   data: response.data,
-  key: '',
+  key: type,
 })
 
 export const getCouncils = () => (dispatch, access_token) => {
@@ -75,17 +75,17 @@ export const getCouncilHousing = (id, params) => (dispatch, access_token) => {
     })
 }
 
-export const getCouncilPropertySummary = (id, params) => (dispatch, access_token) => {
-  const CONSTANT = c.constructSummaryConstant(c.GET_COUNCIL_PROPERTY_SUMMARY, params)
+export const getCouncilPropertySummary = (constant, id, params) => (dispatch, access_token) => {
+  const CONSTANT = constructActionKey(c.GET_COUNCIL_PROPERTY_SUMMARY, params)
   dispatch(loadingActions.handleRequest(CONSTANT))
   dispatch(errorActions.handleClearErrors(CONSTANT))
   return Axios.get(`${u.COUNCILS_URL}${id}${u.PROPERTY_URL}`, {
-    params: { format: 'json', ...params },
+    params: { format: 'json', ...constructSimplePropertyParams(params) },
     headers: typeof access_token === 'string' ? { authorization: `Bearer ${access_token}` } : null,
   })
     .then(response => {
       dispatch(loadingActions.handleCompletedRequest(CONSTANT))
-      dispatch(handleGetCouncilHousing(response))
+      dispatch(handleGetCouncilPropertySummary(CONSTANT, response))
     })
     .catch(error => {
       handleCatchError(error, CONSTANT, dispatch)

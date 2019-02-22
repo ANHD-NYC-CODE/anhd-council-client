@@ -8,12 +8,13 @@ import { requestWithAuth } from 'shared/utilities/authUtils'
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
 import { resourceRouteChanged } from 'shared/utilities/routeUtils'
+import { getBuildingResource } from 'Store/Building/actions'
 import Layout from 'Layout'
 import LeafletMap from 'LeafletMap'
 import BuildingSearchModule from '../BuildingSearchModule'
 import { Row, Col, Jumbotron } from 'react-bootstrap'
+import RecordsFetchModule from 'shared/components/RecordsFetchModule'
 import BuildingHistoryTable from 'BuildingLookup/BuildingHistoryTable'
-import { getBuildingResource } from 'Store/Building/actions'
 
 class BuildingLookup extends React.Component {
   constructor(props) {
@@ -54,18 +55,20 @@ class BuildingLookup extends React.Component {
               {this.props.loading ? <div>Loading</div> : JSON.stringify(this.props.building.currentBuilding, null, 2)}
             </Jumbotron>
             <h2>Building History</h2>
-            <BuildingHistoryTable
+            <RecordsFetchModule
               id={this.props.id}
-              recordsConstant={c.buildingResourceConstant('HPD_VIOLATIONS')}
+              recordsConstant="GET_BUILDING_HPD_VIOLATIONS"
               recordsFetch={getBuildingResource}
-              reducerPath="building.hpd_violations"
+              reducerPath="building.GET_BUILDING_HPD_VIOLATIONS"
+              render={(title, records) => <BuildingHistoryTable title={title} records={records} />}
               title="HPD Violations"
             />
-            <BuildingHistoryTable
+            <RecordsFetchModule
               id={this.props.id}
-              recordsConstant={c.buildingResourceConstant('DOB_VIOLATIONS')}
+              recordsConstant="GET_BUILDING_DOB_VIOLATIONS"
               recordsFetch={getBuildingResource}
-              reducerPath="building.dob_violations"
+              reducerPath="building.GET_BUILDING_DOB_VIOLATIONS"
+              render={(title, records) => <BuildingHistoryTable title={title} records={records} />}
               title="DOB Violations"
             />
           </Col>
