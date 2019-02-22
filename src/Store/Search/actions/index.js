@@ -1,4 +1,4 @@
-import { Axios } from 'shared/utilities/Axios'
+import { constructAxiosGet } from 'shared/utilities/Axios'
 import { SEARCH_URL } from 'shared/constants/urls'
 import * as loadingActions from 'Store/Loading/actions'
 import * as errorActions from 'Store/Error/actions'
@@ -32,10 +32,7 @@ export const setSearchTimeout = event => ({
 export const queryBuildingAddress = value => (dispatch, access_token) => {
   dispatch(loadingActions.handleRequest(GET_BUILDING_SEARCH))
   dispatch(errorActions.handleClearErrors(GET_BUILDING_SEARCH))
-  return Axios.get(SEARCH_URL, {
-    params: { fts: value, format: 'json' },
-    headers: { authorization: `Bearer ${access_token}` },
-  })
+  return constructAxiosGet(SEARCH_URL, { fts: value }, access_token)
     .then(response => {
       dispatch(loadingActions.handleCompletedRequest(GET_BUILDING_SEARCH))
       dispatch(handleReadSearchResponse(response))
