@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import * as a from 'Store/Council/actions'
-import * as u from 'shared/constants/urls'
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
 import { createMatchSelector } from 'connected-react-router'
@@ -46,7 +45,7 @@ class DistrictMap extends React.Component {
   }
 
   fetchCouncilById(props) {
-    if (!(props.selectedDistrict || props.error) || resourceRouteChanged(this.props, props)) {
+    if (!(props.district || props.error) || resourceRouteChanged(this.props, props)) {
       this.props.dispatch(a.getCouncil(props.id))
     }
   }
@@ -71,7 +70,7 @@ class DistrictMap extends React.Component {
             </Form.Group>
           </Col>
           <Col sm={12} md={8}>
-            {JSON.stringify(this.props.selectedDistrict, null, 2)}
+            {JSON.stringify(this.props.district, null, 2)}
           </Col>
         </Row>
       </Layout>
@@ -92,8 +91,8 @@ const mapStateToProps = state => {
 
   return {
     districts: state.council.districts,
-    selectedDistrict: state.council.selectedDistrict,
-    selectedDistrictHousing: state.council.selectedDistrictHousing,
+    district: state.council.district,
+    districtHousing: state.council.districtHousing,
     loading: loadingSelector(state),
     error: errorSelector(state),
     id: match ? match.params.id : null,

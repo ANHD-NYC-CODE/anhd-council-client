@@ -4,10 +4,9 @@ import PropTypes from 'prop-types'
 import { Jumbotron } from 'react-bootstrap'
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
-import { getBuildingResource } from 'Store/Building/actions'
 import { requestWithAuth } from 'shared/utilities/authUtils'
 import { resourceRouteChanged } from 'shared/utilities/routeUtils'
-
+import resolvePath from 'object-resolve-path'
 class BuildingHistoryTable extends React.Component {
   constructor(props) {
     super(props)
@@ -18,12 +17,12 @@ class BuildingHistoryTable extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.getRecords(nextProps)
+    this.getRecords(nextProps, nextProps.urlParams)
   }
 
-  getRecords(props) {
+  getRecords(props, urlParams) {
     if (!(props.loading || props.error || props.records) || resourceRouteChanged(this.props, props)) {
-      props.dispatch(requestWithAuth(getBuildingResource(props.recordsConstant, props.id)))
+      props.dispatch(requestWithAuth(props.recordsFetch(props.recordsConstant, props.id, urlParams)))
     }
   }
 
@@ -55,22 +54,25 @@ class BuildingHistoryTable extends React.Component {
 }
 
 BuildingHistoryTable.propTypes = {
-  recordsConstant: PropTypes.string,
   error: PropTypes.object,
   loading: PropTypes.bool,
   id: PropTypes.string,
-  recordsKey: PropTypes.string,
   records: PropTypes.array,
+  recordsConstant: PropTypes.string,
+  recordsFetch: PropTypes.func,
+  reducerPath: PropTypes.string,
   title: PropTypes.string,
+  urlParams: PropTypes.object,
 }
 
 const mapStateToProps = (state, props) => {
   const loadingSelector = createLoadingSelector([props.recordsConstant])
   const errorSelector = createErrorSelector([props.recordsConstant])
+
   return {
     loading: loadingSelector(state),
     error: errorSelector(state),
-    records: state.building[props.recordsConstant.split('GET_BUILDING_')[1].toLowerCase()],
+    records: resolvePath(state, `${props.reducerPath}`),
   }
 }
 

@@ -2,8 +2,9 @@ import * as c from '../constants'
 
 export const initialState = {
   districts: undefined,
-  selectedDistrict: undefined,
-  selectedDistrictHousing: undefined,
+  district: undefined,
+  districtHousing: undefined,
+  districtPropertySummaries: undefined,
 }
 
 export const councilReducer = (state = Object.freeze(initialState), action = { data: [] }) => {
@@ -17,13 +18,22 @@ export const councilReducer = (state = Object.freeze(initialState), action = { d
     case c.HANDLE_GET_COUNCIL: {
       return {
         ...state,
-        selectedDistrict: action.data,
+        district: action.data,
       }
     }
     case c.HANDLE_GET_COUNCIL_HOUSING: {
       return {
         ...state,
-        selectedDistrictHousing: action.data,
+        districtHousing: action.data,
+      }
+    }
+    case c.HANDLE_GET_COUNCIL_PROPERTY_SUMMARY: {
+      return {
+        ...state,
+        districtPropertySummaries: {
+          ...state.districtPropertySummaries,
+          ...action.data,
+        },
       }
     }
     default:

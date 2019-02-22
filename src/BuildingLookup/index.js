@@ -13,6 +13,7 @@ import LeafletMap from 'LeafletMap'
 import BuildingSearchModule from '../BuildingSearchModule'
 import { Row, Col, Jumbotron } from 'react-bootstrap'
 import BuildingHistoryTable from 'BuildingLookup/BuildingHistoryTable'
+import { getBuildingResource } from 'Store/Building/actions'
 
 class BuildingLookup extends React.Component {
   constructor(props) {
@@ -54,13 +55,17 @@ class BuildingLookup extends React.Component {
             </Jumbotron>
             <h2>Building History</h2>
             <BuildingHistoryTable
-              recordsConstant={c.buildingResourceConstant('HPD_VIOLATIONS')}
               id={this.props.id}
+              recordsConstant={c.buildingResourceConstant('HPD_VIOLATIONS')}
+              recordsFetch={getBuildingResource}
+              reducerPath="building.hpd_violations"
               title="HPD Violations"
             />
             <BuildingHistoryTable
-              recordsConstant={c.buildingResourceConstant('DOB_VIOLATIONS')}
               id={this.props.id}
+              recordsConstant={c.buildingResourceConstant('DOB_VIOLATIONS')}
+              recordsFetch={getBuildingResource}
+              reducerPath="building.dob_violations"
               title="DOB Violations"
             />
           </Col>
