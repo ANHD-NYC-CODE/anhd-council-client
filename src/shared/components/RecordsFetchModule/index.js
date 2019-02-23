@@ -28,17 +28,11 @@ class RecordsFetchModule extends React.Component {
   }
 
   render() {
-    const renderTable = () => {
-      if (this.props.loading) {
-        return <div>Loading</div>
-      } else if (this.props.error) {
-        return <div className="text-error">{this.props.error.message}</div>
-      } else {
-        return this.props.render(this.props.title, this.props.records)
-      }
-    }
-
-    return <div className="records-fetch-module">{renderTable()}</div>
+    return (
+      <div className="records-fetch-module">
+        {this.props.render(this.props.title, this.props.records, this.props.loading, this.props.error)}
+      </div>
+    )
   }
 }
 

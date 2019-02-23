@@ -8,16 +8,15 @@ import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
 import { createMatchSelector } from 'connected-react-router'
 import { resourceRouteChanged } from 'shared/utilities/routeUtils'
-import { getCouncilPropertySummary } from 'Store/Council/actions'
-import { constructActionKey } from 'shared/utilities/actionUtils'
+
 import { push } from 'connected-react-router'
 
 import Layout from 'Layout'
 import LeafletMap from 'LeafletMap'
 import Select from 'react-select'
 import { Row, Col, Form } from 'react-bootstrap'
-import RecordsFetchModule from 'shared/components/RecordsFetchModule'
-import BuildingHistoryTable from 'BuildingLookup/BuildingHistoryTable'
+
+import DistrictMapShow from 'DistrictMap/Show'
 
 class DistrictMap extends React.Component {
   constructor(props) {
@@ -28,29 +27,22 @@ class DistrictMap extends React.Component {
     this.handleDistrictChange = this.handleDistrictChange.bind(this)
 
     this.fetchCouncils(props)
-    if (props.id) {
-      this.fetchCouncilById(props)
-    }
+    this.fetchCouncilById(props)
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!nextProps.loading) {
-      this.fetchCouncils(nextProps)
-    }
-
-    if (nextProps.id) {
-      this.fetchCouncilById(nextProps)
-    }
+    this.fetchCouncils(nextProps)
+    this.fetchCouncilById(nextProps)
   }
 
   fetchCouncils(props) {
-    if (!((props.districts || {}).length || props.error)) {
+    if (!props.loading && !((props.districts || {}).length || props.error)) {
       this.props.dispatch(a.getCouncils())
     }
   }
 
   fetchCouncilById(props) {
-    if (!(props.district || props.error) || resourceRouteChanged(this.props, props)) {
+    if (!!props.id && (!(props.district || props.error) || resourceRouteChanged(this.props, props))) {
       this.props.dispatch(a.getCouncil(props.id))
     }
   }
@@ -77,20 +69,7 @@ class DistrictMap extends React.Component {
           <Col sm={12} md={8}>
             <div style={{ maxHeight: '400px', overflow: 'scroll' }}>{JSON.stringify(this.props.district, null, 2)}</div>
 
-            <RecordsFetchModule
-              id={this.props.id}
-              recordsConstant="GET_COUNCIL_PROPERTY_SUMMARY"
-              recordsFetch={getCouncilPropertySummary}
-              reducerPath={`council.districtPropertySummaries.${constructActionKey(c.GET_COUNCIL_PROPERTY_SUMMARY, {
-                type: 'hpdviolations',
-                comparison: 'gte',
-                value: '10',
-                startDate: '2017-01-31',
-              })}`}
-              render={(title, records) => <BuildingHistoryTable title={title} records={records} />}
-              title="Properties with +10 HPD Violations Last Month"
-              urlParams={{ type: 'hpdviolations', comparison: 'gte', value: '10', startDate: '2019-01-01' }}
-            />
+            {this.props.id && <DistrictMapShow id={this.props.id} />}
           </Col>
         </Row>
       </Layout>

@@ -32,14 +32,17 @@ const findErrorKeyValue = (status, data) => {
 
 export const handleCatchError = (error, type, dispatch) => {
   let errorMessage = ''
+  let errorStatus = ''
   if (!error.response) {
     errorMessage = ERROR_500_MESSAGE
+    errorStatus = 500
   } else if (error.response.status === 500) {
     errorMessage = error.response.data.results
   } else if (error.response.status > 200) {
     errorMessage = findErrorKeyValue(error.response.status, error.response.data)
   }
-  dispatch(errorActions.handleFailure(type, error.response.status, errorMessage))
+  errorStatus = error.response.status
+  dispatch(errorActions.handleFailure(type, errorStatus, errorMessage))
   toast.error(`Error: ${error.response.status} - ${errorMessage}`)
   dispatch(loadingActions.handleCompletedRequest(type))
 }

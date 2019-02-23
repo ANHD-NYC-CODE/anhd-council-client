@@ -1,0 +1,37 @@
+import React from 'react'
+import PropTypes from 'prop-types'
+import * as c from 'Store/Council/constants'
+
+import { getCouncilPropertySummary } from 'Store/Council/actions'
+import { constructActionKey } from 'shared/utilities/actionUtils'
+import RecordsFetchModule from 'shared/components/RecordsFetchModule'
+import BuildingHistoryTable from 'BuildingLookup/BuildingHistoryTable'
+
+const DistictMapShow = props => {
+  return (
+    <div className="district-map-show">
+      <RecordsFetchModule
+        id={props.id}
+        recordsConstant="GET_COUNCIL_PROPERTY_SUMMARY"
+        recordsFetch={getCouncilPropertySummary}
+        reducerPath={`council.districtPropertySummaries.${constructActionKey(c.GET_COUNCIL_PROPERTY_SUMMARY, {
+          type: 'hpdviolations',
+          comparison: 'gte',
+          value: '10',
+          startDate: '2017-01-31',
+        })}`}
+        render={(title, records, loading, error) => (
+          <BuildingHistoryTable title={title} records={records} loading={loading} error={error} />
+        )}
+        title="Properties with +10 HPD Violations Last Month"
+        urlParams={{ type: 'hpdviolations', comparison: 'gte', value: '10', startDate: '2019-01-01' }}
+      />
+    </div>
+  )
+}
+
+DistictMapShow.propTypes = {
+  id: PropTypes.string,
+}
+
+export default DistictMapShow
