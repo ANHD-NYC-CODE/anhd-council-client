@@ -6,7 +6,7 @@ import './style.scss'
 import { Table } from 'react-bootstrap'
 const SearchResults = props => {
   return (
-    <Table className="search-results" size="sm" bordered hover stiped>
+    <Table className="search-results" size="sm" bordered hover striped>
       {props.loading && <div className="text-info">loading</div>}
       {props.error && <div className="text-danger">{props.error.message}</div>}
       {props.results.map((result, index) => (
