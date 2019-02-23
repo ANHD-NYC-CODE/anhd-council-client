@@ -1,12 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import resolvePath from 'object-resolve-path'
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
 import { requestWithAuth } from 'shared/utilities/authUtils'
 import { resourceRouteChanged } from 'shared/utilities/routeUtils'
 import { constructActionKey } from 'shared/utilities/actionUtils'
-import resolvePath from 'object-resolve-path'
 
 class RecordsFetchModule extends React.Component {
   constructor(props) {
@@ -23,7 +23,7 @@ class RecordsFetchModule extends React.Component {
 
   getRecords(props) {
     if (!(props.loading || props.error || props.records) || resourceRouteChanged(this.props, props)) {
-      props.dispatch(requestWithAuth(props.recordsFetch(props.recordsConstant, props.id, props.urlParams)))
+      props.dispatch(requestWithAuth(props.recordsFetch(props.dataset, props.id, props.urlParams)))
     }
   }
 
@@ -37,11 +37,11 @@ class RecordsFetchModule extends React.Component {
 }
 
 RecordsFetchModule.propTypes = {
+  dataset: PropTypes.object,
   error: PropTypes.object,
   loading: PropTypes.bool,
   id: PropTypes.string,
   records: PropTypes.array,
-  recordsConstant: PropTypes.string,
   recordsFetch: PropTypes.func,
   reducerPath: PropTypes.string,
   title: PropTypes.string,
@@ -49,8 +49,9 @@ RecordsFetchModule.propTypes = {
 }
 
 const mapStateToProps = (state, props) => {
-  const loadingSelector = createLoadingSelector([constructActionKey(props.recordsConstant, props.urlParams)])
-  const errorSelector = createErrorSelector([constructActionKey(props.recordsConstant, props.urlParams)])
+  const loadingSelector = createLoadingSelector([constructActionKey(props.dataset.constant, props.urlParams)])
+  const errorSelector = createErrorSelector([constructActionKey(props.dataset.constant, props.urlParams)])
+
   let records = undefined
   try {
     records = resolvePath(state, `${props.reducerPath}`)

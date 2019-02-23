@@ -30,7 +30,7 @@ export const getCouncils = () => (dispatch, access_token) => {
 }
 
 export const getCouncil = id => (dispatch, access_token) => {
-  return constructAxiosGet(`${u.COUNCILS_URL}${id}`, null, access_token, dispatch, c.GET_COUNCIL, handleGetCouncil)
+  return constructAxiosGet(`${u.COUNCILS_URL}${id}/`, null, access_token, dispatch, c.GET_COUNCIL, handleGetCouncil)
 }
 
 export const getCouncilHousing = (id, params) => (dispatch, access_token) => {
@@ -44,8 +44,8 @@ export const getCouncilHousing = (id, params) => (dispatch, access_token) => {
   )
 }
 
-export const getCouncilPropertySummary = (constant, id, params) => (dispatch, access_token) => {
-  const CONSTANT = constructActionKey(c.GET_COUNCIL_PROPERTY_SUMMARY, params)
+export const getCouncilPropertySummary = (dataset, id, params) => (dispatch, access_token) => {
+  const CONSTANT = constructActionKey(dataset.constant, params)
   return constructAxiosGet(
     `${u.COUNCILS_URL}${id}${u.PROPERTY_URL}`,
     constructSimplePropertyParams(params),

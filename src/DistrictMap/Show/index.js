@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import * as c from 'Store/Council/constants'
 import * as d from 'shared/constants/datasets'
 
 import { getCouncilPropertySummary } from 'Store/Council/actions'
@@ -13,9 +12,9 @@ const DistictMapShow = props => {
     <div className="district-map-show">
       <RecordsFetchModule
         id={props.id}
-        recordsConstant="GET_COUNCIL_PROPERTY_SUMMARY"
+        dataset={d.HPDVIOLATIONS}
         recordsFetch={getCouncilPropertySummary}
-        reducerPath={`council.districtPropertySummaries.${constructActionKey(c.GET_COUNCIL_PROPERTY_SUMMARY, {
+        reducerPath={`council.districtPropertySummaries.${constructActionKey(d.HPDVIOLATIONS.constant, {
           type: d.HPDVIOLATIONS.name,
           comparison: 'gte',
           value: '10',

@@ -24,3 +24,21 @@ export const ECBVIOLATIONS = {
   dateField: () => 'issuedate',
   amountField: () => 'count',
 }
+
+export const HPDCOMPLAINTS = {
+  name: 'hpdcomplaints',
+  model: 'hpdcomplaint',
+  url: '/hpdcomplaints/',
+  constant: 'HPD_COMPLAINTS',
+  dateField: () => 'receiveddate',
+  amountField: () => 'count',
+}
+
+export const DOBCOMPLAINTS = {
+  name: 'dobcomplaints',
+  model: 'dobcomplaint',
+  url: '/dobcomplaints/',
+  constant: 'DOB_COMPLAINTS',
+  dateField: () => 'dateentered',
+  amountField: () => 'count',
+}

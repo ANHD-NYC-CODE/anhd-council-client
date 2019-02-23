@@ -51,7 +51,7 @@ class DistrictMap extends React.Component {
   }
 
   fetchCouncilById(props) {
-    if (!!props.id && (!(props.district || props.error) || resourceRouteChanged(this.props, props))) {
+    if (!!props.id && !props.loading && (!(props.district || props.error) || resourceRouteChanged(this.props, props))) {
       this.props.dispatch(a.getCouncil(props.id))
     }
   }

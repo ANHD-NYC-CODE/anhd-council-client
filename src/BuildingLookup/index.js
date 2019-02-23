@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import { createMatchSelector } from 'connected-react-router'
 import * as a from 'Store/Building/actions'
 import * as c from 'Store/Building/constants'
+import * as d from 'shared/constants/datasets'
+
 import { requestWithAuth } from 'shared/utilities/authUtils'
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
@@ -57,18 +59,22 @@ class BuildingLookup extends React.Component {
             <h2>Building History</h2>
             <RecordsFetchModule
               id={this.props.id}
-              recordsConstant="GET_BUILDING_HPD_VIOLATIONS"
+              dataset={d.HPDVIOLATIONS}
               recordsFetch={getBuildingResource}
-              reducerPath="building.GET_BUILDING_HPD_VIOLATIONS"
-              render={(title, records) => <BuildingHistoryTable title={title} records={records} />}
+              reducerPath={`building.${d.HPDVIOLATIONS.constant}`}
+              render={(title, records, loading, error) => (
+                <BuildingHistoryTable loading={loading} error={error} title={title} records={records} />
+              )}
               title="HPD Violations"
             />
             <RecordsFetchModule
               id={this.props.id}
-              recordsConstant="GET_BUILDING_DOB_VIOLATIONS"
+              dataset={d.DOBVIOLATIONS}
               recordsFetch={getBuildingResource}
-              reducerPath="building.GET_BUILDING_DOB_VIOLATIONS"
-              render={(title, records) => <BuildingHistoryTable title={title} records={records} />}
+              reducerPath={`building.${d.DOBVIOLATIONS.constant}`}
+              render={(title, records, loading, error) => (
+                <BuildingHistoryTable loading={loading} error={error} title={title} records={records} />
+              )}
               title="DOB Violations"
             />
           </Col>
