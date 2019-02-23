@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import * as c from 'Store/Council/constants'
+import * as d from 'shared/constants/datasets'
 
 import { getCouncilPropertySummary } from 'Store/Council/actions'
 import { constructActionKey } from 'shared/utilities/actionUtils'
@@ -15,7 +16,7 @@ const DistictMapShow = props => {
         recordsConstant="GET_COUNCIL_PROPERTY_SUMMARY"
         recordsFetch={getCouncilPropertySummary}
         reducerPath={`council.districtPropertySummaries.${constructActionKey(c.GET_COUNCIL_PROPERTY_SUMMARY, {
-          type: 'hpdviolations',
+          type: d.HPDVIOLATIONS.name,
           comparison: 'gte',
           value: '10',
           startDate: '2017-01-31',
@@ -24,7 +25,7 @@ const DistictMapShow = props => {
           <BuildingHistoryTable title={title} records={records} loading={loading} error={error} />
         )}
         title="Properties with +10 HPD Violations Last Month"
-        urlParams={{ type: 'hpdviolations', comparison: 'gte', value: '10', startDate: '2019-01-01' }}
+        urlParams={{ type: d.HPDVIOLATIONS.name, comparison: 'gte', value: '10', startDate: '2019-01-01' }}
       />
     </div>
   )
