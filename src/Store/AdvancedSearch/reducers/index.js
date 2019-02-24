@@ -12,32 +12,46 @@ export const initialState = {
 export const advancedSearchReducer = (state = Object.freeze(initialState), action = { data: [] }) => {
   switch (action.type) {
     case c.ADD_NEW_CONDITION: {
-      const condition =
+      const newCondition =
         state.conditions[state.conditions.length - 1].type === 'AND'
           ? { type: 'OR', filters: [] }
           : { type: 'AND', filters: [] }
+
+      const newConditions = state.conditions.slice()
+      newConditions[action.conditionIndex].filters.unshift({ conditionGroup: action.conditionIndex + 1 })
+
       return {
         ...state,
-        conditions: [...state.conditions, condition],
+        conditions: [...newConditions, newCondition],
       }
     }
     case c.REMOVE_LAST_CONDITION: {
       const newConditions = state.conditions.slice()
       newConditions.pop()
+
+      if (newConditions.length > 0) {
+        newConditions[newConditions.length - 1].filters.shift()
+      }
+
       return {
         ...state,
-        conditions: state.conditions.length === 1 ? [initialState.conditions[0]] : newConditions,
+        conditions: !newConditions.length ? [initialState.conditions[0]] : newConditions,
       }
     }
     case c.ADD_FILTER: {
       const newConditions = state.conditions.slice()
-      let condition = newConditions[action.index]
+      let condition = newConditions[action.conditionIndex]
       condition.filters.push(action.filter)
       return {
         ...state,
-        conditions: [...newConditions.splice(0, action.index), condition, ...newConditions.splice(action.index + 1)],
+        conditions: [
+          ...newConditions.slice(0, action.conditionIndex),
+          condition,
+          ...newConditions.slice(action.conditionIndex + 1),
+        ],
       }
     }
+
     case c.UPDATE_FILTER: {
       const newConditions = state.conditions.slice()
       let condition = newConditions[action.conditionIndex]
@@ -45,26 +59,27 @@ export const advancedSearchReducer = (state = Object.freeze(initialState), actio
       return {
         ...state,
         conditions: [
-          ...newConditions.splice(0, action.conditionIndex),
+          ...newConditions.slice(0, action.conditionIndex),
           condition,
-          ...newConditions.splice(action.conditionIndex + 1),
+          ...newConditions.slice(action.conditionIndex + 1),
         ],
       }
     }
     case c.REMOVE_FILTER: {
-      let condition = state.conditions[action.conditionIndex]
-      condition.filters.splice(action.filterIndex, 1)
       const newConditions = state.conditions.slice()
+      let condition = newConditions[action.conditionIndex]
+      condition.filters.splice(action.filterIndex, 1)
 
       return {
         ...state,
         conditions: [
-          ...newConditions.splice(0, action.conditionIndex),
+          ...newConditions.slice(0, action.conditionIndex),
           condition,
-          ...newConditions.splice(action.conditionIndex + 1),
+          ...newConditions.slice(action.conditionIndex + 1),
         ],
       }
     }
+
     default:
       return state
   }

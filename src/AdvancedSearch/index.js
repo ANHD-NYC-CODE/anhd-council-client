@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import Layout from 'Layout'
 
 import Condition from 'AdvancedSearch/Condition'
-import { addNewCondition, removeLastCondition } from 'Store/AdvancedSearch/actions'
 
 class AdvancedSearch extends React.Component {
   constructor(props) {
@@ -15,20 +14,20 @@ class AdvancedSearch extends React.Component {
     return (
       <Layout>
         <h1>Advanced Search</h1>
-        <button onClick={() => this.props.dispatch(addNewCondition())}>Add Condition</button>
-        <button onClick={() => this.props.dispatch(removeLastCondition())}>Remove Condition</button>
-
-        {this.props.advancedSearch.conditions.map((condition, index) => {
-          return (
-            <Condition condition={condition} dispatch={this.props.dispatch} key={`condition-${index}`} index={index} />
-          )
-        })}
+        <Condition
+          conditions={this.props.advancedSearch.conditions}
+          condition={this.props.advancedSearch.conditions[0]}
+          dispatch={this.props.dispatch}
+          key={'condition-0'}
+          index={0}
+        />
       </Layout>
     )
   }
 }
 
 AdvancedSearch.propTypes = {
+  advancedSearch: PropTypes.object,
   dispatch: PropTypes.func,
 }
 
