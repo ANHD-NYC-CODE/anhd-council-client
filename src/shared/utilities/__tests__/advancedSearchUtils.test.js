@@ -36,7 +36,7 @@ describe('convertConditionMappingToQ', () => {
         }
       })
 
-      const q = [
+      const conditions = [
         {
           type: 'AND',
           filters: condition0Filters,
@@ -45,7 +45,7 @@ describe('convertConditionMappingToQ', () => {
 
       const result =
         'condition_0=AND+group_0a=hpdviolation__approveddate__gte=2017-01-01,hpdviolation__approveddate__lte=2018-01-01,hpdviolation__count__gte=10+group_0b=dobviolation__issuedate__gte=2017-01-01,dobviolation__issuedate__lte=2018-01-01,dobviolation__count__gte=10+group_0c=ecbviolation__issuedate__gte=2017-01-01,ecbviolation__issuedate__lte=2018-01-01,ecbviolation__count__gte=10'
-      expect(a.convertConditionMappingToQ(q)).toEqual(result)
+      expect(a.convertConditionMappingToQ(conditions)).toEqual(result)
     })
   })
 
@@ -61,7 +61,7 @@ describe('convertConditionMappingToQ', () => {
         }
       })
 
-      const q = [
+      const conditions = [
         {
           type: 'OR',
           filters: condition0Filters,
@@ -70,7 +70,7 @@ describe('convertConditionMappingToQ', () => {
 
       const result =
         'condition_0=OR+group_0a=hpdviolation__approveddate__gte=2017-01-01,hpdviolation__approveddate__lte=2018-01-01,hpdviolation__count__gte=10+group_0b=dobviolation__issuedate__gte=2017-01-01,dobviolation__issuedate__lte=2018-01-01,dobviolation__count__gte=10+group_0c=ecbviolation__issuedate__gte=2017-01-01,ecbviolation__issuedate__lte=2018-01-01,ecbviolation__count__gte=10'
-      expect(a.convertConditionMappingToQ(q)).toEqual(result)
+      expect(a.convertConditionMappingToQ(conditions)).toEqual(result)
     })
   })
 
@@ -97,7 +97,7 @@ describe('convertConditionMappingToQ', () => {
         }
       })
 
-      const q = [
+      const conditions = [
         {
           type: 'AND',
           filters: condition0Filters,
@@ -110,7 +110,7 @@ describe('convertConditionMappingToQ', () => {
 
       const result =
         'condition_0=AND+group_0a=*condition_1+group_0b=hpdviolation__approveddate__gte=2017-01-01,hpdviolation__approveddate__lte=2018-01-01,hpdviolation__count__gte=10+condition_1=OR+group_1a=dobviolation__issuedate__gte=2017-01-01,dobviolation__issuedate__lte=2018-01-01,dobviolation__count__gte=10+group_1b=ecbviolation__issuedate__gte=2017-01-01,ecbviolation__issuedate__lte=2018-01-01,ecbviolation__count__gte=10'
-      expect(a.convertConditionMappingToQ(q)).toEqual(result)
+      expect(a.convertConditionMappingToQ(conditions)).toEqual(result)
     })
   })
 
@@ -137,7 +137,7 @@ describe('convertConditionMappingToQ', () => {
         }
       })
 
-      const q = [
+      const conditions = [
         {
           type: 'OR',
           filters: condition0Filters,
@@ -150,7 +150,7 @@ describe('convertConditionMappingToQ', () => {
 
       const result =
         'condition_0=OR+group_0a=*condition_1+group_0b=hpdviolation__approveddate__gte=2017-01-01,hpdviolation__approveddate__lte=2018-01-01,hpdviolation__count__gte=10+condition_1=AND+group_1a=dobviolation__issuedate__gte=2017-01-01,dobviolation__issuedate__lte=2018-01-01,dobviolation__count__gte=10+group_1b=ecbviolation__issuedate__gte=2017-01-01,ecbviolation__issuedate__lte=2018-01-01,ecbviolation__count__gte=10'
-      expect(a.convertConditionMappingToQ(q)).toEqual(result)
+      expect(a.convertConditionMappingToQ(conditions)).toEqual(result)
     })
   })
 
@@ -188,7 +188,7 @@ describe('convertConditionMappingToQ', () => {
         }
       })
 
-      const q = [
+      const conditions = [
         {
           type: 'AND',
           filters: condition0Filters,
@@ -205,7 +205,7 @@ describe('convertConditionMappingToQ', () => {
 
       const result =
         'condition_0=AND+group_0a=*condition_1+group_0b=hpdviolation__approveddate__gte=2017-01-01,hpdviolation__approveddate__lte=2018-01-01,hpdviolation__count__gte=10+condition_1=OR+group_1a=*condition_2+group_1b=dobviolation__issuedate__gte=2017-01-01,dobviolation__issuedate__lte=2018-01-01,dobviolation__count__gte=10+group_1c=ecbviolation__issuedate__gte=2017-01-01,ecbviolation__issuedate__lte=2018-01-01,ecbviolation__count__gte=10+condition_2=AND+group_2a=hpdcomplaint__receiveddate__gte=2017-01-01,hpdcomplaint__receiveddate__lte=2018-01-01,hpdcomplaint__count__gte=10+group_2b=dobcomplaint__dateentered__gte=2017-01-01,dobcomplaint__dateentered__lte=2018-01-01,dobcomplaint__count__gte=10'
-      expect(a.convertConditionMappingToQ(q)).toEqual(result)
+      expect(a.convertConditionMappingToQ(conditions)).toEqual(result)
     })
   })
 })
@@ -268,7 +268,7 @@ describe('convertConditionMappingToSentence', () => {
         }
       })
 
-      const q = [
+      const conditions = [
         {
           type: 'AND',
           filters: condition0Filters,
@@ -277,7 +277,7 @@ describe('convertConditionMappingToSentence', () => {
 
       const result =
         'Show me properties that have at least 10 HPD Violations from 01/01/2017 to 01/01/2018 and at least 10 DOB Violations from 01/01/2017 to 01/01/2018.'
-      expect(a.convertConditionMappingToSentence(q)).toEqual(result)
+      expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
 
@@ -293,7 +293,7 @@ describe('convertConditionMappingToSentence', () => {
         }
       })
 
-      const q = [
+      const conditions = [
         {
           type: 'OR',
           filters: condition0Filters,
@@ -302,7 +302,7 @@ describe('convertConditionMappingToSentence', () => {
 
       const result =
         'Show me properties that have at least 10 HPD Violations from 01/01/2017 to 01/01/2018 or at least 10 DOB Violations from 01/01/2017 to 01/01/2018.'
-      expect(a.convertConditionMappingToSentence(q)).toEqual(result)
+      expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
 
@@ -329,7 +329,7 @@ describe('convertConditionMappingToSentence', () => {
         }
       })
 
-      const q = [
+      const conditions = [
         {
           type: 'AND',
           filters: condition0Filters,
@@ -342,7 +342,7 @@ describe('convertConditionMappingToSentence', () => {
 
       const result =
         'Show me properties that have at least 10 HPD Violations from 01/01/2017 to 01/01/2018 and that either have at least 10 DOB Violations from 01/01/2017 to 01/01/2018 or at least 10 ECB Violations from 01/01/2017 to 01/01/2018.'
-      expect(a.convertConditionMappingToSentence(q)).toEqual(result)
+      expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
 
@@ -369,7 +369,7 @@ describe('convertConditionMappingToSentence', () => {
         }
       })
 
-      const q = [
+      const conditions = [
         {
           type: 'OR',
           filters: condition0Filters,
@@ -382,7 +382,7 @@ describe('convertConditionMappingToSentence', () => {
 
       const result =
         'Show me properties that have at least 10 HPD Violations from 01/01/2017 to 01/01/2018 or that have at least 10 DOB Violations from 01/01/2017 to 01/01/2018 and at least 10 ECB Violations from 01/01/2017 to 01/01/2018.'
-      expect(a.convertConditionMappingToSentence(q)).toEqual(result)
+      expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
 
@@ -420,7 +420,7 @@ describe('convertConditionMappingToSentence', () => {
         }
       })
 
-      const q = [
+      const conditions = [
         {
           type: 'AND',
           filters: condition0Filters,
@@ -437,7 +437,7 @@ describe('convertConditionMappingToSentence', () => {
 
       const result =
         'Show me properties that have at least 10 HPD Violations from 01/01/2017 to 01/01/2018 and that either have at least 10 DOB Violations from 01/01/2017 to 01/01/2018 or at least 10 ECB Violations from 01/01/2017 to 01/01/2018 or that have at least 10 HPD Complaints from 01/01/2017 to 01/01/2018 and at least 10 DOB Complaints from 01/01/2017 to 01/01/2018.'
-      expect(a.convertConditionMappingToSentence(q)).toEqual(result)
+      expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
 
@@ -486,7 +486,7 @@ describe('convertConditionMappingToSentence', () => {
         }
       })
 
-      const q = [
+      const conditions = [
         {
           type: 'AND',
           filters: condition0Filters,
@@ -507,7 +507,7 @@ describe('convertConditionMappingToSentence', () => {
 
       const result =
         'Show me properties that have at least 10 HPD Violations from 01/01/2017 to 01/01/2018 and that either have at least 10 DOB Violations from 01/01/2017 to 01/01/2018 or at least 10 ECB Violations from 01/01/2017 to 01/01/2018 or that have at least 10 HPD Complaints from 01/01/2017 to 01/01/2018 and at least 10 DOB Complaints from 01/01/2017 to 01/01/2018 and that either have at least 10 Evictions from 01/01/2017 to 01/01/2018 or at least 10 HPD Violations from 01/01/2017 to 01/01/2018.'
-      expect(a.convertConditionMappingToSentence(q)).toEqual(result)
+      expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
 })
