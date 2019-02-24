@@ -1,22 +1,14 @@
 import * as r from '../'
 import * as a from '../../actions'
-import * as c from '../../constants'
 
 describe('Advanced Search reducer', () => {
   it('should return the initial state', () => {
     expect(r.advancedSearchReducer(undefined, {})).toEqual(r.initialState)
   })
 
-  describe('ADD_CONDITION', () => {
-    const condition = { type: 'AND', filters: [{ dataset: 1 }, { dataset: 2 }] }
-    it('replace initial state', () => {
-      expect(r.advancedSearchReducer(undefined, a.addCondition(condition))).toEqual({
-        ...r.initialState,
-        conditions: [condition],
-      })
-    })
-
-    it('adds to array', () => {
+  describe('ADD_NEW_CONDITION', () => {
+    const condition = { type: 'OR', filters: [] }
+    it('adds to array, adds opposite type', () => {
       const state = {
         conditions: [
           {
@@ -25,14 +17,14 @@ describe('Advanced Search reducer', () => {
           },
         ],
       }
-      expect(r.advancedSearchReducer(state, a.addCondition(condition))).toEqual({
+      expect(r.advancedSearchReducer(state, a.addNewCondition(condition))).toEqual({
         ...r.initialState,
         conditions: [state.conditions[0], condition],
       })
     })
   })
 
-  describe('ADD_CONDITION', () => {
+  describe('REMOVE_LAST_CONDITION', () => {
     const state = {
       conditions: [
         {
@@ -43,13 +35,13 @@ describe('Advanced Search reducer', () => {
     }
     const condition = state.conditions[0]
     it('replaces with the initial state', () => {
-      expect(r.advancedSearchReducer(state, a.removeCondition(condition))).toEqual({
+      expect(r.advancedSearchReducer(state, a.removeLastCondition(condition))).toEqual({
         ...r.initialState,
         conditions: [r.initialState.conditions[0]],
       })
     })
 
-    it('removes the exact condition', () => {
+    it('removes the last condition', () => {
       const state = {
         conditions: [
           {
@@ -62,16 +54,13 @@ describe('Advanced Search reducer', () => {
           },
         ],
       }
-      const condition = {
-        type: 'AND',
-        filters: [{ dataset: 1 }, { dataset: 2 }],
-      }
-      expect(r.advancedSearchReducer(state, a.removeCondition(condition))).toEqual({
+
+      expect(r.advancedSearchReducer(state, a.removeLastCondition(condition))).toEqual({
         ...r.initialState,
         conditions: [
           {
-            type: 'OR',
-            filters: [{ dataset: 3 }, { dataset: 4 }],
+            type: 'AND',
+            filters: [{ dataset: 1 }, { dataset: 2 }],
           },
         ],
       })
@@ -119,7 +108,6 @@ describe('Advanced Search reducer', () => {
       }
 
       const expectedConditions = [{ type: 'AND', filters: [{ dataset: 2 }] }]
-      const filter = { dataset: 1 }
       expect(r.advancedSearchReducer(state, a.removeFilter(0, 0))).toEqual({
         ...r.initialState,
         conditions: expectedConditions,
@@ -138,11 +126,24 @@ describe('Advanced Search reducer', () => {
         { type: 'AND', filters: [{ dataset: 1 }, { dataset: 2 }] },
         { type: 'AND', filters: [{ dataset: 3 }] },
       ]
-      const filter = { dataset: 1 }
       expect(r.advancedSearchReducer(state, a.removeFilter(1, 1))).toEqual({
         ...r.initialState,
         conditions: expectedConditions,
       })
+    })
+  })
+})
+
+describe('UPDATE_FILTER', () => {
+  it('updates a filter', () => {
+    const state = {
+      conditions: [{ type: 'AND', filters: [{ dataset: 1 }, { dataset: 2 }] }],
+    }
+
+    const expectedConditions = [{ type: 'AND', filters: [{ dataset: 1 }, { dataset: 3 }] }]
+    expect(r.advancedSearchReducer(state, a.updateFilter(0, 1, { dataset: 3 }))).toEqual({
+      ...r.initialState,
+      conditions: expectedConditions,
     })
   })
 })

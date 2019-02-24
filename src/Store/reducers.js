@@ -8,6 +8,7 @@ import { modalReducer } from 'Store/Modal/reducers'
 import { authReducer } from 'Store/Auth/reducers'
 import { councilReducer } from 'Store/Council/reducers'
 import { buildingReducer } from 'Store/Building/reducers'
+import { advancedSearchReducer } from 'Store/AdvancedSearch/reducers'
 
 export default history =>
   combineReducers({
@@ -19,4 +20,5 @@ export default history =>
     search: searchReducer,
     council: councilReducer,
     building: buildingReducer,
+    advancedSearch: advancedSearchReducer,
   })
