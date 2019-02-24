@@ -1,3 +1,5 @@
+import * as f from 'shared/constants/filters'
+
 export const HPDVIOLATIONS = {
   name: 'HPD Violations',
   model: 'hpdviolation',
@@ -5,6 +7,7 @@ export const HPDVIOLATIONS = {
   constant: 'HPD_VIOLATIONS',
   dateField: () => 'approveddate',
   amountField: () => 'count',
+  filter: f.AMOUNTDATE,
 }
 
 export const DOBVIOLATIONS = {
@@ -14,6 +17,7 @@ export const DOBVIOLATIONS = {
   constant: 'DOB_VIOLATIONS',
   dateField: () => 'issuedate',
   amountField: () => 'count',
+  filter: f.AMOUNTDATE,
 }
 
 export const ECBVIOLATIONS = {
@@ -23,6 +27,7 @@ export const ECBVIOLATIONS = {
   constant: 'ECB_VIOLATIONS',
   dateField: () => 'issuedate',
   amountField: () => 'count',
+  filter: f.AMOUNTDATE,
 }
 
 export const HPDCOMPLAINTS = {
@@ -32,6 +37,7 @@ export const HPDCOMPLAINTS = {
   constant: 'HPD_COMPLAINTS',
   dateField: () => 'receiveddate',
   amountField: () => 'count',
+  filter: f.AMOUNTDATE,
 }
 
 export const DOBCOMPLAINTS = {
@@ -41,6 +47,7 @@ export const DOBCOMPLAINTS = {
   constant: 'DOB_COMPLAINTS',
   dateField: () => 'dateentered',
   amountField: () => 'count',
+  filter: f.AMOUNTDATE,
 }
 
 export const EVICTIONS = {
@@ -50,4 +57,5 @@ export const EVICTIONS = {
   constant: 'EVICTIONS',
   dateField: () => 'executeddate',
   amountField: () => 'count',
+  filter: f.AMOUNTDATE,
 }

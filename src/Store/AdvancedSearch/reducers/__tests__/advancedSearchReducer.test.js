@@ -8,7 +8,7 @@ describe('Advanced Search reducer', () => {
 
   describe('ADD_NEW_CONDITION', () => {
     const condition1 = { type: 'OR', filters: [] }
-    it('adds to condition array, adds opposite type, adds condition filter', () => {
+    it('adds to condition array, adds opposite type, adds condition filter at end', () => {
       const state = {
         conditions: [
           {
@@ -19,7 +19,7 @@ describe('Advanced Search reducer', () => {
       }
       const condition0 = {
         type: 'AND',
-        filters: [{ conditionGroup: 1 }, { dataset: 1 }],
+        filters: [{ dataset: 1 }, { conditionGroup: 1 }],
       }
       expect(r.advancedSearchReducer(state, a.addNewCondition(0))).toEqual({
         ...r.initialState,
@@ -50,7 +50,7 @@ describe('Advanced Search reducer', () => {
         conditions: [
           {
             type: 'AND',
-            filters: [{ conditionGroup: 1 }, { dataset: 1 }, { dataset: 2 }],
+            filters: [{ dataset: 1 }, { dataset: 2 }, { conditionGroup: 1 }],
           },
           {
             type: 'OR',
@@ -85,16 +85,19 @@ describe('Advanced Search reducer', () => {
       })
     })
 
-    it('adds a filter 2', () => {
+    it('adds a filter 2, keeps condition group at the end', () => {
       const state = {
         conditions: [
-          { type: 'AND', filters: [{ dataset: 1 }, { dataset: 2 }, { dataset: 3 }] },
+          { type: 'AND', filters: [{ dataset: 1 }, { dataset: 2 }, { dataset: 3 }, { conditionGroup: 1 }] },
           { type: 'OR', filters: [{ dataset: 1 }, { dataset: 2 }, { dataset: 3 }] },
         ],
       }
 
       const expectedConditions = [
-        { type: 'AND', filters: [{ dataset: 1 }, { dataset: 2 }, { dataset: 3 }, { dataset: 4 }] },
+        {
+          type: 'AND',
+          filters: [{ dataset: 1 }, { dataset: 2 }, { dataset: 3 }, { dataset: 4 }, { conditionGroup: 1 }],
+        },
         { type: 'OR', filters: [{ dataset: 1 }, { dataset: 2 }, { dataset: 3 }] },
       ]
       const filter = { dataset: 4 }
