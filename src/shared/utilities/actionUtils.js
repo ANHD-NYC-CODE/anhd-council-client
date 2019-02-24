@@ -54,7 +54,7 @@ export const constructActionKey = (constant, params) => {
   const { type, value, comparison, sinceDate, endDate } = params
   return [constant, type, comparison, value, sinceDate, endDate]
     .filter(el => el)
-    .map(el => el.toUpperCase())
+    .map(el => el.replace(' ', '').toUpperCase())
     .join('_')
 }
 

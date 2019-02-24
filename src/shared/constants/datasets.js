@@ -1,5 +1,5 @@
 export const HPDVIOLATIONS = {
-  name: 'hpdviolations',
+  name: 'HPD Violations',
   model: 'hpdviolation',
   url: '/hpdviolations/',
   constant: 'HPD_VIOLATIONS',
@@ -8,7 +8,7 @@ export const HPDVIOLATIONS = {
 }
 
 export const DOBVIOLATIONS = {
-  name: 'dobviolations',
+  name: 'DOB Violations',
   model: 'dobviolation',
   url: '/dobviolations/',
   constant: 'DOB_VIOLATIONS',
@@ -17,7 +17,7 @@ export const DOBVIOLATIONS = {
 }
 
 export const ECBVIOLATIONS = {
-  name: 'ecbviolations',
+  name: 'ECB Violations',
   model: 'ecbviolation',
   url: '/ecbviolations/',
   constant: 'ECB_VIOLATIONS',
@@ -26,7 +26,7 @@ export const ECBVIOLATIONS = {
 }
 
 export const HPDCOMPLAINTS = {
-  name: 'hpdcomplaints',
+  name: 'HPD Complaints',
   model: 'hpdcomplaint',
   url: '/hpdcomplaints/',
   constant: 'HPD_COMPLAINTS',
@@ -35,10 +35,19 @@ export const HPDCOMPLAINTS = {
 }
 
 export const DOBCOMPLAINTS = {
-  name: 'dobcomplaints',
+  name: 'DOB Complaints',
   model: 'dobcomplaint',
   url: '/dobcomplaints/',
   constant: 'DOB_COMPLAINTS',
   dateField: () => 'dateentered',
+  amountField: () => 'count',
+}
+
+export const EVICTIONS = {
+  name: 'Evictions',
+  model: 'eviction',
+  url: '/evictions/',
+  constant: 'EVICTIONS',
+  dateField: () => 'executeddate',
   amountField: () => 'count',
 }
