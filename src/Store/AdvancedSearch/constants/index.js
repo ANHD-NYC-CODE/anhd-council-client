@@ -1,2 +1,4 @@
 export const ADD_CONDITION = 'ADD_CONDITION'
 export const REMOVE_CONDITION = 'REMOVE_CONDITION'
+export const ADD_FILTER = 'ADD_FILTER'
+export const REMOVE_FILTER = 'REMOVE_FILTER'
