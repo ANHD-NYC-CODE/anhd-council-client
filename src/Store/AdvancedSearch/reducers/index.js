@@ -75,7 +75,6 @@ export const advancedSearchReducer = (state = Object.freeze(initialState), actio
       const newConditions = state.conditions.slice()
       let condition = newConditions[action.conditionIndex]
       condition.filters.splice(action.filterIndex, 1)
-
       return {
         ...state,
         conditions: [

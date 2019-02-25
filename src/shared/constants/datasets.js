@@ -2,6 +2,7 @@ import * as f from 'shared/constants/filters'
 
 export const HPDVIOLATIONS = {
   name: 'HPD Violations',
+  queryName: 'hpdviolations',
   model: 'hpdviolation',
   url: '/hpdviolations/',
   constant: 'HPD_VIOLATIONS',
@@ -12,6 +13,7 @@ export const HPDVIOLATIONS = {
 
 export const DOBVIOLATIONS = {
   name: 'DOB Violations',
+  queryName: 'dobviolations',
   model: 'dobviolation',
   url: '/dobviolations/',
   constant: 'DOB_VIOLATIONS',
@@ -22,6 +24,7 @@ export const DOBVIOLATIONS = {
 
 export const ECBVIOLATIONS = {
   name: 'ECB Violations',
+  queryName: 'ecbviolations',
   model: 'ecbviolation',
   url: '/ecbviolations/',
   constant: 'ECB_VIOLATIONS',
@@ -32,6 +35,7 @@ export const ECBVIOLATIONS = {
 
 export const HPDCOMPLAINTS = {
   name: 'HPD Complaints',
+  queryName: 'hpdcomplaints',
   model: 'hpdcomplaint',
   url: '/hpdcomplaints/',
   constant: 'HPD_COMPLAINTS',
@@ -42,6 +46,7 @@ export const HPDCOMPLAINTS = {
 
 export const DOBCOMPLAINTS = {
   name: 'DOB Complaints',
+  queryName: 'dobcomplaints',
   model: 'dobcomplaint',
   url: '/dobcomplaints/',
   constant: 'DOB_COMPLAINTS',
@@ -52,6 +57,7 @@ export const DOBCOMPLAINTS = {
 
 export const EVICTIONS = {
   name: 'Evictions',
+  queryName: 'evictions',
   model: 'eviction',
   url: '/evictions/',
   constant: 'EVICTIONS',

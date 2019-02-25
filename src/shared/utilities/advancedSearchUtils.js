@@ -112,6 +112,7 @@ const constructConditionFill = conditionGroup => {
 }
 
 export const convertConditionMappingToSentence = q => {
+  if (!q.length || !q[0].filters.length) return 'Show me properties that have...'
   return `Show me properties that have ${q
     .map((conditionGroup, index) => {
       return `${convertConditionGroupToSentence(conditionGroup, index)}${

@@ -25,6 +25,6 @@ export const updateFilter = (conditionIndex, filterIndex, newFilter) => ({
 
 export const removeFilter = (conditionIndex, filterIndex) => ({
   type: c.REMOVE_FILTER,
-  filterIndex,
   conditionIndex,
+  filterIndex,
 })

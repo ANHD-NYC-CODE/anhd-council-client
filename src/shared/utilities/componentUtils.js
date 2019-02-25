@@ -1,21 +1,26 @@
 import React from 'react'
 import Select from 'react-select'
 import { Form } from 'react-bootstrap'
+import DateField from 'AdvancedSearch/Filter/DateFilter'
 
-export const convertFieldsToComponents = field => {
+export const convertFieldsToComponents = (field, filterValues = {}) => {
   switch (field.type) {
     case 'INTEGER':
       return (
         <div>
-          <Select options={field.options} value={field.options.find(option => option.value === 'gte')} />
-          <Form.Control type="number" defaultValue="10" />
+          <Select
+            name="comparison"
+            options={field.options}
+            defaultValue={field.options.find(option => option.value === 'gte')}
+            value={field.options.find(option => option.value === filterValues.comparison)}
+          />
+          <Form.Control name="value" type="number" defaultValue="10" value={filterValues.value} />
         </div>
       )
     case 'DATE':
       return (
         <div>
-          <Select options={field.options} value={field.options.find(option => option.value === 'start')} />
-          <Form.Control type="date" defaultValue="01/01/2017" />
+          <DateField field={field} filterValues={filterValues} />
         </div>
       )
   }

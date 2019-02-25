@@ -15,7 +15,7 @@ const DistictMapShow = props => {
         dataset={d.HPDVIOLATIONS}
         recordsFetch={getCouncilPropertySummary}
         reducerPath={`council.districtPropertySummaries.${constructActionKey(d.HPDVIOLATIONS.constant, {
-          type: d.HPDVIOLATIONS.name,
+          type: d.HPDVIOLATIONS.queryName,
           comparison: 'gte',
           value: '10',
           startDate: '2017-01-31',
@@ -24,7 +24,7 @@ const DistictMapShow = props => {
           <BuildingHistoryTable title={title} records={records} loading={loading} error={error} />
         )}
         title="Properties with +10 HPD Violations Last Month"
-        urlParams={{ type: d.HPDVIOLATIONS.name, comparison: 'gte', value: '10', startDate: '2019-01-01' }}
+        urlParams={{ type: d.HPDVIOLATIONS.queryName, comparison: 'gte', value: '10', startDate: '2019-01-01' }}
       />
     </div>
   )

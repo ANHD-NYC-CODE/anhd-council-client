@@ -12,8 +12,8 @@ export const AMOUNTDATE = {
       type: 'DATE',
       options: [
         { value: 'range', label: 'From/To' },
-        { value: 'start', label: 'Since' },
-        { value: 'end', label: 'Before' },
+        { value: 'startDate', label: 'Since' },
+        { value: 'endDate', label: 'Before' },
       ],
     },
   ],
