@@ -14,9 +14,9 @@ describe('convertFilterToParams', () => {
           endDate: '2018-01-01',
         }
 
-        const result = `${ds.model}__${ds.dateField()}__gte=2017-01-01,${ds.model}__${ds.dateField()}__lte=2018-01-01,${
-          ds.model
-        }__${ds.amountField()}__gte=10`
+        const result = `${ds.queryName}__${ds.dateField()}__gte=2017-01-01,${
+          ds.queryName
+        }__${ds.dateField()}__lte=2018-01-01,${ds.queryName}__${ds.amountField()}__gte=10`
         expect(a.convertFilterToParams(object)).toEqual(result)
       })
     })
@@ -44,7 +44,7 @@ describe('convertConditionMappingToQ', () => {
       ]
 
       const result =
-        'condition_0=AND+group_0a=hpdviolation__approveddate__gte=2017-01-01,hpdviolation__approveddate__lte=2018-01-01,hpdviolation__count__gte=10+group_0b=dobviolation__issuedate__gte=2017-01-01,dobviolation__issuedate__lte=2018-01-01,dobviolation__count__gte=10+group_0c=ecbviolation__issuedate__gte=2017-01-01,ecbviolation__issuedate__lte=2018-01-01,ecbviolation__count__gte=10'
+        '*condition_0=AND+filter_0=hpdviolations__approveddate__gte=2017-01-01,hpdviolations__approveddate__lte=2018-01-01,hpdviolations__count__gte=10+filter_1=dobviolations__issuedate__gte=2017-01-01,dobviolations__issuedate__lte=2018-01-01,dobviolations__count__gte=10+filter_2=ecbviolations__issuedate__gte=2017-01-01,ecbviolations__issuedate__lte=2018-01-01,ecbviolations__count__gte=10'
       expect(a.convertConditionMappingToQ(conditions)).toEqual(result)
     })
   })
@@ -69,12 +69,12 @@ describe('convertConditionMappingToQ', () => {
       ]
 
       const result =
-        'condition_0=OR+group_0a=hpdviolation__approveddate__gte=2017-01-01,hpdviolation__approveddate__lte=2018-01-01,hpdviolation__count__gte=10+group_0b=dobviolation__issuedate__gte=2017-01-01,dobviolation__issuedate__lte=2018-01-01,dobviolation__count__gte=10+group_0c=ecbviolation__issuedate__gte=2017-01-01,ecbviolation__issuedate__lte=2018-01-01,ecbviolation__count__gte=10'
+        '*condition_0=OR+filter_0=hpdviolations__approveddate__gte=2017-01-01,hpdviolations__approveddate__lte=2018-01-01,hpdviolations__count__gte=10+filter_1=dobviolations__issuedate__gte=2017-01-01,dobviolations__issuedate__lte=2018-01-01,dobviolations__count__gte=10+filter_2=ecbviolations__issuedate__gte=2017-01-01,ecbviolations__issuedate__lte=2018-01-01,ecbviolations__count__gte=10'
       expect(a.convertConditionMappingToQ(conditions)).toEqual(result)
     })
   })
 
-  describe('1 AND group(1) 1 OR group(2)', () => {
+  describe('1 AND filter(1 1 OR filter(2', () => {
     it('converts the object into a Q', () => {
       let condition0Filters = [d.HPDVIOLATIONS].map(ds => {
         return {
@@ -109,12 +109,12 @@ describe('convertConditionMappingToQ', () => {
       ]
 
       const result =
-        'condition_0=AND+group_0a=*condition_1+group_0b=hpdviolation__approveddate__gte=2017-01-01,hpdviolation__approveddate__lte=2018-01-01,hpdviolation__count__gte=10+condition_1=OR+group_1a=dobviolation__issuedate__gte=2017-01-01,dobviolation__issuedate__lte=2018-01-01,dobviolation__count__gte=10+group_1b=ecbviolation__issuedate__gte=2017-01-01,ecbviolation__issuedate__lte=2018-01-01,ecbviolation__count__gte=10'
+        '*condition_0=AND+filter_0=condition_1+filter_1=hpdviolations__approveddate__gte=2017-01-01,hpdviolations__approveddate__lte=2018-01-01,hpdviolations__count__gte=10+*condition_1=OR+filter_0=dobviolations__issuedate__gte=2017-01-01,dobviolations__issuedate__lte=2018-01-01,dobviolations__count__gte=10+filter_1=ecbviolations__issuedate__gte=2017-01-01,ecbviolations__issuedate__lte=2018-01-01,ecbviolations__count__gte=10'
       expect(a.convertConditionMappingToQ(conditions)).toEqual(result)
     })
   })
 
-  describe('1 OR group(1) 1 AND group(2)', () => {
+  describe('1 OR filter(1 1 AND filter(2', () => {
     it('converts the object into a Q', () => {
       let condition0Filters = [d.HPDVIOLATIONS].map(ds => {
         return {
@@ -149,7 +149,7 @@ describe('convertConditionMappingToQ', () => {
       ]
 
       const result =
-        'condition_0=OR+group_0a=*condition_1+group_0b=hpdviolation__approveddate__gte=2017-01-01,hpdviolation__approveddate__lte=2018-01-01,hpdviolation__count__gte=10+condition_1=AND+group_1a=dobviolation__issuedate__gte=2017-01-01,dobviolation__issuedate__lte=2018-01-01,dobviolation__count__gte=10+group_1b=ecbviolation__issuedate__gte=2017-01-01,ecbviolation__issuedate__lte=2018-01-01,ecbviolation__count__gte=10'
+        '*condition_0=OR+filter_0=condition_1+filter_1=hpdviolations__approveddate__gte=2017-01-01,hpdviolations__approveddate__lte=2018-01-01,hpdviolations__count__gte=10+*condition_1=AND+filter_0=dobviolations__issuedate__gte=2017-01-01,dobviolations__issuedate__lte=2018-01-01,dobviolations__count__gte=10+filter_1=ecbviolations__issuedate__gte=2017-01-01,ecbviolations__issuedate__lte=2018-01-01,ecbviolations__count__gte=10'
       expect(a.convertConditionMappingToQ(conditions)).toEqual(result)
     })
   })
@@ -204,7 +204,7 @@ describe('convertConditionMappingToQ', () => {
       ]
 
       const result =
-        'condition_0=AND+group_0a=*condition_1+group_0b=hpdviolation__approveddate__gte=2017-01-01,hpdviolation__approveddate__lte=2018-01-01,hpdviolation__count__gte=10+condition_1=OR+group_1a=*condition_2+group_1b=dobviolation__issuedate__gte=2017-01-01,dobviolation__issuedate__lte=2018-01-01,dobviolation__count__gte=10+group_1c=ecbviolation__issuedate__gte=2017-01-01,ecbviolation__issuedate__lte=2018-01-01,ecbviolation__count__gte=10+condition_2=AND+group_2a=hpdcomplaint__receiveddate__gte=2017-01-01,hpdcomplaint__receiveddate__lte=2018-01-01,hpdcomplaint__count__gte=10+group_2b=dobcomplaint__dateentered__gte=2017-01-01,dobcomplaint__dateentered__lte=2018-01-01,dobcomplaint__count__gte=10'
+        '*condition_0=AND+filter_0=condition_1+filter_1=hpdviolations__approveddate__gte=2017-01-01,hpdviolations__approveddate__lte=2018-01-01,hpdviolations__count__gte=10+*condition_1=OR+filter_0=condition_2+filter_1=dobviolations__issuedate__gte=2017-01-01,dobviolations__issuedate__lte=2018-01-01,dobviolations__count__gte=10+filter_2=ecbviolations__issuedate__gte=2017-01-01,ecbviolations__issuedate__lte=2018-01-01,ecbviolations__count__gte=10+*condition_2=AND+filter_0=hpdcomplaints__receiveddate__gte=2017-01-01,hpdcomplaints__receiveddate__lte=2018-01-01,hpdcomplaints__count__gte=10+filter_1=dobcomplaints__dateentered__gte=2017-01-01,dobcomplaints__dateentered__lte=2018-01-01,dobcomplaints__count__gte=10'
       expect(a.convertConditionMappingToQ(conditions)).toEqual(result)
     })
   })
@@ -306,7 +306,7 @@ describe('convertConditionMappingToSentence', () => {
     })
   })
 
-  describe('1 AND group(1) 1 OR group(2)', () => {
+  describe('1 AND filter(1 1 OR filter(2', () => {
     it('converts the object into a sentence', () => {
       let condition0Filters = [d.HPDVIOLATIONS].map(ds => {
         return {
@@ -346,7 +346,7 @@ describe('convertConditionMappingToSentence', () => {
     })
   })
 
-  describe('1 OR group(1) 1 AND group(2)', () => {
+  describe('1 OR filter(1 1 AND filter(2', () => {
     it('converts the object into a Q', () => {
       let condition0Filters = [d.HPDVIOLATIONS].map(ds => {
         return {

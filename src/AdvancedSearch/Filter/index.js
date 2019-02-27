@@ -67,7 +67,7 @@ class Filter extends React.Component {
 
           {this.state.filterModel && (
             <div>
-              <input type="hidden" value={this.state.dataset.model} />
+              <input type="hidden" value={this.state.dataset.queryName} />
 
               {this.state.filterModel.fields.map((field, index) => {
                 return <div key={`filterField-${index}`}>{convertFieldsToComponents(field, this.state.filter)}</div>

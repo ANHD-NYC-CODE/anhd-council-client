@@ -1,16 +1,16 @@
 import moment from 'moment'
 
 const constructAmountFilter = (dataset, comparison, value) => {
-  return `${dataset.model}__${dataset.amountField()}__${comparison}=${value}`
+  return `${dataset.queryName}__${dataset.amountField()}__${comparison}=${value}`
 }
 
 const constructDateFilter = (dataset, startDate = null, endDate = null) => {
   let filters = []
   if (startDate) {
-    filters.push(`${dataset.model}__${dataset.dateField()}__gte=${startDate}`)
+    filters.push(`${dataset.queryName}__${dataset.dateField()}__gte=${startDate}`)
   }
   if (endDate) {
-    filters.push(`${dataset.model}__${dataset.dateField()}__lte=${endDate}`)
+    filters.push(`${dataset.queryName}__${dataset.dateField()}__lte=${endDate}`)
   }
 
   return filters.join(',')
@@ -32,13 +32,13 @@ export const convertFilterToParams = object => {
   return filters.join(',')
 }
 
-const convertConditionGroupToString = (filters, groupNumber) => {
+const convertConditionGroupToString = filters => {
   return filters
     .map((filterObject, index) => {
-      const groupLabel = `group_${groupNumber}${String.fromCharCode(97 + index)}`
+      const groupLabel = `filter_${index}`
 
       if (filterObject.conditionGroup) {
-        return `${groupLabel}=*condition_${filterObject.conditionGroup}`
+        return `${groupLabel}=condition_${filterObject.conditionGroup}`
       } else {
         return `${groupLabel}=${convertFilterToParams(filterObject)}`
       }
@@ -50,7 +50,7 @@ export const convertConditionMappingToQ = q => {
   return q
     .map(
       (conditionGroup, index) =>
-        `condition_${index}=${conditionGroup.type}+${convertConditionGroupToString(conditionGroup.filters, index)}`
+        `*condition_${index}=${conditionGroup.type}+${convertConditionGroupToString(conditionGroup.filters)}`
     )
     .join('+')
 }
