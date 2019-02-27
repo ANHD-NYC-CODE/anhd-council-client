@@ -49,7 +49,7 @@ class Condition extends React.Component {
             filter={filter}
             filterIndex={filterIndex}
             filterModel={Object.entries(d).find(ds => ds[1] == filter.dataset)[1].filter}
-            key={`filter-${this.props.index}-${filter.type}`}
+            key={`filter-${this.props.index}-${filter.dataset.name}`}
           />
         )
       }

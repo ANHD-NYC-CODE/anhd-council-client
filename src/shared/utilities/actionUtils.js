@@ -45,7 +45,8 @@ export const handleCatchError = (error, type, dispatch) => {
     }
   }
   dispatch(errorActions.handleFailure(type, errorStatus, errorMessage))
-  toast.error(`Error: ${error.response.status} - ${errorMessage}`)
+  toast.error(`Error: ${errorStatus} - ${errorMessage}`)
+
   dispatch(loadingActions.handleCompletedRequest(type))
 }
 

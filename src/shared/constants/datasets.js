@@ -8,6 +8,11 @@ export const HPDVIOLATIONS = {
   dateField: () => 'approveddate',
   amountField: () => 'count',
   filter: f.AMOUNTDATE,
+  defaultFilterValues: {
+    comparison: 'gte',
+    value: '10',
+    startDate: '2018-01-01',
+  },
 }
 
 export const DOBVIOLATIONS = {
@@ -18,6 +23,11 @@ export const DOBVIOLATIONS = {
   dateField: () => 'issuedate',
   amountField: () => 'count',
   filter: f.AMOUNTDATE,
+  defaultFilterValues: {
+    comparison: 'gte',
+    value: '10',
+    startDate: '2018-01-01',
+  },
 }
 
 export const ECBVIOLATIONS = {
@@ -28,6 +38,11 @@ export const ECBVIOLATIONS = {
   dateField: () => 'issuedate',
   amountField: () => 'count',
   filter: f.AMOUNTDATE,
+  defaultFilterValues: {
+    comparison: 'gte',
+    value: '10',
+    startDate: '2017-01-01',
+  },
 }
 
 export const HPDCOMPLAINTS = {
@@ -38,6 +53,11 @@ export const HPDCOMPLAINTS = {
   dateField: () => 'receiveddate',
   amountField: () => 'count',
   filter: f.AMOUNTDATE,
+  defaultFilterValues: {
+    comparison: 'gte',
+    value: '10',
+    startDate: '2017-01-01',
+  },
 }
 
 export const DOBCOMPLAINTS = {
@@ -48,6 +68,11 @@ export const DOBCOMPLAINTS = {
   dateField: () => 'dateentered',
   amountField: () => 'count',
   filter: f.AMOUNTDATE,
+  defaultFilterValues: {
+    comparison: 'gte',
+    value: '10',
+    startDate: '2017-01-01',
+  },
 }
 
 export const EVICTIONS = {
@@ -58,4 +83,9 @@ export const EVICTIONS = {
   dateField: () => 'executeddate',
   amountField: () => 'count',
   filter: f.AMOUNTDATE,
+  defaultFilterValues: {
+    comparison: 'gte',
+    value: '1',
+    startDate: '2017-01-01',
+  },
 }

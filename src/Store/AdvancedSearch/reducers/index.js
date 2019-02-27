@@ -7,6 +7,7 @@ export const initialState = {
       filters: [],
     },
   ],
+  results: undefined,
 }
 
 export const advancedSearchReducer = (state = Object.freeze(initialState), action = { data: [] }) => {
@@ -82,6 +83,12 @@ export const advancedSearchReducer = (state = Object.freeze(initialState), actio
           condition,
           ...newConditions.slice(action.conditionIndex + 1),
         ],
+      }
+    }
+    case c.HANDLE_GET_ADVANCED_SEARCH: {
+      return {
+        ...state,
+        results: action.data,
       }
     }
 

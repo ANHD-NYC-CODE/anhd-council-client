@@ -22,11 +22,11 @@ class Filter extends React.Component {
     this.constructFilter = this.constructFilter.bind(this)
     this.removeFilter = this.removeFilter.bind(this)
     this.submitFilter = this.submitFilter.bind(this)
+    this.updateFilter = this.updateFilter.bind(this)
   }
 
   constructFilter(dataset) {
-    this.setState({ dataset: dataset })
-    this.setState({ filterModel: dataset.filter })
+    this.setState({ dataset: dataset, filterModel: dataset.filter, filter: dataset.defaultFilterValues })
   }
 
   removeFilter() {
@@ -46,6 +46,22 @@ class Filter extends React.Component {
     filter['dataset'] = this.state.dataset
     this.props.dispatch(addFilter(this.props.conditionIndex, filter))
     this.setState(this.initialState)
+  }
+
+  updateFilter(e) {
+    if (e.preventDefault) {
+      e.preventDefault()
+      e.stopPropagation()
+      e = e.currentTarget
+    }
+
+    this.setState({
+      ...this.state,
+      filter: {
+        ...this.state.filter,
+        [e.name]: e.value,
+      },
+    })
   }
 
   render() {
@@ -70,7 +86,11 @@ class Filter extends React.Component {
               <input type="hidden" value={this.state.dataset.queryName} />
 
               {this.state.filterModel.fields.map((field, index) => {
-                return <div key={`filterField-${index}`}>{convertFieldsToComponents(field, this.state.filter)}</div>
+                return (
+                  <div key={`filterField-${index}`}>
+                    {convertFieldsToComponents(field, this.state.filter, this.updateFilter)}
+                  </div>
+                )
               })}
 
               {this.state.creatingFilter && <button type="submit">Create</button>}

@@ -1,4 +1,9 @@
+import { constructAxiosGet } from 'shared/utilities/Axios'
 import * as c from '../constants'
+import * as u from 'shared/constants/urls'
+
+import { convertConditionMappingToQ } from 'shared/utilities/advancedSearchUtils'
+
 export const addNewCondition = conditionIndex => {
   return {
     type: c.ADD_NEW_CONDITION,
@@ -28,3 +33,19 @@ export const removeFilter = (conditionIndex, filterIndex) => ({
   conditionIndex,
   filterIndex,
 })
+
+export const handleGetAdvancedSearch = response => ({
+  type: c.HANDLE_GET_ADVANCED_SEARCH,
+  data: response.data,
+})
+
+export const getAdvancedSearch = conditions => (dispatch, access_token) => {
+  return constructAxiosGet(
+    `${u.PROPERTY_URL}`,
+    { q: convertConditionMappingToQ(conditions) },
+    access_token,
+    dispatch,
+    c.GET_ADVANCED_SEARCH,
+    handleGetAdvancedSearch
+  )
+}

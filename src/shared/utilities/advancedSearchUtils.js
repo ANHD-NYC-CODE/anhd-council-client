@@ -43,17 +43,20 @@ const convertConditionGroupToString = filters => {
         return `${groupLabel}=${convertFilterToParams(filterObject)}`
       }
     })
-    .join('+')
+    .join(' ')
 }
 
-export const convertConditionMappingToQ = q => {
-  return q
+export const convertConditionMappingToQ = conditions => {
+  return conditions
     .map(
       (conditionGroup, index) =>
-        `*condition_${index}=${conditionGroup.type}+${convertConditionGroupToString(conditionGroup.filters)}`
+        `*condition_${index}=${conditionGroup.type} ${convertConditionGroupToString(conditionGroup.filters)}`
     )
-    .join('+')
+    .join(' ')
 }
+
+//////////////////
+// Sentence
 
 const constructDateSentence = (dataset, startDate = null, endDate = null) => {
   if (startDate && endDate) {
@@ -80,8 +83,6 @@ const constructAmountSentence = (dataset, comparison, value) => {
   return `${constructComparisonString(comparison)} ${value} ${dataset.name}`
 }
 
-//////////////////
-// Sentence
 export const convertFilterToSentence = object => {
   // converts an objects like:
   // const object = { dataset: ds, comparison: 'gte', value: '10', startDate '2017-01-01', endDate: '2018-01-01' }

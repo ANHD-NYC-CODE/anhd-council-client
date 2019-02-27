@@ -17,14 +17,16 @@ class DateField extends React.Component {
   renderDateConfig(filterValues) {
     switch (this.state.config) {
       case 'startDate':
-        return <Form.Control name="startDate" type="date" defaultValue="2017-01-01" value={filterValues.startDate} />
+        return (
+          <Form.Control name="startDate" onChange={this.props.onChange} type="date" value={filterValues.startDate} />
+        )
       case 'endDate':
-        return <Form.Control name="endDate" type="date" defaultValue="2017-01-01" value={filterValues.endDate} />
+        return <Form.Control name="endDate" onChange={this.props.onChange} type="date" value={filterValues.endDate} />
       default:
         return (
           <div>
-            <Form.Control name="startDate" type="date" defaultValue="2017-01-01" value={filterValues.startDate} /> to{' '}
-            <Form.Control name="endDate" type="date" defaultValue="2017-01-01" value={filterValues.endDate} />
+            <Form.Control name="startDate" onChange={this.props.onChange} type="date" value={filterValues.startDate} />{' '}
+            to <Form.Control name="endDate" onChange={this.props.onChange} type="date" value={filterValues.endDate} />
           </div>
         )
     }
@@ -44,7 +46,6 @@ class DateField extends React.Component {
       <div className="date-field">
         <Select
           options={this.props.field.options}
-          defaultValue={this.props.field.options.find(option => option.value === this.startingConfig)}
           onChange={e => this.setState({ config: e.value })}
           value={this.props.field.options.find(option => option.value === chooseDateConfig(this.props.filterValues))}
         />
@@ -57,6 +58,7 @@ class DateField extends React.Component {
 DateField.propTypes = {
   field: PropTypes.object,
   filterValues: PropTypes.object,
+  onChange: PropTypes.func,
 }
 
 export default DateField
