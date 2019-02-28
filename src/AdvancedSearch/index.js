@@ -9,6 +9,7 @@ import { requestWithAuth } from 'shared/utilities/authUtils'
 import Layout from 'Layout'
 import AdvancedSearchSentence from 'AdvancedSearch/Sentence'
 import BuildingHistoryTable from 'BuildingLookup/BuildingHistoryTable'
+import { Button } from 'react-bootstrap'
 
 import Condition from 'AdvancedSearch/Condition'
 
@@ -45,9 +46,9 @@ class AdvancedSearch extends React.Component {
           key={'condition-0'}
           index={0}
         />
-        <button onClick={this.submitSearch} type="submit">
+        <Button onClick={this.submitSearch} type="submit" variant="primary">
           Submit
-        </button>
+        </Button>
       </Layout>
     )
   }

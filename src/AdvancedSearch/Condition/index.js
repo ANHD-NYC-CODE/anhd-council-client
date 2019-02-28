@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import * as d from 'shared/constants/datasets'
 import { addNewCondition, removeLastCondition } from 'Store/AdvancedSearch/actions'
+import { Button } from 'react-bootstrap'
 
 import Filter from 'AdvancedSearch/Filter'
 
@@ -58,10 +59,16 @@ class Condition extends React.Component {
     return (
       <div className="condition">
         <h1>{this.props.condition.type}</h1>
-        {!this.containsCondition() && <button onClick={() => this.addCondition()}>Add Condition</button>}
+        {!this.containsCondition() && (
+          <Button onClick={() => this.addCondition()} variant="outline-primary">
+            Add Condition
+          </Button>
+        )}
 
         {this.props.index !== 0 && this.props.index === this.props.conditions.length - 1 && (
-          <button onClick={() => this.props.dispatch(removeLastCondition())}>Remove Condition</button>
+          <Button onClick={() => this.props.dispatch(removeLastCondition())} variant="outline-danger">
+            Remove Condition
+          </Button>
         )}
 
         {this.props.condition.filters.map((filter, index) => {

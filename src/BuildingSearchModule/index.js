@@ -51,8 +51,6 @@ class BuildingSearchModule extends React.Component {
     const selectedResult = result || this.state.selectedResult || this.props.search.results[0]
     if (!selectedResult) return
     this.setState({ selectedResult: selectedResult })
-    // this.props.dispatch(readBuildingById(selectedResult.id))
-    this.props.setViewCoordinates(selectedResult.representativePoint, 17)
     this.props.dispatch(clearSearch())
   }
 

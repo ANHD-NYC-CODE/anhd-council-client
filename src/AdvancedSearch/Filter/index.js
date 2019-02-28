@@ -4,7 +4,8 @@ import { convertFieldsToComponents } from 'shared/utilities/componentUtils'
 import * as d from 'shared/constants/datasets'
 import { addFilter, removeFilter } from 'Store/AdvancedSearch/actions'
 
-import Select from 'react-select'
+import CustomSelect from 'shared/components/Select'
+import { Form, Button, Col } from 'react-bootstrap'
 
 class Filter extends React.Component {
   constructor(props) {
@@ -74,33 +75,32 @@ class Filter extends React.Component {
 
     return (
       <div className="filter">
-        <form onSubmit={this.submitFilter}>
-          {this.state.creatingFilter && (
-            <Select options={datasetOptions} onChange={e => this.constructFilter(e.value)} />
-          )}
-
-          {this.props.filter && <div>{this.state.dataset.name}</div>}
-
-          {this.state.filterModel && (
-            <div>
-              <input type="hidden" value={this.state.dataset.queryName} />
-
-              {this.state.filterModel.fields.map((field, index) => {
-                return (
-                  <div key={`filterField-${index}`}>
-                    {convertFieldsToComponents(field, this.state.filter, this.updateFilter)}
-                  </div>
-                )
+        <Form className="filter" onSubmit={this.submitFilter}>
+          <Form.Row>
+            {this.state.creatingFilter && (
+              <Col md="3">
+                <CustomSelect options={datasetOptions} onChange={e => this.constructFilter(e.value)} size="sm" />
+              </Col>
+            )}
+            {this.props.filter && <Form.Label column>{this.state.dataset.name}</Form.Label>}
+            {this.state.dataset && <input type="hidden" value={this.state.dataset.queryName} />}
+            {this.state.filterModel &&
+              this.state.filterModel.fields.map((field, index) => {
+                return convertFieldsToComponents(field, this.state.filter, this.updateFilter, index)
               })}
-
-              {this.state.creatingFilter && <button type="submit">Create</button>}
-            </div>
-          )}
-        </form>
+            {this.state.filterModel && this.state.creatingFilter && <Button type="submit">Create</Button>}
+          </Form.Row>
+        </Form>
         {!this.state.creatingFilter && !this.state.filter && (
-          <button onClick={() => this.setState({ creatingFilter: true })}>Add Filter</button>
+          <Button onClick={() => this.setState({ creatingFilter: true })} variant="outline-success">
+            Add Filter
+          </Button>
         )}
-        {this.props.filter && <button onClick={this.removeFilter}>Remove Filter</button>}
+        {this.props.filter && (
+          <Button onClick={this.removeFilter} variant="outline-danger">
+            Remove Filter
+          </Button>
+        )}
       </div>
     )
   }

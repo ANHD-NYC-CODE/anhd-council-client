@@ -6,16 +6,29 @@ import { LinkContainer } from 'react-router-bootstrap'
 import './style.scss'
 
 const SearchResultRow = props => {
-  return (
-    <tr className="search-result-row">
-      <td>
-        <MapMarkerIcon />
-      </td>
-      <LinkContainer to={`/buildings/${props.result.bin}`}>
-        <td>{`${props.result.housenumber} ${props.result.street}, ${props.result.borough}`}</td>
-      </LinkContainer>
-    </tr>
-  )
+  if (props.result.street) {
+    return (
+      <tr className="search-result-row">
+        <td>
+          <MapMarkerIcon />
+        </td>
+        <LinkContainer to={`/buildings/${props.result.bin}`}>
+          <td>{`${props.result.housenumber} ${props.result.street}, ${props.result.borough}`}</td>
+        </LinkContainer>
+      </tr>
+    )
+  } else {
+    return (
+      <tr className="search-result-row">
+        <td>
+          <MapMarkerIcon />
+        </td>
+        <td>
+          {props.result.bbl} - {props.result.propertyaddress} - {props.result.propertyborough}
+        </td>
+      </tr>
+    )
+  }
 }
 
 SearchResultRow.propTypes = {

@@ -1,56 +1,96 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Select from 'react-select'
-import { Form } from 'react-bootstrap'
+import CustomSelect from 'shared/components/Select'
+import { Form, Row, Col } from 'react-bootstrap'
 
 class DateField extends React.Component {
   constructor(props) {
     super(props)
     this.startingConfig = 'startDate'
     this.state = {
-      config: this.startingConfig,
+      config: this.chooseDateConfig(this.props.filterValues),
     }
 
     this.renderDateConfig = this.renderDateConfig.bind(this)
+    this.chooseDateConfig = this.chooseDateConfig.bind(this)
+  }
+
+  chooseDateConfig(filterValues) {
+    if (filterValues.startDate && filterValues.endDate) {
+      return 'range'
+    } else if (filterValues.startDate) {
+      return 'startDate'
+    } else if (filterValues.endDate) {
+      return 'endDate'
+    }
   }
 
   renderDateConfig(filterValues) {
     switch (this.state.config) {
       case 'startDate':
         return (
-          <Form.Control name="startDate" onChange={this.props.onChange} type="date" value={filterValues.startDate} />
+          <Form.Control
+            name="startDate"
+            onChange={this.props.onChange}
+            size="sm"
+            type="date"
+            value={filterValues.startDate}
+          />
         )
       case 'endDate':
-        return <Form.Control name="endDate" onChange={this.props.onChange} type="date" value={filterValues.endDate} />
+        return (
+          <Form.Control
+            name="endDate"
+            onChange={this.props.onChange}
+            type="date"
+            size="sm"
+            value={filterValues.endDate}
+          />
+        )
       default:
         return (
-          <div>
-            <Form.Control name="startDate" onChange={this.props.onChange} type="date" value={filterValues.startDate} />{' '}
-            to <Form.Control name="endDate" onChange={this.props.onChange} type="date" value={filterValues.endDate} />
-          </div>
+          <Row>
+            <Col md="6">
+              <Form.Control
+                name="startDate"
+                onChange={this.props.onChange}
+                size="sm"
+                type="date"
+                value={filterValues.startDate}
+              />{' '}
+            </Col>
+            <Col md="6">
+              <Form.Control
+                name="endDate"
+                onChange={this.props.onChange}
+                size="sm"
+                type="date"
+                value={filterValues.endDate}
+              />
+            </Col>
+          </Row>
         )
     }
   }
 
   render() {
-    const chooseDateConfig = filterValues => {
-      if (filterValues.startDate && filterValues.endDate) {
-        return 'range'
-      } else if (filterValues.startDate) {
-        return 'startDate'
-      } else if (filterValues.endDate) {
-        return 'endDate'
-      }
-    }
     return (
-      <div className="date-field">
-        <Select
-          options={this.props.field.options}
-          onChange={e => this.setState({ config: e.value })}
-          value={this.props.field.options.find(option => option.value === chooseDateConfig(this.props.filterValues))}
-        />
-        {this.renderDateConfig(this.props.filterValues)}
-      </div>
+      <Col md="12">
+        <Row>
+          <Col md="3">
+            <CustomSelect
+              options={this.props.field.options}
+              onChange={e => this.setState({ config: e.value })}
+              size="sm"
+              value={this.props.field.options.find(option => option.value === this.state.config)}
+            />
+          </Col>
+
+          <Col md="9" className="date-field">
+            {this.renderDateConfig(this.props.filterValues)}
+          </Col>
+        </Row>
+      </Col>
     )
   }
 }

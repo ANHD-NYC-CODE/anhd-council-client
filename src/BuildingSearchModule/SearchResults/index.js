@@ -6,13 +6,21 @@ import './style.scss'
 import { Table } from 'react-bootstrap'
 const SearchResults = props => {
   return (
-    <Table className="search-results" size="sm" bordered hover striped>
+    <div>
       {props.loading && <div className="text-info">loading</div>}
       {props.error && <div className="text-danger">{props.error.message}</div>}
-      {props.results.map((result, index) => (
-        <SearchResultRow selectBuildingResult={props.selectBuildingResult} key={`result-${index}`} result={result} />
-      ))}
-    </Table>
+      <Table className="search-results" size="sm" bordered hover>
+        <tbody>
+          {props.results.map((result, index) => (
+            <SearchResultRow
+              selectBuildingResult={props.selectBuildingResult}
+              key={`result-${index}`}
+              result={result}
+            />
+          ))}
+        </tbody>
+      </Table>
+    </div>
   )
 }
 
