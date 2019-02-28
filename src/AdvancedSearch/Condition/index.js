@@ -59,11 +59,9 @@ class Condition extends React.Component {
     return (
       <div className="condition">
         <h1>{this.props.condition.type}</h1>
-        {!this.containsCondition() && (
-          <Button onClick={() => this.addCondition()} variant="outline-primary">
-            Add Condition
-          </Button>
-        )}
+        <Button onClick={() => this.addCondition()} variant="outline-primary">
+          Add Condition
+        </Button>
 
         {this.props.index !== 0 && this.props.index === this.props.conditions.length - 1 && (
           <Button onClick={() => this.props.dispatch(removeLastCondition())} variant="outline-danger">
