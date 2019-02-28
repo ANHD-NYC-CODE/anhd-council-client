@@ -11,13 +11,14 @@ const SearchResults = props => {
       {props.error && <div className="text-danger">{props.error.message}</div>}
       <Table className="search-results" size="sm" bordered hover>
         <tbody>
-          {props.results.map((result, index) => (
-            <SearchResultRow
-              selectBuildingResult={props.selectBuildingResult}
-              key={`result-${index}`}
-              result={result}
-            />
-          ))}
+          {!!props.results.length &&
+            props.results.map((result, index) => (
+              <SearchResultRow
+                selectBuildingResult={props.selectBuildingResult}
+                key={`result-${index}`}
+                result={result}
+              />
+            ))}
         </tbody>
       </Table>
     </div>
