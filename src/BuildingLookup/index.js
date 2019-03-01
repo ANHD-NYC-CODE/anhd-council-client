@@ -11,6 +11,7 @@ import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
 import { resourceRouteChanged } from 'shared/utilities/routeUtils'
 import { getBuildingResource } from 'Store/Building/actions'
+import { constructActionKey } from 'shared/utilities/actionUtils'
 import Layout from 'Layout'
 import LeafletMap from 'LeafletMap'
 import BuildingSearchModule from '../BuildingSearchModule'
@@ -58,20 +59,22 @@ class BuildingLookup extends React.Component {
             </Jumbotron>
             <h2>Building History</h2>
             <RecordsFetchModule
+              actionKey={constructActionKey([c.GET_BUILDING_RESOURCE, d.HPDVIOLATIONS.constant])}
               id={this.props.id}
               dataset={d.HPDVIOLATIONS}
               recordsFetch={getBuildingResource}
-              reducerPath={`building.${d.HPDVIOLATIONS.constant}`}
+              reducerPath="building"
               render={(title, records, loading, error) => (
                 <BuildingHistoryTable loading={loading} error={error} title={title} records={records} />
               )}
               title="HPD Violations"
             />
             <RecordsFetchModule
+              actionKey={constructActionKey([c.GET_BUILDING_RESOURCE, d.DOBVIOLATIONS.constant])}
               id={this.props.id}
               dataset={d.DOBVIOLATIONS}
               recordsFetch={getBuildingResource}
-              reducerPath={`building.${d.DOBVIOLATIONS.constant}`}
+              reducerPath="building"
               render={(title, records, loading, error) => (
                 <BuildingHistoryTable loading={loading} error={error} title={title} records={records} />
               )}

@@ -2,7 +2,7 @@ import { constructAxiosGet } from 'shared/utilities/Axios'
 import * as u from 'shared/constants/urls'
 
 import * as c from '../constants'
-import { constructActionKey, constructSimplePropertyParams } from 'shared/utilities/actionUtils'
+import { constructSimplePropertyParams } from 'shared/utilities/actionUtils'
 
 export const handleGetCouncils = (response, key = null) => ({
   type: c.HANDLE_GET_COUNCILS,
@@ -25,33 +25,42 @@ export const handleGetCouncilPropertySummary = (response, key = null) => ({
   key: key,
 })
 
-export const getCouncils = () => (dispatch, access_token) => {
-  return constructAxiosGet(u.COUNCILS_URL, null, access_token, dispatch, c.GET_COUNCILS, handleGetCouncils)
+export const getCouncils = () => (dispatch, getState, access_token) => {
+  return constructAxiosGet(dispatch, getState, u.COUNCILS_URL, null, access_token, c.GET_COUNCILS, handleGetCouncils)
 }
 
-export const getCouncil = id => (dispatch, access_token) => {
-  return constructAxiosGet(`${u.COUNCILS_URL}${id}/`, null, access_token, dispatch, c.GET_COUNCIL, handleGetCouncil)
-}
-
-export const getCouncilHousing = (id, params) => (dispatch, access_token) => {
+export const getCouncil = id => (dispatch, getState, access_token) => {
   return constructAxiosGet(
+    dispatch,
+    getState,
+    `${u.COUNCILS_URL}${id}/`,
+    null,
+    access_token,
+    c.GET_COUNCIL,
+    handleGetCouncil
+  )
+}
+
+export const getCouncilHousing = (id, params) => (dispatch, getState, access_token) => {
+  return constructAxiosGet(
+    dispatch,
+    getState,
     `${u.COUNCILS_URL}${id}/housing`,
     params,
     access_token,
-    dispatch,
     c.GET_COUNCIL_HOUSING,
     handleGetCouncilHousing
   )
 }
 
-export const getCouncilPropertySummary = (dataset, id, params) => (dispatch, access_token) => {
-  const CONSTANT = constructActionKey(dataset.constant, params)
+export const getCouncilPropertySummary = (dataset, id, params, actionKey) => (dispatch, getState, access_token) => {
   return constructAxiosGet(
+    dispatch,
+    getState,
     `${u.COUNCILS_URL}${id}${u.PROPERTY_URL}`,
     constructSimplePropertyParams(params),
     access_token,
-    dispatch,
-    CONSTANT,
+    actionKey,
     handleGetCouncilPropertySummary
   )
 }

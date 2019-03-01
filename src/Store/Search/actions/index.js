@@ -26,12 +26,13 @@ export const setSearchTimeout = event => ({
   data: event,
 })
 
-export const queryBuildingAddress = value => (dispatch, access_token) => {
+export const queryBuildingAddress = value => (dispatch, getState, access_token) => {
   return constructAxiosGet(
+    dispatch,
+    getState,
     SEARCH_URL,
     { fts: value },
     access_token,
-    dispatch,
     GET_BUILDING_SEARCH,
     handleReadSearchResponse
   )

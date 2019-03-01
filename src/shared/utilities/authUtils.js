@@ -50,7 +50,7 @@ export const requestMiddleware = () => {
     if (!request) {
       return next(action)
     } else if (!auth.refresh) {
-      return request(dispatch)
+      return request(dispatch, getState)
     }
 
     // Refresh token if token has been alive for over 4 min
@@ -58,13 +58,13 @@ export const requestMiddleware = () => {
       dispatch(refreshTokens(auth.refresh.token))
         .then(() => {
           auth = getState().auth
-          return request(dispatch, auth.access.token)
+          return request(dispatch, getState, auth.access.token)
         })
         .catch(() => {
           return dispatch(logoutUser())
         })
     } else {
-      return request(dispatch, auth.access.token)
+      return request(dispatch, getState, auth.access.token)
     }
   }
 }
@@ -72,6 +72,6 @@ export const requestMiddleware = () => {
 export const requestWithAuth = request => {
   return {
     type: 'AUTH_REQUEST',
-    request: (dispatch, access_token) => request(dispatch, access_token),
+    request: (dispatch, getState, access_token) => request(dispatch, getState, access_token),
   }
 }

@@ -24,7 +24,7 @@ export const handleUserLogout = () => {
   }
 }
 
-export const getUserProfile = () => (dispatch, access_token) => {
+export const getUserProfile = () => (dispatch, getState, access_token) => {
   dispatch(loadingActions.handleRequest(GET_USER_PROFILE))
   dispatch(errorActions.handleClearErrors(GET_USER_PROFILE))
 

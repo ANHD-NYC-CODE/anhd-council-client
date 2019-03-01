@@ -39,12 +39,13 @@ export const handleGetAdvancedSearch = response => ({
   data: response.data,
 })
 
-export const getAdvancedSearch = conditions => (dispatch, access_token) => {
+export const getAdvancedSearch = conditions => (dispatch, getState, access_token) => {
   return constructAxiosGet(
+    dispatch,
+    getState,
     `${u.PROPERTY_URL}`,
     { q: convertConditionMappingToQ(conditions) },
     access_token,
-    dispatch,
     c.GET_ADVANCED_SEARCH,
     handleGetAdvancedSearch
   )

@@ -8,16 +8,19 @@ export const Axios = axios.create({
   headers: { 'Content-type': 'application/json' },
 })
 
-export const constructAxiosGet = (url, params, access_token, dispatch, constant, handleAction) => {
-  handleActionDispatch(dispatch, constant)
-
+export const constructAxiosGet = (dispatch, getState, url, params, access_token, constant, handleAction) => {
+  const requestId = Math.floor(Math.random() * 1000000)
+  handleActionDispatch(dispatch, constant, requestId)
   return Axios.get(url, {
     params: { format: 'json', ...params },
     headers: typeof access_token === 'string' ? { authorization: `Bearer ${access_token}` } : null,
   })
     .then(response => {
-      dispatch(handleCompletedRequest(constant))
-      dispatch(handleAction(response, constant))
+      const requestIsValid = !!getState().loading.requests.filter(request => request.id === requestId).length
+      if (requestIsValid) {
+        dispatch(handleCompletedRequest(constant, requestId))
+        dispatch(handleAction(response, constant))
+      }
     })
     .catch(error => {
       handleCatchError(error, constant, dispatch)

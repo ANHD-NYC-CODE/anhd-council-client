@@ -6,7 +6,6 @@ import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
 import { requestWithAuth } from 'shared/utilities/authUtils'
 import { resourceRouteChanged } from 'shared/utilities/routeUtils'
-import { constructActionKey } from 'shared/utilities/actionUtils'
 
 class RecordsFetchModule extends React.Component {
   constructor(props) {
@@ -23,7 +22,7 @@ class RecordsFetchModule extends React.Component {
 
   getRecords(props) {
     if (!(props.loading || props.error || props.records) || resourceRouteChanged(this.props, props)) {
-      props.dispatch(requestWithAuth(props.recordsFetch(props.dataset, props.id, props.urlParams)))
+      props.dispatch(requestWithAuth(props.recordsFetch(props.dataset, props.id, props.urlParams, props.actionKey)))
     }
   }
 
@@ -49,12 +48,12 @@ RecordsFetchModule.propTypes = {
 }
 
 const mapStateToProps = (state, props) => {
-  const loadingSelector = createLoadingSelector([constructActionKey(props.dataset.constant, props.urlParams)])
-  const errorSelector = createErrorSelector([constructActionKey(props.dataset.constant, props.urlParams)])
+  const loadingSelector = createLoadingSelector([props.actionKey])
+  const errorSelector = createErrorSelector([props.actionKey])
 
   let records = undefined
   try {
-    records = resolvePath(state, `${props.reducerPath}`)
+    records = resolvePath(state, `${props.reducerPath}.${props.actionKey}`)
   } catch (err) {
     return
   }

@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import * as d from 'shared/constants/datasets'
+import * as c from 'Store/Council/constants'
 
 import { getCouncilPropertySummary } from 'Store/Council/actions'
 import { constructActionKey } from 'shared/utilities/actionUtils'
@@ -11,15 +12,11 @@ const DistictMapShow = props => {
   return (
     <div className="district-map-show">
       <RecordsFetchModule
+        actionKey={constructActionKey([c.GET_COUNCIL_PROPERTIES, d.HPDVIOLATIONS.constant])}
         id={props.id}
         dataset={d.HPDVIOLATIONS}
         recordsFetch={getCouncilPropertySummary}
-        reducerPath={`council.districtPropertySummaries.${constructActionKey(d.HPDVIOLATIONS.constant, {
-          type: d.HPDVIOLATIONS.queryName,
-          comparison: 'gte',
-          value: '10',
-          startDate: '2017-01-31',
-        })}`}
+        reducerPath="council.districtPropertySummaries"
         render={(title, records, loading, error) => (
           <BuildingHistoryTable title={title} records={records} loading={loading} error={error} />
         )}

@@ -10,6 +10,8 @@ export const GET_COUNCIL_HOUSING = 'GET_COUNCIL_HOUSING'
 export const HANDLE_GET_COUNCIL_PROPERTY_SUMMARY = 'HANDLE_GET_COUNCIL_PROPERTY_SUMMARY'
 export const GET_COUNCIL_PROPERTY_SUMMARY = 'GET_COUNCIL_PROPERTY_SUMMARY'
 
+export const GET_COUNCIL_PROPERTIES = 'GET_COUNCIL_PROPERTIES'
+
 export const constructSummaryConstant = (constant, params) => {
   const { type, value, comparison, startDate, endDate } = params
 

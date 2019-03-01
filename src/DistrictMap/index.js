@@ -46,7 +46,7 @@ class DistrictMap extends React.Component {
 
   syncToStore(props) {
     if (!props.id && props.district) {
-      this.handleDistrictChange({ value: props.district.coundist })
+      this.handleDistrictChange({ value: props.district.id })
     }
   }
 
@@ -62,7 +62,7 @@ class DistrictMap extends React.Component {
 
   render() {
     const options = this.props.districts
-      ? this.props.districts.map(council => ({ value: council.coundist, label: `District ${council.coundist}` }))
+      ? this.props.districts.map(council => ({ value: council.id, label: `District ${council.id}` }))
       : []
     return (
       <Layout>

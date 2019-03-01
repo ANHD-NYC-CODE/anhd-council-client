@@ -7,8 +7,9 @@ const ERROR_401_MESSAGE = 'Please login for access.'
 const ERROR_404_MESSAGE = 'Not found.'
 const ERROR_500_MESSAGE = 'Oops, something went wrong.'
 
-export const handleActionDispatch = (dispatch, constant) => {
-  dispatch(loadingActions.handleRequest(constant))
+export const handleActionDispatch = (dispatch, constant, requestId) => {
+  dispatch(loadingActions.handleCancelRequests(constant))
+  dispatch(loadingActions.handleRequest(constant, requestId))
   dispatch(errorActions.handleClearErrors(constant))
 }
 
@@ -30,7 +31,7 @@ const findErrorKeyValue = (status, data) => {
   }
 }
 
-export const handleCatchError = (error, type, dispatch) => {
+export const handleCatchError = (error, type, dispatch, requestId) => {
   let errorMessage = ''
   let errorStatus = ''
   if (!error.response) {
@@ -47,16 +48,11 @@ export const handleCatchError = (error, type, dispatch) => {
   dispatch(errorActions.handleFailure(type, errorStatus, errorMessage))
   toast.error(`Error: ${errorStatus} - ${errorMessage}`)
 
-  dispatch(loadingActions.handleCompletedRequest(type))
+  dispatch(loadingActions.handleCompletedRequest(type, requestId))
 }
 
-export const constructActionKey = (constant, params) => {
-  if (!params) return constant
-  const { type, value, comparison, sinceDate, endDate } = params
-  return [constant, type, comparison, value, sinceDate, endDate]
-    .filter(el => el)
-    .map(el => el.replace(' ', '').toUpperCase())
-    .join('_')
+export const constructActionKey = constants => {
+  return constants.filter(c => c).join('_')
 }
 
 export const constructSimplePropertyParams = params => {
