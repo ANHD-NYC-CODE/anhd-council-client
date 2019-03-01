@@ -47,11 +47,8 @@ const convertConditionGroupToString = filters => {
 }
 
 export const convertConditionMappingToQ = conditions => {
-  return conditions
-    .map(
-      (conditionGroup, index) =>
-        `*condition_${index}=${conditionGroup.type} ${convertConditionGroupToString(conditionGroup.filters)}`
-    )
+  return Object.keys(conditions)
+    .map(key => `*condition_${key}=${conditions[key].type} ${convertConditionGroupToString(conditions[key].filters)}`)
     .join(' ')
 }
 
@@ -113,11 +110,12 @@ const constructConditionFill = conditionGroup => {
 }
 
 export const convertConditionMappingToSentence = q => {
-  if (!q.length || !q[0].filters.length) return 'Show me properties that have...'
-  return `Show me properties that have ${q
-    .map((conditionGroup, index) => {
-      return `${convertConditionGroupToSentence(conditionGroup, index)}${
-        q.length > 1 && index !== q.length - 1 ? constructConditionFill(conditionGroup) : ''
+  const conditions = Object.keys(q)
+  if (!conditions.length) return 'Show me properties that have...'
+  return `Show me properties that have ${conditions
+    .map((key, index) => {
+      return `${convertConditionGroupToSentence(q[key])}${
+        conditions.length > 1 && index !== conditions.length - 1 ? constructConditionFill(q[key]) : ''
       }`
     })
     .join(' ')}.`
