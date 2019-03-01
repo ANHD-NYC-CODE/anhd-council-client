@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { convertConditionMappingToSentence } from 'shared/utilities/advancedSearchUtils'
+import { convertConditionMappingToSentence } from 'AdvancedSearch/utilities/sentenceUtils'
 
 const AdvancedSearchSentence = props => {
   return <div className="advanced-search-sentence">{convertConditionMappingToSentence(props.conditions)}</div>

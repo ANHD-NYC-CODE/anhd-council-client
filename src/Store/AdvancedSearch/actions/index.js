@@ -2,7 +2,7 @@ import { constructAxiosGet } from 'shared/utilities/Axios'
 import * as c from '../constants'
 import * as u from 'shared/constants/urls'
 
-import { convertConditionMappingToQ } from 'shared/utilities/advancedSearchUtils'
+import { convertConditionMappingToQ } from 'AdvancedSearch/utilities/advancedSearchUtils'
 
 export const addNewCondition = (parentKey, conditionKey) => {
   return {
