@@ -4,15 +4,17 @@ import * as u from 'shared/constants/urls'
 
 import { convertConditionMappingToQ } from 'shared/utilities/advancedSearchUtils'
 
-export const addNewCondition = conditionIndex => {
+export const addNewCondition = (parentKey, conditionKey) => {
   return {
     type: c.ADD_NEW_CONDITION,
-    conditionIndex,
+    parentKey,
+    conditionKey,
   }
 }
 
-export const removeLastCondition = () => ({
-  type: c.REMOVE_LAST_CONDITION,
+export const removeCondition = conditionKey => ({
+  type: c.REMOVE_CONDITION,
+  conditionKey,
 })
 
 export const addFilter = (conditionIndex, filter) => ({

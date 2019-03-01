@@ -7,66 +7,72 @@ describe('Advanced Search reducer', () => {
   })
 
   describe('ADD_NEW_CONDITION', () => {
+    const conditionId = '1'
     const condition1 = { type: 'OR', filters: [] }
     it('adds to condition array, adds opposite type, adds condition filter at end', () => {
       const state = {
-        conditions: [
-          {
+        conditions: {
+          '0': {
             type: 'AND',
             filters: [{ dataset: 1 }],
           },
-        ],
+        },
       }
       const condition0 = {
         type: 'AND',
-        filters: [{ dataset: 1 }, { conditionGroup: 1 }],
+        filters: [{ dataset: 1 }, { conditionGroup: conditionId }],
       }
-      expect(r.advancedSearchReducer(state, a.addNewCondition(0))).toEqual({
+      expect(r.advancedSearchReducer(state, a.addNewCondition('0', conditionId))).toEqual({
         ...r.initialState,
-        conditions: [condition0, condition1],
+        conditions: { '0': condition0, '1': condition1 },
       })
     })
   })
 
-  describe('REMOVE_LAST_CONDITION', () => {
+  describe('REMOVE_CONDITION', () => {
     const state = {
-      conditions: [
-        {
+      ...r.initialState,
+      conditions: {
+        '0': {
           type: 'AND',
           filters: [{ dataset: 1 }],
         },
-      ],
+      },
+      results: undefined,
     }
-    const condition = state.conditions[0]
+    const conditionId = '0'
+    const condition = state.conditions['0']
     it('replaces with the initial state', () => {
-      expect(r.advancedSearchReducer(state, a.removeLastCondition(condition))).toEqual({
+      expect(r.advancedSearchReducer(state, a.removeCondition(conditionId))).toEqual({
         ...r.initialState,
-        conditions: [r.initialState.conditions[0]],
+        conditions: { ...r.initialState.conditions },
       })
     })
 
     it('removes the last condition', () => {
+      const conditionId = '1'
       const state = {
-        conditions: [
-          {
+        ...r.initialState,
+        conditions: {
+          '0': {
             type: 'AND',
-            filters: [{ dataset: 1 }, { dataset: 2 }, { conditionGroup: 1 }],
+            filters: [{ dataset: 1 }, { dataset: 2 }, { conditionGroup: '1' }],
           },
-          {
+          [conditionId]: {
             type: 'OR',
             filters: [{ dataset: 3 }, { dataset: 4 }],
           },
-        ],
+        },
       }
 
-      expect(r.advancedSearchReducer(state, a.removeLastCondition(condition))).toEqual({
+      expect(r.advancedSearchReducer(state, a.removeCondition(conditionId))).toEqual({
         ...r.initialState,
-        conditions: [
-          {
+        conditions: {
+          '0': {
             type: 'AND',
             filters: [{ dataset: 1 }, { dataset: 2 }],
           },
-        ],
+        },
       })
     })
   })

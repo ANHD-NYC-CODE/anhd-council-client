@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import uuidv4 from 'uuid/v4'
 import * as d from 'shared/constants/datasets'
-import { addNewCondition, removeLastCondition } from 'Store/AdvancedSearch/actions'
+import { addNewCondition, removeCondition } from 'Store/AdvancedSearch/actions'
 import { Button } from 'react-bootstrap'
 
 import Filter from 'AdvancedSearch/Filter'
@@ -18,11 +19,11 @@ class Condition extends React.Component {
   }
 
   addCondition() {
-    this.props.dispatch(addNewCondition(this.props.index))
+    this.props.dispatch(addNewCondition(this.props.conditionKey, uuidv4()))
   }
 
   removeCondition() {
-    this.props.dispatch(removeLastCondition())
+    this.props.dispatch(removeCondition(this.props.conditionKey))
   }
 
   containsCondition() {
@@ -34,23 +35,23 @@ class Condition extends React.Component {
       if (filter.conditionGroup) {
         return (
           <Condition
-            key={`condition-${this.props.index + 1}`}
+            key={`condition-${this.props.conditionKey}`}
             conditions={this.props.conditions}
-            condition={this.props.conditions[this.props.index + 1]}
+            condition={this.props.conditions[filter.conditionGroup]}
             dispatch={this.props.dispatch}
-            index={this.props.index + 1}
+            conditionKey={filter.conditionGroup}
           />
         )
       } else {
         return (
           <Filter
-            conditionIndex={this.props.index}
+            conditionIndex={this.props.conditionKey}
             dataset={Object.entries(d).find(ds => ds[1] == filter.dataset)[1]}
             dispatch={this.props.dispatch}
             filter={filter}
             filterIndex={filterIndex}
             filterModel={Object.entries(d).find(ds => ds[1] == filter.dataset)[1].filter}
-            key={`filter-${this.props.index}-${filter.dataset.name}`}
+            key={`filter-${this.props.conditionKey}-${filter.dataset.name}`}
           />
         )
       }
@@ -63,17 +64,17 @@ class Condition extends React.Component {
           Add Condition
         </Button>
 
-        {this.props.index !== 0 && this.props.index === this.props.conditions.length - 1 && (
-          <Button onClick={() => this.props.dispatch(removeLastCondition())} variant="outline-danger">
+        {this.props.conditionKey !== '0' && (
+          <Button onClick={() => this.removeCondition()} variant="outline-danger">
             Remove Condition
           </Button>
         )}
 
-        {this.props.condition.filters.map((filter, index) => {
-          return renderFilterOrCondition(filter, index)
+        {this.props.condition.filters.map((filter, conditionKey) => {
+          return renderFilterOrCondition(filter, conditionKey)
         })}
 
-        <Filter dispatch={this.props.dispatch} conditionIndex={this.props.index} />
+        <Filter dispatch={this.props.dispatch} conditionIndex={this.props.conditionKey} />
       </div>
     )
   }
@@ -83,7 +84,7 @@ Condition.propTypes = {
   condition: PropTypes.object,
   conditions: PropTypes.array,
   dispatch: PropTypes.func,
-  index: PropTypes.number,
+  conditionKey: PropTypes.string,
 }
 
 export default Condition

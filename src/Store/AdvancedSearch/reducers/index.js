@@ -1,12 +1,12 @@
 import * as c from '../constants'
 
 export const initialState = {
-  conditions: [
-    {
+  conditions: {
+    '0': {
       type: 'AND',
       filters: [],
     },
-  ],
+  },
   results: undefined,
 }
 
@@ -14,29 +14,34 @@ export const advancedSearchReducer = (state = Object.freeze(initialState), actio
   switch (action.type) {
     case c.ADD_NEW_CONDITION: {
       const newCondition =
-        state.conditions[state.conditions.length - 1].type === 'AND'
-          ? { type: 'OR', filters: [] }
-          : { type: 'AND', filters: [] }
+        state.conditions[action.parentKey].type === 'AND' ? { type: 'OR', filters: [] } : { type: 'AND', filters: [] }
 
-      const newConditions = state.conditions.slice()
-      newConditions[action.conditionIndex].filters.push({ conditionGroup: newConditions.length })
+      const newConditions = { ...state.conditions }
+      newConditions[action.parentKey].filters.push({ conditionGroup: action.conditionKey })
 
       return {
         ...state,
-        conditions: [...newConditions, newCondition],
+        conditions: { ...newConditions, [action.conditionKey]: newCondition },
       }
     }
-    case c.REMOVE_LAST_CONDITION: {
-      const newConditions = state.conditions.slice()
-      newConditions.pop()
+    case c.REMOVE_CONDITION: {
+      const newConditions = { ...state.conditions }
 
-      if (newConditions.length > 0) {
-        newConditions[newConditions.length - 1].filters.pop()
+      delete newConditions[action.conditionKey]
+
+      // Remove conditionGroup links in other condition filters
+      for (const key in newConditions) {
+        newConditions[key].filters = newConditions[key].filters.filter(
+          f => !f.conditionGroup || f.conditionGroup !== action.conditionKey
+        )
       }
 
       return {
         ...state,
-        conditions: !newConditions.length ? [initialState.conditions[0]] : newConditions,
+        conditions:
+          Object.entries(newConditions).length === 0 && newConditions.constructor === Object
+            ? { ...initialState.conditions }
+            : newConditions,
       }
     }
     case c.ADD_FILTER: {

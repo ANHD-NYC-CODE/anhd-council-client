@@ -44,7 +44,7 @@ class AdvancedSearch extends React.Component {
           condition={this.props.advancedSearch.conditions[0]}
           dispatch={this.props.dispatch}
           key={'condition-0'}
-          index={0}
+          conditionKey={'0'}
         />
         <Button onClick={this.submitSearch} type="submit" variant="primary">
           Submit
