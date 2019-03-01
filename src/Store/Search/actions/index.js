@@ -1,6 +1,5 @@
 import { constructAxiosGet } from 'shared/utilities/Axios'
 import { SEARCH_URL } from 'shared/constants/urls'
-import * as loadingActions from 'Store/Loading/actions'
 import { GET_BUILDING_SEARCH } from 'shared/constants/actions'
 export const HANDLE_READ_SEARCH_RESPONSE = 'HANDLE_READ_SEARCH_RESPONSE'
 export const CLEAR_SEARCH = 'CLEAR_SEARCH'

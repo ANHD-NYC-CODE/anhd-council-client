@@ -8,7 +8,7 @@ import * as errorActions from 'Store/Error/actions'
 
 import { GET_BUILDING } from 'Store/Building/constants'
 
-import { getBuilding, handleGetBuilding } from '../index.js'
+import { getBuilding } from '../index.js'
 const middlewares = [thunk]
 const mockStore = configureStore(middlewares)
 
@@ -28,7 +28,6 @@ describe('getBuilding', () => {
 
     await store.dispatch(getBuilding(id)).then(() => {
       const expectedActions = [
-        loadingActions.handleCancelRequests(GET_BUILDING),
         loadingActions.handleRequest(GET_BUILDING),
         errorActions.handleClearErrors(GET_BUILDING),
         errorActions.handleFailure(GET_BUILDING, errorResponse.status, 'oops'),

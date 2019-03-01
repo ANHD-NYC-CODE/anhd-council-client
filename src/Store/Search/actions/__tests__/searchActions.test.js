@@ -27,7 +27,6 @@ describe('queryBuildingAddress', () => {
 
     await store.dispatch(queryBuildingAddress('50 broad')).then(() => {
       const expectedActions = [
-        loadingActions.handleCancelRequests(GET_BUILDING_SEARCH),
         loadingActions.handleRequest(GET_BUILDING_SEARCH),
         errorActions.handleClearErrors(GET_BUILDING_SEARCH),
         errorActions.handleFailure(GET_BUILDING_SEARCH, errorResponse.status, 'Incorrect username or password.'),

@@ -8,7 +8,6 @@ const ERROR_404_MESSAGE = 'Not found.'
 const ERROR_500_MESSAGE = 'Oops, something went wrong.'
 
 export const handleActionDispatch = (dispatch, constant, requestId) => {
-  dispatch(loadingActions.handleCancelRequests(constant))
   dispatch(loadingActions.handleRequest(constant, requestId))
   dispatch(errorActions.handleClearErrors(constant))
 }

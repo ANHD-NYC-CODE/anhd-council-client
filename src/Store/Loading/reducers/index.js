@@ -4,7 +4,7 @@ export const initialState = {
 
 export const loadingReducer = (state = Object.freeze(initialState), action = { data: [] }) => {
   const { type, requestId } = action
-  const matches = /(.*)_(PENDING|COMPLETE|CANCEL)/.exec(type)
+  const matches = /(.*)_(PENDING|COMPLETE)/.exec(type)
   // not a *_REQUEST / *_SUCCESS /  *_FAILURE actions, so we ignore them
   if (!matches) return state
 
@@ -15,18 +15,13 @@ export const loadingReducer = (state = Object.freeze(initialState), action = { d
       return {
         ...state,
         [requestName]: true,
-        requests: [...state.requests, requestEntry],
+        requests: [...state.requests.filter(entry => entry.name !== requestName), requestEntry],
       }
     case 'COMPLETE':
       return {
         ...state,
         [requestName]: false,
         requests: state.requests.filter(entry => entry.id !== requestId),
-      }
-    case 'CANCEL':
-      return {
-        ...state,
-        requests: state.requests.filter(entry => entry.name !== requestName),
       }
   }
 }

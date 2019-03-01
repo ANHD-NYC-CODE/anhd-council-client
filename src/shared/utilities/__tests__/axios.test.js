@@ -20,7 +20,7 @@ beforeEach(() => {
 })
 
 describe('constructAxiosGet', () => {
-  it('on SUCCESS - dispatches handleCancelRequests, handleRequest, handleClearErrors, handleCompletedRequest, and the reducer callback', async () => {
+  it('on SUCCESS - dispatches handleRequest, handleClearErrors, handleCompletedRequest, and the reducer callback', async () => {
     const data = { bin: '2' }
     const url = BUILDING_URL
     mock.onGet(url).reply(200, data)
@@ -38,7 +38,6 @@ describe('constructAxiosGet', () => {
       handleGetBuilding
     ).then(() => {
       const expectedActions = [
-        l.handleCancelRequests(GET_BUILDING),
         l.handleRequest(GET_BUILDING, requestId),
         e.handleClearErrors(GET_BUILDING),
         l.handleCompletedRequest(GET_BUILDING, requestId),
@@ -48,7 +47,7 @@ describe('constructAxiosGet', () => {
     })
   })
 
-  it('on ERROR - dispatches handleCancelRequests, handleRequest, handleClearErrors, handleCompletedRequest, and the reducer callback', async () => {
+  it('on ERROR - dispatches handleRequest, handleClearErrors, handleCompletedRequest, and the reducer callback', async () => {
     const url = BUILDING_URL
     mock.onGet(url).reply(500, { results: 'oops!' })
     const requestId = 100
@@ -65,7 +64,6 @@ describe('constructAxiosGet', () => {
       handleGetBuilding
     ).then(() => {
       const expectedActions = [
-        l.handleCancelRequests(GET_BUILDING),
         l.handleRequest(GET_BUILDING, requestId),
         e.handleClearErrors(GET_BUILDING),
         e.handleFailure(GET_BUILDING, 500, 'oops!'),
@@ -75,7 +73,7 @@ describe('constructAxiosGet', () => {
     })
   })
   // Prevent stale requests from updating the store
-  it('WITH INVALID REQUESTID - dispatches handleCancelRequests, handleRequest, handleClearErrors, and nothing else', async () => {
+  it('WITH INVALID REQUESTID - dispatches handleRequest, handleClearErrors, and nothing else', async () => {
     const data = { bin: '2' }
     const url = BUILDING_URL
     mock.onGet(url).reply(200, data)
@@ -96,11 +94,7 @@ describe('constructAxiosGet', () => {
       GET_BUILDING,
       handleGetBuilding
     ).then(() => {
-      const expectedActions = [
-        l.handleCancelRequests(GET_BUILDING),
-        l.handleRequest(GET_BUILDING, requestId),
-        e.handleClearErrors(GET_BUILDING),
-      ]
+      const expectedActions = [l.handleRequest(GET_BUILDING, requestId), e.handleClearErrors(GET_BUILDING)]
       expect(store.getActions()).toEqual(expectedActions)
     })
   })
