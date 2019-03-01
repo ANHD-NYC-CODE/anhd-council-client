@@ -20,20 +20,24 @@ beforeEach(() => {
 })
 
 describe('getBuilding', () => {
-  it('on SUCCESS - dispatches GET_BUILDING_PENDING, GET_BUILDING_SUCCESS, HANDLE_READ_RESPONSE', async () => {
-    const data = { bin: '1234' }
+  it('on ERROR - dispatches GET_BUILDING_CANCEL, GET_BUILDING_PENDING, GET_BUILDING_FAILURE, GET_BUILDING_HANDLE_ERROR_RESPONSE, GET_BUILDING_COMPLETE', async () => {
+    const errorData = { results: 'oops' }
+    const errorResponse = { status: 500, data: errorData }
     const id = '1'
-    mock.onGet(`${BUILDING_URL}${id}`).reply(200, data)
+    mock.onGet(`${BUILDING_URL}${id}`).reply(500, errorData)
 
     await store.dispatch(getBuilding(id)).then(() => {
       const expectedActions = [
+        loadingActions.handleCancelRequests(GET_BUILDING),
         loadingActions.handleRequest(GET_BUILDING),
         errorActions.handleClearErrors(GET_BUILDING),
+        errorActions.handleFailure(GET_BUILDING, errorResponse.status, 'oops'),
         loadingActions.handleCompletedRequest(GET_BUILDING),
-        handleGetBuilding({ data }),
       ]
 
-      expect(store.getActions()).toEqual(expectedActions)
+      const actions = store.getActions().map(a => a.type)
+      const expected = expectedActions.map(a => a.type)
+      expect(actions).toEqual(expected)
     })
   })
 })

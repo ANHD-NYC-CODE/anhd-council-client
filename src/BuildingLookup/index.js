@@ -53,33 +53,41 @@ class BuildingLookup extends React.Component {
             <LeafletMap />
           </Col>
           <Col sm={12} md={7}>
-            <h2>Building Info</h2>
-            <Jumbotron style={{ maxHeight: '500px' }}>
-              {this.props.loading ? <div>Loading</div> : JSON.stringify(this.props.building.currentBuilding, null, 2)}
-            </Jumbotron>
-            <h2>Building History</h2>
-            <RecordsFetchModule
-              actionKey={constructActionKey([c.GET_BUILDING_RESOURCE, d.HPDVIOLATIONS.constant])}
-              id={this.props.id}
-              dataset={d.HPDVIOLATIONS}
-              recordsFetch={getBuildingResource}
-              reducerPath="building"
-              render={(title, records, loading, error) => (
-                <BuildingHistoryTable loading={loading} error={error} title={title} records={records} />
-              )}
-              title="HPD Violations"
-            />
-            <RecordsFetchModule
-              actionKey={constructActionKey([c.GET_BUILDING_RESOURCE, d.DOBVIOLATIONS.constant])}
-              id={this.props.id}
-              dataset={d.DOBVIOLATIONS}
-              recordsFetch={getBuildingResource}
-              reducerPath="building"
-              render={(title, records, loading, error) => (
-                <BuildingHistoryTable loading={loading} error={error} title={title} records={records} />
-              )}
-              title="DOB Violations"
-            />
+            {this.props.id && (
+              <div>
+                <h2>Building Info</h2>
+                <Jumbotron style={{ maxHeight: '500px' }}>
+                  {this.props.loading ? (
+                    <div>Loading</div>
+                  ) : (
+                    JSON.stringify(this.props.building.currentBuilding, null, 2)
+                  )}
+                </Jumbotron>
+                <h2>Building History</h2>
+                <RecordsFetchModule
+                  actionKey={constructActionKey([c.GET_BUILDING_RESOURCE, d.HPDVIOLATIONS.constant])}
+                  id={this.props.id}
+                  dataset={d.HPDVIOLATIONS}
+                  recordsFetch={getBuildingResource}
+                  reducerPath="building"
+                  render={(title, records, loading, error) => (
+                    <BuildingHistoryTable loading={loading} error={error} title={title} records={records} />
+                  )}
+                  title="HPD Violations"
+                />
+                <RecordsFetchModule
+                  actionKey={constructActionKey([c.GET_BUILDING_RESOURCE, d.DOBVIOLATIONS.constant])}
+                  id={this.props.id}
+                  dataset={d.DOBVIOLATIONS}
+                  recordsFetch={getBuildingResource}
+                  reducerPath="building"
+                  render={(title, records, loading, error) => (
+                    <BuildingHistoryTable loading={loading} error={error} title={title} records={records} />
+                  )}
+                  title="DOB Violations"
+                />
+              </div>
+            )}
           </Col>
         </Row>
       </Layout>

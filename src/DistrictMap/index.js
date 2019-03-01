@@ -78,7 +78,7 @@ class DistrictMap extends React.Component {
           <Col sm={12} md={8}>
             <div style={{ maxHeight: '400px', overflow: 'scroll' }}>{JSON.stringify(this.props.district, null, 2)}</div>
 
-            {this.props.id && <DistrictMapShow id={this.props.id} />}
+            {!!this.props.id && <DistrictMapShow id={this.props.id} />}
           </Col>
         </Row>
       </Layout>

@@ -27,9 +27,12 @@ export const setSearchTimeout = event => ({
 })
 
 export const queryBuildingAddress = value => (dispatch, getState, access_token) => {
+  const requestId = Math.floor(Math.random() * 1000000)
+
   return constructAxiosGet(
     dispatch,
     getState,
+    requestId,
     SEARCH_URL,
     { fts: value },
     access_token,

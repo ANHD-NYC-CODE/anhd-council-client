@@ -4,8 +4,13 @@ import * as actions from 'Store/Loading/actions'
 
 describe('Loading reducer', () => {
   describe('GET_RESOURCE_REQUEST', () => {
-    const action = actions.handleRequest('GET_RESOURCE')
-    const expectedState = { ...reducer.initialState, GET_RESOURCE: true }
+    const requestId = 1
+    const action = actions.handleRequest('GET_RESOURCE', requestId)
+    const expectedState = {
+      ...reducer.initialState,
+      GET_RESOURCE: true,
+      requests: [{ id: requestId, name: 'GET_RESOURCE' }],
+    }
 
     it('sets GET_RESOURCE to true', () => {
       expect(reducer.loadingReducer(reducer.initialState, action)).toEqual(expectedState)

@@ -26,13 +26,27 @@ export const handleGetCouncilPropertySummary = (response, key = null) => ({
 })
 
 export const getCouncils = () => (dispatch, getState, access_token) => {
-  return constructAxiosGet(dispatch, getState, u.COUNCILS_URL, null, access_token, c.GET_COUNCILS, handleGetCouncils)
-}
+  const requestId = Math.floor(Math.random() * 1000000)
 
-export const getCouncil = id => (dispatch, getState, access_token) => {
   return constructAxiosGet(
     dispatch,
     getState,
+    requestId,
+    u.COUNCILS_URL,
+    null,
+    access_token,
+    c.GET_COUNCILS,
+    handleGetCouncils
+  )
+}
+
+export const getCouncil = id => (dispatch, getState, access_token) => {
+  const requestId = Math.floor(Math.random() * 1000000)
+
+  return constructAxiosGet(
+    dispatch,
+    getState,
+    requestId,
     `${u.COUNCILS_URL}${id}/`,
     null,
     access_token,
@@ -42,9 +56,12 @@ export const getCouncil = id => (dispatch, getState, access_token) => {
 }
 
 export const getCouncilHousing = (id, params) => (dispatch, getState, access_token) => {
+  const requestId = Math.floor(Math.random() * 1000000)
+
   return constructAxiosGet(
     dispatch,
     getState,
+    requestId,
     `${u.COUNCILS_URL}${id}/housing`,
     params,
     access_token,
@@ -54,9 +71,12 @@ export const getCouncilHousing = (id, params) => (dispatch, getState, access_tok
 }
 
 export const getCouncilPropertySummary = (dataset, id, params, actionKey) => (dispatch, getState, access_token) => {
+  const requestId = Math.floor(Math.random() * 1000000)
+
   return constructAxiosGet(
     dispatch,
     getState,
+    requestId,
     `${u.COUNCILS_URL}${id}${u.PROPERTY_URL}`,
     constructSimplePropertyParams(params),
     access_token,

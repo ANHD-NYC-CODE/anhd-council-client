@@ -40,9 +40,11 @@ export const handleGetAdvancedSearch = response => ({
 })
 
 export const getAdvancedSearch = conditions => (dispatch, getState, access_token) => {
+  const requestId = Math.floor(Math.random() * 1000000)
   return constructAxiosGet(
     dispatch,
     getState,
+    requestId,
     `${u.PROPERTY_URL}`,
     { q: convertConditionMappingToQ(conditions) },
     access_token,

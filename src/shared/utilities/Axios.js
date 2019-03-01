@@ -8,8 +8,7 @@ export const Axios = axios.create({
   headers: { 'Content-type': 'application/json' },
 })
 
-export const constructAxiosGet = (dispatch, getState, url, params, access_token, constant, handleAction) => {
-  const requestId = Math.floor(Math.random() * 1000000)
+export const constructAxiosGet = (dispatch, getState, requestId, url, params, access_token, constant, handleAction) => {
   handleActionDispatch(dispatch, constant, requestId)
   return Axios.get(url, {
     params: { format: 'json', ...params },
@@ -23,6 +22,6 @@ export const constructAxiosGet = (dispatch, getState, url, params, access_token,
       }
     })
     .catch(error => {
-      handleCatchError(error, constant, dispatch)
+      handleCatchError(error, constant, dispatch, requestId)
     })
 }

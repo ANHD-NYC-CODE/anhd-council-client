@@ -14,9 +14,12 @@ export const handleGetBuildingResource = (response, key = null) => ({
 })
 
 export const getBuilding = id => (dispatch, getState, access_token) => {
+  const requestId = Math.floor(Math.random() * 1000000)
+
   return constructAxiosGet(
     dispatch,
     getState,
+    requestId,
     `${u.BUILDING_URL}${id}`,
     null,
     access_token,
@@ -26,9 +29,12 @@ export const getBuilding = id => (dispatch, getState, access_token) => {
 }
 
 export const getBuildingResource = (dataset, id, params = null, actionKey) => (dispatch, getState, access_token) => {
+  const requestId = Math.floor(Math.random() * 1000000)
+
   return constructAxiosGet(
     dispatch,
     getState,
+    requestId,
     `${u.BUILDING_URL}${id}${dataset.url}`,
     null,
     access_token,

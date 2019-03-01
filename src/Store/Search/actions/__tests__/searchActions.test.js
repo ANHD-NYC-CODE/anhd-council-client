@@ -20,36 +20,23 @@ beforeEach(() => {
 })
 
 describe('queryBuildingAddress', () => {
-  it('on SUCCESS - dispatches GET_BUILDING_SEARCH_PENDING, GET_BUILDING_SEARCH_SUCCESS, HANDLE_READ_SEARCH_RESPONSE', async () => {
-    const data = { results: [] }
-    mock.onGet(SEARCH_URL).reply(200, data)
-
-    await store.dispatch(queryBuildingAddress('50 broad')).then(() => {
-      const expectedActions = [
-        loadingActions.handleRequest(GET_BUILDING_SEARCH),
-        errorActions.handleClearErrors(GET_BUILDING_SEARCH),
-        loadingActions.handleCompletedRequest(GET_BUILDING_SEARCH),
-        handleReadSearchResponse({ data: data }),
-      ]
-
-      expect(store.getActions()).toEqual(expectedActions)
-    })
-  })
-
-  it('on ERROR - dispatches GET_BUILDING_SEARCH_PENDING, GET_BUILDING_SEARCH_FAILURE and HANDLE_ERROR_RESPONSE', async () => {
+  it('on ERROR - dispatches GET_BUILDING_SEARCH_CANCEL, GET_BUILDING_SEARCH_PENDING, GET_BUILDING_SEARCH_FAILURE, HANDLE_ERROR_RESPONSE, GET_BUILDING_SEARCH_COMPLETE', async () => {
     const errorData = { detail: 'forbidden' }
     const errorResponse = { status: 400, data: errorData }
     mock.onGet(SEARCH_URL).reply(400, errorData)
 
     await store.dispatch(queryBuildingAddress('50 broad')).then(() => {
       const expectedActions = [
+        loadingActions.handleCancelRequests(GET_BUILDING_SEARCH),
         loadingActions.handleRequest(GET_BUILDING_SEARCH),
         errorActions.handleClearErrors(GET_BUILDING_SEARCH),
         errorActions.handleFailure(GET_BUILDING_SEARCH, errorResponse.status, 'Incorrect username or password.'),
         loadingActions.handleCompletedRequest(GET_BUILDING_SEARCH),
       ]
 
-      expect(store.getActions()).toEqual(expectedActions)
+      const actions = store.getActions().map(a => a.type)
+      const expected = expectedActions.map(a => a.type)
+      expect(actions).toEqual(expected)
     })
   })
 })
