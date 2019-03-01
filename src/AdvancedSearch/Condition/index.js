@@ -45,7 +45,7 @@ class Condition extends React.Component {
       } else {
         return (
           <Filter
-            conditionIndex={this.props.conditionKey}
+            conditionKey={this.props.conditionKey}
             dataset={Object.entries(d).find(ds => ds[1] == filter.dataset)[1]}
             dispatch={this.props.dispatch}
             filter={filter}
@@ -74,7 +74,7 @@ class Condition extends React.Component {
           return renderFilterOrCondition(filter, conditionKey)
         })}
 
-        <Filter dispatch={this.props.dispatch} conditionIndex={this.props.conditionKey} />
+        <Filter dispatch={this.props.dispatch} conditionKey={this.props.conditionKey} />
       </div>
     )
   }

@@ -13,6 +13,13 @@ class DateField extends React.Component {
 
     this.renderDateConfig = this.renderDateConfig.bind(this)
     this.chooseDateConfig = this.chooseDateConfig.bind(this)
+    this.changeDateConfig = this.changeDateConfig.bind(this)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      config: this.chooseDateConfig(nextProps.filterValues),
+    })
   }
 
   chooseDateConfig(filterValues) {
@@ -25,6 +32,31 @@ class DateField extends React.Component {
     }
   }
 
+  changeDateConfig(value) {
+    let dateObject
+    switch (value) {
+      case 'range':
+        dateObject = {
+          startDate: this.props.filterValues.startDate || this.props.filterValues.endDate,
+          endDate: this.props.filterValues.endDate || this.props.filterValues.startDate,
+        }
+        break
+      case 'startDate':
+        dateObject = {
+          startDate: this.props.filterValues.startDate || this.props.filterValues.endDate,
+          endDate: undefined,
+        }
+        break
+      case 'endDate':
+        dateObject = {
+          startDate: undefined,
+          endDate: this.props.filterValues.endDate || this.props.filterValues.startDate,
+        }
+        break
+    }
+    this.props.onChange(dateObject)
+  }
+
   renderDateConfig(filterValues) {
     switch (this.state.config) {
       case 'startDate':
@@ -33,7 +65,7 @@ class DateField extends React.Component {
             name="startDate"
             onChange={this.props.onChange}
             size="sm"
-            type="date"
+            type={this.props.type}
             value={filterValues.startDate}
           />
         )
@@ -42,7 +74,7 @@ class DateField extends React.Component {
           <Form.Control
             name="endDate"
             onChange={this.props.onChange}
-            type="date"
+            type={this.props.type}
             size="sm"
             value={filterValues.endDate}
           />
@@ -55,7 +87,7 @@ class DateField extends React.Component {
                 name="startDate"
                 onChange={this.props.onChange}
                 size="sm"
-                type="date"
+                type={this.props.type}
                 value={filterValues.startDate}
               />{' '}
             </Col>
@@ -64,8 +96,8 @@ class DateField extends React.Component {
                 name="endDate"
                 onChange={this.props.onChange}
                 size="sm"
-                type="date"
-                value={filterValues.endDate}
+                type={this.props.type}
+                value={filterValues.endDate || filterValues.startDate}
               />
             </Col>
           </Row>
@@ -80,7 +112,7 @@ class DateField extends React.Component {
           <Col md="3">
             <CustomSelect
               options={this.props.field.options}
-              onChange={e => this.setState({ config: e.value })}
+              onChange={e => this.changeDateConfig(e.value)}
               size="sm"
               value={this.props.field.options.find(option => option.value === this.state.config)}
             />

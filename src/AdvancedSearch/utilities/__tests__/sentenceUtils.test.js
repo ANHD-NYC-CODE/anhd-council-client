@@ -1,5 +1,6 @@
 import * as a from 'AdvancedSearch/utilities/sentenceUtils'
 import * as d from 'shared/constants/datasets'
+import * as b from 'shared/constants/boundaries'
 
 describe('convertFilterToSentence', () => {
   describe('from/to', () => {
@@ -48,7 +49,7 @@ describe('convertFilterToSentence', () => {
 
 describe('convertConditionMappingToSentence', () => {
   describe('2 ANDS', () => {
-    it('converts the object into a Q', () => {
+    it('converts the object into a sentence', () => {
       let condition0Filters = [d.HPDVIOLATIONS, d.DOBVIOLATIONS].map(ds => {
         return {
           dataset: ds,
@@ -73,7 +74,7 @@ describe('convertConditionMappingToSentence', () => {
   })
 
   describe('2 ORs', () => {
-    it('converts the object into a Q', () => {
+    it('converts the object into a sentence', () => {
       let condition0Filters = [d.HPDVIOLATIONS, d.DOBVIOLATIONS].map(ds => {
         return {
           dataset: ds,
@@ -138,7 +139,7 @@ describe('convertConditionMappingToSentence', () => {
   })
 
   describe('1 OR filter(1 1 AND filter(2', () => {
-    it('converts the object into a Q', () => {
+    it('converts the object into a sentence', () => {
       let condition0Filters = [d.HPDVIOLATIONS].map(ds => {
         return {
           dataset: ds,
@@ -178,7 +179,7 @@ describe('convertConditionMappingToSentence', () => {
   })
 
   describe('3 Groupings', () => {
-    it('converts the object into a Q', () => {
+    it('converts the object into a sentence', () => {
       let condition0Filters = [d.HPDVIOLATIONS].map(ds => {
         return {
           dataset: ds,
@@ -233,7 +234,7 @@ describe('convertConditionMappingToSentence', () => {
   })
 
   describe('4 Groupings', () => {
-    it('converts the object into a Q', () => {
+    it('converts the object into a sentence', () => {
       let condition0Filters = [d.HPDVIOLATIONS].map(ds => {
         return {
           dataset: ds,
@@ -303,14 +304,14 @@ describe('convertConditionMappingToSentence', () => {
   })
 
   describe('Rent Stabilized Units Lost', () => {
-    it('converts the object into a Q', () => {
-      let condition0Filters = [d.RENTSTABILIZEDUNITSLOST, d.HPDVIOLATIONS].map(ds => {
+    it('converts the object into a sentence', () => {
+      let condition0Filters = [d.RENTSTABILIZEDUNITSLOST].map(ds => {
         return {
           dataset: ds,
           comparison: 'gte',
           value: '10',
-          startDate: '2017-01-01',
-          endDate: '2018-01-01',
+          startDate: '2017',
+          endDate: '2018',
         }
       })
 
@@ -321,14 +322,13 @@ describe('convertConditionMappingToSentence', () => {
         },
       }
 
-      const result =
-        'Show me properties that have lost at least 10% of their Rent Stabilized Units from 2017 to 2018 and at least 10 HPD Violations from 01/01/2017 to 01/01/2018.'
+      const result = 'Show me properties that have lost at least 10% of their Rent Stabilized Units from 2017 to 2018.'
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
 
   describe('Sold For $', () => {
-    it('converts the object into a Q', () => {
+    it('converts the object into a sentence', () => {
       let condition0Filters = [d.SOLDFORAMOUNT, d.HPDVIOLATIONS].map(ds => {
         return {
           dataset: ds,
@@ -353,7 +353,7 @@ describe('convertConditionMappingToSentence', () => {
   })
 
   describe('Sold Times', () => {
-    it('converts the object into a Q', () => {
+    it('converts the object into a sentence', () => {
       let condition0Filters = [d.SOLDTIMES, d.HPDVIOLATIONS].map(ds => {
         return {
           dataset: ds,
@@ -374,6 +374,28 @@ describe('convertConditionMappingToSentence', () => {
       const result =
         'Show me properties that have been sold at least 2 times from 01/01/2017 to 01/01/2018 and at least 2 HPD Violations from 01/01/2017 to 01/01/2018.'
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
+    })
+  })
+})
+
+describe('convertBoundariesToSentence', () => {
+  describe('1 boundary', () => {
+    it('converts the object into a sentence', () => {
+      const boundaries = [{ object: b.COUNCILBOUNDARY, value: '1' }]
+
+      const result = 'in Council District 1'
+
+      expect(a.convertBoundariesToSentence(boundaries)).toEqual(result)
+    })
+  })
+
+  describe('2 boundaries', () => {
+    it('converts the object into a sentence', () => {
+      const boundaries = [{ object: b.COUNCILBOUNDARY, value: '1' }, { object: b.COMMUNITYBOUNDARY, value: '2' }]
+
+      const result = 'in Council District 1 and Community Board 2'
+
+      expect(a.convertBoundariesToSentence(boundaries)).toEqual(result)
     })
   })
 })

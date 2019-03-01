@@ -60,3 +60,7 @@ export const convertConditionMappingToSentence = q => {
     })
     .join(' ')}.`
 }
+
+export const convertBoundariesToSentence = boundaries => {
+  return `in ${boundaries.map(boundary => `${boundary.object.name} ${boundary.value}`).join(' and ')}`
+}

@@ -217,13 +217,13 @@ describe('convertConditionMappingToQ', () => {
           dataset: ds,
           comparison: 'gte',
           value: '10',
-          startDate: '2017',
-          endDate: '2018',
+          startDate: '2010',
+          endDate: '2017',
         }
 
-        const result = `${ds.queryName}__${ds.dateField('2017')}__gt=0,${ds.queryName}__${ds.dateField('2018')}__lt=0,${
+        const result = `${ds.queryName}__${ds.dateField('2010')}__gt=0,${ds.queryName}__${ds.dateField('2017')}__gt=0,${
           ds.queryName
-        }__${ds.amountField()}__gte=10`
+        }__${ds.amountField()}__gte=0.1`
         expect(a.convertFilterToParams(object)).toEqual(result)
       })
     })

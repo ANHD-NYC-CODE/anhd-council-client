@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { convertFieldsToComponents } from 'shared/utilities/componentUtils'
 import * as d from 'shared/constants/datasets'
-import { addFilter, removeFilter } from 'Store/AdvancedSearch/actions'
+import { addFilter, removeFilter, updateFilter } from 'Store/AdvancedSearch/actions'
 
 import CustomSelect from 'shared/components/Select'
 import { Form, Button, Col } from 'react-bootstrap'
@@ -26,12 +26,16 @@ class Filter extends React.Component {
     this.updateFilter = this.updateFilter.bind(this)
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({ filter: nextProps.filter })
+  }
+
   constructFilter(dataset) {
     this.setState({ dataset: dataset, filterModel: dataset.filter, filter: dataset.defaultFilterValues })
   }
 
   removeFilter() {
-    this.props.dispatch(removeFilter(this.props.conditionIndex, this.props.filterIndex))
+    this.props.dispatch(removeFilter(this.props.conditionKey, this.props.filterIndex))
   }
 
   submitFilter(e) {
@@ -45,7 +49,7 @@ class Filter extends React.Component {
         filter[el.name] = el.value
       })
     filter['dataset'] = this.state.dataset
-    this.props.dispatch(addFilter(this.props.conditionIndex, filter))
+    this.props.dispatch(addFilter(this.props.conditionKey, filter))
     this.setState(this.initialState)
   }
 
@@ -56,15 +60,24 @@ class Filter extends React.Component {
       e = e.currentTarget
     }
 
-    let value = e.value
+    // Handle form event object
+    if (e.name && e.value) {
+      e = { [e.name]: e.value }
+    }
 
-    this.setState({
-      ...this.state,
-      filter: {
-        ...this.state.filter,
-        [e.name]: value,
-      },
-    })
+    const filter = {
+      ...this.state.filter,
+      ...e,
+    }
+
+    if (this.props.filter) {
+      this.props.dispatch(updateFilter(this.props.conditionKey, this.props.filterIndex, filter))
+    } else {
+      this.setState({
+        ...this.state,
+        filter: filter,
+      })
+    }
   }
 
   render() {
@@ -109,7 +122,7 @@ class Filter extends React.Component {
 }
 
 Filter.propTypes = {
-  conditionIndex: PropTypes.string,
+  conditionKey: PropTypes.string,
   dataset: PropTypes.object,
   filterIndex: PropTypes.number,
   filterModel: PropTypes.object,

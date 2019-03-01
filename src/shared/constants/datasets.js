@@ -164,7 +164,7 @@ export const RENTSTABILIZEDUNITSLOST = {
   dateUrlParser: p.rsunitsUrlDateParser,
   amountField: () => 'percent',
   amountSentenceParser: p.rsunitsAmountSentenceParser,
-  amountUrlParser: p.standardUrlAmountParser,
+  amountUrlParser: p.rsunitsUrlAmountParser,
   filter: f.PERCENTYEAR,
   defaultFilterValues: {
     comparison: 'gte',
@@ -188,7 +188,7 @@ export const SOLDFORAMOUNT = {
   defaultFilterValues: {
     comparison: 'gte',
     value: '1000000',
-    startDate: '2017',
+    startDate: '2017-01-01',
   },
 }
 
@@ -207,6 +207,6 @@ export const SOLDTIMES = {
   defaultFilterValues: {
     comparison: 'gte',
     value: '2',
-    startDate: '2017',
+    startDate: '2017-01-01',
   },
 }

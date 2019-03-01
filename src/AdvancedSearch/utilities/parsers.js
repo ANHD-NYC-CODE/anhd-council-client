@@ -5,6 +5,10 @@ export const standardUrlAmountParser = (dataset, comparison, value) => {
   return `${dataset.queryName}__${dataset.amountField()}__${comparison}=${value}`
 }
 
+export const rsunitsUrlAmountParser = (dataset, comparison, value) => {
+  return `${dataset.queryName}__${dataset.amountField()}__${comparison}=${value / 100}`
+}
+
 export const acrisUrlAmountParser = (dataset, comparison, value) => {
   return `${dataset.amountField()}__${comparison}=${value}`
 }
@@ -31,7 +35,7 @@ export const rsunitsUrlDateParser = (dataset, startDate, endDate) => {
     filters.push(`${dataset.queryName}__${dataset.dateField(startDate)}__gt=0`)
   }
   if (endDate) {
-    filters.push(`${dataset.queryName}__${dataset.dateField(endDate)}__lt=0`)
+    filters.push(`${dataset.queryName}__${dataset.dateField(endDate)}__gt=0`)
   }
 
   return filters.join(',')
@@ -77,10 +81,10 @@ export const standardDateSentenceParser = (startDate, endDate) => {
 
 export const rsunitsDateSentenceParser = (startDate, endDate) => {
   if (startDate && endDate) {
-    return `from ${moment(startDate).format('YYYY')} to ${moment(endDate).format('YYYY')}`
+    return `from ${startDate} to ${endDate}`
   } else if (startDate) {
-    return `since ${moment(startDate).format('YYYY')}`
+    return `since ${startDate}`
   } else if (endDate) {
-    return `before ${moment(endDate).format('YYYY')}`
+    return `before ${endDate}`
   }
 }
