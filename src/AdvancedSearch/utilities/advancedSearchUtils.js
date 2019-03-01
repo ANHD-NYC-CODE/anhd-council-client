@@ -1,33 +1,5 @@
-export const standardUrlAmountParser = (dataset, comparison, value) => {
-  return `${dataset.queryName}__${dataset.amountField()}__${comparison}=${value}`
-}
-
 const constructAmountFilter = (dataset, comparison, value) => {
   return dataset.amountUrlParser(dataset, comparison, value)
-}
-
-export const standardUrlDateParser = (dataset, startDate, endDate) => {
-  let filters = []
-  if (startDate) {
-    filters.push(`${dataset.queryName}__${dataset.dateField(startDate)}__gte=${startDate}`)
-  }
-  if (endDate) {
-    filters.push(`${dataset.queryName}__${dataset.dateField(endDate)}__lte=${endDate}`)
-  }
-
-  return filters.join(',')
-}
-
-export const rsunitsUrlDateParser = (dataset, startDate, endDate) => {
-  let filters = []
-  if (startDate) {
-    filters.push(`${dataset.queryName}__${dataset.dateField(startDate)}__gt=0`)
-  }
-  if (endDate) {
-    filters.push(`${dataset.queryName}__${dataset.dateField(endDate)}__lt=0`)
-  }
-
-  return filters.join(',')
 }
 
 const constructDateFilter = (dataset, startDate = null, endDate = null) => {

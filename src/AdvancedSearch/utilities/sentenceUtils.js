@@ -1,33 +1,11 @@
-import moment from 'moment'
-
 //////////////////
 // Sentence
-
-export const standardDateSentenceParser = (startDate, endDate) => {
-  if (startDate && endDate) {
-    return `from ${moment(startDate).format('MM/DD/YYYY')} to ${moment(endDate).format('MM/DD/YYYY')}`
-  } else if (startDate) {
-    return `since ${moment(startDate).format('MM/DD/YYYY')}`
-  } else if (endDate) {
-    return `before ${moment(endDate).format('MM/DD/YYYY')}`
-  }
-}
-
-export const rsunitsDateSentenceParser = (startDate, endDate) => {
-  if (startDate && endDate) {
-    return `from ${moment(startDate).format('YYYY')} to ${moment(endDate).format('YYYY')}`
-  } else if (startDate) {
-    return `since ${moment(startDate).format('YYYY')}`
-  } else if (endDate) {
-    return `before ${moment(endDate).format('YYYY')}`
-  }
-}
 
 const constructDateSentence = (dataset, startDate = null, endDate = null) => {
   return dataset.dateSentenceParser(startDate, endDate)
 }
 
-const constructComparisonString = comparison => {
+export const constructComparisonString = comparison => {
   switch (comparison) {
     case 'gte':
       return 'at least'
@@ -38,15 +16,7 @@ const constructComparisonString = comparison => {
   }
 }
 
-export const standardAmountSentence = (dataset, comparison, value) => {
-  return `${constructComparisonString(comparison)} ${value} ${dataset.name}`
-}
-
-export const rsunitsAmountSentence = (dataset, comparison, value) => {
-  return `lost ${constructComparisonString(comparison)} ${value}% of their ${dataset.name}`
-}
-
-const constructAmountSentence = (dataset, comparison, value) => {
+export const constructAmountSentence = (dataset, comparison, value) => {
   return dataset.amountSentenceParser(dataset, comparison, value)
 }
 

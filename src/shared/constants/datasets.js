@@ -1,16 +1,14 @@
 import * as f from 'shared/constants/filters'
+
 import {
   standardUrlAmountParser,
   standardUrlDateParser,
   rsunitsUrlDateParser,
-} from 'AdvancedSearch/utilities/advancedSearchUtils'
-
-import {
   standardDateSentenceParser,
-  standardAmountSentence,
+  standardAmountSentenceParser,
   rsunitsDateSentenceParser,
-  rsunitsAmountSentence,
-} from 'AdvancedSearch/utilities/sentenceUtils'
+  rsunitsAmountSentenceParser,
+} from 'AdvancedSearch/utilities/parsers'
 
 export const HPDVIOLATIONS = {
   name: 'HPD Violations',
@@ -21,7 +19,7 @@ export const HPDVIOLATIONS = {
   dateSentenceParser: standardDateSentenceParser,
   dateUrlParser: standardUrlDateParser,
   amountField: () => 'count',
-  amountSentenceParser: standardAmountSentence,
+  amountSentenceParser: standardAmountSentenceParser,
   amountUrlParser: standardUrlAmountParser,
   filter: f.AMOUNTDATE,
   defaultFilterValues: {
@@ -40,7 +38,7 @@ export const DOBVIOLATIONS = {
   dateSentenceParser: standardDateSentenceParser,
   dateUrlParser: standardUrlDateParser,
   amountField: () => 'count',
-  amountSentenceParser: standardAmountSentence,
+  amountSentenceParser: standardAmountSentenceParser,
   amountUrlParser: standardUrlAmountParser,
   filter: f.AMOUNTDATE,
   defaultFilterValues: {
@@ -59,7 +57,7 @@ export const ECBVIOLATIONS = {
   dateSentenceParser: standardDateSentenceParser,
   dateUrlParser: standardUrlDateParser,
   amountField: () => 'count',
-  amountSentenceParser: standardAmountSentence,
+  amountSentenceParser: standardAmountSentenceParser,
   amountUrlParser: standardUrlAmountParser,
   filter: f.AMOUNTDATE,
   defaultFilterValues: {
@@ -78,7 +76,7 @@ export const HPDCOMPLAINTS = {
   dateSentenceParser: standardDateSentenceParser,
   dateUrlParser: standardUrlDateParser,
   amountField: () => 'count',
-  amountSentenceParser: standardAmountSentence,
+  amountSentenceParser: standardAmountSentenceParser,
   amountUrlParser: standardUrlAmountParser,
   filter: f.AMOUNTDATE,
   defaultFilterValues: {
@@ -97,7 +95,7 @@ export const DOBCOMPLAINTS = {
   dateSentenceParser: standardDateSentenceParser,
   dateUrlParser: standardUrlDateParser,
   amountField: () => 'count',
-  amountSentenceParser: standardAmountSentence,
+  amountSentenceParser: standardAmountSentenceParser,
   amountUrlParser: standardUrlAmountParser,
   filter: f.AMOUNTDATE,
   defaultFilterValues: {
@@ -116,7 +114,7 @@ export const EVICTIONS = {
   dateSentenceParser: standardDateSentenceParser,
   dateUrlParser: standardUrlDateParser,
   amountField: () => 'count',
-  amountSentenceParser: standardAmountSentence,
+  amountSentenceParser: standardAmountSentenceParser,
   amountUrlParser: standardUrlAmountParser,
   filter: f.AMOUNTDATE,
   defaultFilterValues: {
@@ -135,7 +133,7 @@ export const CONSTRUCTIONPERMITSISSUED = {
   dateSentenceParser: standardDateSentenceParser,
   dateUrlParser: standardUrlDateParser,
   amountField: () => 'count',
-  amountSentenceParser: standardAmountSentence,
+  amountSentenceParser: standardAmountSentenceParser,
   amountUrlParser: standardUrlAmountParser,
   filter: f.AMOUNTDATE,
   defaultFilterValues: {
@@ -154,7 +152,7 @@ export const RENTSTABILIZEDUNITSLOST = {
   dateSentenceParser: rsunitsDateSentenceParser,
   dateUrlParser: rsunitsUrlDateParser,
   amountField: () => 'percent',
-  amountSentenceParser: rsunitsAmountSentence,
+  amountSentenceParser: rsunitsAmountSentenceParser,
   amountUrlParser: standardUrlAmountParser,
   filter: f.PERCENTYEAR,
   defaultFilterValues: {
