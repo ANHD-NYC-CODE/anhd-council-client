@@ -48,7 +48,7 @@ export const getAdvancedSearch = conditions => (dispatch, getState, access_token
     getState,
     requestId,
     `${u.PROPERTY_URL}`,
-    { q: convertConditionMappingToQ(conditions) },
+    { q: convertConditionMappingToQ(getState, conditions) },
     access_token,
     c.GET_ADVANCED_SEARCH,
     handleGetAdvancedSearch

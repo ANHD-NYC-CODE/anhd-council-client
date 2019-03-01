@@ -7,6 +7,7 @@ import { ToastContainer } from 'react-toastify'
 import { Provider } from 'react-redux'
 
 import Auth from 'Auth'
+import Config from 'Config'
 import ModalContainer from 'ModalContainer'
 
 import 'react-toastify/dist/ReactToastify.css'
@@ -32,9 +33,11 @@ export class App extends React.Component {
       <div className="App">
         <Provider store={store}>
           <Auth>
-            <Router />
-            <ToastContainer />
-            <ModalContainer />
+            <Config>
+              <Router />
+              <ToastContainer />
+              <ModalContainer />
+            </Config>
           </Auth>
         </Provider>
       </div>

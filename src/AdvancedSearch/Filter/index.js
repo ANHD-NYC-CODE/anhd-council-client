@@ -27,7 +27,7 @@ class Filter extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ filter: nextProps.filter })
+    this.setState({ filter: nextProps.filter, dataset: nextProps.dataset, filterModel: nextProps.filterModel })
   }
 
   constructFilter(dataset) {
@@ -101,7 +101,7 @@ class Filter extends React.Component {
             {this.state.dataset && <input type="hidden" value={this.state.dataset.queryName} />}
             {this.state.filterModel &&
               this.state.filterModel.fields.map((field, index) => {
-                return convertFieldsToComponents(field, this.state.filter, this.updateFilter, index)
+                return convertFieldsToComponents(field, this.state.filter, this.updateFilter, index, this.state.dataset)
               })}
             {this.state.filterModel && this.state.creatingFilter && <Button type="submit">Create</Button>}
           </Form.Row>

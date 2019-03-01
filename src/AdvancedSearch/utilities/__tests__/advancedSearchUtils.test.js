@@ -17,7 +17,7 @@ describe('convertFilterToParams', () => {
         const result = `${ds.queryName}__${ds.dateField()}__gte=2017-01-01,${
           ds.queryName
         }__${ds.dateField()}__lte=2018-01-01,${ds.queryName}__${ds.amountField()}__gte=10`
-        expect(a.convertFilterToParams(object)).toEqual(result)
+        expect(a.convertFilterToParams(undefined, object)).toEqual(result)
       })
     })
   })
@@ -45,7 +45,7 @@ describe('convertConditionMappingToQ', () => {
 
       const result =
         '*condition_0=AND filter_0=hpdviolations__approveddate__gte=2017-01-01,hpdviolations__approveddate__lte=2018-01-01,hpdviolations__count__gte=10 filter_1=dobviolations__issuedate__gte=2017-01-01,dobviolations__issuedate__lte=2018-01-01,dobviolations__count__gte=10 filter_2=ecbviolations__issuedate__gte=2017-01-01,ecbviolations__issuedate__lte=2018-01-01,ecbviolations__count__gte=10'
-      expect(a.convertConditionMappingToQ(conditions)).toEqual(result)
+      expect(a.convertConditionMappingToQ(undefined, conditions)).toEqual(result)
     })
   })
 
@@ -70,7 +70,7 @@ describe('convertConditionMappingToQ', () => {
 
       const result =
         '*condition_0=OR filter_0=hpdviolations__approveddate__gte=2017-01-01,hpdviolations__approveddate__lte=2018-01-01,hpdviolations__count__gte=10 filter_1=dobviolations__issuedate__gte=2017-01-01,dobviolations__issuedate__lte=2018-01-01,dobviolations__count__gte=10 filter_2=ecbviolations__issuedate__gte=2017-01-01,ecbviolations__issuedate__lte=2018-01-01,ecbviolations__count__gte=10'
-      expect(a.convertConditionMappingToQ(conditions)).toEqual(result)
+      expect(a.convertConditionMappingToQ(undefined, conditions)).toEqual(result)
     })
   })
 
@@ -110,7 +110,7 @@ describe('convertConditionMappingToQ', () => {
 
       const result =
         '*condition_0=AND filter_0=condition_1 filter_1=hpdviolations__approveddate__gte=2017-01-01,hpdviolations__approveddate__lte=2018-01-01,hpdviolations__count__gte=10 *condition_1=OR filter_0=dobviolations__issuedate__gte=2017-01-01,dobviolations__issuedate__lte=2018-01-01,dobviolations__count__gte=10 filter_1=ecbviolations__issuedate__gte=2017-01-01,ecbviolations__issuedate__lte=2018-01-01,ecbviolations__count__gte=10'
-      expect(a.convertConditionMappingToQ(conditions)).toEqual(result)
+      expect(a.convertConditionMappingToQ(undefined, conditions)).toEqual(result)
     })
   })
 
@@ -150,7 +150,7 @@ describe('convertConditionMappingToQ', () => {
 
       const result =
         '*condition_0=OR filter_0=condition_1 filter_1=hpdviolations__approveddate__gte=2017-01-01,hpdviolations__approveddate__lte=2018-01-01,hpdviolations__count__gte=10 *condition_1=AND filter_0=dobviolations__issuedate__gte=2017-01-01,dobviolations__issuedate__lte=2018-01-01,dobviolations__count__gte=10 filter_1=ecbviolations__issuedate__gte=2017-01-01,ecbviolations__issuedate__lte=2018-01-01,ecbviolations__count__gte=10'
-      expect(a.convertConditionMappingToQ(conditions)).toEqual(result)
+      expect(a.convertConditionMappingToQ(undefined, conditions)).toEqual(result)
     })
   })
 
@@ -205,13 +205,13 @@ describe('convertConditionMappingToQ', () => {
 
       const result =
         '*condition_0=AND filter_0=condition_1 filter_1=hpdviolations__approveddate__gte=2017-01-01,hpdviolations__approveddate__lte=2018-01-01,hpdviolations__count__gte=10 *condition_1=OR filter_0=condition_2 filter_1=dobviolations__issuedate__gte=2017-01-01,dobviolations__issuedate__lte=2018-01-01,dobviolations__count__gte=10 filter_2=ecbviolations__issuedate__gte=2017-01-01,ecbviolations__issuedate__lte=2018-01-01,ecbviolations__count__gte=10 *condition_2=AND filter_0=hpdcomplaints__receiveddate__gte=2017-01-01,hpdcomplaints__receiveddate__lte=2018-01-01,hpdcomplaints__count__gte=10 filter_1=dobcomplaints__dateentered__gte=2017-01-01,dobcomplaints__dateentered__lte=2018-01-01,dobcomplaints__count__gte=10'
-      expect(a.convertConditionMappingToQ(conditions)).toEqual(result)
+      expect(a.convertConditionMappingToQ(undefined, conditions)).toEqual(result)
     })
   })
 
   describe('rentstabilized units dataset', () => {
     const datasets = [d.RENTSTABILIZEDUNITSLOST]
-    it('converts the object into a field string', () => {
+    it('converts the 2 date field object into a field string', () => {
       datasets.forEach(ds => {
         const object = {
           dataset: ds,
@@ -224,7 +224,23 @@ describe('convertConditionMappingToQ', () => {
         const result = `${ds.queryName}__${ds.dateField('2010')}__gt=0,${ds.queryName}__${ds.dateField('2017')}__gt=0,${
           ds.queryName
         }__${ds.amountField()}__gte=0.1`
-        expect(a.convertFilterToParams(object)).toEqual(result)
+        expect(a.convertFilterToParams(undefined, object)).toEqual(result)
+      })
+    })
+
+    it('converts the 1 date value object into a field string with dataset version limit', () => {
+      datasets.forEach(ds => {
+        const object = {
+          dataset: ds,
+          comparison: 'gte',
+          value: '10',
+          startDate: '2010',
+        }
+
+        const result = `${ds.queryName}__${ds.dateField('2010')}__gt=0,${ds.queryName}__${ds.dateField('2018')}__gt=0,${
+          ds.queryName
+        }__${ds.amountField()}__gte=0.1`
+        expect(a.convertFilterToParams(undefined, object)).toEqual(result)
       })
     })
   })
@@ -242,7 +258,7 @@ describe('convertConditionMappingToQ', () => {
         }
 
         const result = `${ds.dateField()}__gte=2017-01-01,${ds.dateField()}__lte=2018-01-01,${ds.amountField()}__gte=10`
-        expect(a.convertFilterToParams(object)).toEqual(result)
+        expect(a.convertFilterToParams(undefined, object)).toEqual(result)
       })
     })
   })
@@ -260,7 +276,7 @@ describe('convertConditionMappingToQ', () => {
         }
 
         const result = `${ds.dateField()}__gte=2017-01-01,${ds.dateField()}__lte=2018-01-01,${ds.amountField()}__gte=2`
-        expect(a.convertFilterToParams(object)).toEqual(result)
+        expect(a.convertFilterToParams(undefined, object)).toEqual(result)
       })
     })
   })
@@ -282,7 +298,7 @@ describe('convertConditionMappingToQ', () => {
         }__${ds.dateField()}__lte=2018-01-01,${ds.queryName}__${ds.amountField()}__gte=1,${
           ds.queryName
         }__type=foreclosure`
-        expect(a.convertFilterToParams(object)).toEqual(result)
+        expect(a.convertFilterToParams(undefined, object)).toEqual(result)
       })
     })
   })

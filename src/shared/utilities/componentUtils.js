@@ -3,7 +3,7 @@ import CustomSelect from 'shared/components/Select'
 import { Form, Row, Col } from 'react-bootstrap'
 import DateField from 'AdvancedSearch/Filter/DateFilter'
 
-export const convertFieldsToComponents = (field, filterValues = {}, onChange, index) => {
+export const convertFieldsToComponents = (field, filter = {}, onChange, index, dataset) => {
   switch (field.type) {
     case 'INTEGER':
       return (
@@ -15,11 +15,11 @@ export const convertFieldsToComponents = (field, filterValues = {}, onChange, in
                 options={field.options}
                 onChange={e => onChange({ name: 'comparison', value: e.value })}
                 size="sm"
-                value={field.options.find(option => option.value === filterValues.comparison)}
+                value={field.options.find(option => option.value === filter.comparison)}
               />
             </Col>
             <Col md="4">
-              <Form.Control name="value" onChange={onChange} size="sm" type="number" value={filterValues.value} />
+              <Form.Control name="value" onChange={onChange} size="sm" type="number" value={filter.value} />
             </Col>
           </Row>
         </Form.Group>
@@ -27,13 +27,13 @@ export const convertFieldsToComponents = (field, filterValues = {}, onChange, in
     case 'DATE':
       return (
         <Col md="6" key={`filterField-${index}`}>
-          <DateField field={field} filterValues={filterValues} onChange={onChange} type="date" />
+          <DateField dataset={dataset} field={field} filter={filter} onChange={onChange} type="date" />
         </Col>
       )
     case 'YEAR':
       return (
         <Col md="6" key={`filterField-${index}`}>
-          <DateField field={field} filterValues={filterValues} onChange={onChange} type="number" />
+          <DateField dataset={dataset} field={field} filter={filter} onChange={onChange} type="number" />
         </Col>
       )
   }

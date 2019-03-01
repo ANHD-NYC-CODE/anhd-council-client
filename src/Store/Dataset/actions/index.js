@@ -15,7 +15,7 @@ export const getDatasets = () => (dispatch, getState, access_token) => {
     dispatch,
     getState,
     requestId,
-    u.DATASETS_URL,
+    u.DATASET_URL,
     null,
     access_token,
     c.GET_DATASETS,

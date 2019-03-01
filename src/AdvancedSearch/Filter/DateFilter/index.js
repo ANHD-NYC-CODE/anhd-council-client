@@ -1,14 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import CustomSelect from 'shared/components/Select'
+import ConfigContext from 'Config/ConfigContext'
+
 import { Form, Row, Col } from 'react-bootstrap'
+import CustomSelect from 'shared/components/Select'
 
 class DateField extends React.Component {
   constructor(props) {
     super(props)
     this.startingConfig = 'startDate'
     this.state = {
-      config: this.chooseDateConfig(this.props.filterValues),
+      config: this.chooseDateConfig(this.props.filter),
     }
 
     this.renderDateConfig = this.renderDateConfig.bind(this)
@@ -18,16 +20,16 @@ class DateField extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      config: this.chooseDateConfig(nextProps.filterValues),
+      config: this.chooseDateConfig(nextProps.filter),
     })
   }
 
-  chooseDateConfig(filterValues) {
-    if (filterValues.startDate && filterValues.endDate) {
+  chooseDateConfig(filter) {
+    if (filter.startDate && filter.endDate) {
       return 'range'
-    } else if (filterValues.startDate) {
+    } else if (filter.startDate) {
       return 'startDate'
-    } else if (filterValues.endDate) {
+    } else if (filter.endDate) {
       return 'endDate'
     }
   }
@@ -37,46 +39,49 @@ class DateField extends React.Component {
     switch (value) {
       case 'range':
         dateObject = {
-          startDate: this.props.filterValues.startDate || this.props.filterValues.endDate,
-          endDate: this.props.filterValues.endDate || this.props.filterValues.startDate,
+          startDate: this.props.filter.startDate || this.props.filter.endDate,
+          endDate: this.props.filter.endDate || this.props.filter.startDate,
         }
         break
       case 'startDate':
         dateObject = {
-          startDate: this.props.filterValues.startDate || this.props.filterValues.endDate,
+          startDate: this.props.filter.startDate || this.props.filter.endDate,
           endDate: undefined,
         }
         break
       case 'endDate':
         dateObject = {
           startDate: undefined,
-          endDate: this.props.filterValues.endDate || this.props.filterValues.startDate,
+          endDate: this.props.filter.endDate || this.props.filter.startDate,
         }
         break
     }
     this.props.onChange(dateObject)
   }
 
-  renderDateConfig(filterValues) {
+  renderDateConfig(appConfig, dataset, filter) {
+    const datasetConfig = appConfig.find(d => d.model_name.lower() === dataset.model.lower())
     switch (this.state.config) {
       case 'startDate':
         return (
           <Form.Control
+            max={dataset.getMaxDate(datasetConfig)}
             name="startDate"
             onChange={this.props.onChange}
             size="sm"
             type={this.props.type}
-            value={filterValues.startDate}
+            value={filter.startDate}
           />
         )
       case 'endDate':
         return (
           <Form.Control
+            max={dataset.getMaxDate(datasetConfig)}
             name="endDate"
             onChange={this.props.onChange}
             type={this.props.type}
             size="sm"
-            value={filterValues.endDate}
+            value={filter.endDate}
           />
         )
       default:
@@ -84,20 +89,22 @@ class DateField extends React.Component {
           <Row>
             <Col md="6">
               <Form.Control
+                max={dataset.getMaxDate(datasetConfig)}
                 name="startDate"
                 onChange={this.props.onChange}
                 size="sm"
                 type={this.props.type}
-                value={filterValues.startDate}
+                value={filter.startDate}
               />{' '}
             </Col>
             <Col md="6">
               <Form.Control
+                max={dataset.getMaxDate(datasetConfig)}
                 name="endDate"
                 onChange={this.props.onChange}
                 size="sm"
                 type={this.props.type}
-                value={filterValues.endDate || filterValues.startDate}
+                value={filter.endDate || filter.startDate}
               />
             </Col>
           </Row>
@@ -117,10 +124,13 @@ class DateField extends React.Component {
               value={this.props.field.options.find(option => option.value === this.state.config)}
             />
           </Col>
-
-          <Col md="9" className="date-field">
-            {this.renderDateConfig(this.props.filterValues)}
-          </Col>
+          <ConfigContext.Consumer>
+            {config => (
+              <Col md="9" className="date-field">
+                {this.renderDateConfig(config, this.props.dataset, this.props.filter)}
+              </Col>
+            )}
+          </ConfigContext.Consumer>
         </Row>
       </Col>
     )
@@ -128,8 +138,9 @@ class DateField extends React.Component {
 }
 
 DateField.propTypes = {
+  dataset: PropTypes.object,
   field: PropTypes.object,
-  filterValues: PropTypes.object,
+  filter: PropTypes.object,
   onChange: PropTypes.func,
 }
 
