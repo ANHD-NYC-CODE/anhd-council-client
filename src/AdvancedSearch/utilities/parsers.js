@@ -9,6 +9,10 @@ export const acrisUrlAmountParser = (dataset, comparison, value) => {
   return `${dataset.amountField()}__${comparison}=${value}`
 }
 
+export const foreclosureUrlAmountParser = (dataset, comparison, value) => {
+  return `${dataset.queryName}__${dataset.amountField()}__${comparison}=${value},${dataset.queryName}__type=foreclosure`
+}
+
 export const standardUrlDateParser = (dataset, startDate, endDate) => {
   let filters = []
   if (startDate) {

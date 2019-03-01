@@ -264,4 +264,26 @@ describe('convertConditionMappingToQ', () => {
       })
     })
   })
+
+  describe('foreclosure dataset', () => {
+    const datasets = [d.FORECLOSURES]
+    it('converts the object into a field string', () => {
+      datasets.forEach(ds => {
+        const object = {
+          dataset: ds,
+          comparison: 'gte',
+          value: '1',
+          startDate: '2017-01-01',
+          endDate: '2018-01-01',
+        }
+
+        const result = `${ds.queryName}__${ds.dateField()}__gte=2017-01-01,${
+          ds.queryName
+        }__${ds.dateField()}__lte=2018-01-01,${ds.queryName}__${ds.amountField()}__gte=1,${
+          ds.queryName
+        }__type=foreclosure`
+        expect(a.convertFilterToParams(object)).toEqual(result)
+      })
+    })
+  })
 })

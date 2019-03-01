@@ -116,6 +116,25 @@ export const EVICTIONS = {
   },
 }
 
+export const FORECLOSURES = {
+  name: 'Foreclosures',
+  queryName: 'lispendens',
+  url: '/lispendens/',
+  constant: 'FORECLOSURES',
+  dateField: () => 'fileddate',
+  dateSentenceParser: p.standardDateSentenceParser,
+  dateUrlParser: p.standardUrlDateParser,
+  amountField: () => 'count',
+  amountSentenceParser: p.standardAmountSentenceParser,
+  amountUrlParser: p.foreclosureUrlAmountParser,
+  filter: f.AMOUNTDATE,
+  defaultFilterValues: {
+    comparison: 'gte',
+    value: '1',
+    startDate: '2017-01-01',
+  },
+}
+
 export const CONSTRUCTIONPERMITSISSUED = {
   name: 'Construction Permits Issued',
   queryName: 'dobpermitissuedjoined',
