@@ -82,7 +82,7 @@ class Condition extends React.Component {
 
 Condition.propTypes = {
   condition: PropTypes.object,
-  conditions: PropTypes.array,
+  conditions: PropTypes.object,
   dispatch: PropTypes.func,
   conditionKey: PropTypes.string,
 }

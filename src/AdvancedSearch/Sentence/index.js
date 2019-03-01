@@ -7,7 +7,7 @@ const AdvancedSearchSentence = props => {
 }
 
 AdvancedSearchSentence.propTypes = {
-  conditions: PropTypes.array,
+  conditions: PropTypes.object,
 }
 
 export default AdvancedSearchSentence

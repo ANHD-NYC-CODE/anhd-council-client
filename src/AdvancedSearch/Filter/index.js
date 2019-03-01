@@ -56,11 +56,13 @@ class Filter extends React.Component {
       e = e.currentTarget
     }
 
+    let value = e.value
+
     this.setState({
       ...this.state,
       filter: {
         ...this.state.filter,
-        [e.name]: e.value,
+        [e.name]: value,
       },
     })
   }
@@ -107,7 +109,7 @@ class Filter extends React.Component {
 }
 
 Filter.propTypes = {
-  conditionIndex: PropTypes.number,
+  conditionIndex: PropTypes.string,
   dataset: PropTypes.object,
   filterIndex: PropTypes.number,
   filterModel: PropTypes.object,

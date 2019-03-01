@@ -1,19 +1,39 @@
 import moment from 'moment'
 
-const constructAmountFilter = (dataset, comparison, value) => {
+export const standardUrlAmountParser = (dataset, comparison, value) => {
   return `${dataset.queryName}__${dataset.amountField()}__${comparison}=${value}`
 }
 
-const constructDateFilter = (dataset, startDate = null, endDate = null) => {
+const constructAmountFilter = (dataset, comparison, value) => {
+  return dataset.amountUrlParser(dataset, comparison, value)
+}
+
+export const standardUrlDateParser = (dataset, startDate, endDate) => {
   let filters = []
   if (startDate) {
-    filters.push(`${dataset.queryName}__${dataset.dateField()}__gte=${startDate}`)
+    filters.push(`${dataset.queryName}__${dataset.dateField(startDate)}__gte=${startDate}`)
   }
   if (endDate) {
-    filters.push(`${dataset.queryName}__${dataset.dateField()}__lte=${endDate}`)
+    filters.push(`${dataset.queryName}__${dataset.dateField(endDate)}__lte=${endDate}`)
   }
 
   return filters.join(',')
+}
+
+export const rsunitsUrlDateParser = (dataset, startDate, endDate) => {
+  let filters = []
+  if (startDate) {
+    filters.push(`${dataset.queryName}__${dataset.dateField(startDate)}__gt=0`)
+  }
+  if (endDate) {
+    filters.push(`${dataset.queryName}__${dataset.dateField(endDate)}__lt=0`)
+  }
+
+  return filters.join(',')
+}
+
+const constructDateFilter = (dataset, startDate = null, endDate = null) => {
+  return dataset.dateUrlParser(dataset, startDate, endDate)
 }
 
 export const convertFilterToParams = object => {
@@ -55,7 +75,7 @@ export const convertConditionMappingToQ = conditions => {
 //////////////////
 // Sentence
 
-const constructDateSentence = (dataset, startDate = null, endDate = null) => {
+export const standardDateSentenceParser = (startDate, endDate) => {
   if (startDate && endDate) {
     return `from ${moment(startDate).format('MM/DD/YYYY')} to ${moment(endDate).format('MM/DD/YYYY')}`
   } else if (startDate) {
@@ -63,6 +83,20 @@ const constructDateSentence = (dataset, startDate = null, endDate = null) => {
   } else if (endDate) {
     return `before ${moment(endDate).format('MM/DD/YYYY')}`
   }
+}
+
+export const rsunitsDateSentenceParser = (startDate, endDate) => {
+  if (startDate && endDate) {
+    return `from ${moment(startDate).format('YYYY')} to ${moment(endDate).format('YYYY')}`
+  } else if (startDate) {
+    return `since ${moment(startDate).format('YYYY')}`
+  } else if (endDate) {
+    return `before ${moment(endDate).format('YYYY')}`
+  }
+}
+
+const constructDateSentence = (dataset, startDate = null, endDate = null) => {
+  return dataset.dateSentenceParser(startDate, endDate)
 }
 
 const constructComparisonString = comparison => {
@@ -76,8 +110,16 @@ const constructComparisonString = comparison => {
   }
 }
 
-const constructAmountSentence = (dataset, comparison, value) => {
+export const standardAmountSentence = (dataset, comparison, value) => {
   return `${constructComparisonString(comparison)} ${value} ${dataset.name}`
+}
+
+export const rsunitsAmountSentence = (dataset, comparison, value) => {
+  return `lost ${constructComparisonString(comparison)} ${value}% of their ${dataset.name}`
+}
+
+const constructAmountSentence = (dataset, comparison, value) => {
+  return dataset.amountSentenceParser(dataset, comparison, value)
 }
 
 export const convertFilterToSentence = object => {
@@ -111,7 +153,7 @@ const constructConditionFill = conditionGroup => {
 
 export const convertConditionMappingToSentence = q => {
   const conditions = Object.keys(q)
-  if (!conditions.length) return 'Show me properties that have...'
+  if (!(conditions.length && q['0'].filters.length)) return 'Show me properties that have...'
   return `Show me properties that have ${conditions
     .map((key, index) => {
       return `${convertConditionGroupToSentence(q[key])}${

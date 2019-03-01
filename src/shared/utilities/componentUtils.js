@@ -2,6 +2,7 @@ import React from 'react'
 import CustomSelect from 'shared/components/Select'
 import { Form, Row, Col } from 'react-bootstrap'
 import DateField from 'AdvancedSearch/Filter/DateFilter'
+import YearField from 'AdvancedSearch/Filter/YearFilter'
 
 export const convertFieldsToComponents = (field, filterValues = {}, onChange, index) => {
   switch (field.type) {
@@ -26,8 +27,14 @@ export const convertFieldsToComponents = (field, filterValues = {}, onChange, in
       )
     case 'DATE':
       return (
-        <Col md="6">
-          <DateField key={`filterField-${index}`} field={field} filterValues={filterValues} onChange={onChange} />
+        <Col md="6" key={`filterField-${index}`}>
+          <DateField field={field} filterValues={filterValues} onChange={onChange} />
+        </Col>
+      )
+    case 'YEAR':
+      return (
+        <Col md="6" key={`filterField-${index}`}>
+          <YearField field={field} filterValues={filterValues} onChange={onChange} />
         </Col>
       )
   }
