@@ -161,14 +161,33 @@ export const SOLDFORAMOUNT = {
   constant: 'SOLD_FOR_AMOUNT',
   dateField: () => 'acrisreallegals__documentid__docdate',
   dateSentenceParser: p.standardDateSentenceParser,
-  dateUrlParser: p.soldForUrlDateParser,
+  dateUrlParser: p.acrisUrlDateParser,
   amountField: () => 'acrisreallegals__documentid__docamount',
   amountSentenceParser: p.soldForAmountSentenceParser,
-  amountUrlParser: p.soldForUrlAmountParser,
+  amountUrlParser: p.acrisUrlAmountParser,
   filter: f.AMOUNTDATE,
   defaultFilterValues: {
     comparison: 'gte',
     value: '1000000',
+    startDate: '2017',
+  },
+}
+
+export const SOLDTIMES = {
+  name: 'Times Sold',
+  queryName: 'acrisrealmasteramounts',
+  url: '/acrisrealmasteramounts/',
+  constant: 'SOLD_TIMES',
+  dateField: () => 'acrisreallegals__documentid__docdate',
+  dateSentenceParser: p.standardDateSentenceParser,
+  dateUrlParser: p.acrisUrlDateParser,
+  amountField: () => 'acrisreallegals__documentid__count',
+  amountSentenceParser: p.soldTimesAmountSentenceParser,
+  amountUrlParser: p.acrisUrlAmountParser,
+  filter: f.AMOUNTDATE,
+  defaultFilterValues: {
+    comparison: 'gte',
+    value: '2',
     startDate: '2017',
   },
 }

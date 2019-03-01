@@ -246,4 +246,22 @@ describe('convertConditionMappingToQ', () => {
       })
     })
   })
+
+  describe('sold times dataset', () => {
+    const datasets = [d.SOLDTIMES]
+    it('converts the object into a field string', () => {
+      datasets.forEach(ds => {
+        const object = {
+          dataset: ds,
+          comparison: 'gte',
+          value: '2',
+          startDate: '2017-01-01',
+          endDate: '2018-01-01',
+        }
+
+        const result = `${ds.dateField()}__gte=2017-01-01,${ds.dateField()}__lte=2018-01-01,${ds.amountField()}__gte=2`
+        expect(a.convertFilterToParams(object)).toEqual(result)
+      })
+    })
+  })
 })
