@@ -5,6 +5,10 @@ export const standardUrlAmountParser = (dataset, comparison, value) => {
   return `${dataset.queryName}__${dataset.amountField()}__${comparison}=${value}`
 }
 
+export const soldForUrlAmountParser = (dataset, comparison, value) => {
+  return `${dataset.amountField()}__${comparison}=${value}`
+}
+
 export const standardUrlDateParser = (dataset, startDate, endDate) => {
   let filters = []
   if (startDate) {
@@ -29,12 +33,28 @@ export const rsunitsUrlDateParser = (dataset, startDate, endDate) => {
   return filters.join(',')
 }
 
+export const soldForUrlDateParser = (dataset, startDate, endDate) => {
+  let filters = []
+  if (startDate) {
+    filters.push(`${dataset.dateField(startDate)}__gte=${startDate}`)
+  }
+  if (endDate) {
+    filters.push(`${dataset.dateField(endDate)}__lte=${endDate}`)
+  }
+
+  return filters.join(',')
+}
+
 export const standardAmountSentenceParser = (dataset, comparison, value) => {
   return `${constructComparisonString(comparison)} ${value} ${dataset.name}`
 }
 
 export const rsunitsAmountSentenceParser = (dataset, comparison, value) => {
   return `lost ${constructComparisonString(comparison)} ${value}% of their ${dataset.name}`
+}
+
+export const soldForAmountSentenceParser = (dataset, comparison, value) => {
+  return `sold for ${constructComparisonString(comparison)} $${value}`
 }
 
 export const standardDateSentenceParser = (startDate, endDate) => {

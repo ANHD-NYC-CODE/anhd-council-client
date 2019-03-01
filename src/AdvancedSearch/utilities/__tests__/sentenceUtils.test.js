@@ -326,4 +326,29 @@ describe('convertConditionMappingToSentence', () => {
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
+
+  describe('Sold For $', () => {
+    it('converts the object into a Q', () => {
+      let condition0Filters = [d.SOLDFORAMOUNT, d.HPDVIOLATIONS].map(ds => {
+        return {
+          dataset: ds,
+          comparison: 'gte',
+          value: '10',
+          startDate: '2017-01-01',
+          endDate: '2018-01-01',
+        }
+      })
+
+      const conditions = {
+        '0': {
+          type: 'AND',
+          filters: condition0Filters,
+        },
+      }
+
+      const result =
+        'Show me properties that have sold for at least $10 from 01/01/2017 to 01/01/2018 and at least 10 HPD Violations from 01/01/2017 to 01/01/2018.'
+      expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
+    })
+  })
 })

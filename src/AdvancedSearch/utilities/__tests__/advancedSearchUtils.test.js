@@ -209,8 +209,8 @@ describe('convertConditionMappingToQ', () => {
     })
   })
 
-  const datasets = [d.RENTSTABILIZEDUNITSLOST]
   describe('rentstabilized units dataset', () => {
+    const datasets = [d.RENTSTABILIZEDUNITSLOST]
     it('converts the object into a field string', () => {
       datasets.forEach(ds => {
         const object = {
@@ -224,6 +224,24 @@ describe('convertConditionMappingToQ', () => {
         const result = `${ds.queryName}__${ds.dateField('2017')}__gt=0,${ds.queryName}__${ds.dateField('2018')}__lt=0,${
           ds.queryName
         }__${ds.amountField()}__gte=10`
+        expect(a.convertFilterToParams(object)).toEqual(result)
+      })
+    })
+  })
+
+  describe('sold for amount dataset', () => {
+    const datasets = [d.SOLDFORAMOUNT]
+    it('converts the object into a field string', () => {
+      datasets.forEach(ds => {
+        const object = {
+          dataset: ds,
+          comparison: 'gte',
+          value: '10',
+          startDate: '2017-01-01',
+          endDate: '2018-01-01',
+        }
+
+        const result = `${ds.dateField()}__gte=2017-01-01,${ds.dateField()}__lte=2018-01-01,${ds.amountField()}__gte=10`
         expect(a.convertFilterToParams(object)).toEqual(result)
       })
     })
