@@ -17,22 +17,22 @@ export const removeCondition = conditionKey => ({
   conditionKey,
 })
 
-export const addFilter = (conditionIndex, filter) => ({
+export const addFilter = (conditionKey, filter) => ({
   type: c.ADD_FILTER,
   filter: filter,
-  conditionIndex,
+  conditionKey,
 })
 
-export const updateFilter = (conditionIndex, filterIndex, newFilter) => ({
+export const updateFilter = (conditionKey, filterIndex, newFilter) => ({
   type: c.UPDATE_FILTER,
-  conditionIndex,
+  conditionKey,
   filterIndex,
   newFilter,
 })
 
-export const removeFilter = (conditionIndex, filterIndex) => ({
+export const removeFilter = (conditionKey, filterIndex) => ({
   type: c.REMOVE_FILTER,
-  conditionIndex,
+  conditionKey,
   filterIndex,
 })
 

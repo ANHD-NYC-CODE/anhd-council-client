@@ -45,46 +45,37 @@ export const advancedSearchReducer = (state = Object.freeze(initialState), actio
       }
     }
     case c.ADD_FILTER: {
-      const newConditions = state.conditions.slice()
-      let condition = newConditions[action.conditionIndex]
+      const newConditions = { ...state.conditions }
+      let condition = newConditions[action.conditionKey]
       let conditionGroups = condition.filters.filter(f => f.conditionGroup)
       condition.filters = condition.filters.filter(f => !f.conditionGroup)
       condition.filters.push(action.filter)
       condition.filters = condition.filters.concat(conditionGroups)
+      newConditions[action.conditionKey] = condition
       return {
         ...state,
-        conditions: [
-          ...newConditions.slice(0, action.conditionIndex),
-          condition,
-          ...newConditions.slice(action.conditionIndex + 1),
-        ],
+        conditions: { ...newConditions },
       }
     }
 
     case c.UPDATE_FILTER: {
-      const newConditions = state.conditions.slice()
-      let condition = newConditions[action.conditionIndex]
+      const newConditions = { ...state.conditions }
+      let condition = newConditions[action.conditionKey]
       condition.filters[action.filterIndex] = action.newFilter
+      newConditions[action.conditionKey] = condition
       return {
         ...state,
-        conditions: [
-          ...newConditions.slice(0, action.conditionIndex),
-          condition,
-          ...newConditions.slice(action.conditionIndex + 1),
-        ],
+        conditions: { ...newConditions },
       }
     }
     case c.REMOVE_FILTER: {
-      const newConditions = state.conditions.slice()
-      let condition = newConditions[action.conditionIndex]
+      const newConditions = { ...state.conditions }
+      let condition = newConditions[action.conditionKey]
       condition.filters.splice(action.filterIndex, 1)
+      newConditions[action.conditionKey] = condition
       return {
         ...state,
-        conditions: [
-          ...newConditions.slice(0, action.conditionIndex),
-          condition,
-          ...newConditions.slice(action.conditionIndex + 1),
-        ],
+        conditions: { ...newConditions },
       }
     }
     case c.HANDLE_GET_ADVANCED_SEARCH: {
