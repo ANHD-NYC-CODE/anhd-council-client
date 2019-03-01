@@ -19,7 +19,7 @@ export const advancedSearchReducer = (state = Object.freeze(initialState), actio
           : { type: 'AND', filters: [] }
 
       const newConditions = state.conditions.slice()
-      newConditions[action.conditionIndex].filters.push({ conditionGroup: action.conditionIndex + 1 })
+      newConditions[action.conditionIndex].filters.push({ conditionGroup: newConditions.length })
 
       return {
         ...state,
@@ -42,13 +42,10 @@ export const advancedSearchReducer = (state = Object.freeze(initialState), actio
     case c.ADD_FILTER: {
       const newConditions = state.conditions.slice()
       let condition = newConditions[action.conditionIndex]
-      if (condition.filters.some(el => el.conditionGroup)) {
-        const conditionGroupFilter = condition.filters.pop()
-        condition.filters.push(action.filter)
-        condition.filters.push(conditionGroupFilter)
-      } else {
-        condition.filters.push(action.filter)
-      }
+      let conditionGroups = condition.filters.filter(f => f.conditionGroup)
+      condition.filters = condition.filters.filter(f => !f.conditionGroup)
+      condition.filters.push(action.filter)
+      condition.filters = condition.filters.concat(conditionGroups)
       return {
         ...state,
         conditions: [

@@ -85,10 +85,14 @@ describe('Advanced Search reducer', () => {
       })
     })
 
-    it('adds a filter 2, keeps condition group at the end', () => {
+    it('adds a filter, keeps condition groups at the end', () => {
       const state = {
         conditions: [
-          { type: 'AND', filters: [{ dataset: 1 }, { dataset: 2 }, { dataset: 3 }, { conditionGroup: 1 }] },
+          {
+            type: 'AND',
+            filters: [{ dataset: 1 }, { dataset: 2 }, { dataset: 3 }, { conditionGroup: 1 }, { conditionGroup: 2 }],
+          },
+          { type: 'OR', filters: [{ dataset: 1 }, { dataset: 2 }, { dataset: 3 }] },
           { type: 'OR', filters: [{ dataset: 1 }, { dataset: 2 }, { dataset: 3 }] },
         ],
       }
@@ -96,8 +100,16 @@ describe('Advanced Search reducer', () => {
       const expectedConditions = [
         {
           type: 'AND',
-          filters: [{ dataset: 1 }, { dataset: 2 }, { dataset: 3 }, { dataset: 4 }, { conditionGroup: 1 }],
+          filters: [
+            { dataset: 1 },
+            { dataset: 2 },
+            { dataset: 3 },
+            { dataset: 4 },
+            { conditionGroup: 1 },
+            { conditionGroup: 2 },
+          ],
         },
+        { type: 'OR', filters: [{ dataset: 1 }, { dataset: 2 }, { dataset: 3 }] },
         { type: 'OR', filters: [{ dataset: 1 }, { dataset: 2 }, { dataset: 3 }] },
       ]
       const filter = { dataset: 4 }
