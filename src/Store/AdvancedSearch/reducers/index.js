@@ -7,6 +7,7 @@ export const initialState = {
       filters: [],
     },
   },
+  boundaries: [],
   results: undefined,
 }
 
@@ -76,6 +77,28 @@ export const advancedSearchReducer = (state = Object.freeze(initialState), actio
       return {
         ...state,
         conditions: { ...newConditions },
+      }
+    }
+    case c.ADD_BOUNDARY: {
+      return {
+        ...state,
+        boundaries: [...state.boundaries, action.boundary],
+      }
+    }
+    case c.UPDATE_BOUNDARY: {
+      return {
+        ...state,
+        boundaries: [
+          ...state.boundaries.slice(0, action.boundaryIndex),
+          { ...state.boundaries[action.boundaryIndex], ...action.boundary },
+          ...state.boundaries.slice(action.boundaryIndex + 1),
+        ],
+      }
+    }
+    case c.REMOVE_BOUNDARY: {
+      return {
+        ...state,
+        boundaries: state.boundaries.filter(b => !b[action.boundaryKey]),
       }
     }
     case c.HANDLE_GET_ADVANCED_SEARCH: {

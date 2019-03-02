@@ -36,7 +36,6 @@ const convertConditionGroupToString = (getState, filters) => {
 }
 
 export const convertConditionMappingToQ = (getState, conditions) => {
-  console.log()
   return Object.keys(conditions)
     .map(
       key =>

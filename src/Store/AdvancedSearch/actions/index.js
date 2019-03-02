@@ -36,19 +36,43 @@ export const removeFilter = (conditionKey, filterIndex) => ({
   filterIndex,
 })
 
+export const addBoundary = boundary => ({
+  type: c.ADD_BOUNDARY,
+  boundary,
+})
+
+export const updateBoundary = (boundaryIndex, boundary) => ({
+  type: c.UPDATE_BOUNDARY,
+  boundaryIndex,
+  boundary,
+})
+
+export const removeBoundary = boundaryKey => ({
+  type: c.REMOVE_BOUNDARY,
+  boundaryKey,
+})
+
 export const handleGetAdvancedSearch = response => ({
   type: c.HANDLE_GET_ADVANCED_SEARCH,
   data: response.data,
 })
 
-export const getAdvancedSearch = conditions => (dispatch, getState, access_token) => {
+export const getAdvancedSearch = advancedSearch => (dispatch, getState, access_token) => {
   const requestId = Math.floor(Math.random() * 1000000)
   return constructAxiosGet(
     dispatch,
     getState,
     requestId,
     `${u.PROPERTY_URL}`,
-    { q: convertConditionMappingToQ(getState, conditions) },
+    {
+      ...Object.assign(
+        {},
+        ...advancedSearch.boundaries.map(b => ({
+          [b.object.queryName]: b.id,
+        }))
+      ),
+      q: convertConditionMappingToQ(getState, advancedSearch.conditions),
+    },
     access_token,
     c.GET_ADVANCED_SEARCH,
     handleGetAdvancedSearch

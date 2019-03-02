@@ -68,7 +68,7 @@ describe('convertConditionMappingToSentence', () => {
       }
 
       const result =
-        'Show me properties that have at least 10 HPD Violations from 01/01/2017 to 01/01/2018 and at least 10 DOB Violations from 01/01/2017 to 01/01/2018.'
+        'have at least 10 HPD Violations from 01/01/2017 to 01/01/2018 and at least 10 DOB Violations from 01/01/2017 to 01/01/2018.'
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
@@ -93,7 +93,7 @@ describe('convertConditionMappingToSentence', () => {
       }
 
       const result =
-        'Show me properties that have at least 10 HPD Violations from 01/01/2017 to 01/01/2018 or at least 10 DOB Violations from 01/01/2017 to 01/01/2018.'
+        'have at least 10 HPD Violations from 01/01/2017 to 01/01/2018 or at least 10 DOB Violations from 01/01/2017 to 01/01/2018.'
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
@@ -133,7 +133,7 @@ describe('convertConditionMappingToSentence', () => {
       }
 
       const result =
-        'Show me properties that have at least 10 HPD Violations from 01/01/2017 to 01/01/2018 and that either have at least 10 DOB Violations from 01/01/2017 to 01/01/2018 or at least 10 ECB Violations from 01/01/2017 to 01/01/2018.'
+        'have at least 10 HPD Violations from 01/01/2017 to 01/01/2018 and that either have at least 10 DOB Violations from 01/01/2017 to 01/01/2018 or at least 10 ECB Violations from 01/01/2017 to 01/01/2018.'
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
@@ -173,7 +173,7 @@ describe('convertConditionMappingToSentence', () => {
       }
 
       const result =
-        'Show me properties that have at least 10 HPD Violations from 01/01/2017 to 01/01/2018 or that have at least 10 DOB Violations from 01/01/2017 to 01/01/2018 and at least 10 ECB Violations from 01/01/2017 to 01/01/2018.'
+        'have at least 10 HPD Violations from 01/01/2017 to 01/01/2018 or that have at least 10 DOB Violations from 01/01/2017 to 01/01/2018 and at least 10 ECB Violations from 01/01/2017 to 01/01/2018.'
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
@@ -228,7 +228,7 @@ describe('convertConditionMappingToSentence', () => {
       }
 
       const result =
-        'Show me properties that have at least 10 HPD Violations from 01/01/2017 to 01/01/2018 and that either have at least 10 DOB Violations from 01/01/2017 to 01/01/2018 or at least 10 ECB Violations from 01/01/2017 to 01/01/2018 or that have at least 10 HPD Complaints from 01/01/2017 to 01/01/2018 and at least 10 DOB Complaints from 01/01/2017 to 01/01/2018.'
+        'have at least 10 HPD Violations from 01/01/2017 to 01/01/2018 and that either have at least 10 DOB Violations from 01/01/2017 to 01/01/2018 or at least 10 ECB Violations from 01/01/2017 to 01/01/2018 or that have at least 10 HPD Complaints from 01/01/2017 to 01/01/2018 and at least 10 DOB Complaints from 01/01/2017 to 01/01/2018.'
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
@@ -298,7 +298,7 @@ describe('convertConditionMappingToSentence', () => {
       }
 
       const result =
-        'Show me properties that have at least 10 HPD Violations from 01/01/2017 to 01/01/2018 and that either have at least 10 DOB Violations from 01/01/2017 to 01/01/2018 or at least 10 ECB Violations from 01/01/2017 to 01/01/2018 or that have at least 10 HPD Complaints from 01/01/2017 to 01/01/2018 and at least 10 DOB Complaints from 01/01/2017 to 01/01/2018 and that either have at least 10 Evictions from 01/01/2017 to 01/01/2018 or at least 10 HPD Violations from 01/01/2017 to 01/01/2018.'
+        'have at least 10 HPD Violations from 01/01/2017 to 01/01/2018 and that either have at least 10 DOB Violations from 01/01/2017 to 01/01/2018 or at least 10 ECB Violations from 01/01/2017 to 01/01/2018 or that have at least 10 HPD Complaints from 01/01/2017 to 01/01/2018 and at least 10 DOB Complaints from 01/01/2017 to 01/01/2018 and that either have at least 10 Evictions from 01/01/2017 to 01/01/2018 or at least 10 HPD Violations from 01/01/2017 to 01/01/2018.'
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
@@ -322,7 +322,7 @@ describe('convertConditionMappingToSentence', () => {
         },
       }
 
-      const result = 'Show me properties that have lost at least 10% of their Rent Stabilized Units from 2017 to 2018.'
+      const result = 'have lost at least 10% of their Rent Stabilized Units from 2017 to 2018.'
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
@@ -347,7 +347,7 @@ describe('convertConditionMappingToSentence', () => {
       }
 
       const result =
-        'Show me properties that have sold for at least $10 from 01/01/2017 to 01/01/2018 and at least 10 HPD Violations from 01/01/2017 to 01/01/2018.'
+        'have sold for at least $10 from 01/01/2017 to 01/01/2018 and at least 10 HPD Violations from 01/01/2017 to 01/01/2018.'
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
@@ -372,7 +372,7 @@ describe('convertConditionMappingToSentence', () => {
       }
 
       const result =
-        'Show me properties that have been sold at least 2 times from 01/01/2017 to 01/01/2018 and at least 2 HPD Violations from 01/01/2017 to 01/01/2018.'
+        'have been sold at least 2 times from 01/01/2017 to 01/01/2018 and at least 2 HPD Violations from 01/01/2017 to 01/01/2018.'
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
@@ -381,7 +381,7 @@ describe('convertConditionMappingToSentence', () => {
 describe('convertBoundariesToSentence', () => {
   describe('1 boundary', () => {
     it('converts the object into a sentence', () => {
-      const boundaries = [{ object: b.COUNCILBOUNDARY, value: '1' }]
+      const boundaries = [{ object: b.COUNCILBOUNDARY, id: '1' }]
 
       const result = 'in Council District 1'
 
@@ -391,7 +391,7 @@ describe('convertBoundariesToSentence', () => {
 
   describe('2 boundaries', () => {
     it('converts the object into a sentence', () => {
-      const boundaries = [{ object: b.COUNCILBOUNDARY, value: '1' }, { object: b.COMMUNITYBOUNDARY, value: '2' }]
+      const boundaries = [{ object: b.COUNCILBOUNDARY, id: '1' }, { object: b.COMMUNITYBOUNDARY, id: '2' }]
 
       const result = 'in Council District 1 and Community Board 2'
 

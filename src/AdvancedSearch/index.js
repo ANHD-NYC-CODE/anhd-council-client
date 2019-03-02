@@ -12,6 +12,7 @@ import BuildingHistoryTable from 'BuildingLookup/BuildingHistoryTable'
 import { Button } from 'react-bootstrap'
 
 import Condition from 'AdvancedSearch/Condition'
+import BoundaryQuery from 'AdvancedSearch/BoundaryQuery'
 
 class AdvancedSearch extends React.Component {
   constructor(props) {
@@ -24,20 +25,22 @@ class AdvancedSearch extends React.Component {
     e.preventDefault()
     e.stopPropagation()
 
-    this.props.dispatch(requestWithAuth(getAdvancedSearch(this.props.advancedSearch.conditions)))
+    this.props.dispatch(requestWithAuth(getAdvancedSearch(this.props.advancedSearch)))
   }
 
   render() {
     return (
       <Layout>
         <h1>Advanced Search</h1>
-        <AdvancedSearchSentence conditions={this.props.advancedSearch.conditions} />
+        <AdvancedSearchSentence advancedSearch={this.props.advancedSearch} />
         <BuildingHistoryTable
           loading={this.props.loading}
           error={this.props.error}
           title="Search Results"
           records={this.props.advancedSearch.results}
         />
+
+        <BoundaryQuery boundaries={this.props.advancedSearch.boundaries} />
 
         <Condition
           conditions={this.props.advancedSearch.conditions}

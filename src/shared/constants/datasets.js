@@ -1,4 +1,4 @@
-import * as f from 'shared/constants/filters'
+import * as f from 'shared/constants/filterSchemas'
 
 import * as p from 'AdvancedSearch/utilities/parsers'
 import moment from 'moment'

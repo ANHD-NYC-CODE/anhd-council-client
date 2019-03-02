@@ -51,8 +51,8 @@ const constructConditionFill = conditionGroup => {
 
 export const convertConditionMappingToSentence = q => {
   const conditions = Object.keys(q)
-  if (!(conditions.length && q['0'].filters.length)) return 'Show me properties that have...'
-  return `Show me properties that have ${conditions
+  if (!(conditions.length && q['0'].filters.length)) return '...'
+  return `have ${conditions
     .map((key, index) => {
       return `${convertConditionGroupToSentence(q[key])}${
         conditions.length > 1 && index !== conditions.length - 1 ? constructConditionFill(q[key]) : ''
@@ -62,5 +62,13 @@ export const convertConditionMappingToSentence = q => {
 }
 
 export const convertBoundariesToSentence = boundaries => {
-  return `in ${boundaries.map(boundary => `${boundary.object.name} ${boundary.value}`).join(' and ')}`
+  return `in ${boundaries
+    .map(boundary => `${boundary.object.name.toLowerCase()} ${boundary.id ? boundary.id : '_'}`)
+    .join(' and ')}`
+}
+
+export const constructSentence = advancedSearch => {
+  return `Show me properties ${convertBoundariesToSentence(
+    advancedSearch.boundaries
+  )} that ${convertConditionMappingToSentence(advancedSearch.conditions)}`
 }

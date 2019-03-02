@@ -153,6 +153,7 @@ describe('Advanced Search reducer', () => {
   describe('UPDATE_FILTER', () => {
     it('updates a filter', () => {
       const state = {
+        ...r.initialState,
         conditions: { '0': { type: 'AND', filters: [{ dataset: 1 }, { dataset: 2 }] } },
       }
 
@@ -167,6 +168,7 @@ describe('Advanced Search reducer', () => {
   describe('REMOVE_FILTER', () => {
     it('removes a filter', () => {
       const state = {
+        ...r.initialState,
         conditions: { '0': { type: 'AND', filters: [{ dataset: 1 }, { dataset: 2 }] } },
       }
 
@@ -179,6 +181,7 @@ describe('Advanced Search reducer', () => {
 
     it('removes a filter 2', () => {
       const state = {
+        ...r.initialState,
         conditions: {
           '0': { type: 'AND', filters: [{ dataset: 1 }, { dataset: 2 }] },
           '1': { type: 'AND', filters: [{ dataset: 3 }, { dataset: 4 }] },
@@ -192,6 +195,55 @@ describe('Advanced Search reducer', () => {
       expect(r.advancedSearchReducer(state, a.removeFilter(1, 1))).toEqual({
         ...r.initialState,
         conditions: expectedConditions,
+      })
+    })
+  })
+
+  describe('ADD_BOUNDARY', () => {
+    it('adds a boundaries', () => {
+      const state = {
+        ...r.initialState,
+      }
+
+      const expectedBoundaries = [{ council: 1 }]
+
+      const boundary = { council: 1 }
+      expect(r.advancedSearchReducer(state, a.addBoundary(boundary))).toEqual({
+        ...r.initialState,
+        boundaries: expectedBoundaries,
+      })
+    })
+  })
+
+  describe('UPDATE_BOUNDARY', () => {
+    it('updates a boundaries', () => {
+      const state = {
+        ...r.initialState,
+        boundaries: [{ council: 1 }],
+      }
+
+      const updatedBoundary = { council: 2 }
+      const expectedBoundaries = [updatedBoundary]
+
+      expect(r.advancedSearchReducer(state, a.updateBoundary(0, updatedBoundary))).toEqual({
+        ...r.initialState,
+        boundaries: expectedBoundaries,
+      })
+    })
+  })
+
+  describe('REMOVE_BOUNDARY', () => {
+    it('removes a boundaries', () => {
+      const state = {
+        ...r.initialState,
+        boundaries: [{ council: 1 }],
+      }
+
+      const expectedBoundaries = []
+
+      expect(r.advancedSearchReducer(state, a.removeBoundary('council'))).toEqual({
+        ...r.initialState,
+        boundaries: expectedBoundaries,
       })
     })
   })

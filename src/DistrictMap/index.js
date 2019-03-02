@@ -27,13 +27,13 @@ class DistrictMap extends React.Component {
     this.handleDistrictChange = this.handleDistrictChange.bind(this)
     this.syncToStore = this.syncToStore.bind(this)
 
-    this.fetchCouncils(props)
+    // this.fetchCouncils(props)
     this.fetchCouncilById(props)
     this.syncToStore(props)
   }
 
   componentWillReceiveProps(nextProps) {
-    this.fetchCouncils(nextProps)
+    // this.fetchCouncils(nextProps)
     this.fetchCouncilById(nextProps)
     this.syncToStore(nextProps)
   }
