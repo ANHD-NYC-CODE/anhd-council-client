@@ -11,22 +11,24 @@ import DistrictMap from 'DistrictMap'
 import AdvancedSearch from 'AdvancedSearch'
 
 import Page404 from 'shared/components/Page404'
-
+import Layout from 'Layout'
 class Router extends React.Component {
   render() {
     return (
       <ConnectedRouter history={history}>
-        <Switch>
-          <Route exact path="/" render={() => <Main />} />
-          <Route exact path="/buildings/" render={() => <BuildingLookup />} />
-          <Route exact path="/buildings/:id" render={() => <BuildingLookup />} />
-          <Route exact path="/districts" render={() => <DistrictMap />} />
-          <Route exact path="/districts/:id" render={() => <DistrictMap />} />
-          <Route exact path="/search" render={() => <AdvancedSearch />} />
-          <Route exact path="/login" render={() => <Main showLoginModal={true} />} />
-          <Route exact path="/logout" render={() => <Main />} />
-          <Route render={() => <Page404 />} />
-        </Switch>
+        <Layout>
+          <Switch>
+            <Route exact path="/" render={() => <Main />} />
+            <Route exact path="/buildings/" render={() => <BuildingLookup />} />
+            <Route exact path="/buildings/:id" render={() => <BuildingLookup />} />
+            <Route exact path="/districts" render={() => <DistrictMap />} />
+            <Route exact path="/districts/:id" render={() => <DistrictMap />} />
+            <Route exact path="/search" render={() => <AdvancedSearch />} />
+            <Route exact path="/login" render={() => <Main showLoginModal={true} />} />
+            <Route exact path="/logout" render={() => <Main />} />
+            <Route render={() => <Page404 />} />
+          </Switch>
+        </Layout>
       </ConnectedRouter>
     )
   }

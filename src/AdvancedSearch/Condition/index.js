@@ -9,7 +9,7 @@ import Filter from 'AdvancedSearch/Filter'
 
 import './style.scss'
 
-class Condition extends React.Component {
+export class Condition extends React.Component {
   constructor(props) {
     super(props)
 

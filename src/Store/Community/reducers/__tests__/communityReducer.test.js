@@ -12,7 +12,7 @@ describe('Community reducer', () => {
     it('fetches the resources', () => {
       expect(r.communityReducer(undefined, a.handleGetCommunities({ data: response }))).toEqual({
         ...r.initialState,
-        districts: response,
+        boards: response,
       })
     })
   })
@@ -22,7 +22,7 @@ describe('Community reducer', () => {
     it('fetches the resource', () => {
       expect(r.communityReducer(undefined, a.handleGetCommunity({ data: response }))).toEqual({
         ...r.initialState,
-        district: response,
+        board: response,
       })
     })
   })
@@ -32,7 +32,7 @@ describe('Community reducer', () => {
     it('fetches the resource', () => {
       expect(r.communityReducer(undefined, a.handleGetCommunityHousing({ data: response }))).toEqual({
         ...r.initialState,
-        districtHousing: response,
+        boardHousing: response,
       })
     })
   })
@@ -58,7 +58,7 @@ describe('Community reducer', () => {
         )
       ).toEqual({
         ...r.initialState,
-        districtPropertySummaries: {
+        boardPropertySummaries: {
           ['GET_COMMUNITY_PROPERTY_SUMMARY_HPDVIOLATIONS_GTE_10_2017-01-01_2018-01-01']: response,
         },
       })

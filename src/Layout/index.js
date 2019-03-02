@@ -5,7 +5,7 @@ import NavigationBar from 'Layout/NavigationBar'
 import Header from 'Layout/Header'
 import { Container } from 'react-bootstrap'
 
-const Layout = props => {
+export const Layout = props => {
   return (
     <div className="layout">
       <UserContext.Consumer>

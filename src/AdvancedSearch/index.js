@@ -6,7 +6,6 @@ import { createErrorSelector } from 'Store/Error/selectors'
 import { connect } from 'react-redux'
 import { getAdvancedSearch } from 'Store/AdvancedSearch/actions'
 import { requestWithAuth } from 'shared/utilities/authUtils'
-import Layout from 'Layout'
 import AdvancedSearchSentence from 'AdvancedSearch/Sentence'
 import BuildingHistoryTable from 'BuildingLookup/BuildingHistoryTable'
 import { addBoundary, updateBoundary } from 'Store/AdvancedSearch/actions'
@@ -15,7 +14,7 @@ import { Button } from 'react-bootstrap'
 import Condition from 'AdvancedSearch/Condition'
 import BoundaryQuery from 'AdvancedSearch/BoundaryQuery'
 
-class AdvancedSearch extends React.Component {
+export class AdvancedSearch extends React.Component {
   constructor(props) {
     super(props)
 
@@ -23,6 +22,12 @@ class AdvancedSearch extends React.Component {
     this.changeBoundaryObject = this.changeBoundaryObject.bind(this)
     this.changeBoundaryId = this.changeBoundaryId.bind(this)
     this.addBoundary = this.addBoundary.bind(this)
+
+    this.state = {
+      boundaries: [],
+      conditions: [],
+      housingTypes: [],
+    }
   }
 
   addBoundary(option) {
@@ -46,34 +51,38 @@ class AdvancedSearch extends React.Component {
 
   render() {
     return (
-      <Layout>
+      <div className="advanced-search">
         <h1>Advanced Search</h1>
-        <AdvancedSearchSentence advancedSearch={this.props.advancedSearch} />
-        <BuildingHistoryTable
-          loading={this.props.loading}
-          error={this.props.error}
-          title="Search Results"
-          records={this.props.advancedSearch.results}
-        />
 
-        <BoundaryQuery
-          addBoundary={this.addBoundary}
-          boundaries={this.props.advancedSearch.boundaries}
-          changeBoundaryObject={this.changeBoundaryObject}
-          changeBoundaryId={this.changeBoundaryId}
-        />
+        {!!this.props.advancedSearch && (
+          <div>
+            <AdvancedSearchSentence advancedSearch={this.props.advancedSearch} />
+            <BuildingHistoryTable
+              loading={this.props.loading}
+              error={this.props.error}
+              title="Search Results"
+              records={this.props.advancedSearch.results}
+            />
+            <BoundaryQuery
+              addBoundary={this.addBoundary}
+              boundaries={this.props.advancedSearch.boundaries}
+              changeBoundaryObject={this.changeBoundaryObject}
+              changeBoundaryId={this.changeBoundaryId}
+            />
 
-        <Condition
-          conditions={this.props.advancedSearch.conditions}
-          condition={this.props.advancedSearch.conditions[0]}
-          dispatch={this.props.dispatch}
-          key={'condition-0'}
-          conditionKey={'0'}
-        />
+            <Condition
+              conditions={this.props.advancedSearch.conditions}
+              condition={this.props.advancedSearch.conditions[0]}
+              dispatch={this.props.dispatch}
+              key={'condition-0'}
+              conditionKey={'0'}
+            />
+          </div>
+        )}
         <Button onClick={this.submitSearch} type="submit" variant="primary">
           Submit
         </Button>
-      </Layout>
+      </div>
     )
   }
 }

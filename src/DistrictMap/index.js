@@ -11,7 +11,6 @@ import { resourceRouteChanged } from 'shared/utilities/routeUtils'
 
 import { push } from 'connected-react-router'
 
-import Layout from 'Layout'
 import LeafletMap from 'LeafletMap'
 import Select from 'react-select'
 import { Row, Col, Form } from 'react-bootstrap'
@@ -65,23 +64,21 @@ class DistrictMap extends React.Component {
       ? this.props.districts.map(council => ({ value: council.id, label: `District ${council.id}` }))
       : []
     return (
-      <Layout>
-        <Row>
-          <Col sm={12} md={4}>
-            <h1>District Map</h1>
-            <LeafletMap />
-            <Form.Group>
-              <Form.Label>Select your district</Form.Label>
-              <Select options={options} onChange={this.handleDistrictChange} />
-            </Form.Group>
-          </Col>
-          <Col sm={12} md={8}>
-            <div style={{ maxHeight: '400px', overflow: 'scroll' }}>{JSON.stringify(this.props.district, null, 2)}</div>
+      <Row>
+        <Col sm={12} md={4}>
+          <h1>District Map</h1>
+          <LeafletMap />
+          <Form.Group>
+            <Form.Label>Select your district</Form.Label>
+            <Select options={options} onChange={this.handleDistrictChange} />
+          </Form.Group>
+        </Col>
+        <Col sm={12} md={8}>
+          <div style={{ maxHeight: '400px', overflow: 'scroll' }}>{JSON.stringify(this.props.district, null, 2)}</div>
 
-            {!!this.props.id && <DistrictMapShow id={this.props.id} />}
-          </Col>
-        </Row>
-      </Layout>
+          {!!this.props.id && <DistrictMapShow id={this.props.id} />}
+        </Col>
+      </Row>
     )
   }
 }

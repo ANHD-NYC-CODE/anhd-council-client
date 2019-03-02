@@ -10,11 +10,7 @@ class Main extends React.Component {
   }
 
   render() {
-    return (
-      <Layout>
-        <BuildingSearchModule />
-      </Layout>
-    )
+    return <BuildingSearchModule />
   }
 }
 
