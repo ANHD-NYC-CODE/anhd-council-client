@@ -127,7 +127,7 @@ class DateField extends React.Component {
           <ConfigContext.Consumer>
             {config => (
               <Col md="9" className="date-field">
-                {this.renderDateConfig(config, this.props.dataset, this.props.filter)}
+                {this.renderDateConfig(config.datasets, this.props.dataset, this.props.filter)}
               </Col>
             )}
           </ConfigContext.Consumer>

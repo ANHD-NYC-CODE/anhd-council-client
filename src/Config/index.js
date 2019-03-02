@@ -19,9 +19,15 @@ class Config extends React.Component {
     this.props.dispatch(getDatasets())
     this.props.dispatch(getCouncils())
     this.props.dispatch(getCommunities())
+
+    this.state = {
+      boundaryType: undefined,
+      boundaryId: undefined,
+      boundaryObjects: [],
+    }
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps, nextState) {
     if (!nextProps.loading && !nextProps.error) {
       if (!nextProps.datasets) {
         this.props.dispatch(getDatasets())
@@ -35,11 +41,21 @@ class Config extends React.Component {
         this.props.dispatch(getCommunities())
       }
     }
+
+    if (nextState.boundaryType === 'council') {
+      this.setState({
+        boundaryObjects: this.props.councils,
+      })
+    } else if (nextState.boundaryType === 'cd') {
+      this.setState({
+        boundaryObjects: this.props.communities,
+      })
+    }
   }
 
   render() {
     return (
-      <ConfigContext.Provider value={this.props.datasets}>
+      <ConfigContext.Provider value={{ ...this.state, datasets: this.props.datasets }}>
         {this.props.loading || !(this.props.datasets && this.props.councils && this.props.communities) ? (
           <div>loading!</div>
         ) : (

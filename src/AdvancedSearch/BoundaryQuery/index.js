@@ -28,13 +28,14 @@ class BoundaryQuery extends React.Component {
         {!this.props.boundaries.length && (
           <Form.Row className="boundary">
             <Col sm={6} md={4}>
-              <Form.Label>Geography Type</Form.Label>
+              <Form.Label>Type</Form.Label>
               <CustomSelect
                 onChange={this.props.addBoundary}
                 options={[
-                  { value: b.COUNCILBOUNDARY, label: b.COUNCILBOUNDARY.name.toLowerCase() },
-                  { value: b.COMMUNITYBOUNDARY, label: b.COMMUNITYBOUNDARY.name.toLowerCase() },
+                  { value: b.COUNCILBOUNDARY, label: b.COUNCILBOUNDARY.name },
+                  { value: b.COMMUNITYBOUNDARY, label: b.COMMUNITYBOUNDARY.name },
                 ]}
+                placeholder="Council or Community..."
                 size="sm"
               />
             </Col>
@@ -45,7 +46,7 @@ class BoundaryQuery extends React.Component {
             return (
               <Form.Row className="boundary" key={boundary.object.name}>
                 <Col sm={6} md={4}>
-                  <Form.Label>Geography Type</Form.Label>
+                  <Form.Label>Type</Form.Label>
                   <CustomSelect
                     onChange={e => this.props.changeBoundaryObject(e, index)}
                     options={[
@@ -57,7 +58,7 @@ class BoundaryQuery extends React.Component {
                   />
                 </Col>
                 <Col>
-                  <Form.Label>Geography ID</Form.Label>
+                  <Form.Label>{`${boundary.object.name} #`}</Form.Label>
                   <CustomSelect
                     onChange={e => this.props.changeBoundaryId(e, index)}
                     options={this.getBoundaryIdOptions(boundary.object.queryName)}

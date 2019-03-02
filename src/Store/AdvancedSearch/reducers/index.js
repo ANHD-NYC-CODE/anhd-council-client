@@ -8,6 +8,7 @@ export const initialState = {
     },
   },
   boundaries: [],
+  housingTypes: [],
   results: undefined,
 }
 
@@ -98,7 +99,35 @@ export const advancedSearchReducer = (state = Object.freeze(initialState), actio
     case c.REMOVE_BOUNDARY: {
       return {
         ...state,
-        boundaries: state.boundaries.filter(b => !b[action.boundaryKey]),
+        boundaries: [
+          ...state.boundaries.slice(0, action.boundaryIndex),
+          ...state.boundaries.slice(action.boundaryIndex + 1),
+        ],
+      }
+    }
+    case c.ADD_HOUSING_TYPE: {
+      return {
+        ...state,
+        housingTypes: [...state.housingTypes, action.housingType],
+      }
+    }
+    case c.UPDATE_HOUSING_TYPE: {
+      return {
+        ...state,
+        housingTypes: [
+          ...state.housingTypes.slice(0, action.housingTypeIndex),
+          { ...state.housingTypes[action.housingTypeIndex], ...action.housingType },
+          ...state.housingTypes.slice(action.housingTypeIndex + 1),
+        ],
+      }
+    }
+    case c.REMOVE_HOUSING_TYPE: {
+      return {
+        ...state,
+        housingTypes: [
+          ...state.housingTypes.slice(0, action.housingTypeIndex),
+          ...state.housingTypes.slice(action.housingTypeIndex + 1),
+        ],
       }
     }
     case c.HANDLE_GET_ADVANCED_SEARCH: {

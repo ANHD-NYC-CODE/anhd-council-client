@@ -205,9 +205,9 @@ describe('Advanced Search reducer', () => {
         ...r.initialState,
       }
 
-      const expectedBoundaries = [{ council: 1 }]
-
       const boundary = { council: 1 }
+      const expectedBoundaries = [boundary]
+
       expect(r.advancedSearchReducer(state, a.addBoundary(boundary))).toEqual({
         ...r.initialState,
         boundaries: expectedBoundaries,
@@ -241,9 +241,58 @@ describe('Advanced Search reducer', () => {
 
       const expectedBoundaries = []
 
-      expect(r.advancedSearchReducer(state, a.removeBoundary('council'))).toEqual({
+      expect(r.advancedSearchReducer(state, a.removeBoundary(0))).toEqual({
         ...r.initialState,
         boundaries: expectedBoundaries,
+      })
+    })
+  })
+
+  describe('ADD_HOUSING_TYPE', () => {
+    it('adds a housingTypes', () => {
+      const state = {
+        ...r.initialState,
+      }
+
+      const housingType = { type: 'sh', params: { type: 'unitsres', comparison: 'lte', value: 4 } }
+      const expected = [housingType]
+
+      expect(r.advancedSearchReducer(state, a.addHousingType(housingType))).toEqual({
+        ...r.initialState,
+        housingTypes: expected,
+      })
+    })
+  })
+
+  describe('UPDATE_HOUSING_TYPE', () => {
+    it('updates a housingTypes', () => {
+      const state = {
+        ...r.initialState,
+        housingTypes: [{ type: 'sh', params: { type: 'unitsres', comparison: 'lte', value: 4 } }],
+      }
+
+      const updatedObject = { type: 'mr', params: undefined }
+      const expected = [updatedObject]
+
+      expect(r.advancedSearchReducer(state, a.updateHousingType(0, updatedObject))).toEqual({
+        ...r.initialState,
+        housingTypes: expected,
+      })
+    })
+  })
+
+  describe('REMOVE_HOUSING_TYPE', () => {
+    it('removes a housingTypes', () => {
+      const state = {
+        ...r.initialState,
+        housingTypes: [{ type: 'sh', params: { type: 'unitsres', comparison: 'lte', value: 4 } }],
+      }
+
+      const expected = []
+
+      expect(r.advancedSearchReducer(state, a.removeHousingType(0))).toEqual({
+        ...r.initialState,
+        housingTypes: expected,
       })
     })
   })

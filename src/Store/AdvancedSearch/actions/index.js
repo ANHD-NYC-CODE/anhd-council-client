@@ -47,9 +47,25 @@ export const updateBoundary = (boundaryIndex, boundary) => ({
   boundary,
 })
 
-export const removeBoundary = boundaryKey => ({
+export const removeBoundary = boundaryIndex => ({
   type: c.REMOVE_BOUNDARY,
-  boundaryKey,
+  boundaryIndex,
+})
+
+export const addHousingType = housingType => ({
+  type: c.ADD_HOUSING_TYPE,
+  housingType,
+})
+
+export const updateHousingType = (housingTypeIndex, housingType) => ({
+  type: c.UPDATE_HOUSING_TYPE,
+  housingTypeIndex,
+  housingType,
+})
+
+export const removeHousingType = housingTypeIndex => ({
+  type: c.REMOVE_HOUSING_TYPE,
+  housingTypeIndex,
 })
 
 export const handleGetAdvancedSearch = response => ({

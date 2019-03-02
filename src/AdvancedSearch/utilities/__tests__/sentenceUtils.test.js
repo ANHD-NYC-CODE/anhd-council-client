@@ -383,7 +383,7 @@ describe('convertBoundariesToSentence', () => {
     it('converts the object into a sentence', () => {
       const boundaries = [{ object: b.COUNCILBOUNDARY, id: '1' }]
 
-      const result = 'in Council District 1'
+      const result = 'in council district 1'
 
       expect(a.convertBoundariesToSentence(boundaries)).toEqual(result)
     })
@@ -393,7 +393,7 @@ describe('convertBoundariesToSentence', () => {
     it('converts the object into a sentence', () => {
       const boundaries = [{ object: b.COUNCILBOUNDARY, id: '1' }, { object: b.COMMUNITYBOUNDARY, id: '2' }]
 
-      const result = 'in Council District 1 and Community Board 2'
+      const result = 'in council district 1 and community board 2'
 
       expect(a.convertBoundariesToSentence(boundaries)).toEqual(result)
     })
