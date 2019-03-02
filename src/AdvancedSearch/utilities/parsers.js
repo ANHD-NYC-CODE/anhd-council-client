@@ -32,7 +32,7 @@ export const standardUrlDateParser = (getState, dataset, startDate, endDate) => 
 export const rsunitsUrlDateParser = (getState, dataset, startDate, endDate) => {
   let latestYear
   try {
-    latestYear = getState.dataset.datasets.find(d => d.model_name.lower() === dataset.model.lower()).version
+    latestYear = getState.dataset.datasets.find(d => d.model_name.toLowerCase() === dataset.model.toLowerCase()).version
   } catch (e) {
     latestYear = '2018'
   }

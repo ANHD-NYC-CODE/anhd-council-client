@@ -60,7 +60,7 @@ class DateField extends React.Component {
   }
 
   renderDateConfig(appConfig, dataset, filter) {
-    const datasetConfig = appConfig.find(d => d.model_name.lower() === dataset.model.lower())
+    const datasetConfig = appConfig.find(d => d.model_name.toLowerCase() === dataset.model.toLowerCase())
     switch (this.state.config) {
       case 'startDate':
         return (

@@ -16,7 +16,7 @@ class Config extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!nextProps.datasets || nextProps.loading) {
+    if (!(nextProps.datasets || nextProps.loading)) {
       this.props.dispatch(getDatasets())
     }
   }
