@@ -9,6 +9,7 @@ import { requestWithAuth } from 'shared/utilities/authUtils'
 import Layout from 'Layout'
 import AdvancedSearchSentence from 'AdvancedSearch/Sentence'
 import BuildingHistoryTable from 'BuildingLookup/BuildingHistoryTable'
+import { addBoundary, updateBoundary } from 'Store/AdvancedSearch/actions'
 import { Button } from 'react-bootstrap'
 
 import Condition from 'AdvancedSearch/Condition'
@@ -19,6 +20,21 @@ class AdvancedSearch extends React.Component {
     super(props)
 
     this.submitSearch = this.submitSearch.bind(this)
+    this.changeBoundaryObject = this.changeBoundaryObject.bind(this)
+    this.changeBoundaryId = this.changeBoundaryId.bind(this)
+    this.addBoundary = this.addBoundary.bind(this)
+  }
+
+  addBoundary(option) {
+    this.props.dispatch(addBoundary({ object: option.value }))
+  }
+
+  changeBoundaryObject(option, index) {
+    this.props.dispatch(updateBoundary(index, { object: option.value, id: undefined }))
+  }
+
+  changeBoundaryId(option, index) {
+    this.props.dispatch(updateBoundary(index, { id: option.value }))
   }
 
   submitSearch(e) {
@@ -40,7 +56,12 @@ class AdvancedSearch extends React.Component {
           records={this.props.advancedSearch.results}
         />
 
-        <BoundaryQuery boundaries={this.props.advancedSearch.boundaries} />
+        <BoundaryQuery
+          addBoundary={this.addBoundary}
+          boundaries={this.props.advancedSearch.boundaries}
+          changeBoundaryObject={this.changeBoundaryObject}
+          changeBoundaryId={this.changeBoundaryId}
+        />
 
         <Condition
           conditions={this.props.advancedSearch.conditions}

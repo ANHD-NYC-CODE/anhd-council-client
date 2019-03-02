@@ -4,30 +4,13 @@ import { connect } from 'react-redux'
 import * as b from 'shared/constants/boundaries'
 
 import CustomSelect from 'shared/components/Select'
-import { Form, Row, Col } from 'react-bootstrap'
-
-import { addBoundary, updateBoundary } from 'Store/AdvancedSearch/actions'
+import { Form, Col } from 'react-bootstrap'
 
 class BoundaryQuery extends React.Component {
   constructor(props) {
     super(props)
 
     this.getBoundaryIdOptions = this.getBoundaryIdOptions.bind(this)
-    this.changeBoundaryObject = this.changeBoundaryObject.bind(this)
-    this.changeBoundaryId = this.changeBoundaryId.bind(this)
-    this.addBoundary = this.addBoundary.bind(this)
-  }
-
-  addBoundary(option) {
-    this.props.dispatch(addBoundary({ object: option.value }))
-  }
-
-  changeBoundaryObject(option, index) {
-    this.props.dispatch(updateBoundary(index, { object: option.value, id: undefined }))
-  }
-
-  changeBoundaryId(option, index) {
-    this.props.dispatch(updateBoundary(index, { id: option.value }))
   }
 
   getBoundaryIdOptions(type) {
@@ -41,12 +24,13 @@ class BoundaryQuery extends React.Component {
 
   render() {
     return (
-      <div className="boundary-picker">
+      <Form className="boundary-picker">
         {!this.props.boundaries.length && (
-          <Row className="boundary">
+          <Form.Row className="boundary">
             <Col sm={6} md={4}>
+              <Form.Label>Geography Type</Form.Label>
               <CustomSelect
-                onChange={this.addBoundary}
+                onChange={this.props.addBoundary}
                 options={[
                   { value: b.COUNCILBOUNDARY, label: b.COUNCILBOUNDARY.name.toLowerCase() },
                   { value: b.COMMUNITYBOUNDARY, label: b.COMMUNITYBOUNDARY.name.toLowerCase() },
@@ -54,15 +38,16 @@ class BoundaryQuery extends React.Component {
                 size="sm"
               />
             </Col>
-          </Row>
+          </Form.Row>
         )}
         {!!this.props.boundaries.length &&
           this.props.boundaries.map((boundary, index) => {
             return (
-              <Row className="boundary" key={boundary.object.name}>
+              <Form.Row className="boundary" key={boundary.object.name}>
                 <Col sm={6} md={4}>
+                  <Form.Label>Geography Type</Form.Label>
                   <CustomSelect
-                    onChange={e => this.changeBoundaryObject(e, index)}
+                    onChange={e => this.props.changeBoundaryObject(e, index)}
                     options={[
                       { value: b.COUNCILBOUNDARY, label: b.COUNCILBOUNDARY.name.toLowerCase() },
                       { value: b.COMMUNITYBOUNDARY, label: b.COMMUNITYBOUNDARY.name.toLowerCase() },
@@ -72,22 +57,26 @@ class BoundaryQuery extends React.Component {
                   />
                 </Col>
                 <Col>
+                  <Form.Label>Geography ID</Form.Label>
                   <CustomSelect
-                    onChange={e => this.changeBoundaryId(e, index)}
+                    onChange={e => this.props.changeBoundaryId(e, index)}
                     options={this.getBoundaryIdOptions(boundary.object.queryName)}
                     size="sm"
                     value={{ value: boundary.id, label: boundary.id }}
                   />
                 </Col>
-              </Row>
+              </Form.Row>
             )
           })}
-      </div>
+      </Form>
     )
   }
 }
 
 BoundaryQuery.propTypes = {
+  addBoundary: PropTypes.func,
+  changeBoundaryObject: PropTypes.func,
+  changeBoundaryId: PropTypes.func,
   boards: PropTypes.array,
   boundaries: PropTypes.array,
   districts: PropTypes.array,
