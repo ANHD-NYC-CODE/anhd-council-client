@@ -75,6 +75,7 @@ export const handleGetAdvancedSearch = response => ({
 
 export const getAdvancedSearch = advancedSearch => (dispatch, getState, access_token) => {
   const requestId = Math.floor(Math.random() * 1000000)
+  const datasetsConfig = getState().dataset.datasets
   return constructAxiosGet(
     dispatch,
     getState,
@@ -87,7 +88,7 @@ export const getAdvancedSearch = advancedSearch => (dispatch, getState, access_t
           [b.object.queryName]: b.id,
         }))
       ),
-      q: convertConditionMappingToQ(getState, advancedSearch.conditions),
+      q: convertConditionMappingToQ(datasetsConfig, advancedSearch.conditions),
     },
     access_token,
     c.GET_ADVANCED_SEARCH,

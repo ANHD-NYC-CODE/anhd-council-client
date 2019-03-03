@@ -1,7 +1,7 @@
 import * as a from 'AdvancedSearch/utilities/advancedSearchUtils'
 import * as d from 'shared/constants/datasets'
 
-describe('convertFilterToParams', () => {
+describe('convertDatasetFilterToParams', () => {
   const datasets = [d.HPDVIOLATIONS, d.DOBVIOLATIONS, d.ECBVIOLATIONS]
   describe('multiple datasets', () => {
     it('converts the object into a field string', () => {
@@ -17,7 +17,7 @@ describe('convertFilterToParams', () => {
         const result = `${ds.queryName}__${ds.dateField()}__gte=2017-01-01,${
           ds.queryName
         }__${ds.dateField()}__lte=2018-01-01,${ds.queryName}__${ds.amountField()}__gte=10`
-        expect(a.convertFilterToParams(undefined, object)).toEqual(result)
+        expect(a.convertDatasetFilterToParams(undefined, object)).toEqual(result)
       })
     })
   })
@@ -224,7 +224,7 @@ describe('convertConditionMappingToQ', () => {
         const result = `${ds.queryName}__${ds.dateField('2010')}__gt=0,${ds.queryName}__${ds.dateField('2017')}__gt=0,${
           ds.queryName
         }__${ds.amountField()}__gte=0.1`
-        expect(a.convertFilterToParams(undefined, object)).toEqual(result)
+        expect(a.convertDatasetFilterToParams(undefined, object)).toEqual(result)
       })
     })
 
@@ -237,10 +237,10 @@ describe('convertConditionMappingToQ', () => {
           startDate: '2010',
         }
 
-        const result = `${ds.queryName}__${ds.dateField('2010')}__gt=0,${ds.queryName}__${ds.dateField('2018')}__gt=0,${
+        const result = `${ds.queryName}__${ds.dateField('2010')}__gt=0,${ds.queryName}__${ds.dateField('2017')}__gt=0,${
           ds.queryName
         }__${ds.amountField()}__gte=0.1`
-        expect(a.convertFilterToParams(undefined, object)).toEqual(result)
+        expect(a.convertDatasetFilterToParams(undefined, object)).toEqual(result)
       })
     })
   })
@@ -258,7 +258,7 @@ describe('convertConditionMappingToQ', () => {
         }
 
         const result = `${ds.dateField()}__gte=2017-01-01,${ds.dateField()}__lte=2018-01-01,${ds.amountField()}__gte=10`
-        expect(a.convertFilterToParams(undefined, object)).toEqual(result)
+        expect(a.convertDatasetFilterToParams(undefined, object)).toEqual(result)
       })
     })
   })
@@ -276,7 +276,7 @@ describe('convertConditionMappingToQ', () => {
         }
 
         const result = `${ds.dateField()}__gte=2017-01-01,${ds.dateField()}__lte=2018-01-01,${ds.amountField()}__gte=2`
-        expect(a.convertFilterToParams(undefined, object)).toEqual(result)
+        expect(a.convertDatasetFilterToParams(undefined, object)).toEqual(result)
       })
     })
   })
@@ -298,7 +298,7 @@ describe('convertConditionMappingToQ', () => {
         }__${ds.dateField()}__lte=2018-01-01,${ds.queryName}__${ds.amountField()}__gte=1,${
           ds.queryName
         }__type=foreclosure`
-        expect(a.convertFilterToParams(undefined, object)).toEqual(result)
+        expect(a.convertDatasetFilterToParams(undefined, object)).toEqual(result)
       })
     })
   })

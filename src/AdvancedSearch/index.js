@@ -9,10 +9,13 @@ import { requestWithAuth } from 'shared/utilities/authUtils'
 import AdvancedSearchSentence from 'AdvancedSearch/Sentence'
 import BuildingHistoryTable from 'BuildingLookup/BuildingHistoryTable'
 import { addBoundary, updateBoundary } from 'Store/AdvancedSearch/actions'
+import { addHousingType, updateHousingType } from 'Store/AdvancedSearch/actions'
+
 import { Button } from 'react-bootstrap'
 
 import Condition from 'AdvancedSearch/Condition'
 import BoundaryQuery from 'AdvancedSearch/BoundaryQuery'
+import HousingTypeQuery from 'AdvancedSearch/HousingTypeQuery'
 
 export class AdvancedSearch extends React.Component {
   constructor(props) {
@@ -22,12 +25,6 @@ export class AdvancedSearch extends React.Component {
     this.changeBoundaryObject = this.changeBoundaryObject.bind(this)
     this.changeBoundaryId = this.changeBoundaryId.bind(this)
     this.addBoundary = this.addBoundary.bind(this)
-
-    this.state = {
-      boundaries: [],
-      conditions: [],
-      housingTypes: [],
-    }
   }
 
   addBoundary(option) {
@@ -40,6 +37,18 @@ export class AdvancedSearch extends React.Component {
 
   changeBoundaryId(option, index) {
     this.props.dispatch(updateBoundary(index, { id: option.value }))
+  }
+
+  addHousingType(option) {
+    this.props.dispatch(addHousingType({ object: option.value }))
+  }
+
+  changeHousingTypeObject(option, index) {
+    this.props.dispatch(updateHousingType(index, { object: option.value, id: undefined }))
+  }
+
+  changeHousingTypeId(option, index) {
+    this.props.dispatch(updateHousingType(index, { id: option.value }))
   }
 
   submitSearch(e) {
@@ -66,6 +75,12 @@ export class AdvancedSearch extends React.Component {
             <BoundaryQuery
               addBoundary={this.addBoundary}
               boundaries={this.props.advancedSearch.boundaries}
+              changeBoundaryObject={this.changeBoundaryObject}
+              changeBoundaryId={this.changeBoundaryId}
+            />
+            <HousingTypeQuery
+              addBoundary={this.addBoundary}
+              housingTypes={this.props.advancedSearch.boundaries}
               changeBoundaryObject={this.changeBoundaryObject}
               changeBoundaryId={this.changeBoundaryId}
             />

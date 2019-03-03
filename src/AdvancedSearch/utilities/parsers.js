@@ -17,7 +17,7 @@ export const foreclosureUrlAmountParser = (dataset, comparison, value) => {
   return `${dataset.queryName}__${dataset.amountField()}__${comparison}=${value},${dataset.queryName}__type=foreclosure`
 }
 
-export const standardUrlDateParser = (getState, dataset, startDate, endDate) => {
+export const standardUrlDateParser = (datasetsConfig, dataset, startDate, endDate) => {
   let filters = []
   if (startDate) {
     filters.push(`${dataset.queryName}__${dataset.dateField(startDate)}__gte=${startDate}`)
@@ -29,12 +29,14 @@ export const standardUrlDateParser = (getState, dataset, startDate, endDate) => 
   return filters.join(',')
 }
 
-export const rsunitsUrlDateParser = (getState, dataset, startDate, endDate) => {
+export const rsunitsUrlDateParser = (datasetsConfig, dataset, startDate, endDate) => {
+  const defaultLatestYear = '2017'
   let latestYear
   try {
-    latestYear = getState.dataset.datasets.find(d => d.model_name.toLowerCase() === dataset.model.toLowerCase()).version
+    latestYear =
+      datasetsConfig.find(d => d.model_name.toLowerCase() === dataset.model.toLowerCase()).version || defaultLatestYear
   } catch (e) {
-    latestYear = '2018'
+    latestYear = defaultLatestYear
   }
 
   let filters = []
@@ -50,7 +52,7 @@ export const rsunitsUrlDateParser = (getState, dataset, startDate, endDate) => {
   return filters.join(',')
 }
 
-export const acrisUrlDateParser = (getState, dataset, startDate, endDate) => {
+export const acrisUrlDateParser = (datasetsConfig, dataset, startDate, endDate) => {
   let filters = []
   if (startDate) {
     filters.push(`${dataset.dateField(startDate)}__gte=${startDate}`)

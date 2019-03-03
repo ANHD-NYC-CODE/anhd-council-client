@@ -205,7 +205,7 @@ describe('Advanced Search reducer', () => {
         ...r.initialState,
       }
 
-      const boundary = { council: 1 }
+      const boundary = { object: { queryName: 'council' }, id: '1' }
       const expectedBoundaries = [boundary]
 
       expect(r.advancedSearchReducer(state, a.addBoundary(boundary))).toEqual({
@@ -219,11 +219,11 @@ describe('Advanced Search reducer', () => {
     it('updates a boundaries', () => {
       const state = {
         ...r.initialState,
-        boundaries: [{ council: 1 }],
+        boundaries: [{ object: { queryName: 'council' }, id: '1' }],
       }
 
-      const updatedBoundary = { council: 2 }
-      const expectedBoundaries = [updatedBoundary]
+      const updatedBoundary = { id: '2' }
+      const expectedBoundaries = [{ object: { queryName: 'council' }, id: '2' }]
 
       expect(r.advancedSearchReducer(state, a.updateBoundary(0, updatedBoundary))).toEqual({
         ...r.initialState,
@@ -236,7 +236,7 @@ describe('Advanced Search reducer', () => {
     it('removes a boundaries', () => {
       const state = {
         ...r.initialState,
-        boundaries: [{ council: 1 }],
+        boundaries: [{ object: { queryName: 'council' }, id: '1' }],
       }
 
       const expectedBoundaries = []
