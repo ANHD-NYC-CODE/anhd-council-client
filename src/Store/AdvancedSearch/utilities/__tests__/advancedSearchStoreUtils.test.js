@@ -1,6 +1,7 @@
 import * as u from 'Store/AdvancedSearch/utilities/advancedSearchStoreUtils'
 import * as d from 'shared/constants/datasets'
 import * as b from 'shared/constants/boundaries'
+import * as cl from 'Store/AdvancedSearch/classes'
 
 describe('transformStateIntoParamObject', () => {
   it('transforms the state to a params object', () => {
@@ -21,8 +22,8 @@ describe('transformStateIntoParamObject', () => {
       },
     }
 
-    const boundary1 = { object: b.COUNCILBOUNDARY, id: '1' }
-    const boundary2 = { object: b.COMMUNITYBOUNDARY, id: '1' }
+    const boundary1 = new cl.Boundary('COUNCIL', '1')
+    const boundary2 = new cl.Boundary('COMMUNITY', '1')
 
     const housingType1 = {
       type: 'sh',

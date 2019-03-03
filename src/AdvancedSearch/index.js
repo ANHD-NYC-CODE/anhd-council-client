@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import * as c from 'Store/AdvancedSearch/constants'
+import * as cl from 'Store/AdvancedSearch/classes'
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
 import { connect } from 'react-redux'
@@ -22,21 +23,17 @@ export class AdvancedSearch extends React.Component {
     super(props)
 
     this.submitSearch = this.submitSearch.bind(this)
-    this.changeBoundaryObject = this.changeBoundaryObject.bind(this)
-    this.changeBoundaryId = this.changeBoundaryId.bind(this)
+    this.changeBoundary = this.changeBoundary.bind(this)
     this.addBoundary = this.addBoundary.bind(this)
   }
 
   addBoundary(option) {
-    this.props.dispatch(addBoundary({ object: option.value }))
+    this.props.dispatch(addBoundary(new cl.Boundary(option.value)))
   }
 
-  changeBoundaryObject(option, index) {
-    this.props.dispatch(updateBoundary(index, { object: option.value, id: undefined }))
-  }
-
-  changeBoundaryId(option, index) {
-    this.props.dispatch(updateBoundary(index, { id: option.value }))
+  changeBoundary(index, boundary, option) {
+    boundary[option.value.type] = option.value.value
+    this.props.dispatch(updateBoundary(index, boundary))
   }
 
   addHousingType(option) {
@@ -75,14 +72,12 @@ export class AdvancedSearch extends React.Component {
             <BoundaryQuery
               addBoundary={this.addBoundary}
               boundaries={this.props.advancedSearch.boundaries}
-              changeBoundaryObject={this.changeBoundaryObject}
-              changeBoundaryId={this.changeBoundaryId}
+              changeBoundary={this.changeBoundary}
             />
             <HousingTypeQuery
               addBoundary={this.addBoundary}
               housingTypes={this.props.advancedSearch.boundaries}
-              changeBoundaryObject={this.changeBoundaryObject}
-              changeBoundaryId={this.changeBoundaryId}
+              changeBoundary={this.changeBoundary}
             />
 
             <Condition

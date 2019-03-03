@@ -63,7 +63,7 @@ export const convertConditionMappingToSentence = q => {
 
 export const convertBoundariesToSentence = boundaries => {
   return `in ${boundaries
-    .map(boundary => `${boundary.object.name.toLowerCase()} ${boundary.id ? boundary.id : '_'}`)
+    .map(boundary => `${boundary.name.toLowerCase()} ${boundary.id ? boundary.id : '_'}`)
     .join(' and ')}`
 }
 

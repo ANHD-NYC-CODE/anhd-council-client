@@ -3,8 +3,6 @@ import * as c from '../constants'
 import * as u from 'shared/constants/urls'
 import { transformStateIntoParamObject } from 'Store/AdvancedSearch/utilities/advancedSearchStoreUtils'
 
-import { convertConditionMappingToQ } from 'AdvancedSearch/utilities/advancedSearchUtils'
-
 export const addNewCondition = (parentKey, conditionKey) => {
   return {
     type: c.ADD_NEW_CONDITION,

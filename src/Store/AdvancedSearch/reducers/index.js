@@ -91,7 +91,7 @@ export const advancedSearchReducer = (state = Object.freeze(initialState), actio
         ...state,
         boundaries: [
           ...state.boundaries.slice(0, action.boundaryIndex),
-          { ...state.boundaries[action.boundaryIndex], ...action.boundary },
+          action.boundary,
           ...state.boundaries.slice(action.boundaryIndex + 1),
         ],
       }

@@ -1,5 +1,6 @@
 import * as r from '../'
 import * as a from '../../actions'
+import * as cl from '../../classes'
 
 describe('Advanced Search reducer', () => {
   it('should return the initial state', () => {
@@ -205,9 +206,8 @@ describe('Advanced Search reducer', () => {
         ...r.initialState,
       }
 
-      const boundary = { object: { queryName: 'council' }, id: '1' }
+      const boundary = new cl.Boundary('COUNCIL', 1)
       const expectedBoundaries = [boundary]
-
       expect(r.advancedSearchReducer(state, a.addBoundary(boundary))).toEqual({
         ...r.initialState,
         boundaries: expectedBoundaries,
@@ -217,15 +217,16 @@ describe('Advanced Search reducer', () => {
 
   describe('UPDATE_BOUNDARY', () => {
     it('updates a boundaries', () => {
+      const boundary = new cl.Boundary('COUNCIL', 1)
       const state = {
         ...r.initialState,
-        boundaries: [{ object: { queryName: 'council' }, id: '1' }],
+        boundaries: [boundary],
       }
 
-      const updatedBoundary = { id: '2' }
-      const expectedBoundaries = [{ object: { queryName: 'council' }, id: '2' }]
+      boundary.id = 2
+      const expectedBoundaries = [boundary]
 
-      expect(r.advancedSearchReducer(state, a.updateBoundary(0, updatedBoundary))).toEqual({
+      expect(r.advancedSearchReducer(state, a.updateBoundary(0, boundary))).toEqual({
         ...r.initialState,
         boundaries: expectedBoundaries,
       })
