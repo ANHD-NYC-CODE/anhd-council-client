@@ -2,9 +2,8 @@ import * as ht from 'shared/constants/housingTypes'
 export class HousingType {
   constructor(objectConstant, paramsObject) {
     this.setObject = this.setObject.bind(this)
-    this.setObject(objectConstant)
-
     this._paramsObject = paramsObject || {}
+    this.setObject(objectConstant)
   }
 
   setObject(objectConstant) {
@@ -15,6 +14,11 @@ export class HousingType {
       this._queryName = this.object.queryName
       this._constant = this.object.constant
       this._paramsMappingSchema = this.object.paramsMappingSchema
+
+      // Set default keys to blank array
+      Object.keys(this._paramsMappingSchema).map(key => {
+        this._paramsObject = { ...this.paramsObject, ...{ [key]: [] } }
+      })
     } else {
       throw `Pass either '${Object.keys(ht)
         .map(key => ht[key].constant)
@@ -62,25 +66,34 @@ export class HousingType {
     this._paramsObject = newParamsObject
   }
 
-  addParamMapping(paramsMappingKey) {
+  addParamMapping(paramsMappingKey, paramsSetIndex) {
     // Clone schema class
     const newParamsMapping = Object.assign(
-      Object.create(Object.getPrototypeOf(this.paramsMappingSchema[paramsMappingKey])),
-      this.paramsMappingSchema[paramsMappingKey]
+      Object.create(Object.getPrototypeOf(this.paramsMappingSchema[paramsMappingKey][paramsSetIndex])),
+      this.paramsMappingSchema[paramsMappingKey][paramsSetIndex]
     )
 
     this._paramsObject = {
       ...this._paramsObject,
-      ...{ [paramsMappingKey]: newParamsMapping },
+      ...{
+        [paramsMappingKey]: [newParamsMapping],
+      },
     }
   }
 
-  updateParamMapping(paramsObjectKey, inputObject) {
-    this._paramsObject[paramsObjectKey][inputObject['name']] = inputObject['value']
-    this._paramsObject = { ...this._paramsObject, ...{ [paramsObjectKey]: this._paramsObject[paramsObjectKey] } }
+  updateParamMapping(paramsObjectKey, paramsMapIndex, inputObject) {
+    let paramMapSet = this._paramsObject[paramsObjectKey]
+    let updatedParam = paramMapSet[paramsMapIndex]
+    updatedParam[inputObject['name']] = inputObject['value']
+    paramMapSet = [...paramMapSet.slice(0, paramsMapIndex), updatedParam, ...paramMapSet.slice(paramsMapIndex + 1)]
+
+    this._paramsObject = { ...this._paramsObject, ...{ [paramsObjectKey]: paramMapSet } }
   }
 
-  removeParamMapping(paramsObjectKey) {
-    delete this._paramsObject[paramsObjectKey]
+  removeParamMapping(paramsObjectKey, paramMapsIndex) {
+    this._paramsObject[paramsObjectKey] = [
+      ...this._paramsObject[paramsObjectKey].slice(0, paramMapsIndex),
+      ...this._paramsObject[paramsObjectKey].slice(paramMapsIndex + 1),
+    ]
   }
 }

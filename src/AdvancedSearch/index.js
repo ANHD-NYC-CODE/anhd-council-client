@@ -54,13 +54,13 @@ export class AdvancedSearch extends React.Component {
     this.props.dispatch(updateHousingType(housingTypeIndex, newHousingType))
   }
 
-  addHousingTypeParamMapping(housingTypeIndex, paramsMappingKey) {
+  addHousingTypeParamMapping(housingTypeIndex, paramsMappingKey, paramMapIndex) {
     const housingType = this.props.advancedSearch.housingTypes[housingTypeIndex]
-    housingType.addParamMapping(paramsMappingKey)
+    housingType.addParamMapping(paramsMappingKey, paramMapIndex)
     this.props.dispatch(updateHousingType(housingTypeIndex, housingType))
   }
 
-  changeHousingTypeParam(housingTypeIndex, paramObjectKey, e) {
+  changeHousingTypeParam(housingTypeIndex, paramObjectKey, paramMapIndex, e) {
     // Converty multi select into a standardized Input object
     if (Array.isArray(e)) {
       if (e.length) {
@@ -71,13 +71,13 @@ export class AdvancedSearch extends React.Component {
     }
     const housingType = this.props.advancedSearch.housingTypes[housingTypeIndex]
     const standarizedInputObject = { name: e.name, value: e.value }
-    housingType.updateParamMapping(paramObjectKey, standarizedInputObject)
+    housingType.updateParamMapping(paramObjectKey, paramMapIndex, standarizedInputObject)
     this.props.dispatch(updateHousingType(housingTypeIndex, housingType))
   }
 
-  removeParamsObject(housingTypeIndex, paramObjectKey) {
+  removeParamsObject(housingTypeIndex, paramObjectKey, paramMapIndex) {
     const housingType = this.props.advancedSearch.housingTypes[housingTypeIndex]
-    housingType.removeParamMapping(paramObjectKey)
+    housingType.removeParamMapping(paramObjectKey, paramMapIndex)
     this.props.dispatch(updateHousingType(housingTypeIndex, housingType))
   }
 

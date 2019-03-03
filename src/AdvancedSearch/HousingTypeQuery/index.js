@@ -41,33 +41,37 @@ const HousingTypeQuery = props => {
               </Col>
 
               {!!Object.keys(housingType.paramsObject).length &&
-                Object.keys(housingType.paramsObject).map((paramKey, paramIndex) => {
-                  return (
-                    <Col key={`${housingType.name}-filter-${paramIndex}`} sm={6} md={4}>
-                      <Form.Label>{housingType.paramsObject[paramKey].filter.label}</Form.Label>
-                      <Form.Label>
-                        <Button variant="danger" onClick={() => props.removeParamsObject(housingTypeIndex, paramKey)}>
-                          {' '}
-                          -{' '}
-                        </Button>
-                      </Form.Label>
-                      {housingType.paramsObject[paramKey].filter.component({
-                        paramMapping: housingType.paramsObject[paramKey],
-                        index: paramIndex,
-                        options: housingType.paramsObject[paramKey].filter.options(
-                          housingType.paramsObject[paramKey].filter.optionValues
-                        ),
-                        onChange: e => props.changeHousingTypeParam(housingTypeIndex, paramKey, e),
-                      })}
-                    </Col>
-                  )
-                })}
-              {Object.keys(housingType.paramsMappingSchema).map((paramsMappingKey, index) => {
+                Object.keys(housingType.paramsObject).map((paramsSetKey, paramSetIndex) =>
+                  housingType.paramsObject[paramsSetKey].map((paramMap, paramMapIndex) => {
+                    return (
+                      <Col key={`${housingType.name}-filter-${paramSetIndex}-${paramMapIndex}`} sm={6} md={4}>
+                        <Form.Label>{paramMap.filter.label}</Form.Label>
+                        <Form.Label>
+                          <Button
+                            variant="danger"
+                            onClick={() => props.removeParamsObject(housingTypeIndex, paramsSetKey, paramMapIndex)}
+                          >
+                            {' '}
+                            -{' '}
+                          </Button>
+                        </Form.Label>
+                        {paramMap.filter.component({
+                          paramMapping: housingType.paramsObject[paramsSetKey][paramMapIndex],
+                          index: paramSetIndex,
+                          options: paramMap.filter.options(paramMap.filter.optionValues),
+                          onChange: e => props.changeHousingTypeParam(housingTypeIndex, paramsSetKey, paramMapIndex, e),
+                        })}
+                      </Col>
+                    )
+                  })
+                )}
+              {Object.keys(housingType.paramsMappingSchema).map((paramsSetKey, index) => {
                 return (
-                  !housingType.paramsObject[paramsMappingKey] && (
-                    <Col key={`${housingType.name}-add-param-${paramsMappingKey}-${index}`} sm={6} md={4}>
-                      <Button onClick={() => props.addHousingTypeParamMapping(housingTypeIndex, paramsMappingKey)}>
-                        {housingType.paramsMappingSchema[paramsMappingKey].filter.newButtonLabel}
+                  housingType.paramsObject[paramsSetKey].length !==
+                    housingType.paramsMappingSchema[paramsSetKey].length && (
+                    <Col key={`${housingType.name}-add-param-${paramsSetKey}-${index}`} sm={6} md={4}>
+                      <Button onClick={() => props.addHousingTypeParamMapping(housingTypeIndex, paramsSetKey, 0)}>
+                        {housingType.paramsMappingSchema[paramsSetKey][0].filter.newButtonLabel}
                       </Button>
                     </Col>
                   )
