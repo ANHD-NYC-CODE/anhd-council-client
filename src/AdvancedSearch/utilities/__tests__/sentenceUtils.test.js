@@ -1,6 +1,7 @@
 import * as a from 'AdvancedSearch/utilities/sentenceUtils'
 import * as d from 'shared/constants/datasets'
 import * as b from 'shared/constants/boundaries'
+import { Boundary } from 'Store/AdvancedSearch/classes/Boundary'
 
 describe('convertFilterToSentence', () => {
   describe('from/to', () => {
@@ -381,7 +382,7 @@ describe('convertConditionMappingToSentence', () => {
 describe('convertBoundariesToSentence', () => {
   describe('1 boundary', () => {
     it('converts the object into a sentence', () => {
-      const boundaries = [{ object: b.COUNCILBOUNDARY, id: '1' }]
+      const boundaries = [new Boundary('COUNCIL', 1)]
 
       const result = 'in council district 1'
 
@@ -391,7 +392,7 @@ describe('convertBoundariesToSentence', () => {
 
   describe('2 boundaries', () => {
     it('converts the object into a sentence', () => {
-      const boundaries = [{ object: b.COUNCILBOUNDARY, id: '1' }, { object: b.COMMUNITYBOUNDARY, id: '2' }]
+      const boundaries = [new Boundary('COUNCIL', 1), new Boundary('COMMUNITY', 2)]
 
       const result = 'in council district 1 and community board 2'
 

@@ -39,23 +39,3 @@ export const PERCENTYEAR = {
     },
   ],
 }
-
-export const BOUNDARYID = {
-  fields: [
-    {
-      type: 'BOUNDARY_TYPE',
-      options: [{ value: 'council', label: 'Council District' }, { value: 'cd', label: 'Community District/Board' }],
-    },
-    {
-      type: 'BOUNDARY_ID',
-      options: (type, boundaryArray) => {
-        switch (type) {
-          case 'council':
-            return [...boundaryArray.map(d => ({ value: d.id, label: d.id }))]
-          case 'cd':
-            return [...boundaryArray.map(b => ({ value: b.id, label: b.id }))]
-        }
-      },
-    },
-  ],
-}

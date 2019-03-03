@@ -116,7 +116,7 @@ export const advancedSearchReducer = (state = Object.freeze(initialState), actio
         ...state,
         housingTypes: [
           ...state.housingTypes.slice(0, action.housingTypeIndex),
-          { ...state.housingTypes[action.housingTypeIndex], ...action.housingType },
+          action.housingType,
           ...state.housingTypes.slice(action.housingTypeIndex + 1),
         ],
       }

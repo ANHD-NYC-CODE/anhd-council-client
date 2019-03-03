@@ -16,9 +16,9 @@ class BoundaryQuery extends React.Component {
   getBoundaryIdOptions(type) {
     switch (type) {
       case 'council':
-        return [...this.props.districts.map(d => ({ value: { type: 'id', value: d.id }, label: d.id }))]
+        return [...this.props.districts.map(d => ({ value: { key: 'id', value: d.id }, label: d.id }))]
       case 'cd':
-        return [...this.props.boards.map(b => ({ value: { type: 'id', value: b.id }, label: b.id }))]
+        return [...this.props.boards.map(b => ({ value: { key: 'id', value: b.id }, label: b.id }))]
     }
   }
 
@@ -35,7 +35,7 @@ class BoundaryQuery extends React.Component {
                   { value: b.COUNCILBOUNDARY.constant, label: b.COUNCILBOUNDARY.name },
                   { value: b.COMMUNITYBOUNDARY.constant, label: b.COMMUNITYBOUNDARY.name },
                 ]}
-                placeholder="Council or Community..."
+                placeholder="Pick a geography..."
                 size="sm"
               />
             </Col>
@@ -50,9 +50,9 @@ class BoundaryQuery extends React.Component {
                   <CustomSelect
                     onChange={e => this.props.changeBoundary(index, boundary, e)}
                     options={[
-                      { value: { type: 'object', value: b.COUNCILBOUNDARY.constant }, label: b.COUNCILBOUNDARY.name },
+                      { value: { key: 'object', value: b.COUNCILBOUNDARY.constant }, label: b.COUNCILBOUNDARY.name },
                       {
-                        value: { type: 'object', value: b.COMMUNITYBOUNDARY.constant },
+                        value: { key: 'object', value: b.COMMUNITYBOUNDARY.constant },
                         label: b.COMMUNITYBOUNDARY.name,
                       },
                     ]}

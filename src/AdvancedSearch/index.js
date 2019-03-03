@@ -1,7 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import * as c from 'Store/AdvancedSearch/constants'
-import * as cl from 'Store/AdvancedSearch/classes'
+import { Boundary } from 'Store/AdvancedSearch/classes/Boundary'
+import { HousingType } from 'Store/AdvancedSearch/classes/HousingType'
+
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
 import { connect } from 'react-redux'
@@ -25,27 +27,27 @@ export class AdvancedSearch extends React.Component {
     this.submitSearch = this.submitSearch.bind(this)
     this.changeBoundary = this.changeBoundary.bind(this)
     this.addBoundary = this.addBoundary.bind(this)
+    this.addHousingType = this.addHousingType.bind(this)
+    this.changeHousingType = this.changeHousingType.bind(this)
   }
 
   addBoundary(option) {
-    this.props.dispatch(addBoundary(new cl.Boundary(option.value)))
+    this.props.dispatch(addBoundary(new Boundary(option.value)))
   }
 
   changeBoundary(index, boundary, option) {
-    boundary[option.value.type] = option.value.value
+    boundary[option.value.key] = option.value.value
     this.props.dispatch(updateBoundary(index, boundary))
   }
 
   addHousingType(option) {
-    this.props.dispatch(addHousingType({ object: option.value }))
+    this.props.dispatch(addHousingType(new HousingType(option.value)))
   }
 
-  changeHousingTypeObject(option, index) {
-    this.props.dispatch(updateHousingType(index, { object: option.value, id: undefined }))
-  }
-
-  changeHousingTypeId(option, index) {
-    this.props.dispatch(updateHousingType(index, { id: option.value }))
+  changeHousingType(index, housingType, option) {
+    debugger
+    housingType[option.value.key] = option.value.value
+    this.props.dispatch(updateHousingType(index, housingType))
   }
 
   submitSearch(e) {
@@ -75,9 +77,9 @@ export class AdvancedSearch extends React.Component {
               changeBoundary={this.changeBoundary}
             />
             <HousingTypeQuery
-              addBoundary={this.addBoundary}
-              housingTypes={this.props.advancedSearch.boundaries}
-              changeBoundary={this.changeBoundary}
+              addHousingType={this.addHousingType}
+              housingTypes={this.props.advancedSearch.housingTypes}
+              changeHousingType={this.changeHousingType}
             />
 
             <Condition
