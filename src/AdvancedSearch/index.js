@@ -55,7 +55,7 @@ export class AdvancedSearch extends React.Component {
     e.preventDefault()
     e.stopPropagation()
 
-    this.props.dispatch(requestWithAuth(getAdvancedSearch(this.props.advancedSearch)))
+    this.props.dispatch(requestWithAuth(getAdvancedSearch()))
   }
 
   render() {

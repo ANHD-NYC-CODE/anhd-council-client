@@ -1,5 +1,4 @@
 import { convertConditionMappingToQ } from 'AdvancedSearch/utilities/advancedSearchUtils'
-
 export const transformStateIntoParamObject = (datasetsConfig, advancedSearch) => {
   return {
     ...Object.assign(

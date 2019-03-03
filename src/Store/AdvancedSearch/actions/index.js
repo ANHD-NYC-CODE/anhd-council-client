@@ -1,6 +1,7 @@
 import { constructAxiosGet } from 'shared/utilities/Axios'
 import * as c from '../constants'
 import * as u from 'shared/constants/urls'
+import { transformStateIntoParamObject } from 'Store/AdvancedSearch/utilities/advancedSearchStoreUtils'
 
 import { convertConditionMappingToQ } from 'AdvancedSearch/utilities/advancedSearchUtils'
 
@@ -73,7 +74,7 @@ export const handleGetAdvancedSearch = response => ({
   data: response.data,
 })
 
-export const getAdvancedSearch = advancedSearch => (dispatch, getState, access_token) => {
+export const getAdvancedSearch = () => (dispatch, getState, access_token) => {
   const requestId = Math.floor(Math.random() * 1000000)
   const datasetsConfig = getState().dataset.datasets
   return constructAxiosGet(
@@ -81,15 +82,7 @@ export const getAdvancedSearch = advancedSearch => (dispatch, getState, access_t
     getState,
     requestId,
     `${u.PROPERTY_URL}`,
-    {
-      ...Object.assign(
-        {},
-        ...advancedSearch.boundaries.map(b => ({
-          [b.object.queryName]: b.id,
-        }))
-      ),
-      q: convertConditionMappingToQ(datasetsConfig, advancedSearch.conditions),
-    },
+    transformStateIntoParamObject(datasetsConfig, getState().advancedSearch),
     access_token,
     c.GET_ADVANCED_SEARCH,
     handleGetAdvancedSearch
