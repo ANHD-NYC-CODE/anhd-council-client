@@ -1,11 +1,10 @@
 import * as ht from 'shared/constants/housingTypes'
-
 export class HousingType {
-  constructor(objectConstant, params) {
+  constructor(objectConstant, paramsObject) {
     this.setObject = this.setObject.bind(this)
     this.setObject(objectConstant)
-    if (!Array.isArray(params)) throw '2nd argument must be an array.'
-    this._params = params
+
+    this._paramsObject = paramsObject || {}
   }
 
   setObject(objectConstant) {
@@ -15,7 +14,7 @@ export class HousingType {
       this._name = this.object.name
       this._queryName = this.object.queryName
       this._constant = this.object.constant
-      this._filters = this.object.filters
+      this._paramsMappingSchema = this.object.paramsMappingSchema
     } else {
       throw `Pass either '${Object.keys(ht)
         .map(key => ht[key].constant)
@@ -37,28 +36,45 @@ export class HousingType {
     return this._constant
   }
 
-  get params() {
+  get paramsMappingSchema() {
+    return this._paramsMappingSchema
+  }
+
+  get queryParamsObject() {
+    // Maps the params array into an object that Axios can plug in for requests.
     return Object.assign(
       {},
-      ...this._params.map(p => ({
+      ...this._paramsObject.map(p => ({
         [`${p.field}${p.comparison ? '__' + p.comparison : ''}`]: p.value,
       }))
     )
   }
 
-  get filters() {
-    return this._filters
+  get paramsObject() {
+    return this._paramsObject
   }
 
   set object(objectConstant) {
     this.setObject(objectConstant)
   }
 
-  set params(newParams) {
-    this._params = newParams
+  set paramsObject(newParamsObject) {
+    this._paramsObject = newParamsObject
   }
 
-  replaceParam(index, newParams) {
-    this._params = [...this.params.slice(0, index), newParams, ...this.params.slice(index)]
+  addParamMapping(paramsMappingSchemaKey) {
+    this._paramsObject = {
+      ...this._paramsObject,
+      ...{ [paramsMappingSchemaKey]: this._paramsMappingSchema[paramsMappingSchemaKey] },
+    }
+  }
+
+  updateParamMapping(paramsObjectKey, inputObject) {
+    this._paramsObject[paramsObjectKey][inputObject['name']] = inputObject['value']
+    this._paramsObject = { ...this._paramsObject, ...{ [paramsObjectKey]: this._paramsObject[paramsObjectKey] } }
+  }
+
+  removeParamMapping(paramsObjectKey) {
+    delete this._paramsObject[paramsObjectKey]
   }
 }

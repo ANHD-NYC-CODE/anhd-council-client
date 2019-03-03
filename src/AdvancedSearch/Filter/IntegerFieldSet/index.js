@@ -5,24 +5,24 @@ import CustomSelect from 'shared/components/Select'
 
 const IntegerFilter = props => {
   return (
-    <Form.Group className="integer-filter" key={`filterField-${props.index}`} as={Col}>
+    <Form.Group className="integer-fieldset" key={`fieldset-${props.index}`} as={Col}>
       <Row>
         <Col>
           <CustomSelect
             name="comparison"
             options={props.options}
-            onChange={e => props.onChange(props.index, props.parentObject, e)}
+            onChange={props.onChange}
             size="sm"
-            value={props.options.find(option => option.value === props.filter.comparison)}
+            value={props.options.find(option => option.value.value === props.paramMapping.comparison)}
           />
         </Col>
         <Col>
           <Form.Control
             name="value"
-            onChange={e => props.onChange(props.index, props.parentObject, e)}
+            onChange={e => props.onChange(e.target)}
             size="sm"
             type="number"
-            value={props.value}
+            value={props.paramMapping.value}
           />
         </Col>
       </Row>
@@ -31,11 +31,10 @@ const IntegerFilter = props => {
 }
 
 IntegerFilter.propTypes = {
-  filter: PropTypes.object,
+  paramMapping: PropTypes.object,
   index: PropTypes.number,
   onChange: PropTypes.func,
   options: PropTypes.array,
-  parentObject: PropTypes.object,
 }
 
 export default IntegerFilter

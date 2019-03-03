@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import * as ht from 'shared/constants/housingTypes'
 
 import CustomSelect from 'shared/components/Select'
-import { Form, Col } from 'react-bootstrap'
+import { Form, Col, Button } from 'react-bootstrap'
 
 const HousingTypeQuery = props => {
   return (
@@ -22,15 +22,15 @@ const HousingTypeQuery = props => {
         </Form.Row>
       )}
       {!!props.housingTypes.length &&
-        props.housingTypes.map((housingType, index) => {
+        props.housingTypes.map((housingType, housingTypeIndex) => {
           return (
-            <Form.Row className="housing-type" key={housingType.name}>
+            <Form.Row className="housing-type" key={`${housingType.name}-${housingTypeIndex}`}>
               <Col sm={6} md={4}>
                 <Form.Label>Housing Type</Form.Label>
                 <CustomSelect
-                  onChange={e => props.changeHousingType(index, housingType, e)}
+                  onChange={e => props.changeHousingType(housingTypeIndex, housingType, e)}
                   options={Object.keys(ht).map(key => ({
-                    value: { type: 'object', value: ht[key].constant },
+                    value: { key: 'object', value: ht[key].constant },
                     label: ht[key].name,
                   }))}
                   size="sm"
@@ -38,21 +38,37 @@ const HousingTypeQuery = props => {
                 />
               </Col>
 
-              {!!housingType.filters.length &&
-                housingType.filters.map((filter, index) => {
+              {!!Object.keys(housingType.paramsObject).length &&
+                Object.keys(housingType.paramsObject).map((paramKey, paramIndex) => {
                   return (
-                    <Col key={`${housingType.name}-filter-${index}`} sm={6} md={4}>
-                      <Form.Label>{filter.label}</Form.Label>
-                      {filter.component({
-                        filter: filter,
-                        index: index,
-                        options: filter.comparisonOptions(filter.queryParam, 'params'),
-                        onChange: props.changeHousingType,
-                        parentObject: housingType,
+                    <Col key={`${housingType.name}-filter-${paramIndex}`} sm={6} md={4}>
+                      <Form.Label>{housingType.paramsObject[paramKey].filter.label}</Form.Label>
+                      <Form.Label>
+                        <Button variant="danger" onClick={() => props.removeParamsObject(housingTypeIndex, paramKey)}>
+                          {' '}
+                          -{' '}
+                        </Button>
+                      </Form.Label>
+                      {housingType.paramsObject[paramKey].filter.component({
+                        paramMapping: housingType.paramsObject[paramKey],
+                        index: paramIndex,
+                        options: housingType.paramsObject[paramKey].filter.comparisonOptions(),
+                        onChange: e => props.changeHousingTypeParam(housingTypeIndex, paramKey, e),
                       })}
                     </Col>
                   )
                 })}
+              {Object.keys(housingType.paramsMappingSchema).map((paramsMappingKey, index) => {
+                return (
+                  !housingType.paramsObject[paramsMappingKey] && (
+                    <Col key={`${housingType.name}-add-param-${paramsMappingKey}-${index}`} sm={6} md={4}>
+                      <Button onClick={() => props.addHousingTypeParamMapping(housingTypeIndex, paramsMappingKey)}>
+                        {housingType.paramsMappingSchema[paramsMappingKey].filter.newButtonLabel}
+                      </Button>
+                    </Col>
+                  )
+                )
+              })}
             </Form.Row>
           )
         })}
@@ -64,6 +80,7 @@ HousingTypeQuery.propTypes = {
   housingTypes: PropTypes.array,
   addHousingType: PropTypes.func,
   changeHousingType: PropTypes.func,
+  addHousingTypeParamMapping: PropTypes.func,
 }
 
 export default HousingTypeQuery

@@ -1,15 +1,15 @@
-import IntegerFilter from 'AdvancedSearch/Filter/IntegerFilter'
+import IntegerFieldSet from 'AdvancedSearch/Filter/IntegerFieldSet'
 const types = [
   {
     constant: 'INTEGER',
-    comparisonOptions: (param, key) => {
+    comparisonOptions: () => {
       return [
-        { value: { key: key, value: `${param}__gte` }, label: 'At least' },
-        { value: { key: key, value: `${param}__exact` }, label: 'Exactly' },
-        { value: { key: key, value: `${param}__lte` }, label: 'At most' },
+        { value: { name: 'comparison', value: 'gte' }, label: 'At least' },
+        { value: { name: 'comparison', value: 'exact' }, label: 'Exactly' },
+        { value: { name: 'comparison', value: 'lte' }, label: 'At most' },
       ]
     },
-    component: IntegerFilter,
+    component: IntegerFieldSet,
   },
   {
     constant: 'DATE',
@@ -22,10 +22,10 @@ const types = [
 ]
 
 export class ComparisonFilter {
-  constructor(typeConstant, label, queryParam) {
+  constructor(typeConstant, label, newButtonLabel) {
     this.setType = this.setType.bind(this)
     this._label = label
-    this._queryParam = queryParam
+    this._newButtonLabel = newButtonLabel
     this.setType(typeConstant)
   }
 
@@ -46,7 +46,7 @@ export class ComparisonFilter {
     return this._label
   }
 
-  get queryParam() {
-    return this._queryParam
+  get newButtonLabel() {
+    return this._newButtonLabel
   }
 }

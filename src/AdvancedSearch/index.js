@@ -29,6 +29,9 @@ export class AdvancedSearch extends React.Component {
     this.addBoundary = this.addBoundary.bind(this)
     this.addHousingType = this.addHousingType.bind(this)
     this.changeHousingType = this.changeHousingType.bind(this)
+    this.changeHousingTypeParam = this.changeHousingTypeParam.bind(this)
+    this.addHousingTypeParamMapping = this.addHousingTypeParamMapping.bind(this)
+    this.removeParamsObject = this.removeParamsObject.bind(this)
   }
 
   addBoundary(option) {
@@ -41,13 +44,32 @@ export class AdvancedSearch extends React.Component {
   }
 
   addHousingType(option) {
-    this.props.dispatch(addHousingType(new HousingType(option.value)))
+    const newHousingType = new HousingType(option.value)
+    this.props.dispatch(addHousingType(newHousingType))
   }
 
-  changeHousingType(index, housingType, option) {
-    debugger
+  changeHousingType(housingTypeIndex, housingType, option) {
     housingType[option.value.key] = option.value.value
-    this.props.dispatch(updateHousingType(index, housingType))
+    this.props.dispatch(updateHousingType(housingTypeIndex, housingType))
+  }
+
+  addHousingTypeParamMapping(housingTypeIndex, paramsMappingKey) {
+    const housingType = this.props.advancedSearch.housingTypes[housingTypeIndex]
+    housingType.addParamMapping(paramsMappingKey)
+    this.props.dispatch(updateHousingType(housingTypeIndex, housingType))
+  }
+
+  changeHousingTypeParam(housingTypeIndex, paramObjectKey, e) {
+    const housingType = this.props.advancedSearch.housingTypes[housingTypeIndex]
+    const standarizedInputObject = { name: e.value.name || e.name, value: e.value.value || e.value }
+    housingType.updateParamMapping(paramObjectKey, standarizedInputObject)
+    this.props.dispatch(updateHousingType(housingTypeIndex, housingType))
+  }
+
+  removeParamsObject(housingTypeIndex, paramObjectKey) {
+    const housingType = this.props.advancedSearch.housingTypes[housingTypeIndex]
+    housingType.removeParamMapping(paramObjectKey)
+    this.props.dispatch(updateHousingType(housingTypeIndex, housingType))
   }
 
   submitSearch(e) {
@@ -78,8 +100,11 @@ export class AdvancedSearch extends React.Component {
             />
             <HousingTypeQuery
               addHousingType={this.addHousingType}
+              addHousingTypeParamMapping={this.addHousingTypeParamMapping}
               housingTypes={this.props.advancedSearch.housingTypes}
               changeHousingType={this.changeHousingType}
+              changeHousingTypeParam={this.changeHousingTypeParam}
+              removeParamsObject={this.removeParamsObject}
             />
 
             <Condition
