@@ -1,5 +1,5 @@
 import React from 'react'
-import CustomSelect from 'shared/components/Select'
+import CustomSelect from 'shared/components/CustomSelect'
 import { Form, Row, Col } from 'react-bootstrap'
 import DateField from 'AdvancedSearch/Filter/DateFilter'
 

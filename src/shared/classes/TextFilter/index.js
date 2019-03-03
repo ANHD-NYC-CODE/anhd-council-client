@@ -1,11 +1,11 @@
-import TextSelectFieldSet from 'AdvancedSearch/Filter/TextSelectFieldSet'
+import TextMultiSelectField from 'AdvancedSearch/Filter/TextMultiSelectField'
 const types = [
   {
-    constant: 'SELECT',
+    constant: 'MULTISELECT',
     options: values => {
-      return values.map(value => ({ value: { name: 'value', value: value }, label: value }))
+      return values.map(value => ({ value: value, name: 'value', label: value }))
     },
-    component: TextSelectFieldSet,
+    component: TextMultiSelectField,
   },
 ]
 

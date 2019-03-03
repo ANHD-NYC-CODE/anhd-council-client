@@ -1,22 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Form, Row, Col } from 'react-bootstrap'
-import CustomSelect from 'shared/components/Select'
+import CustomSelect from 'shared/components/CustomSelect'
 
-const TextSelectFieldSet = props => {
+const TextMultiSelectField = props => {
   return (
-    <Form.Group className="textselect-fieldset" key={`fieldset-${props.index}`} as={Col}>
+    <Form.Group className="textmultiselect-fieldset" key={`fieldset-${props.index}`} as={Col}>
       <Row>
         <Col>
           <CustomSelect
+            className="textmultiselect-fieldset--select"
             name="value"
             options={props.options}
             onChange={props.onChange}
             isMulti={true}
-            size="sm"
-            value={[
-              ...props.paramMapping.value.split(',').map(v => props.options.find(option => option.value.value === v)),
-            ]}
+            size="multi-sm"
+            value={[...props.paramMapping.value.split(',').map(v => props.options.find(option => option.value === v))]}
           />
         </Col>
       </Row>
@@ -24,11 +23,11 @@ const TextSelectFieldSet = props => {
   )
 }
 
-TextSelectFieldSet.propTypes = {
+TextMultiSelectField.propTypes = {
   paramMapping: PropTypes.object,
   index: PropTypes.number,
   onChange: PropTypes.func,
   options: PropTypes.array,
 }
 
-export default TextSelectFieldSet
+export default TextMultiSelectField

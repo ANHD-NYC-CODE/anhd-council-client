@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Form, Row, Col } from 'react-bootstrap'
-import CustomSelect from 'shared/components/Select'
+import CustomSelect from 'shared/components/CustomSelect'
 
 const IntegerFieldSet = props => {
   return (

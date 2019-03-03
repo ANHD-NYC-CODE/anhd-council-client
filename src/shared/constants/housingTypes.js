@@ -19,7 +19,7 @@ export const RENTREGULATED = {
       'coresubsidyrecord__programname',
       'any',
       '',
-      new TextFilter('SELECT', 'Program Name', 'Add Program +', ['LIHCT', 'J-51', '421a'])
+      new TextFilter('MULTISELECT', 'Program Name', 'Add Program +', ['LIHCT', 'J-51', '421a'])
     ),
   },
 }

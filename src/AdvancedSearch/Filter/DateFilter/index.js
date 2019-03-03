@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import ConfigContext from 'Config/ConfigContext'
 
 import { Form, Row, Col } from 'react-bootstrap'
-import CustomSelect from 'shared/components/Select'
+import CustomSelect from 'shared/components/CustomSelect'
 
 class DateField extends React.Component {
   constructor(props) {

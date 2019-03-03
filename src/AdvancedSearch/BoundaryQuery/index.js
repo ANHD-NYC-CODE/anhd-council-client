@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import * as b from 'shared/constants/boundaries'
 
-import CustomSelect from 'shared/components/Select'
+import CustomSelect from 'shared/components/CustomSelect'
 import { Form, Col } from 'react-bootstrap'
 
 class BoundaryQuery extends React.Component {

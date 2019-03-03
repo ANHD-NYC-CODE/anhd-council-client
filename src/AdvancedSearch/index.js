@@ -64,13 +64,13 @@ export class AdvancedSearch extends React.Component {
     // Converty multi select into a standardized Input object
     if (Array.isArray(e)) {
       if (e.length) {
-        e = { name: e[0].value.name, value: e.map(v => v.value.value).join(',') }
+        e = { name: e[0].name, value: e.map(v => v.value).join(',') }
       } else {
         e = { name: 'value', value: '' }
       }
     }
     const housingType = this.props.advancedSearch.housingTypes[housingTypeIndex]
-    const standarizedInputObject = { name: e.value.name || e.name, value: e.value.value || e.value }
+    const standarizedInputObject = { name: e.name, value: e.value }
     housingType.updateParamMapping(paramObjectKey, standarizedInputObject)
     this.props.dispatch(updateHousingType(housingTypeIndex, housingType))
   }

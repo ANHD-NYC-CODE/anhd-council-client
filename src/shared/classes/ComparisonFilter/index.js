@@ -4,9 +4,9 @@ const types = [
     constant: 'INTEGER',
     options: () => {
       return [
-        { value: { name: 'comparison', value: 'gte' }, label: 'At least' },
-        { value: { name: 'comparison', value: 'exact' }, label: 'Exactly' },
-        { value: { name: 'comparison', value: 'lte' }, label: 'At most' },
+        { name: 'comparison', value: 'gte', label: 'At least' },
+        { name: 'comparison', value: 'exact', label: 'Exactly' },
+        { name: 'comparison', value: 'lte', label: 'At most' },
       ]
     },
     component: IntegerFieldSet,

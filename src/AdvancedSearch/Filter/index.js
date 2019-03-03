@@ -4,7 +4,7 @@ import { convertFieldsToComponents } from 'shared/utilities/componentUtils'
 import * as d from 'shared/constants/datasets'
 import { addFilter, removeFilter, updateFilter } from 'Store/AdvancedSearch/actions'
 
-import CustomSelect from 'shared/components/Select'
+import CustomSelect from 'shared/components/CustomSelect'
 import { Form, Button, Col } from 'react-bootstrap'
 
 class Filter extends React.Component {

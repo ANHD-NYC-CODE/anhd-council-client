@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import * as ht from 'shared/constants/housingTypes'
 
-import CustomSelect from 'shared/components/Select'
+import CustomSelect from 'shared/components/CustomSelect'
 import { Form, Col, Button } from 'react-bootstrap'
 
 const HousingTypeQuery = props => {
