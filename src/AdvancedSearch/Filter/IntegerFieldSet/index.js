@@ -13,7 +13,7 @@ const IntegerFieldSet = props => {
             options={props.options}
             onChange={props.onChange}
             size="sm"
-            value={props.options.find(option => option.value.value === props.paramMapping.comparison)}
+            value={props.options.find(option => option.value === props.paramMapping.comparison)}
           />
         </Col>
         <Col>

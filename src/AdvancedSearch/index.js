@@ -61,7 +61,7 @@ export class AdvancedSearch extends React.Component {
   }
 
   changeHousingTypeParam(housingTypeIndex, paramObjectKey, paramMapIndex, e) {
-    // Converty multi select into a standardized Input object
+    // Converts multi select input value into a standardized Input object
     if (Array.isArray(e)) {
       if (e.length) {
         e = { name: e[0].name, value: e.map(v => v.value).join(',') }

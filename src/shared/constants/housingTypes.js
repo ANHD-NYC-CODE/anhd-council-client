@@ -1,6 +1,7 @@
 import { ComparisonFilter } from 'shared/classes/ComparisonFilter'
 import { TextFilter } from 'shared/classes/TextFilter'
 import { DateFilterClass } from 'shared/classes/DateFilterClass'
+import { ParameterMapSet } from 'shared/classes/ParameterMapSet'
 
 import { ParameterMapping } from 'shared/classes/ParameterMapping'
 import moment from 'moment'
@@ -18,33 +19,32 @@ export const RENTREGULATED = {
   constant: 'RENT_REGULATED',
 
   paramsMappingSchema: {
-    coresubsidyrecord__programname: [
-      new ParameterMapping(
-        'coresubsidyrecord__programname',
-        'any',
-        '',
-        new TextFilter('MULTISELECT', 'Program Name', 'Add Program +', ['LIHCT', 'J-51', '421a'])
-      ),
-    ],
+    coresubsidyrecord__programname: new ParameterMapSet(
+      new TextFilter('MULTISELECT', 'Program Name', 'Add Program +', ['LIHCT', 'J-51', '421a']),
+      [new ParameterMapping('coresubsidyrecord__programname', 'any', '')],
+      1
+    ),
 
-    coresubsidyrecord__enddate: [
-      new ParameterMapping(
-        'coresubsidyrecord__enddate',
-        'lte',
-        moment(moment.now())
-          .add(1, 'Y')
-          .format('MM/DD/YYYY'),
-        new DateFilterClass('DATE', 'Expiration Date', 'Add Expiration +')
-      ),
-      new ParameterMapping(
-        'coresubsidyrecord__enddate',
-        'lte',
-        moment(moment.now())
-          .add(1, 'Y')
-          .format('MM/DD/YYYY'),
-        new DateFilterClass('DATE', 'Expiration Date', 'Add Expiration +')
-      ),
-    ],
+    coresubsidyrecord__enddate: new ParameterMapSet(
+      new DateFilterClass('DATE', 'Expiration Date', 'Add Expiration +'),
+      [
+        new ParameterMapping(
+          'coresubsidyrecord__enddate',
+          'lte',
+          moment(moment.now())
+            .add(1, 'Y')
+            .format('MM/DD/YYYY')
+        ),
+        new ParameterMapping(
+          'coresubsidyrecord__enddate',
+          'lte',
+          moment(moment.now())
+            .add(1, 'Y')
+            .format('MM/DD/YYYY')
+        ),
+      ],
+      2
+    ),
   },
 }
 
@@ -53,14 +53,11 @@ export const SMALLHOMES = {
   queryName: 'sh',
   constant: 'SMALL_HOMES',
   paramsMappingSchema: {
-    unitsres: [
-      new ParameterMapping(
-        'unitsres',
-        'lte',
-        '6',
-        new ComparisonFilter('INTEGER', 'Number of residential units', 'Add Residential Units +')
-      ),
-    ],
+    unitsres: new ParameterMapSet(
+      new ComparisonFilter('INTEGER', 'Number of residential units', 'Add Residential Units +'),
+      [new ParameterMapping('unitsres', 'lte', '6')],
+      1
+    ),
   },
 }
 
