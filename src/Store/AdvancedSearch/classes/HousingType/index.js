@@ -62,10 +62,16 @@ export class HousingType {
     this._paramsObject = newParamsObject
   }
 
-  addParamMapping(paramsMappingSchemaKey) {
+  addParamMapping(paramsMappingKey) {
+    // Clone schema class
+    const newParamsMapping = Object.assign(
+      Object.create(Object.getPrototypeOf(this.paramsMappingSchema[paramsMappingKey])),
+      this.paramsMappingSchema[paramsMappingKey]
+    )
+
     this._paramsObject = {
       ...this._paramsObject,
-      ...{ [paramsMappingSchemaKey]: this._paramsMappingSchema[paramsMappingSchemaKey] },
+      ...{ [paramsMappingKey]: newParamsMapping },
     }
   }
 

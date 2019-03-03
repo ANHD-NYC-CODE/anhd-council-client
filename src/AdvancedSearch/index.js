@@ -49,8 +49,9 @@ export class AdvancedSearch extends React.Component {
   }
 
   changeHousingType(housingTypeIndex, housingType, option) {
-    housingType[option.value.key] = option.value.value
-    this.props.dispatch(updateHousingType(housingTypeIndex, housingType))
+    const newHousingType = new HousingType(option.value.value)
+
+    this.props.dispatch(updateHousingType(housingTypeIndex, newHousingType))
   }
 
   addHousingTypeParamMapping(housingTypeIndex, paramsMappingKey) {
@@ -60,6 +61,14 @@ export class AdvancedSearch extends React.Component {
   }
 
   changeHousingTypeParam(housingTypeIndex, paramObjectKey, e) {
+    // Converty multi select into a standardized Input object
+    if (Array.isArray(e)) {
+      if (e.length) {
+        e = { name: e[0].value.name, value: e.map(v => v.value.value).join(',') }
+      } else {
+        e = { name: 'value', value: '' }
+      }
+    }
     const housingType = this.props.advancedSearch.housingTypes[housingTypeIndex]
     const standarizedInputObject = { name: e.value.name || e.name, value: e.value.value || e.value }
     housingType.updateParamMapping(paramObjectKey, standarizedInputObject)

@@ -13,6 +13,7 @@ const HousingTypeQuery = props => {
           <Col sm={6} md={4}>
             <Form.Label>Housing Type</Form.Label>
             <CustomSelect
+              isSearchable={false}
               onChange={props.addHousingType}
               options={Object.keys(ht).map(key => ({ value: ht[key].constant, label: ht[key].name }))}
               placeholder="Pick a housing type..."
@@ -28,6 +29,7 @@ const HousingTypeQuery = props => {
               <Col sm={6} md={4}>
                 <Form.Label>Housing Type</Form.Label>
                 <CustomSelect
+                  isSearchable={false}
                   onChange={e => props.changeHousingType(housingTypeIndex, housingType, e)}
                   options={Object.keys(ht).map(key => ({
                     value: { key: 'object', value: ht[key].constant },
@@ -52,7 +54,9 @@ const HousingTypeQuery = props => {
                       {housingType.paramsObject[paramKey].filter.component({
                         paramMapping: housingType.paramsObject[paramKey],
                         index: paramIndex,
-                        options: housingType.paramsObject[paramKey].filter.comparisonOptions(),
+                        options: housingType.paramsObject[paramKey].filter.options(
+                          housingType.paramsObject[paramKey].filter.optionValues
+                        ),
                         onChange: e => props.changeHousingTypeParam(housingTypeIndex, paramKey, e),
                       })}
                     </Col>

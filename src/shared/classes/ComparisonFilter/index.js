@@ -2,7 +2,7 @@ import IntegerFieldSet from 'AdvancedSearch/Filter/IntegerFieldSet'
 const types = [
   {
     constant: 'INTEGER',
-    comparisonOptions: () => {
+    options: () => {
       return [
         { value: { name: 'comparison', value: 'gte' }, label: 'At least' },
         { value: { name: 'comparison', value: 'exact' }, label: 'Exactly' },
@@ -34,7 +34,7 @@ export class ComparisonFilter {
 
     if (type) {
       this.type = type
-      this.comparisonOptions = type.comparisonOptions
+      this.options = type.options
       this.constant = type.constant
       this.component = type.component
     } else {
