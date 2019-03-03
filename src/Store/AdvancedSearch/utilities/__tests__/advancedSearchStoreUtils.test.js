@@ -1,6 +1,5 @@
 import * as u from 'Store/AdvancedSearch/utilities/advancedSearchStoreUtils'
 import * as d from 'shared/constants/datasets'
-import * as b from 'shared/constants/boundaries'
 import * as cl from 'Store/AdvancedSearch/classes'
 
 describe('transformStateIntoParamObject', () => {
@@ -25,13 +24,7 @@ describe('transformStateIntoParamObject', () => {
     const boundary1 = new cl.Boundary('COUNCIL', '1')
     const boundary2 = new cl.Boundary('COMMUNITY', '1')
 
-    const housingType1 = {
-      type: 'sh',
-      params: [
-        { type: 'unitsres', comparison: 'lte', value: '4' },
-        { type: 'unitsres', comparison: 'gte', value: '1' },
-      ],
-    }
+    const housingType1 = new cl.HousingType('SMALL_HOMES', { unitsres__lte: '4', unitsres__gte: '1' })
 
     const advancedSearch = {
       conditions: { ...condition0 },

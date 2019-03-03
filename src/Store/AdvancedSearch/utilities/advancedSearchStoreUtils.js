@@ -10,16 +10,8 @@ export const transformStateIntoParamObject = (datasetsConfig, advancedSearch) =>
     ...Object.assign(
       {},
       ...advancedSearch.housingTypes.map(ht => ({
-        housingtype: ht.type,
-        ...Object.assign(
-          {},
-          ...advancedSearch.housingTypes.map(ht =>
-            Object.assign(
-              {},
-              ...ht.params.map(p => ({ [`${p.type}${p.comparison ? '__' + p.comparison : ''}`]: p.value }))
-            )
-          )
-        ),
+        housingtype: ht.queryName,
+        ...Object.assign({}, ...advancedSearch.housingTypes.map(ht => ({ ...ht.params }))),
       }))
     ),
     q: convertConditionMappingToQ(datasetsConfig, advancedSearch.conditions),
