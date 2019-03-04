@@ -1,11 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { cloneInstance } from 'shared/utilities/classUtils'
 
 import { Form, Button } from 'react-bootstrap'
 
 const HousingTypeParamSet = props => {
-  const addHousingTypeParamMapping = (paramSet, newParamMap) => {
-    paramSet.addParameterMap(newParamMap)
+  const addHousingTypeParamMapping = (paramSet, newParamMap, unshift = false) => {
+    if (unshift) {
+      paramSet.unshiftParameterMap(newParamMap)
+    } else {
+      paramSet.addParameterMap(newParamMap)
+    }
     props.dispatchParameterAction()
   }
 
@@ -44,7 +49,7 @@ const HousingTypeParamSet = props => {
       {props.paramSet.paramMaps.length ? (
         <Form.Label>{props.paramSet.filter.label}</Form.Label>
       ) : (
-        <Button onClick={() => addHousingTypeParamMapping(props.paramSet, props.paramSet.defaults[0])}>
+        <Button onClick={() => addHousingTypeParamMapping(props.paramSet, cloneInstance(props.paramSet.defaults[0]))}>
           {props.paramSet.filter.newButtonLabel}
         </Button>
       )}

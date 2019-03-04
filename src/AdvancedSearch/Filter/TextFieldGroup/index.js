@@ -14,7 +14,7 @@ const IntegerFieldGroup = props => {
             key={`integer-fieldset-${paramMapIndex}`}
             paramMap={paramMap}
             paramMapIndex={paramMapIndex}
-            options={props.paramSet.filter.options(props.paramSet.filter.optionsList)}
+            options={props.paramSet.filter.options}
             onChangeParamMap={props.onChangeParamMap}
           />
         )

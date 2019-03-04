@@ -1,9 +1,8 @@
 export class ParameterMapSet {
-  constructor(filter, paramMaps, defaults, maxMaps) {
+  constructor(filter, paramMaps, defaults) {
     this._filter = filter
     this._paramMaps = paramMaps || []
     this._defaults = defaults || []
-    this._maxMaps = maxMaps
   }
 
   get filter() {
@@ -18,16 +17,16 @@ export class ParameterMapSet {
     return this._defaults
   }
 
-  get maxMaps() {
-    return this._maxMaps
-  }
-
   set paramMaps(newArray) {
     this._paramMaps = newArray
   }
 
   addParameterMap(parameterMap) {
     this.paramMaps = [...this.paramMaps, parameterMap]
+  }
+
+  unshiftParameterMap(parameterMap) {
+    this.paramMaps = [parameterMap, ...this.paramMaps]
   }
 
   updateParameterMap(paramMapIndex, inputObject) {

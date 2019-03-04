@@ -1,5 +1,6 @@
 import * as ht from 'shared/constants/housingTypes'
 import { ParameterMapSet } from 'shared/classes/ParameterMapSet'
+import { cloneInstance } from 'shared/utilities/classUtils'
 
 export class HousingType {
   constructor(objectConstant, paramsObject) {
@@ -25,8 +26,7 @@ export class HousingType {
             [key]: new ParameterMapSet(
               this.schema[key].filter,
               [],
-              this.schema[key].defaults,
-              this.schema[key].maxMaps
+              [...this.schema[key].defaults.map(d => cloneInstance(d))]
             ),
           },
         }
@@ -80,11 +80,7 @@ export class HousingType {
 
   addParamMapping(paramsObjectKey, paramsSetIndex) {
     // Clone schema class
-    // debugger
-    const newParamsMapping = Object.assign(
-      Object.create(Object.getPrototypeOf(this.schema[paramsObjectKey].paramMaps[paramsSetIndex])),
-      this.schema[paramsObjectKey].paramMaps[paramsSetIndex]
-    )
+    const newParamsMapping = cloneInstance(this.schema[paramsObjectKey].paramMaps[paramsSetIndex])
 
     const paramMapSet = this._paramsObject[paramsObjectKey]
     paramMapSet.addParameterMap(newParamsMapping)

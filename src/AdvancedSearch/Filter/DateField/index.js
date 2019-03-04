@@ -8,14 +8,14 @@ const DateField = props => {
       name="value"
       onChange={e => props.onChangeParamMap(props.paramMap, e)}
       size="sm"
-      type={props.dateType}
+      type={props.type}
       value={props.paramMap.value}
     />
   )
 }
 
 DateField.propTypes = {
-  dateType: PropTypes.string,
+  type: PropTypes.string,
   onChangeParamMap: PropTypes.func,
   paramMap: PropTypes.object,
 }

@@ -15,7 +15,7 @@ const DateFieldSet = props => {
         size="sm"
         value={props.options.find(option => option.value === props.paramMap.comparison)}
       />
-      <DateField dateType={props.dateType} onChangeParamMap={props.onChangeParamMap} paramMap={props.paramMap} />
+      <DateField type={props.type} onChangeParamMap={props.onChangeParamMap} paramMap={props.paramMap} />
     </div>
   )
 }
@@ -24,7 +24,7 @@ DateFieldSet.propTypes = {
   onChangeParamMap: PropTypes.func,
   paramMap: PropTypes.object,
   paramMapIndex: PropTypes.number,
-  dateType: PropTypes.string,
+  type: PropTypes.string,
 }
 
 export default DateFieldSet

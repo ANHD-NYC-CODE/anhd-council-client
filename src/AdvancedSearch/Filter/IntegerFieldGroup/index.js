@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Button, Row, Col } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 
 import IntegerFieldSet from 'AdvancedSearch/Filter/IntegerFieldSet'
 
@@ -14,7 +14,7 @@ const IntegerFieldGroup = props => {
             key={`integer-fieldset-${paramMapIndex}`}
             paramMap={paramMap}
             paramMapIndex={paramMapIndex}
-            options={props.paramSet.filter.options(props.paramSet.filter.optionsList)}
+            options={props.paramSet.filter.options}
             onChangeParamMap={props.onChangeParamMap}
           />
         )

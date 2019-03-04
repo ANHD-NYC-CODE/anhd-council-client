@@ -1,10 +1,9 @@
-import { ComparisonFilter } from 'shared/classes/ComparisonFilter'
-import { TextFilterClass } from 'shared/classes/TextFilterClass'
-import { DateFilterClass } from 'shared/classes/DateFilterClass'
-import { ParameterMapSet } from 'shared/classes/ParameterMapSet'
-
-import { ParameterMapping } from 'shared/classes/ParameterMapping'
 import moment from 'moment'
+
+import { rentRegulatedProgramOptions, comparisonOptions } from 'shared/utilities/filterUtils'
+import { BaseFilter } from 'shared/classes/BaseFilter'
+import { ParameterMapSet } from 'shared/classes/ParameterMapSet'
+import { ParameterMapping } from 'shared/classes/ParameterMapping'
 
 export const RENTSTABILZED = {
   name: 'Rent Stabilized',
@@ -20,14 +19,13 @@ export const RENTREGULATED = {
 
   schema: {
     coresubsidyrecord__programname: new ParameterMapSet(
-      new TextFilterClass('MULTISELECT', 'Program Name', 'Add Program +', ['LIHCT', 'J-51', '421a']),
+      new BaseFilter('MULTISELECT', 'Program Name', 'Add Program +', rentRegulatedProgramOptions()),
       [],
-      [new ParameterMapping('coresubsidyrecord__programname', 'any', '')],
-      1
+      [new ParameterMapping('coresubsidyrecord__programname', 'any', '')]
     ),
 
     coresubsidyrecord__enddate: new ParameterMapSet(
-      new DateFilterClass('DATE', 'Expiration Date', 'Add Expiration +'),
+      new BaseFilter('DATE', 'Expiration Date', 'Add Expiration +'),
       [],
       [
         new ParameterMapping(
@@ -44,8 +42,7 @@ export const RENTREGULATED = {
             .add(1, 'Y')
             .format('YYYY-MM-DD')
         ),
-      ],
-      2
+      ]
     ),
   },
 }
@@ -56,10 +53,14 @@ export const SMALLHOMES = {
   constant: 'SMALL_HOMES',
   schema: {
     unitsres: new ParameterMapSet(
-      new ComparisonFilter('INTEGER', 'Number of residential units', 'Add Residential Units +'),
+      new BaseFilter(
+        'INTEGER',
+        'Number of residential units',
+        'Add Residential Units +',
+        comparisonOptions(['lte', 'exact'])
+      ),
       [],
-      [new ParameterMapping('unitsres', 'lte', '6')],
-      1
+      [new ParameterMapping('unitsres', 'lte', '6')]
     ),
   },
 }

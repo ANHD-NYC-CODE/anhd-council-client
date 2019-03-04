@@ -1,7 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Button, Row, Col } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
+import { cloneInstance } from 'shared/utilities/classUtils'
+
 import CustomSelect from 'shared/components/CustomSelect'
 import DateField from 'AdvancedSearch/Filter/DateField'
 
@@ -21,20 +23,20 @@ const comparisonReconfigure = (props, e) => {
 const renderDateFields = props => {
   const onDateFieldChange = (paramMap, e) => {
     if (e.name === 'comparison' && e.value === 'between') {
-      // Add the opposite param mapping to the set
-      if (paramMap.comparison === 'gte') {
+      // Change paramMap to LTE and clone the GTE default
+      if (paramMap.comparison === 'lte') {
         props.addHousingTypeParamMapping(
           props.paramSet,
-          props.paramSet.defaults.find(mapping => mapping.comparison === 'lte')
+          cloneInstance(props.paramSet.defaults.find(mapping => mapping.comparison === 'gte')),
+          true
         )
-      } else {
+      } else if (paramMap.comparison === 'gte') {
         props.addHousingTypeParamMapping(
           props.paramSet,
-          props.paramSet.defaults.find(mapping => mapping.comparison === 'gte')
+          cloneInstance(props.paramSet.defaults.find(mapping => mapping.comparison === 'lte'))
         )
       }
       props.dispatchParameterAction()
-      // debugger
     } else {
       props.onChangeParamMap(paramMap, e)
     }
@@ -44,11 +46,11 @@ const renderDateFields = props => {
     return (
       <div key={`datefieldgroup-${0}`}>
         <DateFieldSet
-          dateType={props.paramSet.filter.dateType}
-          options={props.paramSet.filter.options(props.paramSet.filter.optionsList)}
+          options={props.paramSet.filter.options}
           onChangeParamMap={onDateFieldChange}
           paramMap={props.paramSet.paramMaps[0]}
           paramMapIndex={0}
+          type={props.paramSet.filter.type.constant}
         />
       </div>
     )
@@ -57,18 +59,18 @@ const renderDateFields = props => {
       <div>
         <CustomSelect
           name="comparison"
-          options={props.paramSet.filter.options()}
+          options={props.paramSet.filter.options}
           onChange={e => comparisonReconfigure(props, e)}
           size="sm"
-          value={props.paramSet.filter.options().find(option => option.value === 'between')}
+          value={props.paramSet.filter.options.find(option => option.value === 'between')}
         />
         {props.paramSet.paramMaps.map((paramMap, paramMapIndex) => {
           return (
             <DateField
               key={`paramMap-${paramMapIndex}`}
-              dateType={props.paramSet.filter.dateType}
               onChangeParamMap={onDateFieldChange}
               paramMap={paramMap}
+              type={props.paramSet.filter.type.constant}
             />
           )
         })}
