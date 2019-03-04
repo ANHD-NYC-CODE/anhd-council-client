@@ -9,7 +9,7 @@ const IntegerFieldSet = props => {
         className="textmultiselect-fieldset--select"
         name="value"
         options={props.options}
-        onChange={e => props.onChangeParamMap(props.paramMap, e)}
+        onChange={e => props.paramMap.update({ dispatchAction: props.dispatchParameterAction, e: e })}
         isMulti={true}
         size="multi-sm"
         value={[...props.paramMap.value.split(',').map(v => props.options.find(option => option.value === v))]}
@@ -19,10 +19,10 @@ const IntegerFieldSet = props => {
 }
 
 IntegerFieldSet.propTypes = {
+  dispatchParameterAction: PropTypes.func,
+  options: PropTypes.array,
   paramMap: PropTypes.object,
   paramMapIndex: PropTypes.number,
-  onChangeParamMap: PropTypes.func,
-  options: PropTypes.array,
 }
 
 export default IntegerFieldSet

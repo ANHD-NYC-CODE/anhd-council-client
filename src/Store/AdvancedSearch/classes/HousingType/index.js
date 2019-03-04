@@ -84,30 +84,4 @@ export class HousingType {
   set paramsObject(newParamsObject) {
     this._paramsObject = newParamsObject
   }
-
-  addParamMapping(paramsObjectKey, paramsSetIndex) {
-    // Clone schema class
-    const newParamsMapping = cloneInstance(this.schema[paramsObjectKey].paramMaps[paramsSetIndex])
-
-    const paramMapSet = this._paramsObject[paramsObjectKey]
-    paramMapSet.addParameterMap(newParamsMapping)
-    this._paramsObject = {
-      ...this._paramsObject,
-      ...{
-        [paramsObjectKey]: paramMapSet,
-      },
-    }
-  }
-
-  updateParamMapping(paramsObjectKey, paramMapIndex, inputObject) {
-    let paramMapSet = this._paramsObject[paramsObjectKey]
-    paramMapSet.updateParameterMap(paramMapIndex, inputObject)
-
-    this._paramsObject = { ...this._paramsObject, ...{ [paramsObjectKey]: paramMapSet } }
-  }
-
-  removeParamMapping(paramsObjectKey, paramMapsIndex) {
-    const paramMapSet = this._paramsObject[paramsObjectKey]
-    paramMapSet.removeParameterMap(paramMapsIndex)
-  }
 }

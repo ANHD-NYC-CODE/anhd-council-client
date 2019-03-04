@@ -4,20 +4,14 @@ import { Form } from 'react-bootstrap'
 
 const DateField = props => {
   return (
-    <Form.Control
-      name="value"
-      onChange={e => props.onChangeParamMap(props.paramMap, e)}
-      size="sm"
-      type={props.type}
-      value={props.paramMap.value}
-    />
+    <Form.Control name="value" onChange={props.onChange} size="sm" type={props.type} value={props.paramMap.value} />
   )
 }
 
 DateField.propTypes = {
-  type: PropTypes.string,
-  onChangeParamMap: PropTypes.func,
+  onChange: PropTypes.func,
   paramMap: PropTypes.object,
+  type: PropTypes.string,
 }
 
 export default DateField

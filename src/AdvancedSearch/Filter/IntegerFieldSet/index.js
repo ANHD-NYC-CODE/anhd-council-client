@@ -9,14 +9,14 @@ const IntegerFieldSet = props => {
       <CustomSelect
         name="comparison"
         options={props.options}
-        onChange={e => props.onChangeParamMap(props.paramMap, e)}
+        onChange={e => props.paramMap.update({ dispatchAction: props.dispatchParameterAction, e: e })}
         size="sm"
         value={props.options.find(option => option.value === props.paramMap.comparison)}
       />
 
       <Form.Control
         name="value"
-        onChange={e => props.onChangeParamMap(props.paramMap, e)}
+        onChange={e => props.paramMap.update({ dispatchAction: props.dispatchParameterAction, e: e })}
         size="sm"
         type="number"
         value={props.paramMap.value}
@@ -26,9 +26,9 @@ const IntegerFieldSet = props => {
 }
 
 IntegerFieldSet.propTypes = {
+  dispatchParameterAction: PropTypes.func,
   paramMap: PropTypes.object,
   paramMapIndex: PropTypes.number,
-  onChangeParamMap: PropTypes.func,
   options: PropTypes.array,
 }
 

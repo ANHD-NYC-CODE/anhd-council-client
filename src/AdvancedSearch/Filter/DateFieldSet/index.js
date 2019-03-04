@@ -10,17 +10,29 @@ const DateFieldSet = props => {
       <CustomSelect
         name="comparison"
         options={props.options}
-        onChange={e => props.onChangeParamMap(props.paramMap, e)}
+        onChange={e =>
+          props.onChange
+            ? props.onChange(props.paramMap, e)
+            : props.paramMap.update({ dispatchAction: props.dispatchParameterAction, e: e })
+        }
         size="sm"
         value={props.options.find(option => option.value === props.paramMap.comparison)}
       />
-      <DateField type={props.type} onChangeParamMap={props.onChangeParamMap} paramMap={props.paramMap} />
+      <DateField
+        type={props.type}
+        onChange={e =>
+          props.onChange
+            ? props.onChange(props.paramMap, e)
+            : props.paramMap.update({ dispatchAction: props.dispatchParameterAction, e: e })
+        }
+        paramMap={props.paramMap}
+      />
     </div>
   )
 }
 
 DateFieldSet.propTypes = {
-  onChangeParamMap: PropTypes.func,
+  dispatchParameterAction: PropTypes.func,
   options: PropTypes.array,
   paramMap: PropTypes.object,
   paramMapIndex: PropTypes.number,

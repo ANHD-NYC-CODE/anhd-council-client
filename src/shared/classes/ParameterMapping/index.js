@@ -1,3 +1,5 @@
+import { StandardizedInput } from 'shared/classes/StandardizedInput'
+
 export class ParameterMapping {
   constructor({ component = {}, field = '', comparison = '', value = '' } = {}) {
     this._field = field
@@ -34,7 +36,18 @@ export class ParameterMapping {
     this._value = value
   }
 
+  update({ dispatchAction = undefined, e = undefined } = {}) {
+    let updated = this.updateParameterMapValue(new StandardizedInput(e).value)
+
+    if (dispatchAction) {
+      dispatchAction()
+    }
+
+    return updated
+  }
+
   updateParameterMapValue(inputObject) {
     this[inputObject['name']] = inputObject['value']
+    return this
   }
 }

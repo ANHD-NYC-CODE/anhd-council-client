@@ -12,11 +12,14 @@ const MultiTypeFieldGroup = props => {
           paramMap: paramMap,
           paramMapIndex: paramMapIndex,
           options: props.paramSet.setComponent.options,
-          onChangeParamMap: props.onChangeParamMap,
+          dispatchParameterAction: props.dispatchParameterAction,
         })
       })}
       {!!props.paramSet.paramMaps.length && (
-        <Button variant="danger" onClick={() => props.clearParamSetMaps(props.paramSet)}>
+        <Button
+          variant="danger"
+          onClick={() => props.paramSet.deleteAll({ dispatchAction: props.dispatchParameterAction })}
+        >
           -
         </Button>
       )}
@@ -26,10 +29,8 @@ const MultiTypeFieldGroup = props => {
 
 MultiTypeFieldGroup.propTypes = {
   dispatchParameterAction: PropTypes.func,
-  onChangeParamMap: PropTypes.func,
   paramSet: PropTypes.object,
   paramSetIndex: PropTypes.number,
-  removeParamsMap: PropTypes.object,
 }
 
 export default MultiTypeFieldGroup
