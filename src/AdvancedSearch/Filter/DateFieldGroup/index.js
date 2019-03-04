@@ -7,8 +7,6 @@ import { cloneInstance } from 'shared/utilities/classUtils'
 import CustomSelect from 'shared/components/CustomSelect'
 import DateField from 'AdvancedSearch/Filter/DateField'
 
-import DateFieldSet from 'AdvancedSearch/Filter/DateFieldSet'
-
 const comparisonReconfigure = (props, e) => {
   if (e.value.toUpperCase().match(/(LTE|END)/)) {
     props.removeParamsMap(
@@ -31,16 +29,20 @@ const renderDateFields = props => {
     if (e.name === 'comparison' && e.value.toUpperCase().match(/(BETWEEN)/)) {
       // Change paramMap to LTE and clone the GTE default
       if (paramMap.comparison.toUpperCase().match(/(LTE|END)/)) {
-        props.addHousingTypeParamMapping(
-          props.paramSet,
-          cloneInstance(props.paramSet.defaults.find(mapping => mapping.comparison.toUpperCase().match(/(GTE|START)/))),
-          true
-        )
+        props.paramSet.createSpecific({
+          dispatchAction: props.dispatchParameterAction,
+          paramMap: cloneInstance(
+            props.paramSet.defaults.find(mapping => mapping.comparison.toUpperCase().match(/(GTE|START)/))
+          ),
+          unshift: true,
+        })
       } else if (paramMap.comparison.toUpperCase().match(/(GTE|START)/)) {
-        props.addHousingTypeParamMapping(
-          props.paramSet,
-          cloneInstance(props.paramSet.defaults.find(mapping => mapping.comparison.toUpperCase().match(/(LTE|END)/)))
-        )
+        props.paramSet.createSpecific({
+          dispatchAction: props.dispatchParameterAction,
+          paramMap: cloneInstance(
+            props.paramSet.defaults.find(mapping => mapping.comparison.toUpperCase().match(/(LTE|END)/))
+          ),
+        })
       }
       props.dispatchParameterAction()
     } else {
@@ -49,17 +51,14 @@ const renderDateFields = props => {
   }
 
   if (props.paramSet.paramMaps.length === 1) {
-    return (
-      <div key={`datefieldgroup-${0}`}>
-        <DateFieldSet
-          options={props.paramSet.setComponent.options}
-          onChangeParamMap={onDateFieldChange}
-          paramMap={props.paramSet.paramMaps[0]}
-          paramMapIndex={0}
-          type={props.paramSet.setComponent.type.constant}
-        />
-      </div>
-    )
+    return props.paramSet.paramMaps[0].component({
+      key: `datefieldgroup-${0}`,
+      onChangeParamMap: onDateFieldChange,
+      options: props.paramSet.setComponent.options,
+      paramMap: props.paramSet.paramMaps[0],
+      paramMapIndex: 0,
+      type: props.paramSet.setComponent.type.constant,
+    })
   } else if (props.paramSet.paramMaps.length > 1) {
     return (
       <div>
@@ -101,7 +100,6 @@ const DateFieldGroup = props => {
 }
 
 DateFieldGroup.propTypes = {
-  addHousingTypeParamMapping: PropTypes.func,
   dispatchParameterAction: PropTypes.func,
   onChangeParamMap: PropTypes.func,
   paramSet: PropTypes.object,

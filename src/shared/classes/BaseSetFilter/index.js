@@ -1,7 +1,7 @@
 import TextFieldGroup from 'AdvancedSearch/Filter/TextFieldGroup'
 import IntegerFieldGroup from 'AdvancedSearch/Filter/IntegerFieldGroup'
 import DateFieldGroup from 'AdvancedSearch/Filter/DateFieldGroup'
-import IntegerDateFieldGroup from 'AdvancedSearch/Filter/IntegerDateFieldGroup'
+import MultiTypeFieldGroup from 'AdvancedSearch/Filter/MultiTypeFieldGroup'
 
 import { comparisonOptions } from 'shared/utilities/filterUtils'
 
@@ -22,12 +22,11 @@ const types = [
     dateType: 'date',
   },
   {
-    constant: 'PERCENTDATE',
+    constant: 'MULTITYPE',
     options: values => {
-      return values || comparisonOptions(['gte', 'exact', 'lte'], [], 'DATE')
+      return values || comparisonOptions(['gte', 'exact', 'lte'], [], 'INTEGER')
     },
-    component: IntegerDateFieldGroup,
-    dateType: 'date',
+    component: MultiTypeFieldGroup,
   },
   {
     constant: 'MULTISELECT',

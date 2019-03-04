@@ -3,9 +3,9 @@ import PropTypes from 'prop-types'
 
 import { Button } from 'react-bootstrap'
 
-const IntegerFieldGroup = props => {
+const MultiTypeFieldGroup = props => {
   return (
-    <div className="integer-fieldgroup">
+    <div className="multitype-fieldgroup">
       {props.paramSet.paramMaps.map((paramMap, paramMapIndex) => {
         return paramMap.component({
           key: `integer-fieldset-${paramMapIndex}`,
@@ -24,7 +24,7 @@ const IntegerFieldGroup = props => {
   )
 }
 
-IntegerFieldGroup.propTypes = {
+MultiTypeFieldGroup.propTypes = {
   dispatchParameterAction: PropTypes.func,
   onChangeParamMap: PropTypes.func,
   paramSet: PropTypes.object,
@@ -32,4 +32,4 @@ IntegerFieldGroup.propTypes = {
   removeParamsMap: PropTypes.object,
 }
 
-export default IntegerFieldGroup
+export default MultiTypeFieldGroup

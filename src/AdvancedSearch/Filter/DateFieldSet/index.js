@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Form, Row, Col } from 'react-bootstrap'
 import CustomSelect from 'shared/components/CustomSelect'
 import DateField from 'AdvancedSearch/Filter/DateField'
 
@@ -22,6 +21,7 @@ const DateFieldSet = props => {
 
 DateFieldSet.propTypes = {
   onChangeParamMap: PropTypes.func,
+  options: PropTypes.array,
   paramMap: PropTypes.object,
   paramMapIndex: PropTypes.number,
   type: PropTypes.string,

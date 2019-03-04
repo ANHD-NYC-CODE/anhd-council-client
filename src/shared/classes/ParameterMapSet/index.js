@@ -21,12 +21,42 @@ export class ParameterMapSet {
     this._paramMaps = newArray
   }
 
+  createOne({ dispatchAction = undefined, unshift = false } = {}) {
+    let created
+    if (unshift) {
+      created = this.unshiftParameterMap(this.defaults[0])
+    } else {
+      created = this.addParameterMap(this.defaults[0])
+    }
+    if (dispatchAction) {
+      dispatchAction()
+    }
+    return created
+  }
+
+  createSpecific({ dispatchAction = undefined, paramMap = null, unshift = false } = {}) {
+    if (!paramMap) throw "Please pass a param map instance to the 'paramMap' key parameter"
+
+    let created
+    if (unshift) {
+      created = this.unshiftParameterMap(paramMap)
+    } else {
+      created = this.addParameterMap(paramMap)
+    }
+    if (dispatchAction) {
+      dispatchAction()
+    }
+    return created
+  }
+
   addParameterMap(parameterMap) {
     this.paramMaps = [...this.paramMaps, parameterMap]
+    return parameterMap
   }
 
   unshiftParameterMap(parameterMap) {
     this.paramMaps = [parameterMap, ...this.paramMaps]
+    return parameterMap
   }
 
   updateParameterMap(paramMapIndex, inputObject) {
@@ -37,6 +67,7 @@ export class ParameterMapSet {
       updatedParameterMap,
       ...this.paramMaps.slice(paramMapIndex + 1),
     ]
+    return updatedParameterMap
   }
 
   removeParameterMap(paramMapIndex) {

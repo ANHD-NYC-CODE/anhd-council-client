@@ -1,19 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { cloneInstance } from 'shared/utilities/classUtils'
 
 import { Form, Button } from 'react-bootstrap'
 
 const HousingTypeParamSet = props => {
-  const addHousingTypeParamMapping = (paramSet, newParamMap, unshift = false) => {
-    if (unshift) {
-      paramSet.unshiftParameterMap(newParamMap)
-    } else {
-      paramSet.addParameterMap(newParamMap)
-    }
-    props.dispatchParameterAction()
-  }
-
   const changeHousingTypeParam = (paramMap, e) => {
     // Converts multi select input value into a standardized Input object
     if (Array.isArray(e)) {
@@ -49,13 +39,11 @@ const HousingTypeParamSet = props => {
       {props.paramSet.paramMaps.length ? (
         <Form.Label>{props.paramSet.setComponent.label}</Form.Label>
       ) : (
-        <Button onClick={() => addHousingTypeParamMapping(props.paramSet, cloneInstance(props.paramSet.defaults[0]))}>
+        <Button onClick={() => props.paramSet.createOne({ dispatchAction: props.dispatchParameterAction })}>
           {props.paramSet.setComponent.newButtonLabel}
         </Button>
       )}
-      {}
       {props.paramSet.setComponent.component({
-        addHousingTypeParamMapping: addHousingTypeParamMapping,
         clearParamSetMaps: clearParamSetMaps,
         onChangeParamMap: changeHousingTypeParam,
         dispatchParameterAction: props.dispatchParameterAction,

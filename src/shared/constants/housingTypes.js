@@ -5,6 +5,8 @@ import { BaseSetFilter } from 'shared/classes/BaseSetFilter'
 import { ParameterMapSet } from 'shared/classes/ParameterMapSet'
 import { ParameterMapping } from 'shared/classes/ParameterMapping'
 import IntegerFieldSet from 'AdvancedSearch/Filter/IntegerFieldSet'
+import TextFieldSet from 'AdvancedSearch/Filter/TextFieldSet'
+import DateFieldSet from 'AdvancedSearch/Filter/DateFieldSet'
 
 export const RENTSTABILZED = {
   name: 'Rent Stabilized',
@@ -13,13 +15,14 @@ export const RENTSTABILZED = {
   schema: {
     rsunitslost: new ParameterMapSet({
       setComponent: new BaseSetFilter({
-        type: 'PERCENTDATE',
+        type: 'MULTITYPE',
         label: 'Rent Stabilized Units Lost',
         newButtonLabel: 'Add Units Lost +',
       }),
       defaults: [
-        new ParameterMapping({ field: 'rsunitslost', comparison: 'gte', value: '25' }),
+        new ParameterMapping({ component: IntegerFieldSet, field: 'rsunitslost', comparison: 'gte', value: '25' }),
         new ParameterMapping({
+          component: DateFieldSet,
           field: 'rsunitslost',
           comparison: 'start',
           value: moment(moment.now())
@@ -27,6 +30,7 @@ export const RENTSTABILZED = {
             .format('YYYY-MM-DD'),
         }),
         new ParameterMapping({
+          component: DateFieldSet,
           field: 'rsunitslost',
           comparison: 'end',
           value: moment(moment.now())
@@ -51,7 +55,14 @@ export const RENTREGULATED = {
         newButtonLabel: 'Add Program +',
         defaultOptions: rentRegulatedProgramOptions(),
       }),
-      defaults: [new ParameterMapping({ field: 'coresubsidyrecord__programname', comparison: 'any', value: '' })],
+      defaults: [
+        new ParameterMapping({
+          component: TextFieldSet,
+          field: 'coresubsidyrecord__programname',
+          comparison: 'any',
+          value: '',
+        }),
+      ],
     }),
 
     coresubsidyrecord__enddate: new ParameterMapSet({
@@ -64,6 +75,7 @@ export const RENTREGULATED = {
       paramMaps: [],
       defaults: [
         new ParameterMapping({
+          component: DateFieldSet,
           field: 'coresubsidyrecord__enddate',
           comparison: 'lte',
           value: moment(moment.now())
@@ -71,6 +83,7 @@ export const RENTREGULATED = {
             .format('YYYY-MM-DD'),
         }),
         new ParameterMapping({
+          component: DateFieldSet,
           field: 'coresubsidyrecord__enddate',
           comparison: 'gte',
           value: moment(moment.now())

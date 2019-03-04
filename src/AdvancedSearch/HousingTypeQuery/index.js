@@ -40,7 +40,6 @@ HousingTypeQuery.propTypes = {
   housingTypes: PropTypes.array,
   addHousingType: PropTypes.func,
   dispatch: PropTypes.func,
-  addHousingTypeParamMapping: PropTypes.func,
 }
 
 export default HousingTypeQuery
