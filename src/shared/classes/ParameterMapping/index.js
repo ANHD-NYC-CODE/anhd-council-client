@@ -1,9 +1,8 @@
 export class ParameterMapping {
-  constructor(field, comparison, value, filter) {
+  constructor(field, comparison, value) {
     this._field = field
     this._comparison = comparison
     this._value = value
-    this._filter = filter
   }
 
   get field() {
@@ -22,10 +21,6 @@ export class ParameterMapping {
     return this._filter
   }
 
-  set field(value) {
-    this._field = value
-  }
-
   set comparison(value) {
     this._comparison = value
   }
@@ -34,7 +29,7 @@ export class ParameterMapping {
     this._value = value
   }
 
-  set newLabel(value) {
-    this._newLabel = value
+  updateParameterMapValue(inputObject) {
+    this[inputObject['name']] = inputObject['value']
   }
 }

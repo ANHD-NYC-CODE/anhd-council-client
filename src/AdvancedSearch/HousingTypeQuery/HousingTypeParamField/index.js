@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form, Col, Button } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 
-const changeHousingTypeParam = (dispatchParameterAction, housingTypeIndex, housingType, paramSet, paramMapIndex, e) => {
+const changeHousingTypeParam = (dispatchParameterAction, paramMap, e) => {
   // Converts multi select input value into a standardized Input object
   if (Array.isArray(e)) {
     if (e.length) {
@@ -12,42 +12,31 @@ const changeHousingTypeParam = (dispatchParameterAction, housingTypeIndex, housi
     }
   }
   const standarizedInputObject = { name: e.name, value: e.value }
-  paramSet.updateParameterMap(paramMapIndex, standarizedInputObject)
-  dispatchParameterAction()
-}
-
-const removeParamsObject = (dispatchParameterAction, paramSet, paramMapIndex) => {
-  paramSet.removeParameterMap(paramMapIndex)
+  paramMap.updateParameterMapValue(standarizedInputObject)
   dispatchParameterAction()
 }
 
 const HousingTypeParamField = props => {
   return (
-    <Col className="housingtype-paramfield">
-      <Form.Label>
+    <div>
+      <div className="housingtype-paramfield">
+        {props.paramSet.filter.component({
+          paramMapping: props.paramMap,
+          index: props.paramSetIndex,
+          options: props.paramSet.filter.options(props.paramSet.filter.optionValues),
+          onChange: e => changeHousingTypeParam(props.dispatchParameterAction, props.paramMap, e),
+        })}
+      </div>
+      <div>
         <Button
           variant="danger"
-          onClick={() => removeParamsObject(props.dispatchParameterAction, props.paramSet, props.paramMapIndex)}
+          onClick={() => props.removeParamsMap(props.dispatchParameterAction, props.paramSet, props.paramMapIndex)}
         >
           {' '}
           -{' '}
         </Button>
-      </Form.Label>
-      {props.paramSet.filter.component({
-        paramMapping: props.paramMap,
-        index: props.paramSetIndex,
-        options: props.paramSet.filter.options(props.paramSet.filter.optionValues),
-        onChange: e =>
-          changeHousingTypeParam(
-            props.dispatchParameterAction,
-            props.housingTypeIndex,
-            props.housingType,
-            props.paramSet,
-            props.paramMapIndex,
-            e
-          ),
-      })}
-    </Col>
+      </div>
+    </div>
   )
 }
 
@@ -57,6 +46,7 @@ HousingTypeParamField.propTypes = {
   paramMapIndex: PropTypes.number,
   paramSetIndex: PropTypes.number,
   paramSet: PropTypes.object,
+  removeParamsMap: PropTypes.func,
 }
 
 export default HousingTypeParamField

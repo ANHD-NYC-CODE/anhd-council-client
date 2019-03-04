@@ -1,25 +1,25 @@
-import DateFilterSet from 'AdvancedSearch/Filter/DateFilterSet'
+import DateFieldGroup from 'AdvancedSearch/Filter/DateFieldGroup'
 const types = [
   {
     constant: 'DATE',
     options: () => {
       return [
-        { name: 'comparison', value: 'gte', label: 'At least' },
-        { name: 'comparison', value: 'exact', label: 'Exactly' },
-        { name: 'comparison', value: 'lte', label: 'At most' },
+        { name: 'comparison', value: 'gte', label: 'Since' },
+        { name: 'comparison', value: 'between', label: 'Between' },
+        { name: 'comparison', value: 'lte', label: 'Before' },
       ]
     },
-    component: DateFilterSet,
+    component: DateFieldGroup,
+    dateType: 'date',
   },
 ]
 
 export class DateFilterClass {
-  constructor(typeConstant, label, newButtonLabel, optionValues) {
+  constructor(typeConstant, label, newButtonLabel) {
     this.setType = this.setType.bind(this)
     this._label = label
     this._newButtonLabel = newButtonLabel
     this.setType(typeConstant)
-    this._optionValues = optionValues
   }
 
   setType(typeContant) {
@@ -30,9 +30,19 @@ export class DateFilterClass {
       this.options = type.options
       this.constant = type.constant
       this.component = type.component
+      this.dateType = type.dateType
+      this._options = type.options
     } else {
       throw `Pass either '${types.map(t => t.constant).join("' or '")}' as the first argument.`
     }
+  }
+
+  get type() {
+    return this._type
+  }
+
+  set type(value) {
+    this._type = value
   }
 
   get label() {
@@ -43,7 +53,11 @@ export class DateFilterClass {
     return this._newButtonLabel
   }
 
-  get optionValues() {
-    return this._optionValues
+  get options() {
+    return this._options
+  }
+
+  set options(value) {
+    this._options = value
   }
 }

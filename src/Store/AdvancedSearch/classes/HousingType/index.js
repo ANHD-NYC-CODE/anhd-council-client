@@ -15,14 +15,19 @@ export class HousingType {
       this._name = this.object.name
       this._queryName = this.object.queryName
       this._constant = this.object.constant
-      this._paramsMappingSchema = this.object.paramsMappingSchema
+      this._schema = this.object.schema
 
       // Set default keys to ParameterMapSet without any parameter maps
-      Object.keys(this._paramsMappingSchema).map(key => {
+      Object.keys(this._schema).map(key => {
         this._paramsObject = {
           ...this.paramsObject,
           ...{
-            [key]: new ParameterMapSet(this.paramsMappingSchema[key].filter, [], this.paramsMappingSchema[key].maxMaps),
+            [key]: new ParameterMapSet(
+              this.schema[key].filter,
+              [],
+              this.schema[key].defaults,
+              this.schema[key].maxMaps
+            ),
           },
         }
       })
@@ -47,8 +52,8 @@ export class HousingType {
     return this._constant
   }
 
-  get paramsMappingSchema() {
-    return this._paramsMappingSchema
+  get schema() {
+    return this._schema
   }
 
   get queryParamsObject() {
@@ -77,8 +82,8 @@ export class HousingType {
     // Clone schema class
     // debugger
     const newParamsMapping = Object.assign(
-      Object.create(Object.getPrototypeOf(this.paramsMappingSchema[paramsObjectKey].paramMaps[paramsSetIndex])),
-      this.paramsMappingSchema[paramsObjectKey].paramMaps[paramsSetIndex]
+      Object.create(Object.getPrototypeOf(this.schema[paramsObjectKey].paramMaps[paramsSetIndex])),
+      this.schema[paramsObjectKey].paramMaps[paramsSetIndex]
     )
 
     const paramMapSet = this._paramsObject[paramsObjectKey]

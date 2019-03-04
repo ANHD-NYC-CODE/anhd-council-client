@@ -1,7 +1,8 @@
 export class ParameterMapSet {
-  constructor(filter, paramMaps, maxMaps) {
+  constructor(filter, paramMaps, defaults, maxMaps) {
     this._filter = filter
     this._paramMaps = paramMaps || []
+    this._defaults = defaults || []
     this._maxMaps = maxMaps
   }
 
@@ -11,6 +12,10 @@ export class ParameterMapSet {
 
   get paramMaps() {
     return this._paramMaps
+  }
+
+  get defaults() {
+    return this._defaults
   }
 
   get maxMaps() {
