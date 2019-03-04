@@ -3,14 +3,14 @@ import { ParameterMapSet } from 'shared/classes/ParameterMapSet'
 import { cloneInstance } from 'shared/utilities/classUtils'
 
 export class HousingType {
-  constructor(objectConstant, paramsObject) {
+  constructor({ housingType = null, paramsObject = {} } = {}) {
     this.setObject = this.setObject.bind(this)
     this._paramsObject = paramsObject || {}
-    this.setObject(objectConstant)
+    this.setObject(housingType)
   }
 
-  setObject(objectConstant) {
-    const object = ht[Object.keys(ht).find(obj => ht[obj].constant === objectConstant)]
+  setObject(housingType) {
+    const object = ht[Object.keys(ht).find(obj => ht[obj].constant === housingType)]
     if (!object)
       throw `Pass either '${Object.keys(ht)
         .map(key => ht[key].constant)
@@ -26,11 +26,10 @@ export class HousingType {
     Object.keys(this._schema).map(key => {
       this._paramsObject = {
         ...{
-          [key]: new ParameterMapSet(
-            this.schema[key].filter,
-            [],
-            [...this.schema[key].defaults.map(d => cloneInstance(d))]
-          ),
+          [key]: new ParameterMapSet({
+            setComponent: this.schema[key].filter,
+            defaults: [...this.schema[key].defaults.map(d => cloneInstance(d))],
+          }),
         },
         ...this.paramsObject,
       }
@@ -78,8 +77,8 @@ export class HousingType {
     return this._paramsObject
   }
 
-  set object(objectConstant) {
-    this.setObject(objectConstant)
+  set object(housingType) {
+    this.setObject(housingType)
   }
 
   set paramsObject(newParamsObject) {

@@ -27,12 +27,19 @@ describe('transformStateIntoParamObject', () => {
     const boundary1 = new Boundary('COUNCIL', '1')
     const boundary2 = new Boundary('COMMUNITY', '1')
 
-    const housingType1 = new HousingType('MARKET_RATE', {
-      someField: new ParameterMapSet(null, [new ParameterMapping('someField', 'lte', '2018-01-01')]),
-      unitsres: new ParameterMapSet(null, [
-        new ParameterMapping('unitsres', 'lte', '4'),
-        new ParameterMapping('unitsres', 'gte', '1'),
-      ]),
+    const housingType1 = new HousingType({
+      housingType: 'MARKET_RATE',
+      paramsObject: {
+        someField: new ParameterMapSet({
+          paramMaps: [new ParameterMapping({ field: 'someField', comparison: 'lte', value: '2018-01-01' })],
+        }),
+        unitsres: new ParameterMapSet({
+          paramMaps: [
+            new ParameterMapping({ field: 'unitsres', comparison: 'lte', value: '4' }),
+            new ParameterMapping({ field: 'unitsres', comparison: 'gte', value: '1' }),
+          ],
+        }),
+      },
     })
 
     const advancedSearch = {

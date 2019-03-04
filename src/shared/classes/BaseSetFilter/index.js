@@ -1,26 +1,32 @@
 import TextFieldGroup from 'AdvancedSearch/Filter/TextFieldGroup'
 import IntegerFieldGroup from 'AdvancedSearch/Filter/IntegerFieldGroup'
 import DateFieldGroup from 'AdvancedSearch/Filter/DateFieldGroup'
+import IntegerDateFieldGroup from 'AdvancedSearch/Filter/IntegerDateFieldGroup'
+
 import { comparisonOptions } from 'shared/utilities/filterUtils'
 
 const types = [
   {
     constant: 'INTEGER',
     options: values => {
-      return values || comparisonOptions(['gte', 'exact', 'lte'])
+      return values || comparisonOptions(['gte', 'exact', 'lte'], [], 'INTEGER')
     },
     component: IntegerFieldGroup,
   },
   {
     constant: 'DATE',
-    options: () => {
-      return [
-        { name: 'comparison', value: 'gte', label: 'Since' },
-        { name: 'comparison', value: 'between', label: 'Between' },
-        { name: 'comparison', value: 'lte', label: 'Before' },
-      ]
+    options: values => {
+      return values || comparisonOptions(['gte', 'exact', 'lte'], [], 'DATE')
     },
     component: DateFieldGroup,
+    dateType: 'date',
+  },
+  {
+    constant: 'PERCENTDATE',
+    options: values => {
+      return values || comparisonOptions(['gte', 'exact', 'lte'], [], 'DATE')
+    },
+    component: IntegerDateFieldGroup,
     dateType: 'date',
   },
   {
@@ -32,13 +38,13 @@ const types = [
   },
 ]
 
-export class BaseFilter {
-  constructor(typeConstant, label, newButtonLabel, defaultOptions) {
+export class BaseSetFilter {
+  constructor({ type = undefined, label = '', newButtonLabel = '', defaultOptions = [] } = {}) {
     this.setType = this.setType.bind(this)
     this._label = label
     this._newButtonLabel = newButtonLabel
     this._defaultOptions = defaultOptions
-    this.setType(typeConstant)
+    this.setType(type)
   }
 
   setType(typeContant) {

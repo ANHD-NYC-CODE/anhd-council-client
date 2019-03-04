@@ -1,7 +1,7 @@
 import moment from 'moment'
 
 import { rentRegulatedProgramOptions, comparisonOptions } from 'shared/utilities/filterUtils'
-import { BaseFilter } from 'shared/classes/BaseFilter'
+import { BaseSetFilter } from 'shared/classes/BaseSetFilter'
 import { ParameterMapSet } from 'shared/classes/ParameterMapSet'
 import { ParameterMapping } from 'shared/classes/ParameterMapping'
 
@@ -9,7 +9,32 @@ export const RENTSTABILZED = {
   name: 'Rent Stabilized',
   queryName: 'rs',
   constant: 'RENT_STABILIZED',
-  schema: {},
+  schema: {
+    rsunitslost: new ParameterMapSet({
+      setComponent: new BaseSetFilter({
+        type: 'PERCENTDATE',
+        label: 'Rent Stabilized Units Lost',
+        newButtonLabel: 'Add Units Lost +',
+      }),
+      defaults: [
+        new ParameterMapping({ field: 'rsunitslost', comparison: 'gte', value: '25' }),
+        new ParameterMapping({
+          field: 'rsunitslost',
+          comparison: 'start',
+          value: moment(moment.now())
+            .subtract(1, 'Y')
+            .format('YYYY-MM-DD'),
+        }),
+        new ParameterMapping({
+          field: 'rsunitslost',
+          comparison: 'end',
+          value: moment(moment.now())
+            .subtract(1, 'Y')
+            .format('YYYY-MM-DD'),
+        }),
+      ],
+    }),
+  },
 }
 
 export const RENTREGULATED = {
@@ -18,32 +43,41 @@ export const RENTREGULATED = {
   constant: 'RENT_REGULATED',
 
   schema: {
-    coresubsidyrecord__programname: new ParameterMapSet(
-      new BaseFilter('MULTISELECT', 'Program Name', 'Add Program +', rentRegulatedProgramOptions()),
-      [],
-      [new ParameterMapping('coresubsidyrecord__programname', 'any', '')]
-    ),
+    coresubsidyrecord__programname: new ParameterMapSet({
+      setComponent: new BaseSetFilter({
+        type: 'MULTISELECT',
+        label: 'Program Name',
+        newButtonLabel: 'Add Program +',
+        defaultOptions: rentRegulatedProgramOptions(),
+      }),
+      defaults: [new ParameterMapping({ field: 'coresubsidyrecord__programname', comparison: 'any', value: '' })],
+    }),
 
-    coresubsidyrecord__enddate: new ParameterMapSet(
-      new BaseFilter('DATE', 'Expiration Date', 'Add Expiration +'),
-      [],
-      [
-        new ParameterMapping(
-          'coresubsidyrecord__enddate',
-          'gte',
-          moment(moment.now())
-            .subtract(1, 'Y')
-            .format('YYYY-MM-DD')
-        ),
-        new ParameterMapping(
-          'coresubsidyrecord__enddate',
-          'lte',
-          moment(moment.now())
+    coresubsidyrecord__enddate: new ParameterMapSet({
+      setComponent: new BaseSetFilter({
+        type: 'DATE',
+        label: 'Expiration Date',
+        newButtonLabel: 'Add Expiration +',
+        defaultOptions: comparisonOptions(['lte', 'between', 'gte'], ['Before', 'Between', 'After'], 'DATE'),
+      }),
+      paramMaps: [],
+      defaults: [
+        new ParameterMapping({
+          field: 'coresubsidyrecord__enddate',
+          comparison: 'lte',
+          value: moment(moment.now())
+            .add(2, 'Y')
+            .format('YYYY-MM-DD'),
+        }),
+        new ParameterMapping({
+          field: 'coresubsidyrecord__enddate',
+          comparison: 'gte',
+          value: moment(moment.now())
             .add(1, 'Y')
-            .format('YYYY-MM-DD')
-        ),
-      ]
-    ),
+            .format('YYYY-MM-DD'),
+        }),
+      ],
+    }),
   },
 }
 
@@ -52,16 +86,16 @@ export const SMALLHOMES = {
   queryName: 'sh',
   constant: 'SMALL_HOMES',
   schema: {
-    unitsres: new ParameterMapSet(
-      new BaseFilter(
-        'INTEGER',
-        'Number of residential units',
-        'Add Residential Units +',
-        comparisonOptions(['lte', 'exact'])
-      ),
-      [],
-      [new ParameterMapping('unitsres', 'lte', '6')]
-    ),
+    unitsres: new ParameterMapSet({
+      setComponent: new BaseSetFilter({
+        type: 'INTEGER',
+        label: 'Number of residential units',
+        newButtonLabel: 'Add Residential Units +',
+        defaultOptions: comparisonOptions(['lte', 'exact'], null, 'INTEGER'),
+      }),
+
+      defaults: [new ParameterMapping({ field: 'unitsres', comparison: 'lte', value: '6' })],
+    }),
   },
 }
 

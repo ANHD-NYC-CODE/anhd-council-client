@@ -1,6 +1,5 @@
 import * as a from 'AdvancedSearch/utilities/sentenceUtils'
 import * as d from 'shared/constants/datasets'
-import * as b from 'shared/constants/boundaries'
 import { Boundary } from 'Store/AdvancedSearch/classes/Boundary'
 import { HousingType } from 'Store/AdvancedSearch/classes/HousingType'
 import { ParameterMapSet } from 'shared/classes/ParameterMapSet'
@@ -407,8 +406,14 @@ describe('convertBoundariesToSentence', () => {
 describe('convertHousingTypesToSentence', () => {
   describe('1 ht', () => {
     it('converts the object into a sentence', () => {
-      const housingType1 = new HousingType('SMALL_HOMES', {
-        unitsres: new ParameterMapSet(null, [new ParameterMapping('unitsres', 'lte', '4')]),
+      const housingType1 = new HousingType({
+        housingType: 'SMALL_HOMES',
+        paramsObject: {
+          unitsres: new ParameterMapSet({
+            setComponent: null,
+            paramMaps: [new ParameterMapping({ field: 'unitsres', comparison: 'lte', value: '4' })],
+          }),
+        },
       })
       const housingTypes = [housingType1]
 
@@ -420,8 +425,8 @@ describe('convertHousingTypesToSentence', () => {
 
   describe('2 hts', () => {
     it('converts the object into a sentence', () => {
-      const housingType1 = new HousingType('SMALL_HOMES', {})
-      const housingType2 = new HousingType('RENT_REGULATED', {})
+      const housingType1 = new HousingType({ housingType: 'SMALL_HOMES' })
+      const housingType2 = new HousingType({ housingType: 'RENT_REGULATED' })
       const housingTypes = [housingType1, housingType2]
 
       const result = 'Small Home properties and Rent Regulated properties'

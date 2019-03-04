@@ -40,7 +40,7 @@ export class AdvancedSearch extends React.Component {
   }
 
   addHousingType(option) {
-    const newHousingType = new HousingType(option.value)
+    const newHousingType = new HousingType({ housingType: option.value })
     this.props.dispatch(addHousingType(newHousingType))
   }
 

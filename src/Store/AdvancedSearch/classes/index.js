@@ -1,15 +1,15 @@
 import * as ht from 'shared/constants/housingTypes'
 
 export class HousingType {
-  constructor(objectConstant, params) {
+  constructor(housingType, params) {
     this.setObject = this.setObject.bind(this)
 
-    this.setObject(objectConstant)
+    this.setObject(housingType)
     this._params = params
   }
 
-  setObject(objectConstant) {
-    const object = ht[Object.keys(ht).find(obj => ht[obj].constant === objectConstant)]
+  setObject(housingType) {
+    const object = ht[Object.keys(ht).find(obj => ht[obj].constant === housingType)]
     if (object) {
       this._object = object
       this._name = this.object.name

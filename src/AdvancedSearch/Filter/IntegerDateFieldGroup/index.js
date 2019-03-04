@@ -8,6 +8,7 @@ import CustomSelect from 'shared/components/CustomSelect'
 import DateField from 'AdvancedSearch/Filter/DateField'
 
 import DateFieldSet from 'AdvancedSearch/Filter/DateFieldSet'
+import IntegerFieldSet from 'AdvancedSearch/Filter/IntegerFieldSet'
 
 const comparisonReconfigure = (props, e) => {
   if (e.value.toUpperCase().match(/(LTE|END)/)) {
@@ -48,19 +49,25 @@ const renderDateFields = props => {
     }
   }
 
-  if (props.paramSet.paramMaps.length === 1) {
+  if (props.paramSet.paramMaps.length <= 2) {
     return (
       <div key={`datefieldgroup-${0}`}>
+        <IntegerFieldSet
+          options={props.paramSet.filter.options}
+          onChangeParamMap={props.onChangeParamMap}
+          paramMap={props.paramSet.paramMaps[0]}
+          paramMapIndex={0}
+        />
         <DateFieldSet
           options={props.paramSet.filter.options}
           onChangeParamMap={onDateFieldChange}
-          paramMap={props.paramSet.paramMaps[0]}
-          paramMapIndex={0}
+          paramMap={props.paramSet.paramMaps[1]}
+          paramMapIndex={1}
           type={props.paramSet.filter.type.constant}
         />
       </div>
     )
-  } else if (props.paramSet.paramMaps.length > 1) {
+  } else if (props.paramSet.paramMaps.length > 2) {
     return (
       <div>
         <CustomSelect
@@ -87,7 +94,7 @@ const renderDateFields = props => {
   }
 }
 
-const DateFieldGroup = props => {
+const IntegerDateFieldGroup = props => {
   return (
     <div className="date-fieldgroup">
       {renderDateFields(props)}
@@ -100,7 +107,7 @@ const DateFieldGroup = props => {
   )
 }
 
-DateFieldGroup.propTypes = {
+IntegerDateFieldGroup.propTypes = {
   addHousingTypeParamMapping: PropTypes.func,
   dispatchParameterAction: PropTypes.func,
   onChangeParamMap: PropTypes.func,
@@ -109,4 +116,4 @@ DateFieldGroup.propTypes = {
   removeParamsMap: PropTypes.object,
 }
 
-export default DateFieldGroup
+export default IntegerDateFieldGroup

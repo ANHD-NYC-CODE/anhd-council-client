@@ -4,12 +4,12 @@ import * as ht from 'shared/constants/housingTypes'
 import { HousingType } from 'Store/AdvancedSearch/classes/HousingType'
 
 import { updateHousingType } from 'Store/AdvancedSearch/actions'
-import { Form, Col } from 'react-bootstrap'
+import { Form } from 'react-bootstrap'
 import CustomSelect from 'shared/components/CustomSelect'
 import HousingTypeParamSet from 'AdvancedSearch/HousingTypeQuery/HousingTypeParamSet'
 
 const changeHousingType = (dispatch, housingTypeIndex, option) => {
-  const newHousingType = new HousingType(option.value.value)
+  const newHousingType = new HousingType({ housingType: option.value.value })
 
   dispatch(updateHousingType(housingTypeIndex, newHousingType))
 }

@@ -1,5 +1,5 @@
 export class ParameterMapping {
-  constructor(field, comparison, value) {
+  constructor({ field = '', comparison = '', value = '' } = {}) {
     this._field = field
     this._comparison = comparison
     this._value = value

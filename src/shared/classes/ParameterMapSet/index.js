@@ -1,12 +1,12 @@
 export class ParameterMapSet {
-  constructor(filter, paramMaps, defaults) {
-    this._filter = filter
-    this._paramMaps = paramMaps || []
-    this._defaults = defaults || []
+  constructor({ setComponent = null, paramMaps = [], defaults = [] } = {}) {
+    this._setComponent = setComponent
+    this._paramMaps = paramMaps
+    this._defaults = defaults
   }
 
-  get filter() {
-    return this._filter
+  get setComponent() {
+    return this._setComponent
   }
 
   get paramMaps() {

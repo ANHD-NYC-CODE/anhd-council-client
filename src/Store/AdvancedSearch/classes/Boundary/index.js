@@ -1,16 +1,16 @@
 import * as b from 'shared/constants/boundaries'
 
 export class Boundary {
-  constructor(objectConstant, id) {
+  constructor(housingType, id) {
     this.setObject = this.setObject.bind(this)
 
-    this.setObject(objectConstant)
+    this.setObject(housingType)
 
     this._id = id
   }
 
-  setObject(objectConstant) {
-    const object = b[Object.keys(b).find(obj => b[obj].constant === objectConstant)]
+  setObject(housingType) {
+    const object = b[Object.keys(b).find(obj => b[obj].constant === housingType)]
     if (object) {
       this._object = object
       this._name = this.object.name
