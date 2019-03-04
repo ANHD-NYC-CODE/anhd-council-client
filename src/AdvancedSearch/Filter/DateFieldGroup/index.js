@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Form, Row, Col } from 'react-bootstrap'
+import { Button, Row, Col } from 'react-bootstrap'
 import CustomSelect from 'shared/components/CustomSelect'
 import DateField from 'AdvancedSearch/Filter/DateField'
 
@@ -45,7 +45,7 @@ const renderDateFields = props => {
       <div key={`datefieldgroup-${0}`}>
         <DateFieldSet
           dateType={props.paramSet.filter.dateType}
-          options={props.paramSet.filter.options()}
+          options={props.paramSet.filter.options(props.paramSet.filter.optionsList)}
           onChangeParamMap={onDateFieldChange}
           paramMap={props.paramSet.paramMaps[0]}
           paramMapIndex={0}
@@ -54,7 +54,7 @@ const renderDateFields = props => {
     )
   } else if (props.paramSet.paramMaps.length > 1) {
     return (
-      <Col md="3">
+      <div>
         <CustomSelect
           name="comparison"
           options={props.paramSet.filter.options()}
@@ -72,7 +72,7 @@ const renderDateFields = props => {
             />
           )
         })}
-      </Col>
+      </div>
     )
   } else {
     return null
@@ -80,7 +80,16 @@ const renderDateFields = props => {
 }
 
 const DateFieldGroup = props => {
-  return <div className="classname">{renderDateFields(props)}</div>
+  return (
+    <div className="date-fieldgroup">
+      {renderDateFields(props)}
+      {!!props.paramSet.paramMaps.length && (
+        <Button variant="danger" onClick={() => props.clearParamSetMaps(props.paramSet)}>
+          -
+        </Button>
+      )}
+    </div>
+  )
 }
 
 DateFieldGroup.propTypes = {

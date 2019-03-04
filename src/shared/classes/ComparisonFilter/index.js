@@ -1,4 +1,4 @@
-import IntegerFieldSet from 'AdvancedSearch/Filter/IntegerFieldSet'
+import IntegerFieldGroup from 'AdvancedSearch/Filter/IntegerFieldGroup'
 const types = [
   {
     constant: 'INTEGER',
@@ -9,7 +9,7 @@ const types = [
         { name: 'comparison', value: 'lte', label: 'At most' },
       ]
     },
-    component: IntegerFieldSet,
+    component: IntegerFieldGroup,
   },
   {
     constant: 'DATE',
@@ -34,12 +34,20 @@ export class ComparisonFilter {
 
     if (type) {
       this.type = type
-      this.options = type.options
       this.constant = type.constant
       this.component = type.component
+      this._options = type.options
     } else {
       throw `Pass either '${types.map(t => t.constant).join("' or '")}' as the first argument.`
     }
+  }
+
+  get type() {
+    return this._type
+  }
+
+  set type(value) {
+    this._type = value
   }
 
   get label() {
@@ -48,5 +56,13 @@ export class ComparisonFilter {
 
   get newButtonLabel() {
     return this._newButtonLabel
+  }
+
+  get options() {
+    return this._options
+  }
+
+  set options(value) {
+    this._options = value
   }
 }

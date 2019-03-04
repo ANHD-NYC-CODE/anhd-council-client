@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { Form, Button } from 'react-bootstrap'
-import HousingTypeParamField from 'AdvancedSearch/HousingTypeQuery/HousingTypeParamField'
 
 const HousingTypeParamSet = props => {
   const addHousingTypeParamMapping = (paramSet, newParamMap) => {
@@ -35,33 +34,30 @@ const HousingTypeParamSet = props => {
     paramSet.removeParameterMap(paramMapIndex)
     props.dispatchParameterAction()
   }
+
+  const clearParamSetMaps = paramSet => {
+    paramSet.clearParameterMaps()
+    props.dispatchParameterAction()
+  }
   return (
     <Form.Group className="housingtype-paramset">
-      <Form.Label>{props.paramSet.filter.label}</Form.Label>
-      <Button onClick={() => addHousingTypeParamMapping(props.paramSet, props.paramSet.defaults[0])}>
-        {props.paramSet.filter.newButtonLabel}
-      </Button>
+      {props.paramSet.paramMaps.length ? (
+        <Form.Label>{props.paramSet.filter.label}</Form.Label>
+      ) : (
+        <Button onClick={() => addHousingTypeParamMapping(props.paramSet, props.paramSet.defaults[0])}>
+          {props.paramSet.filter.newButtonLabel}
+        </Button>
+      )}
+      {}
       {props.paramSet.filter.component({
         addHousingTypeParamMapping: addHousingTypeParamMapping,
+        clearParamSetMaps: clearParamSetMaps,
         onChangeParamMap: changeHousingTypeParam,
         dispatchParameterAction: props.dispatchParameterAction,
         paramSet: props.paramSet,
         paramSetIndex: props.paramSetIndex,
         removeParamsMap: removeParamsMap,
       })}
-      {/* {props.paramSet.paramMaps.map((paramMap, paramMapIndex) => {
-        return (
-          <HousingTypeParamField
-            key={`housingtype-paramfield-${paramMapIndex}`}
-            dispatchParameterAction={props.dispatchParameterAction}
-            paramMap={paramMap}
-            paramSet={props.paramSet}
-            paramSetIndex={props.paramSetIndex}
-            paramMapIndex={paramMapIndex}
-            removeParamsMap={removeParamsMap}
-          />
-        )
-      })} */}
     </Form.Group>
   )
 }

@@ -43,4 +43,8 @@ export class ParameterMapSet {
   removeParameterMap(paramMapIndex) {
     this.paramMaps = [...this.paramMaps.slice(0, paramMapIndex), ...this.paramMaps.slice(paramMapIndex + 1)]
   }
+
+  clearParameterMaps() {
+    this.paramMaps = []
+  }
 }

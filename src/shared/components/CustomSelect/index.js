@@ -65,7 +65,6 @@ const customStyle = size => {
 }
 
 const CustomSelect = props => {
-  console.log('i')
   return <Select {...props} styles={customStyle(props.size)} />
 }
 

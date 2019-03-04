@@ -20,32 +20,26 @@ const HousingTypeSelection = props => {
   }
 
   return (
-    <div className="housingtype-selection">
-      <Form.Group>
-        <Col sm={6} md={4}>
-          <Form.Label>Housing Type</Form.Label>
-          <CustomSelect
-            isSearchable={false}
-            onChange={e => changeHousingType(props.dispatch, props.housingTypeIndex, e)}
-            options={Object.keys(ht).map(key => ({
-              value: { key: 'object', value: ht[key].constant },
-              label: ht[key].name,
-            }))}
-            size="sm"
-            value={{ value: props.housingType.constant, label: props.housingType.name.toLowerCase() }}
-          />
-        </Col>
-      </Form.Group>
-      <Form.Group>
-        {!!Object.keys(props.housingType.paramsObject).length && <Form.Label>Options</Form.Label>}
-        {Object.keys(props.housingType.paramsObject).map((paramsSetKey, paramSetIndex) => (
-          <HousingTypeParamSet
-            dispatchParameterAction={dispatchParameterAction}
-            key={`housingtype-paramset-${paramSetIndex}`}
-            paramSet={props.housingType.paramsObject[paramsSetKey]}
-          />
-        ))}
-      </Form.Group>
+    <div>
+      <CustomSelect
+        isSearchable={false}
+        onChange={e => changeHousingType(props.dispatch, props.housingTypeIndex, e)}
+        options={Object.keys(ht).map(key => ({
+          value: { key: 'object', value: ht[key].constant },
+          label: ht[key].name,
+        }))}
+        size="sm"
+        value={{ value: props.housingType.constant, label: props.housingType.name.toLowerCase() }}
+      />
+
+      {!!Object.keys(props.housingType.paramsObject).length && <Form.Label>Options</Form.Label>}
+      {Object.keys(props.housingType.paramsObject).map((paramsSetKey, paramSetIndex) => (
+        <HousingTypeParamSet
+          dispatchParameterAction={dispatchParameterAction}
+          key={`housingtype-paramset-${paramSetIndex}`}
+          paramSet={props.housingType.paramsObject[paramsSetKey]}
+        />
+      ))}
     </div>
   )
 }

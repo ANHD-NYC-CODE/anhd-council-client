@@ -8,11 +8,20 @@ import HousingTypeSelection from 'AdvancedSearch/HousingTypeQuery/HousingTypeSel
 
 const HousingTypeQuery = props => {
   return (
-    <div className="housing-type-query">
-      {!props.housingTypes.length && (
-        <Form.Row className="housing-type">
-          <Col sm={6} md={4}>
-            <Form.Label>Housing Type</Form.Label>
+    <Form className="housing-type-query">
+      <Form.Row className="housing-type">
+        <Col>
+          <Form.Label>Housing Type</Form.Label>
+          {props.housingTypes.length ? (
+            props.housingTypes.map((housingType, housingTypeIndex) => (
+              <HousingTypeSelection
+                dispatch={props.dispatch}
+                housingType={housingType}
+                housingTypeIndex={housingTypeIndex}
+                key={`housingtype-selection-${housingTypeIndex}`}
+              />
+            ))
+          ) : (
             <CustomSelect
               isSearchable={false}
               onChange={props.addHousingType}
@@ -20,19 +29,10 @@ const HousingTypeQuery = props => {
               placeholder="Pick a housing type..."
               size="sm"
             />
-          </Col>
-        </Form.Row>
-      )}
-      {!!props.housingTypes.length &&
-        props.housingTypes.map((housingType, housingTypeIndex) => (
-          <HousingTypeSelection
-            dispatch={props.dispatch}
-            housingType={housingType}
-            housingTypeIndex={housingTypeIndex}
-            key={`housingtype-selection-${housingTypeIndex}`}
-          />
-        ))}
-    </div>
+          )}
+        </Col>
+      </Form.Row>
+    </Form>
   )
 }
 

@@ -1,5 +1,5 @@
 import { ComparisonFilter } from 'shared/classes/ComparisonFilter'
-import { TextFilter } from 'shared/classes/TextFilter'
+import { TextFilterClass } from 'shared/classes/TextFilterClass'
 import { DateFilterClass } from 'shared/classes/DateFilterClass'
 import { ParameterMapSet } from 'shared/classes/ParameterMapSet'
 
@@ -20,7 +20,7 @@ export const RENTREGULATED = {
 
   schema: {
     coresubsidyrecord__programname: new ParameterMapSet(
-      new DateFilterClass('DATE', 'Program Name', 'Add Program +', ['LIHCT', 'J-51', '421a']),
+      new TextFilterClass('MULTISELECT', 'Program Name', 'Add Program +', ['LIHCT', 'J-51', '421a']),
       [],
       [new ParameterMapping('coresubsidyrecord__programname', 'any', '')],
       1

@@ -27,7 +27,6 @@ export class DateFilterClass {
 
     if (type) {
       this.type = type
-      this.options = type.options
       this.constant = type.constant
       this.component = type.component
       this.dateType = type.dateType
