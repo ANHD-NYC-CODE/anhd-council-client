@@ -12,7 +12,7 @@ import { requestWithAuth } from 'shared/utilities/authUtils'
 import AdvancedSearchSentence from 'AdvancedSearch/Sentence'
 import BuildingHistoryTable from 'BuildingLookup/BuildingHistoryTable'
 import { addBoundary, updateBoundary } from 'Store/AdvancedSearch/actions'
-import { addHousingType, updateHousingType } from 'Store/AdvancedSearch/actions'
+import { addHousingType } from 'Store/AdvancedSearch/actions'
 
 import { Button } from 'react-bootstrap'
 
@@ -28,10 +28,6 @@ export class AdvancedSearch extends React.Component {
     this.changeBoundary = this.changeBoundary.bind(this)
     this.addBoundary = this.addBoundary.bind(this)
     this.addHousingType = this.addHousingType.bind(this)
-    this.changeHousingType = this.changeHousingType.bind(this)
-    this.changeHousingTypeParam = this.changeHousingTypeParam.bind(this)
-    this.addHousingTypeParamMapping = this.addHousingTypeParamMapping.bind(this)
-    this.removeParamsObject = this.removeParamsObject.bind(this)
   }
 
   addBoundary(option) {
@@ -46,39 +42,6 @@ export class AdvancedSearch extends React.Component {
   addHousingType(option) {
     const newHousingType = new HousingType(option.value)
     this.props.dispatch(addHousingType(newHousingType))
-  }
-
-  changeHousingType(housingTypeIndex, housingType, option) {
-    const newHousingType = new HousingType(option.value.value)
-
-    this.props.dispatch(updateHousingType(housingTypeIndex, newHousingType))
-  }
-
-  addHousingTypeParamMapping(housingTypeIndex, paramsMappingKey, paramMapIndex) {
-    const housingType = this.props.advancedSearch.housingTypes[housingTypeIndex]
-    housingType.addParamMapping(paramsMappingKey, paramMapIndex)
-    this.props.dispatch(updateHousingType(housingTypeIndex, housingType))
-  }
-
-  changeHousingTypeParam(housingTypeIndex, paramObjectKey, paramMapIndex, e) {
-    // Converts multi select input value into a standardized Input object
-    if (Array.isArray(e)) {
-      if (e.length) {
-        e = { name: e[0].name, value: e.map(v => v.value).join(',') }
-      } else {
-        e = { name: 'value', value: '' }
-      }
-    }
-    const housingType = this.props.advancedSearch.housingTypes[housingTypeIndex]
-    const standarizedInputObject = { name: e.name, value: e.value }
-    housingType.updateParamMapping(paramObjectKey, paramMapIndex, standarizedInputObject)
-    this.props.dispatch(updateHousingType(housingTypeIndex, housingType))
-  }
-
-  removeParamsObject(housingTypeIndex, paramObjectKey, paramMapIndex) {
-    const housingType = this.props.advancedSearch.housingTypes[housingTypeIndex]
-    housingType.removeParamMapping(paramObjectKey, paramMapIndex)
-    this.props.dispatch(updateHousingType(housingTypeIndex, housingType))
   }
 
   submitSearch(e) {
@@ -109,11 +72,8 @@ export class AdvancedSearch extends React.Component {
             />
             <HousingTypeQuery
               addHousingType={this.addHousingType}
-              addHousingTypeParamMapping={this.addHousingTypeParamMapping}
               housingTypes={this.props.advancedSearch.housingTypes}
-              changeHousingType={this.changeHousingType}
-              changeHousingTypeParam={this.changeHousingTypeParam}
-              removeParamsObject={this.removeParamsObject}
+              dispatch={this.props.dispatch}
             />
 
             <Condition
