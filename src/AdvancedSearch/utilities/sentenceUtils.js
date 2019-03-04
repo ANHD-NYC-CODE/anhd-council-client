@@ -1,6 +1,24 @@
 //////////////////
 // Sentence
 
+const grammaticalList = array => {
+  let lastItem
+  if (array.length > 1) {
+    lastItem = array.pop()
+  }
+
+  const sentence = array.join(',')
+  return lastItem ? sentence + ' and ' + lastItem : sentence
+}
+
+const singularPlease = string => {
+  if (string.charAt(string.length - 1).toLowerCase() === 's') {
+    return string.slice(0, -1)
+  } else {
+    return string
+  }
+}
+
 const constructDateSentence = (dataset, startDate = null, endDate = null) => {
   return dataset.dateSentenceParser(startDate, endDate)
 }
@@ -62,13 +80,44 @@ export const convertConditionMappingToSentence = q => {
 }
 
 export const convertBoundariesToSentence = boundaries => {
-  return `in ${boundaries
-    .map(boundary => `${boundary.name.toLowerCase()} ${boundary.id ? boundary.id : '_'}`)
-    .join(' and ')}`
+  return `in ${
+    boundaries.length
+      ? boundaries.map(boundary => `${boundary.name.toLowerCase()} ${boundary.id ? boundary.id : '_'}`).join(' and ')
+      : '...'
+  }`
+}
+
+const convertParamMapToSentence = paramMap => {
+  return `${constructComparisonString(paramMap.comparison)} ${paramMap.value}`
+}
+
+const convertParamSetToSentence = paramSet => {
+  return `${grammaticalList(paramSet.paramMaps.map(paramMap => convertParamMapToSentence(paramMap)))}`
+}
+
+const constructHousingTypeParamSentence = housingType => {
+  if (Object.keys(housingType.params).length) {
+    return ` with ${Object.keys(housingType.paramsObject)
+      .map(key => {
+        return convertParamSetToSentence(housingType.paramsObject[key])
+      })
+      .join(' and ')}`
+  } else {
+    return ''
+  }
+}
+
+export const convertHousingTypesToSentence = housingTypes => {
+  return `${grammaticalList(
+    housingTypes.map(
+      housingType => singularPlease(housingType.name) + ' properties' + constructHousingTypeParamSentence(housingType)
+    )
+  )}`
 }
 
 export const constructSentence = advancedSearch => {
-  return `Show me properties ${convertBoundariesToSentence(
-    advancedSearch.boundaries
-  )} that ${convertConditionMappingToSentence(advancedSearch.conditions)}`
+  return `Show me ${[
+    convertHousingTypesToSentence(advancedSearch.housingTypes),
+    convertBoundariesToSentence(advancedSearch.boundaries),
+  ].join(' ')} that ${convertConditionMappingToSentence(advancedSearch.conditions)}`
 }

@@ -2,6 +2,9 @@ import * as a from 'AdvancedSearch/utilities/sentenceUtils'
 import * as d from 'shared/constants/datasets'
 import * as b from 'shared/constants/boundaries'
 import { Boundary } from 'Store/AdvancedSearch/classes/Boundary'
+import { HousingType } from 'Store/AdvancedSearch/classes/HousingType'
+import { ParameterMapSet } from 'shared/classes/ParameterMapSet'
+import { ParameterMapping } from 'shared/classes/ParameterMapping'
 
 describe('convertFilterToSentence', () => {
   describe('from/to', () => {
@@ -397,6 +400,33 @@ describe('convertBoundariesToSentence', () => {
       const result = 'in council district 1 and community board 2'
 
       expect(a.convertBoundariesToSentence(boundaries)).toEqual(result)
+    })
+  })
+})
+
+describe('convertHousingTypesToSentence', () => {
+  describe('1 ht', () => {
+    it('converts the object into a sentence', () => {
+      const housingType1 = new HousingType('SMALL_HOMES', {
+        unitsres: new ParameterMapSet(null, [new ParameterMapping('unitsres', 'lte', '4')]),
+      })
+      const housingTypes = [housingType1]
+
+      const result = 'Small Home properties with at most 4 units'
+
+      expect(a.convertHousingTypesToSentence(housingTypes)).toEqual(result)
+    })
+  })
+
+  describe('2 hts', () => {
+    it('converts the object into a sentence', () => {
+      const housingType1 = new HousingType('SMALL_HOMES', {})
+      const housingType2 = new HousingType('RENT_REGULATED', {})
+      const housingTypes = [housingType1, housingType2]
+
+      const result = 'Small Home properties and Rent Regulated properties'
+
+      expect(a.convertHousingTypesToSentence(housingTypes)).toEqual(result)
     })
   })
 })

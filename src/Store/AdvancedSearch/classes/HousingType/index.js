@@ -11,31 +11,30 @@ export class HousingType {
 
   setObject(objectConstant) {
     const object = ht[Object.keys(ht).find(obj => ht[obj].constant === objectConstant)]
-    if (object) {
-      this._object = object
-      this._name = this.object.name
-      this._queryName = this.object.queryName
-      this._constant = this.object.constant
-      this._schema = this.object.schema
-
-      // Set default keys to ParameterMapSet without any parameter maps
-      Object.keys(this._schema).map(key => {
-        this._paramsObject = {
-          ...this.paramsObject,
-          ...{
-            [key]: new ParameterMapSet(
-              this.schema[key].filter,
-              [],
-              [...this.schema[key].defaults.map(d => cloneInstance(d))]
-            ),
-          },
-        }
-      })
-    } else {
+    if (!object)
       throw `Pass either '${Object.keys(ht)
         .map(key => ht[key].constant)
         .join("' or '")}' as the first argument.`
-    }
+
+    this._object = object
+    this._name = this.object.name
+    this._queryName = this.object.queryName
+    this._constant = this.object.constant
+    this._schema = this.object.schema
+
+    // Set default keys to ParameterMapSet without any parameter maps
+    Object.keys(this._schema).map(key => {
+      this._paramsObject = {
+        ...{
+          [key]: new ParameterMapSet(
+            this.schema[key].filter,
+            [],
+            [...this.schema[key].defaults.map(d => cloneInstance(d))]
+          ),
+        },
+        ...this.paramsObject,
+      }
+    })
   }
 
   get object() {
@@ -56,13 +55,22 @@ export class HousingType {
     return this._schema
   }
 
-  get queryParamsObject() {
+  get params() {
     // Maps the params array into an object that Axios can plug in for requests.
     return Object.assign(
       {},
-      ...this._paramsObject.map(p => ({
-        [`${p.field}${p.comparison ? '__' + p.comparison : ''}`]: p.value,
-      }))
+      ...Object.keys(this.paramsObject).map(key => {
+        return {
+          ...Object.assign(
+            {},
+            ...this.paramsObject[key].paramMaps.map(paramMap => {
+              return {
+                [`${paramMap.field}${paramMap.comparison ? '__' + paramMap.comparison : ''}`]: paramMap.value,
+              }
+            })
+          ),
+        }
+      })
     )
   }
 
