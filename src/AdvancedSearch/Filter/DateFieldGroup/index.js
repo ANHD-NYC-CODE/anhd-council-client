@@ -52,11 +52,11 @@ const renderDateFields = props => {
     return (
       <div key={`datefieldgroup-${0}`}>
         <DateFieldSet
-          options={props.paramSet.filter.options}
+          options={props.paramSet.setComponent.options}
           onChangeParamMap={onDateFieldChange}
           paramMap={props.paramSet.paramMaps[0]}
           paramMapIndex={0}
-          type={props.paramSet.filter.type.constant}
+          type={props.paramSet.setComponent.type.constant}
         />
       </div>
     )
@@ -65,10 +65,10 @@ const renderDateFields = props => {
       <div>
         <CustomSelect
           name="comparison"
-          options={props.paramSet.filter.options}
+          options={props.paramSet.setComponent.options}
           onChange={e => comparisonReconfigure(props, e)}
           size="sm"
-          value={props.paramSet.filter.options.find(option => option.value.toUpperCase().match(/(BETWEEN)/))}
+          value={props.paramSet.setComponent.options.find(option => option.value.toUpperCase().match(/(BETWEEN)/))}
         />
         {props.paramSet.paramMaps.map((paramMap, paramMapIndex) => {
           return (
@@ -76,7 +76,7 @@ const renderDateFields = props => {
               key={`paramMap-${paramMapIndex}`}
               onChangeParamMap={onDateFieldChange}
               paramMap={paramMap}
-              type={props.paramSet.filter.type.constant}
+              type={props.paramSet.setComponent.type.constant}
             />
           )
         })}

@@ -1,8 +1,9 @@
 export class ParameterMapping {
-  constructor({ field = '', comparison = '', value = '' } = {}) {
+  constructor({ component = {}, field = '', comparison = '', value = '' } = {}) {
     this._field = field
     this._comparison = comparison
     this._value = value
+    this._component = component
   }
 
   get field() {
@@ -17,8 +18,12 @@ export class ParameterMapping {
     return this._value
   }
 
-  get filter() {
-    return this._filter
+  get component() {
+    return this._component
+  }
+
+  set component(component) {
+    this._component = component
   }
 
   set comparison(value) {

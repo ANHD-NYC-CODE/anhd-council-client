@@ -27,7 +27,7 @@ export class HousingType {
       this._paramsObject = {
         ...{
           [key]: new ParameterMapSet({
-            setComponent: this.schema[key].filter,
+            setComponent: this.schema[key].setComponent,
             defaults: [...this.schema[key].defaults.map(d => cloneInstance(d))],
           }),
         },

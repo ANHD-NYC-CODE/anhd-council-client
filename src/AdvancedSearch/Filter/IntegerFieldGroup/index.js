@@ -9,15 +9,13 @@ const IntegerFieldGroup = props => {
   return (
     <div className="integer-fieldgroup">
       {props.paramSet.paramMaps.map((paramMap, paramMapIndex) => {
-        return (
-          <IntegerFieldSet
-            key={`integer-fieldset-${paramMapIndex}`}
-            paramMap={paramMap}
-            paramMapIndex={paramMapIndex}
-            options={props.paramSet.filter.options}
-            onChangeParamMap={props.onChangeParamMap}
-          />
-        )
+        return paramMap.component({
+          key: `integer-fieldset-${paramMapIndex}`,
+          paramMap: paramMap,
+          paramMapIndex: paramMapIndex,
+          options: props.paramSet.setComponent.options,
+          onChangeParamMap: props.onChangeParamMap,
+        })
       })}
       {!!props.paramSet.paramMaps.length && (
         <Button variant="danger" onClick={() => props.clearParamSetMaps(props.paramSet)}>

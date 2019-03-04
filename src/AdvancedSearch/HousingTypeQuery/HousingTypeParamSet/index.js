@@ -47,14 +47,14 @@ const HousingTypeParamSet = props => {
   return (
     <Form.Group className="housingtype-paramset">
       {props.paramSet.paramMaps.length ? (
-        <Form.Label>{props.paramSet.filter.label}</Form.Label>
+        <Form.Label>{props.paramSet.setComponent.label}</Form.Label>
       ) : (
         <Button onClick={() => addHousingTypeParamMapping(props.paramSet, cloneInstance(props.paramSet.defaults[0]))}>
-          {props.paramSet.filter.newButtonLabel}
+          {props.paramSet.setComponent.newButtonLabel}
         </Button>
       )}
       {}
-      {props.paramSet.filter.component({
+      {props.paramSet.setComponent.component({
         addHousingTypeParamMapping: addHousingTypeParamMapping,
         clearParamSetMaps: clearParamSetMaps,
         onChangeParamMap: changeHousingTypeParam,

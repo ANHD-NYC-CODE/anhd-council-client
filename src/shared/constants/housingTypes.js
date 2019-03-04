@@ -4,6 +4,7 @@ import { rentRegulatedProgramOptions, comparisonOptions } from 'shared/utilities
 import { BaseSetFilter } from 'shared/classes/BaseSetFilter'
 import { ParameterMapSet } from 'shared/classes/ParameterMapSet'
 import { ParameterMapping } from 'shared/classes/ParameterMapping'
+import IntegerFieldSet from 'AdvancedSearch/Filter/IntegerFieldSet'
 
 export const RENTSTABILZED = {
   name: 'Rent Stabilized',
@@ -94,7 +95,9 @@ export const SMALLHOMES = {
         defaultOptions: comparisonOptions(['lte', 'exact'], null, 'INTEGER'),
       }),
 
-      defaults: [new ParameterMapping({ field: 'unitsres', comparison: 'lte', value: '6' })],
+      defaults: [
+        new ParameterMapping({ component: IntegerFieldSet, field: 'unitsres', comparison: 'lte', value: '6' }),
+      ],
     }),
   },
 }
