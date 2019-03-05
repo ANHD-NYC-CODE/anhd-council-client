@@ -6,6 +6,14 @@ export class Filter {
     this.setDataset = this.setDataset.bind(this)
     this._paramsObject = paramsObject || {}
     this.setDataset(datasetConstant)
+
+    // Post initialize actions
+    Object.keys(this.paramsObject).forEach(key => {
+      const paramSet = this.paramsObject[key]
+      if (paramSet.autoCreate) {
+        paramSet.create()
+      }
+    })
   }
 
   setDataset(datasetConstant) {

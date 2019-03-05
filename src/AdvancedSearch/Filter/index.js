@@ -34,12 +34,7 @@ class FilterComponent extends React.Component {
   constructFilter(datasetConstant) {
     const newFilter = new Filter({ datasetConstant })
     this.props.condition.addFilter({ filter: newFilter })
-    Object.keys(newFilter.paramsObject).map(key => {
-      const paramSet = newFilter.paramsObject[key]
-      if (paramSet.props.autoOpen) {
-        paramSet.create()
-      }
-    })
+
     this.props.dispatchAction()
   }
 

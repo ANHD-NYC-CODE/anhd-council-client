@@ -22,8 +22,8 @@ export const HPDVIOLATIONS = {
       props: {
         label: 'HPD Violations',
         newButtonLabel: '',
-        autoOpen: true,
       },
+      autoCreate: true,
       createType: 'ALL_RANGE_ONE',
       defaults: [
         new ParameterMapping({
