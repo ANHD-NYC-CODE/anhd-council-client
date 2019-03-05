@@ -5,6 +5,7 @@ export class ParameterMapping {
   constructor({
     component = {},
     baseComponent = {},
+    languageModule = {},
     props = {},
     defaultOptions = undefined,
     field = '',
@@ -15,6 +16,7 @@ export class ParameterMapping {
   } = {}) {
     this._component = component
     this._baseComponent = baseComponent
+    this._languageModule = languageModule
     this._props = props
 
     this._field = field
@@ -59,6 +61,14 @@ export class ParameterMapping {
 
   set baseComponent(baseComponent) {
     this._baseComponent = baseComponent
+  }
+
+  get languageModule() {
+    return this._languageModule
+  }
+
+  set languageModule(languageModule) {
+    this._languageModule = languageModule
   }
 
   get props() {

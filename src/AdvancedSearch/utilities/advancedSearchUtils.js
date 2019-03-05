@@ -6,19 +6,20 @@ const constructDateFilter = (datasetsConfig, dataset, startDate = null, endDate 
   return dataset.dateUrlParser(datasetsConfig, dataset, startDate, endDate)
 }
 
-export const convertDatasetFilterToParams = (datasetsConfig, object) => {
+export const convertDatasetFilterToParams = (datasetsConfig, filter) => {
   // converts an objects like:
   // const object = { dataset: ds, comparison: 'gte', value: '10', startDate '2017-01-01', endDate: '2018-01-01' }
   // into:
   // "hpdviolation__approveddate__gte=2017-01-01,hpdviolation__approveddate__lte=2018-01-01,hpdviolation__count__gte=10"
-  let filters = []
-  let { dataset, comparison, value, startDate, endDate } = object
-  if (startDate || endDate) {
-    filters.push(constructDateFilter(datasetsConfig, dataset, startDate, endDate))
-  }
-
-  filters.push(constructAmountFilter(dataset, comparison, value))
-  return filters.join(',')
+  return Object.keys(filter.paramsObject)
+    .map(key => {
+      return filter.paramsObject[key].paramMaps
+        .map(paramMap => {
+          return `${paramMap.field}__${paramMap.comparison}=${paramMap.value}`
+        })
+        .join(',')
+    })
+    .join(',')
 }
 
 const convertConditionGroupToString = (datasetsConfig, filters) => {

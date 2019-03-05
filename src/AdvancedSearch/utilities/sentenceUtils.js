@@ -1,3 +1,4 @@
+import moment from 'moment'
 //////////////////
 // Sentence
 
@@ -34,24 +35,79 @@ export const constructComparisonString = comparison => {
   }
 }
 
+export const constructAmountComparisonString = comparison => {
+  switch (comparison) {
+    case 'gte':
+      return 'at least'
+    case 'exact':
+      return 'exactly'
+    case 'lte':
+      return 'at most'
+  }
+}
+
+export const constructDateComparisonString = comparison => {
+  switch (comparison) {
+    case 'gte':
+      return 'since'
+    case 'lte':
+      return 'before'
+  }
+}
+
 export const constructAmountSentence = (dataset, comparison, value) => {
   return dataset.amountSentenceParser(dataset, comparison, value)
 }
 
-export const convertFilterToSentence = object => {
+const parseParamMapComparison = paramMap => {
+  switch (paramMap.languageModule.type) {
+    case 'AMOUNT':
+      return `${constructAmountComparisonString(paramMap.comparison)} ${
+        paramMap.value
+      } ${paramMap.languageModule.getNoun(paramMap.value)}`
+    case 'DATE':
+      return `${constructDateComparisonString(paramMap.comparison)} ${moment(paramMap.value).format('MM/DD/YYYY')}`
+  }
+}
+
+const parseParamMapRangeGroup = paramMapRangeGroup => {
+  switch (paramMapRangeGroup[0].languageModule.type) {
+    case 'DATE':
+      return `from ${moment(paramMapRangeGroup[0].value).format('MM/DD/YYYY')} to ${moment(
+        paramMapRangeGroup[1].value
+      ).format('MM/DD/YYYY')}`
+  }
+}
+
+export const convertFilterToSentence = filter => {
   // converts an objects like:
   // const object = { dataset: ds, comparison: 'gte', value: '10', startDate '2017-01-01', endDate: '2018-01-01' }
   // into:
   // at least 10 HPD Violations between 01/01/2017 and 01/01/2018
 
-  let filters = []
-  let { dataset, comparison, value, startDate, endDate } = object
-  filters.push(constructAmountSentence(dataset, comparison, value))
-  if (startDate || endDate) {
-    filters.push(constructDateSentence(dataset, startDate, endDate))
-  }
-
-  return filters.join(' ')
+  // let { dataset, comparison, value, startDate, endDate } = object
+  return Object.keys(filter.paramsObject)
+    .map(key => {
+      const paramSet = filter.paramsObject[key]
+      return paramSet.paramMaps
+        .map(paramMap => {
+          // Process range paramMap separately
+          if (paramMap.rangeKey && paramSet.paramMaps.filter(pm => pm.rangeKey === paramMap.rangeKey).length === 2) {
+            // Only process once with the first object
+            if (paramMap.rangePosition === 1) {
+              return parseParamMapRangeGroup(paramSet.paramMaps.filter(pm => pm.rangeKey === paramMap.rangeKey))
+            }
+          } else {
+            return parseParamMapComparison(paramMap)
+          }
+        })
+        .filter(p => p)
+        .join(' ')
+    })
+    .join(' ')
+  // if (startDate || endDate) {
+  //   filters.push(constructDateSentence(dataset, startDate, endDate))
+  // }
 }
 
 export const convertConditionGroupToSentence = conditionGroup => {

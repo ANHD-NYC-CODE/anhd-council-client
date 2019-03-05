@@ -4,16 +4,18 @@ import { cloneInstance } from 'shared/utilities/classUtils'
 export class Filter {
   constructor({ datasetConstant = null, paramsObject = {} } = {}) {
     this.setDataset = this.setDataset.bind(this)
-    this._paramsObject = paramsObject || {}
+    this._paramsObject = paramsObject
     this.setDataset(datasetConstant)
 
     // Post initialize actions
-    Object.keys(this.paramsObject).forEach(key => {
-      const paramSet = this.paramsObject[key]
-      if (paramSet.autoCreate) {
-        paramSet.create()
-      }
-    })
+    if (!Object.keys(paramsObject).length) {
+      Object.keys(this.paramsObject).forEach(key => {
+        const paramSet = this.paramsObject[key]
+        if (paramSet.autoCreate) {
+          paramSet.create()
+        }
+      })
+    }
   }
 
   setDataset(datasetConstant) {
@@ -30,14 +32,16 @@ export class Filter {
     this._schema = this.dataset.schema
 
     // Set default keys to ParameterMapSet without any parameter maps
-    Object.keys(this._schema).map(key => {
-      this._paramsObject = {
-        ...{
-          [key]: cloneInstance(this.schema[key]),
-        },
-        ...this.paramsObject,
-      }
-    })
+    if (!Object.keys(this.paramsObject).length) {
+      Object.keys(this._schema).map(key => {
+        this._paramsObject = {
+          ...{
+            [key]: cloneInstance(this.schema[key]),
+          },
+          ...this.paramsObject,
+        }
+      })
+    }
   }
 
   get dataset() {

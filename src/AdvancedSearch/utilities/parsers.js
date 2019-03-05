@@ -64,8 +64,8 @@ export const acrisUrlDateParser = (datasetsConfig, dataset, startDate, endDate) 
   return filters.join(',')
 }
 
-export const standardAmountSentenceParser = (dataset, comparison, value) => {
-  return `${constructComparisonString(comparison)} ${value} ${dataset.name}`
+export const standardAmountSentenceParser = (filter, comparison, value) => {
+  return `${constructComparisonString(comparison)} ${value} ${filter.name}`
 }
 
 export const rsunitsAmountSentenceParser = (dataset, comparison, value) => {
