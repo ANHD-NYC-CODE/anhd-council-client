@@ -12,7 +12,9 @@ const MultiTypeFieldGroup = props => {
       // Add the opposite paramMap based on 'rangePosition'
       props.paramSet.createSpecific({
         paramMap: cloneInstance(
-          props.paramSet.defaults.find(mapping => mapping.rangePosition !== paramMap.rangePosition)
+          props.paramSet.defaults.find(
+            mapping => mapping.rangePosition && mapping.rangePosition !== paramMap.rangePosition
+          )
         ),
       })
 
