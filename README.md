@@ -35,4 +35,4 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 ## Continuous Deployment
 
 1. Merge to master on github
-2. run command: `ssh -t anhd@45.55.44.160 "cd /var/www/anhd-council-client && sudo sh deploy.sh"`
+2. run command: `ssh -t anhd@45.55.44.160 "cd /var/www/anhd-council-client && sudo sh pull.sh"`
