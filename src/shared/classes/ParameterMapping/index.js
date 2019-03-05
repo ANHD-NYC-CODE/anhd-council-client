@@ -1,11 +1,28 @@
 import { StandardizedInput } from 'shared/classes/StandardizedInput'
+import { comparisonOptions } from 'shared/utilities/filterUtils'
 
 export class ParameterMapping {
-  constructor({ component = {}, field = '', comparison = '', value = '' } = {}) {
+  constructor({
+    component = {},
+    baseComponent = {},
+    props = {},
+    defaultOptions = undefined,
+    field = '',
+    comparison = '',
+    value = '',
+    rangeKey = undefined,
+    rangePosition = undefined,
+  } = {}) {
+    this._component = component
+    this._baseComponent = baseComponent
+    this._props = props
+
     this._field = field
     this._comparison = comparison
     this._value = value
-    this._component = component
+    this._defaultOptions = defaultOptions
+    this._rangeKey = rangeKey
+    this._rangePosition = rangePosition
   }
 
   get field() {
@@ -16,8 +33,16 @@ export class ParameterMapping {
     return this._comparison
   }
 
+  set comparison(value) {
+    this._comparison = value
+  }
+
   get value() {
     return this._value
+  }
+
+  set value(value) {
+    this._value = value
   }
 
   get component() {
@@ -28,12 +53,44 @@ export class ParameterMapping {
     this._component = component
   }
 
-  set comparison(value) {
-    this._comparison = value
+  get baseComponent() {
+    return this._baseComponent
   }
 
-  set value(value) {
-    this._value = value
+  set baseComponent(baseComponent) {
+    this._baseComponent = baseComponent
+  }
+
+  get props() {
+    return this._props
+  }
+
+  set props(props) {
+    this._props = props
+  }
+
+  get defaultOptions() {
+    return this._defaultOptions
+  }
+
+  set defaultOptions(value) {
+    this._defaultOptions = value
+  }
+
+  get rangeKey() {
+    return this._rangeKey
+  }
+
+  get rangePosition() {
+    return this._rangePosition
+  }
+
+  get options() {
+    return this._defaultOptions || comparisonOptions(['gte', 'exact', 'lte'])
+  }
+
+  createOptions(values) {
+    return values || this.defaultOptions || comparisonOptions(['gte', 'exact', 'lte'], [], 'INTEGER')
   }
 
   update({ dispatchAction = undefined, e = undefined } = {}) {

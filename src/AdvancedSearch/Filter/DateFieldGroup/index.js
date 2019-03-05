@@ -1,51 +1,26 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Button } from 'react-bootstrap'
+import { Form, Button } from 'react-bootstrap'
 import { cloneInstance } from 'shared/utilities/classUtils'
 
-import CustomSelect from 'shared/components/CustomSelect'
-import DateField from 'AdvancedSearch/Filter/DateField'
-
-const comparisonReconfigure = (props, e) => {
-  if (e.value.toUpperCase().match(/(LTE|END)/)) {
-    props.paramSet.deleteSpecific({
-      dispatchAction: props.dispatchParameterAction,
-      paramMapIndex: props.paramSet.paramMaps.findIndex(paramMap =>
-        paramMap.comparison.toUpperCase().match(/(GTE|START)/)
-      ),
-    })
-  } else if (e.value.toUpperCase().match(/(GTE|START)/)) {
-    props.paramSet.deleteSpecific({
-      dispatchAction: props.dispatchParameterAction,
-      paramMapIndex: props.paramSet.paramMaps.findIndex(paramMap =>
-        paramMap.comparison.toUpperCase().match(/(LTE|END)/)
-      ),
-    })
-    props.dispatchParameterAction()
-  } else {
-    return
-  }
-}
+import RangeFieldSet from 'AdvancedSearch/Filter/RangeFieldSet'
 
 const renderDateFields = props => {
   const onDateFieldChange = (paramMap, e) => {
-    if (e.name === 'comparison' && e.value.toUpperCase().match(/(BETWEEN)/)) {
-      // Change paramMap to LTE and clone the GTE default
-      if (paramMap.comparison.toUpperCase().match(/(LTE|END)/)) {
+    // When changing a comparison to range mode
+    if (e.rangeKey && e.name === 'comparison' && e.value.toUpperCase().match(/(BETWEEN|RANGE)/)) {
+      // Add the opposite paramMap based on 'rangePosition'
+      if (paramMap.rangePosition === 1) {
         props.paramSet.createSpecific({
           dispatchAction: props.dispatchParameterAction,
-          paramMap: cloneInstance(
-            props.paramSet.defaults.find(mapping => mapping.comparison.toUpperCase().match(/(GTE|START)/))
-          ),
+          paramMap: cloneInstance(props.paramSet.defaults.find(mapping => mapping.rangePosition === 2)),
           unshift: true,
         })
-      } else if (paramMap.comparison.toUpperCase().match(/(GTE|START)/)) {
+      } else if (paramMap.rangePosition === 2) {
         props.paramSet.createSpecific({
           dispatchAction: props.dispatchParameterAction,
-          paramMap: cloneInstance(
-            props.paramSet.defaults.find(mapping => mapping.comparison.toUpperCase().match(/(LTE|END)/))
-          ),
+          paramMap: cloneInstance(props.paramSet.defaults.find(mapping => mapping.rangePosition === 1)),
         })
       }
       props.dispatchParameterAction()
@@ -59,33 +34,12 @@ const renderDateFields = props => {
       key: `datefieldgroup-${0}`,
       onChange: onDateFieldChange,
       dispatchParameterAction: props.dispatchParameterAction,
-      options: props.paramSet.setComponent.options,
+      options: props.paramSet.paramMaps[0].options,
       paramMap: props.paramSet.paramMaps[0],
       paramMapIndex: 0,
-      type: props.paramSet.setComponent.type.constant,
     })
   } else if (props.paramSet.paramMaps.length > 1) {
-    return (
-      <div>
-        <CustomSelect
-          name="comparison"
-          options={props.paramSet.setComponent.options}
-          onChange={e => comparisonReconfigure(props, e)}
-          size="sm"
-          value={props.paramSet.setComponent.options.find(option => option.value.toUpperCase().match(/(BETWEEN)/))}
-        />
-        {props.paramSet.paramMaps.map((paramMap, paramMapIndex) => {
-          return (
-            <DateField
-              key={`paramMap-${paramMapIndex}`}
-              onChange={e => paramMap.update({ dispatchAction: props.dispatchParameterAction, e })}
-              paramMap={paramMap}
-              type={props.paramSet.setComponent.type.constant}
-            />
-          )
-        })}
-      </div>
-    )
+    return <RangeFieldSet paramSet={props.paramSet} dispatchParameterAction={props.dispatchParameterAction} />
   } else {
     return null
   }
@@ -94,6 +48,13 @@ const renderDateFields = props => {
 const DateFieldGroup = props => {
   return (
     <div className="date-fieldgroup">
+      {props.paramSet.paramMaps.length ? (
+        <Form.Label>{props.paramSet.props.label}</Form.Label>
+      ) : (
+        <Button onClick={() => props.paramSet.createOne({ dispatchAction: props.dispatchParameterAction })}>
+          {props.paramSet.props.newButtonLabel}
+        </Button>
+      )}
       {renderDateFields(props)}
       {!!props.paramSet.paramMaps.length && (
         <Button

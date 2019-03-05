@@ -1,12 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
 import CustomSelect from 'shared/components/CustomSelect'
-import DateField from 'AdvancedSearch/Filter/DateField'
 
-const DateFieldSet = props => {
+const ComparisonFieldSet = props => {
   return (
-    <div>
+    <div className="comparison-fieldset" key={props.key}>
       <CustomSelect
         name="comparison"
         options={props.options}
@@ -18,25 +16,22 @@ const DateFieldSet = props => {
         size="sm"
         value={props.options.find(option => option.value === props.paramMap.comparison)}
       />
-      <DateField
-        type={props.type}
-        onChange={e =>
-          props.onChange
-            ? props.onChange(props.paramMap, e)
-            : props.paramMap.update({ dispatchAction: props.dispatchParameterAction, e: e })
-        }
-        paramMap={props.paramMap}
-      />
+      {props.paramMap.baseComponent({
+        key: `paramMap-field-${props.paramMapIndex}`,
+        dispatchParameterAction: props.dispatchParameterAction,
+        paramMap: props.paramMap,
+        onChange: e => props.paramMap.update({ dispatchAction: props.dispatchParameterAction, e }),
+      })}
     </div>
   )
 }
 
-DateFieldSet.propTypes = {
+ComparisonFieldSet.propTypes = {
+  key: PropTypes.string,
   dispatchParameterAction: PropTypes.func,
-  options: PropTypes.array,
   paramMap: PropTypes.object,
   paramMapIndex: PropTypes.number,
-  type: PropTypes.string,
+  options: PropTypes.array,
 }
 
-export default DateFieldSet
+export default ComparisonFieldSet

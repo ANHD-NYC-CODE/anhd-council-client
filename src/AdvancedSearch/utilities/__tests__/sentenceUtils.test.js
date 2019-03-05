@@ -410,7 +410,6 @@ describe('convertHousingTypesToSentence', () => {
         housingType: 'SMALL_HOMES',
         paramsObject: {
           unitsres: new ParameterMapSet({
-            setComponent: null,
             paramMaps: [new ParameterMapping({ field: 'unitsres', comparison: 'lte', value: '4' })],
           }),
         },

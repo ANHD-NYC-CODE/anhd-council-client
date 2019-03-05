@@ -1,12 +1,20 @@
 import moment from 'moment'
 
 import { rentRegulatedProgramOptions, comparisonOptions } from 'shared/utilities/filterUtils'
-import { BaseSetFilter } from 'shared/classes/BaseSetFilter'
 import { ParameterMapSet } from 'shared/classes/ParameterMapSet'
 import { ParameterMapping } from 'shared/classes/ParameterMapping'
-import IntegerFieldSet from 'AdvancedSearch/Filter/IntegerFieldSet'
-import TextFieldSet from 'AdvancedSearch/Filter/TextFieldSet'
-import DateFieldSet from 'AdvancedSearch/Filter/DateFieldSet'
+
+import TextFieldGroup from 'AdvancedSearch/Filter/TextFieldGroup'
+import IntegerFieldGroup from 'AdvancedSearch/Filter/IntegerFieldGroup'
+import DateFieldGroup from 'AdvancedSearch/Filter/DateFieldGroup'
+import MultiTypeFieldGroup from 'AdvancedSearch/Filter/MultiTypeFieldGroup'
+
+import GenericFieldSet from 'AdvancedSearch/Filter/GenericFieldSet'
+import ComparisonFieldSet from 'AdvancedSearch/Filter/ComparisonFieldSet'
+
+import DateField from 'AdvancedSearch/Filter/DateField'
+import IntegerField from 'AdvancedSearch/Filter/IntegerField'
+import MultiSelectField from 'AdvancedSearch/Filter/MultiSelectField'
 
 export const RENTSTABILZED = {
   name: 'Rent Stabilized',
@@ -14,15 +22,26 @@ export const RENTSTABILZED = {
   constant: 'RENT_STABILIZED',
   schema: {
     rsunitslost: new ParameterMapSet({
-      setComponent: new BaseSetFilter({
-        type: 'MULTITYPE',
+      component: MultiTypeFieldGroup,
+      props: {
         label: 'Rent Stabilized Units Lost',
         newButtonLabel: 'Add Units Lost +',
-      }),
+      },
       defaults: [
-        new ParameterMapping({ component: IntegerFieldSet, field: 'rsunitslost', comparison: 'gte', value: '25' }),
         new ParameterMapping({
-          component: DateFieldSet,
+          component: ComparisonFieldSet,
+          baseComponent: IntegerField,
+          field: 'rsunitslost',
+          comparison: 'gte',
+          value: '25',
+        }),
+        new ParameterMapping({
+          component: ComparisonFieldSet,
+          baseComponent: DateField,
+          props: {
+            type: 'tel',
+          },
+          defaultOptions: comparisonOptions(['start', 'between', 'end'], ['Since', 'Between'], 'DATE'),
           field: 'rsunitslost',
           comparison: 'start',
           value: moment(moment.now())
@@ -30,7 +49,12 @@ export const RENTSTABILZED = {
             .format('YYYY-MM-DD'),
         }),
         new ParameterMapping({
-          component: DateFieldSet,
+          component: ComparisonFieldSet,
+          baseComponent: DateField,
+          props: {
+            type: 'tel',
+          },
+          defaultOptions: comparisonOptions(['start', 'between', 'end'], ['Since', 'Between'], 'DATE'),
           field: 'rsunitslost',
           comparison: 'end',
           value: moment(moment.now())
@@ -49,15 +73,16 @@ export const RENTREGULATED = {
 
   schema: {
     coresubsidyrecord__programname: new ParameterMapSet({
-      setComponent: new BaseSetFilter({
-        type: 'MULTISELECT',
+      component: TextFieldGroup,
+      props: {
         label: 'Program Name',
         newButtonLabel: 'Add Program +',
-        defaultOptions: rentRegulatedProgramOptions(),
-      }),
+      },
       defaults: [
         new ParameterMapping({
-          component: TextFieldSet,
+          defaultOptions: rentRegulatedProgramOptions(),
+          component: GenericFieldSet,
+          baseComponent: MultiSelectField,
           field: 'coresubsidyrecord__programname',
           comparison: 'any',
           value: '',
@@ -66,16 +91,26 @@ export const RENTREGULATED = {
     }),
 
     coresubsidyrecord__enddate: new ParameterMapSet({
-      setComponent: new BaseSetFilter({
-        type: 'DATE',
+      component: DateFieldGroup,
+      props: {
         label: 'Expiration Date',
         newButtonLabel: 'Add Expiration +',
-        defaultOptions: comparisonOptions(['lte', 'between', 'gte'], ['Before', 'Between', 'After'], 'DATE'),
-      }),
-      paramMaps: [],
+      },
       defaults: [
         new ParameterMapping({
-          component: DateFieldSet,
+          component: ComparisonFieldSet,
+          baseComponent: DateField,
+          props: {
+            type: 'date',
+          },
+          defaultOptions: comparisonOptions(
+            ['lte', 'between', 'gte'],
+            ['Before', 'Between', 'After'],
+            'DATE',
+            'expirationRange'
+          ),
+          rangeKey: 'expirationRange',
+          rangePosition: 1,
           field: 'coresubsidyrecord__enddate',
           comparison: 'lte',
           value: moment(moment.now())
@@ -83,7 +118,19 @@ export const RENTREGULATED = {
             .format('YYYY-MM-DD'),
         }),
         new ParameterMapping({
-          component: DateFieldSet,
+          component: ComparisonFieldSet,
+          baseComponent: DateField,
+          props: {
+            type: 'date',
+          },
+          rangeKey: 'expirationRange',
+          rangePosition: 2,
+          defaultOptions: comparisonOptions(
+            ['lte', 'between', 'gte'],
+            ['Before', 'Between', 'After'],
+            'DATE',
+            'expirationRange'
+          ),
           field: 'coresubsidyrecord__enddate',
           comparison: 'gte',
           value: moment(moment.now())
@@ -101,15 +148,20 @@ export const SMALLHOMES = {
   constant: 'SMALL_HOMES',
   schema: {
     unitsres: new ParameterMapSet({
-      setComponent: new BaseSetFilter({
-        type: 'INTEGER',
+      component: IntegerFieldGroup,
+      props: {
         label: 'Number of residential units',
         newButtonLabel: 'Add Residential Units +',
-        defaultOptions: comparisonOptions(['lte', 'exact'], null, 'INTEGER'),
-      }),
-
+      },
       defaults: [
-        new ParameterMapping({ component: IntegerFieldSet, field: 'unitsres', comparison: 'lte', value: '6' }),
+        new ParameterMapping({
+          component: ComparisonFieldSet,
+          baseComponent: IntegerField,
+          defaultOptions: comparisonOptions(['lte', 'exact'], null, 'INTEGER'),
+          field: 'unitsres',
+          comparison: 'lte',
+          value: '6',
+        }),
       ],
     }),
   },

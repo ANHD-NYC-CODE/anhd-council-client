@@ -1,17 +1,24 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Button } from 'react-bootstrap'
+import { Button, Form } from 'react-bootstrap'
 
 const MultiTypeFieldGroup = props => {
   return (
     <div className="multitype-fieldgroup">
+      {props.paramSet.paramMaps.length ? (
+        <Form.Label>{props.paramSet.props.label}</Form.Label>
+      ) : (
+        <Button onClick={() => props.paramSet.createAll({ dispatchAction: props.dispatchParameterAction })}>
+          {props.paramSet.props.newButtonLabel}
+        </Button>
+      )}
       {props.paramSet.paramMaps.map((paramMap, paramMapIndex) => {
         return paramMap.component({
-          key: `integer-fieldset-${paramMapIndex}`,
+          key: `paramSet-${props.paramSetIndex}-paramMap-component-${paramMapIndex}`,
           paramMap: paramMap,
           paramMapIndex: paramMapIndex,
-          options: props.paramSet.setComponent.options,
+          options: paramMap.options,
           dispatchParameterAction: props.dispatchParameterAction,
         })
       })}

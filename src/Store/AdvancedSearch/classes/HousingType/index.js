@@ -1,5 +1,4 @@
 import * as ht from 'shared/constants/housingTypes'
-import { ParameterMapSet } from 'shared/classes/ParameterMapSet'
 import { cloneInstance } from 'shared/utilities/classUtils'
 
 export class HousingType {
@@ -26,10 +25,7 @@ export class HousingType {
     Object.keys(this._schema).map(key => {
       this._paramsObject = {
         ...{
-          [key]: new ParameterMapSet({
-            setComponent: this.schema[key].setComponent,
-            defaults: [...this.schema[key].defaults.map(d => cloneInstance(d))],
-          }),
+          [key]: cloneInstance(this.schema[key]),
         },
         ...this.paramsObject,
       }

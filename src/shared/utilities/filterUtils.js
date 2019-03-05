@@ -4,7 +4,7 @@ export const rentRegulatedProgramOptions = () => {
   return rentRegulatedPrograms.map(program => ({ name: 'value', value: program, label: program }))
 }
 
-export const comparisonOptions = (comparisons, labels, type) => {
+export const comparisonOptions = (comparisons, labels, type, rangeKey) => {
   if (type && !type.toUpperCase().match(/(DATE|INTEGER)/)) {
     throw 'Pass either DATE or INTEGER into comparison options'
   }
@@ -43,5 +43,6 @@ export const comparisonOptions = (comparisons, labels, type) => {
     name: 'comparison',
     value: comparison,
     label: labels[index] || defaultLabels[comparison],
+    rangeKey: rangeKey,
   }))
 }

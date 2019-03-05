@@ -1,25 +1,23 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Form } from 'react-bootstrap'
-
-const DateField = props => {
+const IntegerField = props => {
   return (
     <Form.Control
       key={props.key}
       name="value"
-      onChange={props.onChange}
+      onChange={e => props.paramMap.update({ dispatchAction: props.dispatchParameterAction, e: e })}
       size="sm"
-      type={props.type}
+      type="number"
       value={props.paramMap.value}
     />
   )
 }
 
-DateField.propTypes = {
+IntegerField.propTypes = {
   key: PropTypes.string,
-  onChange: PropTypes.func,
   paramMap: PropTypes.object,
-  type: PropTypes.string,
+  dispatchParameterAction: PropTypes.func,
 }
 
-export default DateField
+export default IntegerField

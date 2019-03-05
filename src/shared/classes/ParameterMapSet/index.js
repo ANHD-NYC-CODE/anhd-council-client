@@ -2,26 +2,34 @@ import { cloneInstance } from 'shared/utilities/classUtils'
 import { StandardizedInput } from 'shared/classes/StandardizedInput'
 
 export class ParameterMapSet {
-  constructor({ setComponent = null, paramMaps = [], defaults = [] } = {}) {
-    this._setComponent = setComponent
+  constructor({ component = null, paramMaps = [], defaults = [], props = {} } = {}) {
+    this._component = component
     this._paramMaps = paramMaps
     this._defaults = defaults
+    this._props = props
   }
 
-  get setComponent() {
-    return this._setComponent
+  get component() {
+    return this._component
   }
 
   get paramMaps() {
     return this._paramMaps
   }
 
+  set paramMaps(newArray) {
+    this._paramMaps = newArray
+  }
   get defaults() {
     return this._defaults
   }
 
-  set paramMaps(newArray) {
-    this._paramMaps = newArray
+  get props() {
+    return this._props
+  }
+
+  set props(newProps) {
+    this._props = newProps
   }
 
   createOne({ dispatchAction = undefined, unshift = false } = {}) {
@@ -50,6 +58,18 @@ export class ParameterMapSet {
       dispatchAction()
     }
     return created
+  }
+
+  createAll({ dispatchAction = undefined } = {}) {
+    // this.defaults.forEach(defaultParamMap => {
+    //   this.addParameterMap(cloneInstance(defaultParamMap))
+    // })
+    this.addParameterMap(cloneInstance(this.defaults[0]))
+    this.addParameterMap(cloneInstance(this.defaults[1]))
+
+    if (dispatchAction) {
+      dispatchAction()
+    }
   }
 
   addParameterMap(parameterMap) {
