@@ -26,7 +26,6 @@ const convertConditionGroupToString = (datasetsConfig, filters) => {
   return filters
     .map((filterObject, index) => {
       const groupLabel = `filter_${index}`
-
       if (filterObject.conditionGroup) {
         return `${groupLabel}=condition_${filterObject.conditionGroup}`
       } else {

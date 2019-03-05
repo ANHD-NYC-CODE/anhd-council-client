@@ -35,7 +35,6 @@ class Config extends React.Component {
       if (!nextProps.councils) {
         this.props.dispatch(getCouncils())
       }
-
       // if (!nextProps.communities) {
       //   this.props.dispatch(getCommunities())
       // }

@@ -1,5 +1,6 @@
 import * as c from '../constants'
 import { Condition } from 'shared/classes/Condition'
+import { ConditionFilter } from 'shared/classes/ConditionFilter'
 
 export const initialState = {
   conditions: {
@@ -20,8 +21,9 @@ export const advancedSearchReducer = (state = Object.freeze(initialState), actio
       })
 
       const newConditions = { ...state.conditions }
-      newConditions[action.parentKey].addFilter({ filter: { conditionGroup: action.conditionKey } })
-
+      newConditions[action.parentKey].addFilter({
+        filter: new ConditionFilter({ conditionGroup: action.conditionKey }),
+      })
       return {
         ...state,
         conditions: { ...newConditions, [action.conditionKey]: newCondition },

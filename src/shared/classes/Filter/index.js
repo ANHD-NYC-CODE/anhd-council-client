@@ -5,6 +5,7 @@ export class Filter {
   constructor({ datasetConstant = null, paramsObject = {} } = {}) {
     this.setDataset = this.setDataset.bind(this)
     this._paramsObject = paramsObject
+
     this.setDataset(datasetConstant)
 
     // Post initialize actions
