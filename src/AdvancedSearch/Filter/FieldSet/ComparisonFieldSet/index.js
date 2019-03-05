@@ -9,18 +9,18 @@ const ComparisonFieldSet = props => {
         name="comparison"
         options={props.options}
         onChange={e =>
-          props.onChange
-            ? props.onChange(props.paramMap, e)
+          props.paramMap.rangeKey
+            ? props.rangeChange(props.paramMap, e)
             : props.paramMap.update({ dispatchAction: props.dispatchParameterAction, e: e })
         }
         size="sm"
         value={props.options.find(option => option.value === props.paramMap.comparison)}
       />
       {props.paramMap.baseComponent({
-        key: `paramMap-field-${props.paramMapIndex}`,
         dispatchParameterAction: props.dispatchParameterAction,
         paramMap: props.paramMap,
         onChange: e => props.paramMap.update({ dispatchAction: props.dispatchParameterAction, e }),
+        type: props.paramMap.props.type,
       })}
     </div>
   )
@@ -32,6 +32,7 @@ ComparisonFieldSet.propTypes = {
   paramMap: PropTypes.object,
   paramMapIndex: PropTypes.number,
   options: PropTypes.array,
+  rangeChange: PropTypes.func,
 }
 
 export default ComparisonFieldSet

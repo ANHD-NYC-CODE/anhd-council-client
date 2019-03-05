@@ -4,17 +4,13 @@ import { rentRegulatedProgramOptions, comparisonOptions } from 'shared/utilities
 import { ParameterMapSet } from 'shared/classes/ParameterMapSet'
 import { ParameterMapping } from 'shared/classes/ParameterMapping'
 
-import TextFieldGroup from 'AdvancedSearch/Filter/TextFieldGroup'
-import IntegerFieldGroup from 'AdvancedSearch/Filter/IntegerFieldGroup'
-import DateFieldGroup from 'AdvancedSearch/Filter/DateFieldGroup'
-import MultiTypeFieldGroup from 'AdvancedSearch/Filter/MultiTypeFieldGroup'
+import MultiTypeFieldGroup from 'AdvancedSearch/Filter/Group/MultiTypeFieldGroup'
+import GenericFieldSet from 'AdvancedSearch/Filter/FieldSet/GenericFieldSet'
+import ComparisonFieldSet from 'AdvancedSearch/Filter/FieldSet/ComparisonFieldSet'
 
-import GenericFieldSet from 'AdvancedSearch/Filter/GenericFieldSet'
-import ComparisonFieldSet from 'AdvancedSearch/Filter/ComparisonFieldSet'
-
-import DateField from 'AdvancedSearch/Filter/DateField'
-import IntegerField from 'AdvancedSearch/Filter/IntegerField'
-import MultiSelectField from 'AdvancedSearch/Filter/MultiSelectField'
+import DateField from 'AdvancedSearch/Filter/Field/DateField'
+import IntegerField from 'AdvancedSearch/Filter/Field/IntegerField'
+import MultiSelectField from 'AdvancedSearch/Filter/Field/MultiSelectField'
 
 export const RENTSTABILZED = {
   name: 'Rent Stabilized',
@@ -27,6 +23,7 @@ export const RENTSTABILZED = {
         label: 'Rent Stabilized Units Lost',
         newButtonLabel: 'Add Units Lost +',
       },
+      createType: 'ALL_RANGE_ONE',
       defaults: [
         new ParameterMapping({
           component: ComparisonFieldSet,
@@ -39,27 +36,27 @@ export const RENTSTABILZED = {
           component: ComparisonFieldSet,
           baseComponent: DateField,
           props: {
-            type: 'tel',
+            type: 'number',
           },
-          defaultOptions: comparisonOptions(['start', 'between', 'end'], ['Since', 'Between'], 'DATE'),
+          rangeKey: 'rsUnitsRange',
+          rangePosition: 1,
+          defaultOptions: comparisonOptions(['start', 'between', 'end'], ['Since', 'Between'], 'DATE', 'rsUnitsRange'),
           field: 'rsunitslost',
           comparison: 'start',
-          value: moment(moment.now())
-            .subtract(1, 'Y')
-            .format('YYYY-MM-DD'),
+          value: '2010',
         }),
         new ParameterMapping({
           component: ComparisonFieldSet,
           baseComponent: DateField,
           props: {
-            type: 'tel',
+            type: 'number',
           },
-          defaultOptions: comparisonOptions(['start', 'between', 'end'], ['Since', 'Between'], 'DATE'),
+          rangeKey: 'rsUnitsRange',
+          rangePosition: 2,
+          defaultOptions: comparisonOptions(['start', 'between', 'end'], ['Since', 'Between'], 'DATE', 'rsUnitsRange'),
           field: 'rsunitslost',
           comparison: 'end',
-          value: moment(moment.now())
-            .subtract(1, 'Y')
-            .format('YYYY-MM-DD'),
+          value: '2017',
         }),
       ],
     }),
@@ -73,11 +70,12 @@ export const RENTREGULATED = {
 
   schema: {
     coresubsidyrecord__programname: new ParameterMapSet({
-      component: TextFieldGroup,
+      component: MultiTypeFieldGroup,
       props: {
         label: 'Program Name',
         newButtonLabel: 'Add Program +',
       },
+      createType: 'ONE',
       defaults: [
         new ParameterMapping({
           defaultOptions: rentRegulatedProgramOptions(),
@@ -91,11 +89,12 @@ export const RENTREGULATED = {
     }),
 
     coresubsidyrecord__enddate: new ParameterMapSet({
-      component: DateFieldGroup,
+      component: MultiTypeFieldGroup,
       props: {
         label: 'Expiration Date',
         newButtonLabel: 'Add Expiration +',
       },
+      createType: 'ONE',
       defaults: [
         new ParameterMapping({
           component: ComparisonFieldSet,
@@ -107,14 +106,14 @@ export const RENTREGULATED = {
             ['lte', 'between', 'gte'],
             ['Before', 'Between', 'After'],
             'DATE',
-            'expirationRange'
+            'expirationRangeKey'
           ),
-          rangeKey: 'expirationRange',
+          rangeKey: 'expirationRangeKey',
           rangePosition: 1,
           field: 'coresubsidyrecord__enddate',
           comparison: 'lte',
           value: moment(moment.now())
-            .add(2, 'Y')
+            .add(1, 'Y')
             .format('YYYY-MM-DD'),
         }),
         new ParameterMapping({
@@ -123,14 +122,14 @@ export const RENTREGULATED = {
           props: {
             type: 'date',
           },
-          rangeKey: 'expirationRange',
-          rangePosition: 2,
           defaultOptions: comparisonOptions(
             ['lte', 'between', 'gte'],
             ['Before', 'Between', 'After'],
             'DATE',
-            'expirationRange'
+            'expirationRangeKey'
           ),
+          rangeKey: 'expirationRangeKey',
+          rangePosition: 2,
           field: 'coresubsidyrecord__enddate',
           comparison: 'gte',
           value: moment(moment.now())
@@ -148,11 +147,12 @@ export const SMALLHOMES = {
   constant: 'SMALL_HOMES',
   schema: {
     unitsres: new ParameterMapSet({
-      component: IntegerFieldGroup,
+      component: MultiTypeFieldGroup,
       props: {
         label: 'Number of residential units',
         newButtonLabel: 'Add Residential Units +',
       },
+      createType: 'ONE',
       defaults: [
         new ParameterMapping({
           component: ComparisonFieldSet,

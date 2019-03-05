@@ -7,6 +7,7 @@ const HousingTypeParamSet = props => {
   return (
     <Form.Group className="housingtype-paramset">
       {props.paramSet.component({
+        key: 'housing-type-param-set',
         dispatchParameterAction: props.dispatchParameterAction,
         paramSet: props.paramSet,
         paramSetIndex: props.paramSetIndex,

@@ -2,11 +2,12 @@ import { cloneInstance } from 'shared/utilities/classUtils'
 import { StandardizedInput } from 'shared/classes/StandardizedInput'
 
 export class ParameterMapSet {
-  constructor({ component = null, paramMaps = [], defaults = [], props = {} } = {}) {
+  constructor({ component = null, paramMaps = [], defaults = [], props = {}, createType = 'ALL' } = {}) {
     this._component = component
     this._paramMaps = paramMaps
     this._defaults = defaults
     this._props = props
+    this._createType = createType
   }
 
   get component() {
@@ -30,6 +31,25 @@ export class ParameterMapSet {
 
   set props(newProps) {
     this._props = newProps
+  }
+
+  get createType() {
+    return this._createType
+  }
+
+  create({ dispatchAction = undefined, paramMap = null, unshift = false } = {}) {
+    switch (this.createType) {
+      case 'ONE':
+        return this.createOne({ dispatchAction, unshift })
+      case 'SPECIFIC':
+        return this.createSpecific({ dispatchAction, paramMap, unshift })
+      case 'ALL_RANGE_ONE':
+        return this.createAllRangeOne({ dispatchAction })
+      case 'ALL':
+        return this.createAll({ dispatchAction })
+      default:
+        return this.createAll({ dispatchAction })
+    }
   }
 
   createOne({ dispatchAction = undefined, unshift = false } = {}) {
@@ -60,12 +80,23 @@ export class ParameterMapSet {
     return created
   }
 
+  createAllRangeOne({ dispatchAction = undefined } = {}) {
+    this.defaults.forEach(defaultParamMap => {
+      if (defaultParamMap.rangeKey && defaultParamMap.rangePosition !== 1) {
+        return
+      }
+      this.addParameterMap(cloneInstance(defaultParamMap))
+    })
+
+    if (dispatchAction) {
+      dispatchAction()
+    }
+  }
+
   createAll({ dispatchAction = undefined } = {}) {
-    // this.defaults.forEach(defaultParamMap => {
-    //   this.addParameterMap(cloneInstance(defaultParamMap))
-    // })
-    this.addParameterMap(cloneInstance(this.defaults[0]))
-    this.addParameterMap(cloneInstance(this.defaults[1]))
+    this.defaults.forEach(defaultParamMap => {
+      this.addParameterMap(cloneInstance(defaultParamMap))
+    })
 
     if (dispatchAction) {
       dispatchAction()

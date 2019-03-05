@@ -1,13 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
-import { Form, Button } from 'react-bootstrap'
 import { cloneInstance } from 'shared/utilities/classUtils'
 
-import RangeFieldSet from 'AdvancedSearch/Filter/RangeFieldSet'
+import { Button, Form } from 'react-bootstrap'
+import RangeFieldSet from 'AdvancedSearch/Filter/FieldSet/RangeFieldSet'
 
-const renderDateFields = props => {
-  const onDateFieldChange = (paramMap, e) => {
+const renderRangeFields = (props, rangeKey) => {
+  const rangeChange = (paramMap, e) => {
     // When changing a comparison to range mode
     if (e.rangeKey && e.name === 'comparison' && e.value.toUpperCase().match(/(BETWEEN|RANGE)/)) {
       // Add the opposite paramMap based on 'rangePosition'
@@ -15,7 +14,6 @@ const renderDateFields = props => {
         props.paramSet.createSpecific({
           dispatchAction: props.dispatchParameterAction,
           paramMap: cloneInstance(props.paramSet.defaults.find(mapping => mapping.rangePosition === 2)),
-          unshift: true,
         })
       } else if (paramMap.rangePosition === 2) {
         props.paramSet.createSpecific({
@@ -28,26 +26,33 @@ const renderDateFields = props => {
       paramMap.update({ dispatchAction: props.dispatchParameterAction, e: e })
     }
   }
-
-  if (props.paramSet.paramMaps.length === 1) {
-    return props.paramSet.paramMaps[0].component({
-      key: `datefieldgroup-${0}`,
-      onChange: onDateFieldChange,
+  const paramMapRangeGroup = props.paramSet.paramMaps.filter(paramMap => paramMap.rangeKey === rangeKey)
+  if (paramMapRangeGroup.length === 1) {
+    return paramMapRangeGroup[0].component({
+      key: `paramMap-rangeGroup-${0}`,
+      rangeChange: rangeChange,
       dispatchParameterAction: props.dispatchParameterAction,
-      options: props.paramSet.paramMaps[0].options,
-      paramMap: props.paramSet.paramMaps[0],
+      options: paramMapRangeGroup[0].options,
+      paramMap: paramMapRangeGroup[0],
       paramMapIndex: 0,
     })
-  } else if (props.paramSet.paramMaps.length > 1) {
-    return <RangeFieldSet paramSet={props.paramSet} dispatchParameterAction={props.dispatchParameterAction} />
+  } else if (paramMapRangeGroup.length > 1) {
+    return (
+      <RangeFieldSet
+        key={'rangeFieldSet'}
+        paramMapRangeGroup={paramMapRangeGroup}
+        paramSet={props.paramSet}
+        dispatchParameterAction={props.dispatchParameterAction}
+      />
+    )
   } else {
     return null
   }
 }
 
-const DateFieldGroup = props => {
+const SingleTypeFieldGroup = props => {
   return (
-    <div className="date-fieldgroup">
+    <div className="multitype-fieldgroup">
       {props.paramSet.paramMaps.length ? (
         <Form.Label>{props.paramSet.props.label}</Form.Label>
       ) : (
@@ -55,7 +60,25 @@ const DateFieldGroup = props => {
           {props.paramSet.props.newButtonLabel}
         </Button>
       )}
-      {renderDateFields(props)}
+      {props.paramSet.paramMaps.map((paramMap, paramMapIndex) => {
+        if (paramMap.rangeKey) {
+          if (paramMap.rangePosition === 1) {
+            // Only render 1 range field set per param map of type.
+            return renderRangeFields(props, paramMap.rangeKey)
+          } else {
+            return null
+          }
+        } else {
+          return paramMap.component({
+            dispatchParameterAction: props.dispatchParameterAction,
+            key: `paramSet-${props.paramSetIndex}-paramMap-component-${paramMapIndex}`,
+            options: paramMap.options,
+            paramMap: paramMap,
+            paramMapIndex: paramMapIndex,
+            type: paramMap.props.type,
+          })
+        }
+      })}
       {!!props.paramSet.paramMaps.length && (
         <Button
           variant="danger"
@@ -68,10 +91,10 @@ const DateFieldGroup = props => {
   )
 }
 
-DateFieldGroup.propTypes = {
+SingleTypeFieldGroup.propTypes = {
   dispatchParameterAction: PropTypes.func,
   paramSet: PropTypes.object,
   paramSetIndex: PropTypes.number,
 }
 
-export default DateFieldGroup
+export default SingleTypeFieldGroup

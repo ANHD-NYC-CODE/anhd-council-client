@@ -28,25 +28,28 @@ const RangeFieldSet = props => {
     <div>
       <CustomSelect
         name="comparison"
-        options={props.paramSet.paramMaps[0].options}
+        options={props.paramMapRangeGroup[0].options}
         onChange={e => comparisonReconfigure(props, e)}
         size="sm"
-        value={props.paramSet.paramMaps[0].options.find(option => option.value.toUpperCase().match(/(BETWEEN|RANGE)/))}
+        value={props.paramMapRangeGroup[0].options.find(option => option.value.toUpperCase().match(/(BETWEEN|RANGE)/))}
       />
-      {props.paramSet.paramMaps.map((paramMap, paramMapIndex) => {
-        return paramMap.baseComponent({
-          key: `paramMap-${paramMapIndex}`,
-          onChange: e => paramMap.update({ dispatchAction: props.dispatchParameterAction, e }),
-          paramMap: paramMap,
-          type: paramMap.props.type,
-        })
-      })}
+      {props.paramMapRangeGroup
+        .sort((a, b) => a.rangePosition - b.rangePosition)
+        .map((paramMap, paramMapIndex) => {
+          return paramMap.baseComponent({
+            key: `rangeGroup-paramMap-${paramMapIndex}`,
+            onChange: e => paramMap.update({ dispatchAction: props.dispatchParameterAction, e }),
+            paramMap: paramMap,
+            type: paramMap.props.type,
+          })
+        })}
     </div>
   )
 }
 
 RangeFieldSet.propTypes = {
   dispatchParameterAction: PropTypes.func,
+  paramMapRangeGroup: PropTypes.array,
   paramSet: PropTypes.object,
 }
 

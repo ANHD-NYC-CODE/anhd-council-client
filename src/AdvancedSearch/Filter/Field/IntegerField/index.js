@@ -8,7 +8,7 @@ const IntegerField = props => {
       name="value"
       onChange={e => props.paramMap.update({ dispatchAction: props.dispatchParameterAction, e: e })}
       size="sm"
-      type="number"
+      type={props.type || 'number'}
       value={props.paramMap.value}
     />
   )

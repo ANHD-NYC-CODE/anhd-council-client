@@ -9,7 +9,7 @@ const DateField = props => {
       name="value"
       onChange={props.onChange}
       size="sm"
-      type={props.type}
+      type={props.type || 'date'}
       value={props.paramMap.value}
     />
   )
