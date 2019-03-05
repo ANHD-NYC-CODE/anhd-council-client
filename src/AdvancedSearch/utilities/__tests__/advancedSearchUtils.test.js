@@ -1,43 +1,12 @@
 import * as a from 'AdvancedSearch/utilities/advancedSearchUtils'
-import * as d from 'shared/constants/datasets'
-import { ParameterMapSet } from 'shared/classes/ParameterMapSet'
-import { ParameterMapping } from 'shared/classes/ParameterMapping'
-import { LanguageModule } from 'shared/classes/LanguageModule'
-import { Filter } from 'shared/classes/Filter'
+
+import { Condition } from 'shared/classes/Condition'
+import { filterMocks } from 'shared/models/__mocks__/filterMocks'
+
 describe('convertDatasetFilterToParams', () => {
   describe('one dataset', () => {
     it('converts the object into a field string', () => {
-      const object = new Filter({
-        datasetConstant: 'HPD_VIOLATIONS',
-        paramsObject: {
-          hpdviolations: new ParameterMapSet({
-            paramMaps: [
-              new ParameterMapping({
-                field: 'hpdviolations__count',
-                comparison: 'gte',
-                value: '10',
-                languageModule: new LanguageModule({ type: 'AMOUNT', noun: 'HPD Violation' }),
-              }),
-              new ParameterMapping({
-                field: 'hpdviolations__approveddate',
-                comparison: 'gte',
-                value: '2017-01-01',
-                rangeKey: 'hpd',
-                rangePosition: 1,
-                languageModule: new LanguageModule({ type: 'DATE', noun: 'HPD Violation' }),
-              }),
-              new ParameterMapping({
-                field: 'hpdviolations__approveddate',
-                comparison: 'lte',
-                value: '2018-01-01',
-                rangeKey: 'hpd',
-                rangePosition: 2,
-                languageModule: new LanguageModule({ type: 'DATE', noun: 'HPD Violation' }),
-              }),
-            ],
-          }),
-        },
-      })
+      const object = filterMocks['hpd_violations']
 
       const result =
         'hpdviolations__count__gte=10,hpdviolations__approveddate__gte=2017-01-01,hpdviolations__approveddate__lte=2018-01-01'
@@ -46,52 +15,25 @@ describe('convertDatasetFilterToParams', () => {
   })
 })
 
-// describe('multiple datasets', () => {
-// const datasets = [d.HPDVIOLATIONS, d.DOBVIOLATIONS, d.ECBVIOLATIONS]
-//   it('converts the object into a field string', () => {
-//     datasets.forEach(ds => {
-//       const object = {
-//         dataset: ds,
-//         comparison: 'gte',
-//         value: '10',
-//         startDate: '2017-01-01',
-//         endDate: '2018-01-01',
-//       }
-//
-//       const result = `${ds.queryName}__${ds.dateField()}__gte=2017-01-01,${
-//         ds.queryName
-//       }__${ds.dateField()}__lte=2018-01-01,${ds.queryName}__${ds.amountField()}__gte=10`
-//       expect(a.convertDatasetFilterToParams(undefined, object)).toEqual(result)
-//     })
-//   })
-// })
-// })
+describe('convertConditionMappingToQ', () => {
+  describe('3 ANDS', () => {
+    it('converts the object into a Q', () => {
+      let condition0Filters = [
+        filterMocks['hpd_violations'],
+        filterMocks['dob_violations'],
+        filterMocks['ecb_violations'],
+      ]
 
-// describe('convertConditionMappingToQ', () => {
-//   describe('3 ANDS', () => {
-//     it('converts the object into a Q', () => {
-//       let condition0Filters = [d.HPDVIOLATIONS, d.DOBVIOLATIONS, d.ECBVIOLATIONS].map(ds => {
-//         return {
-//           dataset: ds,
-//           comparison: 'gte',
-//           value: '10',
-//           startDate: '2017-01-01',
-//           endDate: '2018-01-01',
-//         }
-//       })
-//
-//       const conditions = {
-//         '0': {
-//           type: 'AND',
-//           filters: condition0Filters,
-//         },
-//       }
-//
-//       const result =
-//         '*condition_0=AND filter_0=hpdviolations__approveddate__gte=2017-01-01,hpdviolations__approveddate__lte=2018-01-01,hpdviolations__count__gte=10 filter_1=dobviolations__issuedate__gte=2017-01-01,dobviolations__issuedate__lte=2018-01-01,dobviolations__count__gte=10 filter_2=ecbviolations__issuedate__gte=2017-01-01,ecbviolations__issuedate__lte=2018-01-01,ecbviolations__count__gte=10'
-//       expect(a.convertConditionMappingToQ(undefined, conditions)).toEqual(result)
-//     })
-//   })
+      const conditions = {
+        '0': new Condition({ type: 'AND', filters: condition0Filters }),
+      }
+
+      const result =
+        '*condition_0=AND filter_0=hpdviolations__count__gte=10,hpdviolations__approveddate__gte=2017-01-01,hpdviolations__approveddate__lte=2018-01-01 filter_1=dobviolations__count__gte=10,dobviolations__issuedate__gte=2017-01-01,dobviolations__issuedate__lte=2018-01-01 filter_2=ecbviolations__count__gte=10,ecbviolations__issuedate__gte=2017-01-01,ecbviolations__issuedate__lte=2018-01-01'
+      expect(a.convertConditionMappingToQ(undefined, conditions)).toEqual(result)
+    })
+  })
+})
 //
 //   describe('3 ORS', () => {
 //     it('converts the object into a Q', () => {

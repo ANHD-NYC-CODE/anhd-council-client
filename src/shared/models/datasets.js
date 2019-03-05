@@ -17,10 +17,6 @@ export const HPDVIOLATIONS = {
   url: '/hpdviolations/',
   model: 'hpdviolation',
   constant: 'HPD_VIOLATIONS',
-  dateSentenceParser: p.standardDateSentenceParser,
-  dateUrlParser: p.standardUrlDateParser,
-  amountSentenceParser: p.standardAmountSentenceParser,
-  amountUrlParser: p.standardUrlAmountParser,
   schema: {
     hpdviolations: new ParameterMapSet({
       component: MultiTypeFieldGroup,
@@ -92,10 +88,6 @@ export const DOBVIOLATIONS = {
   url: '/dobviolations/',
   model: 'dobviolation',
   constant: 'DOB_VIOLATIONS',
-  dateSentenceParser: p.standardDateSentenceParser,
-  dateUrlParser: p.standardUrlDateParser,
-  amountSentenceParser: p.standardAmountSentenceParser,
-  amountUrlParser: p.standardUrlAmountParser,
   schema: {
     dobviolations: new ParameterMapSet({
       component: MultiTypeFieldGroup,
@@ -151,6 +143,77 @@ export const DOBVIOLATIONS = {
             'dobviolationsRange'
           ),
           field: 'dobviolations__issuedate',
+          comparison: 'lte',
+          value: moment(moment.now())
+            .add(1, 'Y')
+            .format('YYYY-MM-DD'),
+        }),
+      ],
+    }),
+  },
+}
+
+export const ECBVIOLATIONS = {
+  name: 'ECB Violations',
+  queryName: 'ecbviolations',
+  url: '/ecbviolations/',
+  model: 'ecbviolation',
+  constant: 'ECB_VIOLATIONS',
+  schema: {
+    ecbviolations: new ParameterMapSet({
+      component: MultiTypeFieldGroup,
+      props: {
+        label: 'ECB Violations',
+        newButtonLabel: '',
+      },
+      autoCreate: true,
+      createType: 'ALL_RANGE_ONE',
+      defaults: [
+        new ParameterMapping({
+          component: ComparisonFieldSet,
+          baseComponent: IntegerField,
+          languageModule: new LanguageModule({ type: 'AMOUNT', noun: 'ECB Violation' }),
+          field: 'ecbviolations__count',
+          comparison: 'gte',
+          value: '5',
+        }),
+        new ParameterMapping({
+          component: ComparisonFieldSet,
+          baseComponent: DateField,
+          languageModule: new LanguageModule({ type: 'DATE', noun: 'ECB Violation' }),
+          props: {
+            type: 'date',
+          },
+          rangeKey: 'ecbviolationsRange',
+          rangePosition: 1,
+          defaultOptions: comparisonOptions(
+            ['gte', 'between', 'lte'],
+            ['Since', 'Between', 'Before'],
+            'DATE',
+            'ecbviolationsRange'
+          ),
+          field: 'ecbviolations__issuedate',
+          comparison: 'gte',
+          value: moment(moment.now())
+            .subtract(1, 'Y')
+            .format('YYYY-MM-DD'),
+        }),
+        new ParameterMapping({
+          component: ComparisonFieldSet,
+          baseComponent: DateField,
+          languageModule: new LanguageModule({ type: 'DATE', noun: 'ECB Violation' }),
+          props: {
+            type: 'date',
+          },
+          rangeKey: 'ecbviolationsRange',
+          rangePosition: 2,
+          defaultOptions: comparisonOptions(
+            ['gte', 'between', 'lte'],
+            ['Since', 'Between', 'Before'],
+            'DATE',
+            'ecbviolationsRange'
+          ),
+          field: 'ecbviolations__issuedate',
           comparison: 'lte',
           value: moment(moment.now())
             .add(1, 'Y')
