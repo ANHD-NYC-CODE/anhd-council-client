@@ -19,18 +19,18 @@ const MultiTypeFieldGroup = props => {
       })
 
       props.paramSet.paramMaps
-        .sort((a, b) => b.rangePosition - a.rangePosition)
-        .forEach((pm, index) => {
-          if (index) {
-            pm.update({ e: { name: 'comparison', value: 'lte' } })
-          } else {
+        .sort((a, b) => a.rangePosition - b.rangePosition)
+        .forEach(pm => {
+          if (pm.rangePosition === 1) {
             pm.update({ e: { name: 'comparison', value: 'gte' } })
+          } else if (pm.rangePosition === 2) {
+            pm.update({ e: { name: 'comparison', value: 'lte' } })
           }
         })
 
-      props.dispatchParameterAction()
+      props.dispatchAction()
     } else {
-      paramMap.update({ dispatchAction: props.dispatchParameterAction, e: e })
+      paramMap.update({ dispatchAction: props.dispatchAction, e: e })
     }
   }
 
@@ -40,7 +40,7 @@ const MultiTypeFieldGroup = props => {
       return paramMapRangeGroup[0].component({
         key: `paramMap-rangeGroup-${0}`,
         rangeChange: rangeChange,
-        dispatchParameterAction: props.dispatchParameterAction,
+        dispatchAction: props.dispatchAction,
         options: paramMapRangeGroup[0].options,
         paramMap: paramMapRangeGroup[0],
         paramMapIndex: 0,
@@ -52,7 +52,7 @@ const MultiTypeFieldGroup = props => {
           key={'rangeFieldSet'}
           paramMapRangeGroup={paramMapRangeGroup}
           paramSet={props.paramSet}
-          dispatchParameterAction={props.dispatchParameterAction}
+          dispatchAction={props.dispatchAction}
         />
       )
     } else {
@@ -61,11 +61,11 @@ const MultiTypeFieldGroup = props => {
   }
 
   return (
-    <div className="multitype-fieldgroup">
+    <div className="multitype-fieldgroup" key={props.key}>
       {props.paramSet.paramMaps.length ? (
         <Form.Label>{props.paramSet.props.label}</Form.Label>
       ) : (
-        <Button onClick={() => props.paramSet.create({ dispatchAction: props.dispatchParameterAction })}>
+        <Button onClick={() => props.paramSet.create({ dispatchAction: props.dispatchAction })}>
           {props.paramSet.props.newButtonLabel}
         </Button>
       )}
@@ -79,7 +79,7 @@ const MultiTypeFieldGroup = props => {
           }
         } else {
           return paramMap.component({
-            dispatchParameterAction: props.dispatchParameterAction,
+            dispatchAction: props.dispatchAction,
             key: `paramSet-${props.paramSetIndex}-paramMap-component-${paramMapIndex}`,
             options: paramMap.options,
             paramMap: paramMap,
@@ -90,10 +90,7 @@ const MultiTypeFieldGroup = props => {
         }
       })}
       {!!props.paramSet.paramMaps.length && (
-        <Button
-          variant="danger"
-          onClick={() => props.paramSet.deleteAll({ dispatchAction: props.dispatchParameterAction })}
-        >
+        <Button variant="danger" onClick={() => props.paramSet.deleteAll({ dispatchAction: props.dispatchAction })}>
           -
         </Button>
       )}
@@ -102,7 +99,7 @@ const MultiTypeFieldGroup = props => {
 }
 
 MultiTypeFieldGroup.propTypes = {
-  dispatchParameterAction: PropTypes.func,
+  dispatchAction: PropTypes.func,
   paramSet: PropTypes.object,
   paramSetIndex: PropTypes.number,
 }

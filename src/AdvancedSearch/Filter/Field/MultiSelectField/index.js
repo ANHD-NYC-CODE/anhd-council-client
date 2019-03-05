@@ -9,7 +9,7 @@ const MultiSelectField = props => {
       key={props.key}
       name="value"
       options={props.paramMap.options}
-      onChange={e => props.paramMap.update({ dispatchAction: props.dispatchParameterAction, e: e })}
+      onChange={e => props.paramMap.update({ dispatchAction: props.dispatchAction, e: e })}
       isMulti={true}
       size="multi-sm"
       value={[...props.paramMap.value.split(',').map(v => props.paramMap.options.find(option => option.value === v))]}
@@ -20,7 +20,7 @@ const MultiSelectField = props => {
 MultiSelectField.propTypes = {
   key: PropTypes.string,
   paramMap: PropTypes.object,
-  dispatchParameterAction: PropTypes.func,
+  dispatchAction: PropTypes.func,
 }
 
 export default MultiSelectField

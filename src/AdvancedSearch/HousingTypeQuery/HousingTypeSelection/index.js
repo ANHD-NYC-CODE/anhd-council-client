@@ -15,7 +15,7 @@ const changeHousingType = (dispatch, housingTypeIndex, option) => {
 }
 
 const HousingTypeSelection = props => {
-  const dispatchParameterAction = () => {
+  const dispatchAction = () => {
     props.dispatch(updateHousingType(props.housingTypeIndex, props.housingType))
   }
 
@@ -35,7 +35,7 @@ const HousingTypeSelection = props => {
       {!!Object.keys(props.housingType.paramsObject).length && <Form.Label>Options</Form.Label>}
       {Object.keys(props.housingType.paramsObject).map((paramsSetKey, paramSetIndex) => (
         <HousingTypeParamSet
-          dispatchParameterAction={dispatchParameterAction}
+          dispatchAction={dispatchAction}
           key={`housingtype-paramset-${paramSetIndex}`}
           paramSet={props.housingType.paramsObject[paramsSetKey]}
         />

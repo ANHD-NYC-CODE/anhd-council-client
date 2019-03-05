@@ -2,10 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import uuidv4 from 'uuid/v4'
 import * as d from 'shared/constants/datasets'
-import { addNewCondition, removeCondition } from 'Store/AdvancedSearch/actions'
+import { addNewCondition, updateCondition, removeCondition } from 'Store/AdvancedSearch/actions'
 import { Button } from 'react-bootstrap'
 
-import Filter from 'AdvancedSearch/Filter'
+import FilterComponent from 'AdvancedSearch/Filter'
 
 import './style.scss'
 
@@ -16,10 +16,15 @@ export class Condition extends React.Component {
     this.addCondition = this.addCondition.bind(this)
     this.removeCondition = this.removeCondition.bind(this)
     this.containsCondition = this.containsCondition.bind(this)
+    this.dispatchAction = this.dispatchAction.bind(this)
   }
 
   addCondition() {
     this.props.dispatch(addNewCondition(this.props.conditionKey, uuidv4()))
+  }
+
+  dispatchAction() {
+    this.props.dispatch(updateCondition(this.props.conditionKey, this.props.condition))
   }
 
   removeCondition() {
@@ -44,13 +49,15 @@ export class Condition extends React.Component {
         )
       } else {
         return (
-          <Filter
+          <FilterComponent
+            dispatchAction={this.dispatchAction}
             conditionKey={this.props.conditionKey}
-            dataset={Object.entries(d).find(ds => ds[1] == filter.dataset)[1]}
+            condition={this.props.condition}
+            dataset={filter.dataset}
             dispatch={this.props.dispatch}
             filter={filter}
             filterIndex={filterIndex}
-            filterModel={Object.entries(d).find(ds => ds[1] == filter.dataset)[1].filter}
+            // filterModel={Object.entries(d).find(ds => ds[1] == filter.dataset)[1].filter}
             key={`filter-${this.props.conditionKey}-${filter.dataset.name}`}
           />
         )
@@ -74,7 +81,12 @@ export class Condition extends React.Component {
           return renderFilterOrCondition(filter, conditionKey)
         })}
 
-        <Filter dispatch={this.props.dispatch} conditionKey={this.props.conditionKey} />
+        <FilterComponent
+          dispatchAction={this.dispatchAction}
+          dispatch={this.props.dispatch}
+          conditionKey={this.props.conditionKey}
+          condition={this.props.condition}
+        />
       </div>
     )
   }

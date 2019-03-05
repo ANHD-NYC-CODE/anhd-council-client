@@ -6,7 +6,7 @@ const IntegerField = props => {
     <Form.Control
       key={props.key}
       name="value"
-      onChange={e => props.paramMap.update({ dispatchAction: props.dispatchParameterAction, e: e })}
+      onChange={e => props.paramMap.update({ dispatchAction: props.dispatchAction, e: e })}
       size="sm"
       type={props.type || 'number'}
       value={props.paramMap.value}
@@ -17,7 +17,7 @@ const IntegerField = props => {
 IntegerField.propTypes = {
   key: PropTypes.string,
   paramMap: PropTypes.object,
-  dispatchParameterAction: PropTypes.func,
+  dispatchAction: PropTypes.func,
 }
 
 export default IntegerField

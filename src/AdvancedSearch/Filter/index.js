@@ -1,13 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { convertFieldsToComponents } from 'shared/utilities/componentUtils'
-import * as d from 'shared/constants/datasets'
+import { Filter } from 'shared/classes/Filter'
+import * as d from 'shared/models/datasets'
+
 import { addFilter, removeFilter, updateFilter } from 'Store/AdvancedSearch/actions'
 
 import CustomSelect from 'shared/components/CustomSelect'
 import { Form, Button, Col } from 'react-bootstrap'
 
-class Filter extends React.Component {
+class FilterComponent extends React.Component {
   constructor(props) {
     super(props)
 
@@ -30,8 +31,16 @@ class Filter extends React.Component {
     this.setState({ filter: nextProps.filter, dataset: nextProps.dataset, filterModel: nextProps.filterModel })
   }
 
-  constructFilter(dataset) {
-    this.setState({ dataset: dataset, filterModel: dataset.filter, filter: dataset.defaultFilterValues })
+  constructFilter(datasetConstant) {
+    const newFilter = new Filter({ datasetConstant })
+    this.props.condition.addFilter({ filter: newFilter })
+    Object.keys(newFilter.paramsObject).map(key => {
+      const paramSet = newFilter.paramsObject[key]
+      if (paramSet.props.autoOpen) {
+        paramSet.create()
+      }
+    })
+    this.props.dispatchAction()
   }
 
   removeFilter() {
@@ -83,30 +92,34 @@ class Filter extends React.Component {
   render() {
     const datasetOptions = Object.entries(d).map(ds => {
       return {
-        value: ds[1],
+        value: ds[1].constant,
         label: ds[1].name,
       }
     })
 
     return (
       <div className="filter">
-        <Form className="filter" onSubmit={this.submitFilter}>
-          <Form.Row>
+        <Form Submit={this.submitFilter}>
+          <div>
             {this.state.creatingFilter && (
-              <Col md="3">
+              <div>
                 <CustomSelect options={datasetOptions} onChange={e => this.constructFilter(e.value)} size="sm" />
-              </Col>
+              </div>
             )}
-            {this.props.filter && <Form.Label column>{this.state.dataset.name}</Form.Label>}
-            {this.state.dataset && <input type="hidden" value={this.state.dataset.queryName} />}
-            {this.state.filterModel &&
-              this.state.filterModel.fields.map((field, index) => {
-                return convertFieldsToComponents(field, this.state.filter, this.updateFilter, index, this.state.dataset)
-              })}
+
+            {this.props.filter &&
+              Object.keys(this.props.filter.paramsObject).map((paramsSetKey, paramSetIndex) =>
+                this.props.filter.paramsObject[paramsSetKey].component({
+                  key: 'filter-param-set-component',
+                  dispatchAction: this.props.dispatchAction,
+                  paramSet: this.props.filter.paramsObject[paramsSetKey],
+                  paramSetIndex: paramSetIndex,
+                })
+              )}
             {this.state.filterModel && this.state.creatingFilter && <Button type="submit">Create</Button>}
-          </Form.Row>
+          </div>
         </Form>
-        {!this.state.creatingFilter && !this.state.filter && (
+        {!this.state.creatingFilter && (
           <Button onClick={() => this.setState({ creatingFilter: true })} variant="outline-success">
             Add Filter
           </Button>
@@ -121,11 +134,12 @@ class Filter extends React.Component {
   }
 }
 
-Filter.propTypes = {
+FilterComponent.propTypes = {
   conditionKey: PropTypes.string,
   dataset: PropTypes.object,
+  dispatchAction: PropTypes.func,
   filterIndex: PropTypes.number,
   filterModel: PropTypes.object,
 }
 
-export default Filter
+export default FilterComponent

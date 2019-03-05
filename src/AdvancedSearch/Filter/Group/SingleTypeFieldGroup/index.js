@@ -12,18 +12,18 @@ const renderRangeFields = (props, rangeKey) => {
       // Add the opposite paramMap based on 'rangePosition'
       if (paramMap.rangePosition === 1) {
         props.paramSet.createSpecific({
-          dispatchAction: props.dispatchParameterAction,
+          dispatchAction: props.dispatchAction,
           paramMap: cloneInstance(props.paramSet.defaults.find(mapping => mapping.rangePosition === 2)),
         })
       } else if (paramMap.rangePosition === 2) {
         props.paramSet.createSpecific({
-          dispatchAction: props.dispatchParameterAction,
+          dispatchAction: props.dispatchAction,
           paramMap: cloneInstance(props.paramSet.defaults.find(mapping => mapping.rangePosition === 1)),
         })
       }
-      props.dispatchParameterAction()
+      props.dispatchAction()
     } else {
-      paramMap.update({ dispatchAction: props.dispatchParameterAction, e: e })
+      paramMap.update({ dispatchAction: props.dispatchAction, e: e })
     }
   }
   const paramMapRangeGroup = props.paramSet.paramMaps.filter(paramMap => paramMap.rangeKey === rangeKey)
@@ -31,7 +31,7 @@ const renderRangeFields = (props, rangeKey) => {
     return paramMapRangeGroup[0].component({
       key: `paramMap-rangeGroup-${0}`,
       rangeChange: rangeChange,
-      dispatchParameterAction: props.dispatchParameterAction,
+      dispatchAction: props.dispatchAction,
       options: paramMapRangeGroup[0].options,
       paramMap: paramMapRangeGroup[0],
       paramMapIndex: 0,
@@ -42,7 +42,7 @@ const renderRangeFields = (props, rangeKey) => {
         key={'rangeFieldSet'}
         paramMapRangeGroup={paramMapRangeGroup}
         paramSet={props.paramSet}
-        dispatchParameterAction={props.dispatchParameterAction}
+        dispatchAction={props.dispatchAction}
       />
     )
   } else {
@@ -56,7 +56,7 @@ const SingleTypeFieldGroup = props => {
       {props.paramSet.paramMaps.length ? (
         <Form.Label>{props.paramSet.props.label}</Form.Label>
       ) : (
-        <Button onClick={() => props.paramSet.createOne({ dispatchAction: props.dispatchParameterAction })}>
+        <Button onClick={() => props.paramSet.createOne({ dispatchAction: props.dispatchAction })}>
           {props.paramSet.props.newButtonLabel}
         </Button>
       )}
@@ -70,7 +70,7 @@ const SingleTypeFieldGroup = props => {
           }
         } else {
           return paramMap.component({
-            dispatchParameterAction: props.dispatchParameterAction,
+            dispatchAction: props.dispatchAction,
             key: `paramSet-${props.paramSetIndex}-paramMap-component-${paramMapIndex}`,
             options: paramMap.options,
             paramMap: paramMap,
@@ -82,7 +82,7 @@ const SingleTypeFieldGroup = props => {
       {!!props.paramSet.paramMaps.length && (
         <Button
           variant="danger"
-          onClick={() => props.paramSet.deleteAll({ dispatchAction: props.dispatchParameterAction })}
+          onClick={() => props.paramSet.deleteAll({ dispatchAction: props.dispatchAction })}
         >
           -
         </Button>
@@ -92,7 +92,7 @@ const SingleTypeFieldGroup = props => {
 }
 
 SingleTypeFieldGroup.propTypes = {
-  dispatchParameterAction: PropTypes.func,
+  dispatchAction: PropTypes.func,
   paramSet: PropTypes.object,
   paramSetIndex: PropTypes.number,
 }

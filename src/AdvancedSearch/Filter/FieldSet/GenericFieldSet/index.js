@@ -6,7 +6,7 @@ const GenericFieldSet = props => {
     <div className="generic-fieldset" key={props.key}>
       {props.paramMap.baseComponent({
         key: `paramMap-field-${props.paramMapIndex}`,
-        dispatchParameterAction: props.dispatchParameterAction,
+        dispatchAction: props.dispatchAction,
         paramMap: props.paramMap,
       })}
     </div>
@@ -15,7 +15,7 @@ const GenericFieldSet = props => {
 
 GenericFieldSet.propTypes = {
   key: PropTypes.string,
-  dispatchParameterAction: PropTypes.func,
+  dispatchAction: PropTypes.func,
   paramMap: PropTypes.object,
   paramMapIndex: PropTypes.number,
   options: PropTypes.array,

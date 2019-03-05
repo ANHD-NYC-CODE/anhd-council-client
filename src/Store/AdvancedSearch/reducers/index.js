@@ -1,11 +1,9 @@
 import * as c from '../constants'
+import { Condition } from 'shared/classes/Condition'
 
 export const initialState = {
   conditions: {
-    '0': {
-      type: 'AND',
-      filters: [],
-    },
+    '0': new Condition({ key: '0', type: 'AND', filters: [] }),
   },
   boundaries: [],
   housingTypes: [],
@@ -15,15 +13,24 @@ export const initialState = {
 export const advancedSearchReducer = (state = Object.freeze(initialState), action = { data: [] }) => {
   switch (action.type) {
     case c.ADD_NEW_CONDITION: {
-      const newCondition =
-        state.conditions[action.parentKey].type === 'AND' ? { type: 'OR', filters: [] } : { type: 'AND', filters: [] }
+      const newCondition = new Condition({
+        key: action.conditionKey,
+        type: state.conditions[action.parentKey].type === 'AND' ? 'OR' : 'AND',
+        filters: [],
+      })
 
       const newConditions = { ...state.conditions }
-      newConditions[action.parentKey].filters.push({ conditionGroup: action.conditionKey })
+      newConditions[action.parentKey].addFilter({ filter: { conditionGroup: action.conditionKey } })
 
       return {
         ...state,
         conditions: { ...newConditions, [action.conditionKey]: newCondition },
+      }
+    }
+    case c.UPDATE_CONDITION: {
+      return {
+        ...state,
+        conditions: { ...state.conditions, [action.conditionKey]: action.condition },
       }
     }
     case c.REMOVE_CONDITION: {
@@ -38,6 +45,7 @@ export const advancedSearchReducer = (state = Object.freeze(initialState), actio
         )
       }
 
+      // Return to initial state with condition 0 if none left somehow
       return {
         ...state,
         conditions:

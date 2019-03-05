@@ -58,7 +58,7 @@ export class AdvancedSearch extends React.Component {
 
         {!!this.props.advancedSearch && (
           <div>
-            <AdvancedSearchSentence advancedSearch={this.props.advancedSearch} />
+            {/* <AdvancedSearchSentence advancedSearch={this.props.advancedSearch} /> */}
             <BuildingHistoryTable
               loading={this.props.loading}
               error={this.props.error}

@@ -11,6 +11,14 @@ export const addNewCondition = (parentKey, conditionKey) => {
   }
 }
 
+export const updateCondition = (conditionKey, condition) => {
+  return {
+    type: c.UPDATE_CONDITION,
+    conditionKey,
+    condition,
+  }
+}
+
 export const removeCondition = conditionKey => ({
   type: c.REMOVE_CONDITION,
   conditionKey,

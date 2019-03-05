@@ -5,19 +5,19 @@ import CustomSelect from 'shared/components/CustomSelect'
 const comparisonReconfigure = (props, e) => {
   if (e.value.toUpperCase().match(/(LTE|END)/)) {
     props.paramSet.deleteSpecific({
-      dispatchAction: props.dispatchParameterAction,
-      paramMapIndex: props.paramSet.paramMaps.findIndex(paramMap =>
-        paramMap.comparison.toUpperCase().match(/(GTE|START)/)
+      dispatchAction: props.dispatchAction,
+      paramMapIndex: props.paramSet.paramMaps.findIndex(
+        paramMap => paramMap.rangeKey === e.rangeKey && paramMap.comparison.toUpperCase().match(/(GTE|START)/)
       ),
     })
   } else if (e.value.toUpperCase().match(/(GTE|START)/)) {
     props.paramSet.deleteSpecific({
-      dispatchAction: props.dispatchParameterAction,
-      paramMapIndex: props.paramSet.paramMaps.findIndex(paramMap =>
-        paramMap.comparison.toUpperCase().match(/(LTE|END)/)
+      dispatchAction: props.dispatchAction,
+      paramMapIndex: props.paramSet.paramMaps.findIndex(
+        paramMap => paramMap.rangeKey === e.rangeKey && paramMap.comparison.toUpperCase().match(/(LTE|END)/)
       ),
     })
-    props.dispatchParameterAction()
+    props.dispatchAction()
   } else {
     return
   }
@@ -38,7 +38,7 @@ const RangeFieldSet = props => {
         .map((paramMap, paramMapIndex) => {
           return paramMap.baseComponent({
             key: `rangeGroup-paramMap-${paramMapIndex}`,
-            onChange: e => paramMap.update({ dispatchAction: props.dispatchParameterAction, e }),
+            onChange: e => paramMap.update({ dispatchAction: props.dispatchAction, e }),
             paramMap: paramMap,
             type: paramMap.props.type,
           })
@@ -48,7 +48,7 @@ const RangeFieldSet = props => {
 }
 
 RangeFieldSet.propTypes = {
-  dispatchParameterAction: PropTypes.func,
+  dispatchAction: PropTypes.func,
   paramMapRangeGroup: PropTypes.array,
   paramSet: PropTypes.object,
 }
