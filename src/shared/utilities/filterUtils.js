@@ -28,6 +28,7 @@ export const rentRegulatedProgramOptions = () => {
     'Section 221d(3) and Section 221d(4) Mortgage Insurance',
     'Section 223(f)',
     'Section 8 - RAD',
+    'TPT',
   ]
 
   return rentRegulatedPrograms.map(program => ({ name: 'value', value: program, label: program }))
