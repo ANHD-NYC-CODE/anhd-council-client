@@ -6,7 +6,7 @@ import * as d from 'shared/models/datasets'
 import { addFilter, removeFilter, updateFilter } from 'Store/AdvancedSearch/actions'
 
 import CustomSelect from 'shared/components/CustomSelect'
-import { Form, Button, Col } from 'react-bootstrap'
+import { Form, Button } from 'react-bootstrap'
 
 class FilterComponent extends React.Component {
   constructor(props) {
@@ -15,7 +15,6 @@ class FilterComponent extends React.Component {
     this.initialState = {
       creatingFilter: false,
       dataset: this.props.dataset,
-      filterModel: this.props.filterModel,
       filter: this.props.filter,
     }
 
@@ -23,38 +22,22 @@ class FilterComponent extends React.Component {
 
     this.constructFilter = this.constructFilter.bind(this)
     this.removeFilter = this.removeFilter.bind(this)
-    this.submitFilter = this.submitFilter.bind(this)
     this.updateFilter = this.updateFilter.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ filter: nextProps.filter, dataset: nextProps.dataset, filterModel: nextProps.filterModel })
+    this.setState({ filter: nextProps.filter, dataset: nextProps.dataset })
   }
 
   constructFilter(datasetConstant) {
     const newFilter = new Filter({ datasetConstant })
     this.props.condition.addFilter({ filter: newFilter })
-
+    this.setState({ creatingFilter: false })
     this.props.dispatchAction()
   }
 
   removeFilter() {
     this.props.dispatch(removeFilter(this.props.conditionKey, this.props.filterIndex))
-  }
-
-  submitFilter(e) {
-    e.preventDefault()
-    e.stopPropagation()
-    const formElements = Array.from(e.currentTarget.elements)
-    const filter = {}
-    formElements
-      .filter(el => el.name)
-      .forEach(el => {
-        filter[el.name] = el.value
-      })
-    filter['dataset'] = this.state.dataset
-    this.props.dispatch(addFilter(this.props.conditionKey, filter))
-    this.setState(this.initialState)
   }
 
   updateFilter(e) {
@@ -94,27 +77,27 @@ class FilterComponent extends React.Component {
 
     return (
       <div className="filter">
-        <Form Submit={this.submitFilter}>
-          <div>
-            {this.state.creatingFilter && (
-              <div>
-                <CustomSelect options={datasetOptions} onChange={e => this.constructFilter(e.value)} size="sm" />
-              </div>
-            )}
+        <div>
+          {this.state.creatingFilter && (
+            <div>
+              <CustomSelect options={datasetOptions} onChange={e => this.constructFilter(e.value)} size="sm" />
+              <Button variant="warning" onClick={() => this.setState({ creatingFilter: false })}>
+                Cancel
+              </Button>
+            </div>
+          )}
 
-            {this.props.filter &&
-              Object.keys(this.props.filter.paramsObject).map((paramsSetKey, paramSetIndex) =>
-                this.props.filter.paramsObject[paramsSetKey].component({
-                  key: 'filter-param-set-component',
-                  dispatchAction: this.props.dispatchAction,
-                  paramSet: this.props.filter.paramsObject[paramsSetKey],
-                  paramSetIndex: paramSetIndex,
-                })
-              )}
-            {this.state.filterModel && this.state.creatingFilter && <Button type="submit">Create</Button>}
-          </div>
-        </Form>
-        {!this.state.creatingFilter && (
+          {this.props.filter &&
+            Object.keys(this.props.filter.paramsObject).map((paramsSetKey, paramSetIndex) =>
+              this.props.filter.paramsObject[paramsSetKey].component({
+                key: 'filter-param-set-component',
+                dispatchAction: this.props.dispatchAction,
+                paramSet: this.props.filter.paramsObject[paramsSetKey],
+                paramSetIndex: paramSetIndex,
+              })
+            )}
+        </div>
+        {!this.props.filter && !this.state.creatingFilter && (
           <Button onClick={() => this.setState({ creatingFilter: true })} variant="outline-success">
             Add Filter
           </Button>
@@ -134,7 +117,6 @@ FilterComponent.propTypes = {
   dataset: PropTypes.object,
   dispatchAction: PropTypes.func,
   filterIndex: PropTypes.number,
-  filterModel: PropTypes.object,
 }
 
 export default FilterComponent

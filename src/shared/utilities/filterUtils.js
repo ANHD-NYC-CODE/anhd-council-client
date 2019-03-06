@@ -13,14 +13,12 @@ export const constantToQueryName = constant => {
 }
 
 export const constantToName = (constant, plural = true) => {
-  return constant
+  return `${constant
     .split('_')
     .map(string => {
       return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase()
     })
-    .join(' ') + plural
-    ? 's'
-    : ''
+    .join(' ')}${plural ? 's' : ''}`
 }
 
 export const constructDefaultSchema = ({ constant = '', dateFieldQuery = '', amountFieldQuery = '' } = {}) => {
@@ -31,7 +29,7 @@ export const constructDefaultSchema = ({ constant = '', dateFieldQuery = '', amo
         label: constantToName(constant),
         newButtonLabel: '',
       },
-      autoCreate: true,
+      allowActions: false,
       createType: 'ALL_RANGE_ONE',
       defaults: [
         new ParameterMapping({

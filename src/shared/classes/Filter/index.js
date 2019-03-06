@@ -12,7 +12,7 @@ export class Filter {
     if (!Object.keys(paramsObject).length) {
       Object.keys(this.paramsObject).forEach(key => {
         const paramSet = this.paramsObject[key]
-        if (paramSet.autoCreate) {
+        if (!paramSet.allowActions) {
           paramSet.create()
         }
       })

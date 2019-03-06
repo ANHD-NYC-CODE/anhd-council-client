@@ -103,44 +103,44 @@ describe('convertConditionMappingToQ', () => {
       expect(a.convertConditionMappingToQ(undefined, conditions)).toEqual(result)
     })
   })
+
+  // describe('rentstabilized units dataset', () => {
+  //   const datasets = [d.RENTSTABILIZEDUNITSLOST]
+  //   it('converts the 2 date field object into a field string', () => {
+  //     datasets.forEach(ds => {
+  //       const object = {
+  //         dataset: ds,
+  //         comparison: 'gte',
+  //         value: '10',
+  //         startDate: '2010',
+  //         endDate: '2017',
+  //       }
+  //
+  //       const result = `${ds.queryName}__${ds.dateField('2010')}__gt=0,${ds.queryName}__${ds.dateField('2017')}__gt=0,${
+  //         ds.queryName
+  //       }__${ds.amountField()}__gte=0.1`
+  //       expect(a.convertDatasetFilterToParams(undefined, object)).toEqual(result)
+  //     })
+  //   })
+  //
+  //   it('converts the 1 date value object into a field string with dataset version limit', () => {
+  //     datasets.forEach(ds => {
+  //       const object = {
+  //         dataset: ds,
+  //         comparison: 'gte',
+  //         value: '10',
+  //         startDate: '2010',
+  //       }
+  //
+  //       const result = `${ds.queryName}__${ds.dateField('2010')}__gt=0,${ds.queryName}__${ds.dateField('2017')}__gt=0,${
+  //         ds.queryName
+  //       }__${ds.amountField()}__gte=0.1`
+  //       expect(a.convertDatasetFilterToParams(undefined, object)).toEqual(result)
+  //     })
+  //   })
+  // })
 })
-//
-//   describe('rentstabilized units dataset', () => {
-//     const datasets = [d.RENTSTABILIZEDUNITSLOST]
-//     it('converts the 2 date field object into a field string', () => {
-//       datasets.forEach(ds => {
-//         const object = {
-//           dataset: ds,
-//           comparison: 'gte',
-//           value: '10',
-//           startDate: '2010',
-//           endDate: '2017',
-//         }
-//
-//         const result = `${ds.queryName}__${ds.dateField('2010')}__gt=0,${ds.queryName}__${ds.dateField('2017')}__gt=0,${
-//           ds.queryName
-//         }__${ds.amountField()}__gte=0.1`
-//         expect(a.convertDatasetFilterToParams(undefined, object)).toEqual(result)
-//       })
-//     })
-//
-//     it('converts the 1 date value object into a field string with dataset version limit', () => {
-//       datasets.forEach(ds => {
-//         const object = {
-//           dataset: ds,
-//           comparison: 'gte',
-//           value: '10',
-//           startDate: '2010',
-//         }
-//
-//         const result = `${ds.queryName}__${ds.dateField('2010')}__gt=0,${ds.queryName}__${ds.dateField('2017')}__gt=0,${
-//           ds.queryName
-//         }__${ds.amountField()}__gte=0.1`
-//         expect(a.convertDatasetFilterToParams(undefined, object)).toEqual(result)
-//       })
-//     })
-//   })
-//
+
 //   describe('sold for amount dataset', () => {
 //     const datasets = [d.SOLDFORAMOUNT]
 //     it('converts the object into a field string', () => {

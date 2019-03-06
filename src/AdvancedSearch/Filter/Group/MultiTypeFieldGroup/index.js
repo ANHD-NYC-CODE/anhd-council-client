@@ -62,12 +62,12 @@ const MultiTypeFieldGroup = props => {
 
   return (
     <div className="multitype-fieldgroup" key={props.key}>
-      {props.paramSet.paramMaps.length ? (
-        <Form.Label>{props.paramSet.props.label}</Form.Label>
-      ) : (
+      {props.paramSet.allowActions && !props.paramSet.paramMaps.length ? (
         <Button onClick={() => props.paramSet.create({ dispatchAction: props.dispatchAction })}>
           {props.paramSet.props.newButtonLabel}
         </Button>
+      ) : (
+        <Form.Label>{props.paramSet.props.label}</Form.Label>
       )}
       {props.paramSet.paramMaps.map((paramMap, paramMapIndex) => {
         if (paramMap.rangeKey && props.paramSet.paramMaps.filter(paramMap => paramMap.rangeKey).length === 2) {
@@ -89,7 +89,7 @@ const MultiTypeFieldGroup = props => {
           })
         }
       })}
-      {!!props.paramSet.paramMaps.length && (
+      {!!props.paramSet.allowActions && !!props.paramSet.paramMaps.length && (
         <Button variant="danger" onClick={() => props.paramSet.deleteAll({ dispatchAction: props.dispatchAction })}>
           -
         </Button>
