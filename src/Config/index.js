@@ -15,8 +15,8 @@ class Config extends React.Component {
   constructor(props) {
     super(props)
 
-    this.props.dispatch(getDatasets())
-    this.props.dispatch(getCouncils())
+    // this.props.dispatch(getDatasets())
+    // this.props.dispatch(getCouncils())
     // this.props.dispatch(getCommunities())
 
     this.state = {
@@ -28,13 +28,13 @@ class Config extends React.Component {
 
   componentWillReceiveProps(nextProps, nextState) {
     if (!nextProps.loading && !nextProps.error) {
-      if (!nextProps.datasets) {
-        this.props.dispatch(getDatasets())
-      }
-
-      if (!nextProps.councils) {
-        this.props.dispatch(getCouncils())
-      }
+      // if (!nextProps.datasets) {
+      //   this.props.dispatch(getDatasets())
+      // }
+      //
+      // if (!nextProps.councils) {
+      //   this.props.dispatch(getCouncils())
+      // }
       // if (!nextProps.communities) {
       //   this.props.dispatch(getCommunities())
       // }
@@ -54,11 +54,11 @@ class Config extends React.Component {
   render() {
     return (
       <ConfigContext.Provider value={{ ...this.state, datasets: this.props.datasets }}>
-        {this.props.loading || !(this.props.datasets && this.props.councils) ? (
+        {/* {this.props.loading || !(this.props.datasets && this.props.councils) ? (
           <div>loading!</div>
-        ) : (
-          this.props.children
-        )}
+        ) : ( */}
+        {this.props.children}
+        {/* )} */}
       </ConfigContext.Provider>
     )
   }

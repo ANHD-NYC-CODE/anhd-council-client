@@ -20,19 +20,21 @@ export class Filter {
   }
 
   setDataset(datasetConstant) {
-    const dataset = d[Object.keys(d).find(obj => d[obj].constant === datasetConstant)]
+    const dataset = d[Object.keys(d).find(obj => d[obj].apiMap.constant === datasetConstant)]
+
     if (!dataset)
       throw `Pass either '${Object.keys(d)
-        .map(key => d[key].constant)
+        .map(key => d[key].apiMap.constant)
         .join("' or '")}' as the first argument.`
 
     this._dataset = dataset
-    this._name = this.dataset.name
-    this._queryName = this.dataset.queryName
-    this._constant = this.dataset.constant
+    this._name = this.dataset.apiMap.name
+    this._queryName = this.dataset.apiMap.queryName
+    this._constant = this.dataset.apiMap.constant
+    this._url = this.dataset.apiMap.url
     this._schema = this.dataset.schema
 
-    // Set default keys to ParameterMapSet without any parameter maps
+    // Load the schema if no paramsObject was directly supplied
     if (!Object.keys(this.paramsObject).length) {
       Object.keys(this._schema).map(key => {
         this._paramsObject = {
