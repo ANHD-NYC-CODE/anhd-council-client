@@ -57,8 +57,7 @@ export class Condition extends React.Component {
             dispatch={this.props.dispatch}
             filter={filter}
             filterIndex={filterIndex}
-            // filterModel={Object.entries(d).find(ds => ds[1] == filter.dataset)[1].filter}
-            key={`filter-${this.props.conditionKey}-${filter.dataset.name}`}
+            key={`filter-${this.props.conditionKey}-${filter.dataset.apiMap.name}`}
           />
         )
       }
