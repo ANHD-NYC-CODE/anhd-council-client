@@ -7,15 +7,15 @@ export class ParameterMapSet {
     paramMaps = [],
     defaults = [],
     props = {},
+    allowActions = true,
     createType = 'ALL',
-    autoCreate = false,
   } = {}) {
     this._component = component
     this._paramMaps = paramMaps
     this._defaults = defaults
     this._props = props
+    this._allowActions = allowActions
     this._createType = createType
-    this.autoCreate = autoCreate
   }
 
   get component() {
@@ -45,12 +45,12 @@ export class ParameterMapSet {
     return this._createType
   }
 
-  get autoCreate() {
-    return this._autoCreate
+  get allowActions() {
+    return this._allowActions
   }
 
-  set autoCreate(autoCreate) {
-    this._autoCreate = autoCreate
+  set allowActions(allowActions) {
+    this._allowActions = allowActions
   }
 
   create({ dispatchAction = undefined, paramMap = null, unshift = false } = {}) {

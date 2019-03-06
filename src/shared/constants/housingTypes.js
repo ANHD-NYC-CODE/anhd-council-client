@@ -23,6 +23,7 @@ export const RENTSTABILZED = {
         label: 'Rent Stabilized Units Lost',
         newButtonLabel: 'Add Units Lost +',
       },
+      allowActions: true,
       createType: 'ALL_RANGE_ONE',
       defaults: [
         new ParameterMapping({
@@ -75,6 +76,7 @@ export const RENTREGULATED = {
         label: 'Program Name',
         newButtonLabel: 'Add Program +',
       },
+      allowActions: true,
       createType: 'ONE',
       defaults: [
         new ParameterMapping({
@@ -152,6 +154,7 @@ export const SMALLHOMES = {
         label: 'Number of residential units',
         newButtonLabel: 'Add Residential Units +',
       },
+      allowActions: true,
       createType: 'ONE',
       defaults: [
         new ParameterMapping({

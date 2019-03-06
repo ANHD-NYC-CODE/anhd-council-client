@@ -1,15 +1,4 @@
-import moment from 'moment'
-import { LanguageModule } from 'shared/classes/LanguageModule'
-import { comparisonOptions } from 'shared/utilities/filterUtils'
-import { ParameterMapSet } from 'shared/classes/ParameterMapSet'
-import { ParameterMapping } from 'shared/classes/ParameterMapping'
 import { ApiMap } from 'shared/classes/ApiMap'
-
-import MultiTypeFieldGroup from 'AdvancedSearch/Filter/Group/MultiTypeFieldGroup'
-import ComparisonFieldSet from 'AdvancedSearch/Filter/FieldSet/ComparisonFieldSet'
-
-import DateField from 'AdvancedSearch/Filter/Field/DateField'
-import IntegerField from 'AdvancedSearch/Filter/Field/IntegerField'
 import { constructDefaultSchema } from 'shared/utilities/filterUtils'
 
 export const HPD_VIOLATION = {
