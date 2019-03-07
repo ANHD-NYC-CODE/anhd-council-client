@@ -22,10 +22,18 @@ export class Condition {
   }
 
   addFilter({ filter }) {
-    this._filters = [...this._filters, filter]
+    // Adds condition groups to the end
+    if (filter.conditionGroup) {
+      this._filters = [...this._filters, filter]
+    } else {
+      let conditionGroups = this.filters.filter(f => f.conditionGroup)
+      this.filters = this.filters.filter(f => !f.conditionGroup)
+      this._filters = [...this._filters, filter]
+      this.filters = this.filters.concat(conditionGroups)
+    }
   }
 
-  removeFilter({ filterId }) {
-    this._filters = [...this._filters.slice(0, filterId), this._filters.slice(filterId + 1)]
+  removeFilter({ filterIndex }) {
+    this._filters = this._filters.filter((f, index) => index !== filterIndex)
   }
 }

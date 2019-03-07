@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Filter } from 'shared/classes/Filter'
 import * as d from 'shared/models/datasets'
 
-import { removeFilter, updateFilter } from 'Store/AdvancedSearch/actions'
+import { removeFilter } from 'Store/AdvancedSearch/actions'
 
 import CustomSelect from 'shared/components/CustomSelect'
 import { Button } from 'react-bootstrap'
@@ -22,7 +22,6 @@ class FilterComponent extends React.Component {
 
     this.constructFilter = this.constructFilter.bind(this)
     this.removeFilter = this.removeFilter.bind(this)
-    this.updateFilter = this.updateFilter.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -37,34 +36,8 @@ class FilterComponent extends React.Component {
   }
 
   removeFilter() {
-    this.props.dispatch(removeFilter(this.props.conditionKey, this.props.filterIndex))
-  }
-
-  updateFilter(e) {
-    if (e.preventDefault) {
-      e.preventDefault()
-      e.stopPropagation()
-      e = e.currentTarget
-    }
-
-    // Handle form event object
-    if (e.name && e.value) {
-      e = { [e.name]: e.value }
-    }
-
-    const filter = {
-      ...this.state.filter,
-      ...e,
-    }
-
-    if (this.props.filter) {
-      this.props.dispatch(updateFilter(this.props.conditionKey, this.props.filterIndex, filter))
-    } else {
-      this.setState({
-        ...this.state,
-        filter: filter,
-      })
-    }
+    this.props.condition.removeFilter({ filterIndex: this.props.filterIndex })
+    this.props.dispatchAction()
   }
 
   render() {
