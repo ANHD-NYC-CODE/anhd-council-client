@@ -18,7 +18,7 @@ export class ApiMap {
   }
 
   get name() {
-    return this._name || constantToName(this._constant)
+    return this._name || constantToName({ constant: this._constant })
   }
 
   get queryName() {

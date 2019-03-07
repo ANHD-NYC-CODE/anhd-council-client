@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import uuidv4 from 'uuid/v4'
-import * as d from 'shared/constants/datasets'
 import { addNewCondition, updateCondition, removeCondition } from 'Store/AdvancedSearch/actions'
 import { Button } from 'react-bootstrap'
 
@@ -40,7 +39,7 @@ export class Condition extends React.Component {
       if (filter.conditionGroup) {
         return (
           <Condition
-            key={`condition-${this.props.conditionKey}`}
+            key={`condition-${this.props.conditionKey}-${filterIndex}`}
             conditions={this.props.conditions}
             condition={this.props.conditions[filter.conditionGroup]}
             dispatch={this.props.dispatch}

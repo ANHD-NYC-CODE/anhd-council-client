@@ -1,7 +1,8 @@
 import { ParameterMapSet } from 'shared/classes/ParameterMapSet'
 import { ParameterMapping } from 'shared/classes/ParameterMapping'
 import { Filter } from 'shared/classes/Filter'
-import { constantToQueryName } from 'shared/utilities/filterUtils'
+import { LanguageModule } from 'shared/classes/LanguageModule'
+import { constantToQueryName, constantToName } from 'shared/utilities/filterUtils'
 
 export const createFilterMock = ({
   constant = '',
@@ -9,6 +10,7 @@ export const createFilterMock = ({
   defaultDate = '',
   amountFieldQuery = '',
   defaultAmount = '',
+  capitalizeDepartment = true,
 } = {}) => {
   return new Filter({
     datasetConstant: constant,
@@ -19,6 +21,10 @@ export const createFilterMock = ({
             field: `${constantToQueryName(constant)}${amountFieldQuery ? '__' + amountFieldQuery : ''}`,
             comparison: 'gte',
             value: defaultAmount || '10',
+            languageModule: new LanguageModule({
+              type: 'AMOUNT',
+              noun: constantToName({ constant, capitalizeDepartment }),
+            }),
           }),
           new ParameterMapping({
             field: `${constantToQueryName(constant)}${dateFieldQuery ? '__' + dateFieldQuery : ''}`,
@@ -26,6 +32,10 @@ export const createFilterMock = ({
             value: defaultDate || '2017-01-01',
             rangeKey: 'hpd',
             rangePosition: 1,
+            languageModule: new LanguageModule({
+              type: 'DATE',
+              noun: constantToName({ constant, capitalizeDepartment }),
+            }),
           }),
           new ParameterMapping({
             field: `${constantToQueryName(constant)}${dateFieldQuery ? '__' + dateFieldQuery : ''}`,
@@ -33,6 +43,10 @@ export const createFilterMock = ({
             value: defaultDate || '2018-01-01',
             rangeKey: 'hpd',
             rangePosition: 2,
+            languageModule: new LanguageModule({
+              type: 'DATE',
+              noun: constantToName({ constant, capitalizeDepartment }),
+            }),
           }),
         ],
       }),
@@ -76,5 +90,12 @@ export const filterMocks = {
     dateFieldQuery: 'documentid__docdate',
     amountFieldQuery: 'documentid__count',
     defaultAmount: '5',
+  }),
+  EVICTION: createFilterMock({
+    constant: 'EVICTION',
+    dateFieldQuery: 'executeddate',
+    amountFieldQuery: 'count',
+    defaultAmount: '10',
+    capitalizeDepartment: false,
   }),
 }

@@ -12,7 +12,7 @@ describe('Advanced Search reducer', () => {
 
   describe('ADD_NEW_CONDITION', () => {
     const conditionId = '1'
-    const condition1 = new Condition({ key: '1', type: 'OR', filters: [] })
+    const condition1 = new Condition({ key: conditionId, type: 'OR', filters: [] })
     it('adds to condition array, adds opposite type, adds condition filter at end', () => {
       const state = {
         ...r.initialState,
@@ -23,11 +23,11 @@ describe('Advanced Search reducer', () => {
       const expectedCondition0 = new Condition({
         key: '0',
         type: 'AND',
-        filters: [new ConditionFilter({ conditionGroup: '1' })],
+        filters: [new ConditionFilter({ conditionGroup: conditionId })],
       })
       expect(r.advancedSearchReducer(state, a.addNewCondition('0', conditionId))).toEqual({
         ...r.initialState,
-        conditions: { '0': expectedCondition0, '1': condition1 },
+        conditions: { '0': expectedCondition0, [conditionId]: condition1 },
       })
     })
   })
@@ -53,9 +53,13 @@ describe('Advanced Search reducer', () => {
       const state = {
         ...r.initialState,
         conditions: {
-          '0': new Condition({ key: '0', type: 'AND', filters: [new ConditionFilter({ conditionGroup: '1' })] }),
+          '0': new Condition({
+            key: '0',
+            type: 'AND',
+            filters: [new ConditionFilter({ conditionGroup: conditionId })],
+          }),
 
-          [conditionId]: new Condition({ key: '1', type: 'AND', filters: [] }),
+          [conditionId]: new Condition({ key: conditionId, type: 'AND', filters: [] }),
         },
       }
 

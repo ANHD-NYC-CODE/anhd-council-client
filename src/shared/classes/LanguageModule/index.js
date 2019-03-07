@@ -21,6 +21,6 @@ export class LanguageModule {
   }
 
   getNoun(value) {
-    return value > 1 ? `${this._noun}s` : `${this._noun}`
+    return value > 1 && this._noun.endsWith('s') ? `${this._noun}` : `${this._noun}s`
   }
 }
