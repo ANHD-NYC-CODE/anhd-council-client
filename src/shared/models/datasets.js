@@ -45,3 +45,21 @@ export const DOB_COMPLAINT = {
     amountFieldQuery: 'count',
   }),
 }
+
+export const SALE_AMOUNT = {
+  apiMap: new ApiMap({ constant: 'ACRIS_REAL_LEGAL' }),
+  schema: constructDefaultSchema({
+    constant: 'ACRIS_REAL_LEGAL',
+    dateFieldQuery: 'documentid__docdate',
+    amountFieldQuery: 'documentid__docamount',
+  }),
+}
+
+export const SALE_COUNT = {
+  apiMap: new ApiMap({ constant: 'ACRIS_REAL_LEGAL' }),
+  schema: constructDefaultSchema({
+    constant: 'ACRIS_REAL_LEGAL',
+    dateFieldQuery: 'documentid__docdate',
+    amountFieldQuery: 'documentid__count',
+  }),
+}

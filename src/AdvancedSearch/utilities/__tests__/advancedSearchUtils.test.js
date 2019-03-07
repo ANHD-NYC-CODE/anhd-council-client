@@ -104,78 +104,36 @@ describe('convertConditionMappingToQ', () => {
     })
   })
 
-  // describe('rentstabilized units dataset', () => {
-  //   const datasets = [d.RENTSTABILIZEDUNITSLOST]
-  //   it('converts the 2 date field object into a field string', () => {
-  //     datasets.forEach(ds => {
-  //       const object = {
-  //         dataset: ds,
-  //         comparison: 'gte',
-  //         value: '10',
-  //         startDate: '2010',
-  //         endDate: '2017',
-  //       }
-  //
-  //       const result = `${ds.queryName}__${ds.dateField('2010')}__gt=0,${ds.queryName}__${ds.dateField('2017')}__gt=0,${
-  //         ds.queryName
-  //       }__${ds.amountField()}__gte=0.1`
-  //       expect(a.convertDatasetFilterToParams(undefined, object)).toEqual(result)
-  //     })
-  //   })
-  //
-  //   it('converts the 1 date value object into a field string with dataset version limit', () => {
-  //     datasets.forEach(ds => {
-  //       const object = {
-  //         dataset: ds,
-  //         comparison: 'gte',
-  //         value: '10',
-  //         startDate: '2010',
-  //       }
-  //
-  //       const result = `${ds.queryName}__${ds.dateField('2010')}__gt=0,${ds.queryName}__${ds.dateField('2017')}__gt=0,${
-  //         ds.queryName
-  //       }__${ds.amountField()}__gte=0.1`
-  //       expect(a.convertDatasetFilterToParams(undefined, object)).toEqual(result)
-  //     })
-  //   })
-  // })
+  describe('sold for amount dataset', () => {
+    it('converts the object into a Q', () => {
+      let condition0Filters = [filterMocks['SALE_AMOUNT']]
+
+      const conditions = {
+        '0': new Condition({ type: 'AND', filters: condition0Filters }),
+      }
+
+      const result =
+        '*condition_0=AND filter_0=acrisreallegals__documentid__docamount__gte=10,acrisreallegals__documentid__docdate__gte=2017-01-01,acrisreallegals__documentid__docdate__lte=2018-01-01'
+
+      expect(a.convertConditionMappingToQ(undefined, conditions)).toEqual(result)
+    })
+  })
+
+  describe('sold times dataset', () => {
+    it('converts the object into a field string', () => {
+      let condition0Filters = [filterMocks['SALE_COUNT']]
+
+      const conditions = {
+        '0': new Condition({ type: 'AND', filters: condition0Filters }),
+      }
+
+      const result =
+        '*condition_0=AND filter_0=acrisreallegals__documentid__count__gte=5,acrisreallegals__documentid__docdate__gte=2017-01-01,acrisreallegals__documentid__docdate__lte=2018-01-01'
+      expect(a.convertConditionMappingToQ(undefined, conditions)).toEqual(result)
+    })
+  })
 })
 
-//   describe('sold for amount dataset', () => {
-//     const datasets = [d.SOLDFORAMOUNT]
-//     it('converts the object into a field string', () => {
-//       datasets.forEach(ds => {
-//         const object = {
-//           dataset: ds,
-//           comparison: 'gte',
-//           value: '10',
-//           startDate: '2017-01-01',
-//           endDate: '2018-01-01',
-//         }
-//
-//         const result = `${ds.dateField()}__gte=2017-01-01,${ds.dateField()}__lte=2018-01-01,${ds.amountField()}__gte=10`
-//         expect(a.convertDatasetFilterToParams(undefined, object)).toEqual(result)
-//       })
-//     })
-//   })
-//
-//   describe('sold times dataset', () => {
-//     const datasets = [d.SOLDTIMES]
-//     it('converts the object into a field string', () => {
-//       datasets.forEach(ds => {
-//         const object = {
-//           dataset: ds,
-//           comparison: 'gte',
-//           value: '2',
-//           startDate: '2017-01-01',
-//           endDate: '2018-01-01',
-//         }
-//
-//         const result = `${ds.dateField()}__gte=2017-01-01,${ds.dateField()}__lte=2018-01-01,${ds.amountField()}__gte=2`
-//         expect(a.convertDatasetFilterToParams(undefined, object)).toEqual(result)
-//       })
-//     })
-//   })
 //
 //   describe('foreclosure dataset', () => {
 //     const datasets = [d.FORECLOSURES]

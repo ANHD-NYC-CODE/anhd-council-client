@@ -96,6 +96,7 @@ export const RENTREGULATED = {
         label: 'Expiration Date',
         newButtonLabel: 'Add Expiration +',
       },
+      allowActions: true,
       createType: 'ONE',
       defaults: [
         new ParameterMapping({
