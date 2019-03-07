@@ -101,28 +101,39 @@ export const convertFilterToSentence = filter => {
         .join(' ')
     })
     .join(' ')
-  // if (startDate || endDate) {
-  //   filters.push(constructDateSentence(dataset, startDate, endDate))
-  // }
 }
 
-export const convertConditionGroupToSentence = conditionGroup => {
-  return conditionGroup.filters
-    .filter(filterObject => !filterObject.conditionGroup)
-    .map(filterObject => {
-      return `${convertFilterToSentence(filterObject)}`
+export const convertConditionGroupToSentence = (conditions, condition) => {
+  return condition.filters
+    .map((filter, index) => {
+      if (filter.conditionGroup) {
+        return `${convertConditionGroupToSentence(conditions, conditions[filter.conditionGroup])}${
+          condition.filters[index + 1] ? addNextFilterFill(condition, condition.filters[index + 1]) : ''
+        }`
+      } else {
+        return `${convertFilterToSentence(filter)}${
+          condition.filters[index + 1] ? addNextFilterFill(condition, condition.filters[index + 1]) : ''
+        }`
+      }
     })
-    .join(conditionGroup.type === 'AND' ? ' and ' : ' or ')
+    .join(' ')
 }
 
-const constructConditionFill = conditionGroup => {
-  return conditionGroup.type === 'AND' ? ' and that either have' : ' or that have'
+const addNextFilterFill = (condition, filter) => {
+  return filter.conditionGroup ? constructConditionFill(condition) : constructFilterSentenceFill(condition)
 }
 
-export const convertConditionMappingToSentence = q => {
-  const conditions = Object.keys(q)
-  if (!(conditions.length && q['0'].filters.length)) return '...'
-  return `have ${convertConditionGroupToSentence(q['0'])}.`
+const constructFilterSentenceFill = condition => {
+  return condition.type === 'AND' ? ' and' : ' or'
+}
+
+const constructConditionFill = condition => {
+  return condition.type === 'AND' ? ' and that either have' : ' or that have'
+}
+
+export const convertConditionMappingToSentence = conditions => {
+  if (!(Object.keys(conditions).length && conditions['0'].filters.length)) return '...'
+  return `have ${convertConditionGroupToSentence(conditions, conditions['0'])}.`
 }
 
 export const convertBoundariesToSentence = boundaries => {
@@ -134,7 +145,9 @@ export const convertBoundariesToSentence = boundaries => {
 }
 
 const convertParamMapToSentence = paramMap => {
-  return `${constructComparisonString(paramMap.comparison)} ${paramMap.value}`
+  return `${constructComparisonString(paramMap.comparison)} ${
+    paramMap.value
+  } ${paramMap.languageModule.noun.toLowerCase()}`
 }
 
 const convertParamSetToSentence = paramSet => {

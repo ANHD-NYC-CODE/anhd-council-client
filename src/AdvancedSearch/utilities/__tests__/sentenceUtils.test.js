@@ -4,12 +4,11 @@ import { Boundary } from 'Store/AdvancedSearch/classes/Boundary'
 import { HousingType } from 'Store/AdvancedSearch/classes/HousingType'
 import { ParameterMapSet } from 'shared/classes/ParameterMapSet'
 import { ParameterMapping } from 'shared/classes/ParameterMapping'
-import { LanguageModule } from 'shared/classes/LanguageModule'
-import { Filter } from 'shared/classes/Filter'
 import { Condition } from 'shared/classes/Condition'
 import { ConditionFilter } from 'shared/classes/ConditionFilter'
-
+import { LanguageModule } from 'shared/classes/LanguageModule'
 import { filterMocks } from 'shared/models/__mocks__/filterMocks'
+import moment from 'moment'
 
 describe('convertFilterToSentence', () => {
   describe('from/to', () => {
@@ -246,56 +245,107 @@ describe('convertConditionMappingToSentence', () => {
   //   })
   // })
   //
-  // describe('convertBoundariesToSentence', () => {
-  //   describe('1 boundary', () => {
-  //     it('converts the object into a sentence', () => {
-  //       const boundaries = [new Boundary('COUNCIL', 1)]
-  //
-  //       const result = 'in council district 1'
-  //
-  //       expect(a.convertBoundariesToSentence(boundaries)).toEqual(result)
-  //     })
-  //   })
-  //
-  //   describe('2 boundaries', () => {
-  //     it('converts the object into a sentence', () => {
-  //       const boundaries = [new Boundary('COUNCIL', 1), new Boundary('COMMUNITY', 2)]
-  //
-  //       const result = 'in council district 1 and community board 2'
-  //
-  //       expect(a.convertBoundariesToSentence(boundaries)).toEqual(result)
-  //     })
-  //   })
-  // })
-  //
-  // describe('convertHousingTypesToSentence', () => {
-  //   describe('1 ht', () => {
-  //     it('converts the object into a sentence', () => {
-  //       const housingType1 = new HousingType({
-  //         housingType: 'SMALL_HOMES',
-  //         paramsObject: {
-  //           unitsres: new ParameterMapSet({
-  //             paramMaps: [new ParameterMapping({ field: 'unitsres', comparison: 'lte', value: '4' })],
-  //           }),
-  //         },
-  //       })
-  //       const housingTypes = [housingType1]
-  //
-  //       const result = 'Small Home properties with at most 4 units'
-  //
-  //       expect(a.convertHousingTypesToSentence(housingTypes)).toEqual(result)
-  //     })
-  //   })
-  //
-  //   describe('2 hts', () => {
-  //     it('converts the object into a sentence', () => {
-  //       const housingType1 = new HousingType({ housingType: 'SMALL_HOMES' })
-  //       const housingType2 = new HousingType({ housingType: 'RENT_REGULATED' })
-  //       const housingTypes = [housingType1, housingType2]
-  //
-  //       const result = 'Small Home properties and Rent Regulated properties'
-  //
-  //       expect(a.convertHousingTypesToSentence(housingTypes)).toEqual(result)
-  //     })
-  // })
+  describe('convertBoundariesToSentence', () => {
+    describe('1 boundary', () => {
+      it('converts the object into a sentence', () => {
+        const boundaries = [new Boundary('COUNCIL', 1)]
+
+        const result = 'in council district 1'
+
+        expect(a.convertBoundariesToSentence(boundaries)).toEqual(result)
+      })
+    })
+
+    describe('2 boundaries', () => {
+      it('converts the object into a sentence', () => {
+        const boundaries = [new Boundary('COUNCIL', 1), new Boundary('COMMUNITY', 2)]
+
+        const result = 'in council district 1 and community board 2'
+
+        expect(a.convertBoundariesToSentence(boundaries)).toEqual(result)
+      })
+    })
+  })
+
+  describe('convertHousingTypesToSentence', () => {
+    describe('1 ht', () => {
+      it('converts the object into a sentence', () => {
+        const housingType1 = new HousingType({
+          housingType: 'SMALL_HOMES',
+        })
+        housingType1.paramsObject['unitsres'].create()
+        const housingTypes = [housingType1]
+
+        const result = 'Small Home properties with at most 6 units'
+
+        expect(a.convertHousingTypesToSentence(housingTypes)).toEqual(result)
+      })
+    })
+
+    describe('2 hts', () => {
+      it('converts the object into a sentence', () => {
+        const housingType1 = new HousingType({ housingType: 'SMALL_HOMES' })
+        const housingType2 = new HousingType({ housingType: 'RENT_REGULATED' })
+        const housingTypes = [housingType1, housingType2]
+        const result = 'Small Home properties and Rent Regulated properties'
+
+        expect(a.convertHousingTypesToSentence(housingTypes)).toEqual(result)
+      })
+    })
+
+    describe('Rent Regulated', () => {
+      it('converts the object into a sentence', () => {
+        const housingType1 = new HousingType({
+          housingType: 'RENT_REGULATED',
+        })
+        housingType1.paramsObject['coresubsidyrecord__enddate'].create()
+        const housingTypes = [housingType1]
+
+        const result = `Rent Regulated properties expiring before ${moment(moment.now())
+          .add(1, 'Y')
+          .format('YYYY-MM-DD')}`
+
+        expect(a.convertHousingTypesToSentence(housingTypes)).toEqual(result)
+      })
+
+      it('converts the object into a sentence', () => {
+        const housingType1 = new HousingType({
+          housingType: 'RENT_REGULATED',
+        })
+        housingType1.paramsObject['coresubsidyrecord__enddate'].createAll()
+        // housingType1.paramsObject['coresubsidyrecord__enddate'].create()
+        const housingTypes = [housingType1]
+
+        const result = `Rent Regulated properties expiring between ${moment(moment.now())
+          .subtract(1, 'Y')
+          .format('YYYY-MM-DD')} and ${moment(moment.now())
+          .add(1, 'Y')
+          .format('YYYY-MM-DD')}`
+
+        expect(a.convertHousingTypesToSentence(housingTypes)).toEqual(result)
+      })
+
+      it('converts the object into a sentence', () => {
+        const housingType1 = new HousingType({
+          housingType: 'RENT_REGULATED',
+        })
+        housingType1.paramsObject['coresubsidyrecord__programname'].create()
+        housingType1.paramsObject['coresubsidyrecord__programname'].paramMaps[0].update({
+          e: { name: 'value', value: 'LIHCT,J-51,421-a' },
+        })
+        housingType1.paramsObject['coresubsidyrecord__enddate'].createAll()
+
+        // housingType1.paramsObject['coresubsidyrecord__enddate'].create()
+        const housingTypes = [housingType1]
+
+        const result = `Rent Regulated properties expiring between ${moment(moment.now())
+          .subtract(1, 'Y')
+          .format('YYYY-MM-DD')} and ${moment(moment.now())
+          .add(1, 'Y')
+          .format('YYYY-MM-DD')}`
+
+        expect(a.convertHousingTypesToSentence(housingTypes)).toEqual(result)
+      })
+    })
+  })
 })
