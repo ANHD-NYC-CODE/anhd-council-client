@@ -3,8 +3,7 @@ import * as a from '../../actions'
 import { Boundary } from 'Store/AdvancedSearch/classes/Boundary'
 import { Condition } from 'shared/classes/Condition'
 import { ConditionFilter } from 'shared/classes/ConditionFilter'
-import { Filter } from 'shared/classes/Filter'
-import { filterMocks } from 'shared/models/__mocks__/filterMocks'
+import { HousingType } from 'Store/AdvancedSearch/classes/HousingType'
 
 describe('Advanced Search reducer', () => {
   it('should return the initial state', () => {
@@ -124,7 +123,7 @@ describe('Advanced Search reducer', () => {
         ...r.initialState,
       }
 
-      const housingType = { type: 'sh', params: { type: 'unitsres', comparison: 'lte', value: 4 } }
+      const housingType = new HousingType({ housingType: 'SMALL_HOMES' })
       const expected = [housingType]
 
       expect(r.advancedSearchReducer(state, a.addHousingType(housingType))).toEqual({
@@ -138,10 +137,10 @@ describe('Advanced Search reducer', () => {
     it('updates a housingTypes', () => {
       const state = {
         ...r.initialState,
-        housingTypes: [{ type: 'sh', params: { type: 'unitsres', comparison: 'lte', value: 4 } }],
+        housingTypes: [new HousingType({ housingType: 'SMALL_HOMES' })],
       }
 
-      const updatedObject = { type: 'mr', params: undefined }
+      const updatedObject = new HousingType({ housingType: 'MARKET_RATE' })
       const expected = [updatedObject]
 
       expect(r.advancedSearchReducer(state, a.updateHousingType(0, updatedObject))).toEqual({
@@ -155,7 +154,7 @@ describe('Advanced Search reducer', () => {
     it('removes a housingTypes', () => {
       const state = {
         ...r.initialState,
-        housingTypes: [{ type: 'sh', params: { type: 'unitsres', comparison: 'lte', value: 4 } }],
+        housingTypes: [new HousingType({ housingType: 'SMALL_HOMES' })],
       }
 
       const expected = []
