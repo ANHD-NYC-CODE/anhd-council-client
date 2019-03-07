@@ -12,13 +12,21 @@ export const constantToQueryName = constant => {
   return `${constant.replace(/_/g, '').toLowerCase()}s`
 }
 
-export const constantToName = (constant, plural = true) => {
-  return `${constant
-    .split('_')
-    .map(string => {
+export const constantToName = ({ constant = '', plural = true, capitalizeDepartment = true } = {}) => {
+  if (capitalizeDepartment) {
+    const tokens = constant.split('_').map(string => {
       return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase()
     })
-    .join(' ')}${plural ? 's' : ''}`
+    tokens[0] = tokens[0].toUpperCase()
+    return `${tokens.join(' ')}${plural ? 's' : ''}`
+  } else {
+    return `${constant
+      .split('_')
+      .map(string => {
+        return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase()
+      })
+      .join(' ')}${plural ? 's' : ''}`
+  }
 }
 
 export const constructDefaultSchema = ({
@@ -27,12 +35,13 @@ export const constructDefaultSchema = ({
   defaultDate = '',
   amountFieldQuery = '',
   defaultAmount = '',
+  capitalizeDepartment = true,
 } = {}) => {
   return {
     [constantToQueryName(constant)]: new ParameterMapSet({
       component: MultiTypeFieldGroup,
       props: {
-        label: constantToName(constant),
+        label: constantToName({ constant, capitalizeDepartment }),
         newButtonLabel: '',
       },
       allowActions: false,
@@ -41,7 +50,10 @@ export const constructDefaultSchema = ({
         new ParameterMapping({
           component: ComparisonFieldSet,
           baseComponent: IntegerField,
-          languageModule: new LanguageModule({ type: 'AMOUNT', noun: constantToName(constant, false) }),
+          languageModule: new LanguageModule({
+            type: 'AMOUNT',
+            noun: constantToName({ constant, plural: false, capitalizeDepartment }),
+          }),
           field: `${constantToQueryName(constant)}${amountFieldQuery ? '__' + amountFieldQuery : ''}`,
           comparison: 'gte',
           value: defaultAmount || '5',
@@ -49,7 +61,10 @@ export const constructDefaultSchema = ({
         new ParameterMapping({
           component: ComparisonFieldSet,
           baseComponent: DateField,
-          languageModule: new LanguageModule({ type: 'DATE', noun: constantToName(constant, false) }),
+          languageModule: new LanguageModule({
+            type: 'DATE',
+            noun: constantToName({ constant, plural: false, capitalizeDepartment }),
+          }),
           props: {
             type: 'date',
           },
@@ -72,7 +87,10 @@ export const constructDefaultSchema = ({
         new ParameterMapping({
           component: ComparisonFieldSet,
           baseComponent: DateField,
-          languageModule: new LanguageModule({ type: 'DATE', noun: constantToName(constant, false) }),
+          languageModule: new LanguageModule({
+            type: 'DATE',
+            noun: constantToName({ constant, plural: false, capitalizeDepartment }),
+          }),
           props: {
             type: 'date',
           },

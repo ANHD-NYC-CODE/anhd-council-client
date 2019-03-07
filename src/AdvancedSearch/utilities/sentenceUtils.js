@@ -20,10 +20,6 @@ const singularPlease = string => {
   }
 }
 
-const constructDateSentence = (dataset, startDate = null, endDate = null) => {
-  return dataset.dateSentenceParser(startDate, endDate)
-}
-
 export const constructComparisonString = comparison => {
   switch (comparison) {
     case 'gte':
@@ -126,13 +122,7 @@ const constructConditionFill = conditionGroup => {
 export const convertConditionMappingToSentence = q => {
   const conditions = Object.keys(q)
   if (!(conditions.length && q['0'].filters.length)) return '...'
-  return `have ${conditions
-    .map((key, index) => {
-      return `${convertConditionGroupToSentence(q[key])}${
-        conditions.length > 1 && index !== conditions.length - 1 ? constructConditionFill(q[key]) : ''
-      }`
-    })
-    .join(' ')}.`
+  return `have ${convertConditionGroupToSentence(q['0'])}.`
 }
 
 export const convertBoundariesToSentence = boundaries => {

@@ -3,8 +3,6 @@ import PropTypes from 'prop-types'
 import { Filter } from 'shared/classes/Filter'
 import * as d from 'shared/models/datasets'
 
-import { removeFilter } from 'Store/AdvancedSearch/actions'
-
 import CustomSelect from 'shared/components/CustomSelect'
 import { Button } from 'react-bootstrap'
 
@@ -44,7 +42,7 @@ class FilterComponent extends React.Component {
     const datasetOptions = Object.entries(d).map(ds => {
       return {
         value: ds[1].apiMap.constant,
-        label: ds[1].apiMap.name,
+        label: ds[1].languageModule.noun,
       }
     })
 

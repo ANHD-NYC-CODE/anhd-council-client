@@ -6,157 +6,30 @@ import { ParameterMapSet } from 'shared/classes/ParameterMapSet'
 import { ParameterMapping } from 'shared/classes/ParameterMapping'
 import { LanguageModule } from 'shared/classes/LanguageModule'
 import { Filter } from 'shared/classes/Filter'
+import { Condition } from 'shared/classes/Condition'
+import { ConditionFilter } from 'shared/classes/ConditionFilter'
+
+import { filterMocks } from 'shared/models/__mocks__/filterMocks'
 
 describe('convertFilterToSentence', () => {
   describe('from/to', () => {
     it('converts the object into a field string', () => {
-      const object = new Filter({
-        datasetConstant: 'HPD_VIOLATIONS',
-        paramsObject: {
-          hpdviolations: new ParameterMapSet({
-            paramMaps: [
-              new ParameterMapping({
-                field: 'hpdviolations__count',
-                comparison: 'gte',
-                value: '10',
-                languageModule: new LanguageModule({ type: 'AMOUNT', noun: 'HPD Violation' }),
-              }),
-              new ParameterMapping({
-                field: 'hpdviolations__approveddate',
-                comparison: 'gte',
-                value: '2017-01-01',
-                rangeKey: 'hpd',
-                rangePosition: 1,
-                languageModule: new LanguageModule({ type: 'DATE', noun: 'HPD Violation' }),
-              }),
-              new ParameterMapping({
-                field: 'hpdviolations__approveddate',
-                comparison: 'lte',
-                value: '2018-01-01',
-                rangeKey: 'hpd',
-                rangePosition: 2,
-                languageModule: new LanguageModule({ type: 'DATE', noun: 'HPD Violation' }),
-              }),
-            ],
-          }),
-        },
-      })
+      const object = filterMocks['HPD_VIOLATION']
 
       const result = `at least 10 ${d.HPDVIOLATIONS.name} from 01/01/2017 to 01/01/2018`
       expect(a.convertFilterToSentence(object)).toEqual(result)
     })
   })
-
-  // describe('since', () => {
-  //   it('converts the object into a field string', () => {
-  //     const object = {
-  //       dataset: d.HPDVIOLATIONS,
-  //       comparison: 'gte',
-  //       value: '10',
-  //       startDate: '2017-01-01',
-  //     }
-  //
-  //     const result = `at least 10 ${d.HPDVIOLATIONS.name} since 01/01/2017`
-  //     expect(a.convertFilterToSentence(object)).toEqual(result)
-  //   })
-  // })
-  //
-  // describe('before', () => {
-  //   it('converts the object into a field string', () => {
-  //     const object = {
-  //       dataset: d.HPDVIOLATIONS,
-  //       comparison: 'gte',
-  //       value: '10',
-  //       endDate: '2018-01-01',
-  //     }
-  //
-  //     const result = `at least 10 ${d.HPDVIOLATIONS.name} before 01/01/2018`
-  //     expect(a.convertFilterToSentence(object)).toEqual(result)
-  //   })
-  // })
 })
 
 describe('convertConditionMappingToSentence', () => {
   describe('2 ANDS', () => {
     it('converts the object into a sentence', () => {
-      // let condition0Filters = [d.HPDVIOLATIONS, d.DOBVIOLATIONS].map(ds => {
-      //   return {
-      //     dataset: ds,
-      //     comparison: 'gte',
-      //     value: '10',
-      //     startDate: '2017-01-01',
-      //     endDate: '2018-01-01',
-      //   }
-      // })
-
       const conditions = {
-        '0': {
+        '0': new Condition({
           type: 'AND',
-          filters: [
-            new Filter({
-              datasetConstant: 'HPD_VIOLATIONS',
-              paramsObject: {
-                hpdviolations: new ParameterMapSet({
-                  paramMaps: [
-                    new ParameterMapping({
-                      field: 'hpdviolations__count',
-                      comparison: 'gte',
-                      value: '10',
-                      languageModule: new LanguageModule({ type: 'AMOUNT', noun: 'HPD Violation' }),
-                    }),
-                    new ParameterMapping({
-                      field: 'hpdviolations__approveddate',
-                      comparison: 'gte',
-                      value: '2017-01-01',
-                      rangeKey: 'hpd',
-                      rangePosition: 1,
-                      languageModule: new LanguageModule({ type: 'DATE', noun: 'HPD Violation' }),
-                    }),
-                    new ParameterMapping({
-                      field: 'hpdviolations__approveddate',
-                      comparison: 'gte',
-                      value: '2018-01-01',
-                      rangeKey: 'hpd',
-                      rangePosition: 2,
-                      languageModule: new LanguageModule({ type: 'DATE', noun: 'HPD Violation' }),
-                    }),
-                  ],
-                }),
-              },
-            }),
-            new Filter({
-              datasetConstant: 'DOB_VIOLATIONS',
-              paramsObject: {
-                hpdviolations: new ParameterMapSet({
-                  paramMaps: [
-                    new ParameterMapping({
-                      field: 'dobviolations__count',
-                      comparison: 'gte',
-                      value: '10',
-                      languageModule: new LanguageModule({ type: 'AMOUNT', noun: 'DOB Violation' }),
-                    }),
-                    new ParameterMapping({
-                      field: 'dobviolations__issuedate',
-                      comparison: 'gte',
-                      value: '2017-01-01',
-                      rangeKey: 'hpd',
-                      rangePosition: 1,
-                      languageModule: new LanguageModule({ type: 'DATE', noun: 'DOB Violation' }),
-                    }),
-                    new ParameterMapping({
-                      field: 'dobviolations__issuedate',
-                      comparison: 'gte',
-                      value: '2018-01-01',
-                      rangeKey: 'hpd',
-                      rangePosition: 2,
-                      languageModule: new LanguageModule({ type: 'DATE', noun: 'DOB Violation' }),
-                    }),
-                  ],
-                }),
-              },
-            }),
-          ],
-        },
+          filters: [filterMocks['HPD_VIOLATION'], filterMocks['DOB_VIOLATION']],
+        }),
       }
 
       const result =
@@ -164,260 +37,163 @@ describe('convertConditionMappingToSentence', () => {
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
-  //
-  //   describe('2 ORs', () => {
-  //     it('converts the object into a sentence', () => {
-  //       let condition0Filters = [d.HPDVIOLATIONS, d.DOBVIOLATIONS].map(ds => {
-  //         return {
-  //           dataset: ds,
-  //           comparison: 'gte',
-  //           value: '10',
-  //           startDate: '2017-01-01',
-  //           endDate: '2018-01-01',
-  //         }
-  //       })
-  //
-  //       const conditions = {
-  //         '0': {
-  //           type: 'OR',
-  //           filters: condition0Filters,
-  //         },
-  //       }
-  //
-  //       const result =
-  //         'have at least 10 HPD Violations from 01/01/2017 to 01/01/2018 or at least 10 DOB Violations from 01/01/2017 to 01/01/2018.'
-  //       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
-  //     })
-  //   })
-  //
-  //   describe('1 AND filter(1 1 OR filter(2', () => {
-  //     it('converts the object into a sentence', () => {
-  //       let condition0Filters = [d.HPDVIOLATIONS].map(ds => {
-  //         return {
-  //           dataset: ds,
-  //           comparison: 'gte',
-  //           value: '10',
-  //           startDate: '2017-01-01',
-  //           endDate: '2018-01-01',
-  //         }
-  //       })
-  //       condition0Filters.unshift({ conditionGroup: 1 })
-  //
-  //       let condition1Filters = [d.DOBVIOLATIONS, d.ECBVIOLATIONS].map(ds => {
-  //         return {
-  //           dataset: ds,
-  //           comparison: 'gte',
-  //           value: '10',
-  //           startDate: '2017-01-01',
-  //           endDate: '2018-01-01',
-  //         }
-  //       })
-  //
-  //       const conditions = {
-  //         '0': {
-  //           type: 'AND',
-  //           filters: condition0Filters,
-  //         },
-  //         '1': {
-  //           type: 'OR',
-  //           filters: condition1Filters,
-  //         },
-  //       }
-  //
-  //       const result =
-  //         'have at least 10 HPD Violations from 01/01/2017 to 01/01/2018 and that either have at least 10 DOB Violations from 01/01/2017 to 01/01/2018 or at least 10 ECB Violations from 01/01/2017 to 01/01/2018.'
-  //       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
-  //     })
-  //   })
-  //
-  //   describe('1 OR filter(1 1 AND filter(2', () => {
-  //     it('converts the object into a sentence', () => {
-  //       let condition0Filters = [d.HPDVIOLATIONS].map(ds => {
-  //         return {
-  //           dataset: ds,
-  //           comparison: 'gte',
-  //           value: '10',
-  //           startDate: '2017-01-01',
-  //           endDate: '2018-01-01',
-  //         }
-  //       })
-  //       condition0Filters.unshift({ conditionGroup: 1 })
-  //
-  //       let condition1Filters = [d.DOBVIOLATIONS, d.ECBVIOLATIONS].map(ds => {
-  //         return {
-  //           dataset: ds,
-  //           comparison: 'gte',
-  //           value: '10',
-  //           startDate: '2017-01-01',
-  //           endDate: '2018-01-01',
-  //         }
-  //       })
-  //
-  //       const conditions = {
-  //         '0': {
-  //           type: 'OR',
-  //           filters: condition0Filters,
-  //         },
-  //         '1': {
-  //           type: 'AND',
-  //           filters: condition1Filters,
-  //         },
-  //       }
-  //
-  //       const result =
-  //         'have at least 10 HPD Violations from 01/01/2017 to 01/01/2018 or that have at least 10 DOB Violations from 01/01/2017 to 01/01/2018 and at least 10 ECB Violations from 01/01/2017 to 01/01/2018.'
-  //       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
-  //     })
-  //   })
-  //
-  //   describe('3 Groupings', () => {
-  //     it('converts the object into a sentence', () => {
-  //       let condition0Filters = [d.HPDVIOLATIONS].map(ds => {
-  //         return {
-  //           dataset: ds,
-  //           comparison: 'gte',
-  //           value: '10',
-  //           startDate: '2017-01-01',
-  //           endDate: '2018-01-01',
-  //         }
-  //       })
-  //       condition0Filters.unshift({ conditionGroup: 1 })
-  //
-  //       let condition1Filters = [d.DOBVIOLATIONS, d.ECBVIOLATIONS].map(ds => {
-  //         return {
-  //           dataset: ds,
-  //           comparison: 'gte',
-  //           value: '10',
-  //           startDate: '2017-01-01',
-  //           endDate: '2018-01-01',
-  //         }
-  //       })
-  //       condition1Filters.unshift({ conditionGroup: 2 })
-  //
-  //       let condition2Filters = [d.HPDCOMPLAINTS, d.DOBCOMPLAINTS].map(ds => {
-  //         return {
-  //           dataset: ds,
-  //           comparison: 'gte',
-  //           value: '10',
-  //           startDate: '2017-01-01',
-  //           endDate: '2018-01-01',
-  //         }
-  //       })
-  //
-  //       const conditions = {
-  //         '0': {
-  //           type: 'AND',
-  //           filters: condition0Filters,
-  //         },
-  //         '1': {
-  //           type: 'OR',
-  //           filters: condition1Filters,
-  //         },
-  //         '2': {
-  //           type: 'AND',
-  //           filters: condition2Filters,
-  //         },
-  //       }
-  //
-  //       const result =
-  //         'have at least 10 HPD Violations from 01/01/2017 to 01/01/2018 and that either have at least 10 DOB Violations from 01/01/2017 to 01/01/2018 or at least 10 ECB Violations from 01/01/2017 to 01/01/2018 or that have at least 10 HPD Complaints from 01/01/2017 to 01/01/2018 and at least 10 DOB Complaints from 01/01/2017 to 01/01/2018.'
-  //       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
-  //     })
-  //   })
-  //
-  //   describe('4 Groupings', () => {
-  //     it('converts the object into a sentence', () => {
-  //       let condition0Filters = [d.HPDVIOLATIONS].map(ds => {
-  //         return {
-  //           dataset: ds,
-  //           comparison: 'gte',
-  //           value: '10',
-  //           startDate: '2017-01-01',
-  //           endDate: '2018-01-01',
-  //         }
-  //       })
-  //       condition0Filters.unshift({ conditionGroup: '1' })
-  //
-  //       let condition1Filters = [d.DOBVIOLATIONS, d.ECBVIOLATIONS].map(ds => {
-  //         return {
-  //           dataset: ds,
-  //           comparison: 'gte',
-  //           value: '10',
-  //           startDate: '2017-01-01',
-  //           endDate: '2018-01-01',
-  //         }
-  //       })
-  //       condition1Filters.unshift({ conditionGroup: '2' })
-  //
-  //       let condition2Filters = [d.HPDCOMPLAINTS, d.DOBCOMPLAINTS].map(ds => {
-  //         return {
-  //           dataset: ds,
-  //           comparison: 'gte',
-  //           value: '10',
-  //           startDate: '2017-01-01',
-  //           endDate: '2018-01-01',
-  //         }
-  //       })
-  //       condition2Filters.unshift({ conditionGroup: '3' })
-  //
-  //       let condition3Filters = [d.EVICTIONS, d.HPDVIOLATIONS].map(ds => {
-  //         return {
-  //           dataset: ds,
-  //           comparison: 'gte',
-  //           value: '10',
-  //           startDate: '2017-01-01',
-  //           endDate: '2018-01-01',
-  //         }
-  //       })
-  //
-  //       const conditions = {
-  //         '0': {
-  //           type: 'AND',
-  //           filters: condition0Filters,
-  //         },
-  //         '1': {
-  //           type: 'OR',
-  //           filters: condition1Filters,
-  //         },
-  //         '2': {
-  //           type: 'AND',
-  //           filters: condition2Filters,
-  //         },
-  //         '3': {
-  //           type: 'OR',
-  //           filters: condition3Filters,
-  //         },
-  //       }
-  //
-  //       const result =
-  //         'have at least 10 HPD Violations from 01/01/2017 to 01/01/2018 and that either have at least 10 DOB Violations from 01/01/2017 to 01/01/2018 or at least 10 ECB Violations from 01/01/2017 to 01/01/2018 or that have at least 10 HPD Complaints from 01/01/2017 to 01/01/2018 and at least 10 DOB Complaints from 01/01/2017 to 01/01/2018 and that either have at least 10 Evictions from 01/01/2017 to 01/01/2018 or at least 10 HPD Violations from 01/01/2017 to 01/01/2018.'
-  //       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
-  //     })
-  //   })
-  //
-  //   describe('Rent Stabilized Units Lost', () => {
-  //     it('converts the object into a sentence', () => {
-  //       let condition0Filters = [d.RENTSTABILIZEDUNITSLOST].map(ds => {
-  //         return {
-  //           dataset: ds,
-  //           comparison: 'gte',
-  //           value: '10',
-  //           startDate: '2017',
-  //           endDate: '2018',
-  //         }
-  //       })
-  //
-  //       const conditions = {
-  //         '0': {
-  //           type: 'AND',
-  //           filters: condition0Filters,
-  //         },
-  //       }
-  //
-  //       const result = 'have lost at least 10% of their Rent Stabilized Units from 2017 to 2018.'
-  //       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
-  //     })
-  //   })
+
+  describe('2 ORs', () => {
+    it('converts the object into a sentence', () => {
+      const conditions = {
+        '0': new Condition({
+          type: 'OR',
+          filters: [filterMocks['HPD_VIOLATION'], filterMocks['DOB_VIOLATION']],
+        }),
+      }
+
+      const result =
+        'have at least 10 HPD Violations from 01/01/2017 to 01/01/2018 or at least 10 DOB Violations from 01/01/2017 to 01/01/2018.'
+      expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
+    })
+  })
+
+  describe('1 AND filter(1 1 OR filter(2', () => {
+    it('converts the object into a sentence', () => {
+      const conditions = {
+        '0': new Condition({
+          key: '0',
+          type: 'AND',
+          filters: [filterMocks['HPD_VIOLATION'], new ConditionFilter({ conditionGroup: '1' })],
+        }),
+        '1': new Condition({
+          key: '1',
+          type: 'OR',
+          filters: [filterMocks['DOB_VIOLATION'], filterMocks['ECB_VIOLATION']],
+        }),
+      }
+
+      const result =
+        'have at least 10 HPD Violations from 01/01/2017 to 01/01/2018 and that either have at least 10 DOB Violations from 01/01/2017 to 01/01/2018 or at least 10 ECB Violations from 01/01/2017 to 01/01/2018.'
+      expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
+    })
+  })
+
+  describe('1 OR filter(1 1 AND filter(2', () => {
+    it('converts the object into a sentence', () => {
+      const conditions = {
+        '0': new Condition({
+          key: '0',
+          type: 'OR',
+          filters: [filterMocks['HPD_VIOLATION'], new ConditionFilter({ conditionGroup: '1' })],
+        }),
+        '1': new Condition({
+          key: '1',
+          type: 'AND',
+          filters: [filterMocks['DOB_VIOLATION'], filterMocks['ECB_VIOLATION']],
+        }),
+      }
+
+      const result =
+        'have at least 10 HPD Violations from 01/01/2017 to 01/01/2018 or that have at least 10 DOB Violations from 01/01/2017 to 01/01/2018 and at least 10 ECB Violations from 01/01/2017 to 01/01/2018.'
+      expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
+    })
+  })
+
+  describe('3 Groupings', () => {
+    it('converts the object into a sentence', () => {
+      const conditions = {
+        '0': new Condition({
+          key: '0',
+          type: 'AND',
+          filters: [filterMocks['HPD_VIOLATION'], new ConditionFilter({ conditionGroup: '1' })],
+        }),
+        '2': new Condition({
+          key: '2',
+          type: 'AND',
+          filters: [filterMocks['HPD_COMPLAINT'], filterMocks['DOB_COMPLAINT']],
+        }),
+        '1': new Condition({
+          key: '1',
+          type: 'OR',
+          filters: [
+            filterMocks['DOB_VIOLATION'],
+            filterMocks['ECB_VIOLATION'],
+            new ConditionFilter({ conditionGroup: '2' }),
+          ],
+        }),
+      }
+
+      const result =
+        'have at least 10 HPD Violations from 01/01/2017 to 01/01/2018 and that either have at least 10 DOB Violations from 01/01/2017 to 01/01/2018 or at least 10 ECB Violations from 01/01/2017 to 01/01/2018 or that have at least 10 HPD Complaints from 01/01/2017 to 01/01/2018 and at least 10 DOB Complaints from 01/01/2017 to 01/01/2018.'
+      expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
+    })
+  })
+
+  describe('4 Groupings', () => {
+    it('converts the object into a sentence', () => {
+      const conditions = {
+        '0': new Condition({
+          key: '0',
+          type: 'AND',
+          filters: [filterMocks['HPD_VIOLATION'], new ConditionFilter({ conditionGroup: '1' })],
+        }),
+        '3': new Condition({
+          key: '1',
+          type: 'OR',
+          filters: [filterMocks['EVICTION'], filterMocks['HPD_VIOLATION']],
+        }),
+        '2': new Condition({
+          key: '2',
+          type: 'AND',
+          filters: [
+            filterMocks['HPD_COMPLAINT'],
+            filterMocks['DOB_COMPLAINT'],
+            new ConditionFilter({ conditionGroup: '3' }),
+          ],
+        }),
+        '1': new Condition({
+          key: '1',
+          type: 'OR',
+          filters: [
+            filterMocks['DOB_VIOLATION'],
+            filterMocks['ECB_VIOLATION'],
+            new ConditionFilter({ conditionGroup: '2' }),
+          ],
+        }),
+      }
+
+      const result =
+        'have at least 10 HPD Violations from 01/01/2017 to 01/01/2018 and that either have at least 10 DOB Violations from 01/01/2017 to 01/01/2018 or at least 10 ECB Violations from 01/01/2017 to 01/01/2018 or that have at least 10 HPD Complaints from 01/01/2017 to 01/01/2018 and at least 10 DOB Complaints from 01/01/2017 to 01/01/2018 and that either have at least 10 Evictions from 01/01/2017 to 01/01/2018 or at least 10 HPD Violations from 01/01/2017 to 01/01/2018.'
+      expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
+    })
+  })
+
+  describe('2 Groupings on 1 Condition', () => {
+    it('converts the object into a sentence', () => {
+      const conditions = {
+        '0': new Condition({
+          key: '0',
+          type: 'AND',
+          filters: [
+            filterMocks['HPD_VIOLATION'],
+            new ConditionFilter({ conditionGroup: '1' }),
+            new ConditionFilter({ conditionGroup: '2' }),
+          ],
+        }),
+        '2': new Condition({
+          key: '2',
+          type: 'OR',
+          filters: [filterMocks['HPD_COMPLAINT'], filterMocks['DOB_COMPLAINT']],
+        }),
+        '1': new Condition({
+          key: '1',
+          type: 'OR',
+          filters: [filterMocks['DOB_VIOLATION'], filterMocks['ECB_VIOLATION']],
+        }),
+      }
+
+      const result =
+        'have at least 10 HPD Violations from 01/01/2017 to 01/01/2018 and that either have at least 10 DOB Violations from 01/01/2017 to 01/01/2018 or at least 10 ECB Violations from 01/01/2017 to 01/01/2018 and that either have at least 10 HPD Complaints from 01/01/2017 to 01/01/2018 or at least 10 DOB Complaints from 01/01/2017 to 01/01/2018.'
+      expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
+    })
+  })
+
   //
   //   describe('Sold For $', () => {
   //     it('converts the object into a sentence', () => {
