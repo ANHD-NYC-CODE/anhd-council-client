@@ -79,22 +79,24 @@ export const EVICTION = {
   }),
 }
 
-export const SALE_AMOUNT = {
+export const PROPERTY_SALE_BY_AMOUNT = {
   apiMap: new ApiMap({ constant: 'ACRIS_REAL_LEGAL' }),
   schema: constructDefaultSchema({
-    constant: 'ACRIS_REAL_LEGAL',
+    constant: 'PROPERTY_SALE_BY_AMOUNT',
     dateFieldQuery: 'documentid__docdate',
     amountFieldQuery: 'documentid__docamount',
   }),
   languageModule: new LanguageModule({
-    noun: constantToName({ constant: 'PROPERTY_SALE_BY_AMOUNT', capitalizeDepartment: false, plural: false }),
+    noun: '',
+    valuePrefix: '$',
+    propertyAdjective: 'sold for',
   }),
 }
 
-export const SALE_COUNT = {
+export const PROPERTY_SALE_BY_COUNT = {
   apiMap: new ApiMap({ constant: 'ACRIS_REAL_LEGAL' }),
   schema: constructDefaultSchema({
-    constant: 'ACRIS_REAL_LEGAL',
+    constant: 'PROPERTY_SALE_BY_COUNT',
     dateFieldQuery: 'documentid__docdate',
     amountFieldQuery: 'documentid__count',
   }),

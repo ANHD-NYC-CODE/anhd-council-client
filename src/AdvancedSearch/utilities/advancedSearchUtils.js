@@ -1,11 +1,3 @@
-const constructAmountFilter = (dataset, comparison, value) => {
-  return dataset.amountUrlParser(dataset, comparison, value)
-}
-
-const constructDateFilter = (datasetsConfig, dataset, startDate = null, endDate = null) => {
-  return dataset.dateUrlParser(datasetsConfig, dataset, startDate, endDate)
-}
-
 export const convertDatasetFilterToParams = (datasetsConfig, filter) => {
   // converts an objects like:
   // const object = { dataset: ds, comparison: 'gte', value: '10', startDate '2017-01-01', endDate: '2018-01-01' }
@@ -15,7 +7,9 @@ export const convertDatasetFilterToParams = (datasetsConfig, filter) => {
     .map(key => {
       return filter.paramsObject[key].paramMaps
         .map(paramMap => {
-          return `${paramMap.field}__${paramMap.comparison}=${paramMap.value}`
+          return `${paramMap.field}__${paramMap.comparison}=${
+            paramMap.type === 'PERCENT' ? paramMap.value / 100 : paramMap.value
+          }`
         })
         .join(',')
     })

@@ -13,6 +13,9 @@ const IntegerField = props => {
         type={props.type || 'number'}
         value={props.paramMap.value}
       />
+      <InputGroup.Append>
+        <InputGroup.Text>%</InputGroup.Text>
+      </InputGroup.Append>
     </InputGroup>
   )
 }

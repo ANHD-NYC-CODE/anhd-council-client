@@ -6,11 +6,16 @@ import { constantToQueryName, constantToName } from 'shared/utilities/filterUtil
 
 export const createFilterMock = ({
   constant = '',
+  languageConstant = '',
   dateFieldQuery = '',
   defaultDate = '',
   amountFieldQuery = '',
   defaultAmount = '',
   capitalizeDepartment = true,
+  amountPropertyAdjective = undefined,
+  datePropertyAdjective = undefined,
+  amountValuePrefix = undefined,
+  noun = undefined,
 } = {}) => {
   return new Filter({
     datasetConstant: constant,
@@ -23,7 +28,15 @@ export const createFilterMock = ({
             value: defaultAmount || '10',
             languageModule: new LanguageModule({
               type: 'AMOUNT',
-              noun: constantToName({ constant, capitalizeDepartment }),
+              noun:
+                noun !== undefined
+                  ? noun
+                  : constantToName({
+                      constant: languageConstant ? languageConstant : constant,
+                      capitalizeDepartment,
+                    }),
+              propertyAdjective: amountPropertyAdjective,
+              valuePrefix: amountValuePrefix,
             }),
           }),
           new ParameterMapping({
@@ -34,7 +47,11 @@ export const createFilterMock = ({
             rangePosition: 1,
             languageModule: new LanguageModule({
               type: 'DATE',
-              noun: constantToName({ constant, capitalizeDepartment }),
+              noun:
+                noun !== undefined
+                  ? noun
+                  : constantToName({ constant: languageConstant ? languageConstant : constant, capitalizeDepartment }),
+              propertyAdjective: datePropertyAdjective,
             }),
           }),
           new ParameterMapping({
@@ -45,7 +62,11 @@ export const createFilterMock = ({
             rangePosition: 2,
             languageModule: new LanguageModule({
               type: 'DATE',
-              noun: constantToName({ constant, capitalizeDepartment }),
+              noun:
+                noun !== undefined
+                  ? noun
+                  : constantToName({ constant: languageConstant ? languageConstant : constant, capitalizeDepartment }),
+              propertyAdjective: datePropertyAdjective,
             }),
           }),
         ],
@@ -80,15 +101,22 @@ export const filterMocks = {
     dateFieldQuery: 'dateentered',
     amountFieldQuery: 'count',
   }),
-  SALE_AMOUNT: createFilterMock({
+  PROPERTY_SALE_BY_AMOUNT: createFilterMock({
     constant: 'ACRIS_REAL_LEGAL',
+    languageConstant: 'PROPERTY_SALE_BY_AMOUNT',
+    capitalizeDepartment: false,
     dateFieldQuery: 'documentid__docdate',
     amountFieldQuery: 'documentid__docamount',
+    amountPropertyAdjective: 'sold for',
+    amountValuePrefix: '$',
+    noun: '',
   }),
-  SALE_COUNT: createFilterMock({
+  PROPERTY_SALE_BY_COUNT: createFilterMock({
     constant: 'ACRIS_REAL_LEGAL',
+    languageConstant: 'PROPERTY_SALE_BY_COUNT',
     dateFieldQuery: 'documentid__docdate',
     amountFieldQuery: 'documentid__count',
+    capitalizeDepartment: false,
     defaultAmount: '5',
   }),
   EVICTION: createFilterMock({

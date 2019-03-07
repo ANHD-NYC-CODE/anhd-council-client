@@ -62,7 +62,8 @@ export class HousingType {
             {},
             ...this.paramsObject[key].paramMaps.map(paramMap => {
               return {
-                [`${paramMap.field}${paramMap.comparison ? '__' + paramMap.comparison : ''}`]: paramMap.value,
+                [`${paramMap.field}${paramMap.comparison ? '__' + paramMap.comparison : ''}`]:
+                  paramMap.type === 'PERCENT' ? paramMap.value / 100 : paramMap.value,
               }
             })
           ),
