@@ -11,6 +11,7 @@ export class ParameterMapping {
     field = '',
     comparison = '',
     value = '',
+    type = '',
     rangeKey = undefined,
     rangePosition = undefined,
   } = {}) {
@@ -22,6 +23,7 @@ export class ParameterMapping {
     this._field = field
     this._comparison = comparison
     this._value = value
+    this._type = type
     this._defaultOptions = defaultOptions
     this._rangeKey = rangeKey
     this._rangePosition = rangePosition
@@ -45,6 +47,14 @@ export class ParameterMapping {
 
   set value(value) {
     this._value = value
+  }
+
+  get type() {
+    return this._type
+  }
+
+  set type(type) {
+    this._type = type
   }
 
   get component() {

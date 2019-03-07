@@ -10,6 +10,8 @@ import ComparisonFieldSet from 'AdvancedSearch/Filter/FieldSet/ComparisonFieldSe
 
 import DateField from 'AdvancedSearch/Filter/Field/DateField'
 import IntegerField from 'AdvancedSearch/Filter/Field/IntegerField'
+import PercentField from 'AdvancedSearch/Filter/Field/PercentField'
+
 import MultiSelectField from 'AdvancedSearch/Filter/Field/MultiSelectField'
 import { LanguageModule } from 'shared/classes/LanguageModule'
 
@@ -29,11 +31,17 @@ export const RENTSTABILZED = {
       defaults: [
         new ParameterMapping({
           component: ComparisonFieldSet,
-          baseComponent: IntegerField,
-          languageModule: new LanguageModule({ type: 'AMOUNT', noun: 'units' }),
+          baseComponent: PercentField,
+          languageModule: new LanguageModule({
+            type: 'AMOUNT',
+            noun: 'rent stabilized unit',
+            propertyAdjective: 'that lost',
+            valueSuffix: '%',
+          }),
           field: 'rsunitslost',
           comparison: 'gte',
           value: '25',
+          type: 'PERCENT',
         }),
         new ParameterMapping({
           component: ComparisonFieldSet,
@@ -41,7 +49,7 @@ export const RENTSTABILZED = {
           props: {
             type: 'number',
           },
-          languageModule: new LanguageModule({ type: 'DATE', noun: 'units' }),
+          languageModule: new LanguageModule({ type: 'YEAR', noun: '' }),
           rangeKey: 'rsUnitsRange',
           rangePosition: 1,
           defaultOptions: comparisonOptions(['start', 'between'], ['Since', 'Between'], 'DATE', 'rsUnitsRange'),
@@ -52,7 +60,7 @@ export const RENTSTABILZED = {
         new ParameterMapping({
           component: ComparisonFieldSet,
           baseComponent: DateField,
-          languageModule: new LanguageModule({ type: 'DATE', noun: 'units' }),
+          languageModule: new LanguageModule({ type: 'YEAR', noun: 'units' }),
           props: {
             type: 'number',
           },
@@ -87,7 +95,7 @@ export const RENTREGULATED = {
           defaultOptions: rentRegulatedProgramOptions(),
           component: GenericFieldSet,
           baseComponent: MultiSelectField,
-          languageModule: new LanguageModule({ type: 'TEXT', noun: '' }),
+          languageModule: new LanguageModule({ type: 'TEXT', noun: '', propertyAdjective: 'with' }),
           field: 'coresubsidyrecord__programname',
           comparison: 'any',
           value: '',
@@ -170,7 +178,7 @@ export const SMALLHOMES = {
           field: 'unitsres',
           comparison: 'lte',
           value: '6',
-          languageModule: new LanguageModule({ noun: 'units' }),
+          languageModule: new LanguageModule({ noun: 'units', propertyAdjective: 'with' }),
         }),
       ],
     }),

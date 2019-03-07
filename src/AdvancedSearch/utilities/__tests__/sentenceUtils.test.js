@@ -2,11 +2,8 @@ import * as a from 'AdvancedSearch/utilities/sentenceUtils'
 import * as d from 'shared/constants/datasets'
 import { Boundary } from 'Store/AdvancedSearch/classes/Boundary'
 import { HousingType } from 'Store/AdvancedSearch/classes/HousingType'
-import { ParameterMapSet } from 'shared/classes/ParameterMapSet'
-import { ParameterMapping } from 'shared/classes/ParameterMapping'
 import { Condition } from 'shared/classes/Condition'
 import { ConditionFilter } from 'shared/classes/ConditionFilter'
-import { LanguageModule } from 'shared/classes/LanguageModule'
 import { filterMocks } from 'shared/models/__mocks__/filterMocks'
 import moment from 'moment'
 
@@ -15,7 +12,7 @@ describe('convertFilterToSentence', () => {
     it('converts the object into a field string', () => {
       const object = filterMocks['HPD_VIOLATION']
 
-      const result = `at least 10 ${d.HPDVIOLATIONS.name} between 01/01/2017 and 01/01/2018`
+      const result = ` at least 10 ${d.HPDVIOLATIONS.name} between 01/01/2017 and 01/01/2018`
       expect(a.convertFilterToSentence(object)).toEqual(result)
     })
   })
@@ -193,31 +190,20 @@ describe('convertConditionMappingToSentence', () => {
     })
   })
 
-  //
-  //   describe('Sold For $', () => {
-  //     it('converts the object into a sentence', () => {
-  //       let condition0Filters = [d.SOLDFORAMOUNT, d.HPDVIOLATIONS].map(ds => {
-  //         return {
-  //           dataset: ds,
-  //           comparison: 'gte',
-  //           value: '10',
-  //           startDate: '2017-01-01',
-  //           endDate: '2018-01-01',
-  //         }
-  //       })
-  //
-  //       const conditions = {
-  //         '0': {
-  //           type: 'AND',
-  //           filters: condition0Filters,
-  //         },
-  //       }
-  //
-  //       const result =
-  //         'have sold for at least $10 between 01/01/2017 and 01/01/2018 and at least 10 HPD Violations between 01/01/2017 and 01/01/2018.'
-  //       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
-  //     })
-  //   })
+  describe('Sold For $', () => {
+    it('converts the object into a sentence', () => {
+      const conditions = {
+        '0': new Condition({
+          key: '0',
+          type: 'AND',
+          filters: [filterMocks['PROPERTY_SALE_BY_AMOUNT']],
+        }),
+      }
+
+      const result = 'have sold for at least $10 between 01/01/2017 and 01/01/2018.'
+      expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
+    })
+  })
   //
   //   describe('Sold Times', () => {
   //     it('converts the object into a sentence', () => {
@@ -346,6 +332,20 @@ describe('convertConditionMappingToSentence', () => {
 
         expect(a.convertHousingTypesToSentence(housingTypes)).toEqual(result)
       })
+    })
+  })
+
+  describe('Rent Stabilized', () => {
+    it('converts the object into a sentence', () => {
+      const housingType1 = new HousingType({
+        housingType: 'RENT_STABILIZED',
+      })
+      housingType1.paramsObject['rsunitslost'].create()
+      const housingTypes = [housingType1]
+
+      const result = 'Rent Stabilized properties that lost at least 25% rent stabilized units since 2010'
+
+      expect(a.convertHousingTypesToSentence(housingTypes)).toEqual(result)
     })
   })
 })

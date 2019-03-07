@@ -1,17 +1,19 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form } from 'react-bootstrap'
+import { Form, InputGroup } from 'react-bootstrap'
 
 const DateField = props => {
   return (
-    <Form.Control
-      key={props.key}
-      name="value"
-      onChange={props.onChange}
-      size="sm"
-      type={props.type || 'date'}
-      value={props.paramMap.value}
-    />
+    <InputGroup size="sm">
+      <Form.Control
+        key={props.key}
+        name="value"
+        onChange={props.onChange}
+        size="sm"
+        type={props.type || 'date'}
+        value={props.paramMap.value}
+      />
+    </InputGroup>
   )
 }
 

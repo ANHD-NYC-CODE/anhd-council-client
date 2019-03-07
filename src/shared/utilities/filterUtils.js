@@ -36,6 +36,7 @@ export const constructDefaultSchema = ({
   amountFieldQuery = '',
   defaultAmount = '',
   capitalizeDepartment = true,
+  noun = undefined,
 } = {}) => {
   return {
     [constantToQueryName(constant)]: new ParameterMapSet({
@@ -52,7 +53,7 @@ export const constructDefaultSchema = ({
           baseComponent: IntegerField,
           languageModule: new LanguageModule({
             type: 'AMOUNT',
-            noun: constantToName({ constant, plural: false, capitalizeDepartment }),
+            noun: noun !== undefined ? noun : constantToName({ constant, plural: false, capitalizeDepartment }),
           }),
           field: `${constantToQueryName(constant)}${amountFieldQuery ? '__' + amountFieldQuery : ''}`,
           comparison: 'gte',
