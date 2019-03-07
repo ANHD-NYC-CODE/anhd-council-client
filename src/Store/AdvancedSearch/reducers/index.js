@@ -70,26 +70,6 @@ export const advancedSearchReducer = (state = Object.freeze(initialState), actio
       }
     }
 
-    case c.UPDATE_FILTER: {
-      const newConditions = { ...state.conditions }
-      let condition = newConditions[action.conditionKey]
-      condition.filters[action.filterIndex] = action.newFilter
-      newConditions[action.conditionKey] = condition
-      return {
-        ...state,
-        conditions: { ...newConditions },
-      }
-    }
-    case c.REMOVE_FILTER: {
-      const newConditions = { ...state.conditions }
-      let condition = newConditions[action.conditionKey]
-      condition.filters.splice(action.filterIndex, 1)
-      newConditions[action.conditionKey] = condition
-      return {
-        ...state,
-        conditions: { ...newConditions },
-      }
-    }
     case c.ADD_BOUNDARY: {
       return {
         ...state,

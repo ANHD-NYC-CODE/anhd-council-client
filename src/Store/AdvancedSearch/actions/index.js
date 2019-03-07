@@ -24,25 +24,6 @@ export const removeCondition = conditionKey => ({
   conditionKey,
 })
 
-export const addFilter = (conditionKey, filter) => ({
-  type: c.ADD_FILTER,
-  filter: filter,
-  conditionKey,
-})
-
-export const updateFilter = (conditionKey, filterIndex, newFilter) => ({
-  type: c.UPDATE_FILTER,
-  conditionKey,
-  filterIndex,
-  newFilter,
-})
-
-export const removeFilter = (conditionKey, filterIndex) => ({
-  type: c.REMOVE_FILTER,
-  conditionKey,
-  filterIndex,
-})
-
 export const addBoundary = boundary => ({
   type: c.ADD_BOUNDARY,
   boundary,
