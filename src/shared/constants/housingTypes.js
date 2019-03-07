@@ -30,7 +30,7 @@ export const RENTSTABILZED = {
         new ParameterMapping({
           component: ComparisonFieldSet,
           baseComponent: IntegerField,
-          languageModule: new LanguageModule({ noun: 'Units' }),
+          languageModule: new LanguageModule({ type: 'AMOUNT', noun: 'units' }),
           field: 'rsunitslost',
           comparison: 'gte',
           value: '25',
@@ -41,7 +41,7 @@ export const RENTSTABILZED = {
           props: {
             type: 'number',
           },
-          languageModule: new LanguageModule({ noun: 'Units' }),
+          languageModule: new LanguageModule({ type: 'DATE', noun: 'units' }),
           rangeKey: 'rsUnitsRange',
           rangePosition: 1,
           defaultOptions: comparisonOptions(['start', 'between'], ['Since', 'Between'], 'DATE', 'rsUnitsRange'),
@@ -52,7 +52,7 @@ export const RENTSTABILZED = {
         new ParameterMapping({
           component: ComparisonFieldSet,
           baseComponent: DateField,
-          languageModule: new LanguageModule({ noun: 'Units' }),
+          languageModule: new LanguageModule({ type: 'DATE', noun: 'units' }),
           props: {
             type: 'number',
           },
@@ -87,7 +87,7 @@ export const RENTREGULATED = {
           defaultOptions: rentRegulatedProgramOptions(),
           component: GenericFieldSet,
           baseComponent: MultiSelectField,
-          languageModule: new LanguageModule({ noun: 'Units' }),
+          languageModule: new LanguageModule({ type: 'TEXT', noun: '' }),
           field: 'coresubsidyrecord__programname',
           comparison: 'any',
           value: '',
@@ -116,7 +116,7 @@ export const RENTREGULATED = {
             'DATE',
             'expirationRangeKey'
           ),
-          languageModule: new LanguageModule({ noun: 'Units' }),
+          languageModule: new LanguageModule({ type: 'DATE', noun: '', propertyAdjective: 'expiring' }),
           rangeKey: 'expirationRangeKey',
           rangePosition: 1,
           field: 'coresubsidyrecord__enddate',
@@ -137,14 +137,12 @@ export const RENTREGULATED = {
             'DATE',
             'expirationRangeKey'
           ),
-          languageModule: new LanguageModule({ noun: 'Units' }),
+          languageModule: new LanguageModule({ type: 'DATE', noun: '', propertyAdjective: 'expiring' }),
           rangeKey: 'expirationRangeKey',
           rangePosition: 2,
           field: 'coresubsidyrecord__enddate',
           comparison: 'gte',
-          value: moment(moment.now())
-            .add(1, 'Y')
-            .format('YYYY-MM-DD'),
+          value: moment(moment.now()).format('YYYY-MM-DD'),
         }),
       ],
     }),
@@ -172,7 +170,7 @@ export const SMALLHOMES = {
           field: 'unitsres',
           comparison: 'lte',
           value: '6',
-          languageModule: new LanguageModule({ noun: 'Units' }),
+          languageModule: new LanguageModule({ noun: 'units' }),
         }),
       ],
     }),

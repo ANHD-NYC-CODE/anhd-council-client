@@ -22,14 +22,16 @@ export class HousingType {
     this._schema = this.object.schema
 
     // Set default keys to ParameterMapSet without any parameter maps
-    Object.keys(this._schema).map(key => {
-      this._paramsObject = {
-        ...{
-          [key]: cloneInstance(this.schema[key]),
-        },
-        ...this.paramsObject,
-      }
-    })
+    Object.keys(this._schema)
+      .reverse()
+      .map(key => {
+        this._paramsObject = {
+          ...{
+            [key]: cloneInstance(this.schema[key]),
+          },
+          ...this.paramsObject,
+        }
+      })
   }
 
   get object() {

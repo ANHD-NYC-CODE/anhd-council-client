@@ -15,7 +15,7 @@ describe('convertFilterToSentence', () => {
     it('converts the object into a field string', () => {
       const object = filterMocks['HPD_VIOLATION']
 
-      const result = `at least 10 ${d.HPDVIOLATIONS.name} from 01/01/2017 to 01/01/2018`
+      const result = `at least 10 ${d.HPDVIOLATIONS.name} between 01/01/2017 and 01/01/2018`
       expect(a.convertFilterToSentence(object)).toEqual(result)
     })
   })
@@ -32,7 +32,7 @@ describe('convertConditionMappingToSentence', () => {
       }
 
       const result =
-        'have at least 10 HPD Violations from 01/01/2017 to 01/01/2018 and at least 10 DOB Violations from 01/01/2017 to 01/01/2018.'
+        'have at least 10 HPD Violations between 01/01/2017 and 01/01/2018 and at least 10 DOB Violations between 01/01/2017 and 01/01/2018.'
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
@@ -47,7 +47,7 @@ describe('convertConditionMappingToSentence', () => {
       }
 
       const result =
-        'have at least 10 HPD Violations from 01/01/2017 to 01/01/2018 or at least 10 DOB Violations from 01/01/2017 to 01/01/2018.'
+        'have at least 10 HPD Violations between 01/01/2017 and 01/01/2018 or at least 10 DOB Violations between 01/01/2017 and 01/01/2018.'
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
@@ -68,7 +68,7 @@ describe('convertConditionMappingToSentence', () => {
       }
 
       const result =
-        'have at least 10 HPD Violations from 01/01/2017 to 01/01/2018 and that either have at least 10 DOB Violations from 01/01/2017 to 01/01/2018 or at least 10 ECB Violations from 01/01/2017 to 01/01/2018.'
+        'have at least 10 HPD Violations between 01/01/2017 and 01/01/2018 and that either have at least 10 DOB Violations between 01/01/2017 and 01/01/2018 or at least 10 ECB Violations between 01/01/2017 and 01/01/2018.'
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
@@ -89,7 +89,7 @@ describe('convertConditionMappingToSentence', () => {
       }
 
       const result =
-        'have at least 10 HPD Violations from 01/01/2017 to 01/01/2018 or that have at least 10 DOB Violations from 01/01/2017 to 01/01/2018 and at least 10 ECB Violations from 01/01/2017 to 01/01/2018.'
+        'have at least 10 HPD Violations between 01/01/2017 and 01/01/2018 or that have at least 10 DOB Violations between 01/01/2017 and 01/01/2018 and at least 10 ECB Violations between 01/01/2017 and 01/01/2018.'
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
@@ -119,7 +119,7 @@ describe('convertConditionMappingToSentence', () => {
       }
 
       const result =
-        'have at least 10 HPD Violations from 01/01/2017 to 01/01/2018 and that either have at least 10 DOB Violations from 01/01/2017 to 01/01/2018 or at least 10 ECB Violations from 01/01/2017 to 01/01/2018 or that have at least 10 HPD Complaints from 01/01/2017 to 01/01/2018 and at least 10 DOB Complaints from 01/01/2017 to 01/01/2018.'
+        'have at least 10 HPD Violations between 01/01/2017 and 01/01/2018 and that either have at least 10 DOB Violations between 01/01/2017 and 01/01/2018 or at least 10 ECB Violations between 01/01/2017 and 01/01/2018 or that have at least 10 HPD Complaints between 01/01/2017 and 01/01/2018 and at least 10 DOB Complaints between 01/01/2017 and 01/01/2018.'
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
@@ -158,7 +158,7 @@ describe('convertConditionMappingToSentence', () => {
       }
 
       const result =
-        'have at least 10 HPD Violations from 01/01/2017 to 01/01/2018 and that either have at least 10 DOB Violations from 01/01/2017 to 01/01/2018 or at least 10 ECB Violations from 01/01/2017 to 01/01/2018 or that have at least 10 HPD Complaints from 01/01/2017 to 01/01/2018 and at least 10 DOB Complaints from 01/01/2017 to 01/01/2018 and that either have at least 10 Evictions from 01/01/2017 to 01/01/2018 or at least 10 HPD Violations from 01/01/2017 to 01/01/2018.'
+        'have at least 10 HPD Violations between 01/01/2017 and 01/01/2018 and that either have at least 10 DOB Violations between 01/01/2017 and 01/01/2018 or at least 10 ECB Violations between 01/01/2017 and 01/01/2018 or that have at least 10 HPD Complaints between 01/01/2017 and 01/01/2018 and at least 10 DOB Complaints between 01/01/2017 and 01/01/2018 and that either have at least 10 Evictions between 01/01/2017 and 01/01/2018 or at least 10 HPD Violations between 01/01/2017 and 01/01/2018.'
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
@@ -188,7 +188,7 @@ describe('convertConditionMappingToSentence', () => {
       }
 
       const result =
-        'have at least 10 HPD Violations from 01/01/2017 to 01/01/2018 and that either have at least 10 DOB Violations from 01/01/2017 to 01/01/2018 or at least 10 ECB Violations from 01/01/2017 to 01/01/2018 and that either have at least 10 HPD Complaints from 01/01/2017 to 01/01/2018 or at least 10 DOB Complaints from 01/01/2017 to 01/01/2018.'
+        'have at least 10 HPD Violations between 01/01/2017 and 01/01/2018 and that either have at least 10 DOB Violations between 01/01/2017 and 01/01/2018 or at least 10 ECB Violations between 01/01/2017 and 01/01/2018 and that either have at least 10 HPD Complaints between 01/01/2017 and 01/01/2018 or at least 10 DOB Complaints between 01/01/2017 and 01/01/2018.'
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
@@ -214,7 +214,7 @@ describe('convertConditionMappingToSentence', () => {
   //       }
   //
   //       const result =
-  //         'have sold for at least $10 from 01/01/2017 to 01/01/2018 and at least 10 HPD Violations from 01/01/2017 to 01/01/2018.'
+  //         'have sold for at least $10 between 01/01/2017 and 01/01/2018 and at least 10 HPD Violations between 01/01/2017 and 01/01/2018.'
   //       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
   //     })
   //   })
@@ -239,7 +239,7 @@ describe('convertConditionMappingToSentence', () => {
   //       }
   //
   //       const result =
-  //         'have been sold at least 2 times from 01/01/2017 to 01/01/2018 and at least 2 HPD Violations from 01/01/2017 to 01/01/2018.'
+  //         'have been sold at least 2 times between 01/01/2017 and 01/01/2018 and at least 2 HPD Violations between 01/01/2017 and 01/01/2018.'
   //       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
   //     })
   //   })
@@ -303,7 +303,7 @@ describe('convertConditionMappingToSentence', () => {
 
         const result = `Rent Regulated properties expiring before ${moment(moment.now())
           .add(1, 'Y')
-          .format('YYYY-MM-DD')}`
+          .format('MM/DD/YYYY')}`
 
         expect(a.convertHousingTypesToSentence(housingTypes)).toEqual(result)
       })
@@ -316,11 +316,11 @@ describe('convertConditionMappingToSentence', () => {
         // housingType1.paramsObject['coresubsidyrecord__enddate'].create()
         const housingTypes = [housingType1]
 
-        const result = `Rent Regulated properties expiring between ${moment(moment.now())
-          .subtract(1, 'Y')
-          .format('YYYY-MM-DD')} and ${moment(moment.now())
+        const result = `Rent Regulated properties expiring between ${moment(moment.now()).format(
+          'MM/DD/YYYY'
+        )} and ${moment(moment.now())
           .add(1, 'Y')
-          .format('YYYY-MM-DD')}`
+          .format('MM/DD/YYYY')}`
 
         expect(a.convertHousingTypesToSentence(housingTypes)).toEqual(result)
       })
@@ -329,20 +329,20 @@ describe('convertConditionMappingToSentence', () => {
         const housingType1 = new HousingType({
           housingType: 'RENT_REGULATED',
         })
+        housingType1.paramsObject['coresubsidyrecord__enddate'].createAll()
         housingType1.paramsObject['coresubsidyrecord__programname'].create()
         housingType1.paramsObject['coresubsidyrecord__programname'].paramMaps[0].update({
           e: { name: 'value', value: 'LIHCT,J-51,421-a' },
         })
-        housingType1.paramsObject['coresubsidyrecord__enddate'].createAll()
 
         // housingType1.paramsObject['coresubsidyrecord__enddate'].create()
         const housingTypes = [housingType1]
 
-        const result = `Rent Regulated properties expiring between ${moment(moment.now())
-          .subtract(1, 'Y')
-          .format('YYYY-MM-DD')} and ${moment(moment.now())
+        const result = `Rent Regulated properties with LIHCT, J-51, or 421-a and expiring between ${moment(
+          moment.now()
+        ).format('MM/DD/YYYY')} and ${moment(moment.now())
           .add(1, 'Y')
-          .format('YYYY-MM-DD')}`
+          .format('MM/DD/YYYY')}`
 
         expect(a.convertHousingTypesToSentence(housingTypes)).toEqual(result)
       })

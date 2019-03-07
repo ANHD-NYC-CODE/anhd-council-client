@@ -2,14 +2,19 @@ import moment from 'moment'
 //////////////////
 // Sentence
 
-const grammaticalList = array => {
+const grammaticalList = (array, conjunction = 'and') => {
   let lastItem
-  if (array.length > 1) {
+  let sentence
+  if (array.length === 2) {
+    sentence = array.join(` ${conjunction} `)
+  } else if (array.length > 2) {
     lastItem = array.pop()
+    sentence = array.join(', ')
+  } else {
+    sentence = array[0]
   }
 
-  const sentence = array.join(',')
-  return lastItem ? sentence + ' and ' + lastItem : sentence
+  return lastItem ? `${sentence}, ${conjunction} ${lastItem}` : sentence
 }
 
 const singularPlease = string => {
@@ -60,18 +65,21 @@ const parseParamMapComparison = paramMap => {
     case 'AMOUNT':
       return `${constructAmountComparisonString(paramMap.comparison)} ${
         paramMap.value
-      } ${paramMap.languageModule.getNoun(paramMap.value)}`
+      } ${paramMap.languageModule.grammaticalNoun(paramMap.languageModule.noun, paramMap.value)}`
     case 'DATE':
       return `${constructDateComparisonString(paramMap.comparison)} ${moment(paramMap.value).format('MM/DD/YYYY')}`
+    case 'TEXT':
+      return `${grammaticalList(paramMap.value.split(','), 'or')}`
   }
 }
 
 const parseParamMapRangeGroup = paramMapRangeGroup => {
+  const gte = paramMapRangeGroup.find(pm => pm.comparison === 'gte')
+  const lte = paramMapRangeGroup.find(pm => pm.comparison === 'lte')
+
   switch (paramMapRangeGroup[0].languageModule.type) {
     case 'DATE':
-      return `from ${moment(paramMapRangeGroup[0].value).format('MM/DD/YYYY')} to ${moment(
-        paramMapRangeGroup[1].value
-      ).format('MM/DD/YYYY')}`
+      return `between ${moment(gte.value).format('MM/DD/YYYY')} and ${moment(lte.value).format('MM/DD/YYYY')}`
   }
 }
 
@@ -103,11 +111,11 @@ export const convertFilterToSentence = filter => {
     .join(' ')
 }
 
-export const convertConditionGroupToSentence = (conditions, condition) => {
+export const convertConditionToSentence = (conditions, condition) => {
   return condition.filters
     .map((filter, index) => {
       if (filter.conditionGroup) {
-        return `${convertConditionGroupToSentence(conditions, conditions[filter.conditionGroup])}${
+        return `${convertConditionToSentence(conditions, conditions[filter.conditionGroup])}${
           condition.filters[index + 1] ? addNextFilterFill(condition, condition.filters[index + 1]) : ''
         }`
       } else {
@@ -133,7 +141,7 @@ const constructConditionFill = condition => {
 
 export const convertConditionMappingToSentence = conditions => {
   if (!(Object.keys(conditions).length && conditions['0'].filters.length)) return '...'
-  return `have ${convertConditionGroupToSentence(conditions, conditions['0'])}.`
+  return `have ${convertConditionToSentence(conditions, conditions['0'])}.`
 }
 
 export const convertBoundariesToSentence = boundaries => {
@@ -145,21 +153,45 @@ export const convertBoundariesToSentence = boundaries => {
 }
 
 const convertParamMapToSentence = paramMap => {
-  return `${constructComparisonString(paramMap.comparison)} ${
-    paramMap.value
-  } ${paramMap.languageModule.noun.toLowerCase()}`
+  return `${
+    paramMap.languageModule.propertyAdjective ? paramMap.languageModule.propertyAdjective.toLowerCase() : 'with'
+  } ${constructComparisonString(paramMap.comparison)} ${paramMap.value}${
+    paramMap.languageModule.noun ? ' ' + paramMap.languageModule.noun.toLowerCase() : ''
+  }`
 }
 
 const convertParamSetToSentence = paramSet => {
-  return `${grammaticalList(paramSet.paramMaps.map(paramMap => convertParamMapToSentence(paramMap)))}`
+  return `${grammaticalList(paramSet.paramMaps.map(paramMap => convertParamMapToSentence(paramMap), 'and'))}`
 }
 
 const constructHousingTypeParamSentence = housingType => {
   if (Object.keys(housingType.params).length) {
-    return ` with ${Object.keys(housingType.paramsObject)
+    return ` ${Object.keys(housingType.paramsObject)
       .map(key => {
-        return convertParamSetToSentence(housingType.paramsObject[key])
+        const paramSet = housingType.paramsObject[key]
+        return paramSet.paramMaps
+          .map(paramMap => {
+            // Process range paramMap separately
+            let modifier = `${
+              paramMap.languageModule.propertyAdjective
+                ? paramMap.languageModule.propertyAdjective.toLowerCase()
+                : 'with'
+            } `
+            let sentence = ''
+            if (paramMap.rangeKey && paramSet.paramMaps.filter(pm => pm.rangeKey === paramMap.rangeKey).length === 2) {
+              // Only process once with the first object
+              if (paramMap.rangePosition === 1) {
+                sentence = parseParamMapRangeGroup(paramSet.paramMaps.filter(pm => pm.rangeKey === paramMap.rangeKey))
+              }
+            } else {
+              sentence = parseParamMapComparison(paramMap)
+            }
+            return sentence ? modifier + sentence : ''
+          })
+          .filter(p => p)
+          .join(' ')
       })
+      .filter(p => p)
       .join(' and ')}`
   } else {
     return ''
@@ -169,7 +201,8 @@ const constructHousingTypeParamSentence = housingType => {
 export const convertHousingTypesToSentence = housingTypes => {
   return `${grammaticalList(
     housingTypes.map(
-      housingType => singularPlease(housingType.name) + ' properties' + constructHousingTypeParamSentence(housingType)
+      housingType => singularPlease(housingType.name) + ' properties' + constructHousingTypeParamSentence(housingType),
+      'and'
     )
   )}`
 }
