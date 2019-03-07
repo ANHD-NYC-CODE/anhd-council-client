@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 import { Filter } from 'shared/classes/Filter'
 import * as d from 'shared/models/datasets'
 
-import { addFilter, removeFilter, updateFilter } from 'Store/AdvancedSearch/actions'
+import { removeFilter, updateFilter } from 'Store/AdvancedSearch/actions'
 
 import CustomSelect from 'shared/components/CustomSelect'
-import { Form, Button } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 
 class FilterComponent extends React.Component {
   constructor(props) {

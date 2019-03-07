@@ -15,8 +15,8 @@ class Config extends React.Component {
   constructor(props) {
     super(props)
 
-    // this.props.dispatch(getDatasets())
-    // this.props.dispatch(getCouncils())
+    this.props.dispatch(getDatasets())
+    this.props.dispatch(getCouncils())
     // this.props.dispatch(getCommunities())
 
     this.state = {

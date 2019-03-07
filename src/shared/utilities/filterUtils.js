@@ -9,7 +9,7 @@ import DateField from 'AdvancedSearch/Filter/Field/DateField'
 import IntegerField from 'AdvancedSearch/Filter/Field/IntegerField'
 
 export const constantToQueryName = constant => {
-  return `${constant.replace('_', '').toLowerCase()}s`
+  return `${constant.replace(/_/g, '').toLowerCase()}s`
 }
 
 export const constantToName = (constant, plural = true) => {
@@ -21,7 +21,13 @@ export const constantToName = (constant, plural = true) => {
     .join(' ')}${plural ? 's' : ''}`
 }
 
-export const constructDefaultSchema = ({ constant = '', dateFieldQuery = '', amountFieldQuery = '' } = {}) => {
+export const constructDefaultSchema = ({
+  constant = '',
+  dateFieldQuery = '',
+  defaultDate = '',
+  amountFieldQuery = '',
+  defaultAmount = '',
+} = {}) => {
   return {
     [constantToQueryName(constant)]: new ParameterMapSet({
       component: MultiTypeFieldGroup,
@@ -38,7 +44,7 @@ export const constructDefaultSchema = ({ constant = '', dateFieldQuery = '', amo
           languageModule: new LanguageModule({ type: 'AMOUNT', noun: constantToName(constant, false) }),
           field: `${constantToQueryName(constant)}${amountFieldQuery ? '__' + amountFieldQuery : ''}`,
           comparison: 'gte',
-          value: '5',
+          value: defaultAmount || '5',
         }),
         new ParameterMapping({
           component: ComparisonFieldSet,
@@ -57,9 +63,11 @@ export const constructDefaultSchema = ({ constant = '', dateFieldQuery = '', amo
           ),
           field: `${constantToQueryName(constant)}${dateFieldQuery ? '__' + dateFieldQuery : ''}`,
           comparison: 'gte',
-          value: moment(moment.now())
-            .subtract(1, 'Y')
-            .format('YYYY-MM-DD'),
+          value:
+            defaultDate ||
+            moment(moment.now())
+              .subtract(1, 'Y')
+              .format('YYYY-MM-DD'),
         }),
         new ParameterMapping({
           component: ComparisonFieldSet,
@@ -78,9 +86,11 @@ export const constructDefaultSchema = ({ constant = '', dateFieldQuery = '', amo
           ),
           field: `${constantToQueryName(constant)}${dateFieldQuery ? '__' + dateFieldQuery : ''}`,
           comparison: 'lte',
-          value: moment(moment.now())
-            .add(1, 'Y')
-            .format('YYYY-MM-DD'),
+          value:
+            defaultDate ||
+            moment(moment.now())
+              .add(1, 'Y')
+              .format('YYYY-MM-DD'),
         }),
       ],
     }),

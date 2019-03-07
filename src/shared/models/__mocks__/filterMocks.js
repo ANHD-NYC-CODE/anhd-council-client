@@ -3,7 +3,13 @@ import { ParameterMapping } from 'shared/classes/ParameterMapping'
 import { Filter } from 'shared/classes/Filter'
 import { constantToQueryName } from 'shared/utilities/filterUtils'
 
-export const createFilterMock = ({ constant = '', dateFieldQuery = '', amountFieldQuery = '' } = {}) => {
+export const createFilterMock = ({
+  constant = '',
+  dateFieldQuery = '',
+  defaultDate = '',
+  amountFieldQuery = '',
+  defaultAmount = '',
+} = {}) => {
   return new Filter({
     datasetConstant: constant,
     paramsObject: {
@@ -12,19 +18,19 @@ export const createFilterMock = ({ constant = '', dateFieldQuery = '', amountFie
           new ParameterMapping({
             field: `${constantToQueryName(constant)}${amountFieldQuery ? '__' + amountFieldQuery : ''}`,
             comparison: 'gte',
-            value: '10',
+            value: defaultAmount || '10',
           }),
           new ParameterMapping({
             field: `${constantToQueryName(constant)}${dateFieldQuery ? '__' + dateFieldQuery : ''}`,
             comparison: 'gte',
-            value: '2017-01-01',
+            value: defaultDate || '2017-01-01',
             rangeKey: 'hpd',
             rangePosition: 1,
           }),
           new ParameterMapping({
             field: `${constantToQueryName(constant)}${dateFieldQuery ? '__' + dateFieldQuery : ''}`,
             comparison: 'lte',
-            value: '2018-01-01',
+            value: defaultDate || '2018-01-01',
             rangeKey: 'hpd',
             rangePosition: 2,
           }),
@@ -59,5 +65,16 @@ export const filterMocks = {
     constant: 'DOB_COMPLAINT',
     dateFieldQuery: 'dateentered',
     amountFieldQuery: 'count',
+  }),
+  SALE_AMOUNT: createFilterMock({
+    constant: 'ACRIS_REAL_LEGAL',
+    dateFieldQuery: 'documentid__docdate',
+    amountFieldQuery: 'documentid__docamount',
+  }),
+  SALE_COUNT: createFilterMock({
+    constant: 'ACRIS_REAL_LEGAL',
+    dateFieldQuery: 'documentid__docdate',
+    amountFieldQuery: 'documentid__count',
+    defaultAmount: '5',
   }),
 }
