@@ -21,6 +21,10 @@ export class Condition {
     this._filters = filters
   }
 
+  hasCondition() {
+    return this._filters.some(filter => filter.conditionGroup)
+  }
+
   addFilter({ filter }) {
     // Adds condition groups to the end
     if (filter.conditionGroup) {

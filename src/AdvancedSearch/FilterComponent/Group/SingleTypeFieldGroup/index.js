@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { cloneInstance } from 'shared/utilities/classUtils'
 
 import { Button, Form } from 'react-bootstrap'
-import RangeFieldSet from 'AdvancedSearch/Filter/FieldSet/RangeFieldSet'
+import RangeFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/RangeFieldSet'
 
 const renderRangeFields = (props, rangeKey) => {
   const rangeChange = (paramMap, e) => {

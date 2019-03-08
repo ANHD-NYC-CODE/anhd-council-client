@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import * as c from 'Store/AdvancedSearch/constants'
-import { Boundary } from 'Store/AdvancedSearch/classes/Boundary'
-import { HousingType } from 'Store/AdvancedSearch/classes/HousingType'
+import { Boundary } from 'shared/classes/Boundary'
+import { HousingType } from 'shared/classes/HousingType'
 
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
@@ -16,7 +16,7 @@ import { addHousingType } from 'Store/AdvancedSearch/actions'
 
 import { Button } from 'react-bootstrap'
 
-import Condition from 'AdvancedSearch/Condition'
+import ConditionComponent from 'AdvancedSearch/ConditionComponent'
 import BoundaryQuery from 'AdvancedSearch/BoundaryQuery'
 import HousingTypeQuery from 'AdvancedSearch/HousingTypeQuery'
 
@@ -68,6 +68,8 @@ export class AdvancedSearch extends React.Component {
             <BoundaryQuery
               addBoundary={this.addBoundary}
               boundaries={this.props.advancedSearch.boundaries}
+              boards={this.props.boards}
+              districts={this.props.districts}
               changeBoundary={this.changeBoundary}
             />
             <HousingTypeQuery
@@ -76,7 +78,7 @@ export class AdvancedSearch extends React.Component {
               dispatch={this.props.dispatch}
             />
 
-            <Condition
+            <ConditionComponent
               conditions={this.props.advancedSearch.conditions}
               condition={this.props.advancedSearch.conditions[0]}
               dispatch={this.props.dispatch}
@@ -104,6 +106,8 @@ const errorSelector = createErrorSelector([c.GET_ADVANCED_SEARCH])
 const mapStateToProps = state => {
   return {
     advancedSearch: state.advancedSearch,
+    boards: state.community.boards,
+    districts: state.council.districts,
     error: errorSelector(state),
     loading: loadingSelector(state),
   }

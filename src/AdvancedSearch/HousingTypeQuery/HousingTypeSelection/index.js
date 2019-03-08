@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import * as ht from 'shared/constants/housingTypes'
-import { HousingType } from 'Store/AdvancedSearch/classes/HousingType'
+import { HousingType } from 'shared/classes/HousingType'
 
 import { updateHousingType } from 'Store/AdvancedSearch/actions'
 import { Form } from 'react-bootstrap'

@@ -1,6 +1,6 @@
 import * as u from 'Store/AdvancedSearch/utilities/advancedSearchStoreUtils'
-import { Boundary } from 'Store/AdvancedSearch/classes/Boundary'
-import { HousingType } from 'Store/AdvancedSearch/classes/HousingType'
+import { Boundary } from 'shared/classes/Boundary'
+import { HousingType } from 'shared/classes/HousingType'
 import { ParameterMapSet } from 'shared/classes/ParameterMapSet'
 import { ParameterMapping } from 'shared/classes/ParameterMapping'
 import { filterMocks } from 'shared/models/__mocks__/filterMocks'

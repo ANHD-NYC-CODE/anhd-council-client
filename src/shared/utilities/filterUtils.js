@@ -2,11 +2,11 @@ import moment from 'moment'
 import { LanguageModule } from 'shared/classes/LanguageModule'
 import { ParameterMapSet } from 'shared/classes/ParameterMapSet'
 import { ParameterMapping } from 'shared/classes/ParameterMapping'
-import MultiTypeFieldGroup from 'AdvancedSearch/Filter/Group/MultiTypeFieldGroup'
-import ComparisonFieldSet from 'AdvancedSearch/Filter/FieldSet/ComparisonFieldSet'
+import MultiTypeFieldGroup from 'AdvancedSearch/FilterComponent/Group/MultiTypeFieldGroup'
+import ComparisonFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/ComparisonFieldSet'
 
-import DateField from 'AdvancedSearch/Filter/Field/DateField'
-import IntegerField from 'AdvancedSearch/Filter/Field/IntegerField'
+import DateField from 'AdvancedSearch/FilterComponent/Field/DateField'
+import IntegerField from 'AdvancedSearch/FilterComponent/Field/IntegerField'
 
 export const constantToQueryName = constant => {
   return `${constant.replace(/_/g, '').toLowerCase()}s`
