@@ -1,12 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 import * as b from 'shared/constants/boundaries'
 
 import CustomSelect from 'shared/components/CustomSelect'
-import { Form, Col } from 'react-bootstrap'
+import { Form } from 'react-bootstrap'
 
-class BoundaryQuery extends React.Component {
+export class BoundaryQuery extends React.Component {
   constructor(props) {
     super(props)
 
@@ -77,14 +76,6 @@ BoundaryQuery.propTypes = {
   boards: PropTypes.array,
   boundaries: PropTypes.array,
   districts: PropTypes.array,
-  dispatch: PropTypes.func,
 }
 
-const mapStateToProps = state => {
-  return {
-    boards: state.community.boards,
-    districts: state.council.districts,
-  }
-}
-
-export default connect(mapStateToProps)(BoundaryQuery)
+export default BoundaryQuery

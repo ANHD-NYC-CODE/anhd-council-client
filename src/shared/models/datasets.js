@@ -2,8 +2,8 @@ import { ApiMap } from 'shared/classes/ApiMap'
 import { constructDefaultSchema, constantToName } from 'shared/utilities/filterUtils'
 import { LanguageModule } from 'shared/classes/LanguageModule'
 import { ParameterMapping } from 'shared/classes/ParameterMapping'
-import GenericFieldSet from 'AdvancedSearch/Filter/FieldSet/GenericFieldSet'
-import HiddenField from 'AdvancedSearch/Filter/Field/HiddenField'
+import GenericFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/GenericFieldSet'
+import HiddenField from 'AdvancedSearch/FilterComponent/Field/HiddenField'
 
 export const HPD_VIOLATION = {
   id: 'HPD_VIOLATION',

@@ -1,9 +1,9 @@
 import * as r from '../'
 import * as a from '../../actions'
-import { Boundary } from 'Store/AdvancedSearch/classes/Boundary'
+import { Boundary } from 'shared/classes/Boundary'
 import { Condition } from 'shared/classes/Condition'
 import { ConditionFilter } from 'shared/classes/ConditionFilter'
-import { HousingType } from 'Store/AdvancedSearch/classes/HousingType'
+import { HousingType } from 'shared/classes/HousingType'
 
 describe('Advanced Search reducer', () => {
   it('should return the initial state', () => {

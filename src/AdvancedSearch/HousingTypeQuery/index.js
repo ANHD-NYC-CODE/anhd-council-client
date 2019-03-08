@@ -6,7 +6,7 @@ import CustomSelect from 'shared/components/CustomSelect'
 import { Form, Col } from 'react-bootstrap'
 import HousingTypeSelection from 'AdvancedSearch/HousingTypeQuery/HousingTypeSelection'
 
-const HousingTypeQuery = props => {
+export const HousingTypeQuery = props => {
   return (
     <Form className="housing-type-query">
       <Form.Row className="housing-type">

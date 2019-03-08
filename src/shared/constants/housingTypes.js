@@ -4,15 +4,15 @@ import { rentRegulatedProgramOptions, comparisonOptions } from 'shared/utilities
 import { ParameterMapSet } from 'shared/classes/ParameterMapSet'
 import { ParameterMapping } from 'shared/classes/ParameterMapping'
 
-import MultiTypeFieldGroup from 'AdvancedSearch/Filter/Group/MultiTypeFieldGroup'
-import GenericFieldSet from 'AdvancedSearch/Filter/FieldSet/GenericFieldSet'
-import ComparisonFieldSet from 'AdvancedSearch/Filter/FieldSet/ComparisonFieldSet'
+import MultiTypeFieldGroup from 'AdvancedSearch/FilterComponent/Group/MultiTypeFieldGroup'
+import GenericFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/GenericFieldSet'
+import ComparisonFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/ComparisonFieldSet'
 
-import DateField from 'AdvancedSearch/Filter/Field/DateField'
-import IntegerField from 'AdvancedSearch/Filter/Field/IntegerField'
-import PercentField from 'AdvancedSearch/Filter/Field/PercentField'
+import DateField from 'AdvancedSearch/FilterComponent/Field/DateField'
+import IntegerField from 'AdvancedSearch/FilterComponent/Field/IntegerField'
+import PercentField from 'AdvancedSearch/FilterComponent/Field/PercentField'
 
-import MultiSelectField from 'AdvancedSearch/Filter/Field/MultiSelectField'
+import MultiSelectField from 'AdvancedSearch/FilterComponent/Field/MultiSelectField'
 import { LanguageModule } from 'shared/classes/LanguageModule'
 
 export const RENTSTABILZED = {

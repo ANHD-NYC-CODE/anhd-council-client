@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { Button, Form } from 'react-bootstrap'
-import RangeFieldSet from 'AdvancedSearch/Filter/FieldSet/RangeFieldSet'
+import RangeFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/RangeFieldSet'
 
 const MultiTypeFieldGroup = props => {
   const rangeChange = (paramMap, e) => {
