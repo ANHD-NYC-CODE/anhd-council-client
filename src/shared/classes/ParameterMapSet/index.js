@@ -96,6 +96,18 @@ export class ParameterMapSet {
     return created
   }
 
+  createOppositeRangeMap({ dispatchAction = undefined, rangePosition = 1 } = {}) {
+    let created = this.addParameterMap(
+      this.defaults.find(mapping => mapping.rangePosition && mapping.rangePosition !== rangePosition)
+    )
+
+    if (dispatchAction) {
+      dispatchAction()
+    }
+
+    return created
+  }
+
   createAllRangeOne({ dispatchAction = undefined } = {}) {
     this.defaults.forEach(defaultParamMap => {
       if (defaultParamMap.rangeKey && defaultParamMap.rangePosition !== 1) {

@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { cloneInstance } from 'shared/utilities/classUtils'
 
 import { Button, Form } from 'react-bootstrap'
 import RangeFieldSet from 'AdvancedSearch/Filter/FieldSet/RangeFieldSet'
@@ -10,13 +9,7 @@ const MultiTypeFieldGroup = props => {
     // When changing a comparison to range mode
     if (e.rangeKey && e.name === 'comparison' && e.value.toUpperCase().match(/(BETWEEN|RANGE)/)) {
       // Add the opposite paramMap based on 'rangePosition'
-      props.paramSet.createSpecific({
-        paramMap: cloneInstance(
-          props.paramSet.defaults.find(
-            mapping => mapping.rangePosition && mapping.rangePosition !== paramMap.rangePosition
-          )
-        ),
-      })
+      props.paramSet.createOppositeRangeMap({ rangePosition: paramMap.rangePosition })
 
       props.paramSet.paramMaps
         .sort((a, b) => a.rangePosition - b.rangePosition)

@@ -119,12 +119,12 @@ const constructFilterSentenceFill = condition => {
 }
 
 const constructConditionFill = condition => {
-  return condition.type === 'AND' ? ' and that either have' : ' or that have'
+  return condition.type === 'AND' ? ' and that either' : ' or that'
 }
 
 export const convertConditionMappingToSentence = conditions => {
   if (!(Object.keys(conditions).length && conditions['0'].filters.length)) return '...'
-  return `have${convertConditionToSentence(conditions, conditions['0'])}.`
+  return `${convertConditionToSentence(conditions, conditions['0'])}.`
 }
 
 export const convertBoundariesToSentence = boundaries => {

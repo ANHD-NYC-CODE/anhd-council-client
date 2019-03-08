@@ -7,7 +7,7 @@ export const convertDatasetFilterToParams = (datasetsConfig, filter) => {
     .map(key => {
       return filter.paramsObject[key].paramMaps
         .map(paramMap => {
-          return `${paramMap.field}__${paramMap.comparison}=${
+          return `${paramMap.field}${paramMap.comparison ? '__' + paramMap.comparison : ''}=${
             paramMap.type === 'PERCENT' ? paramMap.value / 100 : paramMap.value
           }`
         })

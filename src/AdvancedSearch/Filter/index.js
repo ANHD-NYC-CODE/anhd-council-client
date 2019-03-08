@@ -41,7 +41,7 @@ class FilterComponent extends React.Component {
   render() {
     const datasetOptions = Object.entries(d).map(ds => {
       return {
-        value: ds[1].apiMap.constant,
+        value: ds[1].id,
         label: ds[1].languageModule.noun,
       }
     })

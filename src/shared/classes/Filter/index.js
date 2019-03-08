@@ -20,12 +20,12 @@ export class Filter {
   }
 
   setDataset(datasetConstant) {
-    const dataset = d[Object.keys(d).find(obj => d[obj].apiMap.constant === datasetConstant)]
+    const dataset = d[Object.keys(d).find(obj => d[obj].id === datasetConstant)]
 
     if (!dataset)
       throw `Pass either '${Object.keys(d)
-        .map(key => d[key].apiMap.constant)
-        .join("' or '")}' as the first argument.`
+        .map(key => d[key].id)
+        .join("' or '")}' as the first argument. ${datasetConstant} does not have a match.`
 
     this._dataset = dataset
     this._name = this.dataset.apiMap.name
