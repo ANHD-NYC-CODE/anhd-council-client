@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import CustomSelect from 'shared/components/CustomSelect'
 import { StandardizedInput } from 'shared/classes/StandardizedInput'
+import { Form, Col, Row } from 'react-bootstrap'
 
 const comparisonReconfigure = (props, e) => {
   if (e.value.toUpperCase().match(/(LTE|END)/)) {
@@ -26,25 +27,33 @@ const comparisonReconfigure = (props, e) => {
 
 const RangeFieldSet = props => {
   return (
-    <div>
-      <CustomSelect
-        name="comparison"
-        options={props.paramMapRangeGroup[0].options}
-        onChange={e => comparisonReconfigure(props, e)}
-        size="sm"
-        value={props.paramMapRangeGroup[0].options.find(option => option.value.toUpperCase().match(/(BETWEEN|RANGE)/))}
-      />
+    <Row>
+      <Col xs={6}>
+        <CustomSelect
+          name="comparison"
+          options={props.paramMapRangeGroup[0].options}
+          onChange={e => comparisonReconfigure(props, e)}
+          size="sm"
+          value={props.paramMapRangeGroup[0].options.find(option =>
+            option.value.toUpperCase().match(/(BETWEEN|RANGE)/)
+          )}
+        />
+      </Col>
       {props.paramMapRangeGroup
         .sort((a, b) => a.rangePosition - b.rangePosition)
         .map((paramMap, paramMapIndex) => {
-          return paramMap.baseComponent({
-            key: `rangeGroup-paramMap-${paramMapIndex}`,
-            onChange: e => paramMap.update({ dispatchAction: props.dispatchAction, e: new StandardizedInput(e) }),
-            paramMap: paramMap,
-            type: paramMap.props.type,
-          })
+          return (
+            <Col key={`paramMapRangeGroup-col-${paramMapIndex}`}>
+              {paramMap.baseComponent({
+                key: `rangeGroup-paramMap-${paramMapIndex}`,
+                onChange: e => paramMap.update({ dispatchAction: props.dispatchAction, e: new StandardizedInput(e) }),
+                paramMap: paramMap,
+                type: paramMap.props.type,
+              })}
+            </Col>
+          )
         })}
-    </div>
+    </Row>
   )
 }
 

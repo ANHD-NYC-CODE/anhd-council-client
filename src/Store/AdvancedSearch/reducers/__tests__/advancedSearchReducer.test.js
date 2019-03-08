@@ -2,6 +2,8 @@ import * as r from '../'
 import * as a from '../../actions'
 import { Boundary } from 'shared/classes/Boundary'
 import { Condition } from 'shared/classes/Condition'
+import { Filter } from 'shared/classes/Filter'
+
 import { ConditionFilter } from 'shared/classes/ConditionFilter'
 import { HousingType } from 'shared/classes/HousingType'
 

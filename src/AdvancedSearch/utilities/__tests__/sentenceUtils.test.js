@@ -5,6 +5,7 @@ import { HousingType } from 'shared/classes/HousingType'
 import { Condition } from 'shared/classes/Condition'
 import { ConditionFilter } from 'shared/classes/ConditionFilter'
 import { filterMocks } from 'shared/models/__mocks__/filterMocks'
+import { StandardizedInput } from 'shared/classes/StandardizedInput'
 import moment from 'moment'
 
 const todayminus1year = moment(moment.now())
@@ -111,7 +112,7 @@ describe('convertHousingTypesToSentence', () => {
       housingType1.paramsObject['coresubsidyrecord__enddate'].createAll()
       housingType1.paramsObject['coresubsidyrecord__programname'].create()
       housingType1.paramsObject['coresubsidyrecord__programname'].paramMaps[0].update({
-        e: { name: 'value', value: 'LIHCT,J-51,421-a' },
+        e: new StandardizedInput({ name: 'value', value: 'LIHCT,J-51,421-a' }),
       })
 
       const housingTypes = [housingType1]

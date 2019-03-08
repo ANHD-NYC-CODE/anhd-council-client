@@ -7,7 +7,7 @@ import { StandardizedInput } from 'shared/classes/StandardizedInput'
 
 import uuidv4 from 'uuid/v4'
 import { addNewCondition, changeConditionType, updateCondition, removeCondition } from 'Store/AdvancedSearch/actions'
-import { Button } from 'react-bootstrap'
+import { Form, Button } from 'react-bootstrap'
 
 import FilterComponent from 'AdvancedSearch/FilterComponent'
 
@@ -26,7 +26,6 @@ export class ConditionComponent extends React.Component {
 
     this.state = {
       creatingFilter: false,
-      switchingCondition: false,
     }
   }
 
@@ -53,10 +52,10 @@ export class ConditionComponent extends React.Component {
     this.dispatchAction()
   }
 
-  switchCondition(e) {
-    e = new StandardizedInput(e)
-    this.setState({ switchCondition: false })
-    this.props.dispatch(changeConditionType(this.props.condition.key, e.value))
+  switchCondition() {
+    const e = new StandardizedInput({ value: this.props.condition.type })
+    this.props.condition.toggleAndOrConditionType(e)
+    this.dispatchAction()
   }
 
   render() {
@@ -95,23 +94,22 @@ export class ConditionComponent extends React.Component {
 
     return (
       <div className="condition">
-        <Button className="switch-condition" onClick={() => this.setState({ switchingCondition: true })}>
-          {this.props.condition.type}
-        </Button>
-        {this.state.switchingCondition && (
-          <CustomSelect
-            options={[{ value: 'AND', label: 'AND' }, { value: 'OR', label: 'OR' }]}
-            onChange={e => this.switchCondition(e)}
-            size="sm"
-          />
+        {this.props.condition.key === '0' && !this.props.condition.hasCondition() ? (
+          <Button className="switch-condition" onClick={() => this.switchCondition()}>
+            {this.props.condition.type}
+          </Button>
+        ) : (
+          <Form.Label> {this.props.condition.type}</Form.Label>
         )}
+
         {!this.state.creatingFilter && (
           <Button className="add-filter" onClick={() => this.setState({ creatingFilter: true })} variant="success">
             +
           </Button>
         )}
 
-        {!this.props.condition.hasCondition() && (
+        {(this.props.condition.key === '0' ||
+          (this.props.condition.key !== '0' && !this.props.condition.hasCondition())) && (
           <Button
             className="add-condition"
             onClick={() => this.addCondition(this.props.condition.key)}
@@ -120,7 +118,6 @@ export class ConditionComponent extends React.Component {
             Add Condition
           </Button>
         )}
-
         {this.props.condition.key !== '0' && (
           <Button
             className="remove-condition"

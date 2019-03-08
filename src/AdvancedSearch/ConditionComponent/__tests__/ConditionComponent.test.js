@@ -49,9 +49,9 @@ describe('ConditionComponent', () => {
         expect(wrapper.find(ConditionComponent)).toHaveLength(1)
       })
 
-      it('does not render an add button component on this condition', () => {
+      it('renders an add button component on this condition', () => {
         const button = wrapper.find('.add-condition')
-        expect(button).toHaveLength(0)
+        expect(button).toHaveLength(1)
       })
 
       it('does not render a remove condition button', () => {

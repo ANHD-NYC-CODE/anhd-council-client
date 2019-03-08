@@ -33,7 +33,6 @@ export const advancedSearchReducer = (state = Object.freeze(initialState), actio
     case c.CHANGE_CONDITION_TYPE: {
       const changedCondition = cloneInstance(state.conditions[action.conditionKey])
       changedCondition.type = action.conditionType
-
       return {
         ...state,
         conditions: { ...state.conditions, [action.conditionKey]: changedCondition },
