@@ -154,14 +154,72 @@ describe('convertConditionMappingToQ', () => {
   })
 
   describe('foreclosure dataset', () => {
-    const mock = filterMocks('FORECLOSURE')
-    let condition0Filters = [mock]
+    it('converts the object into a field string', () => {
+      const mock = filterMocks('FORECLOSURE')
+      let condition0Filters = [mock]
 
-    const conditions = {
-      '0': new Condition({ type: 'AND', filters: condition0Filters }),
-    }
+      const conditions = {
+        '0': new Condition({ type: 'AND', filters: condition0Filters }),
+      }
 
-    const result = `*condition_0=AND filter_0=lispendens__count__gte=1,lispendens__fileddate__gte=${todayminus1year},lispendens__type=foreclosure,lispendens__fileddate__lte=${todayplus1year}`
-    expect(a.convertConditionMappingToQ(undefined, conditions)).toEqual(result)
+      const result = `*condition_0=AND filter_0=lispendens__count__gte=1,lispendens__fileddate__gte=${todayminus1year},lispendens__type=foreclosure,lispendens__fileddate__lte=${todayplus1year}`
+      expect(a.convertConditionMappingToQ(undefined, conditions)).toEqual(result)
+    })
+  })
+
+  describe('eviction dataset', () => {
+    it('converts the object into a field string', () => {
+      const mock = filterMocks('EVICTION')
+      let condition0Filters = [mock]
+
+      const conditions = {
+        '0': new Condition({ type: 'AND', filters: condition0Filters }),
+      }
+
+      const result = `*condition_0=AND filter_0=evictions__count__gte=1,evictions__executeddate__gte=${todayminus1year},evictions__executeddate__lte=${todayplus1year}`
+      expect(a.convertConditionMappingToQ(undefined, conditions)).toEqual(result)
+    })
+  })
+
+  describe('dob issued permits dataset', () => {
+    it('converts the object into a field string', () => {
+      const mock = filterMocks('DOB_ISSUED_PERMIT')
+      let condition0Filters = [mock]
+
+      const conditions = {
+        '0': new Condition({ type: 'AND', filters: condition0Filters }),
+      }
+
+      const result = `*condition_0=AND filter_0=dobissuedpermits__count__gte=5,dobissuedpermits__issuedate__gte=${todayminus1year},dobissuedpermits__issuedate__lte=${todayplus1year}`
+      expect(a.convertConditionMappingToQ(undefined, conditions)).toEqual(result)
+    })
+  })
+
+  describe('dob filed permits dataset', () => {
+    it('converts the object into a field string', () => {
+      const mock = filterMocks('DOB_FILED_PERMIT')
+      let condition0Filters = [mock]
+
+      const conditions = {
+        '0': new Condition({ type: 'AND', filters: condition0Filters }),
+      }
+
+      const result = `*condition_0=AND filter_0=dobfiledpermits__count__gte=5,dobfiledpermits__dobrundate__gte=${todayminus1year},dobfiledpermits__dobrundate__lte=${todayplus1year}`
+      expect(a.convertConditionMappingToQ(undefined, conditions)).toEqual(result)
+    })
+  })
+
+  describe('housing litigations dataset', () => {
+    it('converts the object into a field string', () => {
+      const mock = filterMocks('HOUSING_LITIGATION')
+      let condition0Filters = [mock]
+
+      const conditions = {
+        '0': new Condition({ type: 'AND', filters: condition0Filters }),
+      }
+
+      const result = `*condition_0=AND filter_0=housinglitigations__count__gte=1,housinglitigations__caseopendate__gte=${todayminus1year},housinglitigations__caseopendate__lte=${todayplus1year}`
+      expect(a.convertConditionMappingToQ(undefined, conditions)).toEqual(result)
+    })
   })
 })

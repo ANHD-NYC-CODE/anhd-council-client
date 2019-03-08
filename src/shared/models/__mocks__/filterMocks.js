@@ -5,7 +5,7 @@ export const createFilterMock = ({ constant = '' } = {}) => {
   const filter = new Filter({
     datasetConstant: constant,
   })
-  filter.paramsObject[constantToQueryName(filter.constant)].createOppositeRangeMap()
+  filter.paramsObject[constantToQueryName(constant)].createOppositeRangeMap()
   return filter
 }
 
@@ -46,6 +46,18 @@ export const filterMocks = constant => {
     case 'FORECLOSURE':
       return createFilterMock({
         constant: 'FORECLOSURE',
+      })
+    case 'DOB_ISSUED_PERMIT':
+      return createFilterMock({
+        constant: 'DOB_ISSUED_PERMIT',
+      })
+    case 'DOB_FILED_PERMIT':
+      return createFilterMock({
+        constant: 'DOB_FILED_PERMIT',
+      })
+    case 'HOUSING_LITIGATION':
+      return createFilterMock({
+        constant: 'HOUSING_LITIGATION',
       })
   }
 }
