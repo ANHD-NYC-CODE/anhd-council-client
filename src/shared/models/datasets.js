@@ -83,6 +83,7 @@ export const EVICTION = {
     dateFieldQuery: 'executeddate',
     amountFieldQuery: 'count',
     capitalizeDepartment: false,
+    defaultAmount: 1,
   }),
   languageModule: new LanguageModule({
     noun: constantToName({ constant: 'EVICTION', capitalizeDepartment: false, plural: true }),
@@ -93,7 +94,8 @@ export const PROPERTY_SALE_BY_AMOUNT = {
   id: 'PROPERTY_SALE_BY_AMOUNT',
   apiMap: new ApiMap({ constant: 'ACRIS_REAL_LEGAL' }),
   schema: constructDefaultSchema({
-    constant: 'ACRIS_REAL_LEGAL',
+    constant: 'PROPERTY_SALE_BY_AMOUNT',
+    apiField: 'acrisreallegals',
     dateFieldQuery: 'documentid__docdate',
     amountFieldQuery: 'documentid__docamount',
     amountNoun: '',
@@ -110,7 +112,8 @@ export const PROPERTY_SALE_BY_COUNT = {
   id: 'PROPERTY_SALE_BY_COUNT',
   apiMap: new ApiMap({ constant: 'ACRIS_REAL_LEGAL' }),
   schema: constructDefaultSchema({
-    constant: 'ACRIS_REAL_LEGAL',
+    constant: 'PROPERTY_SALE_BY_COUNT',
+    apiField: 'acrisreallegals',
     dateFieldQuery: 'documentid__docdate',
     amountFieldQuery: 'documentid__count',
     amountPropertyAdjective: 'have been sold',
@@ -126,11 +129,12 @@ export const FORECLOSURE = {
   id: 'FORECLOSURE',
   apiMap: new ApiMap({ constant: 'LISPENDEN' }),
   schema: constructDefaultSchema({
-    constant: 'LISPENDEN',
+    constant: 'FORECLOSURE',
+    apiField: 'lispendens',
     dateFieldQuery: 'fileddate',
     amountFieldQuery: 'count',
     defaultAmount: '1',
-    capitalizeDepartment: true,
+    capitalizeDepartment: false,
     hiddenParamMap: new ParameterMapping({
       component: GenericFieldSet,
       baseComponent: HiddenField,
@@ -141,5 +145,50 @@ export const FORECLOSURE = {
   }),
   languageModule: new LanguageModule({
     noun: constantToName({ constant: 'FORECLOSURE', capitalizeDepartment: false, plural: true }),
+  }),
+}
+
+export const DOB_ISSUED_PERMIT = {
+  id: 'DOB_ISSUED_PERMIT',
+  apiMap: new ApiMap({ constant: 'DOB_ISSUED_PERMIT' }),
+  schema: constructDefaultSchema({
+    constant: 'DOB_ISSUED_PERMIT',
+    dateFieldQuery: 'issuedate',
+    amountFieldQuery: 'count',
+    capitalizeDepartment: true,
+    defaultAmount: 5,
+  }),
+  languageModule: new LanguageModule({
+    noun: constantToName({ constant: 'DOB_ISSUED_PERMIT', capitalizeDepartment: true, plural: true }),
+  }),
+}
+
+export const DOB_FILED_PERMIT = {
+  id: 'DOB_FILED_PERMIT',
+  apiMap: new ApiMap({ constant: 'DOB_FILED_PERMIT' }),
+  schema: constructDefaultSchema({
+    constant: 'DOB_FILED_PERMIT',
+    dateFieldQuery: 'dobrundate',
+    amountFieldQuery: 'count',
+    capitalizeDepartment: true,
+    defaultAmount: 5,
+  }),
+  languageModule: new LanguageModule({
+    noun: constantToName({ constant: 'DOB_FILED_PERMIT', capitalizeDepartment: true, plural: true }),
+  }),
+}
+
+export const HOUSING_LITIGATION = {
+  id: 'HOUSING_LITIGATION',
+  apiMap: new ApiMap({ constant: 'HOUSING_LITIGATION' }),
+  schema: constructDefaultSchema({
+    constant: 'HOUSING_LITIGATION',
+    dateFieldQuery: 'caseopendate',
+    amountFieldQuery: 'count',
+    capitalizeDepartment: false,
+    defaultAmount: 1,
+  }),
+  languageModule: new LanguageModule({
+    noun: constantToName({ constant: 'HOUSING_LITIGATION', capitalizeDepartment: false, plural: true }),
   }),
 }

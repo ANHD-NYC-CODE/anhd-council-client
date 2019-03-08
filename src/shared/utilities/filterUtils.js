@@ -31,6 +31,7 @@ export const constantToName = ({ constant = '', plural = true, capitalizeDepartm
 
 export const constructDefaultSchema = ({
   constant = '',
+  apiField = undefined,
   dateFieldQuery = '',
   defaultDate = '',
   amountFieldQuery = '',
@@ -65,7 +66,9 @@ export const constructDefaultSchema = ({
             valuePrefix: amountValuePrefix,
             valueSuffix: amountValueSuffix,
           }),
-          field: `${constantToQueryName(constant)}${amountFieldQuery ? '__' + amountFieldQuery : ''}`,
+          field: `${apiField ? apiField : constantToQueryName(constant)}${
+            amountFieldQuery ? '__' + amountFieldQuery : ''
+          }`,
           comparison: 'gte',
           value: defaultAmount || '5',
         }),
@@ -88,7 +91,7 @@ export const constructDefaultSchema = ({
             'DATE',
             `${constantToQueryName(constant)}Range`
           ),
-          field: `${constantToQueryName(constant)}${dateFieldQuery ? '__' + dateFieldQuery : ''}`,
+          field: `${apiField ? apiField : constantToQueryName(constant)}${dateFieldQuery ? '__' + dateFieldQuery : ''}`,
           comparison: 'gte',
           value:
             defaultDate ||
@@ -115,7 +118,7 @@ export const constructDefaultSchema = ({
             'DATE',
             'hpdviolationsRange'
           ),
-          field: `${constantToQueryName(constant)}${dateFieldQuery ? '__' + dateFieldQuery : ''}`,
+          field: `${apiField ? apiField : constantToQueryName(constant)}${dateFieldQuery ? '__' + dateFieldQuery : ''}`,
           comparison: 'lte',
           value:
             defaultDate ||
