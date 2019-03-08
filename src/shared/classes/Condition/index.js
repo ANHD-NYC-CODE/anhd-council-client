@@ -1,3 +1,5 @@
+import { StandardizedInput } from 'shared/classes/StandardizedInput'
+
 export class Condition {
   constructor({ key = undefined, type = undefined, filters = [] } = {}) {
     this._key = key
@@ -23,6 +25,17 @@ export class Condition {
 
   set filters(filters) {
     this._filters = filters
+  }
+
+  toggleAndOrConditionType(e) {
+    if (e && !(e instanceof StandardizedInput))
+      throw 'please pass a StandardizedInput class instance into the "e" parameter'
+
+    if (e.value.toUpperCase() === 'AND') {
+      this._type = 'OR'
+    } else if (e.value.toUpperCase() === 'OR') {
+      this._type = 'AND'
+    }
   }
 
   hasCondition() {

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { StandardizedInput } from 'shared/classes/StandardizedInput'
 
-import { Button, Form } from 'react-bootstrap'
+import { InputGroup, Button, Form } from 'react-bootstrap'
 import RangeFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/RangeFieldSet'
 
 const MultiTypeFieldGroup = props => {
@@ -63,26 +63,28 @@ const MultiTypeFieldGroup = props => {
       ) : (
         <Form.Label>{props.paramSet.props.label}</Form.Label>
       )}
-      {props.paramSet.paramMaps.map((paramMap, paramMapIndex) => {
-        if (paramMap.rangeKey && props.paramSet.paramMaps.filter(paramMap => paramMap.rangeKey).length === 2) {
-          // Only render range field once
-          if (paramMap.rangePosition === 1) {
-            return renderRangeFields(props, paramMap.rangeKey)
+      <Form.Row>
+        {props.paramSet.paramMaps.map((paramMap, paramMapIndex) => {
+          if (paramMap.rangeKey && props.paramSet.paramMaps.filter(paramMap => paramMap.rangeKey).length === 2) {
+            // Only render range field once
+            if (paramMap.rangePosition === 1) {
+              return renderRangeFields(props, paramMap.rangeKey)
+            } else {
+              return null
+            }
           } else {
-            return null
+            return paramMap.component({
+              dispatchAction: props.dispatchAction,
+              key: `paramSet-${props.paramSetIndex}-paramMap-component-${paramMapIndex}`,
+              options: paramMap.options,
+              paramMap: paramMap,
+              paramMapIndex: paramMapIndex,
+              rangeChange: rangeChange,
+              type: paramMap.props.type,
+            })
           }
-        } else {
-          return paramMap.component({
-            dispatchAction: props.dispatchAction,
-            key: `paramSet-${props.paramSetIndex}-paramMap-component-${paramMapIndex}`,
-            options: paramMap.options,
-            paramMap: paramMap,
-            paramMapIndex: paramMapIndex,
-            rangeChange: rangeChange,
-            type: paramMap.props.type,
-          })
-        }
-      })}
+        })}
+      </Form.Row>
       {!!props.paramSet.allowActions && !!props.paramSet.paramMaps.length && (
         <Button variant="danger" onClick={() => props.paramSet.deleteAll({ dispatchAction: props.dispatchAction })}>
           -
