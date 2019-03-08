@@ -1,6 +1,7 @@
 import * as c from '../constants'
 import { Condition } from 'shared/classes/Condition'
 import { ConditionFilter } from 'shared/classes/ConditionFilter'
+import { cloneInstance } from 'shared/utilities/classUtils'
 
 export const initialState = {
   conditions: {
@@ -27,6 +28,15 @@ export const advancedSearchReducer = (state = Object.freeze(initialState), actio
       return {
         ...state,
         conditions: { ...newConditions, [action.conditionKey]: newCondition },
+      }
+    }
+    case c.CHANGE_CONDITION_TYPE: {
+      const changedCondition = cloneInstance(state.conditions[action.conditionKey])
+      changedCondition.type = action.conditionType
+
+      return {
+        ...state,
+        conditions: { ...state.conditions, [action.conditionKey]: changedCondition },
       }
     }
     case c.UPDATE_CONDITION: {

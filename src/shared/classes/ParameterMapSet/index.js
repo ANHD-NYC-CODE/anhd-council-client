@@ -144,12 +144,13 @@ export class ParameterMapSet {
   updateSpecific({ dispatchAction = undefined, paramMapIndex = undefined, paramMap = undefined, e = undefined } = {}) {
     if (!paramMap && paramMapIndex !== 0 && !paramMap)
       throw 'please pass a paramMapIndex or a paramMap instance as a key parameter'
+    if (!(e instanceof StandardizedInput)) throw 'please pass a StandardizedInput class instance into the "e" parameter'
 
     let updated
     if (paramMap) {
-      updated = paramMap.updateParameterMapValue(new StandardizedInput(e).value)
+      updated = paramMap.updateParameterMapValue(e)
     } else {
-      updated = this.paramMaps[paramMapIndex].updateParameterMapValue(new StandardizedInput(e).value)
+      updated = this.paramMaps[paramMapIndex].updateParameterMapValue(new e())
     }
 
     if (dispatchAction) {

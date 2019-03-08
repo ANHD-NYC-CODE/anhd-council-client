@@ -165,9 +165,10 @@ export const DOB_ISSUED_PERMIT = {
 
 export const DOB_FILED_PERMIT = {
   id: 'DOB_FILED_PERMIT',
-  apiMap: new ApiMap({ constant: 'DOB_FILED_PERMIT' }),
+  apiMap: new ApiMap({ constant: 'DOB_LEGACY_FILED_PERMIT' }),
   schema: constructDefaultSchema({
     constant: 'DOB_FILED_PERMIT',
+    apiField: 'doblegacyfiledpermits',
     dateFieldQuery: 'dobrundate',
     amountFieldQuery: 'count',
     capitalizeDepartment: true,

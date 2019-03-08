@@ -13,6 +13,10 @@ export class Condition {
     return this._type
   }
 
+  set type(type) {
+    this._type = type
+  }
+
   get filters() {
     return this._filters
   }

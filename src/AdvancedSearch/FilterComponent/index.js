@@ -1,36 +1,24 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Filter } from 'shared/classes/Filter'
-import * as d from 'shared/models/datasets'
 
-import CustomSelect from 'shared/components/CustomSelect'
 import { Button } from 'react-bootstrap'
 
-class FilterComponent extends React.Component {
+export class FilterComponent extends React.Component {
   constructor(props) {
     super(props)
 
     this.initialState = {
       creatingFilter: false,
-      dataset: this.props.dataset,
       filter: this.props.filter,
     }
 
     this.state = this.initialState
 
-    this.constructFilter = this.constructFilter.bind(this)
     this.removeFilter = this.removeFilter.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ filter: nextProps.filter, dataset: nextProps.dataset })
-  }
-
-  constructFilter(datasetConstant) {
-    const newFilter = new Filter({ datasetConstant })
-    this.props.condition.addFilter({ filter: newFilter })
-    this.setState({ creatingFilter: false })
-    this.props.dispatchAction()
+    this.setState({ filter: nextProps.filter })
   }
 
   removeFilter() {
@@ -39,25 +27,9 @@ class FilterComponent extends React.Component {
   }
 
   render() {
-    const datasetOptions = Object.entries(d).map(ds => {
-      return {
-        value: ds[1].id,
-        label: ds[1].languageModule.noun,
-      }
-    })
-
     return (
       <div className="filter">
         <div>
-          {this.state.creatingFilter && (
-            <div>
-              <CustomSelect options={datasetOptions} onChange={e => this.constructFilter(e.value)} size="sm" />
-              <Button variant="warning" onClick={() => this.setState({ creatingFilter: false })}>
-                Cancel
-              </Button>
-            </div>
-          )}
-
           {this.props.filter &&
             Object.keys(this.props.filter.paramsObject).map((paramsSetKey, paramSetIndex) =>
               this.props.filter.paramsObject[paramsSetKey].component({
@@ -68,11 +40,7 @@ class FilterComponent extends React.Component {
               })
             )}
         </div>
-        {!this.props.filter && !this.state.creatingFilter && (
-          <Button onClick={() => this.setState({ creatingFilter: true })} variant="outline-success">
-            Add Filter
-          </Button>
-        )}
+
         {this.props.filter && (
           <Button onClick={this.removeFilter} variant="outline-danger">
             Remove Filter
@@ -85,7 +53,6 @@ class FilterComponent extends React.Component {
 
 FilterComponent.propTypes = {
   conditionKey: PropTypes.string,
-  dataset: PropTypes.object,
   dispatchAction: PropTypes.func,
   filterIndex: PropTypes.number,
 }

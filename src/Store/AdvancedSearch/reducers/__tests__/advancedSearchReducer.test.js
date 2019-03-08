@@ -32,6 +32,28 @@ describe('Advanced Search reducer', () => {
     })
   })
 
+  describe('CHANGE_CONDITION_TYPE', () => {
+    describe('condition0', () => {
+      it('changes the condition type', () => {
+        const state = {
+          ...r.initialState,
+          conditions: {
+            '0': new Condition({ key: '0', type: 'AND', filters: [] }),
+          },
+        }
+        const expectedCondition0 = new Condition({
+          key: '0',
+          type: 'OR',
+          filters: [],
+        })
+        expect(r.advancedSearchReducer(state, a.changeConditionType('0', 'OR'))).toEqual({
+          ...r.initialState,
+          conditions: { '0': expectedCondition0 },
+        })
+      })
+    })
+  })
+
   describe('REMOVE_CONDITION', () => {
     const state = {
       ...r.initialState,
