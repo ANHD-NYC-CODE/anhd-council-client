@@ -5,10 +5,19 @@ import { ParameterMapSet } from 'shared/classes/ParameterMapSet'
 import { ParameterMapping } from 'shared/classes/ParameterMapping'
 import { filterMocks } from 'shared/models/__mocks__/filterMocks'
 import { Condition } from 'shared/classes/Condition'
+import moment from 'moment'
+
+const todayminus1year = moment(moment.now())
+  .subtract(1, 'Y')
+  .format('YYYY-MM-DD')
+
+const todayplus1year = moment(moment.now())
+  .add(1, 'Y')
+  .format('YYYY-MM-DD')
 
 describe('transformStateIntoParamObject', () => {
   it('transforms the state to a params object', () => {
-    let condition0Filters = [filterMocks['HPD_VIOLATION']]
+    let condition0Filters = [filterMocks('HPD_VIOLATION')]
 
     const conditions = {
       '0': new Condition({ type: 'AND', filters: condition0Filters }),
@@ -41,8 +50,7 @@ describe('transformStateIntoParamObject', () => {
     const datasetsConfig = []
     const result = u.transformStateIntoParamObject(datasetsConfig, advancedSearch)
     const expected = {
-      q:
-        '*condition_0=AND filter_0=hpdviolations__count__gte=10,hpdviolations__approveddate__gte=2017-01-01,hpdviolations__approveddate__lte=2018-01-01',
+      q: `*condition_0=AND filter_0=hpdviolations__count__gte=5,hpdviolations__approveddate__gte=${todayminus1year},hpdviolations__approveddate__lte=${todayplus1year}`,
       council: '1',
       cd: '1',
       housingtype: 'mr',

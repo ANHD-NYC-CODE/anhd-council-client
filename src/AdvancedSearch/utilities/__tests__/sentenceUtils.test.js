@@ -7,12 +7,20 @@ import { ConditionFilter } from 'shared/classes/ConditionFilter'
 import { filterMocks } from 'shared/models/__mocks__/filterMocks'
 import moment from 'moment'
 
+const todayminus1year = moment(moment.now())
+  .subtract(1, 'Y')
+  .format('MM/DD/YYYY')
+
+const todayplus1year = moment(moment.now())
+  .add(1, 'Y')
+  .format('MM/DD/YYYY')
+
 describe('convertFilterToSentence', () => {
   describe('from/to', () => {
     it('converts the object into a field string', () => {
-      const object = filterMocks['HPD_VIOLATION']
+      const object = filterMocks('HPD_VIOLATION')
 
-      const result = ` at least 10 ${d.HPDVIOLATIONS.name} between 01/01/2017 and 01/01/2018`
+      const result = ` have at least 5 ${d.HPDVIOLATIONS.name} between ${todayminus1year} and ${todayplus1year}`
       expect(a.convertFilterToSentence(object)).toEqual(result)
     })
   })
@@ -24,12 +32,11 @@ describe('convertConditionMappingToSentence', () => {
       const conditions = {
         '0': new Condition({
           type: 'AND',
-          filters: [filterMocks['HPD_VIOLATION'], filterMocks['DOB_VIOLATION']],
+          filters: [filterMocks('HPD_VIOLATION'), filterMocks('DOB_VIOLATION')],
         }),
       }
 
-      const result =
-        'have at least 10 HPD Violations between 01/01/2017 and 01/01/2018 and at least 10 DOB Violations between 01/01/2017 and 01/01/2018.'
+      const result = ` have at least 5 HPD Violations between ${todayminus1year} and ${todayplus1year} and have at least 5 DOB Violations between ${todayminus1year} and ${todayplus1year}.`
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
@@ -39,12 +46,11 @@ describe('convertConditionMappingToSentence', () => {
       const conditions = {
         '0': new Condition({
           type: 'OR',
-          filters: [filterMocks['HPD_VIOLATION'], filterMocks['DOB_VIOLATION']],
+          filters: [filterMocks('HPD_VIOLATION'), filterMocks('DOB_VIOLATION')],
         }),
       }
 
-      const result =
-        'have at least 10 HPD Violations between 01/01/2017 and 01/01/2018 or at least 10 DOB Violations between 01/01/2017 and 01/01/2018.'
+      const result = ` have at least 5 HPD Violations between ${todayminus1year} and ${todayplus1year} or have at least 5 DOB Violations between ${todayminus1year} and ${todayplus1year}.`
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
@@ -55,17 +61,16 @@ describe('convertConditionMappingToSentence', () => {
         '0': new Condition({
           key: '0',
           type: 'AND',
-          filters: [filterMocks['HPD_VIOLATION'], new ConditionFilter({ conditionGroup: '1' })],
+          filters: [filterMocks('HPD_VIOLATION'), new ConditionFilter({ conditionGroup: '1' })],
         }),
         '1': new Condition({
           key: '1',
           type: 'OR',
-          filters: [filterMocks['DOB_VIOLATION'], filterMocks['ECB_VIOLATION']],
+          filters: [filterMocks('DOB_VIOLATION'), filterMocks('ECB_VIOLATION')],
         }),
       }
 
-      const result =
-        'have at least 10 HPD Violations between 01/01/2017 and 01/01/2018 and that either have at least 10 DOB Violations between 01/01/2017 and 01/01/2018 or at least 10 ECB Violations between 01/01/2017 and 01/01/2018.'
+      const result = ` have at least 5 HPD Violations between ${todayminus1year} and ${todayplus1year} and that either have at least 5 DOB Violations between ${todayminus1year} and ${todayplus1year} or have at least 5 ECB Violations between ${todayminus1year} and ${todayplus1year}.`
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
@@ -76,17 +81,16 @@ describe('convertConditionMappingToSentence', () => {
         '0': new Condition({
           key: '0',
           type: 'OR',
-          filters: [filterMocks['HPD_VIOLATION'], new ConditionFilter({ conditionGroup: '1' })],
+          filters: [filterMocks('HPD_VIOLATION'), new ConditionFilter({ conditionGroup: '1' })],
         }),
         '1': new Condition({
           key: '1',
           type: 'AND',
-          filters: [filterMocks['DOB_VIOLATION'], filterMocks['ECB_VIOLATION']],
+          filters: [filterMocks('DOB_VIOLATION'), filterMocks('ECB_VIOLATION')],
         }),
       }
 
-      const result =
-        'have at least 10 HPD Violations between 01/01/2017 and 01/01/2018 or that have at least 10 DOB Violations between 01/01/2017 and 01/01/2018 and at least 10 ECB Violations between 01/01/2017 and 01/01/2018.'
+      const result = ` have at least 5 HPD Violations between ${todayminus1year} and ${todayplus1year} or that have at least 5 DOB Violations between ${todayminus1year} and ${todayplus1year} and have at least 5 ECB Violations between ${todayminus1year} and ${todayplus1year}.`
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
@@ -97,26 +101,25 @@ describe('convertConditionMappingToSentence', () => {
         '0': new Condition({
           key: '0',
           type: 'AND',
-          filters: [filterMocks['HPD_VIOLATION'], new ConditionFilter({ conditionGroup: '1' })],
+          filters: [filterMocks('HPD_VIOLATION'), new ConditionFilter({ conditionGroup: '1' })],
         }),
         '2': new Condition({
           key: '2',
           type: 'AND',
-          filters: [filterMocks['HPD_COMPLAINT'], filterMocks['DOB_COMPLAINT']],
+          filters: [filterMocks('HPD_COMPLAINT'), filterMocks('DOB_COMPLAINT')],
         }),
         '1': new Condition({
           key: '1',
           type: 'OR',
           filters: [
-            filterMocks['DOB_VIOLATION'],
-            filterMocks['ECB_VIOLATION'],
+            filterMocks('DOB_VIOLATION'),
+            filterMocks('ECB_VIOLATION'),
             new ConditionFilter({ conditionGroup: '2' }),
           ],
         }),
       }
 
-      const result =
-        'have at least 10 HPD Violations between 01/01/2017 and 01/01/2018 and that either have at least 10 DOB Violations between 01/01/2017 and 01/01/2018 or at least 10 ECB Violations between 01/01/2017 and 01/01/2018 or that have at least 10 HPD Complaints between 01/01/2017 and 01/01/2018 and at least 10 DOB Complaints between 01/01/2017 and 01/01/2018.'
+      const result = ` have at least 5 HPD Violations between ${todayminus1year} and ${todayplus1year} and that either have at least 5 DOB Violations between ${todayminus1year} and ${todayplus1year} or have at least 5 ECB Violations between ${todayminus1year} and ${todayplus1year} or that have at least 5 HPD Complaints between ${todayminus1year} and ${todayplus1year} and have at least 5 DOB Complaints between ${todayminus1year} and ${todayplus1year}.`
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
@@ -127,19 +130,19 @@ describe('convertConditionMappingToSentence', () => {
         '0': new Condition({
           key: '0',
           type: 'AND',
-          filters: [filterMocks['HPD_VIOLATION'], new ConditionFilter({ conditionGroup: '1' })],
+          filters: [filterMocks('HPD_VIOLATION'), new ConditionFilter({ conditionGroup: '1' })],
         }),
         '3': new Condition({
           key: '1',
           type: 'OR',
-          filters: [filterMocks['EVICTION'], filterMocks['HPD_VIOLATION']],
+          filters: [filterMocks('EVICTION'), filterMocks('HPD_VIOLATION')],
         }),
         '2': new Condition({
           key: '2',
           type: 'AND',
           filters: [
-            filterMocks['HPD_COMPLAINT'],
-            filterMocks['DOB_COMPLAINT'],
+            filterMocks('HPD_COMPLAINT'),
+            filterMocks('DOB_COMPLAINT'),
             new ConditionFilter({ conditionGroup: '3' }),
           ],
         }),
@@ -147,15 +150,14 @@ describe('convertConditionMappingToSentence', () => {
           key: '1',
           type: 'OR',
           filters: [
-            filterMocks['DOB_VIOLATION'],
-            filterMocks['ECB_VIOLATION'],
+            filterMocks('DOB_VIOLATION'),
+            filterMocks('ECB_VIOLATION'),
             new ConditionFilter({ conditionGroup: '2' }),
           ],
         }),
       }
 
-      const result =
-        'have at least 10 HPD Violations between 01/01/2017 and 01/01/2018 and that either have at least 10 DOB Violations between 01/01/2017 and 01/01/2018 or at least 10 ECB Violations between 01/01/2017 and 01/01/2018 or that have at least 10 HPD Complaints between 01/01/2017 and 01/01/2018 and at least 10 DOB Complaints between 01/01/2017 and 01/01/2018 and that either have at least 10 Evictions between 01/01/2017 and 01/01/2018 or at least 10 HPD Violations between 01/01/2017 and 01/01/2018.'
+      const result = ` have at least 5 HPD Violations between ${todayminus1year} and ${todayplus1year} and that either have at least 5 DOB Violations between ${todayminus1year} and ${todayplus1year} or have at least 5 ECB Violations between ${todayminus1year} and ${todayplus1year} or that have at least 5 HPD Complaints between ${todayminus1year} and ${todayplus1year} and have at least 5 DOB Complaints between ${todayminus1year} and ${todayplus1year} and that either have at least 5 Evictions between ${todayminus1year} and ${todayplus1year} or have at least 5 HPD Violations between ${todayminus1year} and ${todayplus1year}.`
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
@@ -167,7 +169,7 @@ describe('convertConditionMappingToSentence', () => {
           key: '0',
           type: 'AND',
           filters: [
-            filterMocks['HPD_VIOLATION'],
+            filterMocks('HPD_VIOLATION'),
             new ConditionFilter({ conditionGroup: '1' }),
             new ConditionFilter({ conditionGroup: '2' }),
           ],
@@ -175,17 +177,16 @@ describe('convertConditionMappingToSentence', () => {
         '2': new Condition({
           key: '2',
           type: 'OR',
-          filters: [filterMocks['HPD_COMPLAINT'], filterMocks['DOB_COMPLAINT']],
+          filters: [filterMocks('HPD_COMPLAINT'), filterMocks('DOB_COMPLAINT')],
         }),
         '1': new Condition({
           key: '1',
           type: 'OR',
-          filters: [filterMocks['DOB_VIOLATION'], filterMocks['ECB_VIOLATION']],
+          filters: [filterMocks('DOB_VIOLATION'), filterMocks('ECB_VIOLATION')],
         }),
       }
 
-      const result =
-        'have at least 10 HPD Violations between 01/01/2017 and 01/01/2018 and that either have at least 10 DOB Violations between 01/01/2017 and 01/01/2018 or at least 10 ECB Violations between 01/01/2017 and 01/01/2018 and that either have at least 10 HPD Complaints between 01/01/2017 and 01/01/2018 or at least 10 DOB Complaints between 01/01/2017 and 01/01/2018.'
+      const result = ` have at least 5 HPD Violations between ${todayminus1year} and ${todayplus1year} and that either have at least 5 DOB Violations between ${todayminus1year} and ${todayplus1year} or have at least 5 ECB Violations between ${todayminus1year} and ${todayplus1year} and that either have at least 5 HPD Complaints between ${todayminus1year} and ${todayplus1year} or have at least 5 DOB Complaints between ${todayminus1year} and ${todayplus1year}.`
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
@@ -196,41 +197,30 @@ describe('convertConditionMappingToSentence', () => {
         '0': new Condition({
           key: '0',
           type: 'AND',
-          filters: [filterMocks['PROPERTY_SALE_BY_AMOUNT']],
+          filters: [filterMocks('PROPERTY_SALE_BY_AMOUNT')],
         }),
       }
 
-      const result = 'have sold for at least $10 between 01/01/2017 and 01/01/2018.'
+      const result = ` sold for at least $1000000 between ${todayminus1year} and ${todayplus1year}.`
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
-  //
-  //   describe('Sold Times', () => {
-  //     it('converts the object into a sentence', () => {
-  //       let condition0Filters = [d.SOLDTIMES, d.HPDVIOLATIONS].map(ds => {
-  //         return {
-  //           dataset: ds,
-  //           comparison: 'gte',
-  //           value: '2',
-  //           startDate: '2017-01-01',
-  //           endDate: '2018-01-01',
-  //         }
-  //       })
-  //
-  //       const conditions = {
-  //         '0': {
-  //           type: 'AND',
-  //           filters: condition0Filters,
-  //         },
-  //       }
-  //
-  //       const result =
-  //         'have been sold at least 2 times between 01/01/2017 and 01/01/2018 and at least 2 HPD Violations between 01/01/2017 and 01/01/2018.'
-  //       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
-  //     })
-  //   })
-  // })
-  //
+
+  describe('Sold Times', () => {
+    it('converts the object into a sentence', () => {
+      const conditions = {
+        '0': new Condition({
+          key: '0',
+          type: 'AND',
+          filters: [filterMocks('PROPERTY_SALE_BY_COUNT')],
+        }),
+      }
+
+      const result = ` have been sold at least 2 times between ${todayminus1year} and ${todayplus1year}.`
+      expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
+    })
+  })
+
   describe('convertBoundariesToSentence', () => {
     describe('1 boundary', () => {
       it('converts the object into a sentence', () => {
@@ -299,7 +289,6 @@ describe('convertConditionMappingToSentence', () => {
           housingType: 'RENT_REGULATED',
         })
         housingType1.paramsObject['coresubsidyrecord__enddate'].createAll()
-        // housingType1.paramsObject['coresubsidyrecord__enddate'].create()
         const housingTypes = [housingType1]
 
         const result = `Rent Regulated properties expiring between ${moment(moment.now()).format(

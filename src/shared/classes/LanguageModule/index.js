@@ -1,16 +1,8 @@
 export class LanguageModule {
-  constructor({
-    type = 'AMOUNT',
-    noun = undefined,
-    propertyAdjective = '',
-    datePropertyAdjective = '',
-    valuePrefix = '',
-    valueSuffix = '',
-  } = {}) {
+  constructor({ type = 'AMOUNT', noun = undefined, propertyAdjective = '', valuePrefix = '', valueSuffix = '' } = {}) {
     this._type = type
     this._noun = noun
     this._propertyAdjective = propertyAdjective
-    this._datePropertyAdjective = datePropertyAdjective
     this._valuePrefix = valuePrefix
     this._valueSuffix = valueSuffix
   }
@@ -37,14 +29,6 @@ export class LanguageModule {
 
   set propertyAdjective(propertyAdjective) {
     this._propertyAdjective = propertyAdjective
-  }
-
-  get datePropertyAdjective() {
-    return this._datePropertyAdjective
-  }
-
-  set datePropertyAdjective(datePropertyAdjective) {
-    this._datePropertyAdjective = datePropertyAdjective
   }
 
   get valueSuffix() {

@@ -37,6 +37,12 @@ export const constructDefaultSchema = ({
   defaultAmount = '',
   capitalizeDepartment = true,
   noun = undefined,
+  amountNoun = undefined,
+  amountValuePrefix = undefined,
+  amountValueSuffix = undefined,
+  amountPropertyAdjective = undefined,
+  datePropertyAdjective = undefined,
+  hiddenParamMap = undefined,
 } = {}) => {
   return {
     [constantToQueryName(constant)]: new ParameterMapSet({
@@ -53,7 +59,11 @@ export const constructDefaultSchema = ({
           baseComponent: IntegerField,
           languageModule: new LanguageModule({
             type: 'AMOUNT',
-            noun: noun !== undefined ? noun : constantToName({ constant, plural: false, capitalizeDepartment }),
+            noun:
+              amountNoun !== undefined ? amountNoun : constantToName({ constant, plural: false, capitalizeDepartment }),
+            propertyAdjective: amountPropertyAdjective || 'have',
+            valuePrefix: amountValuePrefix,
+            valueSuffix: amountValueSuffix,
           }),
           field: `${constantToQueryName(constant)}${amountFieldQuery ? '__' + amountFieldQuery : ''}`,
           comparison: 'gte',
@@ -64,7 +74,8 @@ export const constructDefaultSchema = ({
           baseComponent: DateField,
           languageModule: new LanguageModule({
             type: 'DATE',
-            noun: constantToName({ constant, plural: false, capitalizeDepartment }),
+            noun: noun !== undefined ? noun : constantToName({ constant, plural: false, capitalizeDepartment }),
+            propertyAdjective: datePropertyAdjective,
           }),
           props: {
             type: 'date',
@@ -90,7 +101,8 @@ export const constructDefaultSchema = ({
           baseComponent: DateField,
           languageModule: new LanguageModule({
             type: 'DATE',
-            noun: constantToName({ constant, plural: false, capitalizeDepartment }),
+            noun: noun !== undefined ? noun : constantToName({ constant, plural: false, capitalizeDepartment }),
+            propertyAdjective: datePropertyAdjective,
           }),
           props: {
             type: 'date',
@@ -111,7 +123,8 @@ export const constructDefaultSchema = ({
               .add(1, 'Y')
               .format('YYYY-MM-DD'),
         }),
-      ],
+        hiddenParamMap,
+      ].filter(m => m),
     }),
   }
 }
