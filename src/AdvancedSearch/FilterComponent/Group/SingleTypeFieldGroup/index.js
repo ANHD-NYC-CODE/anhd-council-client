@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { cloneInstance } from 'shared/utilities/classUtils'
+import { StandardizedInput } from 'shared/classes/StandardizedInput'
 
 import { Button, Form } from 'react-bootstrap'
 import RangeFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/RangeFieldSet'
@@ -23,7 +24,7 @@ const renderRangeFields = (props, rangeKey) => {
       }
       props.dispatchAction()
     } else {
-      paramMap.update({ dispatchAction: props.dispatchAction, e: e })
+      paramMap.update({ dispatchAction: props.dispatchAction, e: new StandardizedInput(e) })
     }
   }
   const paramMapRangeGroup = props.paramSet.paramMaps.filter(paramMap => paramMap.rangeKey === rangeKey)
@@ -80,10 +81,7 @@ const SingleTypeFieldGroup = props => {
         }
       })}
       {!!props.paramSet.paramMaps.length && (
-        <Button
-          variant="danger"
-          onClick={() => props.paramSet.deleteAll({ dispatchAction: props.dispatchAction })}
-        >
+        <Button variant="danger" onClick={() => props.paramSet.deleteAll({ dispatchAction: props.dispatchAction })}>
           -
         </Button>
       )}

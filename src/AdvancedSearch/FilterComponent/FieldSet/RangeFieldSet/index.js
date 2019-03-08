@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import CustomSelect from 'shared/components/CustomSelect'
+import { StandardizedInput } from 'shared/classes/StandardizedInput'
 
 const comparisonReconfigure = (props, e) => {
   if (e.value.toUpperCase().match(/(LTE|END)/)) {
@@ -38,7 +39,7 @@ const RangeFieldSet = props => {
         .map((paramMap, paramMapIndex) => {
           return paramMap.baseComponent({
             key: `rangeGroup-paramMap-${paramMapIndex}`,
-            onChange: e => paramMap.update({ dispatchAction: props.dispatchAction, e }),
+            onChange: e => paramMap.update({ dispatchAction: props.dispatchAction, e: new StandardizedInput(e) }),
             paramMap: paramMap,
             type: paramMap.props.type,
           })

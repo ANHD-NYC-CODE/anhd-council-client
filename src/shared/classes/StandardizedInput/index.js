@@ -1,6 +1,6 @@
 export class StandardizedInput {
   constructor(e) {
-    this._value = this.cleanEvent(e)
+    this.cleanEvent(e)
   }
 
   cleanEvent(e) {
@@ -17,8 +17,8 @@ export class StandardizedInput {
       e.name = target.name
       e.value = target.value
     }
-
-    return { name: e.name, value: e.value }
+    this.name = e.name
+    this.value = e.value
   }
 
   get value() {

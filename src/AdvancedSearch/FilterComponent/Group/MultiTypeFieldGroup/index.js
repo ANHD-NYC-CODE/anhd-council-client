@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { StandardizedInput } from 'shared/classes/StandardizedInput'
 
 import { Button, Form } from 'react-bootstrap'
 import RangeFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/RangeFieldSet'
@@ -15,15 +16,15 @@ const MultiTypeFieldGroup = props => {
         .sort((a, b) => a.rangePosition - b.rangePosition)
         .forEach(pm => {
           if (pm.rangePosition === 1) {
-            pm.update({ e: { name: 'comparison', value: 'gte' } })
+            pm.update({ e: new StandardizedInput({ name: 'comparison', value: 'gte' }) })
           } else if (pm.rangePosition === 2) {
-            pm.update({ e: { name: 'comparison', value: 'lte' } })
+            pm.update({ e: new StandardizedInput({ name: 'comparison', value: 'lte' }) })
           }
         })
 
       props.dispatchAction()
     } else {
-      paramMap.update({ dispatchAction: props.dispatchAction, e: e })
+      paramMap.update({ dispatchAction: props.dispatchAction, e: new StandardizedInput(e) })
     }
   }
 

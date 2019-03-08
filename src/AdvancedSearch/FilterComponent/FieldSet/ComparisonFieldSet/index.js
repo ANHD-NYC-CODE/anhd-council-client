@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import CustomSelect from 'shared/components/CustomSelect'
+import { StandardizedInput } from 'shared/classes/StandardizedInput'
 
 const ComparisonFieldSet = props => {
   return (
@@ -11,7 +12,7 @@ const ComparisonFieldSet = props => {
         onChange={e =>
           props.paramMap.rangeKey
             ? props.rangeChange(props.paramMap, e)
-            : props.paramMap.update({ dispatchAction: props.dispatchAction, e: e })
+            : props.paramMap.update({ dispatchAction: props.dispatchAction, e: new StandardizedInput(e) })
         }
         size="sm"
         value={props.options.find(option => option.value === props.paramMap.comparison)}
@@ -19,7 +20,7 @@ const ComparisonFieldSet = props => {
       {props.paramMap.baseComponent({
         dispatchAction: props.dispatchAction,
         paramMap: props.paramMap,
-        onChange: e => props.paramMap.update({ dispatchAction: props.dispatchAction, e }),
+        onChange: e => props.paramMap.update({ dispatchAction: props.dispatchAction, e: new StandardizedInput(e) }),
         type: props.paramMap.props.type,
       })}
     </div>

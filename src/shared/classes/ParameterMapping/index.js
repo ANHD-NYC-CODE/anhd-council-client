@@ -114,7 +114,9 @@ export class ParameterMapping {
   }
 
   update({ dispatchAction = undefined, e = undefined } = {}) {
-    let updated = this.updateParameterMapValue(new StandardizedInput(e).value)
+    if (!(e instanceof StandardizedInput)) throw 'please pass a StandardizedInput class insance into the "e" parameter'
+
+    let updated = this.updateParameterMapValue(e)
 
     if (dispatchAction) {
       dispatchAction()

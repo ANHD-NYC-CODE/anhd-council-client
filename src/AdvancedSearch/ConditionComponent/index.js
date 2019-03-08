@@ -1,7 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import * as d from 'shared/models/datasets'
+import CustomSelect from 'shared/components/CustomSelect'
+import { Filter } from 'shared/classes/Filter'
+import { StandardizedInput } from 'shared/classes/StandardizedInput'
+
 import uuidv4 from 'uuid/v4'
-import { addNewCondition, updateCondition, removeCondition } from 'Store/AdvancedSearch/actions'
+import { addNewCondition, changeConditionType, updateCondition, removeCondition } from 'Store/AdvancedSearch/actions'
 import { Button } from 'react-bootstrap'
 
 import FilterComponent from 'AdvancedSearch/FilterComponent'
@@ -16,6 +21,13 @@ export class ConditionComponent extends React.Component {
     this.removeCondition = this.removeCondition.bind(this)
     this.containsCondition = this.containsCondition.bind(this)
     this.dispatchAction = this.dispatchAction.bind(this)
+    this.constructFilter = this.constructFilter.bind(this)
+    this.switchCondition = this.switchCondition.bind(this)
+
+    this.state = {
+      creatingFilter: false,
+      switchingCondition: false,
+    }
   }
 
   addCondition() {
@@ -34,7 +46,27 @@ export class ConditionComponent extends React.Component {
     return this.props.condition.filters.find(filter => filter.conditionGroup)
   }
 
+  constructFilter(datasetConstant) {
+    const newFilter = new Filter({ datasetConstant })
+    this.props.condition.addFilter({ filter: newFilter })
+    this.setState({ creatingFilter: false })
+    this.dispatchAction()
+  }
+
+  switchCondition(e) {
+    e = new StandardizedInput(e)
+    this.setState({ switchCondition: false })
+    this.props.dispatch(changeConditionType(this.props.condition.key, e.value))
+  }
+
   render() {
+    const datasetOptions = Object.entries(d).map(ds => {
+      return {
+        value: ds[1].id,
+        label: ds[1].languageModule.noun,
+      }
+    })
+
     const renderFilterOrCondition = (filter, filterIndex) => {
       if (filter.conditionGroup) {
         return (
@@ -52,7 +84,6 @@ export class ConditionComponent extends React.Component {
             dispatchAction={this.dispatchAction}
             conditionKey={this.props.condition.key}
             condition={this.props.condition}
-            dataset={filter.dataset}
             dispatch={this.props.dispatch}
             filter={filter}
             filterIndex={filterIndex}
@@ -64,7 +95,22 @@ export class ConditionComponent extends React.Component {
 
     return (
       <div className="condition">
-        <h1>{this.props.condition.type}</h1>
+        <Button className="switch-condition" onClick={() => this.setState({ switchingCondition: true })}>
+          {this.props.condition.type}
+        </Button>
+        {this.state.switchingCondition && (
+          <CustomSelect
+            options={[{ value: 'AND', label: 'AND' }, { value: 'OR', label: 'OR' }]}
+            onChange={e => this.switchCondition(e)}
+            size="sm"
+          />
+        )}
+        {!this.state.creatingFilter && (
+          <Button className="add-filter" onClick={() => this.setState({ creatingFilter: true })} variant="success">
+            +
+          </Button>
+        )}
+
         {!this.props.condition.hasCondition() && (
           <Button
             className="add-condition"
@@ -89,12 +135,18 @@ export class ConditionComponent extends React.Component {
           return renderFilterOrCondition(filter, conditionKey)
         })}
 
-        <FilterComponent
-          dispatchAction={this.dispatchAction}
-          dispatch={this.props.dispatch}
-          conditionKey={this.props.condition.key}
-          condition={this.props.condition}
-        />
+        {this.state.creatingFilter && (
+          <div>
+            <CustomSelect options={datasetOptions} onChange={e => this.constructFilter(e.value)} size="sm" />
+            <Button
+              className="cancel-filter"
+              variant="warning"
+              onClick={() => this.setState({ creatingFilter: false })}
+            >
+              Cancel
+            </Button>
+          </div>
+        )}
       </div>
     )
   }
