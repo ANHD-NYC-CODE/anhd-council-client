@@ -7,7 +7,7 @@ import { Form } from 'react-bootstrap'
 
 const IntegerField = props => {
   return (
-    <AutosizeInput
+    <Form.Control
       className=""
       key={props.key}
       min={0}

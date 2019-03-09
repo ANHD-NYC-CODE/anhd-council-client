@@ -5,8 +5,36 @@ import { StandardizedInput } from 'shared/classes/StandardizedInput'
 import { Form, InputGroup, Col, Row } from 'react-bootstrap'
 const ComparisonFieldSet = props => {
   return (
-    <Form.Row>
-      <Col className="comparison-fieldset" key={props.key}>
+    <Form.Row className="comparison-fieldset" key={props.key}>
+      <InputGroup as={Col} size="sm">
+        {props.paramMap.languageModule.propertyAdjective && (
+          <InputGroup.Append>
+            <InputGroup.Text>{props.paramMap.languageModule.propertyAdjective}</InputGroup.Text>
+          </InputGroup.Append>
+        )}
+        <Form.Control
+          name="comparison"
+          as="select"
+          data-range-key={props.paramMap.rangeKey}
+          onChange={e =>
+            props.paramMap.rangeKey
+              ? props.rangeChange(props.paramMap, e)
+              : props.paramMap.update({ dispatchAction: props.dispatchAction, e: new StandardizedInput(e) })
+          }
+        >
+          {props.options.map((option, index) => {
+            return (
+              <option
+                key={`paramMap-${props.paramMapIndex}-comparison-option-${index}`}
+                name={option.name}
+                value={option.value}
+              >
+                {option.label}
+              </option>
+            )
+          })}
+        </Form.Control>
+        {/*
         <CustomSelect
           name="comparison"
           options={props.options}
@@ -17,8 +45,8 @@ const ComparisonFieldSet = props => {
           }
           size="sm"
           value={props.options.find(option => option.value === props.paramMap.comparison)}
-        />
-      </Col>
+        /> */}
+      </InputGroup>
       <InputGroup as={Col} size="sm">
         {props.paramMap.baseComponent({
           dispatchAction: props.dispatchAction,
