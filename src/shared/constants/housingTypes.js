@@ -31,7 +31,7 @@ export const RENTSTABILZED = {
       defaults: [
         new ParameterMapping({
           component: ComparisonFieldSet,
-          baseComponent: PercentField,
+          baseComponent: IntegerField,
           languageModule: new LanguageModule({
             type: 'AMOUNT',
             noun: 'rent stabilized unit',

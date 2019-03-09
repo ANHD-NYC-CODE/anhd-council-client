@@ -16,16 +16,10 @@ export class StandardizedInput {
       const target = e.target
       e.name = target.name
       e.value = target.value
+      e.rangeKey = target.dataset ? target.dataset.rangeKey : undefined
     }
     this.name = e.name
     this.value = e.value
-  }
-
-  get value() {
-    return this._value
-  }
-
-  set value(value) {
-    this._value = value
+    this.rangeKey = e.rangeKey
   }
 }

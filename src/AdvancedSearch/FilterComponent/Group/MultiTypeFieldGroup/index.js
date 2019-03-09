@@ -9,6 +9,7 @@ import './style.scss'
 
 const MultiTypeFieldGroup = props => {
   const rangeChange = (paramMap, e) => {
+    e = new StandardizedInput(e)
     // When changing a comparison to range mode
     if (e.rangeKey && e.name === 'comparison' && e.value.toUpperCase().match(/(BETWEEN|RANGE)/)) {
       // Add the opposite paramMap based on 'rangePosition'
@@ -17,10 +18,21 @@ const MultiTypeFieldGroup = props => {
       props.paramSet.paramMaps
         .sort((a, b) => a.rangePosition - b.rangePosition)
         .forEach(pm => {
+          // Set param map comparison values back to default
           if (pm.rangePosition === 1) {
-            pm.update({ e: new StandardizedInput({ name: 'comparison', value: 'gte' }) })
+            pm.update({
+              e: new StandardizedInput({
+                name: 'comparison',
+                value: props.paramSet.defaults.find(pm2 => pm2.rangePosition === pm.rangePosition).comparison,
+              }),
+            })
           } else if (pm.rangePosition === 2) {
-            pm.update({ e: new StandardizedInput({ name: 'comparison', value: 'lte' }) })
+            pm.update({
+              e: new StandardizedInput({
+                name: 'comparison',
+                value: props.paramSet.defaults.find(pm2 => pm2.rangePosition === pm.rangePosition).comparison,
+              }),
+            })
           }
         })
 
