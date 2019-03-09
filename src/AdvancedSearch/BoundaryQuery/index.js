@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import * as b from 'shared/constants/boundaries'
 
 import CustomSelect from 'shared/components/CustomSelect'
-import { Form } from 'react-bootstrap'
+import { Form, InputGroup, DropdownButton, Dropdown, Col } from 'react-bootstrap'
 
 export class BoundaryQuery extends React.Component {
   constructor(props) {
@@ -25,44 +25,48 @@ export class BoundaryQuery extends React.Component {
     return (
       <Form className="boundary-picker">
         {!this.props.boundaries.length && (
-          <Form.Group className="boundary">
-            <Form.Label>Type</Form.Label>
-            <CustomSelect
-              onChange={this.props.addBoundary}
-              options={[
-                { value: b.COUNCILBOUNDARY.constant, label: b.COUNCILBOUNDARY.name },
-                { value: b.COMMUNITYBOUNDARY.constant, label: b.COMMUNITYBOUNDARY.name },
-              ]}
-              placeholder="Pick a geography..."
-              size="sm"
-            />
-          </Form.Group>
+          <Form.Row>
+            <Col xs={6} sm={4}>
+              <CustomSelect
+                onChange={this.props.addBoundary}
+                options={[
+                  { value: b.COUNCILBOUNDARY.constant, label: b.COUNCILBOUNDARY.name },
+                  { value: b.COMMUNITYBOUNDARY.constant, label: b.COMMUNITYBOUNDARY.name },
+                ]}
+                placeholder="Pick a geography..."
+                size="sm"
+              />
+            </Col>
+          </Form.Row>
         )}
         {!!this.props.boundaries.length &&
           this.props.boundaries.map((boundary, index) => {
             return (
-              <Form.Group className="boundary" key={boundary.name}>
-                <Form.Label>Type</Form.Label>
-                <CustomSelect
-                  onChange={e => this.props.changeBoundary(index, boundary, e)}
-                  options={[
-                    { value: { key: 'object', value: b.COUNCILBOUNDARY.constant }, label: b.COUNCILBOUNDARY.name },
-                    {
-                      value: { key: 'object', value: b.COMMUNITYBOUNDARY.constant },
-                      label: b.COMMUNITYBOUNDARY.name,
-                    },
-                  ]}
-                  size="sm"
-                  value={{ value: boundary.constant, label: boundary.name.toLowerCase() }}
-                />
-                <Form.Label>{`${boundary.name} #`}</Form.Label>
-                <CustomSelect
-                  onChange={e => this.props.changeBoundary(index, boundary, e)}
-                  options={this.getBoundaryIdOptions(boundary.queryName)}
-                  size="sm"
-                  value={{ value: boundary.id, label: boundary.id }}
-                />
-              </Form.Group>
+              <Form.Row key={`boundary-${boundary.name}`}>
+                <Col xs={6} sm={4}>
+                  <CustomSelect
+                    onChange={e => this.props.changeBoundary(index, boundary, e)}
+                    options={[
+                      { value: { key: 'object', value: b.COUNCILBOUNDARY.constant }, label: b.COUNCILBOUNDARY.name },
+                      {
+                        value: { key: 'object', value: b.COMMUNITYBOUNDARY.constant },
+                        label: b.COMMUNITYBOUNDARY.name,
+                      },
+                    ]}
+                    size="sm"
+                    value={{ value: boundary.constant, label: boundary.name.toLowerCase() }}
+                  />
+                </Col>
+                <Col>
+                  <CustomSelect
+                    onChange={e => this.props.changeBoundary(index, boundary, e)}
+                    options={this.getBoundaryIdOptions(boundary.queryName)}
+                    size="sm"
+                    placeholder="#"
+                    value={{ value: boundary.id, label: boundary.id }}
+                  />
+                </Col>
+              </Form.Row>
             )
           })}
       </Form>

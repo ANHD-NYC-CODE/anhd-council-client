@@ -14,7 +14,7 @@ import BuildingHistoryTable from 'BuildingLookup/BuildingHistoryTable'
 import { addBoundary, updateBoundary } from 'Store/AdvancedSearch/actions'
 import { addHousingType } from 'Store/AdvancedSearch/actions'
 
-import { Button } from 'react-bootstrap'
+import { Button, Row, Col } from 'react-bootstrap'
 
 import ConditionComponent from 'AdvancedSearch/ConditionComponent'
 import BoundaryQuery from 'AdvancedSearch/BoundaryQuery'
@@ -56,36 +56,40 @@ export class AdvancedSearch extends React.Component {
       <div className="advanced-search">
         <h1>Advanced Search</h1>
 
+        <BuildingHistoryTable
+          loading={this.props.loading}
+          error={this.props.error}
+          title="Search Results"
+          records={this.props.advancedSearch.results}
+        />
         {!!this.props.advancedSearch && (
-          <div>
-            <AdvancedSearchSentence advancedSearch={this.props.advancedSearch} />
-            <BuildingHistoryTable
-              loading={this.props.loading}
-              error={this.props.error}
-              title="Search Results"
-              records={this.props.advancedSearch.results}
-            />
-            <BoundaryQuery
-              addBoundary={this.addBoundary}
-              boundaries={this.props.advancedSearch.boundaries}
-              boards={this.props.boards}
-              districts={this.props.districts}
-              changeBoundary={this.changeBoundary}
-            />
-            <HousingTypeQuery
-              addHousingType={this.addHousingType}
-              housingTypes={this.props.advancedSearch.housingTypes}
-              dispatch={this.props.dispatch}
-            />
+          <Row>
+            <Col xs={12} sm={4}>
+              <AdvancedSearchSentence advancedSearch={this.props.advancedSearch} />
+            </Col>
+            <Col xs={12} sm={8}>
+              <BoundaryQuery
+                addBoundary={this.addBoundary}
+                boundaries={this.props.advancedSearch.boundaries}
+                boards={this.props.boards}
+                districts={this.props.districts}
+                changeBoundary={this.changeBoundary}
+              />
+              <HousingTypeQuery
+                addHousingType={this.addHousingType}
+                housingTypes={this.props.advancedSearch.housingTypes}
+                dispatch={this.props.dispatch}
+              />
 
-            <ConditionComponent
-              conditions={this.props.advancedSearch.conditions}
-              condition={this.props.advancedSearch.conditions[0]}
-              dispatch={this.props.dispatch}
-              key={'condition-0'}
-              conditionKey={'0'}
-            />
-          </div>
+              <ConditionComponent
+                conditions={this.props.advancedSearch.conditions}
+                condition={this.props.advancedSearch.conditions[0]}
+                dispatch={this.props.dispatch}
+                key={'condition-0'}
+                conditionKey={'0'}
+              />
+            </Col>
+          </Row>
         )}
         <Button onClick={this.submitSearch} type="submit" variant="primary">
           Submit

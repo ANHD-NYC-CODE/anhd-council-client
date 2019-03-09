@@ -8,31 +8,32 @@ import HousingTypeSelection from 'AdvancedSearch/HousingTypeQuery/HousingTypeSel
 
 export const HousingTypeQuery = props => {
   return (
-    <Form className="housing-type-query">
-      <Form.Row className="housing-type">
-        <Col>
-          <Form.Label>Housing Type</Form.Label>
-          {props.housingTypes.length ? (
-            props.housingTypes.map((housingType, housingTypeIndex) => (
-              <HousingTypeSelection
-                dispatch={props.dispatch}
-                housingType={housingType}
-                housingTypeIndex={housingTypeIndex}
-                key={`housingtype-selection-${housingTypeIndex}`}
+    <div className="housing-type-query">
+      {props.housingTypes.length ? (
+        props.housingTypes.map((housingType, housingTypeIndex) => (
+          <HousingTypeSelection
+            dispatch={props.dispatch}
+            housingType={housingType}
+            housingTypeIndex={housingTypeIndex}
+            key={`housingtype-selection-${housingTypeIndex}`}
+          />
+        ))
+      ) : (
+        <Form className="housing-type-query">
+          <Form.Row className="housing-type">
+            <Col xs={6} sm={4}>
+              <CustomSelect
+                isSearchable={false}
+                onChange={props.addHousingType}
+                options={Object.keys(ht).map(key => ({ value: ht[key].constant, label: ht[key].name }))}
+                placeholder="Pick a housing type..."
+                size="sm"
               />
-            ))
-          ) : (
-            <CustomSelect
-              isSearchable={false}
-              onChange={props.addHousingType}
-              options={Object.keys(ht).map(key => ({ value: ht[key].constant, label: ht[key].name }))}
-              placeholder="Pick a housing type..."
-              size="sm"
-            />
-          )}
-        </Col>
-      </Form.Row>
-    </Form>
+            </Col>
+          </Form.Row>
+        </Form>
+      )}
+    </div>
   )
 }
 
