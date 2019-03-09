@@ -5,8 +5,8 @@ import { StandardizedInput } from 'shared/classes/StandardizedInput'
 import { Form, InputGroup, Col, Row } from 'react-bootstrap'
 const ComparisonFieldSet = props => {
   return (
-    <Row className="comparison-fieldset" key={props.key}>
-      <Col>
+    <Form.Row>
+      <Col className="comparison-fieldset" key={props.key}>
         <CustomSelect
           name="comparison"
           options={props.options}
@@ -27,7 +27,7 @@ const ComparisonFieldSet = props => {
           type: props.paramMap.props.type,
         })}
       </Col>
-    </Row>
+    </Form.Row>
   )
 }
 

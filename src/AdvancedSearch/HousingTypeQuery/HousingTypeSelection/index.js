@@ -4,7 +4,7 @@ import * as ht from 'shared/constants/housingTypes'
 import { HousingType } from 'shared/classes/HousingType'
 
 import { updateHousingType } from 'Store/AdvancedSearch/actions'
-import { Form } from 'react-bootstrap'
+import { Form, Col } from 'react-bootstrap'
 import CustomSelect from 'shared/components/CustomSelect'
 import HousingTypeParamSet from 'AdvancedSearch/HousingTypeQuery/HousingTypeParamSet'
 
@@ -20,19 +20,21 @@ const HousingTypeSelection = props => {
   }
 
   return (
-    <div>
-      <CustomSelect
-        isSearchable={false}
-        onChange={e => changeHousingType(props.dispatch, props.housingTypeIndex, e)}
-        options={Object.keys(ht).map(key => ({
-          value: { key: 'object', value: ht[key].constant },
-          label: ht[key].name,
-        }))}
-        size="sm"
-        value={{ value: props.housingType.constant, label: props.housingType.name.toLowerCase() }}
-      />
-
-      {!!Object.keys(props.housingType.paramsObject).length && <Form.Label>Options</Form.Label>}
+    <Form className="housing-type-selection">
+      <Form.Row>
+        <Col>
+          <CustomSelect
+            isSearchable={false}
+            onChange={e => changeHousingType(props.dispatch, props.housingTypeIndex, e)}
+            options={Object.keys(ht).map(key => ({
+              value: { key: 'object', value: ht[key].constant },
+              label: ht[key].name,
+            }))}
+            size="sm"
+            value={{ value: props.housingType.constant, label: props.housingType.name.toLowerCase() }}
+          />
+        </Col>
+      </Form.Row>
       {Object.keys(props.housingType.paramsObject).map((paramsSetKey, paramSetIndex) => (
         <HousingTypeParamSet
           dispatchAction={dispatchAction}
@@ -40,7 +42,7 @@ const HousingTypeSelection = props => {
           paramSet={props.housingType.paramsObject[paramsSetKey]}
         />
       ))}
-    </div>
+    </Form>
   )
 }
 

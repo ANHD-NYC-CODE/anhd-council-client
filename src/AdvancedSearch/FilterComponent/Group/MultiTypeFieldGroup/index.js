@@ -56,35 +56,26 @@ const MultiTypeFieldGroup = props => {
 
   return (
     <div className="multitype-fieldgroup" key={props.key}>
-      {props.paramSet.allowActions && !props.paramSet.paramMaps.length ? (
-        <Button onClick={() => props.paramSet.create({ dispatchAction: props.dispatchAction })}>
-          {props.paramSet.props.newButtonLabel}
-        </Button>
-      ) : (
-        <Form.Label>{props.paramSet.props.label}</Form.Label>
-      )}
-      <Form.Row>
-        {props.paramSet.paramMaps.map((paramMap, paramMapIndex) => {
-          if (paramMap.rangeKey && props.paramSet.paramMaps.filter(paramMap => paramMap.rangeKey).length === 2) {
-            // Only render range field once
-            if (paramMap.rangePosition === 1) {
-              return renderRangeFields(props, paramMap.rangeKey)
-            } else {
-              return null
-            }
+      {props.paramSet.paramMaps.map((paramMap, paramMapIndex) => {
+        if (paramMap.rangeKey && props.paramSet.paramMaps.filter(paramMap => paramMap.rangeKey).length === 2) {
+          // Only render range field once
+          if (paramMap.rangePosition === 1) {
+            return renderRangeFields(props, paramMap.rangeKey)
           } else {
-            return paramMap.component({
-              dispatchAction: props.dispatchAction,
-              key: `paramSet-${props.paramSetIndex}-paramMap-component-${paramMapIndex}`,
-              options: paramMap.options,
-              paramMap: paramMap,
-              paramMapIndex: paramMapIndex,
-              rangeChange: rangeChange,
-              type: paramMap.props.type,
-            })
+            return null
           }
-        })}
-      </Form.Row>
+        } else {
+          return paramMap.component({
+            dispatchAction: props.dispatchAction,
+            key: `paramSet-${props.paramSetIndex}-paramMap-component-${paramMapIndex}`,
+            options: paramMap.options,
+            paramMap: paramMap,
+            paramMapIndex: paramMapIndex,
+            rangeChange: rangeChange,
+            type: paramMap.props.type,
+          })
+        }
+      })}
       {!!props.paramSet.allowActions && !!props.paramSet.paramMaps.length && (
         <Button variant="danger" onClick={() => props.paramSet.deleteAll({ dispatchAction: props.dispatchAction })}>
           -

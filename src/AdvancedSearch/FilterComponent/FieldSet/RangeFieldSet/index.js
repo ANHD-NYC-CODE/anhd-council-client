@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import CustomSelect from 'shared/components/CustomSelect'
 import { StandardizedInput } from 'shared/classes/StandardizedInput'
-import { Form, Col, Row } from 'react-bootstrap'
+import { Form, Col, InputGroup } from 'react-bootstrap'
 
 const comparisonReconfigure = (props, e) => {
   if (e.value.toUpperCase().match(/(LTE|END)/)) {
@@ -27,8 +27,8 @@ const comparisonReconfigure = (props, e) => {
 
 const RangeFieldSet = props => {
   return (
-    <Row>
-      <Col xs={6}>
+    <Form.Row>
+      <Col>
         <CustomSelect
           name="comparison"
           options={props.paramMapRangeGroup[0].options}
@@ -43,17 +43,20 @@ const RangeFieldSet = props => {
         .sort((a, b) => a.rangePosition - b.rangePosition)
         .map((paramMap, paramMapIndex) => {
           return (
-            <Col key={`paramMapRangeGroup-col-${paramMapIndex}`}>
+            <InputGroup as={Col} size="sm" key={`paramMapRangeGroup-col-${paramMapIndex}`}>
+              <InputGroup.Prepend>
+                <InputGroup.Text>{paramMap.rangePosition == 1 ? 'From' : 'To'}</InputGroup.Text>
+              </InputGroup.Prepend>
               {paramMap.baseComponent({
                 key: `rangeGroup-paramMap-${paramMapIndex}`,
                 onChange: e => paramMap.update({ dispatchAction: props.dispatchAction, e: new StandardizedInput(e) }),
                 paramMap: paramMap,
                 type: paramMap.props.type,
               })}
-            </Col>
+            </InputGroup>
           )
         })}
-    </Row>
+    </Form.Row>
   )
 }
 
