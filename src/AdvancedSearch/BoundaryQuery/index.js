@@ -26,14 +26,14 @@ export class BoundaryQuery extends React.Component {
       <Form className="boundary-picker">
         {!this.props.boundaries.length && (
           <Form.Row>
-            <Col xs={6} sm={4}>
+            <Col xs={6}>
               <CustomSelect
                 onChange={this.props.addBoundary}
                 options={[
                   { value: b.COUNCILBOUNDARY.constant, label: b.COUNCILBOUNDARY.name },
                   { value: b.COMMUNITYBOUNDARY.constant, label: b.COMMUNITYBOUNDARY.name },
                 ]}
-                placeholder="Pick a geography..."
+                placeholder="Search boundary"
                 size="sm"
               />
             </Col>
@@ -43,7 +43,7 @@ export class BoundaryQuery extends React.Component {
           this.props.boundaries.map((boundary, index) => {
             return (
               <Form.Row key={`boundary-${boundary.name}`}>
-                <Col xs={6} sm={4}>
+                <Col xs={6}>
                   <CustomSelect
                     onChange={e => this.props.changeBoundary(index, boundary, e)}
                     options={[

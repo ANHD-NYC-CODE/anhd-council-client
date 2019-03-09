@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { Form, Button } from 'react-bootstrap'
-
+import './style.scss'
 export class FilterComponent extends React.Component {
   constructor(props) {
     super(props)
@@ -32,7 +32,7 @@ export class FilterComponent extends React.Component {
         {this.props.filter &&
           Object.keys(this.props.filter.paramsObject).map((paramsSetKey, paramSetIndex) =>
             this.props.filter.paramsObject[paramsSetKey].component({
-              key: 'filter-param-set-component',
+              key: 'filter-paramset-component',
               dispatchAction: this.props.dispatchAction,
               paramSet: this.props.filter.paramsObject[paramsSetKey],
               paramSetIndex: paramSetIndex,
@@ -40,8 +40,8 @@ export class FilterComponent extends React.Component {
           )}
 
         {this.props.filter && (
-          <Button onClick={this.removeFilter} variant="outline-danger">
-            Remove Filter
+          <Button onClick={this.removeFilter} variant="danger">
+            -
           </Button>
         )}
       </Form>

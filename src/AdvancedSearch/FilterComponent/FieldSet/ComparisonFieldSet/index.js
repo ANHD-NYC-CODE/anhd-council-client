@@ -19,14 +19,24 @@ const ComparisonFieldSet = props => {
           value={props.options.find(option => option.value === props.paramMap.comparison)}
         />
       </Col>
-      <Col>
+      <InputGroup as={Col} size="sm">
         {props.paramMap.baseComponent({
           dispatchAction: props.dispatchAction,
           paramMap: props.paramMap,
           onChange: e => props.paramMap.update({ dispatchAction: props.dispatchAction, e: new StandardizedInput(e) }),
           type: props.paramMap.props.type,
         })}
-      </Col>
+        {props.paramMap.languageModule.type === 'AMOUNT' && (
+          <InputGroup.Append>
+            {props.paramMap.languageModule.valueSuffix && (
+              <InputGroup.Text>{props.paramMap.languageModule.valueSuffix}</InputGroup.Text>
+            )}
+            <InputGroup.Text>
+              {props.paramMap.languageModule.grammaticalNoun(props.paramMap.languageModule.noun, props.paramMap.value)}
+            </InputGroup.Text>
+          </InputGroup.Append>
+        )}
+      </InputGroup>
     </Form.Row>
   )
 }
