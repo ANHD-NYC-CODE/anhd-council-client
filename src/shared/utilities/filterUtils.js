@@ -87,7 +87,7 @@ export const constructDefaultSchema = ({
           rangePosition: 1,
           defaultOptions: comparisonOptions(
             ['gte', 'between', 'lte'],
-            ['Since', 'Between', 'Before'],
+            ['Since', 'Range', 'Before'],
             'DATE',
             `${constantToQueryName(constant)}Range`
           ),
@@ -114,9 +114,9 @@ export const constructDefaultSchema = ({
           rangePosition: 2,
           defaultOptions: comparisonOptions(
             ['gte', 'between', 'lte'],
-            ['Since', 'Between', 'Before'],
+            ['Since', 'Range', 'Before'],
             'DATE',
-            'hpdviolationsRange'
+            `${constantToQueryName(constant)}Range`
           ),
           field: `${apiField ? apiField : constantToQueryName(constant)}${dateFieldQuery ? '__' + dateFieldQuery : ''}`,
           comparison: 'lte',
@@ -177,7 +177,7 @@ export const comparisonOptions = (comparisons, labels, type, rangeKey) => {
 
   const dateLabels = {
     gte: 'Since',
-    between: 'Between',
+    between: 'Range',
     lte: 'Before',
   }
 

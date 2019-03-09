@@ -21,12 +21,12 @@ export const HousingTypeQuery = props => {
       ) : (
         <Form className="housing-type-query">
           <Form.Row className="housing-type">
-            <Col xs={6} sm={4}>
+            <Col xs={6}>
               <CustomSelect
                 isSearchable={false}
                 onChange={props.addHousingType}
                 options={Object.keys(ht).map(key => ({ value: ht[key].constant, label: ht[key].name }))}
-                placeholder="Pick a housing type..."
+                placeholder="Housing type"
                 size="sm"
               />
             </Col>

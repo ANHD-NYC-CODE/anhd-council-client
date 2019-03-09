@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Form } from 'react-bootstrap'
 
+import './style.scss'
+
 const DateField = props => {
   return (
     <Form.Control

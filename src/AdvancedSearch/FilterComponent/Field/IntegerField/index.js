@@ -1,12 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { StandardizedInput } from 'shared/classes/StandardizedInput'
+import AutosizeInput from 'react-input-autosize'
 
 import { Form } from 'react-bootstrap'
 
 const IntegerField = props => {
   return (
-    <Form.Control
+    <AutosizeInput
+      className=""
       key={props.key}
       min={0}
       name="value"

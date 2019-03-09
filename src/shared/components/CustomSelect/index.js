@@ -53,6 +53,7 @@ const customStyle = size => {
           'min-height': '1px',
           paddingTop: 0,
           paddingBottom: 0,
+          minWidth: 200,
         }),
         valueContainer: base => ({
           ...base,
@@ -67,6 +68,7 @@ const customStyle = size => {
 const CustomSelect = props => {
   return (
     <Select
+      autosize={true}
       {...props}
       components={{
         DropdownIndicator: () => null,

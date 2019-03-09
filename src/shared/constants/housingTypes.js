@@ -95,7 +95,7 @@ export const RENTREGULATED = {
           defaultOptions: rentRegulatedProgramOptions(),
           component: GenericFieldSet,
           baseComponent: MultiSelectField,
-          languageModule: new LanguageModule({ type: 'TEXT', noun: '', propertyAdjective: 'with' }),
+          languageModule: new LanguageModule({ type: 'TEXT', noun: 'Program', propertyAdjective: 'with' }),
           field: 'coresubsidyrecord__programname',
           comparison: 'any',
           value: '',

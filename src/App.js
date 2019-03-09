@@ -9,6 +9,8 @@ import { Provider } from 'react-redux'
 import Auth from 'Auth'
 import Config from 'Config'
 import ModalContainer from 'ModalContainer'
+import 'react-dates/initialize'
+import 'react-dates/lib/css/_datepicker.css'
 
 import 'react-toastify/dist/ReactToastify.css'
 

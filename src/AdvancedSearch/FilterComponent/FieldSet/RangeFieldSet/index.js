@@ -43,7 +43,7 @@ const RangeFieldSet = props => {
         .sort((a, b) => a.rangePosition - b.rangePosition)
         .map((paramMap, paramMapIndex) => {
           return (
-            <InputGroup as={Col} size="sm" key={`paramMapRangeGroup-col-${paramMapIndex}`}>
+            <InputGroup as={Col} size="sm" xs={12} sm={12} md={5} key={`paramMapRangeGroup-col-${paramMapIndex}`}>
               <InputGroup.Prepend>
                 <InputGroup.Text>{paramMap.rangePosition == 1 ? 'From' : 'To'}</InputGroup.Text>
               </InputGroup.Prepend>
