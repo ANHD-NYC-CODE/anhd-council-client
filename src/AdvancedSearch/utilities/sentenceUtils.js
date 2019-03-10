@@ -50,13 +50,13 @@ export const constructAmountComparisonString = comparison => {
 export const constructDateComparisonString = comparison => {
   switch (comparison) {
     case 'gte':
-      return 'since'
+      return 'after'
     case 'start':
-      return 'since'
+      return 'after'
     case 'lte':
       return 'before'
     case 'end':
-      return 'since'
+      return 'before'
   }
 }
 

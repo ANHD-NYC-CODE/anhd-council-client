@@ -17,11 +17,13 @@ export const HousingTypeQuery = props => {
       />
     ))
   ) : (
-    <Form.Group as={Row} className="housing-type">
-      <Col xs={6}>
-        <HousingTypeSelect onChange={props.addHousingType} />
-      </Col>
-    </Form.Group>
+    <Form>
+      <Form.Group as={Row} className="housing-type">
+        <Col xs={6}>
+          <HousingTypeSelect onChange={props.addHousingType} />
+        </Col>
+      </Form.Group>
+    </Form>
   )
 }
 

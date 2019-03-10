@@ -5,23 +5,20 @@ import { Form, Col, Button } from 'react-bootstrap'
 
 const HousingTypeParamSet = props => {
   return props.paramSet.allowActions && !props.paramSet.paramMaps.length ? (
-    <Col>
+    <Form.Group as={Col} className="housingtype-paramset">
       <Button onClick={() => props.paramSet.create({ dispatchAction: props.dispatchAction })}>
         {props.paramSet.props.newButtonLabel}
       </Button>
-    </Col>
+    </Form.Group>
   ) : (
-    <Col xs={12}>
-      <Form.Group className="housingtype-paramset">
-        <Form.Label>{props.paramSet.props.label}</Form.Label>
-        {props.paramSet.component({
-          key: 'housing-type-param-set',
-          dispatchAction: props.dispatchAction,
-          paramSet: props.paramSet,
-          paramSetIndex: props.paramSetIndex,
-        })}
-      </Form.Group>
-    </Col>
+    <Form.Group as={Col} xs={12} className="housingtype-paramset">
+      {props.paramSet.component({
+        key: 'housing-type-param-set',
+        dispatchAction: props.dispatchAction,
+        paramSet: props.paramSet,
+        paramSetIndex: props.paramSetIndex,
+      })}
+    </Form.Group>
   )
 }
 

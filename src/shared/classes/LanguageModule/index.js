@@ -1,7 +1,15 @@
 export class LanguageModule {
-  constructor({ type = 'AMOUNT', noun = undefined, propertyAdjective = '', valuePrefix = '', valueSuffix = '' } = {}) {
+  constructor({
+    type = 'AMOUNT',
+    noun = undefined,
+    shortNoun = undefined,
+    propertyAdjective = '',
+    valuePrefix = '',
+    valueSuffix = '',
+  } = {}) {
     this._type = type
     this._noun = noun
+    this._shortNoun = shortNoun
     this._propertyAdjective = propertyAdjective
     this._valuePrefix = valuePrefix
     this._valueSuffix = valueSuffix
@@ -13,6 +21,14 @@ export class LanguageModule {
 
   set noun(noun) {
     this._noun = noun
+  }
+
+  get shortNoun() {
+    return this._shortNoun
+  }
+
+  set shortNoun(shortNoun) {
+    this._shortNoun = shortNoun
   }
 
   get type() {

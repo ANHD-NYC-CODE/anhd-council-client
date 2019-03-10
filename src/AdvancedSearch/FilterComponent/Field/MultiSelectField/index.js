@@ -2,13 +2,16 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { StandardizedInput } from 'shared/classes/StandardizedInput'
 import { InputGroup } from 'react-bootstrap'
-
+import './style.scss'
 import CustomSelect from 'shared/components/CustomSelect'
 const MultiSelectField = props => {
   return (
     <InputGroup size="sm">
+      <InputGroup.Prepend>
+        <InputGroup.Text>{props.paramMap.languageModule.noun}</InputGroup.Text>
+      </InputGroup.Prepend>
       <CustomSelect
-        className="textmultiselect-field"
+        className={'textmultiselect-field form-control'}
         key={props.key}
         name="value"
         options={props.paramMap.options}

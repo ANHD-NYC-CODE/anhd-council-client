@@ -1,12 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import CustomSelect from 'shared/components/CustomSelect'
 import { StandardizedInput } from 'shared/classes/StandardizedInput'
-import { Form, InputGroup, Col, Row } from 'react-bootstrap'
+import { Form, InputGroup, Col } from 'react-bootstrap'
 const ComparisonFieldSet = props => {
   return (
     <Form.Row className="comparison-fieldset" key={props.key}>
       <InputGroup as={Col} size="sm">
+        <InputGroup.Prepend>
+          {props.paramMap.languageModule.propertyAdjective && (
+            <InputGroup.Text>{props.paramMap.languageModule.propertyAdjective}</InputGroup.Text>
+          )}
+        </InputGroup.Prepend>
         <Form.Control
           name="comparison"
           as="select"
@@ -16,6 +20,7 @@ const ComparisonFieldSet = props => {
               ? props.rangeChange(props.paramMap, e)
               : props.paramMap.update({ dispatchAction: props.dispatchAction, e: new StandardizedInput(e) })
           }
+          value={props.paramMap.comparison}
         >
           {props.options.map((option, index) => {
             return (
@@ -37,6 +42,14 @@ const ComparisonFieldSet = props => {
           onChange: e => props.paramMap.update({ dispatchAction: props.dispatchAction, e: new StandardizedInput(e) }),
           type: props.paramMap.props.type,
         })}
+        <InputGroup.Append>
+          {props.paramMap.languageModule.valueSuffix && (
+            <InputGroup.Text>{props.paramMap.languageModule.valueSuffix}</InputGroup.Text>
+          )}
+          {props.paramMap.languageModule.shortNoun && (
+            <InputGroup.Text>{props.paramMap.languageModule.shortNoun}</InputGroup.Text>
+          )}
+        </InputGroup.Append>
       </InputGroup>
     </Form.Row>
   )

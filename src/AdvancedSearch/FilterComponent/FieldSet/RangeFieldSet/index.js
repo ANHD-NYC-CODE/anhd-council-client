@@ -1,10 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import CustomSelect from 'shared/components/CustomSelect'
 import { StandardizedInput } from 'shared/classes/StandardizedInput'
 import { Form, Col, InputGroup } from 'react-bootstrap'
-
 const comparisonReconfigure = (props, e) => {
+  e = new StandardizedInput(e)
   if (e.value.toUpperCase().match(/(LTE|END)/)) {
     props.paramSet.deleteSpecific({
       dispatchAction: props.dispatchAction,
@@ -25,25 +24,54 @@ const comparisonReconfigure = (props, e) => {
   }
 }
 
+const hasPropertyAdjective = props => {
+  return !!props.paramMapRangeGroup[0].languageModule.propertyAdjective
+}
+
 const RangeFieldSet = props => {
   return (
     <Form.Row>
-      <Col>
-        <CustomSelect
-          name="comparison"
-          options={props.paramMapRangeGroup[0].options}
-          onChange={e => comparisonReconfigure(props, e)}
-          size="sm"
-          value={props.paramMapRangeGroup[0].options.find(option =>
-            option.value.toUpperCase().match(/(BETWEEN|RANGE)/)
+      <InputGroup as={Col} xs={12} sm={12} md={hasPropertyAdjective(props) ? 12 : 2} size="sm">
+        <InputGroup.Prepend>
+          {hasPropertyAdjective(props) && (
+            <InputGroup.Text>{props.paramMapRangeGroup[0].languageModule.propertyAdjective}</InputGroup.Text>
           )}
-        />
-      </Col>
+        </InputGroup.Prepend>
+        <Form.Control
+          name="comparison"
+          as="select"
+          data-range-key={props.paramMapRangeGroup[0].rangeKey}
+          onChange={e => comparisonReconfigure(props, e)}
+          value={
+            props.paramMapRangeGroup[0].options.find(option => option.value.toUpperCase().match(/(BETWEEN|RANGE)/))
+              .value
+          }
+        >
+          {props.paramMapRangeGroup[0].options.map((option, index) => {
+            return (
+              <option
+                key={`paramMap-${props.paramMapIndex}-comparison-option-${index}`}
+                name={option.name}
+                value={option.value}
+              >
+                {option.label}
+              </option>
+            )
+          })}
+        </Form.Control>
+      </InputGroup>
       {props.paramMapRangeGroup
         .sort((a, b) => a.rangePosition - b.rangePosition)
         .map((paramMap, paramMapIndex) => {
           return (
-            <InputGroup as={Col} size="sm" xs={12} sm={12} md={5} key={`paramMapRangeGroup-col-${paramMapIndex}`}>
+            <InputGroup
+              as={Col}
+              size="sm"
+              xs={12}
+              sm={12}
+              md={hasPropertyAdjective(props) ? 6 : 5}
+              key={`paramMapRangeGroup-col-${paramMapIndex}`}
+            >
               <InputGroup.Prepend>
                 <InputGroup.Text>{paramMap.rangePosition == 1 ? 'From' : 'To'}</InputGroup.Text>
               </InputGroup.Prepend>

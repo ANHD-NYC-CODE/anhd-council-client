@@ -39,6 +39,7 @@ export const RENTSTABILZED = {
           languageModule: new LanguageModule({
             type: 'AMOUNT',
             noun: 'rent stabilized unit',
+            shortNoun: 'rs units',
             propertyAdjective: 'that lost',
             valueSuffix: '%',
           }),
@@ -56,7 +57,7 @@ export const RENTSTABILZED = {
           languageModule: new LanguageModule({ type: 'YEAR', noun: '' }),
           rangeKey: 'rsUnitsRange',
           rangePosition: 1,
-          defaultOptions: comparisonOptions(['start', 'between'], ['Since', 'Between'], 'DATE', 'rsUnitsRange'),
+          defaultOptions: comparisonOptions(['start', 'between'], ['Since', 'Range'], 'DATE', 'rsUnitsRange'),
           field: 'rsunitslost',
           comparison: 'start',
           value: '2010',
@@ -70,7 +71,7 @@ export const RENTSTABILZED = {
           },
           rangeKey: 'rsUnitsRange',
           rangePosition: 2,
-          defaultOptions: comparisonOptions(['start', 'between'], ['Since', 'Between'], 'DATE', 'rsUnitsRange'),
+          defaultOptions: comparisonOptions(['start', 'between'], ['Since', 'Range'], 'DATE', 'rsUnitsRange'),
           field: 'rsunitslost',
           comparison: 'end',
           value: '2017',
@@ -99,7 +100,7 @@ export const RENTREGULATED = {
           defaultOptions: rentRegulatedProgramOptions(),
           component: GenericFieldSet,
           baseComponent: MultiSelectField,
-          languageModule: new LanguageModule({ type: 'TEXT', noun: 'Program', propertyAdjective: 'with' }),
+          languageModule: new LanguageModule({ type: 'TEXT', noun: 'Program(s)', propertyAdjective: 'with' }),
           field: 'coresubsidyrecord__programname',
           comparison: 'any',
           value: '',
@@ -124,7 +125,7 @@ export const RENTREGULATED = {
           },
           defaultOptions: comparisonOptions(
             ['lte', 'between', 'gte'],
-            ['Before', 'Between', 'After'],
+            ['Before', 'Range', 'After'],
             'DATE',
             'expirationRangeKey'
           ),
@@ -145,7 +146,7 @@ export const RENTREGULATED = {
           },
           defaultOptions: comparisonOptions(
             ['lte', 'between', 'gte'],
-            ['Before', 'Between', 'After'],
+            ['Before', 'Range', 'After'],
             'DATE',
             'expirationRangeKey'
           ),
