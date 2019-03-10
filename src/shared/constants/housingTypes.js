@@ -10,10 +10,14 @@ import ComparisonFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/Comparis
 
 import DateField from 'AdvancedSearch/FilterComponent/Field/DateField'
 import IntegerField from 'AdvancedSearch/FilterComponent/Field/IntegerField'
-import PercentField from 'AdvancedSearch/FilterComponent/Field/PercentField'
 
 import MultiSelectField from 'AdvancedSearch/FilterComponent/Field/MultiSelectField'
 import { LanguageModule } from 'shared/classes/LanguageModule'
+
+export const ALLTYPES = {
+  name: 'All',
+  constant: 'ALL_TYPES',
+}
 
 export const RENTSTABILZED = {
   name: 'Rent Stabilized',

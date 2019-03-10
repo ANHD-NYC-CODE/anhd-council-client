@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import * as ht from 'shared/constants/housingTypes'
 
-import CustomSelect from 'shared/components/CustomSelect'
 import { Form, Col } from 'react-bootstrap'
 import HousingTypeSelection from 'AdvancedSearch/HousingTypeQuery/HousingTypeSelection'
 
@@ -22,13 +21,22 @@ export const HousingTypeQuery = props => {
         <Form className="housing-type-query">
           <Form.Row className="housing-type">
             <Col xs={6}>
-              <CustomSelect
-                isSearchable={false}
+              <Form.Control
+                as="select"
+                name="comparison"
                 onChange={props.addHousingType}
-                options={Object.keys(ht).map(key => ({ value: ht[key].constant, label: ht[key].name }))}
-                placeholder="Housing type"
+                placeholder="Search housing type"
                 size="sm"
-              />
+                value={'ALL_TYPES'}
+              >
+                {Object.keys(ht).map((key, index) => {
+                  return (
+                    <option key={`housingtype-option-${index}`} value={ht[key].constant}>
+                      {ht[key].name}
+                    </option>
+                  )
+                })}
+              </Form.Control>
             </Col>
           </Form.Row>
         </Form>

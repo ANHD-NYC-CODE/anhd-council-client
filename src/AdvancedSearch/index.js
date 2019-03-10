@@ -28,6 +28,20 @@ export class AdvancedSearch extends React.Component {
     this.changeBoundary = this.changeBoundary.bind(this)
     this.addBoundary = this.addBoundary.bind(this)
     this.addHousingType = this.addHousingType.bind(this)
+    this.prefillHousingType = this.prefillHousingType.bind(this)
+
+    this.prefillHousingType(props)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.prefillHousingType(nextProps)
+  }
+
+  prefillHousingType(props) {
+    if (!props.advancedSearch.housingTypes.length) {
+      const newHousingType = new HousingType({ housingType: 'ALL_TYPES' })
+      this.props.dispatch(addHousingType(newHousingType))
+    }
   }
 
   addBoundary(e) {
@@ -41,8 +55,9 @@ export class AdvancedSearch extends React.Component {
     this.props.dispatch(updateBoundary(index, boundary))
   }
 
-  addHousingType(option) {
-    const newHousingType = new HousingType({ housingType: option.value })
+  addHousingType(e) {
+    e = new StandardizedInput(e)
+    const newHousingType = new HousingType({ housingType: e.value })
     this.props.dispatch(addHousingType(newHousingType))
   }
 
