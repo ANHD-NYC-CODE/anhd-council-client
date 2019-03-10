@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { updateHousingType } from 'Store/AdvancedSearch/actions'
 
-import { Form, Col, Row } from 'react-bootstrap'
+import { Form, Col, Row, Button } from 'react-bootstrap'
 import HousingTypeParamSet from 'AdvancedSearch/HousingTypeQuery/HousingTypeParamSet'
 import HousingTypeSelect from 'AdvancedSearch/HousingTypeQuery/HousingTypeSelect'
 
@@ -21,15 +21,29 @@ const HousingTypeSelection = props => {
           />
         </Col>
       </Form.Group>
-      <Form.Row>
-        {Object.keys(props.housingType.paramsObject).map((paramsSetKey, paramSetIndex) => (
+
+      {Object.keys(props.housingType.paramsObject).map((paramsSetKey, paramSetIndex) => {
+        const paramSet = props.housingType.paramsObject[paramsSetKey]
+        return !!paramSet.allowActions && !paramSet.paramMaps.length ? (
+          <Form.Row>
+            <Form.Group as={Col} className="housingtype-paramset">
+              <Button
+                variant="outline-primary"
+                size="sm"
+                onClick={() => paramSet.create({ dispatchAction: dispatchAction })}
+              >
+                {paramSet.props.newButtonLabel}
+              </Button>
+            </Form.Group>
+          </Form.Row>
+        ) : (
           <HousingTypeParamSet
             key={`housingtype-paramset-${paramSetIndex}`}
             dispatchAction={dispatchAction}
             paramSet={props.housingType.paramsObject[paramsSetKey]}
           />
-        ))}
-      </Form.Row>
+        )
+      })}
     </Form>
   )
 }

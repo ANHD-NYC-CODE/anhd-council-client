@@ -106,16 +106,16 @@ export class ConditionComponent extends React.Component {
 
     return (
       <Form.Row className="condition">
-        <Col xs={2} className="condition-control flex-column">
+        <Col xs={2} className="condition-control flex-column align-center">
           <ButtonGroup vertical>
             {isCondition0() && !this.props.condition.hasCondition() ? (
-              <Button className="switch-condition" onClick={() => this.switchCondition()}>
+              <Button className="switch-condition" size="sm" onClick={() => this.switchCondition()}>
                 {this.props.condition.type}
               </Button>
             ) : (
               <Form.Label> {this.props.condition.type}</Form.Label>
             )}
-            <Button className="add-filter" onClick={() => this.createNewFilter()} variant="success">
+            <Button className="add-filter" size="sm" onClick={() => this.createNewFilter()} variant="success">
               +
             </Button>
           </ButtonGroup>
@@ -123,6 +123,7 @@ export class ConditionComponent extends React.Component {
           {(isCondition0() || (!isCondition0() && !this.props.condition.hasCondition())) && (
             <Button
               className="add-condition"
+              size="sm"
               onClick={() => this.addCondition(this.props.condition.key)}
               variant="outline-primary"
             >
@@ -132,6 +133,7 @@ export class ConditionComponent extends React.Component {
           {!isCondition0() && (
             <Button
               className="remove-condition"
+              size="sm"
               onClick={() => this.removeCondition(this.props.condition.key)}
               variant="outline-danger"
             >

@@ -90,11 +90,6 @@ const MultiTypeFieldGroup = props => {
           })
         }
       })}
-      {!!props.paramSet.allowActions && !!props.paramSet.paramMaps.length && (
-        <Button variant="danger" onClick={() => props.paramSet.deleteAll({ dispatchAction: props.dispatchAction })}>
-          -
-        </Button>
-      )}
     </div>
   )
 }

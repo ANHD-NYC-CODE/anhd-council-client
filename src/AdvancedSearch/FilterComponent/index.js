@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { Form, Button, Col, ButtonGroup } from 'react-bootstrap'
-import './style.scss'
+
 export class FilterComponent extends React.Component {
   constructor(props) {
     super(props)
@@ -28,7 +28,7 @@ export class FilterComponent extends React.Component {
 
   render() {
     return (
-      <Form.Row className="filter">
+      <Form.Row className="filter align-items-center">
         <Form.Group as={Col} xs={10}>
           {this.props.filter &&
             Object.keys(this.props.filter.paramsObject).map((paramsSetKey, paramSetIndex) =>
@@ -40,13 +40,13 @@ export class FilterComponent extends React.Component {
               })
             )}
         </Form.Group>
-        <Col xs={2}>
-          <ButtonGroup>
-            <Button onClick={this.removeFilter} variant="danger">
+        <Col xs={2} className="flex-column">
+          <ButtonGroup className="align-center">
+            <Button size="sm" onClick={this.removeFilter} variant="danger">
               -
             </Button>
             {this.props.allowNewCondition && (
-              <Button onClick={() => this.props.addCondition(this.props.conditionKey)} variant="success">
+              <Button size="sm" onClick={() => this.props.addCondition(this.props.conditionKey)} variant="success">
                 {'<'}
               </Button>
             )}
