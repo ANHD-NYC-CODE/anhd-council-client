@@ -3,11 +3,12 @@ import * as c from '../constants'
 import * as u from 'shared/constants/urls'
 import { transformStateIntoParamObject } from 'Store/AdvancedSearch/utilities/advancedSearchStoreUtils'
 
-export const addNewCondition = (parentKey, conditionKey) => {
+export const addNewCondition = (parentKey, conditionKey, filter) => {
   return {
     type: c.ADD_NEW_CONDITION,
     parentKey,
     conditionKey,
+    filter, // optional create with filter
   }
 }
 

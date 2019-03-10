@@ -19,7 +19,7 @@ export const advancedSearchReducer = (state = Object.freeze(initialState), actio
       const newCondition = new Condition({
         key: action.conditionKey,
         type: state.conditions[action.parentKey].type === 'AND' ? 'OR' : 'AND',
-        filters: [],
+        filters: [action.filter],
       })
 
       const newConditions = { ...state.conditions }
