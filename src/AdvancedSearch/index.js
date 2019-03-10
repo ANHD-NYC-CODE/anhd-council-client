@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import * as c from 'Store/AdvancedSearch/constants'
 import { Boundary } from 'shared/classes/Boundary'
 import { HousingType } from 'shared/classes/HousingType'
-
+import { StandardizedInput } from 'shared/classes/StandardizedInput'
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
 import { connect } from 'react-redux'
@@ -30,12 +30,14 @@ export class AdvancedSearch extends React.Component {
     this.addHousingType = this.addHousingType.bind(this)
   }
 
-  addBoundary(option) {
-    this.props.dispatch(addBoundary(new Boundary(option.value)))
+  addBoundary(e) {
+    e = new StandardizedInput(e)
+    this.props.dispatch(addBoundary(new Boundary(e.value)))
   }
 
-  changeBoundary(index, boundary, option) {
-    boundary[option.value.key] = option.value.value
+  changeBoundary(index, boundary, e) {
+    e = new StandardizedInput(e)
+    boundary[e.key] = e.value
     this.props.dispatch(updateBoundary(index, boundary))
   }
 

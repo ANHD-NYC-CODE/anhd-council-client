@@ -4,7 +4,7 @@ import { handleCompletedRequest } from 'Store/Loading/actions'
 
 export const Axios = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
-  timeout: 60000,
+  timeout: 240000,
   headers: { 'Content-type': 'application/json' },
 })
 
