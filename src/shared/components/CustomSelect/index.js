@@ -8,7 +8,7 @@ const customStyle = size => {
       return {
         control: base => ({
           ...base,
-          'min-height': '1px',
+          minHeight: '1px',
           height: '38px',
         }),
         dropdownIndicator: base => ({
@@ -23,12 +23,12 @@ const customStyle = size => {
         }),
         container: base => ({
           ...base,
-          'min-height': '1px',
+          minHeight: '1px',
           height: '38px',
         }),
         valueContainer: base => ({
           ...base,
-          'min-height': '1px',
+          minHeight: '1px',
           height: '38px',
         }),
       }
@@ -36,7 +36,8 @@ const customStyle = size => {
       return {
         control: base => ({
           ...base,
-          'min-height': '1px',
+          minHeight: '1px',
+          border: 'none',
         }),
         dropdownIndicator: base => ({
           ...base,
@@ -48,16 +49,18 @@ const customStyle = size => {
           paddingTop: 0,
           paddingBottom: 0,
         }),
+        input: base => ({ ...base, border: 'none' }),
         container: base => ({
           ...base,
-          'min-height': '1px',
+          minHeight: '1px',
           paddingTop: 0,
           paddingBottom: 0,
-          minWidth: '100%',
+          minWidth: '240px',
         }),
         valueContainer: base => ({
           ...base,
-          'min-height': '1px',
+          border: 'none',
+          minHeight: '1px',
           paddingTop: 0,
           paddingBottom: 0,
         }),
@@ -74,7 +77,9 @@ const CustomSelect = props => {
         DropdownIndicator: () => null,
         IndicatorSeparator: () => null,
       }}
+      className={props.className}
       styles={customStyle(props.size)}
+      style={{ height: 'inherit' }}
     />
   )
 }

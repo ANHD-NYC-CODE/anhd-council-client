@@ -14,11 +14,20 @@ export class BoundaryQuery extends React.Component {
   getBoundaryIdOptions(type) {
     switch (type) {
       case 'council':
-        return [...this.props.districts.map(d => ({ value: d.id, label: d.id })), { value: -1, label: '#' }]
+        return [
+          <option disabled value={-1} key={-1}>
+            #
+          </option>,
+          ...this.props.districts.map(d => (
+            <option key={`boundary-id-option-${d.id}`} value={d.id}>
+              {d.id}
+            </option>
+          )),
+        ]
       case 'cd':
         return [
-          ...this.props.boards.map(b => ({ value: { key: 'id', value: b.id }, label: b.id })),
           { value: -1, label: '#' },
+          ...this.props.boards.map(b => ({ value: { key: 'id', value: b.id }, label: b.id })),
         ]
     }
   }
@@ -27,64 +36,62 @@ export class BoundaryQuery extends React.Component {
     return this.props.boundaries.length ? (
       this.props.boundaries.map((boundary, boundaryIndex) => {
         return (
-          <Form.Group as={Row} key={`boundary-${boundary.name}`}>
-            <Col xs={6}>
-              <Form.Control
-                size="sm"
-                placeholder="Search boundary"
-                name="comparison"
-                as="select"
-                onChange={this.props.addBoundary}
-                value={boundary.constant}
-              >
-                <option disabled value={-1} key={-1}>
-                  Select a geography
-                </option>
-                <option value={b.COUNCILBOUNDARY.constant}>{b.COUNCILBOUNDARY.name}</option>
-                <option value={b.COMMUNITYBOUNDARY.constant}>{b.COMMUNITYBOUNDARY.name}</option>
-              </Form.Control>
-            </Col>
-            <Col>
-              <Form.Control
-                as="select"
-                data-key="id"
-                name="comparison"
-                onChange={e => this.props.changeBoundary(boundaryIndex, boundary, e)}
-                placeholder="Search boundary"
-                size="sm"
-                value={boundary.id || -1}
-              >
-                {this.getBoundaryIdOptions(boundary.queryName).map((option, index) => {
-                  return (
-                    <option key={`boundary-id-option-${index}`} value={option.value}>
-                      {option.label}
-                    </option>
-                  )
-                })}
-              </Form.Control>
-            </Col>
-          </Form.Group>
+          <Form key={`boundary-${boundary.name}`}>
+            <Form.Group as={Row}>
+              <Col xs={6}>
+                <Form.Control
+                  size="sm"
+                  placeholder="Search boundary"
+                  name="comparison"
+                  as="select"
+                  onChange={this.props.addBoundary}
+                  value={boundary.constant}
+                >
+                  <option disabled value={-1} key={-1}>
+                    Select a geography
+                  </option>
+                  <option value={b.COUNCILBOUNDARY.constant}>{b.COUNCILBOUNDARY.name}</option>
+                  <option value={b.COMMUNITYBOUNDARY.constant}>{b.COMMUNITYBOUNDARY.name}</option>
+                </Form.Control>
+              </Col>
+              <Col>
+                <Form.Control
+                  as="select"
+                  data-key="id"
+                  name="comparison"
+                  onChange={e => this.props.changeBoundary(boundaryIndex, boundary, e)}
+                  placeholder="Search boundary"
+                  size="sm"
+                  value={boundary.id || -1}
+                >
+                  {this.getBoundaryIdOptions(boundary.queryName)}
+                </Form.Control>
+              </Col>
+            </Form.Group>
+          </Form>
         )
       })
     ) : (
-      <Form.Group as={Row}>
-        <Col xs={6}>
-          <Form.Control
-            size="sm"
-            placeholder="Search boundary"
-            name="comparison"
-            as="select"
-            onChange={this.props.addBoundary}
-            value={-1}
-          >
-            <option disabled value={-1} key={-1}>
-              Select a geography
-            </option>
-            <option value={b.COUNCILBOUNDARY.constant}>{b.COUNCILBOUNDARY.name}</option>
-            <option value={b.COMMUNITYBOUNDARY.constant}>{b.COMMUNITYBOUNDARY.name}</option>
-          </Form.Control>
-        </Col>
-      </Form.Group>
+      <Form>
+        <Form.Group as={Row}>
+          <Col xs={6}>
+            <Form.Control
+              size="sm"
+              placeholder="Search boundary"
+              name="comparison"
+              as="select"
+              onChange={this.props.addBoundary}
+              value={-1}
+            >
+              <option disabled value={-1} key={-1}>
+                Select a geography
+              </option>
+              <option value={b.COUNCILBOUNDARY.constant}>{b.COUNCILBOUNDARY.name}</option>
+              <option value={b.COMMUNITYBOUNDARY.constant}>{b.COMMUNITYBOUNDARY.name}</option>
+            </Form.Control>
+          </Col>
+        </Form.Group>
+      </Form>
     )
   }
 }

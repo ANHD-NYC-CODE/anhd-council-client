@@ -75,25 +75,24 @@ export class AdvancedSearch extends React.Component {
         />
         {!!this.props.advancedSearch && (
           <Row>
-            <Col xs={12} sm={4}>
+            <Col xs={12} md={4}>
               <AdvancedSearchSentence advancedSearch={this.props.advancedSearch} />
             </Col>
-            <Col xs={12} sm={8}>
-              <Form>
-                <BoundaryQuery
-                  addBoundary={this.addBoundary}
-                  boundaries={this.props.advancedSearch.boundaries}
-                  boards={this.props.boards}
-                  districts={this.props.districts}
-                  changeBoundary={this.changeBoundary}
-                />
-                <HousingTypeQuery
-                  addHousingType={this.addHousingType}
-                  changeHousingType={this.changeHousingType}
-                  housingTypes={this.props.advancedSearch.housingTypes}
-                  dispatch={this.props.dispatch}
-                />
-              </Form>
+            <Col xs={12} md={8}>
+              <BoundaryQuery
+                addBoundary={this.addBoundary}
+                boundaries={this.props.advancedSearch.boundaries}
+                boards={this.props.boards}
+                districts={this.props.districts}
+                changeBoundary={this.changeBoundary}
+              />
+              <HousingTypeQuery
+                addHousingType={this.addHousingType}
+                changeHousingType={this.changeHousingType}
+                housingTypes={this.props.advancedSearch.housingTypes}
+                dispatch={this.props.dispatch}
+              />
+
               <ConditionComponent
                 conditions={this.props.advancedSearch.conditions}
                 condition={this.props.advancedSearch.conditions[0]}
