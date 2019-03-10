@@ -48,10 +48,14 @@ export class Condition {
       this._filters = [...this._filters, filter]
     } else {
       let conditionGroups = this.filters.filter(f => f.conditionGroup)
-      this.filters = this.filters.filter(f => !f.conditionGroup)
+      this._filters = this.filters.filter(f => !f.conditionGroup)
       this._filters = [...this._filters, filter]
-      this.filters = this.filters.concat(conditionGroups)
+      this._filters = this.filters.concat(conditionGroups)
     }
+  }
+
+  replaceFilter({ filterIndex, filter }) {
+    this._filters = [...this._filters.slice(0, filterIndex), filter, ...this._filters.slice(filterIndex + 1)]
   }
 
   removeFilter({ filterIndex }) {

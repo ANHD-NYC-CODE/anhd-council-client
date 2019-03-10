@@ -5,7 +5,8 @@ export class Filter {
   constructor({ datasetConstant = null, paramsObject = {} } = {}) {
     this.setDataset = this.setDataset.bind(this)
     this._paramsObject = paramsObject
-
+    this.id = datasetConstant
+    if (datasetConstant === 'NEW_FILTER') return
     this.setDataset(datasetConstant)
 
     // Post initialize actions
@@ -22,7 +23,7 @@ export class Filter {
   setDataset(datasetConstant) {
     const dataset = d[Object.keys(d).find(obj => d[obj].id === datasetConstant)]
 
-    if (!dataset)
+    if (!dataset && datasetConstant !== 'NEW_FILTER')
       throw `Pass either '${Object.keys(d)
         .map(key => d[key].id)
         .join("' or '")}' as the first argument. ${datasetConstant} does not have a match.`

@@ -1,13 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import * as d from 'shared/models/datasets'
-import CustomSelect from 'shared/components/CustomSelect'
 import { Filter } from 'shared/classes/Filter'
 import { StandardizedInput } from 'shared/classes/StandardizedInput'
-
+import NewFilterSelect from 'AdvancedSearch/FilterComponent/NewFilterSelect'
 import uuidv4 from 'uuid/v4'
-import { addNewCondition, changeConditionType, updateCondition, removeCondition } from 'Store/AdvancedSearch/actions'
-import { Form, Button } from 'react-bootstrap'
+import { addNewCondition, updateCondition, removeCondition } from 'Store/AdvancedSearch/actions'
+import { Form, Button, Col, ButtonGroup } from 'react-bootstrap'
 
 import FilterComponent from 'AdvancedSearch/FilterComponent'
 
@@ -21,7 +19,8 @@ export class ConditionComponent extends React.Component {
     this.removeCondition = this.removeCondition.bind(this)
     this.containsCondition = this.containsCondition.bind(this)
     this.dispatchAction = this.dispatchAction.bind(this)
-    this.constructFilter = this.constructFilter.bind(this)
+    this.replaceFilter = this.replaceFilter.bind(this)
+    this.createNewFilter = this.createNewFilter.bind(this)
     this.switchCondition = this.switchCondition.bind(this)
 
     this.state = {
@@ -45,10 +44,16 @@ export class ConditionComponent extends React.Component {
     return this.props.condition.filters.find(filter => filter.conditionGroup)
   }
 
-  constructFilter(datasetConstant) {
-    const newFilter = new Filter({ datasetConstant })
+  createNewFilter() {
+    const newFilter = new Filter({ datasetConstant: 'NEW_FILTER' })
     this.props.condition.addFilter({ filter: newFilter })
-    this.setState({ creatingFilter: false })
+    this.dispatchAction()
+  }
+
+  replaceFilter(filterIndex, e) {
+    e = new StandardizedInput(e)
+    const newFilter = new Filter({ datasetConstant: e.value })
+    this.props.condition.replaceFilter({ filterIndex, filter: newFilter })
     this.dispatchAction()
   }
 
@@ -59,12 +64,9 @@ export class ConditionComponent extends React.Component {
   }
 
   render() {
-    const datasetOptions = Object.entries(d).map(ds => {
-      return {
-        value: ds[1].id,
-        label: ds[1].languageModule.noun,
-      }
-    })
+    const isCondition0 = () => {
+      return this.props.condition.key === '0'
+    }
 
     const renderFilterOrCondition = (filter, filterIndex) => {
       if (filter.conditionGroup) {
@@ -77,74 +79,72 @@ export class ConditionComponent extends React.Component {
             conditionKey={filter.conditionGroup}
           />
         )
+      } else if (filter.id === 'NEW_FILTER') {
+        return (
+          <NewFilterSelect
+            filterIndex={filterIndex}
+            onChange={this.replaceFilter}
+            key={`new-filter-${this.props.condition.key}-${filter.id}`}
+          />
+        )
       } else {
         return (
           <FilterComponent
+            addCondition={this.addCondition}
+            allowNewCondition={isCondition0() || (!isCondition0() && !this.props.condition.hasCondition())}
             dispatchAction={this.dispatchAction}
             conditionKey={this.props.condition.key}
             condition={this.props.condition}
             dispatch={this.props.dispatch}
             filter={filter}
             filterIndex={filterIndex}
-            key={`filter-${this.props.condition.key}-${filter.dataset.apiMap.name}`}
+            key={`filter-${this.props.condition.key}-${filter.id}`}
           />
         )
       }
     }
 
     return (
-      <div className="condition">
-        {this.props.condition.key === '0' && !this.props.condition.hasCondition() ? (
-          <Button className="switch-condition" onClick={() => this.switchCondition()}>
-            {this.props.condition.type}
-          </Button>
-        ) : (
-          <Form.Label> {this.props.condition.type}</Form.Label>
-        )}
-
-        {!this.state.creatingFilter && (
-          <Button className="add-filter" onClick={() => this.setState({ creatingFilter: true })} variant="success">
-            +
-          </Button>
-        )}
-
-        {(this.props.condition.key === '0' ||
-          (this.props.condition.key !== '0' && !this.props.condition.hasCondition())) && (
-          <Button
-            className="add-condition"
-            onClick={() => this.addCondition(this.props.condition.key)}
-            variant="outline-primary"
-          >
-            Add Condition
-          </Button>
-        )}
-        {this.props.condition.key !== '0' && (
-          <Button
-            className="remove-condition"
-            onClick={() => this.removeCondition(this.props.condition.key)}
-            variant="outline-danger"
-          >
-            Remove Condition
-          </Button>
-        )}
-
-        {this.props.condition.filters.map((filter, conditionKey) => {
-          return renderFilterOrCondition(filter, conditionKey)
-        })}
-
-        {this.state.creatingFilter && (
-          <div>
-            <CustomSelect options={datasetOptions} onChange={e => this.constructFilter(e.value)} size="sm" />
-            <Button
-              className="cancel-filter"
-              variant="warning"
-              onClick={() => this.setState({ creatingFilter: false })}
-            >
-              Cancel
+      <Form.Row className="condition">
+        <Col xs={2} className="condition-control flex-column">
+          <ButtonGroup vertical>
+            {isCondition0() && !this.props.condition.hasCondition() ? (
+              <Button className="switch-condition" onClick={() => this.switchCondition()}>
+                {this.props.condition.type}
+              </Button>
+            ) : (
+              <Form.Label> {this.props.condition.type}</Form.Label>
+            )}
+            <Button className="add-filter" onClick={() => this.createNewFilter()} variant="success">
+              +
             </Button>
-          </div>
-        )}
-      </div>
+          </ButtonGroup>
+
+          {(isCondition0() || (!isCondition0() && !this.props.condition.hasCondition())) && (
+            <Button
+              className="add-condition"
+              onClick={() => this.addCondition(this.props.condition.key)}
+              variant="outline-primary"
+            >
+              + C
+            </Button>
+          )}
+          {!isCondition0() && (
+            <Button
+              className="remove-condition"
+              onClick={() => this.removeCondition(this.props.condition.key)}
+              variant="outline-danger"
+            >
+              -
+            </Button>
+          )}
+        </Col>
+        <Col xs={10}>
+          {this.props.condition.filters.map((filter, conditionKey) => {
+            return renderFilterOrCondition(filter, conditionKey)
+          })}
+        </Col>
+      </Form.Row>
     )
   }
 }
