@@ -5,7 +5,7 @@ import { StandardizedInput } from 'shared/classes/StandardizedInput'
 import NewFilterSelect from 'AdvancedSearch/FilterComponent/NewFilterSelect'
 import uuidv4 from 'uuid/v4'
 import { addNewCondition, updateCondition, removeCondition } from 'Store/AdvancedSearch/actions'
-import { Form, Button, Col, ButtonGroup } from 'react-bootstrap'
+import { Form, Button, Badge, Col, ButtonGroup } from 'react-bootstrap'
 
 import FilterComponent from 'AdvancedSearch/FilterComponent'
 
@@ -28,8 +28,8 @@ export class ConditionComponent extends React.Component {
     }
   }
 
-  addCondition() {
-    this.props.dispatch(addNewCondition(this.props.condition.key, uuidv4()))
+  addCondition(filter) {
+    this.props.dispatch(addNewCondition(this.props.condition.key, uuidv4(), filter))
   }
 
   dispatchAction() {
@@ -93,7 +93,6 @@ export class ConditionComponent extends React.Component {
             addCondition={this.addCondition}
             allowNewCondition={isCondition0() || (!isCondition0() && !this.props.condition.hasCondition())}
             dispatchAction={this.dispatchAction}
-            conditionKey={this.props.condition.key}
             condition={this.props.condition}
             dispatch={this.props.dispatch}
             filter={filter}
@@ -113,33 +112,34 @@ export class ConditionComponent extends React.Component {
                 {this.props.condition.type}
               </Button>
             ) : (
-              <Form.Label> {this.props.condition.type}</Form.Label>
+              <Button size="sm" disabled>
+                {this.props.condition.type}
+              </Button>
+            )}
+            {/* {(isCondition0() || (!isCondition0() && !this.props.condition.hasCondition())) && (
+              <Button
+                className="add-condition"
+                size="sm"
+                onClick={() => this.addCondition(this.props.condition.key)}
+                variant="outline-primary"
+              >
+                + {this.props.condition.isAnd() ? 'OR' : 'AND'}
+              </Button>
+            )} */}
+            {!isCondition0() && (
+              <Button
+                className="remove-condition"
+                size="sm"
+                onClick={() => this.removeCondition(this.props.condition.key)}
+                variant="outline-danger"
+              >
+                - {this.props.condition.type.toUpperCase()}
+              </Button>
             )}
             <Button className="add-filter" size="sm" onClick={() => this.createNewFilter()} variant="success">
               +
             </Button>
           </ButtonGroup>
-
-          {(isCondition0() || (!isCondition0() && !this.props.condition.hasCondition())) && (
-            <Button
-              className="add-condition"
-              size="sm"
-              onClick={() => this.addCondition(this.props.condition.key)}
-              variant="outline-primary"
-            >
-              + C
-            </Button>
-          )}
-          {!isCondition0() && (
-            <Button
-              className="remove-condition"
-              size="sm"
-              onClick={() => this.removeCondition(this.props.condition.key)}
-              variant="outline-danger"
-            >
-              -
-            </Button>
-          )}
         </Col>
         <Col xs={10}>
           {this.props.condition.filters.map((filter, conditionKey) => {

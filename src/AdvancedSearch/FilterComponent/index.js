@@ -7,18 +7,13 @@ export class FilterComponent extends React.Component {
   constructor(props) {
     super(props)
 
-    this.initialState = {
-      creatingFilter: false,
-      filter: this.props.filter,
-    }
-
-    this.state = this.initialState
-
     this.removeFilter = this.removeFilter.bind(this)
+    this.createConditionWithFilter = this.createConditionWithFilter.bind(this)
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({ filter: nextProps.filter })
+  createConditionWithFilter(filterIndex) {
+    this.props.condition.removeFilter({ filterIndex })
+    this.props.addCondition(this.props.filter)
   }
 
   removeFilter() {
@@ -46,7 +41,11 @@ export class FilterComponent extends React.Component {
               -
             </Button>
             {this.props.allowNewCondition && (
-              <Button size="sm" onClick={() => this.props.addCondition(this.props.conditionKey)} variant="success">
+              <Button
+                size="sm"
+                onClick={() => this.createConditionWithFilter(this.props.filterIndex)}
+                variant="success"
+              >
                 {'<'}
               </Button>
             )}
@@ -60,7 +59,7 @@ export class FilterComponent extends React.Component {
 FilterComponent.propTypes = {
   addCondition: PropTypes.func,
   allowNewCondition: PropTypes.bool,
-  conditionKey: PropTypes.string,
+  condition: PropTypes.object,
   dispatchAction: PropTypes.func,
   filter: PropTypes.object,
   filterIndex: PropTypes.number,

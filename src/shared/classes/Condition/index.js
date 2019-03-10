@@ -38,6 +38,14 @@ export class Condition {
     }
   }
 
+  isAnd() {
+    return this._type.toUpperCase() === 'AND'
+  }
+
+  isOr() {
+    return this._type.toUpperCase() === 'OR'
+  }
+
   hasCondition() {
     return this._filters.some(filter => filter.conditionGroup)
   }
