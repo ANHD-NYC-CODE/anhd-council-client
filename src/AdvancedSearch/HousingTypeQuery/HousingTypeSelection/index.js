@@ -1,18 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import * as ht from 'shared/constants/housingTypes'
-import { HousingType } from 'shared/classes/HousingType'
-
 import { updateHousingType } from 'Store/AdvancedSearch/actions'
+
 import { Form, Col } from 'react-bootstrap'
-import CustomSelect from 'shared/components/CustomSelect'
 import HousingTypeParamSet from 'AdvancedSearch/HousingTypeQuery/HousingTypeParamSet'
-
-const changeHousingType = (dispatch, housingTypeIndex, option) => {
-  const newHousingType = new HousingType({ housingType: option.value.value })
-
-  dispatch(updateHousingType(housingTypeIndex, newHousingType))
-}
+import HousingTypeSelect from 'AdvancedSearch/HousingTypeQuery/HousingTypeSelect'
 
 const HousingTypeSelection = props => {
   const dispatchAction = () => {
@@ -20,21 +12,13 @@ const HousingTypeSelection = props => {
   }
 
   return (
-    <Form className="housing-type-selection">
-      <Form.Row>
-        <Col>
-          <CustomSelect
-            isSearchable={false}
-            onChange={e => changeHousingType(props.dispatch, props.housingTypeIndex, e)}
-            options={Object.keys(ht).map(key => ({
-              value: { key: 'object', value: ht[key].constant },
-              label: ht[key].name,
-            }))}
-            size="sm"
-            value={{ value: props.housingType.constant, label: props.housingType.name.toLowerCase() }}
-          />
-        </Col>
-      </Form.Row>
+    <Form.Row>
+      <Col xs={12}>
+        <HousingTypeSelect
+          onChange={e => props.changeHousingType(props.housingTypeIndex, e)}
+          value={props.housingType.constant}
+        />
+      </Col>
       {Object.keys(props.housingType.paramsObject).map((paramsSetKey, paramSetIndex) => (
         <HousingTypeParamSet
           dispatchAction={dispatchAction}
@@ -42,11 +26,12 @@ const HousingTypeSelection = props => {
           paramSet={props.housingType.paramsObject[paramsSetKey]}
         />
       ))}
-    </Form>
+    </Form.Row>
   )
 }
 
 HousingTypeSelection.propTypes = {
+  changeHousingType: PropTypes.func,
   dispatch: PropTypes.func,
   housingType: PropTypes.object,
   housingTypeIndex: PropTypes.number,

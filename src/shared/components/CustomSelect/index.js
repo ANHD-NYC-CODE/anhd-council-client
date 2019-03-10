@@ -53,7 +53,7 @@ const customStyle = size => {
           'min-height': '1px',
           paddingTop: 0,
           paddingBottom: 0,
-          minWidth: 200,
+          minWidth: '100%',
         }),
         valueContainer: base => ({
           ...base,
