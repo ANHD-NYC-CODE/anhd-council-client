@@ -16,7 +16,7 @@ export const Layout = props => {
           </div>
         )}
       </UserContext.Consumer>
-      <Container>{props.children}</Container>
+      <Container fluid={true}>{props.children}</Container>
     </div>
   )
 }
