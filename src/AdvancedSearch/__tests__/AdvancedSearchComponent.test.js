@@ -12,15 +12,16 @@ import { Boundary } from 'shared/classes/Boundary'
 import { HousingType } from 'shared/classes/HousingType'
 import { Condition } from 'shared/classes/Condition'
 import { ConditionFilter } from 'shared/classes/ConditionFilter'
-
 configure({ adapter: new Adapter() })
 
 describe('AdvancedSearch', () => {
+  const dispatch = sinon.spy()
   const advancedSearch = {
     boundaries: [new Boundary('COUNCIL', 1)],
     conditions: { '0': new Condition({ type: 'AND', filters: [] }) },
+    housingTypes: [],
   }
-  const wrapper = shallow(<AdvancedSearch advancedSearch={advancedSearch} />)
+  const wrapper = shallow(<AdvancedSearch advancedSearch={advancedSearch} dispatch={dispatch} />)
 
   it('renders the component', () => {
     expect(wrapper.find('.advanced-search')).toBeDefined()

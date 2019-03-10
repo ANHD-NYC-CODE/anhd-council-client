@@ -166,7 +166,7 @@ describe('convertConditionMappingToSentence', () => {
         }),
       }
 
-      const result = ` either have at least 5 HPD Violations between ${todayminus1year} and ${todayplus1year} or have at least 5 DOB Violations between ${todayminus1year} and ${todayplus1year}.`
+      const result = ` have at least 5 HPD Violations between ${todayminus1year} and ${todayplus1year} or have at least 5 DOB Violations between ${todayminus1year} and ${todayplus1year}.`
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
