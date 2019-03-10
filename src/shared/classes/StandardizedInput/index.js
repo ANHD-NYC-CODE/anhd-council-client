@@ -17,9 +17,11 @@ export class StandardizedInput {
       e.name = target.name
       e.value = target.value
       e.rangeKey = target.dataset ? target.dataset.rangeKey : undefined
+      e.key = target.dataset ? target.dataset.key : undefined
     }
     this.name = e.name
     this.value = e.value
     this.rangeKey = e.rangeKey
+    this.key = e.key
   }
 }
