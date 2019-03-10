@@ -180,7 +180,7 @@ export const constructSentence = advancedSearch => {
   return `Show me ${[
     convertHousingTypesToSentence(advancedSearch.housingTypes),
     convertBoundariesToSentence(advancedSearch.boundaries),
-  ].join(' ')} ${constructConditionFill(advancedSearch.conditions['0'])}  ${convertConditionMappingToSentence(
-    advancedSearch.conditions
-  )}`
+  ].join(' ')} ${
+    advancedSearch.conditions['0'].type.toUpperCase() === 'AND' ? 'that' : 'that either'
+  }  ${convertConditionMappingToSentence(advancedSearch.conditions)}`
 }
