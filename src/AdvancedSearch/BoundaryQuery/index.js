@@ -15,9 +15,12 @@ export class BoundaryQuery extends React.Component {
   getBoundaryIdOptions(type) {
     switch (type) {
       case 'council':
-        return [...this.props.districts.map(d => ({ value: d.id, label: d.id }))]
+        return [...this.props.districts.map(d => ({ value: d.id, label: d.id })), { value: -1, label: '#' }]
       case 'cd':
-        return [...this.props.boards.map(b => ({ value: { key: 'id', value: b.id }, label: b.id }))]
+        return [
+          ...this.props.boards.map(b => ({ value: { key: 'id', value: b.id }, label: b.id })),
+          { value: -1, label: '#' },
+        ]
     }
   }
 
@@ -72,7 +75,7 @@ export class BoundaryQuery extends React.Component {
                     onChange={e => this.props.changeBoundary(boundaryIndex, boundary, e)}
                     placeholder="Search boundary"
                     size="sm"
-                    value={-1}
+                    value={boundary.id || -1}
                   >
                     {this.getBoundaryIdOptions(boundary.queryName).map((option, index) => {
                       return (

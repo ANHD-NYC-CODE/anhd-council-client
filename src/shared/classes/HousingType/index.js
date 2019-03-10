@@ -13,7 +13,7 @@ export class HousingType {
     if (!object)
       throw `Pass either '${Object.keys(ht)
         .map(key => ht[key].constant)
-        .join("' or '")}' as the first argument.`
+        .join("' or '")}' as the first argument. Can't match ${housingType}`
 
     this._object = object
     this._name = this.object.name
@@ -21,17 +21,19 @@ export class HousingType {
     this._constant = this.object.constant
     this._schema = this.object.schema
 
-    // Set default keys to ParameterMapSet without any parameter maps
-    Object.keys(this._schema)
-      .reverse()
-      .map(key => {
-        this._paramsObject = {
-          ...{
-            [key]: cloneInstance(this.schema[key]),
-          },
-          ...this.paramsObject,
-        }
-      })
+    if (this._schema) {
+      // Set default keys to ParameterMapSet without any parameter maps
+      Object.keys(this._schema)
+        .reverse()
+        .map(key => {
+          this._paramsObject = {
+            ...{
+              [key]: cloneInstance(this.schema[key]),
+            },
+            ...this.paramsObject,
+          }
+        })
+    }
   }
 
   get object() {
