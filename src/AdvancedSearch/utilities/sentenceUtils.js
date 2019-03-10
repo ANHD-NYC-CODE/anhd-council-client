@@ -170,7 +170,8 @@ export const convertFilterToSentence = filter => {
 export const convertHousingTypesToSentence = housingTypes => {
   return `${grammaticalList(
     housingTypes.map(
-      housingType => singularPlease(housingType.name) + ' properties' + convertFilterToSentence(housingType),
+      housingType =>
+        singularPlease(housingType.name).toLowerCase() + ' properties' + convertFilterToSentence(housingType),
       'and'
     )
   )}`

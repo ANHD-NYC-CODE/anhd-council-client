@@ -12,9 +12,9 @@ import { requestWithAuth } from 'shared/utilities/authUtils'
 import AdvancedSearchSentence from 'AdvancedSearch/Sentence'
 import BuildingHistoryTable from 'BuildingLookup/BuildingHistoryTable'
 import { addBoundary, updateBoundary } from 'Store/AdvancedSearch/actions'
-import { addHousingType } from 'Store/AdvancedSearch/actions'
+import { addHousingType, updateHousingType } from 'Store/AdvancedSearch/actions'
 
-import { Button, Row, Col } from 'react-bootstrap'
+import { Form, Button, Row, Col } from 'react-bootstrap'
 
 import ConditionComponent from 'AdvancedSearch/ConditionComponent'
 import BoundaryQuery from 'AdvancedSearch/BoundaryQuery'
@@ -28,20 +28,7 @@ export class AdvancedSearch extends React.Component {
     this.changeBoundary = this.changeBoundary.bind(this)
     this.addBoundary = this.addBoundary.bind(this)
     this.addHousingType = this.addHousingType.bind(this)
-    this.prefillHousingType = this.prefillHousingType.bind(this)
-
-    this.prefillHousingType(props)
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.prefillHousingType(nextProps)
-  }
-
-  prefillHousingType(props) {
-    if (!props.advancedSearch.housingTypes.length) {
-      const newHousingType = new HousingType({ housingType: 'ALL_TYPES' })
-      this.props.dispatch(addHousingType(newHousingType))
-    }
+    this.changeHousingType = this.changeHousingType.bind(this)
   }
 
   addBoundary(e) {
@@ -59,6 +46,13 @@ export class AdvancedSearch extends React.Component {
     e = new StandardizedInput(e)
     const newHousingType = new HousingType({ housingType: e.value })
     this.props.dispatch(addHousingType(newHousingType))
+  }
+
+  changeHousingType(housingTypeIndex, e) {
+    e = new StandardizedInput(e)
+    const newHousingType = new HousingType({ housingType: e.value })
+
+    this.props.dispatch(updateHousingType(housingTypeIndex, newHousingType))
   }
 
   submitSearch(e) {
@@ -85,19 +79,21 @@ export class AdvancedSearch extends React.Component {
               <AdvancedSearchSentence advancedSearch={this.props.advancedSearch} />
             </Col>
             <Col xs={12} sm={8}>
-              <BoundaryQuery
-                addBoundary={this.addBoundary}
-                boundaries={this.props.advancedSearch.boundaries}
-                boards={this.props.boards}
-                districts={this.props.districts}
-                changeBoundary={this.changeBoundary}
-              />
-              <HousingTypeQuery
-                addHousingType={this.addHousingType}
-                housingTypes={this.props.advancedSearch.housingTypes}
-                dispatch={this.props.dispatch}
-              />
-
+              <Form>
+                <BoundaryQuery
+                  addBoundary={this.addBoundary}
+                  boundaries={this.props.advancedSearch.boundaries}
+                  boards={this.props.boards}
+                  districts={this.props.districts}
+                  changeBoundary={this.changeBoundary}
+                />
+                <HousingTypeQuery
+                  addHousingType={this.addHousingType}
+                  changeHousingType={this.changeHousingType}
+                  housingTypes={this.props.advancedSearch.housingTypes}
+                  dispatch={this.props.dispatch}
+                />
+              </Form>
               <ConditionComponent
                 conditions={this.props.advancedSearch.conditions}
                 condition={this.props.advancedSearch.conditions[0]}
