@@ -2,7 +2,6 @@ import * as r from '../'
 import * as a from '../../actions'
 import { Boundary } from 'shared/classes/Boundary'
 import { Condition } from 'shared/classes/Condition'
-import { Filter } from 'shared/classes/Filter'
 
 import { ConditionFilter } from 'shared/classes/ConditionFilter'
 import { HousingType } from 'shared/classes/HousingType'
@@ -10,6 +9,7 @@ import { HousingType } from 'shared/classes/HousingType'
 describe('Advanced Search reducer', () => {
   it('should return the initial state', () => {
     expect(r.advancedSearchReducer(undefined, {})).toEqual(r.initialState)
+    expect(r.advancedSearchReducer(undefined, {}).housingTypes.length).toEqual(1)
   })
 
   describe('ADD_NEW_CONDITION', () => {
@@ -149,6 +149,7 @@ describe('Advanced Search reducer', () => {
     it('adds a housingTypes', () => {
       const state = {
         ...r.initialState,
+        housingTypes: [],
       }
 
       const housingType = new HousingType({ housingType: 'SMALL_HOMES' })

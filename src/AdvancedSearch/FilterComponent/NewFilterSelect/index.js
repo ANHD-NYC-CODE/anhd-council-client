@@ -18,7 +18,12 @@ const datasetOptions = [
 
 const NewFilterSelect = props => {
   return (
-    <Form.Control as="select" onChange={e => props.onChange(props.filterIndex, e)} value={-1}>
+    <Form.Control
+      as="select"
+      className="new-filter-select"
+      onChange={e => props.onChange(props.filterIndex, e)}
+      value={-1}
+    >
       {datasetOptions}
     </Form.Control>
   )
