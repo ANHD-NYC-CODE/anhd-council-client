@@ -9,6 +9,7 @@ export const Axios = axios.create({
 })
 
 export const constructAxiosGet = (dispatch, getState, requestId, url, params, access_token, constant, handleAction) => {
+  if (!requestId) throw 'Misconfigured Axios Request (missing id)'
   handleActionDispatch(dispatch, constant, requestId)
   return Axios.get(url, {
     params: { format: 'json', ...params },
