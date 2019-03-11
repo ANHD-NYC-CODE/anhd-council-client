@@ -2,11 +2,11 @@ import configureStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import { Axios } from 'shared/utilities/Axios'
 import { TOKEN_URL, TOKEN_REFRESH_URL } from 'shared/constants/urls'
+import { getUserStorageData } from 'shared/utilities/storageUtils'
 import MockAdapter from 'axios-mock-adapter'
 import * as loadingActions from 'Store/Loading/actions'
 import * as errorActions from 'Store/Error/actions'
 import { push } from 'connected-react-router'
-import { USER_STORAGE } from 'shared/constants/actions'
 import { requestWithAuth } from 'shared/utilities/authUtils'
 import { GET_TOKEN, GET_TOKEN_REFRESH } from 'shared/constants/actions'
 
@@ -39,7 +39,7 @@ describe('loginUser', () => {
         loadingActions.handleRequest(GET_TOKEN),
         errorActions.handleClearErrors(GET_TOKEN),
         loadingActions.handleCompletedRequest(GET_TOKEN),
-        handleSyncStorage(JSON.parse(localStorage.getItem(USER_STORAGE))),
+        handleSyncStorage(getUserStorageData()),
         requestWithAuth(getUserProfile()),
       ])
 
@@ -85,7 +85,7 @@ describe('refreshTokens', () => {
         loadingActions.handleRequest(GET_TOKEN_REFRESH),
         errorActions.handleClearErrors(GET_TOKEN_REFRESH),
         loadingActions.handleCompletedRequest(GET_TOKEN_REFRESH),
-        handleSyncStorage(JSON.parse(localStorage.getItem(USER_STORAGE))),
+        handleSyncStorage(getUserStorageData()),
       ]
 
       expect(store.getActions()).toEqual(expectedActions)

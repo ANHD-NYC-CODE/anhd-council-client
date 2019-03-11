@@ -1,7 +1,7 @@
 import * as c from '../constants'
 
 export const initialState = {
-  boards: undefined,
+  boards: [],
   board: undefined,
   boardHousing: undefined,
   boardPropertySummaries: {},

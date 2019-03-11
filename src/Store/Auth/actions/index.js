@@ -2,9 +2,13 @@ import { Axios } from 'shared/utilities/Axios'
 import * as loadingActions from 'Store/Loading/actions'
 import * as errorActions from 'Store/Error/actions'
 import { TOKEN_URL, TOKEN_REFRESH_URL, CURRENT_USER_URL } from 'shared/constants/urls'
-import { USER_STORAGE, GET_TOKEN, GET_TOKEN_REFRESH, GET_USER_PROFILE } from 'shared/constants/actions'
+import { GET_TOKEN, GET_TOKEN_REFRESH, GET_USER_PROFILE } from 'shared/constants/actions'
+import { getUserStorageData, removeUserStorageData } from 'shared/utilities/storageUtils'
+
 import { handleCatchError } from 'shared/utilities/actionUtils'
-import { updateLocalStorage, requestWithAuth } from 'shared/utilities/authUtils'
+import { requestWithAuth } from 'shared/utilities/authUtils'
+import { updateAuthLocalStorage } from 'shared/utilities/storageUtils'
+
 import { toast } from 'react-toastify'
 import { push } from 'connected-react-router'
 
@@ -36,8 +40,8 @@ export const getUserProfile = () => (dispatch, getState, access_token) => {
     })
       .then(response => {
         dispatch(loadingActions.handleCompletedRequest(GET_USER_PROFILE))
-        updateLocalStorage(null, null, response.data, dispatch)
-        dispatch(handleSyncStorage(JSON.parse(localStorage.getItem(USER_STORAGE))))
+        updateAuthLocalStorage(null, null, response.data, dispatch)
+        dispatch(handleSyncStorage(getUserStorageData()))
         toast.success(`Welcome, ${response.data.username}!`)
       })
       .catch(error => {
@@ -54,10 +58,14 @@ export const refreshTokens = refresh_token => dispatch => {
   dispatch(errorActions.handleClearErrors(GET_TOKEN_REFRESH))
   return Axios.post(TOKEN_REFRESH_URL, { refresh: refresh_token })
     .then(response => {
-      updateLocalStorage(response.data.access, response.data.refresh, null, dispatch)
+      updateAuthLocalStorage(response.data.access, response.data.refresh, null, dispatch)
       dispatch(loadingActions.handleCompletedRequest(GET_TOKEN_REFRESH))
-      dispatch(handleSyncStorage(JSON.parse(localStorage.getItem(USER_STORAGE))))
-      return JSON.parse(localStorage.getItem(USER_STORAGE))
+
+      const storage = getUserStorageData()
+
+      dispatch(handleSyncStorage(storage))
+
+      return storage
     })
     .catch(error => {
       handleCatchError(error, GET_TOKEN_REFRESH, dispatch)
@@ -72,8 +80,8 @@ export const loginUser = data => dispatch => {
     .then(response => {
       dispatch(loadingActions.handleCompletedRequest(GET_TOKEN))
 
-      updateLocalStorage(response.data.access, response.data.refresh, null, dispatch)
-      dispatch(handleSyncStorage(JSON.parse(localStorage.getItem(USER_STORAGE))))
+      updateAuthLocalStorage(response.data.access, response.data.refresh, null, dispatch)
+      dispatch(handleSyncStorage(getUserStorageData()))
       dispatch(requestWithAuth(getUserProfile()))
     })
     .catch(error => {
@@ -82,7 +90,7 @@ export const loginUser = data => dispatch => {
 }
 
 export const logoutUser = () => dispatch => {
-  localStorage.removeItem(USER_STORAGE)
+  removeUserStorageData()
   dispatch(handleUserLogout())
   dispatch(push('/'))
   toast.info("You've been logged out.")

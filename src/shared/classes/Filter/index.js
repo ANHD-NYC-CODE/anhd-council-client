@@ -5,7 +5,7 @@ export class Filter {
   constructor({ datasetConstant = null, dataset = null, paramsObject = {} } = {}) {
     this.setDataset = this.setDataset.bind(this)
     this._paramsObject = paramsObject
-    this.id = datasetConstant
+    this.id = datasetConstant || dataset.id
     if (datasetConstant === 'NEW_FILTER') return
     this._dataset = dataset
     this.setDataset(datasetConstant)

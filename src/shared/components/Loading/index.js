@@ -41,7 +41,6 @@ class Loading extends React.Component {
   }
 
   render() {
-    console.log(this.lengthCompleted(this.props))
     return (
       <div className="loading">
         <h5>Loading</h5>
@@ -69,7 +68,7 @@ class Loading extends React.Component {
         <ProgressBar
           striped
           animated
-          active
+          active="true"
           variant="success"
           now={(this.lengthCompleted(this.props) / this.props.monitoredRequests.length) * 100}
         />

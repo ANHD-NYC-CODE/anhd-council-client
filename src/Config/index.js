@@ -16,8 +16,13 @@ class Config extends React.Component {
     super(props)
 
     this.props.dispatch(getDatasets())
-    this.props.dispatch(getCouncils())
-    this.props.dispatch(getCommunities())
+    if (!props.councils.length) {
+      this.props.dispatch(getCouncils())
+    }
+
+    if (!props.communities.length) {
+      this.props.dispatch(getCommunities())
+    }
 
     this.state = {
       boundaryType: undefined,
@@ -28,14 +33,14 @@ class Config extends React.Component {
 
   componentWillReceiveProps(nextProps, nextState) {
     if (!nextProps.loading && !nextProps.error) {
-      if (!nextProps.datasets) {
+      if (!nextProps.datasets.length) {
         this.props.dispatch(getDatasets())
       }
 
-      if (!nextProps.councils) {
+      if (!nextProps.councils.length) {
         this.props.dispatch(getCouncils())
       }
-      if (!nextProps.communities) {
+      if (!nextProps.communities.length) {
         this.props.dispatch(getCommunities())
       }
     }

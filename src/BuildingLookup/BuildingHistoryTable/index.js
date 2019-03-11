@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Loading from 'shared/components/Loading'
+import InnerLoader from 'shared/components/InnerLoader'
 
 import { Jumbotron } from 'react-bootstrap'
 
@@ -17,7 +17,7 @@ const BuildingHistoryTable = props => {
     <div className="building-history-table">
       <Jumbotron style={{ maxHeight: '500px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
         <h4>{props.title}</h4>
-        {props.loading && <Loading />}
+        {props.loading && <InnerLoader />}
         {props.error && <div>{props.error.message}</div>}
         {!(props.loading || props.error) && renderTable()}
       </Jumbotron>
