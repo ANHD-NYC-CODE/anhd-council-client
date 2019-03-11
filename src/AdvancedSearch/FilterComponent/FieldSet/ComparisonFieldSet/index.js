@@ -7,7 +7,7 @@ import NewFilterSelect from 'AdvancedSearch/FilterComponent/NewFilterSelect'
 const ComparisonFieldSet = props => {
   return (
     <Form.Row className="comparison-fieldset" key={props.key}>
-      <InputGroup as={Col} size="sm">
+      <InputGroup as={Col} xs={12} sm={6} md={4} size="sm">
         <InputGroup.Prepend>
           {props.paramMap.languageModule.propertyAdjective && (
             <InputGroup.Text>{props.paramMap.languageModule.propertyAdjective}</InputGroup.Text>
@@ -37,7 +37,7 @@ const ComparisonFieldSet = props => {
           })}
         </Form.Control>
       </InputGroup>
-      <InputGroup as={Col} size="sm">
+      <InputGroup as={Col} xs={12} sm={6} md={3} size="sm">
         {props.paramMap.baseComponent({
           dispatchAction: props.dispatchAction,
           paramMap: props.paramMap,
@@ -54,7 +54,7 @@ const ComparisonFieldSet = props => {
         </InputGroup.Append>
       </InputGroup>
       {props.paramMap.languageModule.type === 'AMOUNT' && (
-        <InputGroup as={Col} size="sm">
+        <InputGroup as={Col} xs={12} sm={6} md={5} size="sm">
           <NewFilterSelect
             filterIndex={props.filterIndex}
             onChange={props.replaceFilter}
