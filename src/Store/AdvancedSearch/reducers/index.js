@@ -16,16 +16,22 @@ export const initialState = {
 export const advancedSearchReducer = (state = Object.freeze(initialState), action = { data: [] }) => {
   switch (action.type) {
     case c.ADD_NEW_CONDITION: {
+      const newConditions = { ...state.conditions }
+      const parentCondition = newConditions[action.parentKey]
+
+      const transferredFilter =
+        action.filterIndex || action.filterIndex === 0 ? parentCondition.filters[action.filterIndex] : undefined
+
       const newCondition = new Condition({
         key: action.conditionKey,
-        type: state.conditions[action.parentKey].type === 'AND' ? 'OR' : 'AND',
-        filters: action.filter ? [action.filter] : [],
+        type: parentCondition.type === 'AND' ? 'OR' : 'AND',
+        filters: transferredFilter ? [transferredFilter] : [],
       })
 
-      const newConditions = { ...state.conditions }
-      newConditions[action.parentKey].addFilter({
+      parentCondition.addFilter({
         filter: new ConditionFilter({ conditionGroup: action.conditionKey }),
       })
+      parentCondition.removeFilter({ filterIndex: action.filterIndex })
       return {
         ...state,
         conditions: { ...newConditions, [action.conditionKey]: newCondition },

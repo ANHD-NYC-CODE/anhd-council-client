@@ -7,13 +7,12 @@ export class FilterComponent extends React.Component {
   constructor(props) {
     super(props)
 
+    this.changeFilter = this.changeFilter.bind(this)
     this.removeFilter = this.removeFilter.bind(this)
-    this.createConditionWithFilter = this.createConditionWithFilter.bind(this)
   }
 
-  createConditionWithFilter(filterIndex) {
-    this.props.condition.removeFilter({ filterIndex })
-    this.props.addCondition(this.props.filter)
+  changeFilter() {
+    debugger
   }
 
   removeFilter() {
@@ -30,6 +29,8 @@ export class FilterComponent extends React.Component {
               this.props.filter.paramsObject[paramsSetKey].component({
                 key: 'filter-paramset-component',
                 dispatchAction: this.props.dispatchAction,
+                changeFilter: this.changeFilter,
+                filterIndex: this.props.filterIndex,
                 paramSet: this.props.filter.paramsObject[paramsSetKey],
                 paramSetIndex: paramSetIndex,
               })
@@ -41,11 +42,7 @@ export class FilterComponent extends React.Component {
               -
             </Button>
             {this.props.allowNewCondition && (
-              <Button
-                size="sm"
-                onClick={() => this.createConditionWithFilter(this.props.filterIndex)}
-                variant="success"
-              >
+              <Button size="sm" onClick={() => this.props.addCondition(this.props.filterIndex)} variant="success">
                 {'<'}
               </Button>
             )}

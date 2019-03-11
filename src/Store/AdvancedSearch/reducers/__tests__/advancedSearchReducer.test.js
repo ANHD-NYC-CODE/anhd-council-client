@@ -13,23 +13,54 @@ describe('Advanced Search reducer', () => {
   })
 
   describe('ADD_NEW_CONDITION', () => {
-    const conditionId = '1'
-    const condition1 = new Condition({ key: conditionId, type: 'OR', filters: [] })
-    it('adds to condition array, adds opposite type, adds condition filter at end', () => {
-      const state = {
-        ...r.initialState,
-        conditions: {
-          '0': new Condition({ key: '0', type: 'AND', filters: [] }),
-        },
-      }
-      const expectedCondition0 = new Condition({
-        key: '0',
-        type: 'AND',
-        filters: [new ConditionFilter({ conditionGroup: conditionId })],
+    const newConditionId = '1'
+    const condition1 = new Condition({ key: newConditionId, type: 'OR', filters: [] })
+    describe('without an optional filter', () => {
+      it('adds to condition array, adds opposite type, adds condition filter at end', () => {
+        const state = {
+          ...r.initialState,
+          conditions: {
+            '0': new Condition({ key: '0', type: 'AND', filters: [] }),
+          },
+        }
+        const expectedCondition0 = new Condition({
+          key: '0',
+          type: 'AND',
+          filters: [new ConditionFilter({ conditionGroup: newConditionId })],
+        })
+        expect(r.advancedSearchReducer(state, a.addNewCondition('0', newConditionId))).toEqual({
+          ...r.initialState,
+          conditions: { '0': expectedCondition0, [newConditionId]: condition1 },
+        })
       })
-      expect(r.advancedSearchReducer(state, a.addNewCondition('0', conditionId))).toEqual({
-        ...r.initialState,
-        conditions: { '0': expectedCondition0, [conditionId]: condition1 },
+    })
+
+    describe('with an optional filter', () => {
+      const newConditionId = '1'
+      it('moves the filter to the new condition, creates a conditionGroup in the parent condition, and deletes the filter from the parent condition', () => {
+        const state = {
+          ...r.initialState,
+          conditions: {
+            '0': new Condition({ key: '0', type: 'AND', filters: [{ id: 1 }] }),
+          },
+        }
+        const expectedConditions = {
+          '0': new Condition({
+            key: '0',
+            type: 'AND',
+            filters: [new ConditionFilter({ conditionGroup: newConditionId })],
+          }),
+          [newConditionId]: new Condition({
+            key: newConditionId,
+            type: 'OR',
+            filters: [{ id: 1 }],
+          }),
+        }
+
+        expect(r.advancedSearchReducer(state, a.addNewCondition('0', newConditionId, 0))).toEqual({
+          ...r.initialState,
+          conditions: expectedConditions,
+        })
       })
     })
   })
