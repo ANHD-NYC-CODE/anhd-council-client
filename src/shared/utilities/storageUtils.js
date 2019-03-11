@@ -26,7 +26,7 @@ export const getStorageDataAction = async (dispatch, constant, requestId, path, 
       }
     })
     .catch(error => {
-      handleCatchError(error, constant, dispatch, requestId)
+      return // silently fail and let Axios take with fetching data
     })
 }
 
@@ -46,13 +46,19 @@ export const getCommunityBoardsData = () => {
   return get(COMMUNITY_BOARDS_INDEX)
 }
 
-export const setCouncilDistrictsData = data => {
-  return set(COUNCIL_DISTRICTS_INDEX, data)
+const setIndexedData = (path, data) => {
+  return set(path, data)
 }
 
-export const setCommunityBoardsData = data => {
-  console.log('SETTING', data)
-  return set(COMMUNITY_BOARDS_INDEX, data)
+export const setIndexedDataThenUpdateReducer = (path, response, actionCallback) => {
+  return setIndexedData(path, response.data)
+    .then(response => {
+      return actionCallback(response)
+    })
+    .catch(() => {
+      // Silent error handle, return response to reducer
+      return actionCallback(response)
+    })
 }
 
 export const delCouncilDistrictsData = () => {

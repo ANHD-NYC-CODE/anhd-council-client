@@ -8,6 +8,8 @@ const DateField = props => {
   return (
     <Form.Control
       key={props.key}
+      min={props.paramMap.props.minValue}
+      max={props.paramMap.props.maxValue}
       name="value"
       onChange={props.onChange}
       size="sm"

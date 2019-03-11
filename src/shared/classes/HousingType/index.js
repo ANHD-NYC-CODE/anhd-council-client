@@ -1,4 +1,4 @@
-import * as ht from 'shared/constants/housingTypes'
+import * as ht from 'shared/models/housingTypes'
 import { cloneInstance } from 'shared/utilities/classUtils'
 
 export class HousingType {

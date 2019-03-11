@@ -30,6 +30,7 @@ const convertConditionGroupToString = (datasetsConfig, filters) => {
 }
 
 export const convertConditionMappingToQ = (datasetsConfig, conditions) => {
+  if (Object.values(conditions).some(condition => !condition.filters.length)) return null
   return Object.keys(conditions)
     .map(
       key =>

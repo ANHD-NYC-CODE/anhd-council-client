@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Form } from 'react-bootstrap'
-import * as ht from 'shared/constants/housingTypes'
+import * as ht from 'shared/models/housingTypes'
 
 const HousingTypeSelect = props => {
   return (

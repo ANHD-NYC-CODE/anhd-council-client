@@ -25,6 +25,17 @@ describe('convertDatasetFilterToParams', () => {
 })
 
 describe('convertConditionMappingToQ', () => {
+  describe('Empty condition 0', () => {
+    it('returns an empty string', () => {
+      const conditions = {
+        '0': new Condition({ type: 'AND', filters: [] }),
+      }
+
+      const result = null
+
+      expect(a.convertConditionMappingToQ(undefined, conditions)).toEqual(result)
+    })
+  })
   describe('3 ANDS', () => {
     it('converts the object into a Q', () => {
       const mock1 = filterMocks('HPD_VIOLATION')
