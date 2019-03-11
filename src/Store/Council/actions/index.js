@@ -1,6 +1,10 @@
 import { constructAxiosGet } from 'shared/utilities/Axios'
 import * as u from 'shared/constants/urls'
-import { COUNCIL_DISTRICTS_INDEX, getStorageDataAction, setCouncilDistrictsData } from 'shared/utilities/storageUtils'
+import {
+  COUNCIL_DISTRICTS_INDEX,
+  getStorageDataAction,
+  setIndexedDataThenUpdateReducer,
+} from 'shared/utilities/storageUtils'
 
 import * as c from '../constants'
 import { constructSimplePropertyParams } from 'shared/utilities/actionUtils'
@@ -12,13 +16,7 @@ const getCouncilsActionObject = response => ({
 
 export const handleGetCouncils = (response, key = null, setStorage = true) => {
   if (setStorage) {
-    setCouncilDistrictsData(response.data)
-      .then(response => {
-        return getCouncilsActionObject(response)
-      })
-      .catch(error => {
-        return getCouncilsActionObject(response)
-      })
+    setIndexedDataThenUpdateReducer(COUNCIL_DISTRICTS_INDEX, response, getCouncilsActionObject)
   } else {
     return getCouncilsActionObject(response)
   }
