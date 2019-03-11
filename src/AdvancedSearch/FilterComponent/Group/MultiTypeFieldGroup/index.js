@@ -80,10 +80,11 @@ const MultiTypeFieldGroup = props => {
           }
         } else {
           return paramMap.component({
-            changeFilter: props.changeFilter,
+            replaceFilter: props.replaceFilter,
             dispatchAction: props.dispatchAction,
             key: `paramSet-${props.paramSetIndex}-paramMap-component-${paramMapIndex}`,
             filterIndex: props.filterIndex,
+            filter: props.filter,
             options: paramMap.options,
             paramMap: paramMap,
             paramMapIndex: paramMapIndex,
@@ -97,9 +98,10 @@ const MultiTypeFieldGroup = props => {
 }
 
 MultiTypeFieldGroup.propTypes = {
-  changeFilter: PropTypes.func,
+  replaceFilter: PropTypes.func,
   dispatchAction: PropTypes.func,
   filterIndex: PropTypes.number,
+  filter: PropTypes.object,
   paramSet: PropTypes.object,
   paramSetIndex: PropTypes.number,
 }

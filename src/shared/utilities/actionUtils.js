@@ -6,7 +6,8 @@ const ERROR_400_MESSAGE = 'Incorrect username or password.'
 const ERROR_401_MESSAGE = 'Please login for access.'
 const ERROR_404_MESSAGE = 'Not found.'
 const ERROR_500_MESSAGE = 'Oops, something went wrong.'
-const ERROR_504_MESSAGE = 'Sorry, the request timed out. Perhaps try a simpler query?'
+const TIMEOUT_MESSAGE = 'Sorry, the request timed out. Perhaps try a simpler query?'
+
 export const handleActionDispatch = (dispatch, constant, requestId) => {
   dispatch(loadingActions.handleRequest(constant, requestId))
   dispatch(errorActions.handleClearErrors(constant))
@@ -35,9 +36,12 @@ export const handleCatchError = (error, type, dispatch, requestId) => {
   let errorStatus = ''
 
   if (!error.response) {
-    if (error.message && error.message.toUpperCase().match(/(TIMEOUT|NETWORK)/)) {
-      errorMessage = ERROR_504_MESSAGE
+    if (error.message && error.message.toUpperCase().match(/(TIMEOUT)/)) {
+      errorMessage = TIMEOUT_MESSAGE
       errorStatus = 504
+    } else if (error.status === 504) {
+      errorMessage = ERROR_500_MESSAGE
+      errorStatus = error.status
     } else {
       errorMessage = ERROR_500_MESSAGE
       errorStatus = 500

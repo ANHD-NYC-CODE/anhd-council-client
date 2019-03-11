@@ -28,13 +28,13 @@ class Config extends React.Component {
 
   componentWillReceiveProps(nextProps, nextState) {
     if (!nextProps.loading && !nextProps.error) {
-      // if (!nextProps.datasets) {
-      //   this.props.dispatch(getDatasets())
-      // }
-      //
-      // if (!nextProps.councils) {
-      //   this.props.dispatch(getCouncils())
-      // }
+      if (!nextProps.datasets) {
+        this.props.dispatch(getDatasets())
+      }
+
+      if (!nextProps.councils) {
+        this.props.dispatch(getCouncils())
+      }
       // if (!nextProps.communities) {
       //   this.props.dispatch(getCommunities())
       // }
@@ -53,7 +53,7 @@ class Config extends React.Component {
 
   render() {
     return (
-      <ConfigContext.Provider value={{ ...this.state, datasets: this.props.datasets }}>
+      <ConfigContext.Provider value={{ datasets: this.props.datasets, datasetModels: this.props.datasetModels }}>
         {/* {this.props.loading || !(this.props.datasets && this.props.councils) ? (
           <div>loading!</div>
         ) : ( */}
@@ -77,6 +77,7 @@ const loadingSelector = createLoadingSelector([GET_DATASETS, GET_COUNCILS, GET_C
 const mapStateToProps = state => {
   return {
     datasets: state.dataset.datasets,
+    datasetModels: state.dataset.models,
     councils: state.council.districts,
     communities: state.community.boards,
     error: errorSelector(state),

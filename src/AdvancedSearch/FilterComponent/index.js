@@ -7,17 +7,14 @@ export class FilterComponent extends React.Component {
   constructor(props) {
     super(props)
 
-    this.changeFilter = this.changeFilter.bind(this)
     this.removeFilter = this.removeFilter.bind(this)
   }
 
-  changeFilter() {
-    debugger
-  }
-
   removeFilter() {
-    this.props.condition.removeFilter({ filterIndex: this.props.filterIndex })
-    this.props.dispatchAction()
+    this.props.condition.removeFilter({
+      dispatchAction: this.props.dispatchAction,
+      filterIndex: this.props.filterIndex,
+    })
   }
 
   render() {
@@ -29,8 +26,9 @@ export class FilterComponent extends React.Component {
               this.props.filter.paramsObject[paramsSetKey].component({
                 key: 'filter-paramset-component',
                 dispatchAction: this.props.dispatchAction,
-                changeFilter: this.changeFilter,
+                replaceFilter: this.props.replaceFilter,
                 filterIndex: this.props.filterIndex,
+                filter: this.props.filter,
                 paramSet: this.props.filter.paramsObject[paramsSetKey],
                 paramSetIndex: paramSetIndex,
               })
@@ -57,9 +55,11 @@ FilterComponent.propTypes = {
   addCondition: PropTypes.func,
   allowNewCondition: PropTypes.bool,
   condition: PropTypes.object,
+  datasetModels: PropTypes.array,
   dispatchAction: PropTypes.func,
   filter: PropTypes.object,
   filterIndex: PropTypes.number,
+  replaceFilter: PropTypes.func,
 }
 
 export default FilterComponent
