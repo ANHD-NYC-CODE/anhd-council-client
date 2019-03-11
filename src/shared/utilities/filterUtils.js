@@ -39,6 +39,7 @@ export const constructDefaultSchema = ({
   capitalizeDepartment = true,
   noun = undefined,
   amountNoun = undefined,
+  amountShortNoun = undefined,
   amountValuePrefix = undefined,
   amountValueSuffix = undefined,
   amountPropertyAdjective = undefined,
@@ -62,6 +63,7 @@ export const constructDefaultSchema = ({
             type: 'AMOUNT',
             noun:
               amountNoun !== undefined ? amountNoun : constantToName({ constant, plural: false, capitalizeDepartment }),
+            shortNoun: amountShortNoun,
             propertyAdjective: amountPropertyAdjective || 'have',
             valuePrefix: amountValuePrefix,
             valueSuffix: amountValueSuffix,
