@@ -5,7 +5,7 @@ import { StandardizedInput } from 'shared/classes/StandardizedInput'
 import NewFilterSelect from 'AdvancedSearch/FilterComponent/NewFilterSelect'
 import uuidv4 from 'uuid/v4'
 import { addNewCondition, updateCondition, removeCondition } from 'Store/AdvancedSearch/actions'
-import { Form, Button, Badge, Col, ButtonGroup } from 'react-bootstrap'
+import { Form, Button, Col, ButtonGroup } from 'react-bootstrap'
 
 import FilterComponent from 'AdvancedSearch/FilterComponent'
 
@@ -116,16 +116,6 @@ export class ConditionComponent extends React.Component {
                 {this.props.condition.type}
               </Button>
             )}
-            {/* {(isCondition0() || (!isCondition0() && !this.props.condition.hasCondition())) && (
-              <Button
-                className="add-condition"
-                size="sm"
-                onClick={() => this.addCondition(this.props.condition.key)}
-                variant="outline-primary"
-              >
-                + {this.props.condition.isAnd() ? 'OR' : 'AND'}
-              </Button>
-            )} */}
             {!isCondition0() && (
               <Button
                 className="remove-condition"

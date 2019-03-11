@@ -31,7 +31,6 @@ describe('ConditionComponent', () => {
 
     it('renders the component', () => {
       expect(wrapper.find('.condition')).toBeDefined()
-      expect(wrapper.find('.add-condition')).toHaveLength(1)
       expect(wrapper.find('.remove-condition')).toHaveLength(0)
     })
 
@@ -47,11 +46,6 @@ describe('ConditionComponent', () => {
       const wrapper = shallow(<ConditionComponent conditions={conditions} condition={condition} dispatch={dispatch} />)
       it('renders a second condition', () => {
         expect(wrapper.find(ConditionComponent)).toHaveLength(1)
-      })
-
-      it('renders an add button component on this condition', () => {
-        const button = wrapper.find('.add-condition')
-        expect(button).toHaveLength(1)
       })
 
       it('does not render a remove condition button', () => {
@@ -74,7 +68,6 @@ describe('ConditionComponent', () => {
 
     it('renders the component', () => {
       expect(wrapper.find('.condition')).toBeDefined()
-      expect(wrapper.find('.add-condition')).toHaveLength(1)
       expect(wrapper.find('.remove-condition')).toHaveLength(1)
     })
 
@@ -115,31 +108,6 @@ describe('ConditionComponent', () => {
     })
     const conditions = { [conditionKey]: condition }
     const dispatch = sinon.spy()
-    describe('Creating a filter', () => {
-      it('renders a select component', () => {
-        const wrapper = shallow(
-          <ConditionComponent conditions={conditions} condition={condition} dispatch={dispatch} />
-        )
-        expect(wrapper.find(CustomSelect)).toHaveLength(0)
-        expect(wrapper.find('.cancel-filter')).toHaveLength(0)
-        wrapper.find('.add-filter').simulate('click')
-        expect(wrapper.find(CustomSelect)).toHaveLength(1)
-        expect(wrapper.find('.cancel-filter')).toHaveLength(1)
-      })
-
-      it('hides a select component', () => {
-        const wrapper = shallow(
-          <ConditionComponent conditions={conditions} condition={condition} dispatch={dispatch} />
-        )
-
-        wrapper.find('.add-filter').simulate('click')
-        expect(wrapper.find(CustomSelect)).toHaveLength(1)
-        expect(wrapper.find('.cancel-filter')).toHaveLength(1)
-
-        wrapper.find('.cancel-filter').simulate('click')
-        expect(wrapper.find(CustomSelect)).toHaveLength(0)
-      })
-    })
 
     describe('With a filter', () => {
       const wrapper = shallow(<ConditionComponent conditions={conditions} condition={condition} dispatch={dispatch} />)

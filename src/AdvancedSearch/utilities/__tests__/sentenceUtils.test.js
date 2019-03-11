@@ -58,7 +58,7 @@ describe('convertHousingTypesToSentence', () => {
       housingType1.paramsObject['unitsres'].create()
       const housingTypes = [housingType1]
 
-      const result = 'Small Home properties with at most 6 units'
+      const result = 'small home properties with at most 6 units'
 
       expect(a.convertHousingTypesToSentence(housingTypes)).toEqual(result)
     })
@@ -69,7 +69,7 @@ describe('convertHousingTypesToSentence', () => {
       const housingType1 = new HousingType({ housingType: 'SMALL_HOMES' })
       const housingType2 = new HousingType({ housingType: 'RENT_REGULATED' })
       const housingTypes = [housingType1, housingType2]
-      const result = 'Small Home properties and Rent Regulated properties'
+      const result = 'small home properties and rent regulated properties'
 
       expect(a.convertHousingTypesToSentence(housingTypes)).toEqual(result)
     })
@@ -82,7 +82,7 @@ describe('convertHousingTypesToSentence', () => {
       housingType1.paramsObject['coresubsidyrecord__enddate'].create()
       const housingTypes = [housingType1]
 
-      const result = `Rent Regulated properties expiring before ${moment(moment.now())
+      const result = `rent regulated properties expiring before ${moment(moment.now())
         .add(1, 'Y')
         .format('MM/DD/YYYY')}`
 
@@ -96,7 +96,7 @@ describe('convertHousingTypesToSentence', () => {
       housingType1.paramsObject['coresubsidyrecord__enddate'].createAll()
       const housingTypes = [housingType1]
 
-      const result = `Rent Regulated properties expiring between ${moment(moment.now()).format(
+      const result = `rent regulated properties expiring between ${moment(moment.now()).format(
         'MM/DD/YYYY'
       )} and ${moment(moment.now())
         .add(1, 'Y')
@@ -117,7 +117,7 @@ describe('convertHousingTypesToSentence', () => {
 
       const housingTypes = [housingType1]
 
-      const result = `Rent Regulated properties with LIHCT, J-51, or 421-a and expiring between ${moment(
+      const result = `rent regulated properties with LIHCT, J-51, or 421-a and expiring between ${moment(
         moment.now()
       ).format('MM/DD/YYYY')} and ${moment(moment.now())
         .add(1, 'Y')
@@ -135,7 +135,7 @@ describe('convertHousingTypesToSentence', () => {
       housingType1.paramsObject['rsunitslost'].create()
       const housingTypes = [housingType1]
 
-      const result = 'Rent Stabilized properties that lost at least 25% rent stabilized units since 2010'
+      const result = 'rent stabilized properties that lost at least 25% rent stabilized units after 2010'
 
       expect(a.convertHousingTypesToSentence(housingTypes)).toEqual(result)
     })
@@ -166,7 +166,7 @@ describe('convertConditionMappingToSentence', () => {
         }),
       }
 
-      const result = ` have at least 5 HPD Violations between ${todayminus1year} and ${todayplus1year} or have at least 5 DOB Violations between ${todayminus1year} and ${todayplus1year}.`
+      const result = ` either have at least 5 HPD Violations between ${todayminus1year} and ${todayplus1year} or have at least 5 DOB Violations between ${todayminus1year} and ${todayplus1year}.`
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
@@ -206,7 +206,7 @@ describe('convertConditionMappingToSentence', () => {
         }),
       }
 
-      const result = ` have at least 5 HPD Violations between ${todayminus1year} and ${todayplus1year} or that have at least 5 DOB Violations between ${todayminus1year} and ${todayplus1year} and have at least 5 ECB Violations between ${todayminus1year} and ${todayplus1year}.`
+      const result = ` either have at least 5 HPD Violations between ${todayminus1year} and ${todayplus1year} or that have at least 5 DOB Violations between ${todayminus1year} and ${todayplus1year} and have at least 5 ECB Violations between ${todayminus1year} and ${todayplus1year}.`
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })

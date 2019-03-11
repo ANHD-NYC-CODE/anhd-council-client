@@ -95,7 +95,7 @@ const parseParamMapRangeGroup = paramMapRangeGroup => {
 }
 
 export const convertConditionToSentence = (conditions, condition) => {
-  return `${condition.type === 'AND' ? '' : 'either'} ${condition.filters
+  return `${condition.type === 'AND' ? '' : ' either'}${condition.filters
     .map((filter, index) => {
       if (filter.conditionGroup) {
         return `${convertConditionToSentence(conditions, conditions[filter.conditionGroup])}${
@@ -119,7 +119,7 @@ const constructFilterSentenceFill = condition => {
 }
 
 const constructConditionFill = condition => {
-  return condition.type === 'AND' ? ' and that ' : ' or that '
+  return condition.type === 'AND' ? ' and that' : ' or that'
 }
 
 export const convertConditionMappingToSentence = conditions => {
