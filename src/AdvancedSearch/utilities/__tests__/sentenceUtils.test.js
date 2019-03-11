@@ -332,7 +332,7 @@ describe('convertConditionMappingToSentence', () => {
         }),
       }
 
-      const result = ` have been sold at least 2 times between ${todayminus1year} and ${todayplus1year}.`
+      const result = ` were sold at least 2 times between ${todayminus1year} and ${todayplus1year}.`
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })

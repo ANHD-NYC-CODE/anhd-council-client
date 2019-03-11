@@ -116,9 +116,10 @@ export const PROPERTY_SALE_BY_COUNT = {
     apiField: 'acrisreallegals',
     dateFieldQuery: 'documentid__docdate',
     amountFieldQuery: 'documentid__count',
-    amountPropertyAdjective: 'have been sold',
+    amountPropertyAdjective: 'were sold',
     defaultAmount: 2,
     amountNoun: 'times',
+    amountShortNoun: 'times',
   }),
   languageModule: new LanguageModule({
     noun: constantToName({ constant: 'PROPERTY_SALE_BY_COUNT', capitalizeDepartment: false, plural: false }),

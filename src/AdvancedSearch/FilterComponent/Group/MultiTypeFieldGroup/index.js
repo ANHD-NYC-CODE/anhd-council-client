@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { StandardizedInput } from 'shared/classes/StandardizedInput'
 
-import { InputGroup, Button, Form } from 'react-bootstrap'
 import RangeFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/RangeFieldSet'
 
 import './style.scss'

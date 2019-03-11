@@ -2,12 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { StandardizedInput } from 'shared/classes/StandardizedInput'
 import { Form, InputGroup, Col } from 'react-bootstrap'
+import classNames from 'classnames'
 import NewFilterSelect from 'AdvancedSearch/FilterComponent/NewFilterSelect'
 
 const ComparisonFieldSet = props => {
   return (
     <Form.Row className="comparison-fieldset" key={props.key}>
-      <InputGroup as={Col} xs={12} sm={6} md={props.filter ? 4 : 6} size="sm">
+      <InputGroup as={Col} xs={12} md={props.filter ? 4 : 6} size="sm">
         <InputGroup.Prepend>
           {props.paramMap.languageModule.propertyAdjective && (
             <InputGroup.Text>{props.paramMap.languageModule.propertyAdjective}</InputGroup.Text>
@@ -37,7 +38,21 @@ const ComparisonFieldSet = props => {
           })}
         </Form.Control>
       </InputGroup>
-      <InputGroup as={Col} xs={12} sm={6} md={props.filter ? 3 : 6} size="sm">
+      <InputGroup
+        as={Col}
+        xs={12}
+        md={{
+          '3': props.filter && !props.paramMap.rangeKey,
+          '6': !props.filter,
+          '8': props.filter && props.paramMap.rangeKey,
+        }}
+        size="sm"
+      >
+        <InputGroup.Prepend>
+          {props.paramMap.languageModule.valuePrefix && (
+            <InputGroup.Text>{props.paramMap.languageModule.valuePrefix}</InputGroup.Text>
+          )}
+        </InputGroup.Prepend>
         {props.paramMap.baseComponent({
           dispatchAction: props.dispatchAction,
           paramMap: props.paramMap,
@@ -54,7 +69,7 @@ const ComparisonFieldSet = props => {
         </InputGroup.Append>
       </InputGroup>
       {props.filter && props.paramMap.languageModule.type === 'AMOUNT' && (
-        <InputGroup as={Col} xs={12} sm={6} md={5} size="sm">
+        <InputGroup as={Col} xs={12} md={5} size="sm">
           <NewFilterSelect
             filterIndex={props.filterIndex}
             onChange={props.replaceFilter}
