@@ -48,14 +48,21 @@ class Loading extends React.Component {
         {this.props.monitoredRequests.map((request, index) => {
           return (
             <div key={`loading-request-monitor-${index}`}>
-              <p>{request}:</p>
-              <p>Status:</p>
               {this[request](this.props.loadingReducer) ? (
-                <p className="text-debug">'Loading...' </p>
+                <div>
+                  <b>{request}:</b>
+                  <p>Status:</p>
+                  <p className="text-debug">Loading... </p>
+                  <hr />
+                </div>
               ) : (
-                <p className="text-success">'Done!'</p>
+                <div>
+                  <b>{request}:</b>
+                  <p>Status:</p>
+                  <b className="text-success">Done!</b>
+                  <hr />
+                </div>
               )}
-              <br />
             </div>
           )
         })}
