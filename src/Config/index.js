@@ -10,14 +10,14 @@ import ConfigContext from 'Config/ConfigContext'
 import { getDatasets } from 'Store/Dataset/actions'
 import { getCouncils } from 'Store/Council/actions'
 import { getCommunities } from 'Store/Community/actions'
-
+import Loading from 'shared/components/Loading'
 class Config extends React.Component {
   constructor(props) {
     super(props)
 
     this.props.dispatch(getDatasets())
     this.props.dispatch(getCouncils())
-    // this.props.dispatch(getCommunities())
+    this.props.dispatch(getCommunities())
 
     this.state = {
       boundaryType: undefined,
@@ -35,9 +35,9 @@ class Config extends React.Component {
       if (!nextProps.councils) {
         this.props.dispatch(getCouncils())
       }
-      // if (!nextProps.communities) {
-      //   this.props.dispatch(getCommunities())
-      // }
+      if (!nextProps.communities) {
+        this.props.dispatch(getCommunities())
+      }
     }
 
     if (nextState.boundaryType === 'council') {
@@ -54,11 +54,11 @@ class Config extends React.Component {
   render() {
     return (
       <ConfigContext.Provider value={{ datasets: this.props.datasets, datasetModels: this.props.datasetModels }}>
-        {/* {this.props.loading || !(this.props.datasets && this.props.councils) ? (
-          <div>loading!</div>
-        ) : ( */}
-        {this.props.children}
-        {/* )} */}
+        {this.props.loading || !(this.props.datasets && this.props.councils && this.props.communities) ? (
+          <Loading monitoredRequests={[GET_DATASETS, GET_COUNCILS, GET_COMMUNITIES]} />
+        ) : (
+          this.props.children
+        )}
       </ConfigContext.Provider>
     )
   }
