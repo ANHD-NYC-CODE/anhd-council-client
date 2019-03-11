@@ -1,13 +1,28 @@
 import { constructAxiosGet } from 'shared/utilities/Axios'
 import * as u from 'shared/constants/urls'
+import { COMMUNITY_BOARDS_INDEX, getStorageDataAction, setCommunityBoardsData } from 'shared/utilities/storageUtils'
 
 import * as c from '../constants'
 import { constructSimplePropertyParams } from 'shared/utilities/actionUtils'
 
-export const handleGetCommunities = (response, key = null) => ({
+const getCommunitiesActionObject = response => ({
   type: c.HANDLE_GET_COMMUNITIES,
   data: response.data,
 })
+
+export const handleGetCommunities = (response, key = null, setStorage = true) => {
+  if (setStorage) {
+    setCommunityBoardsData(response.data)
+      .then(response => {
+        return getCommunitiesActionObject(response)
+      })
+      .catch(error => {
+        return getCommunitiesActionObject(response)
+      })
+  } else {
+    return getCommunitiesActionObject(response)
+  }
+}
 
 export const handleGetCommunity = (response, key = null) => ({
   type: c.HANDLE_GET_COMMUNITY,
@@ -27,7 +42,18 @@ export const handleGetCommunityPropertySummary = (response, key = null) => ({
 
 export const getCommunities = () => (dispatch, getState, access_token) => {
   const requestId = Math.floor(Math.random() * 1000000)
+  getStorageDataAction(dispatch, c.GET_COMMUNITIES, requestId, COMMUNITY_BOARDS_INDEX, handleGetCommunities)
+    .then(storageData => {
+      if (!storageData) {
+        return communitiesAxios(dispatch, getState, access_token, requestId)
+      }
+    })
+    .catch(() => {
+      return communitiesAxios(dispatch, getState, access_token, requestId)
+    })
+}
 
+const communitiesAxios = (dispatch, getState, access_token, requestId) => {
   return constructAxiosGet(
     dispatch,
     getState,

@@ -2,10 +2,9 @@ import React from 'react'
 import Router from 'Router'
 
 import configureStore from 'Store/configureStore'
-import { USER_STORAGE } from 'shared/constants/actions'
 import { ToastContainer } from 'react-toastify'
 import { Provider } from 'react-redux'
-
+import { getUserStorageData } from 'shared/utilities/storageUtils'
 import Auth from 'Auth'
 import Config from 'Config'
 import ModalContainer from 'ModalContainer'
@@ -13,16 +12,29 @@ import ModalContainer from 'ModalContainer'
 import 'react-toastify/dist/ReactToastify.css'
 
 // Login user with browser refresh, if token fresh and available
-const getAuthState = () => {
+const getStateFromStorage = () => {
   try {
-    const storage = JSON.parse(localStorage.getItem(USER_STORAGE)) || undefined
-    return { auth: { user: storage.user, access: storage.access, refresh: storage.refresh } }
+    const userStorage = getUserStorageData()
+
+    return {
+      auth: {
+        user: (userStorage || {}).user,
+        access: (userStorage || {}).access,
+        refresh: (userStorage || {}).refresh,
+      },
+      council: {
+        districts: [],
+      },
+      community: {
+        boards: [],
+      },
+    }
   } catch (err) {
     return undefined
   }
 }
 
-const store = configureStore({ ...getAuthState() })
+const store = configureStore({ ...getStateFromStorage() })
 
 export class App extends React.Component {
   constructor() {

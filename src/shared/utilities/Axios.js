@@ -18,8 +18,8 @@ export const constructAxiosGet = (dispatch, getState, requestId, url, params, ac
     .then(response => {
       const requestIsValid = !!getState().loading.requests.filter(request => request.id === requestId).length
       if (requestIsValid) {
-        dispatch(handleCompletedRequest(constant, requestId))
         dispatch(handleAction(response, constant))
+        dispatch(handleCompletedRequest(constant, requestId))
       }
     })
     .catch(error => {
