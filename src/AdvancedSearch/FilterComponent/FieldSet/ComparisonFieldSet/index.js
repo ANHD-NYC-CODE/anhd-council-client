@@ -53,17 +53,24 @@ const ComparisonFieldSet = props => {
           )}
         </InputGroup.Append>
       </InputGroup>
-      <InputGroup>
-        <NewFilterSelect filterIndex={props.filterIndex} onChange={props.changeFilter} />
-      </InputGroup>
+      {props.paramMap.languageModule.type === 'AMOUNT' && (
+        <InputGroup as={Col} size="sm">
+          <NewFilterSelect
+            filterIndex={props.filterIndex}
+            onChange={props.replaceFilter}
+            value={props.filter.dataset.id}
+          />
+        </InputGroup>
+      )}
     </Form.Row>
   )
 }
 
 ComparisonFieldSet.propTypes = {
-  changeFilter: PropTypes.func,
+  replaceFilter: PropTypes.func,
   dispatchAction: PropTypes.func,
   filterIndex: PropTypes.number,
+  filter: PropTypes.object,
   key: PropTypes.string,
   options: PropTypes.array,
   paramMap: PropTypes.object,

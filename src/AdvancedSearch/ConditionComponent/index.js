@@ -17,7 +17,6 @@ export class ConditionComponent extends React.Component {
 
     this.addCondition = this.addCondition.bind(this)
     this.removeCondition = this.removeCondition.bind(this)
-    this.containsCondition = this.containsCondition.bind(this)
     this.dispatchAction = this.dispatchAction.bind(this)
     this.replaceFilter = this.replaceFilter.bind(this)
     this.createNewFilter = this.createNewFilter.bind(this)
@@ -40,10 +39,6 @@ export class ConditionComponent extends React.Component {
     this.props.dispatch(removeCondition(this.props.condition.key))
   }
 
-  containsCondition() {
-    return this.props.condition.filters.find(filter => filter.conditionGroup)
-  }
-
   createNewFilter() {
     const newFilter = new Filter({ datasetConstant: 'NEW_FILTER' })
     this.props.condition.addFilter({ filter: newFilter })
@@ -52,7 +47,8 @@ export class ConditionComponent extends React.Component {
 
   replaceFilter(filterIndex, e) {
     e = new StandardizedInput(e)
-    const newFilter = new Filter({ datasetConstant: e.value })
+    const dataset = this.props.datasetModels.find(ds => ds.id === e.value)
+    const newFilter = new Filter({ dataset })
     this.props.condition.replaceFilter({ filterIndex, filter: newFilter })
     this.dispatchAction()
   }
@@ -73,15 +69,17 @@ export class ConditionComponent extends React.Component {
         return (
           <ConditionComponent
             key={`condition-${this.props.condition.key}-${filterIndex}`}
-            conditions={this.props.conditions}
             condition={this.props.conditions[filter.conditionGroup]}
-            dispatch={this.props.dispatch}
+            conditions={this.props.conditions}
             conditionKey={filter.conditionGroup}
+            datasetModels={this.props.datasetModels}
+            dispatch={this.props.dispatch}
           />
         )
       } else if (filter.id === 'NEW_FILTER') {
         return (
           <NewFilterSelect
+            datasetModels={this.props.datasetModels}
             filterIndex={filterIndex}
             onChange={this.replaceFilter}
             key={`new-filter-${this.props.condition.key}-${filter.id}`}
@@ -92,12 +90,14 @@ export class ConditionComponent extends React.Component {
           <FilterComponent
             addCondition={this.addCondition}
             allowNewCondition={isCondition0() || (!isCondition0() && !this.props.condition.hasCondition())}
-            dispatchAction={this.dispatchAction}
             condition={this.props.condition}
+            datasetModels={this.props.datasetModels}
             dispatch={this.props.dispatch}
+            dispatchAction={this.dispatchAction}
             filter={filter}
             filterIndex={filterIndex}
             key={`filter-${this.props.condition.key}-${filter.id}`}
+            replaceFilter={this.replaceFilter}
           />
         )
       }
@@ -145,6 +145,7 @@ ConditionComponent.propTypes = {
   condition: PropTypes.object,
   conditions: PropTypes.object,
   dispatch: PropTypes.func,
+  datasetModels: PropTypes.array,
 }
 
 export default ConditionComponent

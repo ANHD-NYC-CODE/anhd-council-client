@@ -2,11 +2,12 @@ import * as d from 'shared/models/datasets'
 import { cloneInstance } from 'shared/utilities/classUtils'
 
 export class Filter {
-  constructor({ datasetConstant = null, paramsObject = {} } = {}) {
+  constructor({ datasetConstant = null, dataset = null, paramsObject = {} } = {}) {
     this.setDataset = this.setDataset.bind(this)
     this._paramsObject = paramsObject
     this.id = datasetConstant
     if (datasetConstant === 'NEW_FILTER') return
+    this._dataset = dataset
     this.setDataset(datasetConstant)
 
     // Post initialize actions
@@ -21,7 +22,7 @@ export class Filter {
   }
 
   setDataset(datasetConstant) {
-    const dataset = d[Object.keys(d).find(obj => d[obj].id === datasetConstant)]
+    const dataset = d[Object.keys(d).find(obj => d[obj].id === datasetConstant)] || this._dataset
 
     if (!dataset && datasetConstant !== 'NEW_FILTER')
       throw `Pass either '${Object.keys(d)

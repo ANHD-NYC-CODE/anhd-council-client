@@ -9,6 +9,8 @@ import { createErrorSelector } from 'Store/Error/selectors'
 import { connect } from 'react-redux'
 import { getAdvancedSearch } from 'Store/AdvancedSearch/actions'
 import { requestWithAuth } from 'shared/utilities/authUtils'
+import ConfigContext from 'Config/ConfigContext'
+
 import AdvancedSearchSentence from 'AdvancedSearch/Sentence'
 import BuildingHistoryTable from 'BuildingLookup/BuildingHistoryTable'
 import { addBoundary, updateBoundary } from 'Store/AdvancedSearch/actions'
@@ -92,14 +94,18 @@ export class AdvancedSearch extends React.Component {
                 housingTypes={this.props.advancedSearch.housingTypes}
                 dispatch={this.props.dispatch}
               />
-
-              <ConditionComponent
-                conditions={this.props.advancedSearch.conditions}
-                condition={this.props.advancedSearch.conditions[0]}
-                dispatch={this.props.dispatch}
-                key={'condition-0'}
-                conditionKey={'0'}
-              />
+              <ConfigContext.Consumer>
+                {config => (
+                  <ConditionComponent
+                    conditions={this.props.advancedSearch.conditions}
+                    condition={this.props.advancedSearch.conditions[0]}
+                    datasetModels={config.datasetModels}
+                    dispatch={this.props.dispatch}
+                    key={'condition-0'}
+                    conditionKey={'0'}
+                  />
+                )}
+              </ConfigContext.Consumer>
             </Col>
           </Row>
         )}

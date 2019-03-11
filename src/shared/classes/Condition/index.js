@@ -50,7 +50,7 @@ export class Condition {
     return this._filters.some(filter => filter.conditionGroup)
   }
 
-  addFilter({ filter }) {
+  addFilter({ dispatchAction, filter }) {
     // Adds condition groups to the end
     if (filter.conditionGroup) {
       this._filters = [...this._filters, filter]
@@ -60,13 +60,24 @@ export class Condition {
       this._filters = [...this._filters, filter]
       this._filters = this.filters.concat(conditionGroups)
     }
+
+    if (dispatchAction) {
+      dispatchAction()
+    }
   }
 
-  replaceFilter({ filterIndex, filter }) {
+  replaceFilter({ dispatchAction, filterIndex, filter }) {
     this._filters = [...this._filters.slice(0, filterIndex), filter, ...this._filters.slice(filterIndex + 1)]
+
+    if (dispatchAction) {
+      dispatchAction()
+    }
   }
 
-  removeFilter({ filterIndex }) {
+  removeFilter({ dispatchAction, filterIndex }) {
     this._filters = this._filters.filter((f, index) => index !== filterIndex)
+    if (dispatchAction) {
+      dispatchAction()
+    }
   }
 }
