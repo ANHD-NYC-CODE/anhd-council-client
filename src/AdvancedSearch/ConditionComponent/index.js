@@ -28,8 +28,8 @@ export class ConditionComponent extends React.Component {
     }
   }
 
-  addCondition(filter) {
-    this.props.dispatch(addNewCondition(this.props.condition.key, uuidv4(), filter))
+  addCondition(filterIndex = undefined) {
+    this.props.dispatch(addNewCondition(this.props.condition.key, uuidv4(), filterIndex))
   }
 
   dispatchAction() {
