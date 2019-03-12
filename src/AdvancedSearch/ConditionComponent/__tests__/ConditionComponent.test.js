@@ -104,7 +104,7 @@ describe('ConditionComponent', () => {
     const condition = new Condition({
       key: conditionKey,
       type: 'AND',
-      filters: [new Filter({ datasetConstant: 'HPD_VIOLATION' })],
+      filters: [new Filter({ modelConstant: 'HPD_VIOLATION' })],
     })
     const conditions = { [conditionKey]: condition }
     const dispatch = sinon.spy()

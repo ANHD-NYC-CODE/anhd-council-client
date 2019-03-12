@@ -10,7 +10,7 @@ describe('Council reducer', () => {
   describe('HANDLE_GET_COUNCILS', () => {
     const response = [{ id: 1 }, { id: 2 }]
     it('fetches the resources', () => {
-      expect(r.councilReducer(undefined, a.handleGetCouncils({ data: response }))).toEqual({
+      expect(r.councilReducer(undefined, a.handleGetCouncils({ data: response }, null, false))).toEqual({
         ...r.initialState,
         districts: response,
       })

@@ -3,6 +3,7 @@ import moment from 'moment'
 import { rentRegulatedProgramOptions, comparisonOptions } from 'shared/utilities/filterUtils'
 import { ParameterMapSet } from 'shared/classes/ParameterMapSet'
 import { ParameterMapping } from 'shared/classes/ParameterMapping'
+import { ApiMap } from 'shared/classes/ApiMap'
 
 import MultiTypeFieldGroup from 'AdvancedSearch/FilterComponent/Group/MultiTypeFieldGroup'
 import GenericFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/GenericFieldSet'
@@ -15,14 +16,14 @@ import MultiSelectField from 'AdvancedSearch/FilterComponent/Field/MultiSelectFi
 import { LanguageModule } from 'shared/classes/LanguageModule'
 
 export const ALLTYPES = {
-  name: 'All',
-  constant: 'ALL_TYPES',
+  apiMap: new ApiMap({ name: 'All' }),
+  id: 'ALL_TYPES',
+  schema: {},
 }
 
 export const RENTSTABILZED = {
-  name: 'Rent Stabilized',
-  queryName: 'rs',
-  constant: 'RENT_STABILIZED',
+  apiMap: new ApiMap({ name: 'Rent Stabilized', queryName: 'rs' }),
+  id: 'RENT_STABILIZED',
   schema: {
     rsunitslost: new ParameterMapSet({
       component: MultiTypeFieldGroup,
@@ -88,9 +89,8 @@ export const RENTSTABILZED = {
 }
 
 export const RENTREGULATED = {
-  name: 'Rent Regulated',
-  queryName: 'rr',
-  constant: 'RENT_REGULATED',
+  apiMap: new ApiMap({ name: 'Rent Regulated', queryName: 'rr' }),
+  id: 'RENT_REGULATED',
 
   schema: {
     coresubsidyrecord__programname: new ParameterMapSet({
@@ -169,9 +169,8 @@ export const RENTREGULATED = {
 }
 
 export const SMALLHOMES = {
-  name: 'Small Homes',
-  queryName: 'sh',
-  constant: 'SMALL_HOMES',
+  apiMap: new ApiMap({ name: 'Small Homes', queryName: 'sh' }),
+  id: 'SMALL_HOMES',
   schema: {
     unitsres: new ParameterMapSet({
       component: MultiTypeFieldGroup,
@@ -201,15 +200,13 @@ export const SMALLHOMES = {
 }
 
 export const MARKETRATE = {
-  name: 'Market Rate',
-  queryName: 'mr',
-  constant: 'MARKET_RATE',
+  apiMap: new ApiMap({ name: 'Market Rate', queryName: 'mr' }),
+  id: 'MARKET_RATE',
   schema: {},
 }
 
 export const PUBLICHOUSING = {
-  name: 'Public Housing',
-  queryName: 'ph',
-  constant: 'PUBLIC_HOUSING',
+  apiMap: new ApiMap({ name: 'Public Housing', queryName: 'ph' }),
+  id: 'PUBLIC_HOUSING',
   schema: {},
 }

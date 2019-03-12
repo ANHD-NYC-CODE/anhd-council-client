@@ -40,8 +40,8 @@ describe('constructAxiosGet', () => {
       const expectedActions = [
         l.handleRequest(GET_BUILDING, requestId),
         e.handleClearErrors(GET_BUILDING),
-        l.handleCompletedRequest(GET_BUILDING, requestId),
         handleGetBuilding({ data }),
+        l.handleCompletedRequest(GET_BUILDING, requestId),
       ]
       expect(store.getActions()).toEqual(expectedActions)
     })

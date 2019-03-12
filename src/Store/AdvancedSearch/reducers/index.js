@@ -2,14 +2,14 @@ import * as c from '../constants'
 import { Condition } from 'shared/classes/Condition'
 import { ConditionFilter } from 'shared/classes/ConditionFilter'
 import { cloneInstance } from 'shared/utilities/classUtils'
-import { HousingType } from 'shared/classes/HousingType'
+import { Filter } from 'shared/classes/Filter'
 
 export const initialState = {
   conditions: {
     '0': new Condition({ key: '0', type: 'AND', filters: [] }),
   },
   boundaries: [],
-  housingTypes: [new HousingType({ housingType: 'ALL_TYPES' })],
+  housingTypes: [new Filter({ modelConstant: 'ALL_TYPES' })],
   results: undefined,
 }
 

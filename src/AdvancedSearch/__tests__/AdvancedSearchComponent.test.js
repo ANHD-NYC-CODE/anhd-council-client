@@ -23,7 +23,5 @@ describe('AdvancedSearch', () => {
   it('renders the component', () => {
     expect(wrapper.find('.advanced-search')).toBeDefined()
     expect(wrapper.find(AdvancedSearchSentence)).toHaveLength(1)
-    expect(wrapper.find(BoundaryQuery)).toHaveLength(1)
-    expect(wrapper.find(HousingTypeQuery)).toHaveLength(1)
   })
 })

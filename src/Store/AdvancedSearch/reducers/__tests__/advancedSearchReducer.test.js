@@ -4,7 +4,7 @@ import { Boundary } from 'shared/classes/Boundary'
 import { Condition } from 'shared/classes/Condition'
 
 import { ConditionFilter } from 'shared/classes/ConditionFilter'
-import { HousingType } from 'shared/classes/HousingType'
+import { Filter } from 'shared/classes/Filter'
 
 describe('Advanced Search reducer', () => {
   it('should return the initial state', () => {
@@ -183,7 +183,7 @@ describe('Advanced Search reducer', () => {
         housingTypes: [],
       }
 
-      const housingType = new HousingType({ housingType: 'SMALL_HOMES' })
+      const housingType = new Filter({ modelConstant: 'SMALL_HOMES' })
       const expected = [housingType]
 
       expect(r.advancedSearchReducer(state, a.addHousingType(housingType))).toEqual({
@@ -197,10 +197,10 @@ describe('Advanced Search reducer', () => {
     it('updates a housingTypes', () => {
       const state = {
         ...r.initialState,
-        housingTypes: [new HousingType({ housingType: 'SMALL_HOMES' })],
+        housingTypes: [new Filter({ modelConstant: 'SMALL_HOMES' })],
       }
 
-      const updatedObject = new HousingType({ housingType: 'MARKET_RATE' })
+      const updatedObject = new Filter({ modelConstant: 'MARKET_RATE' })
       const expected = [updatedObject]
 
       expect(r.advancedSearchReducer(state, a.updateHousingType(0, updatedObject))).toEqual({
@@ -214,7 +214,7 @@ describe('Advanced Search reducer', () => {
     it('removes a housingTypes', () => {
       const state = {
         ...r.initialState,
-        housingTypes: [new HousingType({ housingType: 'SMALL_HOMES' })],
+        housingTypes: [new Filter({ modelConstant: 'SMALL_HOMES' })],
       }
 
       const expected = []

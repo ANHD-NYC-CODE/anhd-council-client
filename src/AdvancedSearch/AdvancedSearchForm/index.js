@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { HousingType } from 'shared/classes/HousingType'
+import { Filter } from 'shared/classes/Filter'
 import * as yup from 'yup'
 
 import { StandardizedInput } from 'shared/classes/StandardizedInput'
@@ -17,15 +17,6 @@ import HousingTypeQuery from 'AdvancedSearch/HousingTypeQuery'
 import { Form, Button } from 'react-bootstrap'
 import { Formik } from 'formik'
 
-const schema = yup.object({
-  boundaryType: yup
-    .string()
-    .test('selectValid', 'Please make a selection', value => {
-      return !!value && value !== '-1'
-    })
-    .required('Please make a selection'),
-  boundaryId: yup.string().required('Please make a selection'),
-})
 class AdvancedSearchForm extends React.Component {
   constructor(props) {
     super(props)
@@ -34,31 +25,44 @@ class AdvancedSearchForm extends React.Component {
       validated: false,
     }
 
-    this.handleSubmit = this.handleSubmit.bind(this)
+    this.submitForm = this.submitForm.bind(this)
     this.addHousingType = this.addHousingType.bind(this)
     this.changeHousingType = this.changeHousingType.bind(this)
+    this.generateFormSchema = this.generateFormSchema.bind(this)
   }
 
   addHousingType(e) {
     e = new StandardizedInput(e)
-    const newHousingType = new HousingType({ housingType: e.value })
+    const newHousingType = new Filter({ modelConstant: e.value })
     this.props.dispatch(addHousingType(newHousingType))
   }
 
   changeHousingType(housingTypeIndex, e) {
     e = new StandardizedInput(e)
-    const newHousingType = new HousingType({ housingType: e.value })
-
+    const newHousingType = new Filter({ modelConstant: e.value })
     this.props.dispatch(updateHousingType(housingTypeIndex, newHousingType))
   }
 
-  handleSubmit(event) {
+  submitForm() {
     this.props.dispatch(requestWithAuth(getAdvancedSearch()))
   }
 
+  generateFormSchema() {
+    return yup.object({
+      boundaryType: yup
+        .string()
+        .test('selectValid', 'Please make a selection', value => {
+          return !!value && value !== '-1'
+        })
+        .required('Please make a selection'),
+      boundaryId: yup.string().required('Please make a selection'),
+    })
+  }
+
   render() {
+    console.log(this.generateFormSchema())
     return (
-      <Formik className="advanced-search-form" onSubmit={this.handleSubmit} validationSchema={schema}>
+      <Formik className="advanced-search-form" onSubmit={this.submitForm} validationSchema={this.generateFormSchema()}>
         {({ handleSubmit, handleChange, handleBlur, touched, errors, submitCount }) => (
           <Form noValidate onSubmit={handleSubmit} validated={this.state.validated}>
             {this.props.error && (

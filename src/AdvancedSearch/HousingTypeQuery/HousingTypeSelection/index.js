@@ -17,7 +17,7 @@ const HousingTypeSelection = props => {
         <Col xs={12}>
           <HousingTypeSelect
             onChange={e => props.changeHousingType(props.housingTypeIndex, e)}
-            value={props.housingType.constant}
+            value={props.housingType.id}
           />
         </Col>
       </Form.Group>
@@ -25,7 +25,7 @@ const HousingTypeSelection = props => {
       {Object.keys(props.housingType.paramsObject).map((paramsSetKey, paramSetIndex) => {
         const paramSet = props.housingType.paramsObject[paramsSetKey]
         return !!paramSet.allowActions && !paramSet.paramMaps.length ? (
-          <Form.Row>
+          <Form.Row key={`housingtype-${paramSetIndex}`}>
             <Form.Group as={Col} className="housingtype-paramset">
               <Button
                 variant="outline-primary"
