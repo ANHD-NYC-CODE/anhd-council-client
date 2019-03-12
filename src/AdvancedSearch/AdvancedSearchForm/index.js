@@ -43,13 +43,15 @@ class AdvancedSearchForm extends React.Component {
 
   addHousingType(e) {
     e = new StandardizedInput(e)
-    const newHousingType = new Filter({ modelConstant: e.value })
+    const housingType = this.props.config.housingTypeModels.find(housingType => housingType.id === e.value)
+    const newHousingType = new Filter({ model: housingType })
     this.props.dispatch(addHousingType(newHousingType))
   }
 
   changeHousingType(housingTypeIndex, e) {
     e = new StandardizedInput(e)
-    const newHousingType = new Filter({ modelConstant: e.value })
+    const housingType = this.props.config.housingTypeModels.find(housingType => housingType.id === e.value)
+    const newHousingType = new Filter({ model: housingType })
     this.props.dispatch(updateHousingType(housingTypeIndex, newHousingType))
   }
 
@@ -98,18 +100,16 @@ class AdvancedSearchForm extends React.Component {
               errors={errors}
               submitCount={submitCount}
             />
-            <ConfigContext.Consumer>
-              {config => (
-                <ConditionComponent
-                  conditions={this.props.advancedSearch.conditions}
-                  condition={this.props.advancedSearch.conditions[0]}
-                  datasetModels={config.datasetModels}
-                  dispatch={this.props.dispatch}
-                  key={'condition-0'}
-                  conditionKey={'0'}
-                />
-              )}
-            </ConfigContext.Consumer>
+
+            <ConditionComponent
+              conditions={this.props.advancedSearch.conditions}
+              condition={this.props.advancedSearch.conditions[0]}
+              config={this.props.config}
+              dispatch={this.props.dispatch}
+              key={'condition-0'}
+              conditionKey={'0'}
+            />
+
             <Button disabled={this.props.loading} type="submit" variant="primary">
               Submit
             </Button>

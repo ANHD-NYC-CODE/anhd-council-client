@@ -11,6 +11,7 @@ import BuildingHistoryTable from 'BuildingLookup/BuildingHistoryTable'
 
 import { Row, Col } from 'react-bootstrap'
 import AdvancedSearchForm from 'AdvancedSearch/AdvancedSearchForm'
+import ConfigContext from 'Config/ConfigContext'
 
 export class AdvancedSearch extends React.Component {
   constructor(props) {
@@ -34,12 +35,17 @@ export class AdvancedSearch extends React.Component {
               <AdvancedSearchSentence advancedSearch={this.props.advancedSearch} />
             </Col>
             <Col xs={12} md={8}>
-              <AdvancedSearchForm
-                advancedSearch={this.props.advancedSearch}
-                dispatch={this.props.dispatch}
-                error={this.props.error}
-                loading={this.props.loading}
-              />
+              <ConfigContext.Consumer>
+                {config => (
+                  <AdvancedSearchForm
+                    advancedSearch={this.props.advancedSearch}
+                    config={config}
+                    dispatch={this.props.dispatch}
+                    error={this.props.error}
+                    loading={this.props.loading}
+                  />
+                )}
+              </ConfigContext.Consumer>
             </Col>
           </Row>
         )}

@@ -4,13 +4,12 @@ import * as ht from 'shared/models/housingTypes'
 import { cloneInstance } from 'shared/utilities/classUtils'
 
 export class Filter {
-  constructor({ modelConstant = null, dataset = null, paramsObject = {} } = {}) {
-    this.setDataset = this.setDataset.bind(this)
+  constructor({ modelConstant = null, model = null, paramsObject = {} } = {}) {
     this._paramsObject = paramsObject
-    this.id = modelConstant || dataset.id
-    this._dataset = dataset
+    this.id = modelConstant || model.id
+    this._model = model
 
-    this.setDataset(modelConstant)
+    this.setModel(modelConstant)
 
     if (modelConstant === 'NEW_FILTER' || modelConstant === 'ALL_TYPES') return
     // Post initialize actions
@@ -36,20 +35,20 @@ export class Filter {
       : null
   }
 
-  setDataset(modelConstant) {
-    const dataset = this.findDataset(modelConstant) || this.findHousingType(modelConstant) || this._dataset
-    if (!dataset && modelConstant !== 'NEW_FILTER' && modelConstant !== 'ALL_TYPES')
+  setModel(modelConstant) {
+    const model = this.findDataset(modelConstant) || this.findHousingType(modelConstant) || this._model
+    if (!model && modelConstant !== 'NEW_FILTER' && modelConstant !== 'ALL_TYPES')
       throw `Pass either '${Object.keys(d)
         .map(key => d[key].id)
         .join("' or '")}' as the first argument. ${modelConstant} does not have a match.`
 
-    if ((dataset || {}).apiMap) {
-      Object.keys(dataset.apiMap).forEach(key => {
-        this[key] = dataset.apiMap[key]
+    if ((model || {}).apiMap) {
+      Object.keys(model.apiMap).forEach(key => {
+        this[key] = model.apiMap[key]
       })
     }
-    this._dataset = dataset
-    this._schema = this.dataset.schema
+    this._model = model
+    this._schema = this.model.schema
     // Load the schema if no paramsObject was directly supplied
     if (!Object.keys(this.paramsObject).length) {
       Object.keys(this._schema)
@@ -65,8 +64,8 @@ export class Filter {
     }
   }
 
-  get dataset() {
-    return this._dataset
+  get model() {
+    return this._model
   }
 
   get name() {
@@ -112,8 +111,8 @@ export class Filter {
     return this._paramsObject
   }
 
-  set dataset(dataset) {
-    this.setDataset(dataset)
+  set model(model) {
+    this.setModel(model)
   }
 
   set paramsObject(newParamsObject) {

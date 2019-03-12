@@ -36,7 +36,6 @@ const NewFilterSelect = props => {
 }
 
 NewFilterSelect.propTypes = {
-  datasetModels: PropTypes.array,
   filterIndex: PropTypes.number,
   onChange: PropTypes.func,
   value: PropTypes.string,

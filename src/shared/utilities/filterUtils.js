@@ -77,6 +77,9 @@ export const constructDefaultSchema = ({
             amountFieldQuery ? '__' + amountFieldQuery : ''
           }`,
           comparison: 'gte',
+          validations: {
+            min: 0,
+          },
           value: defaultAmount || '5',
         }),
         new ParameterMapping({
