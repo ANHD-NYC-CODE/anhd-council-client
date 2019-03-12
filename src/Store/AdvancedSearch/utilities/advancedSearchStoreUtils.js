@@ -1,6 +1,5 @@
 import { convertConditionMappingToQ } from 'AdvancedSearch/utilities/advancedSearchUtils'
 export const transformStateIntoParamObject = (datasetsConfig, advancedSearch) => {
-  console.log(advancedSearch.housingTypes[0].queryName)
   return {
     ...Object.assign(
       {},
@@ -17,4 +16,18 @@ export const transformStateIntoParamObject = (datasetsConfig, advancedSearch) =>
     ),
     q: convertConditionMappingToQ(datasetsConfig, advancedSearch.conditions),
   }
+}
+
+export const getAdvancedSearchParamMaps = advancedSearch => {
+  const conditionParamMaps = [].concat.apply(
+    [],
+    Object.keys(advancedSearch.conditions).map(key => advancedSearch.conditions[key].paramMaps)
+  )
+
+  const housingTypeParamMaps = [].concat.apply(
+    [],
+    Object.keys(advancedSearch.housingTypes).map(key => advancedSearch.housingTypes[key].paramMaps)
+  )
+
+  return [].concat.apply([], [conditionParamMaps, housingTypeParamMaps])
 }

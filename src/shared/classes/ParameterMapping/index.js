@@ -1,5 +1,6 @@
 import { StandardizedInput } from 'shared/classes/StandardizedInput'
 import { comparisonOptions } from 'shared/utilities/filterUtils'
+import { ParamError } from 'shared/classes/ParamError'
 
 export class ParameterMapping {
   constructor({
@@ -7,6 +8,7 @@ export class ParameterMapping {
     baseComponent = {},
     languageModule = {},
     props = {},
+    validations = {},
     defaultOptions = undefined,
     field = '',
     comparison = '',
@@ -19,7 +21,7 @@ export class ParameterMapping {
     this._baseComponent = baseComponent
     this._languageModule = languageModule
     this._props = props
-
+    this._validations = validations
     this._field = field
     this._comparison = comparison
     this._value = value
@@ -90,6 +92,14 @@ export class ParameterMapping {
     this._props = props
   }
 
+  get validations() {
+    return this._validations
+  }
+
+  set validations(validations) {
+    this._validations = validations
+  }
+
   get defaultOptions() {
     return this._defaultOptions
   }
@@ -145,5 +155,21 @@ export class ParameterMapping {
 
   clearErrors() {
     this._errors = []
+  }
+
+  validate() {
+    this.clearErrors()
+    Object.keys(this._validations).forEach(key => {
+      switch (key) {
+        case 'min':
+          if (this._value < this._validations[key])
+            this.addError(new ParamError({ message: `Value can not be less than ${this._validations.min}` }))
+          break
+        case 'max':
+          if (this._value > this._validations[key])
+            this.addError(new ParamError({ message: `Value can not be greater than ${this._validations.max}` }))
+          break
+      }
+    })
   }
 }

@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { StandardizedInput } from 'shared/classes/StandardizedInput'
 import { Form, InputGroup, Col } from 'react-bootstrap'
-import classNames from 'classnames'
 import NewFilterSelect from 'AdvancedSearch/FilterComponent/NewFilterSelect'
 
 const ComparisonFieldSet = props => {

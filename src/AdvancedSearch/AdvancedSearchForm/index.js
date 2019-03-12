@@ -6,6 +6,7 @@ import * as yup from 'yup'
 import { StandardizedInput } from 'shared/classes/StandardizedInput'
 import { getAdvancedSearch } from 'Store/AdvancedSearch/actions'
 import { requestWithAuth } from 'shared/utilities/authUtils'
+import { getAdvancedSearchParamMaps } from 'Store/AdvancedSearch/utilities/advancedSearchStoreUtils'
 
 import { addHousingType, updateHousingType } from 'Store/AdvancedSearch/actions'
 
@@ -16,6 +17,16 @@ import BoundaryQuery from 'AdvancedSearch/BoundaryQuery'
 import HousingTypeQuery from 'AdvancedSearch/HousingTypeQuery'
 import { Form, Button } from 'react-bootstrap'
 import { Formik } from 'formik'
+
+const schema = yup.object({
+  boundaryType: yup
+    .string()
+    .test('selectValid', 'Please make a selection', value => {
+      return !!value && value !== '-1'
+    })
+    .required('Please make a selection'),
+  boundaryId: yup.string().required('Please make a selection'),
+})
 
 class AdvancedSearchForm extends React.Component {
   constructor(props) {
@@ -28,7 +39,6 @@ class AdvancedSearchForm extends React.Component {
     this.submitForm = this.submitForm.bind(this)
     this.addHousingType = this.addHousingType.bind(this)
     this.changeHousingType = this.changeHousingType.bind(this)
-    this.generateFormSchema = this.generateFormSchema.bind(this)
   }
 
   addHousingType(e) {
@@ -43,26 +53,23 @@ class AdvancedSearchForm extends React.Component {
     this.props.dispatch(updateHousingType(housingTypeIndex, newHousingType))
   }
 
-  submitForm() {
-    this.props.dispatch(requestWithAuth(getAdvancedSearch()))
-  }
-
-  generateFormSchema() {
-    return yup.object({
-      boundaryType: yup
-        .string()
-        .test('selectValid', 'Please make a selection', value => {
-          return !!value && value !== '-1'
-        })
-        .required('Please make a selection'),
-      boundaryId: yup.string().required('Please make a selection'),
+  submitForm(values, formik) {
+    const allParamMaps = getAdvancedSearchParamMaps(this.props.advancedSearch)
+    allParamMaps.forEach(paramMap => {
+      paramMap.validate()
+    })
+    formik.validateForm(values).then(() => {
+      if (allParamMaps.some(paramMap => !!paramMap.errors.length)) {
+        return
+      } else {
+        this.props.dispatch(requestWithAuth(getAdvancedSearch()))
+      }
     })
   }
 
   render() {
-    console.log(this.generateFormSchema())
     return (
-      <Formik className="advanced-search-form" onSubmit={this.submitForm} validationSchema={this.generateFormSchema()}>
+      <Formik className="advanced-search-form" onSubmit={this.submitForm} validationSchema={schema}>
         {({ handleSubmit, handleChange, handleBlur, touched, errors, submitCount }) => (
           <Form noValidate onSubmit={handleSubmit} validated={this.state.validated}>
             {this.props.error && (
