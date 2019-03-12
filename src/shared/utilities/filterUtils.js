@@ -61,7 +61,6 @@ export const constructDefaultSchema = ({
           baseComponent: IntegerField,
           type: 'AMOUNT',
           languageModule: new LanguageModule({
-            type: 'AMOUNT',
             noun:
               amountNoun !== undefined ? amountNoun : constantToName({ constant, plural: false, capitalizeDepartment }),
             shortNoun: amountShortNoun,
@@ -80,7 +79,6 @@ export const constructDefaultSchema = ({
           baseComponent: DateField,
           type: 'DATE',
           languageModule: new LanguageModule({
-            type: 'DATE',
             noun: noun !== undefined ? noun : constantToName({ constant, plural: false, capitalizeDepartment }),
             propertyAdjective: datePropertyAdjective,
           }),
@@ -108,7 +106,6 @@ export const constructDefaultSchema = ({
           baseComponent: DateField,
           type: 'DATE',
           languageModule: new LanguageModule({
-            type: 'DATE',
             noun: noun !== undefined ? noun : constantToName({ constant, plural: false, capitalizeDepartment }),
             propertyAdjective: datePropertyAdjective,
           }),
