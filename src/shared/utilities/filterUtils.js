@@ -59,6 +59,7 @@ export const constructDefaultSchema = ({
         new ParameterMapping({
           component: ComparisonFieldSet,
           baseComponent: IntegerField,
+          type: 'AMOUNT',
           languageModule: new LanguageModule({
             type: 'AMOUNT',
             noun:
@@ -77,6 +78,7 @@ export const constructDefaultSchema = ({
         new ParameterMapping({
           component: ComparisonFieldSet,
           baseComponent: DateField,
+          type: 'DATE',
           languageModule: new LanguageModule({
             type: 'DATE',
             noun: noun !== undefined ? noun : constantToName({ constant, plural: false, capitalizeDepartment }),
@@ -104,6 +106,7 @@ export const constructDefaultSchema = ({
         new ParameterMapping({
           component: ComparisonFieldSet,
           baseComponent: DateField,
+          type: 'DATE',
           languageModule: new LanguageModule({
             type: 'DATE',
             noun: noun !== undefined ? noun : constantToName({ constant, plural: false, capitalizeDepartment }),
