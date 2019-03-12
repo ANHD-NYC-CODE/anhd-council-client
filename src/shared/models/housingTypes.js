@@ -21,7 +21,7 @@ export const ALLTYPES = databaseObject => ({
   schema: {},
 })
 
-export const RENTSTABILZED = databaseObject => ({
+export const RENTSTABILIZED = databaseObject => ({
   apiMap: new ApiMap({ name: 'Rent Stabilized', queryName: 'rs' }),
   id: 'RENT_STABILIZED',
   schema: {
@@ -79,10 +79,10 @@ export const RENTSTABILZED = databaseObject => ({
           languageModule: new LanguageModule({ noun: 'units' }),
           props: {
             type: 'number',
-            max: (databaseObject || {}).version,
           },
           validations: {
             min: 2007,
+            max: (databaseObject || {}).version,
           },
           rangeKey: 'rsUnitsRange',
           rangePosition: 2,

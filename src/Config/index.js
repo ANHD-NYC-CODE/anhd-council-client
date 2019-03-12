@@ -82,7 +82,8 @@ const loadingSelector = createLoadingSelector([GET_DATASETS, GET_COUNCILS, GET_C
 const mapStateToProps = state => {
   return {
     datasets: state.dataset.datasets,
-    datasetModels: state.dataset.models,
+    datasetModels: state.dataset.datasetModels,
+    housingTypeModels: state.dataset.housingTypeModels,
     councils: state.council.districts,
     communities: state.community.boards,
     error: errorSelector(state),
