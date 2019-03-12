@@ -72,7 +72,7 @@ const ComparisonFieldSet = props => {
           <NewFilterSelect
             filterIndex={props.filterIndex}
             onChange={props.replaceFilter}
-            value={props.filter.dataset.id}
+            value={props.filter.model.id}
           />
         </InputGroup>
       )}

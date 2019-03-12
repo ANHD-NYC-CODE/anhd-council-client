@@ -58,7 +58,13 @@ class Config extends React.Component {
 
   render() {
     return (
-      <ConfigContext.Provider value={{ datasets: this.props.datasets, datasetModels: this.props.datasetModels }}>
+      <ConfigContext.Provider
+        value={{
+          datasets: this.props.datasets,
+          datasetModels: this.props.datasetModels,
+          housingTypeModels: this.props.housingTypeModels,
+        }}
+      >
         {this.props.loading || !(this.props.datasets && this.props.councils && this.props.communities) ? (
           <Loading monitoredRequests={[GET_DATASETS, GET_COUNCILS, GET_COMMUNITIES]} />
         ) : (
