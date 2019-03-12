@@ -1,6 +1,11 @@
 import { StandardizedInput } from 'shared/classes/StandardizedInput'
 import { comparisonOptions } from 'shared/utilities/filterUtils'
-import { ParamError } from 'shared/classes/ParamError'
+import {
+  minValidate,
+  maxValidate,
+  requiredValidate,
+  typeValidate,
+} from 'shared/classes/ParameterMapping/utilities/validations'
 
 export class ParameterMapping {
   constructor({
@@ -159,15 +164,15 @@ export class ParameterMapping {
 
   validate() {
     this.clearErrors()
+    requiredValidate(this)
+    typeValidate(this)
     Object.keys(this._validations).forEach(key => {
       switch (key) {
         case 'min':
-          if (this._value < this._validations[key])
-            this.addError(new ParamError({ message: `Value can not be less than ${this._validations.min}` }))
+          minValidate(this)
           break
         case 'max':
-          if (this._value > this._validations[key])
-            this.addError(new ParamError({ message: `Value can not be greater than ${this._validations.max}` }))
+          maxValidate(this)
           break
       }
     })

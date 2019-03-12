@@ -16,7 +16,7 @@ import MultiSelectField from 'AdvancedSearch/FilterComponent/Field/MultiSelectFi
 import { LanguageModule } from 'shared/classes/LanguageModule'
 
 export const ALLTYPES = {
-  apiMap: new ApiMap({ name: 'All' }),
+  apiMap: new ApiMap({ name: 'All', queryName: 'all' }),
   id: 'ALL_TYPES',
   schema: {},
 }
@@ -37,6 +37,7 @@ export const RENTSTABILZED = {
         new ParameterMapping({
           component: ComparisonFieldSet,
           baseComponent: IntegerField,
+          type: 'PERCENT',
           languageModule: new LanguageModule({
             type: 'AMOUNT',
             noun: 'rent stabilized unit',
@@ -52,11 +53,11 @@ export const RENTSTABILZED = {
           field: 'rsunitslost',
           comparison: 'gte',
           value: '25',
-          type: 'PERCENT',
         }),
         new ParameterMapping({
           component: ComparisonFieldSet,
           baseComponent: DateField,
+          type: 'YEAR',
           props: {
             type: 'number',
           },
@@ -74,6 +75,7 @@ export const RENTSTABILZED = {
         new ParameterMapping({
           component: ComparisonFieldSet,
           baseComponent: DateField,
+          type: 'YEAR',
           languageModule: new LanguageModule({ type: 'YEAR', noun: 'units' }),
           props: {
             type: 'number',
@@ -111,6 +113,7 @@ export const RENTREGULATED = {
           defaultOptions: rentRegulatedProgramOptions(),
           component: GenericFieldSet,
           baseComponent: MultiSelectField,
+          type: 'TEXT',
           languageModule: new LanguageModule({ type: 'TEXT', noun: 'Program(s)', propertyAdjective: 'with' }),
           field: 'coresubsidyrecord__programname',
           comparison: 'any',
@@ -131,6 +134,7 @@ export const RENTREGULATED = {
         new ParameterMapping({
           component: ComparisonFieldSet,
           baseComponent: DateField,
+          type: 'DATE',
           props: {
             type: 'date',
           },
@@ -152,6 +156,7 @@ export const RENTREGULATED = {
         new ParameterMapping({
           component: ComparisonFieldSet,
           baseComponent: DateField,
+          type: 'DATE',
           props: {
             type: 'date',
           },
@@ -189,6 +194,7 @@ export const SMALLHOMES = {
         new ParameterMapping({
           component: ComparisonFieldSet,
           baseComponent: IntegerField,
+          type: 'AMOUNT',
           defaultOptions: comparisonOptions(['lte', 'exact'], null, 'INTEGER'),
           field: 'unitsres',
           comparison: 'lte',
