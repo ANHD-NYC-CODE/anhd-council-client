@@ -36,7 +36,12 @@ class LoginForm extends React.Component {
     return (
       <Formik validationSchema={schema}>
         {({ handleChange, handleBlur, touched, errors }) => (
-          <Form className="auth-login-form" validated={this.state.validated} onSubmit={e => this.handleSubmit(e)}>
+          <Form
+            noValidate
+            className="auth-login-form"
+            validated={this.state.validated}
+            onSubmit={e => this.handleSubmit(e)}
+          >
             {this.props.error && (
               <Form.Text className="text-danger" type="invalid">
                 {this.props.error.message}

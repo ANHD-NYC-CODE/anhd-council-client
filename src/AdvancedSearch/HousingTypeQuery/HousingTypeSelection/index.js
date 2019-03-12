@@ -12,7 +12,7 @@ const HousingTypeSelection = props => {
   }
 
   return (
-    <Form>
+    <div className="housing-type-selection">
       <Form.Group as={Row}>
         <Col xs={12}>
           <HousingTypeSelect
@@ -44,7 +44,7 @@ const HousingTypeSelection = props => {
           />
         )
       })}
-    </Form>
+    </div>
   )
 }
 

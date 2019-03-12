@@ -5,6 +5,7 @@ export class HousingType {
   constructor({ housingType = null, paramsObject = {} } = {}) {
     this.setObject = this.setObject.bind(this)
     this._paramsObject = paramsObject || {}
+    this._errors = []
     this.setObject(housingType)
   }
 
@@ -84,5 +85,21 @@ export class HousingType {
 
   set paramsObject(newParamsObject) {
     this._paramsObject = newParamsObject
+  }
+
+  get errors() {
+    return this._errors
+  }
+
+  set errors(errors) {
+    this._errors = errors
+  }
+
+  addError(error) {
+    this._errors = [...this._errors, error]
+  }
+
+  clearErrors() {
+    this._errors = []
   }
 }

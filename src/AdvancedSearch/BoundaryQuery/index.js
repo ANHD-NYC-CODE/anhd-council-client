@@ -1,6 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import * as b from 'shared/constants/boundaries'
+import { Boundary } from 'shared/classes/Boundary'
+
+import { StandardizedInput } from 'shared/classes/StandardizedInput'
+
+import { addBoundary, updateBoundary } from 'Store/AdvancedSearch/actions'
 
 import { Form, Row, Col } from 'react-bootstrap'
 
@@ -9,6 +15,21 @@ export class BoundaryQuery extends React.Component {
     super(props)
 
     this.getBoundaryIdOptions = this.getBoundaryIdOptions.bind(this)
+    this.addBoundary = this.addBoundary.bind(this)
+    this.changeBoundary = this.changeBoundary.bind(this)
+  }
+
+  addBoundary(e) {
+    this.props.handleChange(e)
+    e = new StandardizedInput(e)
+    this.props.dispatch(addBoundary(new Boundary(e.value)))
+  }
+
+  changeBoundary(index, boundary, e) {
+    this.props.handleChange(e)
+    e = new StandardizedInput(e)
+    boundary[e.key] = e.value
+    this.props.dispatch(updateBoundary(index, boundary))
   }
 
   getBoundaryIdOptions(type) {
@@ -33,65 +54,89 @@ export class BoundaryQuery extends React.Component {
   }
 
   render() {
+    console.log(this.props.touched, this.props.errors)
     return this.props.boundaries.length ? (
       this.props.boundaries.map((boundary, boundaryIndex) => {
         return (
-          <Form key={`boundary-${boundary.name}`}>
-            <Form.Group as={Row}>
-              <Col xs={6}>
-                <Form.Control
-                  size="sm"
-                  placeholder="Search boundary"
-                  name="comparison"
-                  as="select"
-                  onChange={this.props.addBoundary}
-                  value={boundary.constant}
-                >
-                  <option disabled value={-1} key={-1}>
-                    Select a geography
-                  </option>
-                  <option value={b.COUNCILBOUNDARY.constant}>{b.COUNCILBOUNDARY.name}</option>
-                  <option value={b.COMMUNITYBOUNDARY.constant}>{b.COMMUNITYBOUNDARY.name}</option>
-                </Form.Control>
-              </Col>
-              <Col>
-                <Form.Control
-                  as="select"
-                  data-key="id"
-                  name="comparison"
-                  onChange={e => this.props.changeBoundary(boundaryIndex, boundary, e)}
-                  placeholder="Search boundary"
-                  size="sm"
-                  value={boundary.id || -1}
-                >
-                  {this.getBoundaryIdOptions(boundary.queryName)}
-                </Form.Control>
-              </Col>
-            </Form.Group>
-          </Form>
+          <Form.Group as={Row} key={`boundary-${boundary.name}`}>
+            <Col xs={6}>
+              <Form.Control
+                required
+                size="sm"
+                placeholder="Search boundary"
+                name="boundaryType"
+                as="select"
+                onBlur={this.props.handleBlur}
+                isInvalid={
+                  (this.props.touched.boundaryType || !!this.props.submitCount) && this.props.errors.boundaryType
+                }
+                onChange={this.addBoundary}
+                value={boundary.constant}
+              >
+                <option disabled value={-1} key={-1}>
+                  Select a geography
+                </option>
+                <option value={b.COUNCILBOUNDARY.constant}>{b.COUNCILBOUNDARY.name}</option>
+                <option value={b.COMMUNITYBOUNDARY.constant}>{b.COMMUNITYBOUNDARY.name}</option>
+              </Form.Control>
+
+              {(this.props.touched.boundaryType || !!this.props.submitCount) && this.props.errors.boundaryType && (
+                <Form.Text className="text-danger" type="invalid">
+                  {this.props.errors.boundaryType}
+                </Form.Text>
+              )}
+            </Col>
+            <Col>
+              <Form.Control
+                required
+                as="select"
+                data-key="id"
+                name="boundaryId"
+                onChange={e => this.changeBoundary(boundaryIndex, boundary, e)}
+                placeholder="Search boundary"
+                size="sm"
+                onBlur={this.props.handleBlur}
+                isInvalid={(this.props.touched.boundaryId || !!this.props.submitCount) && this.props.errors.boundaryId}
+                value={boundary.id || -1}
+              >
+                {this.getBoundaryIdOptions(boundary.queryName)}
+              </Form.Control>
+              {(this.props.touched.boundaryId || !!this.props.submitCount) && this.props.errors.boundaryId && (
+                <Form.Text className="text-danger" type="invalid">
+                  {this.props.errors.boundaryId}
+                </Form.Text>
+              )}
+            </Col>
+          </Form.Group>
         )
       })
     ) : (
-      <Form>
-        <Form.Group as={Row}>
-          <Col xs={6}>
-            <Form.Control
-              size="sm"
-              placeholder="Search boundary"
-              name="comparison"
-              as="select"
-              onChange={this.props.addBoundary}
-              value={-1}
-            >
-              <option disabled value={-1} key={-1}>
-                Select a geography
-              </option>
-              <option value={b.COUNCILBOUNDARY.constant}>{b.COUNCILBOUNDARY.name}</option>
-              <option value={b.COMMUNITYBOUNDARY.constant}>{b.COMMUNITYBOUNDARY.name}</option>
-            </Form.Control>
-          </Col>
-        </Form.Group>
-      </Form>
+      <Form.Group as={Row}>
+        <Col xs={6}>
+          <Form.Control
+            required
+            size="sm"
+            placeholder="Search boundary"
+            name="boundaryType"
+            as="select"
+            onChange={this.addBoundary}
+            onBlur={this.props.handleBlur}
+            isInvalid={(this.props.touched.boundaryType || !!this.props.submitCount) && this.props.errors.boundaryType}
+            value={-1}
+          >
+            <option disabled value={-1} key={-1}>
+              Select a geography
+            </option>
+            <option value={b.COUNCILBOUNDARY.constant}>{b.COUNCILBOUNDARY.name}</option>
+            <option value={b.COMMUNITYBOUNDARY.constant}>{b.COMMUNITYBOUNDARY.name}</option>
+          </Form.Control>
+          {(this.props.touched.boundaryType || !!this.props.submitCount) && this.props.errors.boundaryType && (
+            <Form.Text className="text-danger" type="invalid">
+              {this.props.errors.boundaryType}
+            </Form.Text>
+          )}
+        </Col>
+      </Form.Group>
     )
   }
 }
@@ -104,4 +149,11 @@ BoundaryQuery.propTypes = {
   districts: PropTypes.array,
 }
 
-export default BoundaryQuery
+const mapStateToProps = state => {
+  return {
+    boards: state.community.boards,
+    districts: state.council.districts,
+  }
+}
+
+export default connect(mapStateToProps)(BoundaryQuery)

@@ -16,6 +16,7 @@ export class ParameterMapSet {
     this._props = props
     this._allowActions = allowActions
     this._createType = createType
+    this._errors = []
   }
 
   get component() {
@@ -51,6 +52,22 @@ export class ParameterMapSet {
 
   set allowActions(allowActions) {
     this._allowActions = allowActions
+  }
+
+  get errors() {
+    return this._errors
+  }
+
+  set errors(errors) {
+    this._errors = errors
+  }
+
+  addError(error) {
+    this._errors = [...this._errors, error]
+  }
+
+  clearErrors() {
+    this._errors = []
   }
 
   create({ dispatchAction = undefined, paramMap = null, unshift = false } = {}) {
