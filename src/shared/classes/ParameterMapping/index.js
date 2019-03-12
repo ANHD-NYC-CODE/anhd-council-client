@@ -27,7 +27,7 @@ export class ParameterMapping {
     this._defaultOptions = defaultOptions
     this._rangeKey = rangeKey
     this._rangePosition = rangePosition
-    this._errors = [{ message: 'error!' }]
+    this._errors = []
   }
 
   get field() {
