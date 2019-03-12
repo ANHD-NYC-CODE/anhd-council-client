@@ -25,7 +25,7 @@ export const getStorageDataAction = async (dispatch, constant, requestId, path, 
         return data
       }
     })
-    .catch(error => {
+    .catch(() => {
       return // silently fail and let Axios take with fetching data
     })
 }
