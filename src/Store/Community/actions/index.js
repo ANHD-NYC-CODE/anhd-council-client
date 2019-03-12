@@ -16,10 +16,9 @@ const getCommunitiesActionObject = response => ({
 
 export const handleGetCommunities = (response, key = null, setStorage = true) => {
   if (setStorage) {
-    setIndexedDataThenUpdateReducer(COMMUNITY_BOARDS_INDEX, response, getCommunitiesActionObject)
-  } else {
-    return getCommunitiesActionObject(response)
+    setIndexedDataThenUpdateReducer(COMMUNITY_BOARDS_INDEX, response)
   }
+  return getCommunitiesActionObject(response)
 }
 
 export const handleGetCommunity = (response, key = null) => ({
@@ -40,7 +39,7 @@ export const handleGetCommunityPropertySummary = (response, key = null) => ({
 
 export const getCommunities = () => (dispatch, getState, access_token) => {
   const requestId = Math.floor(Math.random() * 1000000)
-  getStorageDataAction(dispatch, c.GET_COMMUNITIES, requestId, COMMUNITY_BOARDS_INDEX, handleGetCommunities)
+  return getStorageDataAction(dispatch, c.GET_COMMUNITIES, requestId, COMMUNITY_BOARDS_INDEX, handleGetCommunities)
     .then(storageData => {
       if (!storageData) {
         return communitiesAxios(dispatch, getState, access_token, requestId)

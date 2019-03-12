@@ -16,10 +16,9 @@ const getCouncilsActionObject = response => ({
 
 export const handleGetCouncils = (response, key = null, setStorage = true) => {
   if (setStorage) {
-    setIndexedDataThenUpdateReducer(COUNCIL_DISTRICTS_INDEX, response, getCouncilsActionObject)
-  } else {
-    return getCouncilsActionObject(response)
+    setIndexedDataThenUpdateReducer(COUNCIL_DISTRICTS_INDEX, response)
   }
+  return getCouncilsActionObject(response)
 }
 
 export const handleGetCouncil = (response, key = null) => ({
@@ -41,7 +40,7 @@ export const handleGetCouncilPropertySummary = (response, key = null) => ({
 export const getCouncils = () => async (dispatch, getState, access_token) => {
   const requestId = Math.floor(Math.random() * 1000000)
 
-  getStorageDataAction(dispatch, c.GET_COUNCILS, requestId, COUNCIL_DISTRICTS_INDEX, handleGetCouncils)
+  return getStorageDataAction(dispatch, c.GET_COUNCILS, requestId, COUNCIL_DISTRICTS_INDEX, handleGetCouncils)
     .then(storageData => {
       if (!storageData) {
         return councilsAxios(dispatch, getState, access_token, requestId)

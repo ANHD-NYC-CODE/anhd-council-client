@@ -50,15 +50,10 @@ const setIndexedData = (path, data) => {
   return set(path, data)
 }
 
-export const setIndexedDataThenUpdateReducer = (path, response, actionCallback) => {
-  return setIndexedData(path, response.data)
-    .then(response => {
-      return actionCallback(response)
-    })
-    .catch(() => {
-      // Silent error handle, return response to reducer
-      return actionCallback(response)
-    })
+export const setIndexedDataThenUpdateReducer = (path, response) => {
+  return setIndexedData(path, response.data).catch(error => {
+    console.log(error)
+  })
 }
 
 export const delCouncilDistrictsData = () => {

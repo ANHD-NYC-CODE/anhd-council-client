@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { StandardizedInput } from 'shared/classes/StandardizedInput'
 
 import RangeFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/RangeFieldSet'
-
+import { Form } from 'react-bootstrap'
 import './style.scss'
 
 const MultiTypeFieldGroup = props => {
@@ -78,18 +78,27 @@ const MultiTypeFieldGroup = props => {
             return null
           }
         } else {
-          return paramMap.component({
-            replaceFilter: props.replaceFilter,
-            dispatchAction: props.dispatchAction,
-            key: `paramSet-${props.paramSetIndex}-paramMap-component-${paramMapIndex}`,
-            filterIndex: props.filterIndex,
-            filter: props.filter,
-            options: paramMap.options,
-            paramMap: paramMap,
-            paramMapIndex: paramMapIndex,
-            rangeChange: rangeChange,
-            type: paramMap.props.type,
-          })
+          return (
+            <div>
+              {paramMap.component({
+                replaceFilter: props.replaceFilter,
+                dispatchAction: props.dispatchAction,
+                key: `paramSet-${props.paramSetIndex}-paramMap-component-${paramMapIndex}`,
+                filterIndex: props.filterIndex,
+                filter: props.filter,
+                options: paramMap.options,
+                paramMap: paramMap,
+                paramMapIndex: paramMapIndex,
+                rangeChange: rangeChange,
+                type: paramMap.props.type,
+              })}
+              {!!paramMap.errors.length && (
+                <Form.Text className="text-danger" type="invalid">
+                  {paramMap.errors[0].message}
+                </Form.Text>
+              )}
+            </div>
+          )
         }
       })}
     </div>
