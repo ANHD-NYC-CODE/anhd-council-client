@@ -39,7 +39,6 @@ export const RENTSTABILZED = {
           baseComponent: IntegerField,
           type: 'PERCENT',
           languageModule: new LanguageModule({
-            type: 'AMOUNT',
             noun: 'rent stabilized unit',
             shortNoun: 'rs units',
             propertyAdjective: 'that lost',
@@ -64,7 +63,7 @@ export const RENTSTABILZED = {
           validations: {
             min: 2007,
           },
-          languageModule: new LanguageModule({ type: 'YEAR', noun: '' }),
+          languageModule: new LanguageModule({ noun: '' }),
           rangeKey: 'rsUnitsRange',
           rangePosition: 1,
           defaultOptions: comparisonOptions(['start', 'between'], ['Since', 'Range'], 'DATE', 'rsUnitsRange'),
@@ -76,7 +75,7 @@ export const RENTSTABILZED = {
           component: ComparisonFieldSet,
           baseComponent: DateField,
           type: 'YEAR',
-          languageModule: new LanguageModule({ type: 'YEAR', noun: 'units' }),
+          languageModule: new LanguageModule({ noun: 'units' }),
           props: {
             type: 'number',
           },
@@ -114,7 +113,7 @@ export const RENTREGULATED = {
           component: GenericFieldSet,
           baseComponent: MultiSelectField,
           type: 'TEXT',
-          languageModule: new LanguageModule({ type: 'TEXT', noun: 'Program(s)', propertyAdjective: 'with' }),
+          languageModule: new LanguageModule({ noun: 'Program(s)', propertyAdjective: 'with' }),
           field: 'coresubsidyrecord__programname',
           comparison: 'any',
           value: '',
@@ -144,7 +143,7 @@ export const RENTREGULATED = {
             'DATE',
             'expirationRangeKey'
           ),
-          languageModule: new LanguageModule({ type: 'DATE', noun: '', propertyAdjective: 'expiring' }),
+          languageModule: new LanguageModule({ noun: '', propertyAdjective: 'expiring' }),
           rangeKey: 'expirationRangeKey',
           rangePosition: 1,
           field: 'coresubsidyrecord__enddate',
@@ -166,7 +165,7 @@ export const RENTREGULATED = {
             'DATE',
             'expirationRangeKey'
           ),
-          languageModule: new LanguageModule({ type: 'DATE', noun: '', propertyAdjective: 'expiring' }),
+          languageModule: new LanguageModule({ noun: '', propertyAdjective: 'expiring' }),
           rangeKey: 'expirationRangeKey',
           rangePosition: 2,
           field: 'coresubsidyrecord__enddate',

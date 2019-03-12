@@ -58,8 +58,6 @@ export const handleCatchError = (error, type, dispatch, requestId) => {
   toast.error(`Error: ${errorStatus} - ${errorMessage}`)
 
   dispatch(loadingActions.handleCompletedRequest(type, requestId))
-
-  console.log(error)
 }
 
 export const constructActionKey = constants => {

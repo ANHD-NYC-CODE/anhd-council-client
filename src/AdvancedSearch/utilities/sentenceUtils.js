@@ -65,8 +65,15 @@ export const constructAmountSentence = (dataset, comparison, value) => {
 }
 
 const parseParamMapComparison = paramMap => {
-  switch (paramMap.languageModule.type) {
+  switch (paramMap.type) {
     case 'AMOUNT':
+      return `${constructAmountComparisonString(paramMap.comparison)} ${paramMap.languageModule.valuePrefix}${
+        paramMap.value
+      }${paramMap.languageModule.valueSuffix}${paramMap.languageModule.grammaticalNoun(
+        paramMap.languageModule.noun,
+        paramMap.value
+      )}`
+    case 'PERCENT':
       return `${constructAmountComparisonString(paramMap.comparison)} ${paramMap.languageModule.valuePrefix}${
         paramMap.value
       }${paramMap.languageModule.valueSuffix}${paramMap.languageModule.grammaticalNoun(
@@ -86,7 +93,7 @@ const parseParamMapRangeGroup = paramMapRangeGroup => {
   const gte = paramMapRangeGroup.find(pm => pm.comparison.match(/(gte|start)/))
   const lte = paramMapRangeGroup.find(pm => pm.comparison.match(/(lte|end)/))
 
-  switch (paramMapRangeGroup[0].languageModule.type) {
+  switch (paramMapRangeGroup[0].type) {
     case 'DATE':
       return `between ${moment(gte.value).format('MM/DD/YYYY')} and ${moment(lte.value).format('MM/DD/YYYY')}`
     case 'YEAR':
