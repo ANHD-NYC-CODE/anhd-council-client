@@ -27,6 +27,7 @@ export class ParameterMapping {
     this._defaultOptions = defaultOptions
     this._rangeKey = rangeKey
     this._rangePosition = rangePosition
+    this._errors = [{ message: 'error!' }]
   }
 
   get field() {
@@ -129,5 +130,20 @@ export class ParameterMapping {
   updateParameterMapValue(inputObject) {
     this[inputObject['name']] = inputObject['value']
     return this
+  }
+  get errors() {
+    return this._errors
+  }
+
+  set errors(errors) {
+    this._errors = errors
+  }
+
+  addError(error) {
+    this._errors = [...this._errors, error]
+  }
+
+  clearErrors() {
+    this._errors = []
   }
 }
