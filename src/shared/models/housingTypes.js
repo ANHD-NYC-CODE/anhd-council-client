@@ -15,13 +15,13 @@ import IntegerField from 'AdvancedSearch/FilterComponent/Field/IntegerField'
 import MultiSelectField from 'AdvancedSearch/FilterComponent/Field/MultiSelectField'
 import { LanguageModule } from 'shared/classes/LanguageModule'
 
-export const ALLTYPES = {
+export const ALLTYPES = databaseObject => ({
   apiMap: new ApiMap({ name: 'All', queryName: 'all' }),
   id: 'ALL_TYPES',
   schema: {},
-}
+})
 
-export const RENTSTABILZED = {
+export const RENTSTABILZED = databaseObject => ({
   apiMap: new ApiMap({ name: 'Rent Stabilized', queryName: 'rs' }),
   id: 'RENT_STABILIZED',
   schema: {
@@ -62,6 +62,7 @@ export const RENTSTABILZED = {
           },
           validations: {
             min: 2007,
+            max: (databaseObject || {}).version,
           },
           languageModule: new LanguageModule({ noun: '' }),
           rangeKey: 'rsUnitsRange',
@@ -78,6 +79,7 @@ export const RENTSTABILZED = {
           languageModule: new LanguageModule({ noun: 'units' }),
           props: {
             type: 'number',
+            max: (databaseObject || {}).version,
           },
           validations: {
             min: 2007,
@@ -92,9 +94,9 @@ export const RENTSTABILZED = {
       ],
     }),
   },
-}
+})
 
-export const RENTREGULATED = {
+export const RENTREGULATED = databaseObject => ({
   apiMap: new ApiMap({ name: 'Rent Regulated', queryName: 'rr' }),
   id: 'RENT_REGULATED',
 
@@ -175,9 +177,9 @@ export const RENTREGULATED = {
       ],
     }),
   },
-}
+})
 
-export const SMALLHOMES = {
+export const SMALLHOMES = databaseObject => ({
   apiMap: new ApiMap({ name: 'Small Homes', queryName: 'sh' }),
   id: 'SMALL_HOMES',
   schema: {
@@ -207,16 +209,16 @@ export const SMALLHOMES = {
       ],
     }),
   },
-}
+})
 
-export const MARKETRATE = {
+export const MARKETRATE = databaseObject => ({
   apiMap: new ApiMap({ name: 'Market Rate', queryName: 'mr' }),
   id: 'MARKET_RATE',
   schema: {},
-}
+})
 
-export const PUBLICHOUSING = {
+export const PUBLICHOUSING = databaseObject => ({
   apiMap: new ApiMap({ name: 'Public Housing', queryName: 'ph' }),
   id: 'PUBLIC_HOUSING',
   schema: {},
-}
+})
