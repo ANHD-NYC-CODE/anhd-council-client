@@ -15,8 +15,8 @@ const HousingTypeSelect = props => {
     >
       {Object.keys(ht).map((key, index) => {
         return (
-          <option key={`housingtype-option-${index}`} value={ht[key].constant}>
-            {ht[key].name}
+          <option key={`housingtype-option-${index}`} value={ht[key].id}>
+            {ht[key].apiMap.name}
           </option>
         )
       })}

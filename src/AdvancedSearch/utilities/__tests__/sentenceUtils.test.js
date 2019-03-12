@@ -1,7 +1,7 @@
 import * as a from 'AdvancedSearch/utilities/sentenceUtils'
 import * as d from 'shared/constants/datasets'
 import { Boundary } from 'shared/classes/Boundary'
-import { HousingType } from 'shared/classes/HousingType'
+import { Filter } from 'shared/classes/Filter'
 import { Condition } from 'shared/classes/Condition'
 import { ConditionFilter } from 'shared/classes/ConditionFilter'
 import { filterMocks } from 'shared/models/__mocks__/filterMocks'
@@ -52,8 +52,8 @@ describe('convertBoundariesToSentence', () => {
 describe('convertHousingTypesToSentence', () => {
   describe('1 ht', () => {
     it('converts the object into a sentence', () => {
-      const housingType1 = new HousingType({
-        housingType: 'SMALL_HOMES',
+      const housingType1 = new Filter({
+        modelConstant: 'SMALL_HOMES',
       })
       housingType1.paramsObject['unitsres'].create()
       const housingTypes = [housingType1]
@@ -66,8 +66,8 @@ describe('convertHousingTypesToSentence', () => {
 
   describe('2 hts', () => {
     it('converts the object into a sentence', () => {
-      const housingType1 = new HousingType({ housingType: 'SMALL_HOMES' })
-      const housingType2 = new HousingType({ housingType: 'RENT_REGULATED' })
+      const housingType1 = new Filter({ modelConstant: 'SMALL_HOMES' })
+      const housingType2 = new Filter({ modelConstant: 'RENT_REGULATED' })
       const housingTypes = [housingType1, housingType2]
       const result = 'small home properties and rent regulated properties'
 
@@ -76,8 +76,8 @@ describe('convertHousingTypesToSentence', () => {
   })
   describe('Rent Regulated', () => {
     it('converts the object into a sentence', () => {
-      const housingType1 = new HousingType({
-        housingType: 'RENT_REGULATED',
+      const housingType1 = new Filter({
+        modelConstant: 'RENT_REGULATED',
       })
       housingType1.paramsObject['coresubsidyrecord__enddate'].create()
       const housingTypes = [housingType1]
@@ -90,8 +90,8 @@ describe('convertHousingTypesToSentence', () => {
     })
 
     it('converts the object into a sentence', () => {
-      const housingType1 = new HousingType({
-        housingType: 'RENT_REGULATED',
+      const housingType1 = new Filter({
+        modelConstant: 'RENT_REGULATED',
       })
       housingType1.paramsObject['coresubsidyrecord__enddate'].createAll()
       const housingTypes = [housingType1]
@@ -106,8 +106,8 @@ describe('convertHousingTypesToSentence', () => {
     })
 
     it('converts the object into a sentence', () => {
-      const housingType1 = new HousingType({
-        housingType: 'RENT_REGULATED',
+      const housingType1 = new Filter({
+        modelConstant: 'RENT_REGULATED',
       })
       housingType1.paramsObject['coresubsidyrecord__enddate'].createAll()
       housingType1.paramsObject['coresubsidyrecord__programname'].create()
@@ -129,8 +129,8 @@ describe('convertHousingTypesToSentence', () => {
 
   describe('Rent Stabilized', () => {
     it('converts the object into a sentence', () => {
-      const housingType1 = new HousingType({
-        housingType: 'RENT_STABILIZED',
+      const housingType1 = new Filter({
+        modelConstant: 'RENT_STABILIZED',
       })
       housingType1.paramsObject['rsunitslost'].create()
       const housingTypes = [housingType1]

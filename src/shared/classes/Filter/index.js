@@ -1,15 +1,18 @@
 import * as d from 'shared/models/datasets'
+import * as ht from 'shared/models/housingTypes'
+
 import { cloneInstance } from 'shared/utilities/classUtils'
 
 export class Filter {
-  constructor({ datasetConstant = null, dataset = null, paramsObject = {} } = {}) {
+  constructor({ modelConstant = null, dataset = null, paramsObject = {} } = {}) {
     this.setDataset = this.setDataset.bind(this)
     this._paramsObject = paramsObject
-    this.id = datasetConstant || dataset.id
-    if (datasetConstant === 'NEW_FILTER') return
+    this.id = modelConstant || dataset.id
     this._dataset = dataset
-    this.setDataset(datasetConstant)
 
+    this.setDataset(modelConstant)
+
+    if (modelConstant === 'NEW_FILTER' || modelConstant === 'ALL_TYPES') return
     // Post initialize actions
     if (!Object.keys(paramsObject).length) {
       Object.keys(this.paramsObject).forEach(key => {
@@ -21,31 +24,35 @@ export class Filter {
     }
   }
 
-  setDataset(datasetConstant) {
-    const dataset = d[Object.keys(d).find(obj => d[obj].id === datasetConstant)] || this._dataset
-
-    if (!dataset && datasetConstant !== 'NEW_FILTER')
+  setDataset(modelConstant) {
+    const dataset =
+      d[Object.keys(d).find(obj => d[obj].id === modelConstant)] ||
+      ht[Object.keys(ht).find(obj => ht[obj].id === modelConstant)] ||
+      this._dataset
+    if (!dataset && modelConstant !== 'NEW_FILTER' && modelConstant !== 'ALL_TYPES')
       throw `Pass either '${Object.keys(d)
         .map(key => d[key].id)
-        .join("' or '")}' as the first argument. ${datasetConstant} does not have a match.`
+        .join("' or '")}' as the first argument. ${modelConstant} does not have a match.`
 
+    if ((dataset || {}).apiMap) {
+      Object.keys(dataset.apiMap).forEach(key => {
+        this[key] = dataset.apiMap[key]
+      })
+    }
     this._dataset = dataset
-    this._name = this.dataset.apiMap.name
-    this._queryName = this.dataset.apiMap.queryName
-    this._constant = this.dataset.apiMap.constant
-    this._url = this.dataset.apiMap.url
     this._schema = this.dataset.schema
-
     // Load the schema if no paramsObject was directly supplied
     if (!Object.keys(this.paramsObject).length) {
-      Object.keys(this._schema).map(key => {
-        this._paramsObject = {
-          ...{
-            [key]: cloneInstance(this.schema[key]),
-          },
-          ...this.paramsObject,
-        }
-      })
+      Object.keys(this._schema)
+        .reverse()
+        .map(key => {
+          this._paramsObject = {
+            ...{
+              [key]: cloneInstance(this.schema[key]),
+            },
+            ...this.paramsObject,
+          }
+        })
     }
   }
 
@@ -59,6 +66,11 @@ export class Filter {
   get queryName() {
     return this._queryName
   }
+
+  set queryName(queryName) {
+    return this._queryName
+  }
+
   get constant() {
     return this._constant
   }
@@ -77,7 +89,8 @@ export class Filter {
             {},
             ...this.paramsObject[key].paramMaps.map(paramMap => {
               return {
-                [`${paramMap.field}${paramMap.comparison ? '__' + paramMap.comparison : ''}`]: paramMap.value,
+                [`${paramMap.field}${paramMap.comparison ? '__' + paramMap.comparison : ''}`]:
+                  paramMap.type === 'PERCENT' ? paramMap.value / 100 : paramMap.value,
               }
             })
           ),

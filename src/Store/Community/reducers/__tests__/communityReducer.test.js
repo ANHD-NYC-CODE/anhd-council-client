@@ -10,7 +10,7 @@ describe('Community reducer', () => {
   describe('HANDLE_GET_COMMUNITIES', () => {
     const response = [{ id: 1 }, { id: 2 }]
     it('fetches the resources', () => {
-      expect(r.communityReducer(undefined, a.handleGetCommunities({ data: response }))).toEqual({
+      expect(r.communityReducer(undefined, a.handleGetCommunities({ data: response }, null, false))).toEqual({
         ...r.initialState,
         boards: response,
       })

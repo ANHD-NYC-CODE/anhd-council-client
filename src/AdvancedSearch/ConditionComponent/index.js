@@ -40,7 +40,7 @@ export class ConditionComponent extends React.Component {
   }
 
   createNewFilter() {
-    const newFilter = new Filter({ datasetConstant: 'NEW_FILTER' })
+    const newFilter = new Filter({ modelConstant: 'NEW_FILTER', dataset: { schema: {} } })
     this.props.condition.addFilter({ filter: newFilter })
     this.dispatchAction()
   }

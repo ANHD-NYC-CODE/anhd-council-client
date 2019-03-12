@@ -3,7 +3,7 @@ import { constantToQueryName } from 'shared/utilities/filterUtils'
 
 export const createFilterMock = ({ constant = '' } = {}) => {
   const filter = new Filter({
-    datasetConstant: constant,
+    modelConstant: constant,
   })
   filter.paramsObject[constantToQueryName(constant)].createOppositeRangeMap()
   return filter

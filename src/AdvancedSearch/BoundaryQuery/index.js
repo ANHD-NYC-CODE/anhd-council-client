@@ -54,7 +54,6 @@ export class BoundaryQuery extends React.Component {
   }
 
   render() {
-    console.log(this.props.touched, this.props.errors)
     return this.props.boundaries.length ? (
       this.props.boundaries.map((boundary, boundaryIndex) => {
         return (

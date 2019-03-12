@@ -1,6 +1,6 @@
 import * as u from 'Store/AdvancedSearch/utilities/advancedSearchStoreUtils'
 import { Boundary } from 'shared/classes/Boundary'
-import { HousingType } from 'shared/classes/HousingType'
+import { Filter } from 'shared/classes/Filter'
 import { ParameterMapSet } from 'shared/classes/ParameterMapSet'
 import { ParameterMapping } from 'shared/classes/ParameterMapping'
 import { filterMocks } from 'shared/models/__mocks__/filterMocks'
@@ -26,8 +26,8 @@ describe('transformStateIntoParamObject', () => {
     const boundary1 = new Boundary('COUNCIL', '1')
     const boundary2 = new Boundary('COMMUNITY', '1')
 
-    const housingType1 = new HousingType({
-      housingType: 'MARKET_RATE',
+    const housingType1 = new Filter({
+      modelConstant: 'MARKET_RATE',
       paramsObject: {
         someField: new ParameterMapSet({
           paramMaps: [new ParameterMapping({ field: 'someField', comparison: 'lte', value: '2018-01-01' })],
