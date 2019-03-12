@@ -7,6 +7,7 @@ export class Boundary {
     this.setObject(boundary)
 
     this._id = id
+    this._errors = [{ message: 'hi' }]
   }
 
   setObject(boundary) {
@@ -38,6 +39,22 @@ export class Boundary {
   }
   get constant() {
     return this._constant
+  }
+
+  get errors() {
+    return this._errors
+  }
+
+  set errors(errors) {
+    this._errors = errors
+  }
+
+  addError(error) {
+    this._errors = [...this._errors, error]
+  }
+
+  clearErrors() {
+    this._errors = []
   }
 
   set object(value) {
