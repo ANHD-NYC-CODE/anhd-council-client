@@ -80,4 +80,8 @@ export class Condition {
       dispatchAction()
     }
   }
+
+  get paramMaps() {
+    return [].concat.apply([], this._filters.map(filter => filter.paramMaps))
+  }
 }

@@ -110,4 +110,8 @@ export class Filter {
   set paramsObject(newParamsObject) {
     this._paramsObject = newParamsObject
   }
+
+  get paramMaps() {
+    return [].concat.apply([], Object.keys(this._paramsObject).map(key => this._paramsObject[key].paramMaps))
+  }
 }

@@ -44,9 +44,10 @@ export const RENTSTABILZED = {
             propertyAdjective: 'that lost',
             valueSuffix: '%',
           }),
-          props: {
-            minValue: 0,
-            maxValue: 100,
+
+          validations: {
+            min: 0,
+            max: 100,
           },
           field: 'rsunitslost',
           comparison: 'gte',
@@ -58,7 +59,9 @@ export const RENTSTABILZED = {
           baseComponent: DateField,
           props: {
             type: 'number',
-            minValue: 2007,
+          },
+          validations: {
+            min: 2007,
           },
           languageModule: new LanguageModule({ type: 'YEAR', noun: '' }),
           rangeKey: 'rsUnitsRange',
@@ -74,7 +77,9 @@ export const RENTSTABILZED = {
           languageModule: new LanguageModule({ type: 'YEAR', noun: 'units' }),
           props: {
             type: 'number',
-            minValue: 2007,
+          },
+          validations: {
+            min: 2007,
           },
           rangeKey: 'rsUnitsRange',
           rangePosition: 2,
@@ -188,9 +193,9 @@ export const SMALLHOMES = {
           field: 'unitsres',
           comparison: 'lte',
           value: '6',
-          props: {
-            minValue: 1,
-            maxValue: 6,
+          validations: {
+            min: 1,
+            max: 6,
           },
           languageModule: new LanguageModule({ noun: 'units', propertyAdjective: 'with' }),
         }),

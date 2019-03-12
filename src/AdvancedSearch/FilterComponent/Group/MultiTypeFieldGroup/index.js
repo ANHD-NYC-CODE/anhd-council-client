@@ -79,11 +79,10 @@ const MultiTypeFieldGroup = props => {
           }
         } else {
           return (
-            <div>
+            <div key={`paramSet-${props.paramSetIndex}-paramMap-component-${paramMapIndex}`}>
               {paramMap.component({
                 replaceFilter: props.replaceFilter,
                 dispatchAction: props.dispatchAction,
-                key: `paramSet-${props.paramSetIndex}-paramMap-component-${paramMapIndex}`,
                 filterIndex: props.filterIndex,
                 filter: props.filter,
                 options: paramMap.options,
