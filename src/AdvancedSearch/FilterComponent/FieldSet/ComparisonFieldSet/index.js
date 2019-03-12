@@ -67,7 +67,7 @@ const ComparisonFieldSet = props => {
           )}
         </InputGroup.Append>
       </InputGroup>
-      {props.filter && props.paramMap.languageModule.type === 'AMOUNT' && (
+      {props.filter && props.paramMap.type === 'AMOUNT' && (
         <InputGroup as={Col} xs={12} md={5} size="sm">
           <NewFilterSelect
             filterIndex={props.filterIndex}
