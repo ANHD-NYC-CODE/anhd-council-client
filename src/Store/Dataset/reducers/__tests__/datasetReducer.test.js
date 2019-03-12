@@ -12,7 +12,7 @@ describe('Dataset reducer', () => {
     it('fetches the resources and loads the models', () => {
       const reducer = r.datasetReducer(undefined, a.handleGetDatasets({ data: response }))
       expect(reducer.datasets).toEqual(response)
-      expect(reducer.models.length).toEqual(Object.keys(datasetModels).length)
+      expect(reducer.datasetModels.length).toEqual(Object.keys(datasetModels).length)
     })
   })
 })
