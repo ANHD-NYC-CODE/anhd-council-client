@@ -6,7 +6,8 @@ export const initialState = {
   housingTypeModels: [],
 }
 
-export const datasetReducer = (state = Object.freeze(initialState), action = { data: [] }) => {
+export const datasetReducer = (state = Object.freeze(initialState), action = { data: {} }) => {
+  console.log(action.type)
   switch (action.type) {
     case c.HANDLE_GET_DATASETS: {
       return {

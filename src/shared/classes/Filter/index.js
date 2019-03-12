@@ -9,9 +9,14 @@ export class Filter {
     this.id = modelConstant || model.id
     this._model = model
 
-    this.setModel(modelConstant)
+    if (!this.model) {
+      this.setModel(modelConstant)
+    } else if (!this.modelConstant) {
+      return
+    }
 
     if (modelConstant === 'NEW_FILTER' || modelConstant === 'ALL_TYPES') return
+
     // Post initialize actions
     if (!Object.keys(paramsObject).length) {
       Object.keys(this.paramsObject).forEach(key => {

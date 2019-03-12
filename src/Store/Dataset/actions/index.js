@@ -18,23 +18,33 @@ export const handleGetDatasets = (response, key = null) => {
 }
 
 const setupHousingTypeModels = response => {
-  return Object.keys(ht).map(constant => {
-    let databaseObject
-    switch (constant) {
-      case 'RENTSTABILIZED':
-        databaseObject = response.data.find(object => object.model_name.toUpperCase() === 'CORESUBSIDYRECORD')
-    }
-    return new Dataset({ model: ht[constant](databaseObject) })
-  })
+  return Object.keys(ht)
+    .map(constant => {
+      let databaseObject
+      switch (constant) {
+        case 'RENTSTABILIZED':
+          databaseObject = response.data.find(object => (object.model_name || {}).toUpperCase() === 'CORESUBSIDYRECORD')
+          break
+        default:
+          databaseObject = undefined
+          break
+      }
+      return new Dataset({ model: ht[constant](databaseObject) })
+    })
+    .filter(ht => ht)
 }
 
 const setupDatasetModels = response => {
-  return Object.keys(d).map(constant => {
-    const databaseObject = response.data.find(
-      object => object.model_name.toUpperCase() === constantToModelName(constant).toUpperCase
-    )
-    return new Dataset({ model: d[constant](databaseObject) })
-  })
+  return Object.keys(d)
+    .map(constant => {
+      const databaseObject = response.data.find(
+        object => (object.model_name || {}).toUpperCase() === constantToModelName(constant).toUpperCase()
+      )
+      if (databaseObject) {
+        return new Dataset({ model: d[constant](databaseObject) })
+      }
+    })
+    .filter(ds => ds)
 }
 
 export const getDatasets = () => (dispatch, getState, access_token) => {

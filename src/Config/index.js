@@ -57,6 +57,10 @@ class Config extends React.Component {
   }
 
   render() {
+    console.log(
+      this.props.loading ||
+        !(!!this.props.datasets.length && !!this.props.councils.length && !!this.props.communities.length)
+    )
     return (
       <ConfigContext.Provider
         value={{
@@ -65,7 +69,8 @@ class Config extends React.Component {
           housingTypeModels: this.props.housingTypeModels,
         }}
       >
-        {this.props.loading || !(this.props.datasets && this.props.councils && this.props.communities) ? (
+        {this.props.loading ||
+        !(!!this.props.datasets.length && !!this.props.councils.length && !!this.props.communities.length) ? (
           <Loading monitoredRequests={[GET_DATASETS, GET_COUNCILS, GET_COMMUNITIES]} />
         ) : (
           this.props.children

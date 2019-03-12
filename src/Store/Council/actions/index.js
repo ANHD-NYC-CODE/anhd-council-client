@@ -37,11 +37,12 @@ export const handleGetCouncilPropertySummary = (response, key = null) => ({
   key: key,
 })
 
-export const getCouncils = () => async (dispatch, getState, access_token) => {
+export const getCouncils = () => (dispatch, getState, access_token) => {
   const requestId = Math.floor(Math.random() * 1000000)
 
   return getStorageDataAction(dispatch, c.GET_COUNCILS, requestId, COUNCIL_DISTRICTS_INDEX, handleGetCouncils)
     .then(storageData => {
+      console.log('STOREAGE')
       if (!storageData) {
         return councilsAxios(dispatch, getState, access_token, requestId)
       }
