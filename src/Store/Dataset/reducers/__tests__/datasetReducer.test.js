@@ -8,7 +8,7 @@ describe('Dataset reducer', () => {
   })
 
   describe('HANDLE_GET_DATASETS', () => {
-    const response = [{ id: 1 }, { id: 2 }]
+    const response = [{ model_name: 'hpdviolations' }, { model_name: 'something' }]
     it('fetches the resources and loads the models', () => {
       const reducer = r.datasetReducer(undefined, a.handleGetDatasets({ data: response }))
       expect(reducer.datasets).toEqual(response)

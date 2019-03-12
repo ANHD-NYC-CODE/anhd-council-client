@@ -24,11 +24,20 @@ export class Filter {
     }
   }
 
+  findDataset(modelConstant) {
+    return d[Object.keys(d).find(key => d[key]().id === modelConstant)]
+      ? d[Object.keys(d).find(key => d[key]().id === modelConstant)]()
+      : null
+  }
+
+  findHousingType(modelConstant) {
+    return ht[Object.keys(ht).find(key => ht[key]().id === modelConstant)]
+      ? ht[Object.keys(ht).find(key => ht[key]().id === modelConstant)]()
+      : null
+  }
+
   setDataset(modelConstant) {
-    const dataset =
-      d[Object.keys(d).find(obj => d[obj].id === modelConstant)] ||
-      ht[Object.keys(ht).find(obj => ht[obj].id === modelConstant)] ||
-      this._dataset
+    const dataset = this.findDataset(modelConstant) || this.findHousingType(modelConstant) || this._dataset
     if (!dataset && modelConstant !== 'NEW_FILTER' && modelConstant !== 'ALL_TYPES')
       throw `Pass either '${Object.keys(d)
         .map(key => d[key].id)

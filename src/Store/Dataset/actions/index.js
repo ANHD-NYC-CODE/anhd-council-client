@@ -4,18 +4,22 @@ import * as u from 'shared/constants/urls'
 import * as c from '../constants'
 import * as d from 'shared/models/datasets'
 import { Dataset } from 'shared/classes/Dataset'
+import { constantToModelName } from 'shared/utilities/filterUtils'
 
 export const handleGetDatasets = (response, key = null) => {
-  const datasetModels = setupDatasetModels()
+  const datasetModels = setupDatasetModels(response)
   return {
     type: c.HANDLE_GET_DATASETS,
     data: { datasets: response.data, models: datasetModels },
   }
 }
 
-export const setupDatasetModels = () => {
+export const setupDatasetModels = response => {
   return Object.keys(d).map(constant => {
-    return new Dataset({ model: d[constant] })
+    const databaseObject = response.data.find(
+      object => object.model_name.toUpperCase() === constantToModelName(constant).toUpperCase
+    )
+    return new Dataset({ model: d[constant](databaseObject) })
   })
 }
 

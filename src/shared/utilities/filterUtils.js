@@ -12,6 +12,10 @@ export const constantToQueryName = constant => {
   return `${constant.replace(/_/g, '').toLowerCase()}s`
 }
 
+export const constantToModelName = constant => {
+  return `${constant.replace(/_/g, '').toLowerCase()}`
+}
+
 export const constantToName = ({ constant = '', plural = true, capitalizeDepartment = true } = {}) => {
   if (capitalizeDepartment) {
     const tokens = constant.split('_').map(string => {
@@ -44,6 +48,7 @@ export const constructDefaultSchema = ({
   amountValueSuffix = undefined,
   amountPropertyAdjective = undefined,
   datePropertyAdjective = undefined,
+  dateMax = undefined,
   hiddenParamMap = undefined,
 } = {}) => {
   return {
@@ -85,6 +90,9 @@ export const constructDefaultSchema = ({
           props: {
             type: 'date',
           },
+          validations: {
+            max: dateMax,
+          },
           rangeKey: `${constantToQueryName(constant)}Range`,
           rangePosition: 1,
           defaultOptions: comparisonOptions(
@@ -111,6 +119,9 @@ export const constructDefaultSchema = ({
           }),
           props: {
             type: 'date',
+          },
+          validations: {
+            max: dateMax,
           },
           rangeKey: `${constantToQueryName(constant)}Range`,
           rangePosition: 2,

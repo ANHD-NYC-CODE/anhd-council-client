@@ -1,8 +1,6 @@
 import * as u from 'Store/AdvancedSearch/utilities/advancedSearchStoreUtils'
 import { Boundary } from 'shared/classes/Boundary'
 import { Filter } from 'shared/classes/Filter'
-import { ParameterMapSet } from 'shared/classes/ParameterMapSet'
-import { ParameterMapping } from 'shared/classes/ParameterMapping'
 import { filterMocks } from 'shared/models/__mocks__/filterMocks'
 import { Condition } from 'shared/classes/Condition'
 import moment from 'moment'
@@ -27,19 +25,10 @@ describe('transformStateIntoParamObject', () => {
     const boundary2 = new Boundary('COMMUNITY', '1')
 
     const housingType1 = new Filter({
-      modelConstant: 'MARKET_RATE',
-      paramsObject: {
-        someField: new ParameterMapSet({
-          paramMaps: [new ParameterMapping({ field: 'someField', comparison: 'lte', value: '2018-01-01' })],
-        }),
-        unitsres: new ParameterMapSet({
-          paramMaps: [
-            new ParameterMapping({ field: 'unitsres', comparison: 'lte', value: '4' }),
-            new ParameterMapping({ field: 'unitsres', comparison: 'gte', value: '1' }),
-          ],
-        }),
-      },
+      modelConstant: 'SMALL_HOMES',
     })
+
+    housingType1.paramsObject['unitsres'].create()
 
     const advancedSearch = {
       conditions: conditions,
@@ -53,10 +42,8 @@ describe('transformStateIntoParamObject', () => {
       q: `*condition_0=AND filter_0=hpdviolations__count__gte=5,hpdviolations__approveddate__gte=${todayminus1year},hpdviolations__approveddate__lte=${todayplus1year}`,
       council: '1',
       cd: '1',
-      housingtype: 'mr',
-      unitsres__lte: '4',
-      unitsres__gte: '1',
-      someField__lte: '2018-01-01',
+      housingtype: 'sh',
+      unitsres__lte: '6',
     }
     expect(result).toEqual(expected)
   })
