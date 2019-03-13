@@ -75,7 +75,8 @@ export class BoundaryQuery extends React.Component {
                 isInvalid={
                   (this.props.touched.boundaryType || !!this.props.submitCount) && this.props.errors.boundaryType
                 }
-                onChange={this.addBoundary}
+                data-key="boundaryType"
+                onChange={e => this.changeBoundary(boundaryIndex, boundary, e)}
                 value={boundary.constant}
               >
                 <option disabled value={-1} key={-1}>

@@ -26,8 +26,9 @@ const HousingTypeSelection = props => {
         const paramSet = props.housingType.paramsObject[paramsSetKey]
         return !!paramSet.allowActions && !paramSet.paramMaps.length ? (
           <Form.Row key={`housingtype-${paramSetIndex}`}>
-            <Form.Group as={Col} className="housingtype-paramset">
+            <Form.Group as={Col} className="housingtype-paramset--group">
               <Button
+                className="housingtype-paramset--new-button"
                 variant="outline-primary"
                 size="sm"
                 onClick={() => paramSet.create({ dispatchAction: dispatchAction })}
