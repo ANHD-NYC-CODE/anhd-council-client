@@ -101,9 +101,22 @@ export const setupHousingTypeModels = datasets => {
 export const setupDatasetModels = datasets => {
   return Object.keys(d)
     .map(constant => {
-      const databaseObject = datasets.find(
-        object => (object.model_name || {}).toUpperCase() === constantToModelName(constant).toUpperCase()
-      )
+      let databaseObject
+      switch (constant) {
+        case 'PROPERTY_SALE_BY_COUNT':
+          databaseObject = datasets.find(object => (object.model_name || {}).toUpperCase() === 'ACRISREALLEGAL')
+          break
+        case 'PROPERTY_SALE_BY_AMOUNT':
+          databaseObject = datasets.find(object => (object.model_name || {}).toUpperCase() === 'ACRISREALLEGAL')
+          break
+        case 'FORECLOSURE':
+          databaseObject = datasets.find(object => (object.model_name || {}).toUpperCase() === 'LISPENDEN')
+          break
+        default:
+          databaseObject = datasets.find(
+            object => (object.model_name || {}).toUpperCase() === constantToModelName(constant).toUpperCase()
+          )
+      }
       if (databaseObject) {
         return new Dataset({ model: d[constant](databaseObject) })
       }
