@@ -10,8 +10,6 @@ import { getAdvancedSearchParamMaps } from 'Store/AdvancedSearch/utilities/advan
 
 import { addHousingType, updateHousingType } from 'Store/AdvancedSearch/actions'
 
-import ConfigContext from 'Config/ConfigContext'
-
 import ConditionComponent from 'AdvancedSearch/ConditionComponent'
 import BoundaryQuery from 'AdvancedSearch/BoundaryQuery'
 import HousingTypeQuery from 'AdvancedSearch/HousingTypeQuery'

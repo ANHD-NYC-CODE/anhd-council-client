@@ -40,6 +40,36 @@ const setupWrapper = state => {
   return wrapper
 }
 
+const selectedBoundaryWrapper = ({ wrapper = undefined, selectValue = undefined, idValue = undefined } = {}) => {
+  if (!wrapper) {
+    wrapper = setupWrapper()
+  }
+  wrapper
+    .find('select[name="boundaryType"]')
+    .simulate('change', { target: { name: 'boundaryType', value: selectValue, dataset: { key: 'boundaryType' } } })
+
+  wrapper.update()
+
+  if (idValue) {
+    wrapper
+      .find('select[name="boundaryId"]')
+      .simulate('change', { target: { name: 'boundaryId', value: idValue, dataset: { key: 'id' } } })
+  }
+  wrapper.update()
+  return wrapper
+}
+
+const selectedHousingTypeWrapper = ({ wrapper = undefined, selectValue = undefined } = {}) => {
+  if (!wrapper) {
+    wrapper = setupWrapper()
+  }
+  wrapper
+    .find('select[name="housingTypeSelect"]')
+    .simulate('change', { target: { name: 'boundaryType', value: selectValue } })
+  wrapper.update()
+  return wrapper
+}
+
 describe('AdvancedSearch', () => {
   const wrapper = setupWrapper()
   it('renders the page components', () => {
@@ -51,26 +81,126 @@ describe('AdvancedSearch', () => {
 
   describe('Advanced Search Form', () => {
     describe('Boundary Query Select', () => {
-      const wrapper = setupWrapper()
-      it('adds council districts when selected', () => {
+      it('has initial state', () => {
+        const wrapper = setupWrapper()
         expect(wrapper.find('BoundaryQuery')).toHaveLength(1)
+        expect(wrapper.find('select[name="boundaryType"]')).toHaveLength(1)
+        expect(wrapper.find('select[name="boundaryId"]')).toHaveLength(0)
+
         expect(wrapper.find('select[name="boundaryType"]').props().value).toEqual(-1)
         expect(wrapper.find('select[name="boundaryType"] option')).toHaveLength(3)
+      })
 
-        wrapper
-          .find('select[name="boundaryType"]')
-          .simulate('change', { target: { name: 'boundaryType', value: 'COUNCIL' } })
-
-        wrapper.update()
+      it('switches between boundaries', () => {
+        let wrapper = selectedBoundaryWrapper({ selectValue: 'COUNCIL' })
+        expect(wrapper.find('select[name="boundaryType"]')).toHaveLength(1)
         expect(wrapper.find('select[name="boundaryType"]').props().value).toEqual('COUNCIL')
-        expect(wrapper.find('select[name="boundaryId"]').props().value).toEqual(-1)
+
+        wrapper = selectedBoundaryWrapper({ wrapper: wrapper, selectValue: 'COMMUNITY' })
+        expect(wrapper.find('select[name="boundaryType"]')).toHaveLength(1)
+        expect(wrapper.find('select[name="boundaryType"]').props().value).toEqual('COMMUNITY')
+      })
+
+      it('adds council districts when selected', () => {
+        const wrapper = selectedBoundaryWrapper({ selectValue: 'COUNCIL', idValue: 3 })
+        expect(wrapper.find('select[name="boundaryType"]').props().value).toEqual('COUNCIL')
+
+        expect(wrapper.find('select[name="boundaryId"]')).toHaveLength(1)
         expect(wrapper.find('select[name="boundaryId"] option')).toHaveLength(4)
+        expect(wrapper.find('select[name="boundaryId"]').props().value).toEqual(3)
+        expect(wrapper.find('AdvancedSearchSentence').text()).toMatch(/Show me all properties in council district 3/)
+      })
+    })
+
+    describe('Housing Type selection', () => {
+      it('has initial state', () => {
+        const wrapper = setupWrapper()
+        expect(wrapper.find('HousingTypeQuery')).toHaveLength(1)
+        expect(wrapper.find('select[name="housingTypeSelect"]')).toHaveLength(1)
+        expect(wrapper.find('select[name="housingTypeSelect"]').props().value).toEqual('ALL_TYPES')
+        expect(wrapper.find('div.housingtype-paramset')).toHaveLength(0)
+
+        expect(wrapper.find('select[name="housingTypeSelect"] option')).toHaveLength(6)
+      })
+
+      it('switches between housing types', () => {
+        let wrapper = selectedHousingTypeWrapper({ selectValue: 'RENT_STABILIZED' })
+        expect(wrapper.find('select[name="housingTypeSelect"]').props().value).toEqual('RENT_STABILIZED')
+
+        expect(wrapper.find('HousingTypeQuery')).toHaveLength(1)
+
+        wrapper = selectedHousingTypeWrapper({ wrapper: wrapper, selectValue: 'SMALL_HOMES' })
+        expect(wrapper.find('select[name="housingTypeSelect"]').props().value).toEqual('SMALL_HOMES')
+
+        expect(wrapper.find('HousingTypeQuery')).toHaveLength(1)
+      })
+
+      it('adds Rent Stabilized param sets when selection is made', () => {
+        const wrapper = selectedHousingTypeWrapper({ selectValue: 'RENT_STABILIZED' })
+
+        expect(wrapper.find('select[name="housingTypeSelect"]').props().value).toEqual('RENT_STABILIZED')
+        expect(wrapper.find('div.housingtype-paramset--group')).toHaveLength(1)
+
+        wrapper.find('button.housingtype-paramset--new-button').simulate('click')
+        wrapper.update()
+        expect(wrapper.find('div.multitype-fieldgroup')).toHaveLength(1)
+      })
+
+      it('adds Rent Regulated param sets when selection is made', () => {
+        const wrapper = selectedHousingTypeWrapper({ selectValue: 'RENT_REGULATED' })
+
+        expect(wrapper.find('select[name="housingTypeSelect"]').props().value).toEqual('RENT_REGULATED')
+        expect(wrapper.find('div.housingtype-paramset--group')).toHaveLength(2)
 
         wrapper
-          .find('select[name="boundaryId"]')
-          .simulate('change', { target: { name: 'boundaryId', value: 3, dataset: { key: 'id' } } })
+          .find('button.housingtype-paramset--new-button')
+          .at(0)
+          .simulate('click')
         wrapper.update()
-        expect(wrapper.find('select[name="boundaryId"]').props().value).toEqual(3)
+        expect(wrapper.find('div.multitype-fieldgroup')).toHaveLength(1)
+
+        wrapper
+          .find('button.housingtype-paramset--new-button')
+          .at(0)
+          .simulate('click')
+        wrapper.update()
+        expect(wrapper.find('div.multitype-fieldgroup')).toHaveLength(2)
+      })
+
+      it('adds Small Homes param sets when selection is made', () => {
+        const wrapper = selectedHousingTypeWrapper({ selectValue: 'SMALL_HOMES' })
+
+        expect(wrapper.find('select[name="housingTypeSelect"]').props().value).toEqual('SMALL_HOMES')
+        expect(wrapper.find('div.housingtype-paramset--group')).toHaveLength(1)
+
+        wrapper.find('button.housingtype-paramset--new-button').simulate('click')
+        wrapper.update()
+        expect(wrapper.find('div.multitype-fieldgroup')).toHaveLength(1)
+      })
+
+      it('adds Small Homes param sets when selection is made', () => {
+        const wrapper = selectedHousingTypeWrapper({ selectValue: 'SMALL_HOMES' })
+
+        expect(wrapper.find('select[name="housingTypeSelect"]').props().value).toEqual('SMALL_HOMES')
+        expect(wrapper.find('div.housingtype-paramset--group')).toHaveLength(1)
+
+        wrapper.find('button.housingtype-paramset--new-button').simulate('click')
+        wrapper.update()
+        expect(wrapper.find('div.multitype-fieldgroup')).toHaveLength(1)
+      })
+
+      it('adds Market Rate param sets when selection is made', () => {
+        const wrapper = selectedHousingTypeWrapper({ selectValue: 'MARKET_RATE' })
+
+        expect(wrapper.find('select[name="housingTypeSelect"]').props().value).toEqual('MARKET_RATE')
+        expect(wrapper.find('div.housingtype-paramset--group')).toHaveLength(0)
+      })
+
+      it('adds Public Housing param sets when selection is made', () => {
+        const wrapper = selectedHousingTypeWrapper({ selectValue: 'PUBLIC_HOUSING' })
+
+        expect(wrapper.find('select[name="housingTypeSelect"]').props().value).toEqual('PUBLIC_HOUSING')
+        expect(wrapper.find('div.housingtype-paramset--group')).toHaveLength(0)
       })
     })
   })

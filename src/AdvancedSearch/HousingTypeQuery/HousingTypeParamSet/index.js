@@ -6,7 +6,7 @@ import { Form, Col, ButtonGroup, Button } from 'react-bootstrap'
 const HousingTypeParamSet = props => {
   return (
     <Form.Row className="housingtype-paramset align-items-center">
-      <Form.Group as={Col} xs={10}>
+      <Form.Group className="housingtype-paramset--group" as={Col} xs={10}>
         {props.paramSet.component({
           key: 'housing-type-param-set',
           dispatchAction: props.dispatchAction,

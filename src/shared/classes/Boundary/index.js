@@ -1,22 +1,19 @@
 import * as b from 'shared/constants/boundaries'
 
 export class Boundary {
-  constructor(boundary, id) {
-    this.setObject = this.setObject.bind(this)
-
-    this.setObject(boundary)
-
+  constructor(boundaryConstant, id) {
     this._id = id
     this._errors = []
+    this.setBoundaryType(boundaryConstant)
   }
 
-  setObject(boundary) {
-    const object = b[Object.keys(b).find(obj => b[obj].constant === boundary)]
-    if (object) {
-      this._object = object
-      this._name = this.object.name
-      this._queryName = this.object.queryName
-      this._constant = this.object.constant
+  setBoundaryType(boundaryConstant) {
+    const boundaryType = b[Object.keys(b).find(obj => b[obj].constant === boundaryConstant)]
+    if (boundaryType) {
+      this._boundaryType = boundaryType
+      this._name = this.boundaryType.name
+      this._queryName = this.boundaryType.queryName
+      this._constant = this.boundaryType.constant
     } else {
       throw `Pass either '${Object.keys(b)
         .map(key => b[key].constant)
@@ -24,8 +21,8 @@ export class Boundary {
     }
   }
 
-  get object() {
-    return this._object
+  get boundaryType() {
+    return this._boundaryType
   }
   get id() {
     return this._id
@@ -57,8 +54,8 @@ export class Boundary {
     this._errors = []
   }
 
-  set object(value) {
-    this.setObject(value)
+  set boundaryType(boundaryConstant) {
+    this.setBoundaryType(boundaryConstant)
     this.id = undefined // Clear the ID to avoid boundary/id mismatches
   }
 
