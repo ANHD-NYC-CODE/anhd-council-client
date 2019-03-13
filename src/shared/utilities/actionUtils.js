@@ -54,7 +54,6 @@ export const handleCatchError = (error, type, dispatch, requestId) => {
       errorMessage = findErrorKeyValue(error.response.status, error.response.data)
     }
   }
-  console.log('ERROR!', error)
   dispatch(errorActions.handleFailure(type, errorStatus, errorMessage))
   toast.error(`Error: ${errorStatus} - ${errorMessage}`)
 

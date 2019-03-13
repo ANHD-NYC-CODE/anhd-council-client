@@ -5,5 +5,3 @@ import reducers from 'Store/reducers'
 export const setupStore = initialState => {
   return createStore(reducers, { ...initialState }, applyMiddleware(thunk))
 }
-
-export const configuredAppWrapper = wrapper => {}
