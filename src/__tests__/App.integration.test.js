@@ -44,7 +44,7 @@ describe('initial startup', () => {
   })
 
   describe('after completed requests', () => {
-    it('Does not display the loading module', async () => {
+    it('Does not display the loading module', () => {
       const datasets = [{ model_name: 'hpdviolation' }]
 
       mock.onGet('/datasets/').reply(200, datasets)
@@ -52,8 +52,6 @@ describe('initial startup', () => {
       mock.onGet('/communities/').reply(200, [1, 2])
       const wrapper = mount(<App />)
 
-      await flushAllPromises()
-      wrapper.update()
       const request = window.indexedDB.open('test', 1)
       request.addEventListener('success', async () => {
         await flushAllPromises()
@@ -64,14 +62,11 @@ describe('initial startup', () => {
   })
 
   describe('after an error with requests', () => {
-    it('Displays the error screens', async () => {
+    it('Displays the error screens', () => {
       mock.onGet('/datasets/').reply(500, [])
       mock.onGet('/councils/').reply(500, [])
       mock.onGet('/communities/').reply(500, [])
       const wrapper = mount(<App />)
-
-      await flushAllPromises()
-      wrapper.update()
 
       const request = window.indexedDB.open('test', 1)
       request.addEventListener('success', async () => {
