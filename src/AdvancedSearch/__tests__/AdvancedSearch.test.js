@@ -5,8 +5,7 @@ import sinon from 'sinon'
 
 import { AdvancedSearch } from 'AdvancedSearch'
 import { AdvancedSearchSentence } from 'AdvancedSearch/Sentence'
-import { BoundaryQuery } from 'AdvancedSearch/BoundaryQuery'
-import { HousingTypeQuery } from 'AdvancedSearch/HousingTypeQuery'
+
 import { Boundary } from 'shared/classes/Boundary'
 import { Condition } from 'shared/classes/Condition'
 configure({ adapter: new Adapter() })

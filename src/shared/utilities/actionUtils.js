@@ -1,6 +1,11 @@
 import * as loadingActions from 'Store/Loading/actions'
 import * as errorActions from 'Store/Error/actions'
 import { toast } from 'react-toastify'
+import * as d from 'shared/models/datasets'
+import * as ht from 'shared/models/housingTypes'
+
+import { Dataset } from 'shared/classes/Dataset'
+import { constantToModelName } from 'shared/utilities/filterUtils'
 
 const ERROR_400_MESSAGE = 'Incorrect username or password.'
 const ERROR_401_MESSAGE = 'Please login for access.'
@@ -74,4 +79,34 @@ export const constructSimplePropertyParams = params => {
     [`${params.type}__start`]: params.startDate,
     [`${params.type}__end`]: params.endDate,
   }
+}
+
+export const setupHousingTypeModels = datasets => {
+  return Object.keys(ht)
+    .map(constant => {
+      let databaseObject
+      switch (constant) {
+        case 'RENTSTABILIZED':
+          databaseObject = datasets.find(object => (object.model_name || {}).toUpperCase() === 'CORESUBSIDYRECORD')
+          break
+        default:
+          databaseObject = undefined
+          break
+      }
+      return new Dataset({ model: ht[constant](databaseObject) })
+    })
+    .filter(ht => ht)
+}
+
+export const setupDatasetModels = datasets => {
+  return Object.keys(d)
+    .map(constant => {
+      const databaseObject = datasets.find(
+        object => (object.model_name || {}).toUpperCase() === constantToModelName(constant).toUpperCase()
+      )
+      if (databaseObject) {
+        return new Dataset({ model: d[constant](databaseObject) })
+      }
+    })
+    .filter(ds => ds)
 }

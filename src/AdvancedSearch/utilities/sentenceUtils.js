@@ -13,7 +13,6 @@ const grammaticalList = (array, conjunction = 'and') => {
   } else {
     sentence = array[0]
   }
-
   return lastItem ? `${sentence}, ${conjunction} ${lastItem}` : sentence
 }
 
@@ -176,11 +175,10 @@ export const convertFilterToSentence = filter => {
 
 export const convertHousingTypesToSentence = housingTypes => {
   return `${grammaticalList(
-    housingTypes.map(
-      housingType =>
-        singularPlease(housingType.name).toLowerCase() + ' properties' + convertFilterToSentence(housingType),
-      'and'
-    )
+    housingTypes.map(housingType => {
+      return singularPlease(housingType.name).toLowerCase() + ' properties' + convertFilterToSentence(housingType)
+    }),
+    'and'
   )}`
 }
 

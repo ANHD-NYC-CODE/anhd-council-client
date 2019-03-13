@@ -1,13 +1,9 @@
 import React from 'react'
-import Router from 'Router'
 
 import configureStore from 'Store/configureStore'
-import { ToastContainer } from 'react-toastify'
 import { Provider } from 'react-redux'
 import { getUserStorageData } from 'shared/utilities/storageUtils'
-import Auth from 'Auth'
-import Config from 'Config'
-import ModalContainer from 'ModalContainer'
+import App from 'App'
 
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -36,25 +32,17 @@ const getStateFromStorage = () => {
 
 const store = configureStore({ ...getStateFromStorage() })
 
-export class App extends React.Component {
+export class AppProvider extends React.Component {
   constructor() {
     super()
   }
   render() {
     return (
-      <div className="App">
-        <Provider store={store}>
-          <Auth>
-            <Config>
-              <Router />
-              <ToastContainer />
-              <ModalContainer />
-            </Config>
-          </Auth>
-        </Provider>
-      </div>
+      <Provider store={store}>
+        <App />
+      </Provider>
     )
   }
 }
 
-export default App
+export default AppProvider
