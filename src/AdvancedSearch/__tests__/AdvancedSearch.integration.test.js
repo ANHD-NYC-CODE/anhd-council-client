@@ -144,6 +144,10 @@ describe('AdvancedSearch', () => {
         wrapper.find('button.housingtype-paramset--new-button').simulate('click')
         wrapper.update()
         expect(wrapper.find('div.multitype-fieldgroup')).toHaveLength(1)
+
+        expect(wrapper.find('AdvancedSearchSentence').text()).toMatch(
+          /Show me rent stabilized properties that lost at least 25% rent stabilized units after 2010/
+        )
       })
 
       it('adds Rent Regulated param sets when selection is made', () => {
@@ -165,6 +169,10 @@ describe('AdvancedSearch', () => {
           .simulate('click')
         wrapper.update()
         expect(wrapper.find('div.multitype-fieldgroup')).toHaveLength(2)
+
+        expect(wrapper.find('AdvancedSearchSentence').text()).toMatch(
+          /Show me rent regulated properties expiring before/
+        )
       })
 
       it('adds Small Homes param sets when selection is made', () => {
@@ -176,17 +184,9 @@ describe('AdvancedSearch', () => {
         wrapper.find('button.housingtype-paramset--new-button').simulate('click')
         wrapper.update()
         expect(wrapper.find('div.multitype-fieldgroup')).toHaveLength(1)
-      })
-
-      it('adds Small Homes param sets when selection is made', () => {
-        const wrapper = selectedHousingTypeWrapper({ selectValue: 'SMALL_HOMES' })
-
-        expect(wrapper.find('select[name="housingTypeSelect"]').props().value).toEqual('SMALL_HOMES')
-        expect(wrapper.find('div.housingtype-paramset--group')).toHaveLength(1)
-
-        wrapper.find('button.housingtype-paramset--new-button').simulate('click')
-        wrapper.update()
-        expect(wrapper.find('div.multitype-fieldgroup')).toHaveLength(1)
+        expect(wrapper.find('AdvancedSearchSentence').text()).toMatch(
+          /Show me small home properties with at most 6 units/
+        )
       })
 
       it('adds Market Rate param sets when selection is made', () => {
@@ -194,6 +194,7 @@ describe('AdvancedSearch', () => {
 
         expect(wrapper.find('select[name="housingTypeSelect"]').props().value).toEqual('MARKET_RATE')
         expect(wrapper.find('div.housingtype-paramset--group')).toHaveLength(0)
+        expect(wrapper.find('AdvancedSearchSentence').text()).toMatch(/Show me market rate properties/)
       })
 
       it('adds Public Housing param sets when selection is made', () => {
@@ -201,6 +202,7 @@ describe('AdvancedSearch', () => {
 
         expect(wrapper.find('select[name="housingTypeSelect"]').props().value).toEqual('PUBLIC_HOUSING')
         expect(wrapper.find('div.housingtype-paramset--group')).toHaveLength(0)
+        expect(wrapper.find('AdvancedSearchSentence').text()).toMatch(/Show me public housing properties/)
       })
     })
   })
