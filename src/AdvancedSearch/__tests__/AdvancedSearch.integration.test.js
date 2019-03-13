@@ -1,4 +1,5 @@
 import React from 'react'
+import moment from 'moment'
 import { configure, mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import { setupStore } from 'shared/testUtilities'
@@ -8,6 +9,14 @@ import { setupDatasetModels, setupHousingTypeModels } from 'shared/utilities/act
 import ConfigContext from 'Config/ConfigContext'
 
 configure({ adapter: new Adapter() })
+
+const todayminus1year = moment(moment.now())
+  .subtract(1, 'Y')
+  .format('MM/DD/YYYY')
+
+const todayplus1year = moment(moment.now())
+  .add(1, 'Y')
+  .format('MM/DD/YYYY')
 
 const setupWrapper = state => {
   if (!state) {
@@ -65,6 +74,17 @@ const selectedHousingTypeWrapper = ({ wrapper = undefined, selectValue = undefin
   wrapper
     .find('select[name="housingTypeSelect"]')
     .simulate('change', { target: { name: 'boundaryType', value: selectValue } })
+  wrapper.update()
+  return wrapper
+}
+
+const selectedFilterWrapper = ({ wrapper = undefined, selectValue = undefined } = {}) => {
+  if (!wrapper) {
+    wrapper = setupWrapper()
+  }
+  wrapper.find('ConditionComponent button.add-filter').simulate('click')
+  wrapper.update()
+  wrapper.find('select[name="newFilter"]').simulate('change', { target: { name: 'newFilter', value: selectValue } })
   wrapper.update()
   return wrapper
 }
@@ -239,6 +259,65 @@ describe('AdvancedSearch', () => {
       wrapper.update()
       expect(wrapper.find('NewFilterSelect')).toHaveLength(0)
       expect(wrapper.find('FilterComponent')).toHaveLength(0)
+    })
+  })
+
+  describe('Filters', () => {
+    it('has initial state', () => {
+      const wrapper = selectedFilterWrapper({ selectValue: 'HPD_VIOLATION' })
+      expect(wrapper.find('FilterComponent')).toHaveLength(1)
+    })
+
+    it('updates reducer state on change (comparison value)', () => {
+      const wrapper = selectedFilterWrapper({ selectValue: 'HPD_VIOLATION' })
+      wrapper
+        .find('FilterComponent input[name="value"]')
+        .at(0)
+        .simulate('change', { target: { name: 'value', value: '100' } })
+
+      expect(
+        wrapper
+          .find('FilterComponent input[name="value"]')
+          .at(0)
+          .props().value
+      ).toEqual('100')
+      expect(wrapper.find('AdvancedSearchSentence').text()).toMatch(/that have at least 100 HPD Violations/)
+    })
+
+    it('updates reducer state on change (date value)', () => {
+      const wrapper = selectedFilterWrapper({ selectValue: 'HPD_VIOLATION' })
+      wrapper
+        .find('FilterComponent input[name="value"]')
+        .at(1)
+        .simulate('change', { target: { name: 'value', value: '2020-01-01' } })
+
+      expect(
+        wrapper
+          .find('FilterComponent input[name="value"]')
+          .at(1)
+          .props().value
+      ).toEqual('2020-01-01')
+      expect(wrapper.find('AdvancedSearchSentence').text()).toMatch(/HPD Violations after 01\/01\/2020/)
+    })
+
+    it('updates reducer state on change (date range)', () => {
+      const wrapper = selectedFilterWrapper({ selectValue: 'HPD_VIOLATION' })
+      wrapper
+        .find('FilterComponent select[name="comparison"]')
+        .at(1)
+        .simulate('change', {
+          target: { name: 'comparison', value: 'between', dataset: { rangeKey: 'hpdviolationsRange' } },
+        })
+      wrapper.update()
+      expect(
+        wrapper
+          .find('FilterComponent select[name="comparison"]')
+          .at(1)
+          .props().value
+      ).toEqual('between')
+      expect(wrapper.find('AdvancedSearchSentence').text()).toContain(
+        `HPD Violations between ${todayminus1year} and ${todayplus1year}`
+      )
     })
   })
 })

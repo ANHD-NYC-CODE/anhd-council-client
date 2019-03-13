@@ -26,6 +26,7 @@ const NewFilterSelect = props => {
           <Form.Control
             as="select"
             className="new-filter-select"
+            name="newFilter"
             onChange={e => props.onChange(props.filterIndex, e)}
             value={props.value || -1}
           >

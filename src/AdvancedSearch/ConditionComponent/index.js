@@ -151,14 +151,14 @@ export class ConditionComponent extends React.Component {
           </ButtonGroup>
         </Col>
         <Col xs={10}>
-          {this.props.condition.filters.map((filter, conditionKey) => {
-            return renderFilterOrCondition(filter, conditionKey)
-          })}
           {!!this.props.condition.errors.length && (
             <Form.Text className="text-danger" type="invalid">
               {this.props.condition.errors[0].message}
             </Form.Text>
           )}
+          {this.props.condition.filters.map((filter, conditionKey) => {
+            return renderFilterOrCondition(filter, conditionKey)
+          })}
         </Col>
       </Form.Row>
     )
