@@ -19,34 +19,41 @@ export class FilterComponent extends React.Component {
 
   render() {
     return (
-      <Form.Row className="filter align-items-center">
-        <Form.Group as={Col} xs={10}>
-          {this.props.filter &&
-            Object.keys(this.props.filter.paramsObject).map((paramsSetKey, paramSetIndex) =>
-              this.props.filter.paramsObject[paramsSetKey].component({
-                key: `filter-paramset-${this.props.filter.id}-${paramSetIndex}`,
-                dispatchAction: this.props.dispatchAction,
-                replaceFilter: this.props.replaceFilter,
-                filterIndex: this.props.filterIndex,
-                filter: this.props.filter,
-                paramSet: this.props.filter.paramsObject[paramsSetKey],
-                paramSetIndex: paramSetIndex,
-              })
-            )}
-        </Form.Group>
-        <Col xs={2} className="flex-column">
-          <ButtonGroup className="align-center">
-            <Button size="sm" onClick={this.removeFilter} variant="danger">
-              -
-            </Button>
-            {this.props.allowNewCondition && (
-              <Button size="sm" onClick={() => this.props.addCondition(this.props.filterIndex)} variant="success">
-                {'<'}
+      <div>
+        <Form.Row className="filter align-items-center">
+          <Form.Group as={Col} xs={10}>
+            {this.props.filter &&
+              Object.keys(this.props.filter.paramsObject).map((paramsSetKey, paramSetIndex) =>
+                this.props.filter.paramsObject[paramsSetKey].component({
+                  key: `filter-paramset-${this.props.filter.id}-${paramSetIndex}`,
+                  dispatchAction: this.props.dispatchAction,
+                  replaceFilter: this.props.replaceFilter,
+                  filterIndex: this.props.filterIndex,
+                  filter: this.props.filter,
+                  paramSet: this.props.filter.paramsObject[paramsSetKey],
+                  paramSetIndex: paramSetIndex,
+                })
+              )}
+          </Form.Group>
+          <Col xs={2} className="flex-column">
+            <ButtonGroup className="align-center">
+              <Button size="sm" onClick={this.removeFilter} variant="danger">
+                -
               </Button>
-            )}
-          </ButtonGroup>
-        </Col>
-      </Form.Row>
+              {this.props.allowNewCondition && (
+                <Button size="sm" onClick={() => this.props.addCondition(this.props.filterIndex)} variant="success">
+                  {'<'}
+                </Button>
+              )}
+            </ButtonGroup>
+          </Col>
+        </Form.Row>
+        {!!this.props.filter.errors.length && (
+          <Form.Text className="text-danger" type="invalid">
+            {this.props.filter.errors[0].message}
+          </Form.Text>
+        )}
+      </div>
     )
   }
 }

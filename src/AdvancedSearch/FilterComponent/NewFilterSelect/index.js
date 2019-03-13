@@ -22,20 +22,28 @@ const NewFilterSelect = props => {
   return (
     <ConfigContext.Consumer>
       {config => (
-        <Form.Control
-          as="select"
-          className="new-filter-select"
-          onChange={e => props.onChange(props.filterIndex, e)}
-          value={props.value || -1}
-        >
-          {datasetOptions(config.datasetModels)}
-        </Form.Control>
+        <div>
+          <Form.Control
+            as="select"
+            className="new-filter-select"
+            onChange={e => props.onChange(props.filterIndex, e)}
+            value={props.value || -1}
+          >
+            {datasetOptions(config.datasetModels)}
+          </Form.Control>
+          {!!props.filter.errors.length && (
+            <Form.Text className="text-danger" type="invalid">
+              {props.filter.errors[0].message}
+            </Form.Text>
+          )}
+        </div>
       )}
     </ConfigContext.Consumer>
   )
 }
 
 NewFilterSelect.propTypes = {
+  filter: PropTypes.object,
   filterIndex: PropTypes.number,
   onChange: PropTypes.func,
   value: PropTypes.string,

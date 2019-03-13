@@ -29,5 +29,5 @@ export const getAdvancedSearchParamMaps = advancedSearch => {
     Object.keys(advancedSearch.housingTypes).map(key => advancedSearch.housingTypes[key].paramMaps)
   )
 
-  return [].concat.apply([], [conditionParamMaps, housingTypeParamMaps])
+  return [].concat.apply([], [conditionParamMaps, housingTypeParamMaps]).filter(p => p)
 }
