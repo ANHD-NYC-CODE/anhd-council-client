@@ -101,7 +101,7 @@ const parseParamMapRangeGroup = paramMapRangeGroup => {
 }
 
 export const convertConditionToSentence = (conditions, condition) => {
-  return `${condition.type === 'AND' ? '' : ' either'}${condition.filters
+  return `${condition.type === 'AND' ? ' that' : ' that either'}${condition.filters
     .map((filter, index) => {
       if (filter.conditionGroup) {
         return `${convertConditionToSentence(conditions, conditions[filter.conditionGroup])}${
@@ -125,11 +125,11 @@ const constructFilterSentenceFill = condition => {
 }
 
 const constructConditionFill = condition => {
-  return condition.type === 'AND' ? ' and that' : ' or that'
+  return condition.type === 'AND' ? ' and' : ' or'
 }
 
 export const convertConditionMappingToSentence = conditions => {
-  if (!(Object.keys(conditions).length && conditions['0'].filters.length)) return '...'
+  if (!(Object.keys(conditions).length && conditions['0'].filters.length)) return ''
   return `${convertConditionToSentence(conditions, conditions['0'])}.`
 }
 
@@ -186,5 +186,5 @@ export const constructSentence = advancedSearch => {
   return `Show me ${[
     convertHousingTypesToSentence(advancedSearch.housingTypes),
     convertBoundariesToSentence(advancedSearch.boundaries),
-  ].join(' ')} that  ${convertConditionMappingToSentence(advancedSearch.conditions)}`
+  ].join(' ')} ${convertConditionMappingToSentence(advancedSearch.conditions)}`
 }
