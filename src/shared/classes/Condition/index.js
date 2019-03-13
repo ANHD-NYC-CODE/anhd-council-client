@@ -1,10 +1,12 @@
 import { StandardizedInput } from 'shared/classes/StandardizedInput'
+import { ParamError } from 'shared/classes/ParamError'
 
 export class Condition {
-  constructor({ key = undefined, type = undefined, filters = [] } = {}) {
+  constructor({ key = undefined, type = undefined, filters = [], errors = [] } = {}) {
     this._key = key
     this._type = type
     this._filters = filters
+    this._errors = errors
   }
 
   get key() {
@@ -90,5 +92,44 @@ export class Condition {
 
   get paramMaps() {
     return [].concat.apply([], this._filters.map(filter => filter.paramMaps))
+  }
+
+  get errors() {
+    return this._errors
+  }
+
+  set errors(errors) {
+    this._errors = errors
+  }
+
+  addError(error) {
+    this._errors = [...this._errors, error]
+  }
+
+  clearErrors() {
+    this._errors = []
+  }
+
+  validate() {
+    this.clearErrors()
+    const filterCount = this.filters.filter(f => !f.conditionGroup).length
+    const conditionFilterCount = this.filters.filter(f => f.conditionGroup).length
+    if (this.key === '0') {
+      if (!!conditionFilterCount && !filterCount) {
+        this.addError(new ParamError({ message: 'Please add a filter' }))
+      }
+
+      if (this.type === 'OR' && filterCount === 1) {
+        this.addError(new ParamError({ message: 'Please add at least 2 filters to an "OR" condition.' }))
+      }
+    } else if (this.key !== '0') {
+      if (!filterCount) {
+        this.addError(new ParamError({ message: 'Please add a filter' }))
+      }
+
+      if (this.type === 'OR' && filterCount < 2) {
+        this.addError(new ParamError({ message: 'Please add at least 2 filters to an "OR" condition.' }))
+      }
+    }
   }
 }
