@@ -152,7 +152,7 @@ export class ConditionComponent extends React.Component {
         </Col>
         <Col xs={10}>
           {!!this.props.condition.errors.length && (
-            <Form.Text className="text-danger" type="invalid">
+            <Form.Text className="form-error text-danger" type="invalid">
               {this.props.condition.errors[0].message}
             </Form.Text>
           )}

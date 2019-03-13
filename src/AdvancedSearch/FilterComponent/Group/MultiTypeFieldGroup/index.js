@@ -92,7 +92,7 @@ const MultiTypeFieldGroup = props => {
                 type: paramMap.props.type,
               })}
               {!!paramMap.errors.length && (
-                <Form.Text className="text-danger" type="invalid">
+                <Form.Text className="form-error text-danger" type="invalid">
                   {paramMap.errors[0].message}
                 </Form.Text>
               )}

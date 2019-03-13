@@ -43,7 +43,7 @@ class LoginForm extends React.Component {
             onSubmit={e => this.handleSubmit(e)}
           >
             {this.props.error && (
-              <Form.Text className="text-danger" type="invalid">
+              <Form.Text className="form-error text-danger" type="invalid">
                 {this.props.error.message}
               </Form.Text>
             )}
@@ -60,7 +60,7 @@ class LoginForm extends React.Component {
                 placeholder="Enter username"
               />
               {touched.username && errors.username && (
-                <Form.Text className="text-danger" type="invalid">
+                <Form.Text className="form-error text-danger" type="invalid">
                   {errors.username}
                 </Form.Text>
               )}
@@ -78,7 +78,7 @@ class LoginForm extends React.Component {
                 type="password"
               />
               {touched.password && errors.password && (
-                <Form.Text className="text-danger" type="invalid">
+                <Form.Text className="form-error text-danger" type="invalid">
                   {errors.password}
                 </Form.Text>
               )}
