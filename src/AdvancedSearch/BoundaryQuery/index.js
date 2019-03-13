@@ -47,8 +47,14 @@ export class BoundaryQuery extends React.Component {
         ]
       case 'cd':
         return [
-          { value: -1, label: '#' },
-          ...this.props.boards.map(b => ({ value: { key: 'id', value: b.id }, label: b.id })),
+          <option disabled value={-1} key={-1}>
+            #
+          </option>,
+          ...this.props.boards.map(d => (
+            <option key={`boundary-id-option-${d.id}`} value={d.id}>
+              {d.id}
+            </option>
+          )),
         ]
     }
   }

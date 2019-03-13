@@ -7,7 +7,7 @@ export class Boundary {
     this.setObject(boundary)
 
     this._id = id
-    this._errors = [{ message: 'hi' }]
+    this._errors = []
   }
 
   setObject(boundary) {

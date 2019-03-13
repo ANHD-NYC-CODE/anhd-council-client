@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import Layout from 'Layout'
 import BuildingSearchModule from '../BuildingSearchModule'
 
 class Main extends React.Component {
@@ -22,7 +21,6 @@ Main.propTypes = {
 }
 
 const mapStateToProps = state => {
-  console.log(state.router.location.pathname)
   return {
     auth: state.auth,
     path: state.router.location.pathname,
