@@ -11,6 +11,8 @@ import { getDatasets } from 'Store/Dataset/actions'
 import { getCouncils } from 'Store/Council/actions'
 import { getCommunities } from 'Store/Community/actions'
 import Loading from 'shared/components/Loading'
+import PageError from 'shared/components/PageError'
+
 class Config extends React.Component {
   constructor(props) {
     super(props)
@@ -32,15 +34,15 @@ class Config extends React.Component {
   }
 
   componentWillReceiveProps(nextProps, nextState) {
-    if (!nextProps.loading && !nextProps.error) {
+    if (!nextProps.error && !nextProps.loading && !nextProps.error) {
       if (!nextProps.datasets.length) {
         this.props.dispatch(getDatasets())
       }
 
-      if (!nextProps.councils.length) {
+      if (!nextProps.error && !nextProps.councils.length) {
         this.props.dispatch(getCouncils())
       }
-      if (!nextProps.communities.length) {
+      if (!nextProps.error && !nextProps.communities.length) {
         this.props.dispatch(getCommunities())
       }
     }
@@ -57,11 +59,9 @@ class Config extends React.Component {
   }
 
   render() {
-    console.log(
-      this.props.loading ||
-        !(!!this.props.datasets.length && !!this.props.councils.length && !!this.props.communities.length)
-    )
-    return (
+    return this.props.error ? (
+      <PageError title="Oops, an error occured" message="Sorry, we couldn't load the page." />
+    ) : (
       <ConfigContext.Provider
         value={{
           datasets: this.props.datasets,

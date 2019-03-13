@@ -10,7 +10,7 @@ import BuildingLookup from 'BuildingLookup'
 import DistrictMap from 'DistrictMap'
 import AdvancedSearch from 'AdvancedSearch'
 
-import Page404 from 'shared/components/Page404'
+import PageError from 'shared/components/PageError'
 import Layout from 'Layout'
 class Router extends React.Component {
   render() {
@@ -26,7 +26,14 @@ class Router extends React.Component {
             <Route exact path="/search" render={() => <AdvancedSearch />} />
             <Route exact path="/login" render={() => <Main showLoginModal={true} />} />
             <Route exact path="/logout" render={() => <Main />} />
-            <Route render={() => <Page404 />} />
+            <Route
+              render={() => (
+                <PageError
+                  title="Oops! 404 Not Found."
+                  message="Sorry, an error has occured, Requested page not found!"
+                />
+              )}
+            />
           </Switch>
         </Layout>
       </ConnectedRouter>

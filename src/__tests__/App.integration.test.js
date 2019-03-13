@@ -53,13 +53,31 @@ describe('initial startup', () => {
       const wrapper = mount(<App />)
 
       await flushAllPromises()
-
       wrapper.update()
       const request = window.indexedDB.open('test', 1)
       request.addEventListener('success', async () => {
         await flushAllPromises()
-
         wrapper.update()
+        expect(wrapper.find('Loading')).toHaveLength(0)
+      })
+    })
+  })
+
+  describe('after an error with requests', () => {
+    it('Displays the error screens', async () => {
+      mock.onGet('/datasets/').reply(500, [])
+      mock.onGet('/councils/').reply(500, [])
+      mock.onGet('/communities/').reply(500, [])
+      const wrapper = mount(<App />)
+
+      await flushAllPromises()
+      wrapper.update()
+
+      const request = window.indexedDB.open('test', 1)
+      request.addEventListener('success', async () => {
+        await flushAllPromises()
+        wrapper.update()
+        expect(wrapper.find('PageError')).toHaveLength(1)
         expect(wrapper.find('Loading')).toHaveLength(0)
       })
     })

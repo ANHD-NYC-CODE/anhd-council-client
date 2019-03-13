@@ -1,4 +1,5 @@
 module.exports = {
+  parser: 'babel-eslint',
   parserOptions: {
     ecmaVersion: 2018,
     sourceType: 'module',
@@ -35,7 +36,6 @@ module.exports = {
     browser: true,
     es6: true,
     jest: true,
-    'jest/globals': true,
   },
   extends: ['eslint:recommended', 'plugin:react/recommended', 'prettier'],
   plugins: ['react', 'prettier', 'jest'],

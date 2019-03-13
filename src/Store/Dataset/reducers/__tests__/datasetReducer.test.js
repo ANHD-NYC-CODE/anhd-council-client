@@ -8,11 +8,14 @@ describe('Dataset reducer', () => {
   })
 
   describe('HANDLE_GET_DATASETS', () => {
-    const response = [{ model_name: 'hpdviolations' }, { model_name: 'something' }]
+    const datasets = [{ model_name: 'hpdviolation' }, { model_name: 'something' }]
+
     it('fetches the resources and loads the models', () => {
-      const reducer = r.datasetReducer(undefined, a.handleGetDatasets({ data: response }))
-      expect(reducer.datasets).toEqual(response)
-      expect(reducer.datasetModels.length).toEqual(Object.keys(datasetModels).length)
+      const reducer = r.datasetReducer(undefined, a.handleGetDatasets({ data: datasets }))
+
+      expect(reducer.datasets).toEqual(datasets)
+      expect(reducer.housingTypeModels.length).toEqual(6)
+      expect(reducer.datasetModels.length).toEqual(1)
     })
   })
 })

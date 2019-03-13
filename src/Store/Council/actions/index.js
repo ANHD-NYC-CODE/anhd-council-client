@@ -42,7 +42,6 @@ export const getCouncils = () => (dispatch, getState, access_token) => {
 
   return getStorageDataAction(dispatch, c.GET_COUNCILS, requestId, COUNCIL_DISTRICTS_INDEX, handleGetCouncils)
     .then(storageData => {
-      console.log('STOREAGE')
       if (!storageData) {
         return councilsAxios(dispatch, getState, access_token, requestId)
       }
