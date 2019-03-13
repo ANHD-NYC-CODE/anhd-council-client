@@ -37,6 +37,7 @@ class AdvancedSearchForm extends React.Component {
     this.submitForm = this.submitForm.bind(this)
     this.addHousingType = this.addHousingType.bind(this)
     this.changeHousingType = this.changeHousingType.bind(this)
+    this.validateForm = this.validateForm.bind(this)
   }
 
   addHousingType(e) {
@@ -53,20 +54,30 @@ class AdvancedSearchForm extends React.Component {
     this.props.dispatch(updateHousingType(housingTypeIndex, newHousingType))
   }
 
-  submitForm(values, formik) {
+  validateForm() {
     const allParamMaps = getAdvancedSearchParamMaps(this.props.advancedSearch)
+    const allConditions = [
+      ...Object.keys(this.props.advancedSearch.conditions).map(key => this.props.advancedSearch.conditions[key]),
+    ]
     const allFilters = [].concat(
-      ...Object.keys(this.props.advancedSearch.conditions).map(key =>
-        this.props.advancedSearch.conditions[key].filters.filter(filter => !filter.conditionGroup)
-      )
+      ...allConditions.map(condition => condition.filters.filter(filter => !filter.conditionGroup))
     )
 
-    allParamMaps.forEach(paramMap => paramMap.validate())
+    allConditions.forEach(condition => condition.validate())
     allFilters.forEach(filter => filter.validate())
+    allParamMaps.forEach(paramMap => paramMap.validate())
+
+    return [allConditions, allFilters, allParamMaps]
+  }
+
+  submitForm(values, formik) {
+    const [allConditions, allFilters, allParamMaps] = this.validateForm()
+
     formik.validateForm(values).then(() => {
       if (
-        allParamMaps.some(paramMap => !!paramMap.errors.length) ||
-        allFilters.some(filter => !!filter.errors.length)
+        allConditions.some(condition => !!condition.errors.length) ||
+        allFilters.some(filter => !!filter.errors.length) ||
+        allParamMaps.some(paramMap => !!paramMap.errors.length)
       ) {
         return
       } else {
@@ -114,6 +125,7 @@ class AdvancedSearchForm extends React.Component {
               dispatch={this.props.dispatch}
               key={'condition-0'}
               conditionKey={'0'}
+              validateForm={this.validateForm}
             />
 
             <Button disabled={this.props.loading} type="submit" variant="primary">

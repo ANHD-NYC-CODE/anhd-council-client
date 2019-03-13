@@ -32,6 +32,10 @@ export class ConditionComponent extends React.Component {
   }
 
   dispatchAction() {
+    this.props.condition.clearErrors()
+    if (this.props.condition.errors.length) {
+      this.props.validateForm()
+    }
     this.props.dispatch(updateCondition(this.props.condition.key, this.props.condition))
   }
 
@@ -150,6 +154,11 @@ export class ConditionComponent extends React.Component {
           {this.props.condition.filters.map((filter, conditionKey) => {
             return renderFilterOrCondition(filter, conditionKey)
           })}
+          {!!this.props.condition.errors.length && (
+            <Form.Text className="text-danger" type="invalid">
+              {this.props.condition.errors[0].message}
+            </Form.Text>
+          )}
         </Col>
       </Form.Row>
     )
@@ -161,6 +170,7 @@ ConditionComponent.propTypes = {
   conditions: PropTypes.object,
   dispatch: PropTypes.func,
   datasetModels: PropTypes.array,
+  validateForm: PropTypes.func,
 }
 
 export default ConditionComponent
