@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { Form, Button, Col, ButtonGroup } from 'react-bootstrap'
-
+import './style.scss'
 export class FilterComponent extends React.Component {
   constructor(props) {
     super(props)

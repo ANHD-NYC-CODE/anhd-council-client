@@ -15,7 +15,7 @@ import BoundaryQuery from 'AdvancedSearch/BoundaryQuery'
 import HousingTypeQuery from 'AdvancedSearch/HousingTypeQuery'
 import { Form, Button } from 'react-bootstrap'
 import { Formik } from 'formik'
-
+import './style.scss'
 const schema = yup.object({
   boundaryType: yup
     .string()
@@ -88,9 +88,9 @@ class AdvancedSearchForm extends React.Component {
 
   render() {
     return (
-      <Formik className="advanced-search-form" onSubmit={this.submitForm} validationSchema={schema}>
+      <Formik onSubmit={this.submitForm} validationSchema={schema}>
         {({ handleSubmit, handleChange, handleBlur, touched, errors, submitCount }) => (
-          <Form noValidate onSubmit={handleSubmit} validated={this.state.validated}>
+          <Form noValidate className="advanced-search-form" onSubmit={handleSubmit} validated={this.state.validated}>
             {this.props.error && (
               <Form.Text className="form-error text-danger" type="invalid">
                 {this.props.error.message}
