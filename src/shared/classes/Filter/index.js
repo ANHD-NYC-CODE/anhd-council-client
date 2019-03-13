@@ -1,14 +1,16 @@
 import * as d from 'shared/models/datasets'
 import * as ht from 'shared/models/housingTypes'
+import { ParamError } from 'shared/classes/ParamError'
 
 import { cloneInstance } from 'shared/utilities/classUtils'
 
 export class Filter {
-  constructor({ modelConstant = null, model = null, paramsObject = {} } = {}) {
+  constructor({ modelConstant = null, model = null, paramsObject = {}, errors = [] } = {}) {
     this._paramsObject = paramsObject
     this.id = modelConstant || model.id
     this.modelConstant = modelConstant
     this._model = model
+    this._errors = errors
 
     if (!this.model && !!this.modelConstant) {
       const model = this.findDataset(this.modelConstant) || this.findHousingType(this.modelConstant) || this._model
@@ -131,5 +133,28 @@ export class Filter {
 
   get paramMaps() {
     return [].concat.apply([], Object.keys(this._paramsObject).map(key => this._paramsObject[key].paramMaps))
+  }
+
+  get errors() {
+    return this._errors
+  }
+
+  set errors(errors) {
+    this._errors = errors
+  }
+
+  addError(error) {
+    this._errors = [...this._errors, error]
+  }
+
+  clearErrors() {
+    this._errors = []
+  }
+
+  validate() {
+    this.clearErrors()
+    if (this.id === 'NEW_FILTER') {
+      this.addError(new ParamError({ message: 'Please make a selection' }))
+    }
   }
 }

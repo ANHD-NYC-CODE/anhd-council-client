@@ -79,6 +79,7 @@ export class ConditionComponent extends React.Component {
       } else if (filter.id === 'NEW_FILTER') {
         return (
           <NewFilterSelect
+            filter={filter}
             filterIndex={filterIndex}
             onChange={this.replaceFilter}
             key={`new-filter-${this.props.condition.key}-${filter.id}`}

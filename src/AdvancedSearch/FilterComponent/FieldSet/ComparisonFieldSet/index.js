@@ -70,6 +70,7 @@ const ComparisonFieldSet = props => {
       {props.filter && props.paramMap.type === 'AMOUNT' && (
         <InputGroup as={Col} xs={12} md={5} size="sm">
           <NewFilterSelect
+            filter={props.filter}
             filterIndex={props.filterIndex}
             onChange={props.replaceFilter}
             value={props.filter.model.id}

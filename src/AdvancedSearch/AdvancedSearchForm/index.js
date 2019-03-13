@@ -55,11 +55,19 @@ class AdvancedSearchForm extends React.Component {
 
   submitForm(values, formik) {
     const allParamMaps = getAdvancedSearchParamMaps(this.props.advancedSearch)
-    allParamMaps.forEach(paramMap => {
-      paramMap.validate()
-    })
+    const allFilters = [].concat(
+      ...Object.keys(this.props.advancedSearch.conditions).map(key =>
+        this.props.advancedSearch.conditions[key].filters.filter(filter => !filter.conditionGroup)
+      )
+    )
+
+    allParamMaps.forEach(paramMap => paramMap.validate())
+    allFilters.forEach(filter => filter.validate())
     formik.validateForm(values).then(() => {
-      if (allParamMaps.some(paramMap => !!paramMap.errors.length)) {
+      if (
+        allParamMaps.some(paramMap => !!paramMap.errors.length) ||
+        allFilters.some(filter => !!filter.errors.length)
+      ) {
         return
       } else {
         this.props.dispatch(requestWithAuth(getAdvancedSearch()))
