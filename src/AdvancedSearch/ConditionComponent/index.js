@@ -125,9 +125,24 @@ export class ConditionComponent extends React.Component {
                 - {this.props.condition.type.toUpperCase()}
               </Button>
             )}
-            <Button className="add-filter" size="sm" onClick={() => this.createNewFilter()} variant="success">
-              +
-            </Button>
+            {this.props.condition.filters.some(filter => filter.id === 'NEW_FILTER') ? (
+              <Button
+                className="remove-add-filter"
+                size="sm"
+                onClick={() =>
+                  this.props.condition.removeNewFilters({
+                    dispatchAction: this.dispatchAction,
+                  })
+                }
+                variant="warning"
+              >
+                X
+              </Button>
+            ) : (
+              <Button className="add-filter" size="sm" onClick={() => this.createNewFilter()} variant="success">
+                +
+              </Button>
+            )}
           </ButtonGroup>
         </Col>
         <Col xs={10}>

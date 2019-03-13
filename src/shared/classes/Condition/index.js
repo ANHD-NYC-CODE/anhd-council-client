@@ -81,6 +81,13 @@ export class Condition {
     }
   }
 
+  removeNewFilters({ dispatchAction }) {
+    this._filters = this._filters.filter(f => f.id !== 'NEW_FILTER')
+    if (dispatchAction) {
+      dispatchAction()
+    }
+  }
+
   get paramMaps() {
     return [].concat.apply([], this._filters.map(filter => filter.paramMaps))
   }

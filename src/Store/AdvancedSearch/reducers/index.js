@@ -4,16 +4,16 @@ import { ConditionFilter } from 'shared/classes/ConditionFilter'
 import { cloneInstance } from 'shared/utilities/classUtils'
 import { Filter } from 'shared/classes/Filter'
 
-export const initialState = {
+export const initialState = () => ({
   conditions: {
     '0': new Condition({ key: '0', type: 'AND', filters: [] }),
   },
   boundaries: [],
   housingTypes: [new Filter({ modelConstant: 'ALL_TYPES' })],
   results: undefined,
-}
+})
 
-export const advancedSearchReducer = (state = Object.freeze(initialState), action = { data: [] }) => {
+export const advancedSearchReducer = (state = Object.freeze(initialState()), action = { data: [] }) => {
   switch (action.type) {
     case c.ADD_NEW_CONDITION: {
       const newConditions = { ...state.conditions }
@@ -68,7 +68,7 @@ export const advancedSearchReducer = (state = Object.freeze(initialState), actio
         ...state,
         conditions:
           Object.entries(newConditions).length === 0 && newConditions.constructor === Object
-            ? { ...initialState.conditions }
+            ? { ...initialState().conditions }
             : newConditions,
       }
     }

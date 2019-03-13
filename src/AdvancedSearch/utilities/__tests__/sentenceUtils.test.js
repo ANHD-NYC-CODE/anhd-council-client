@@ -152,7 +152,7 @@ describe('convertConditionMappingToSentence', () => {
         }),
       }
 
-      const result = ` have at least 5 HPD Violations between ${todayminus1year} and ${todayplus1year} and have at least 5 DOB Violations between ${todayminus1year} and ${todayplus1year}.`
+      const result = ` that have at least 5 HPD Violations between ${todayminus1year} and ${todayplus1year} and have at least 5 DOB Violations between ${todayminus1year} and ${todayplus1year}.`
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
@@ -166,7 +166,7 @@ describe('convertConditionMappingToSentence', () => {
         }),
       }
 
-      const result = ` either have at least 5 HPD Violations between ${todayminus1year} and ${todayplus1year} or have at least 5 DOB Violations between ${todayminus1year} and ${todayplus1year}.`
+      const result = ` that either have at least 5 HPD Violations between ${todayminus1year} and ${todayplus1year} or have at least 5 DOB Violations between ${todayminus1year} and ${todayplus1year}.`
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
@@ -186,7 +186,7 @@ describe('convertConditionMappingToSentence', () => {
         }),
       }
 
-      const result = ` have at least 5 HPD Violations between ${todayminus1year} and ${todayplus1year} and that either have at least 5 DOB Violations between ${todayminus1year} and ${todayplus1year} or have at least 5 ECB Violations between ${todayminus1year} and ${todayplus1year}.`
+      const result = ` that have at least 5 HPD Violations between ${todayminus1year} and ${todayplus1year} and that either have at least 5 DOB Violations between ${todayminus1year} and ${todayplus1year} or have at least 5 ECB Violations between ${todayminus1year} and ${todayplus1year}.`
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
@@ -206,7 +206,7 @@ describe('convertConditionMappingToSentence', () => {
         }),
       }
 
-      const result = ` either have at least 5 HPD Violations between ${todayminus1year} and ${todayplus1year} or that have at least 5 DOB Violations between ${todayminus1year} and ${todayplus1year} and have at least 5 ECB Violations between ${todayminus1year} and ${todayplus1year}.`
+      const result = ` that either have at least 5 HPD Violations between ${todayminus1year} and ${todayplus1year} or that have at least 5 DOB Violations between ${todayminus1year} and ${todayplus1year} and have at least 5 ECB Violations between ${todayminus1year} and ${todayplus1year}.`
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
@@ -235,7 +235,7 @@ describe('convertConditionMappingToSentence', () => {
         }),
       }
 
-      const result = ` have at least 5 HPD Violations between ${todayminus1year} and ${todayplus1year} and that either have at least 5 DOB Violations between ${todayminus1year} and ${todayplus1year} or have at least 5 ECB Violations between ${todayminus1year} and ${todayplus1year} or that have at least 5 HPD Complaints between ${todayminus1year} and ${todayplus1year} and have at least 5 DOB Complaints between ${todayminus1year} and ${todayplus1year}.`
+      const result = ` that have at least 5 HPD Violations between ${todayminus1year} and ${todayplus1year} and that either have at least 5 DOB Violations between ${todayminus1year} and ${todayplus1year} or have at least 5 ECB Violations between ${todayminus1year} and ${todayplus1year} or that have at least 5 HPD Complaints between ${todayminus1year} and ${todayplus1year} and have at least 5 DOB Complaints between ${todayminus1year} and ${todayplus1year}.`
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
@@ -273,7 +273,7 @@ describe('convertConditionMappingToSentence', () => {
         }),
       }
 
-      const result = ` have at least 5 HPD Violations between ${todayminus1year} and ${todayplus1year} and that either have at least 5 DOB Violations between ${todayminus1year} and ${todayplus1year} or have at least 5 ECB Violations between ${todayminus1year} and ${todayplus1year} or that have at least 5 HPD Complaints between ${todayminus1year} and ${todayplus1year} and have at least 5 DOB Complaints between ${todayminus1year} and ${todayplus1year} and that either have at least 1 Eviction between ${todayminus1year} and ${todayplus1year} or have at least 5 HPD Violations between ${todayminus1year} and ${todayplus1year}.`
+      const result = ` that have at least 5 HPD Violations between ${todayminus1year} and ${todayplus1year} and that either have at least 5 DOB Violations between ${todayminus1year} and ${todayplus1year} or have at least 5 ECB Violations between ${todayminus1year} and ${todayplus1year} or that have at least 5 HPD Complaints between ${todayminus1year} and ${todayplus1year} and have at least 5 DOB Complaints between ${todayminus1year} and ${todayplus1year} and that either have at least 1 Eviction between ${todayminus1year} and ${todayplus1year} or have at least 5 HPD Violations between ${todayminus1year} and ${todayplus1year}.`
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
@@ -302,7 +302,7 @@ describe('convertConditionMappingToSentence', () => {
         }),
       }
 
-      const result = ` have at least 5 HPD Violations between ${todayminus1year} and ${todayplus1year} and that either have at least 5 DOB Violations between ${todayminus1year} and ${todayplus1year} or have at least 5 ECB Violations between ${todayminus1year} and ${todayplus1year} and that either have at least 5 HPD Complaints between ${todayminus1year} and ${todayplus1year} or have at least 5 DOB Complaints between ${todayminus1year} and ${todayplus1year}.`
+      const result = ` that have at least 5 HPD Violations between ${todayminus1year} and ${todayplus1year} and that either have at least 5 DOB Violations between ${todayminus1year} and ${todayplus1year} or have at least 5 ECB Violations between ${todayminus1year} and ${todayplus1year} and that either have at least 5 HPD Complaints between ${todayminus1year} and ${todayplus1year} or have at least 5 DOB Complaints between ${todayminus1year} and ${todayplus1year}.`
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
@@ -317,7 +317,7 @@ describe('convertConditionMappingToSentence', () => {
         }),
       }
 
-      const result = ` sold for at least $1000000 between ${todayminus1year} and ${todayplus1year}.`
+      const result = ` that sold for at least $1000000 between ${todayminus1year} and ${todayplus1year}.`
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
@@ -332,7 +332,7 @@ describe('convertConditionMappingToSentence', () => {
         }),
       }
 
-      const result = ` were sold at least 2 times between ${todayminus1year} and ${todayplus1year}.`
+      const result = ` that were sold at least 2 times between ${todayminus1year} and ${todayplus1year}.`
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
@@ -347,7 +347,7 @@ describe('convertConditionMappingToSentence', () => {
         }),
       }
 
-      const result = ` have at least 1 Foreclosure between ${todayminus1year} and ${todayplus1year}.`
+      const result = ` that have at least 1 Foreclosure between ${todayminus1year} and ${todayplus1year}.`
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
@@ -362,7 +362,7 @@ describe('convertConditionMappingToSentence', () => {
         }),
       }
 
-      const result = ` have at least 1 Eviction between ${todayminus1year} and ${todayplus1year}.`
+      const result = ` that have at least 1 Eviction between ${todayminus1year} and ${todayplus1year}.`
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
@@ -377,7 +377,7 @@ describe('convertConditionMappingToSentence', () => {
         }),
       }
 
-      const result = ` have at least 5 DOB Issued Permits between ${todayminus1year} and ${todayplus1year}.`
+      const result = ` that have at least 5 DOB Issued Permits between ${todayminus1year} and ${todayplus1year}.`
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
@@ -392,7 +392,7 @@ describe('convertConditionMappingToSentence', () => {
         }),
       }
 
-      const result = ` have at least 5 DOB Filed Permits between ${todayminus1year} and ${todayplus1year}.`
+      const result = ` that have at least 5 DOB Filed Permits between ${todayminus1year} and ${todayplus1year}.`
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
@@ -407,7 +407,7 @@ describe('convertConditionMappingToSentence', () => {
         }),
       }
 
-      const result = ` have at least 1 Housing Litigation between ${todayminus1year} and ${todayplus1year}.`
+      const result = ` that have at least 1 Housing Litigation between ${todayminus1year} and ${todayplus1year}.`
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
