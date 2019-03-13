@@ -12,7 +12,7 @@ import BuildingHistoryTable from 'BuildingLookup/BuildingHistoryTable'
 import { Row, Col } from 'react-bootstrap'
 import AdvancedSearchForm from 'AdvancedSearch/AdvancedSearchForm'
 import ConfigContext from 'Config/ConfigContext'
-
+import './style.scss'
 export class AdvancedSearch extends React.Component {
   constructor(props) {
     super(props)
@@ -34,7 +34,7 @@ export class AdvancedSearch extends React.Component {
             <Col xs={12} md={4}>
               <AdvancedSearchSentence advancedSearch={this.props.advancedSearch} />
             </Col>
-            <Col xs={12} md={8}>
+            <Col className="advanced-search-form--container" xs={12} md={8}>
               <ConfigContext.Consumer>
                 {config => (
                   <AdvancedSearchForm
