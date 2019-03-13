@@ -37,11 +37,16 @@ export class FilterComponent extends React.Component {
           </Form.Group>
           <Col xs={2} className="flex-column">
             <ButtonGroup className="align-center">
-              <Button size="sm" onClick={this.removeFilter} variant="danger">
+              <Button size="sm" className="remove-filter" onClick={this.removeFilter} variant="danger">
                 -
               </Button>
               {this.props.allowNewCondition && (
-                <Button size="sm" onClick={() => this.props.addCondition(this.props.filterIndex)} variant="success">
+                <Button
+                  size="sm"
+                  className="add-condition"
+                  onClick={() => this.props.addCondition(this.props.filterIndex)}
+                  variant="success"
+                >
                   {'<'}
                 </Button>
               )}
@@ -49,7 +54,7 @@ export class FilterComponent extends React.Component {
           </Col>
         </Form.Row>
         {!!this.props.filter.errors.length && (
-          <Form.Text className="text-danger" type="invalid">
+          <Form.Text className="form-error text-danger" type="invalid">
             {this.props.filter.errors[0].message}
           </Form.Text>
         )}

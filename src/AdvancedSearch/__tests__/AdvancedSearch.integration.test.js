@@ -96,6 +96,7 @@ describe('AdvancedSearch', () => {
     expect(wrapper.find('AdvancedSearchSentence')).toHaveLength(1)
     expect(wrapper.find('AdvancedSearchForm')).toHaveLength(1)
     expect(wrapper.find('ConditionComponent')).toHaveLength(1)
+    expect(wrapper.find('button[type="submit"]')).toHaveLength(1)
   })
 
   describe('Boundary Query Select', () => {
@@ -250,7 +251,6 @@ describe('AdvancedSearch', () => {
 
     it('it cancels a new filter select', () => {
       const wrapper = setupWrapper()
-      wrapper.update()
       wrapper.find('ConditionComponent button.add-filter').simulate('click')
       wrapper.update()
       expect(wrapper.find('NewFilterSelect')).toHaveLength(1)

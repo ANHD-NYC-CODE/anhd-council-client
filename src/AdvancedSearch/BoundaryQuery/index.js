@@ -87,7 +87,7 @@ export class BoundaryQuery extends React.Component {
               </Form.Control>
 
               {(this.props.touched.boundaryType || !!this.props.submitCount) && this.props.errors.boundaryType && (
-                <Form.Text className="text-danger" type="invalid">
+                <Form.Text className="form-error text-danger" type="invalid">
                   {this.props.errors.boundaryType}
                 </Form.Text>
               )}
@@ -108,7 +108,7 @@ export class BoundaryQuery extends React.Component {
                 {this.getBoundaryIdOptions(boundary.queryName)}
               </Form.Control>
               {(this.props.touched.boundaryId || !!this.props.submitCount) && this.props.errors.boundaryId && (
-                <Form.Text className="text-danger" type="invalid">
+                <Form.Text className="form-error text-danger" type="invalid">
                   {this.props.errors.boundaryId}
                 </Form.Text>
               )}
@@ -137,7 +137,7 @@ export class BoundaryQuery extends React.Component {
             <option value={b.COMMUNITYBOUNDARY.constant}>{b.COMMUNITYBOUNDARY.name}</option>
           </Form.Control>
           {(this.props.touched.boundaryType || !!this.props.submitCount) && this.props.errors.boundaryType && (
-            <Form.Text className="text-danger" type="invalid">
+            <Form.Text className="form-error text-danger" type="invalid">
               {this.props.errors.boundaryType}
             </Form.Text>
           )}

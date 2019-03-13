@@ -33,7 +33,7 @@ const NewFilterSelect = props => {
             {datasetOptions(config.datasetModels)}
           </Form.Control>
           {!!props.filter.errors.length && (
-            <Form.Text className="text-danger" type="invalid">
+            <Form.Text className="form-error text-danger" type="invalid">
               {props.filter.errors[0].message}
             </Form.Text>
           )}

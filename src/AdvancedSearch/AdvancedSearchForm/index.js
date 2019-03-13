@@ -92,7 +92,7 @@ class AdvancedSearchForm extends React.Component {
         {({ handleSubmit, handleChange, handleBlur, touched, errors, submitCount }) => (
           <Form noValidate onSubmit={handleSubmit} validated={this.state.validated}>
             {this.props.error && (
-              <Form.Text className="text-danger" type="invalid">
+              <Form.Text className="form-error text-danger" type="invalid">
                 {this.props.error.message}
               </Form.Text>
             )}
