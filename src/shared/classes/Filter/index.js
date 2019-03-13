@@ -7,11 +7,21 @@ export class Filter {
   constructor({ modelConstant = null, model = null, paramsObject = {} } = {}) {
     this._paramsObject = paramsObject
     this.id = modelConstant || model.id
+    this.modelConstant = modelConstant
     this._model = model
 
-    if (!this.model) {
-      this.setModel(modelConstant)
-    } else if (!this.modelConstant) {
+    if (!this.model && !!this.modelConstant) {
+      const model = this.findDataset(this.modelConstant) || this.findHousingType(this.modelConstant) || this._model
+      if (!model && this.modelConstant !== 'NEW_FILTER' && this.modelConstant !== 'ALL_TYPES') {
+        throw `Pass either '${Object.keys(d)
+          .map(key => d[key].id)
+          .join("' or '")}' as the first argument. ${this.modelConstant} does not have a match.`
+      }
+
+      this.setModel(model)
+    } else if (model) {
+      this.setModel(model)
+    } else {
       return
     }
 
@@ -40,18 +50,13 @@ export class Filter {
       : null
   }
 
-  setModel(modelConstant) {
-    const model = this.findDataset(modelConstant) || this.findHousingType(modelConstant) || this._model
-    if (!model && modelConstant !== 'NEW_FILTER' && modelConstant !== 'ALL_TYPES')
-      throw `Pass either '${Object.keys(d)
-        .map(key => d[key].id)
-        .join("' or '")}' as the first argument. ${modelConstant} does not have a match.`
-
+  setModel(model) {
     if ((model || {}).apiMap) {
       Object.keys(model.apiMap).forEach(key => {
         this[key] = model.apiMap[key]
       })
     }
+
     this._model = model
     this._schema = this.model.schema
     // Load the schema if no paramsObject was directly supplied

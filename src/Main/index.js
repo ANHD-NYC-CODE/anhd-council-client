@@ -22,6 +22,7 @@ Main.propTypes = {
 }
 
 const mapStateToProps = state => {
+  console.log(state.router.location.pathname)
   return {
     auth: state.auth,
     path: state.router.location.pathname,

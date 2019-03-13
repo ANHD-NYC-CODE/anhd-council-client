@@ -16,8 +16,9 @@ import PageError from 'shared/components/PageError'
 class Config extends React.Component {
   constructor(props) {
     super(props)
-
-    this.props.dispatch(getDatasets())
+    if (!props.datasets.length) {
+      this.props.dispatch(getDatasets())
+    }
     if (!props.councils.length) {
       this.props.dispatch(getCouncils())
     }
