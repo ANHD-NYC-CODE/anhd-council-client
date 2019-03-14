@@ -46,7 +46,7 @@ export default class SearchBar extends React.Component {
   render() {
     return (
       <div className="search-bar">
-        <Form autoComplete="off" className="search-form" onSubmit={this.onFormSubmit}>
+        <Form.Group className="search-form" onSubmit={this.onFormSubmit}>
           <Form.Control
             size="sm"
             onChange={this.onInputChange}
@@ -55,7 +55,7 @@ export default class SearchBar extends React.Component {
             type="text"
             value={this.props.searchValue}
           />
-        </Form>
+        </Form.Group>
       </div>
     )
   }
