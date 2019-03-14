@@ -16,9 +16,9 @@ import LeafletMap from 'LeafletMap'
 import BuildingSearchModule from '../BuildingSearchModule'
 import { Row, Col, Jumbotron } from 'react-bootstrap'
 import RecordsFetchModule from 'shared/components/RecordsFetchModule'
-import BuildingHistoryTable from 'BuildingLookup/BuildingHistoryTable'
+import BuildingHistoryTable from 'Lookup/BuildingHistoryTable'
 
-class BuildingLookup extends React.Component {
+class Lookup extends React.Component {
   constructor(props) {
     super(props)
 
@@ -87,7 +87,7 @@ class BuildingLookup extends React.Component {
   }
 }
 
-BuildingLookup.propTypes = {
+Lookup.propTypes = {
   dispatch: PropTypes.func,
   id: PropTypes.string,
 }
@@ -107,4 +107,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(BuildingLookup)
+export default connect(mapStateToProps)(Lookup)

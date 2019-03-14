@@ -3,18 +3,73 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Navbar, Nav } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-
+import './style.scss'
 const NavigationBar = props => {
   return (
-    <div className="header">
+    <div className="navigation-bar">
       <Navbar bg="dark" variant="dark" expand="lg">
-        <Navbar.Brand as="li">
+        <Nav.Link as="span">
           <Link className="text-light" to="/">
             Home
           </Link>
-        </Navbar.Brand>
+        </Nav.Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
+          <Nav.Link as="li">
+            <a
+              className="text-light"
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://map.displacementalert.org/"
+            >
+              DAP Map
+            </a>
+          </Nav.Link>
+          <Nav.Link as="li">
+            <a
+              className="text-light"
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://reports.displacementalert.org/"
+            >
+              District Reports
+            </a>
+          </Nav.Link>
+          <Nav.Link as="li">
+            <a
+              className="text-light"
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://www.displacementalert.org/watchlist"
+            >
+              Watch List
+            </a>
+          </Nav.Link>
+          <Nav.Link as="li">
+            <Link className="text-light" to="/">
+              Portal
+            </Link>
+          </Nav.Link>
+          <Nav.Link as="li">
+            <a
+              className="text-light"
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://www.displacementalert.org/about"
+            >
+              About
+            </a>
+          </Nav.Link>
+          <Nav.Link as="li">
+            <a
+              className="text-light"
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://www.displacementalert.org/contact-us"
+            >
+              Contact
+            </a>
+          </Nav.Link>
           <Nav className="mr-auto">
             {props.user && (
               <Nav.Link as="li">

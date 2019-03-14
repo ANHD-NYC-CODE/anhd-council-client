@@ -6,7 +6,7 @@ import { history } from 'Store/configureStore'
 import { ConnectedRouter } from 'connected-react-router'
 import { Route, Switch } from 'react-router'
 import Main from 'Main'
-import BuildingLookup from 'BuildingLookup'
+import Lookup from 'Lookup'
 import AlertMap from 'AlertMap'
 import AdvancedSearch from 'AdvancedSearch'
 
@@ -19,8 +19,8 @@ class Router extends React.Component {
         <Layout>
           <Switch>
             <Route exact path="/" render={() => <Main />} />
-            <Route exact path="/buildings/" render={() => <BuildingLookup />} />
-            <Route exact path="/buildings/:id" render={() => <BuildingLookup />} />
+            <Route exact path="/lookup" render={() => <Lookup />} />
+            <Route exact path="/buildings/:id" render={() => <Lookup />} />
             <Route exact path="/map" render={() => <AlertMap />} />
             <Route exact path="/district/:id" render={() => <AlertMap />} />
             <Route exact path="/board/:id" render={() => <AlertMap />} />

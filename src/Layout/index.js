@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import UserContext from 'Auth/UserContext'
 import NavigationBar from 'Layout/NavigationBar'
-import Header from 'Layout/Header'
+import SubHeader from 'Layout/SubHeader'
 import Footer from 'Layout/Footer'
 import './style.scss'
 import { Container } from 'react-bootstrap'
@@ -15,7 +15,7 @@ export const Layout = props => {
           {user => (
             <div>
               <NavigationBar user={user} />
-              <Header user={user} />
+              <SubHeader user={user} />
             </div>
           )}
         </UserContext.Consumer>

@@ -53,7 +53,7 @@ export class BoundaryQuery extends React.Component {
                 value={boundary.constant}
               >
                 <option disabled value={-1} key={-1}>
-                  Select a geography
+                  Select a boundary type
                 </option>
                 <option value={b.COUNCILBOUNDARY.constant}>{b.COUNCILBOUNDARY.name}</option>
                 <option value={b.COMMUNITYBOUNDARY.constant}>{b.COMMUNITYBOUNDARY.name}</option>
@@ -102,7 +102,7 @@ export class BoundaryQuery extends React.Component {
             value={-1}
           >
             <option disabled value={-1} key={-1}>
-              Select a geography
+              Select a boundary type
             </option>
             <option value={b.COUNCILBOUNDARY.constant}>{b.COUNCILBOUNDARY.name}</option>
             <option value={b.COMMUNITYBOUNDARY.constant}>{b.COMMUNITYBOUNDARY.name}</option>

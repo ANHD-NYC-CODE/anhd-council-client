@@ -1,11 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Navbar, Row, Nav, Col } from 'react-bootstrap'
+import { Navbar, Nav, Col } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { getBoundaryPath } from 'shared/utilities/componentUtils'
-
-class Header extends React.Component {
+import logo from 'shared/images/portallogo.png'
+import './style.scss'
+class SubHeader extends React.Component {
   constructor(props) {
     super(props)
   }
@@ -13,11 +14,20 @@ class Header extends React.Component {
   render() {
     return (
       <Navbar className="sub-header">
+        <Navbar.Brand as="li">
+          <Link to="/">
+            <img
+              src={logo}
+              className="sub-header__logo d-inline-block align-top"
+              alt="Displacement Alert Portal Logo"
+            />
+          </Link>
+        </Navbar.Brand>
         <Col sm={12} md={6}>
           <Nav variant="tabs" defaultActiveKey="/buildings">
             <Nav.Item>
               <Nav.Link as="li">
-                <Link to="/buildings">Building Lookup</Link>
+                <Link to="/lookup">Building Lookup</Link>
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
@@ -45,7 +55,7 @@ class Header extends React.Component {
   }
 }
 
-Header.propTypes = {
+SubHeader.propTypes = {
   dispatch: PropTypes.func,
 }
 
@@ -56,4 +66,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(Header)
+export default connect(mapStateToProps)(SubHeader)

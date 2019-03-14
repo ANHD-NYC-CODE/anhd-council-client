@@ -43,7 +43,7 @@ class LoginForm extends React.Component {
             validated={this.state.validated}
             onSubmit={e => this.handleSubmit(e)}
           >
-            <FormError show={!!this.props.error} message={this.props.error.message} />
+            <FormError show={!!this.props.error} message={(this.props.error || {}).message} />
             <Form.Group controlId="loginUsername">
               <Form.Label>Username</Form.Label>
               <Form.Control
