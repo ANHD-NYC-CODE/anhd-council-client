@@ -47,11 +47,10 @@ export default class SearchBar extends React.Component {
     return (
       <div className="search-bar">
         <Form autoComplete="off" className="search-form" onSubmit={this.onFormSubmit}>
-          <Form.Label>Search an address</Form.Label>
           <Form.Control
-            size="lg"
+            size="sm"
             onChange={this.onInputChange}
-            placeholder="Type an address to search"
+            placeholder={this.props.placeholder || 'Type an address to search'}
             tabIndex={0}
             type="text"
             value={this.props.searchValue}
@@ -65,6 +64,7 @@ export default class SearchBar extends React.Component {
 SearchBar.propTypes = {
   clearSelectedSearch: PropTypes.func,
   dispatch: PropTypes.func,
+  placeholder: PropTypes.string,
   searchTimeout: PropTypes.number,
   selectBuildingResult: PropTypes.func,
   selectedResult: PropTypes.object,

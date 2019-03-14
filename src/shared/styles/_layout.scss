@@ -5,3 +5,14 @@
 .align-items-center {
   align-items: center;
 }
+
+.touch-left {
+  @include media-breakpoint-up(md) {
+    // Styles
+    margin-left: -15px;
+  }
+}
+
+.touch-right {
+  margin-right: -15px;
+}

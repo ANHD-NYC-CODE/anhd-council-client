@@ -61,6 +61,7 @@ class BuildingSearchModule extends React.Component {
           clearSelectedSearch={this.clearSelectedSearch}
           dispatch={this.props.dispatch}
           dispatchSelectedBuildingResult={this.dispatchSelectedBuildingResult}
+          placeholder={this.props.placeholder}
           searchTimeout={this.props.search.searchTimeout}
           selectBuildingResult={this.selectBuildingResult}
           selectedResult={this.state.selectedResult}
@@ -84,6 +85,7 @@ BuildingSearchModule.propTypes = {
   error: PropTypes.object,
   loading: PropTypes.bool,
   dispatch: PropTypes.func,
+  placeholder: PropTypes.string,
 }
 
 const loadingSelector = createLoadingSelector([GET_BUILDING_SEARCH])

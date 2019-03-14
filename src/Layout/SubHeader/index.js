@@ -13,7 +13,7 @@ class SubHeader extends React.Component {
 
   render() {
     return (
-      <Navbar className="sub-header">
+      <Navbar className="sub-header touch-left">
         <Navbar.Brand as="li">
           <Link to="/">
             <img
