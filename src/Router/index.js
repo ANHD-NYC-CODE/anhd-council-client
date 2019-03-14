@@ -20,7 +20,9 @@ class Router extends React.Component {
           <Switch>
             <Route exact path="/" render={() => <Main />} />
             <Route exact path="/lookup" render={() => <Lookup />} />
-            <Route exact path="/buildings/:id" render={() => <Lookup />} />
+            <Route exact path="/property/:bbl/building/:bin" render={() => <Lookup />} />
+            <Route exact path="/property/:bbl" render={() => <Lookup />} />
+            <Route exact path="/building/:bin" render={() => <Lookup />} />
             <Route exact path="/map" render={() => <AlertMap />} />
             <Route exact path="/district/:id" render={() => <AlertMap />} />
             <Route exact path="/board/:id" render={() => <AlertMap />} />

@@ -13,7 +13,7 @@ import { resourceRouteChanged } from 'shared/utilities/routeUtils'
 import { getBuildingResource } from 'Store/Building/actions'
 import { constructActionKey } from 'shared/utilities/actionUtils'
 import LeafletMap from 'LeafletMap'
-import BuildingSearchModule from '../BuildingSearchModule'
+import AddressSearch from 'Lookup/AddressSearch'
 import { Row, Col, Jumbotron } from 'react-bootstrap'
 import RecordsFetchModule from 'shared/components/RecordsFetchModule'
 import BuildingHistoryTable from 'Lookup/BuildingHistoryTable'
@@ -24,20 +24,20 @@ class Lookup extends React.Component {
 
     this.fetchBuildingById = this.fetchBuildingById.bind(this)
 
-    if (props.id && !props.loading) {
+    if (props.bin && !props.loading) {
       this.fetchBuildingById(props)
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.id && !nextProps.loading) {
+    if (nextProps.bin && !nextProps.loading) {
       this.fetchBuildingById(nextProps)
     }
   }
 
   fetchBuildingById(props) {
     if (!(props.building || {}).currentBuilding || resourceRouteChanged(this.props, props)) {
-      props.dispatch(requestWithAuth(a.getBuilding(props.id)))
+      props.dispatch(requestWithAuth(a.getBuilding(props.bin)))
     }
   }
 
@@ -46,11 +46,11 @@ class Lookup extends React.Component {
       <Row>
         <h1>Building Lookup</h1>
         <Col sm={12} md={5}>
-          <BuildingSearchModule />
+          <AddressSearch />
           <LeafletMap />
         </Col>
         <Col sm={12} md={7}>
-          {this.props.id && (
+          {this.props.bin && (
             <div>
               <h2>Building Info</h2>
               <Jumbotron style={{ maxHeight: '500px' }}>
@@ -59,7 +59,7 @@ class Lookup extends React.Component {
               <h2>Building History</h2>
               <RecordsFetchModule
                 actionKey={constructActionKey([c.GET_BUILDING_RESOURCE, d.HPDVIOLATIONS.constant])}
-                id={this.props.id}
+                id={this.props.bin}
                 dataset={d.HPDVIOLATIONS}
                 recordsFetch={getBuildingResource}
                 reducerPath="building"
@@ -70,7 +70,7 @@ class Lookup extends React.Component {
               />
               <RecordsFetchModule
                 actionKey={constructActionKey([c.GET_BUILDING_RESOURCE, d.DOBVIOLATIONS.constant])}
-                id={this.props.id}
+                id={this.props.bin}
                 dataset={d.DOBVIOLATIONS}
                 recordsFetch={getBuildingResource}
                 reducerPath="building"
@@ -89,18 +89,18 @@ class Lookup extends React.Component {
 
 Lookup.propTypes = {
   dispatch: PropTypes.func,
-  id: PropTypes.string,
+  bin: PropTypes.string,
 }
 
 const loadingSelector = createLoadingSelector([c.GET_BUILDING])
 const errorSelector = createErrorSelector([c.GET_BUILDING])
 
 const mapStateToProps = state => {
-  const matchSelector = createMatchSelector({ path: '/buildings/:id' })
+  const matchSelector = createMatchSelector({ path: '/buildings/:bin' })
   const match = matchSelector(state)
 
   return {
-    id: match ? match.params.id : null,
+    bin: match ? match.params.bin : null,
     building: state.building,
     loading: loadingSelector(state),
     error: errorSelector(state),

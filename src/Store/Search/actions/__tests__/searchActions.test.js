@@ -8,7 +8,7 @@ import * as errorActions from 'Store/Error/actions'
 
 import { GET_BUILDING_SEARCH } from 'shared/constants/actions'
 
-import { queryBuildingAddress, handleReadSearchResponse } from '../index.js'
+import { queryAddress, handleReadSearchResponse } from '../index.js'
 const middlewares = [thunk]
 const mockStore = configureStore(middlewares)
 
@@ -19,13 +19,13 @@ beforeEach(() => {
   store.clearActions()
 })
 
-describe('queryBuildingAddress', () => {
+describe('queryAddress', () => {
   it('on ERROR - dispatches GET_BUILDING_SEARCH_CANCEL, GET_BUILDING_SEARCH_PENDING, GET_BUILDING_SEARCH_FAILURE, HANDLE_ERROR_RESPONSE, GET_BUILDING_SEARCH_COMPLETE', async () => {
     const errorData = { detail: 'forbidden' }
     const errorResponse = { status: 400, data: errorData }
     mock.onGet(SEARCH_URL).reply(400, errorData)
 
-    await store.dispatch(queryBuildingAddress('50 broad')).then(() => {
+    await store.dispatch(queryAddress('50 broad')).then(() => {
       const expectedActions = [
         loadingActions.handleRequest(GET_BUILDING_SEARCH),
         errorActions.handleClearErrors(GET_BUILDING_SEARCH),
