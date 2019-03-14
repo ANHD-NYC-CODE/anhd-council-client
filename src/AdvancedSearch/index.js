@@ -7,7 +7,7 @@ import { createErrorSelector } from 'Store/Error/selectors'
 import { connect } from 'react-redux'
 
 import AdvancedSearchSentence from 'AdvancedSearch/Sentence'
-import BuildingHistoryTable from 'BuildingLookup/BuildingHistoryTable'
+import BuildingHistoryTable from 'Lookup/BuildingHistoryTable'
 
 import { Row, Col } from 'react-bootstrap'
 import AdvancedSearchForm from 'AdvancedSearch/AdvancedSearchForm'

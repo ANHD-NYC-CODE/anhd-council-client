@@ -16,7 +16,7 @@ import { pathToBoundary } from 'shared/utilities/componentUtils'
 import RecordsFetchModule from 'shared/components/RecordsFetchModule'
 import { getCouncilPropertySummary } from 'Store/Council/actions'
 import { constructActionKey } from 'shared/utilities/actionUtils'
-import BuildingHistoryTable from 'BuildingLookup/BuildingHistoryTable'
+import BuildingHistoryTable from 'Lookup/BuildingHistoryTable'
 
 class DistrictMap extends React.Component {
   constructor(props) {

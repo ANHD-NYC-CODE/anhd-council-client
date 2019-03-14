@@ -3,7 +3,7 @@ import { configure, mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import { Axios } from 'shared/utilities/Axios'
 import MockAdapter from 'axios-mock-adapter'
-import { setupStore } from 'shared/testUtilities'
+import { setupStore, flushAllPromises } from 'shared/testUtilities'
 
 import { Provider } from 'react-redux'
 
@@ -13,8 +13,6 @@ import App from 'App'
 import { IDBFactory, IDBKeyRange, reset } from 'shelving-mock-indexeddb'
 
 configure({ adapter: new Adapter() })
-
-const flushAllPromises = () => new Promise(resolve => window.setImmediate(resolve))
 
 window.indexedDB = new IDBFactory()
 

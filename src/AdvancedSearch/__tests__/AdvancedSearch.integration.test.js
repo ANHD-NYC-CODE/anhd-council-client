@@ -2,10 +2,9 @@ import React from 'react'
 import moment from 'moment'
 import { configure, mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import { setupStore } from 'shared/testUtilities'
+import { setupStore, configuredState } from 'shared/testUtilities'
 import { Provider } from 'react-redux'
 import AdvancedSearch from 'AdvancedSearch'
-import { setupDatasetModels, setupHousingTypeModels } from 'shared/utilities/actionUtils'
 import ConfigContext from 'Config/ConfigContext'
 
 configure({ adapter: new Adapter() })
@@ -20,16 +19,7 @@ const todayplus1year = moment(moment.now())
 
 const setupWrapper = state => {
   if (!state) {
-    const datasetsResponse = [{ model_name: 'hpdviolation' }]
-    const dataset = {
-      datasets: datasetsResponse,
-      housingTypeModels: setupHousingTypeModels(datasetsResponse),
-      datasetModels: setupDatasetModels(datasetsResponse),
-    }
-    const council = { districts: [{ id: 1 }, { id: 2 }, { id: 3 }] }
-    const community = { boards: [{ id: 1 }] }
-    const router = { location: { pathname: '/search' } }
-    state = { dataset, council, community, router }
+    state = configuredState()
   }
   const store = setupStore({ ...state })
   const wrapper = mount(
@@ -108,6 +98,9 @@ describe('AdvancedSearch', () => {
 
       expect(wrapper.find('select[name="boundaryType"]').props().value).toEqual(-1)
       expect(wrapper.find('select[name="boundaryType"] option')).toHaveLength(3)
+      expect(wrapper.find('select[name="boundaryType"]').text()).toEqual(
+        'Select a boundary typeCouncil DistrictCommunity Board'
+      )
     })
 
     it('switches between boundaries', () => {
