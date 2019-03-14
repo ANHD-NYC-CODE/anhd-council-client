@@ -6,7 +6,7 @@ import NewFilterSelect from 'AdvancedSearch/FilterComponent/NewFilterSelect'
 import uuidv4 from 'uuid/v4'
 import { addNewCondition, updateCondition, removeCondition } from 'Store/AdvancedSearch/actions'
 import { Form, Button, Col, ButtonGroup } from 'react-bootstrap'
-
+import FormError from 'shared/components/FormError'
 import FilterComponent from 'AdvancedSearch/FilterComponent'
 
 import './style.scss'
@@ -151,11 +151,11 @@ export class ConditionComponent extends React.Component {
           </ButtonGroup>
         </Col>
         <Col xs={10}>
-          {!!this.props.condition.errors.length && (
-            <Form.Text className="form-error text-danger" type="invalid">
-              {this.props.condition.errors[0].message}
-            </Form.Text>
-          )}
+          <FormError
+            show={!!this.props.condition.errors.length}
+            message={(this.props.condition.errors[0] || {}).message}
+          />
+
           {this.props.condition.filters.map((filter, conditionKey) => {
             return renderFilterOrCondition(filter, conditionKey)
           })}

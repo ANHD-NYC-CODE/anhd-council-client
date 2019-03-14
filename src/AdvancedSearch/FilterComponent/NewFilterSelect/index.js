@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Form } from 'react-bootstrap'
 import ConfigContext from 'Config/ConfigContext'
+import FormError from 'shared/components/FormError'
 
 const datasetOptions = datasetModels => {
   return [
@@ -32,11 +33,7 @@ const NewFilterSelect = props => {
           >
             {datasetOptions(config.datasetModels)}
           </Form.Control>
-          {!!props.filter.errors.length && (
-            <Form.Text className="form-error text-danger" type="invalid">
-              {props.filter.errors[0].message}
-            </Form.Text>
-          )}
+          <FormError show={!!props.filter.errors.length} message={(props.filter.errors[0] || {}).message} />
         </div>
       )}
     </ConfigContext.Consumer>

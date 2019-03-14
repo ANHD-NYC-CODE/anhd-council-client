@@ -13,6 +13,8 @@ import { addHousingType, updateHousingType } from 'Store/AdvancedSearch/actions'
 import ConditionComponent from 'AdvancedSearch/ConditionComponent'
 import BoundaryQuery from 'AdvancedSearch/BoundaryQuery'
 import HousingTypeQuery from 'AdvancedSearch/HousingTypeQuery'
+import FormError from 'shared/components/FormError'
+
 import { Form, Button } from 'react-bootstrap'
 import { Formik } from 'formik'
 import './style.scss'
@@ -91,11 +93,7 @@ class AdvancedSearchForm extends React.Component {
       <Formik onSubmit={this.submitForm} validationSchema={schema}>
         {({ handleSubmit, handleChange, handleBlur, touched, errors, submitCount }) => (
           <Form noValidate className="advanced-search-form" onSubmit={handleSubmit} validated={this.state.validated}>
-            {this.props.error && (
-              <Form.Text className="form-error text-danger" type="invalid">
-                {this.props.error.message}
-              </Form.Text>
-            )}
+            <FormError show={!!this.props.error} message={(this.props.error || {}).message} />
             <BoundaryQuery
               addBoundary={this.addBoundary}
               boundaries={this.props.advancedSearch.boundaries}

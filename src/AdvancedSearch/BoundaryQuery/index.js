@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import * as b from 'shared/constants/boundaries'
 import { Boundary } from 'shared/classes/Boundary'
+import FormError from 'shared/components/FormError'
 
 import { StandardizedInput } from 'shared/classes/StandardizedInput'
 
@@ -85,12 +86,10 @@ export class BoundaryQuery extends React.Component {
                 <option value={b.COUNCILBOUNDARY.constant}>{b.COUNCILBOUNDARY.name}</option>
                 <option value={b.COMMUNITYBOUNDARY.constant}>{b.COMMUNITYBOUNDARY.name}</option>
               </Form.Control>
-
-              {(this.props.touched.boundaryType || !!this.props.submitCount) && this.props.errors.boundaryType && (
-                <Form.Text className="form-error text-danger" type="invalid">
-                  {this.props.errors.boundaryType}
-                </Form.Text>
-              )}
+              <FormError
+                show={!!(this.props.touched.boundaryType || !!this.props.submitCount) && this.props.errors.boundaryType}
+                message={this.props.errors.boundaryType}
+              />
             </Col>
             <Col>
               <Form.Control
@@ -107,11 +106,11 @@ export class BoundaryQuery extends React.Component {
               >
                 {this.getBoundaryIdOptions(boundary.queryName)}
               </Form.Control>
-              {(this.props.touched.boundaryId || !!this.props.submitCount) && this.props.errors.boundaryId && (
-                <Form.Text className="form-error text-danger" type="invalid">
-                  {this.props.errors.boundaryId}
-                </Form.Text>
-              )}
+
+              <FormError
+                show={!!((this.props.touched.boundaryId || !!this.props.submitCount) && this.props.errors.boundaryId)}
+                message={this.props.errors.boundaryId}
+              />
             </Col>
           </Form.Group>
         )
@@ -136,11 +135,11 @@ export class BoundaryQuery extends React.Component {
             <option value={b.COUNCILBOUNDARY.constant}>{b.COUNCILBOUNDARY.name}</option>
             <option value={b.COMMUNITYBOUNDARY.constant}>{b.COMMUNITYBOUNDARY.name}</option>
           </Form.Control>
-          {(this.props.touched.boundaryType || !!this.props.submitCount) && this.props.errors.boundaryType && (
-            <Form.Text className="form-error text-danger" type="invalid">
-              {this.props.errors.boundaryType}
-            </Form.Text>
-          )}
+
+          <FormError
+            show={!!(this.props.touched.boundaryType || !!this.props.submitCount) && this.props.errors.boundaryType}
+            message={this.props.errors.boundaryType}
+          />
         </Col>
       </Form.Group>
     )
