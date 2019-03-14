@@ -7,7 +7,7 @@ import { ConnectedRouter } from 'connected-react-router'
 import { Route, Switch } from 'react-router'
 import Main from 'Main'
 import BuildingLookup from 'BuildingLookup'
-import DistrictMap from 'DistrictMap'
+import AlertMap from 'AlertMap'
 import AdvancedSearch from 'AdvancedSearch'
 
 import PageError from 'shared/components/PageError'
@@ -21,8 +21,9 @@ class Router extends React.Component {
             <Route exact path="/" render={() => <Main />} />
             <Route exact path="/buildings/" render={() => <BuildingLookup />} />
             <Route exact path="/buildings/:id" render={() => <BuildingLookup />} />
-            <Route exact path="/districts" render={() => <DistrictMap />} />
-            <Route exact path="/districts/:id" render={() => <DistrictMap />} />
+            <Route exact path="/map" render={() => <AlertMap />} />
+            <Route exact path="/district/:id" render={() => <AlertMap />} />
+            <Route exact path="/board/:id" render={() => <AlertMap />} />
             <Route exact path="/search" render={() => <AdvancedSearch />} />
             <Route exact path="/login" render={() => <Main showLoginModal={true} />} />
             <Route exact path="/logout" render={() => <Main />} />
