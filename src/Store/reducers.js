@@ -10,6 +10,7 @@ import { datasetReducer } from 'Store/Dataset/reducers'
 import { councilReducer } from 'Store/Council/reducers'
 import { communityReducer } from 'Store/Community/reducers'
 import { buildingReducer } from 'Store/Building/reducers'
+import { appStateReducer } from 'Store/AppState/reducers'
 import { advancedSearchReducer } from 'Store/AdvancedSearch/reducers'
 
 export default history =>
@@ -20,6 +21,7 @@ export default history =>
     modal: modalReducer,
     dataset: datasetReducer,
     auth: authReducer,
+    appState: appStateReducer,
     search: searchReducer,
     council: councilReducer,
     community: communityReducer,

@@ -68,6 +68,8 @@ class Config extends React.Component {
           datasets: this.props.datasets,
           datasetModels: this.props.datasetModels,
           housingTypeModels: this.props.housingTypeModels,
+          boards: this.props.communities,
+          districts: this.props.councils,
         }}
       >
         {this.props.loading ||
