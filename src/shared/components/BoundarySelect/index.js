@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import * as b from 'shared/constants/boundaries'
-import { handleSetBoundaryTypeAndId } from 'Store/AppState/actions'
+import { setBoundaryTypeAndIdAndRedirect } from 'Store/AppState/actions'
 import { getBoundaryIdOptions } from 'shared/utilities/componentUtils'
-import { Row, Col, Form } from 'react-bootstrap'
+import { Row, Col, Form, Button } from 'react-bootstrap'
 import { StandardizedInput } from 'shared/classes/StandardizedInput'
 import ConfigContext from 'Config/ConfigContext'
 
@@ -17,20 +17,18 @@ class BoundarySelect extends React.Component {
       boundaryId: props.currentBoundaryId,
     }
 
-    this.changeBoundaryType = this.changeBoundaryType.bind(this)
+    this.changeBoundaryAndId = this.changeBoundaryAndId.bind(this)
+  }
+
+  changeBoundaryAndId(e) {
+    this.setState({ changing: false })
+    this.props.dispatch(setBoundaryTypeAndIdAndRedirect(this.state.boundaryType, new StandardizedInput(e).value))
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({
       boundaryType: nextProps.currentBoundaryType,
       boundaryId: nextProps.currentBoundaryId,
-    })
-  }
-
-  changeBoundaryType(e) {
-    e = new StandardizedInput(e)
-    this.setState({
-      boundaryType: e.value,
     })
   }
 
@@ -47,11 +45,16 @@ class BoundarySelect extends React.Component {
                 name="boundaryType"
                 as="select"
                 data-key="boundaryType"
-                onChange={this.changeBoundaryType}
+                onChange={e =>
+                  this.setState({
+                    changing: true,
+                    boundaryType: new StandardizedInput(e).value,
+                  })
+                }
                 value={this.state.boundaryType || -1}
               >
                 <option disabled value={-1} key={-1}>
-                  Select a geography
+                  Select a boundary type
                 </option>
                 <option value={b.COUNCILBOUNDARY.constant}>{b.COUNCILBOUNDARY.name}</option>
                 <option value={b.COMMUNITYBOUNDARY.constant}>{b.COMMUNITYBOUNDARY.name}</option>
@@ -64,17 +67,30 @@ class BoundarySelect extends React.Component {
                   as="select"
                   data-key="id"
                   name="boundaryId"
-                  onChange={e =>
-                    this.props.dispatch(
-                      handleSetBoundaryTypeAndId(this.state.boundaryType, new StandardizedInput(e).value)
-                    )
-                  }
+                  onChange={e => this.changeBoundaryAndId(e)}
                   placeholder="#"
                   size="sm"
                   value={this.state.boundaryId || -1}
                 >
                   {getBoundaryIdOptions(config.districts, config.boards, this.state.boundaryType)}
                 </Form.Control>
+              </Col>
+            )}
+            {this.props.confirmChange && this.state.changing && (
+              <Col xs={12}>
+                <Button
+                  className="cancel-boundary-change"
+                  onClick={() =>
+                    this.setState({
+                      changing: false,
+                      boundaryType: this.props.currentBoundaryType,
+                      boundaryId: this.props.currentBoundaryId,
+                    })
+                  }
+                  variant="warning"
+                >
+                  Cancel
+                </Button>
               </Col>
             )}
           </Form.Group>
@@ -88,6 +104,7 @@ BoundarySelect.propTypes = {
   currentBoundaryType: PropTypes.string,
   currentBoundaryId: PropTypes.string,
   dispatch: PropTypes.func,
+  confirmChange: PropTypes.bool,
 }
 
 export default BoundarySelect

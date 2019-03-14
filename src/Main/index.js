@@ -14,6 +14,7 @@ class Main extends React.Component {
       <div className="main">
         <BuildingSearchModule />
         <BoundarySelect
+          confirmChange={false}
           currentBoundaryType={this.props.appState.currentBoundaryType}
           currentBoundaryId={this.props.appState.currentBoundaryId}
           dispatch={this.props.dispatch}
