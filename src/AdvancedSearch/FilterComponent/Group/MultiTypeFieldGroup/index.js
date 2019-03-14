@@ -4,6 +4,8 @@ import { StandardizedInput } from 'shared/classes/StandardizedInput'
 
 import RangeFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/RangeFieldSet'
 import { Form } from 'react-bootstrap'
+import FormError from 'shared/components/FormError'
+
 import './style.scss'
 
 const MultiTypeFieldGroup = props => {
@@ -55,12 +57,17 @@ const MultiTypeFieldGroup = props => {
       })
     } else if (paramMapRangeGroup.length > 1) {
       return (
-        <RangeFieldSet
-          key={'rangeFieldSet'}
-          paramMapRangeGroup={paramMapRangeGroup}
-          paramSet={props.paramSet}
-          dispatchAction={props.dispatchAction}
-        />
+        <div key="rangeFieldSet">
+          <RangeFieldSet
+            paramMapRangeGroup={paramMapRangeGroup}
+            paramSet={props.paramSet}
+            dispatchAction={props.dispatchAction}
+          />
+          {paramMapRangeGroup.some(paramMap => !!paramMap.errors) &&
+            [].concat(...paramMapRangeGroup.map(paramMap => paramMap.errors)).map((error, index) => {
+              return <FormError key={`range-error-${index}`} show={!!error} message={error.message} />
+            })}
+        </div>
       )
     } else {
       return null
@@ -91,11 +98,7 @@ const MultiTypeFieldGroup = props => {
                 rangeChange: rangeChange,
                 type: paramMap.props.type,
               })}
-              {!!paramMap.errors.length && (
-                <Form.Text className="form-error text-danger" type="invalid">
-                  {paramMap.errors[0].message}
-                </Form.Text>
-              )}
+              <FormError show={!!paramMap.errors.length} message={(paramMap.errors[0] || {}).message} />
             </div>
           )
         }

@@ -3,14 +3,14 @@ import moment from 'moment'
 
 export const minValidate = paramMap => {
   if (paramMap._validations.min !== 0 && !paramMap._validations.min) return
-  if (paramMap._value >= paramMap._validations.min) return
+  if (parseInt(paramMap._value) >= parseInt(paramMap._validations.min)) return
 
   paramMap.addError(new ParamError({ message: `Value can not be less than ${paramMap._validations.min}` }))
 }
 
 export const maxValidate = paramMap => {
   if (paramMap._validations.max !== 0 && !paramMap._validations.max) return
-  if (paramMap._value <= paramMap._validations.max) return
+  if (parseInt(paramMap._value) <= parseInt(paramMap._validations.max)) return
 
   paramMap.addError(new ParamError({ message: `Value can not be greater than ${paramMap._validations.max}` }))
 }

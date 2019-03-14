@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { Form, Button, Col, ButtonGroup } from 'react-bootstrap'
+import FormError from 'shared/components/FormError'
+
 import './style.scss'
 export class FilterComponent extends React.Component {
   constructor(props) {
@@ -53,11 +55,7 @@ export class FilterComponent extends React.Component {
             </ButtonGroup>
           </Col>
         </Form.Row>
-        {!!this.props.filter.errors.length && (
-          <Form.Text className="form-error text-danger" type="invalid">
-            {this.props.filter.errors[0].message}
-          </Form.Text>
-        )}
+        <FormError show={!!this.props.filter.errors.length} message={(this.props.filter.errors[0] || {}).message} />
       </div>
     )
   }

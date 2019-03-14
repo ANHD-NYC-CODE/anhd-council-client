@@ -4,6 +4,7 @@ import { Form, Button } from 'react-bootstrap'
 import { loginUser } from 'Store/Auth/actions'
 import { Formik } from 'formik'
 import * as yup from 'yup'
+import FormError from 'shared/components/FormError'
 
 const schema = yup.object({
   username: yup.string().required(),
@@ -42,11 +43,7 @@ class LoginForm extends React.Component {
             validated={this.state.validated}
             onSubmit={e => this.handleSubmit(e)}
           >
-            {this.props.error && (
-              <Form.Text className="form-error text-danger" type="invalid">
-                {this.props.error.message}
-              </Form.Text>
-            )}
+            <FormError show={!!this.props.error} message={this.props.error.message} />
             <Form.Group controlId="loginUsername">
               <Form.Label>Username</Form.Label>
               <Form.Control
@@ -59,11 +56,7 @@ class LoginForm extends React.Component {
                 type="text"
                 placeholder="Enter username"
               />
-              {touched.username && errors.username && (
-                <Form.Text className="form-error text-danger" type="invalid">
-                  {errors.username}
-                </Form.Text>
-              )}
+              <FormError show={!!(touched.username && errors.username)} message={errors.username} />
             </Form.Group>
 
             <Form.Group controlId="loginPassword">
@@ -77,11 +70,7 @@ class LoginForm extends React.Component {
                 placeholder="Password"
                 type="password"
               />
-              {touched.password && errors.password && (
-                <Form.Text className="form-error text-danger" type="invalid">
-                  {errors.password}
-                </Form.Text>
-              )}
+              <FormError show={!!(touched.password && errors.password)} message={errors.password} />
             </Form.Group>
             <Button disabled={this.props.loading} variant="primary" type="submit">
               Submit
