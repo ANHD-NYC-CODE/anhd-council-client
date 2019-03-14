@@ -9,7 +9,11 @@ class Main extends React.Component {
   }
 
   render() {
-    return <BuildingSearchModule />
+    return (
+      <div className="main">
+        <BuildingSearchModule />
+      </div>
+    )
   }
 }
 
