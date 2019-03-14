@@ -25,14 +25,14 @@ export class FilterComponent extends React.Component {
         <Form.Row className="filter align-items-center">
           <Form.Group as={Col} xs={10}>
             {this.props.filter &&
-              Object.keys(this.props.filter.paramsObject).map((paramsSetKey, paramSetIndex) =>
-                this.props.filter.paramsObject[paramsSetKey].component({
+              Object.keys(this.props.filter.paramSets).map((paramsSetKey, paramSetIndex) =>
+                this.props.filter.paramSets[paramsSetKey].component({
                   key: `filter-paramset-${this.props.filter.id}-${paramSetIndex}`,
                   dispatchAction: this.props.dispatchAction,
                   replaceFilter: this.props.replaceFilter,
                   filterIndex: this.props.filterIndex,
                   filter: this.props.filter,
-                  paramSet: this.props.filter.paramsObject[paramsSetKey],
+                  paramSet: this.props.filter.paramSets[paramsSetKey],
                   paramSetIndex: paramSetIndex,
                 })
               )}

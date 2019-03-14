@@ -3,6 +3,9 @@ import * as errorActions from 'Store/Error/actions'
 import { toast } from 'react-toastify'
 import * as d from 'shared/models/datasets'
 import * as ht from 'shared/models/housingTypes'
+import { DataRequest } from 'shared/classes/DataRequest'
+
+import { ApiMap } from 'shared/classes/ApiMap'
 
 import { Dataset } from 'shared/classes/Dataset'
 import { constantToModelName } from 'shared/utilities/filterUtils'
@@ -122,4 +125,55 @@ export const setupDatasetModels = datasets => {
       }
     })
     .filter(ds => ds)
+}
+
+export const newBuildingRequest = ({ buildingId, resourceConstant }) => {
+  return new DataRequest({
+    apiMaps: [
+      new ApiMap({ constant: 'BUILDING', resourceId: buildingId }),
+      resourceConstant ? new ApiMap({ constant: resourceConstant }) : null,
+    ].filter(a => a),
+  })
+}
+
+export const newPropertyRequest = ({ propertyId, resourceConstant } = {}) => {
+  return new DataRequest({
+    apiMaps: [
+      new ApiMap({ constant: 'PROPERTY', queryName: 'properties', resourceId: propertyId }),
+      new ApiMap({ constant: resourceConstant }),
+    ],
+  })
+}
+
+export const newLookupRequests = ({ propertyId, buildingId } = {}) => {
+  return [
+    newPropertyRequest({ propertyId }),
+    newPropertyRequest({ propertyId, resourceConstant: 'ACRISREALMASTER' }),
+    newPropertyRequest({ propertyId, resourceConstant: 'EVICTION' }),
+    newPropertyRequest({ propertyId, resourceConstant: 'FORECLOSURE' }),
+    buildingId
+      ? newBuildingRequest({ buildingId, resourceConstant: 'HPD_VIOLATION' })
+      : newPropertyRequest({ propertyId, resourceConstant: 'HPD_VIOLATION' }),
+    buildingId
+      ? newBuildingRequest({ buildingId, resourceConstant: 'HPD_COMPLAINT' })
+      : newPropertyRequest({ propertyId, resourceConstant: 'HPD_COMPLAINT' }),
+    buildingId
+      ? newBuildingRequest({ buildingId, resourceConstant: 'DOB_VIOLATION' })
+      : newPropertyRequest({ propertyId, resourceConstant: 'DOB_VIOLATION' }),
+    buildingId
+      ? newBuildingRequest({ buildingId, resourceConstant: 'DOB_COMPLAINT' })
+      : newPropertyRequest({ propertyId, resourceConstant: 'DOB_COMPLAINT' }),
+    buildingId
+      ? newBuildingRequest({ buildingId, resourceConstant: 'ECB_VIOLATION' })
+      : newPropertyRequest({ propertyId, resourceConstant: 'ECB_VIOLATION' }),
+    buildingId
+      ? newBuildingRequest({ buildingId, resourceConstant: 'DOB_ISSUED_PERMIT' })
+      : newPropertyRequest({ propertyId, resourceConstant: 'DOB_ISSUED_PERMIT' }),
+    buildingId
+      ? newBuildingRequest({ buildingId, resourceConstant: 'DOB_FILED_PERMIT' })
+      : newPropertyRequest({ propertyId, resourceConstant: 'DOB_FILED_PERMIT' }),
+    buildingId
+      ? newBuildingRequest({ buildingId, resourceConstant: 'HOUSING_LITIGATION' })
+      : newPropertyRequest({ propertyId, resourceConstant: 'HOUSING_LITIGATION' }),
+  ].filter(r => r)
 }

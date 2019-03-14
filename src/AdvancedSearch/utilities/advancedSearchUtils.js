@@ -3,9 +3,9 @@ export const convertDatasetFilterToParams = (datasetsConfig, filter) => {
   // const object = { dataset: ds, comparison: 'gte', value: '10', startDate '2017-01-01', endDate: '2018-01-01' }
   // into:
   // "hpdviolation__approveddate__gte=2017-01-01,hpdviolation__approveddate__lte=2018-01-01,hpdviolation__count__gte=10"
-  return Object.keys(filter.paramsObject)
+  return Object.keys(filter.paramSets)
     .map(key => {
-      return filter.paramsObject[key].paramMaps
+      return filter.paramSets[key].paramMaps
         .map(paramMap => {
           return `${paramMap.field}${paramMap.comparison ? '__' + paramMap.comparison : ''}=${
             paramMap.type === 'PERCENT' ? paramMap.value / 100 : paramMap.value

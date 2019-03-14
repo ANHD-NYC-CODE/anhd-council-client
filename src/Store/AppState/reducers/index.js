@@ -59,6 +59,14 @@ export const appStateReducer = (state = Object.freeze(initialState), action = { 
         currentBuilding: action.buildingId,
       }
     }
+    case c.SET_PROPERTY_BUILDING_LOOKUP_REQUESTS: {
+      return {
+        ...state,
+        currentProperty: action.propertyId,
+        currentBuilding: action.buildingId,
+        lookupFilters: action.lookupFilters,
+      }
+    }
     default:
       return state
   }

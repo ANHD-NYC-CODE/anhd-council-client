@@ -55,7 +55,7 @@ describe('convertHousingTypesToSentence', () => {
       const housingType1 = new Filter({
         modelConstant: 'SMALL_HOMES',
       })
-      housingType1.paramsObject['unitsres'].create()
+      housingType1.paramSets['unitsres'].create()
       const housingTypes = [housingType1]
 
       const result = 'small home properties with at most 6 units'
@@ -79,7 +79,7 @@ describe('convertHousingTypesToSentence', () => {
       const housingType1 = new Filter({
         modelConstant: 'RENT_REGULATED',
       })
-      housingType1.paramsObject['coresubsidyrecord__enddate'].create()
+      housingType1.paramSets['coresubsidyrecord__enddate'].create()
       const housingTypes = [housingType1]
 
       const result = `rent regulated properties expiring before ${moment(moment.now())
@@ -93,7 +93,7 @@ describe('convertHousingTypesToSentence', () => {
       const housingType1 = new Filter({
         modelConstant: 'RENT_REGULATED',
       })
-      housingType1.paramsObject['coresubsidyrecord__enddate'].createAll()
+      housingType1.paramSets['coresubsidyrecord__enddate'].createAll()
       const housingTypes = [housingType1]
 
       const result = `rent regulated properties expiring between ${moment(moment.now()).format(
@@ -109,9 +109,9 @@ describe('convertHousingTypesToSentence', () => {
       const housingType1 = new Filter({
         modelConstant: 'RENT_REGULATED',
       })
-      housingType1.paramsObject['coresubsidyrecord__enddate'].createAll()
-      housingType1.paramsObject['coresubsidyrecord__programname'].create()
-      housingType1.paramsObject['coresubsidyrecord__programname'].paramMaps[0].update({
+      housingType1.paramSets['coresubsidyrecord__enddate'].createAll()
+      housingType1.paramSets['coresubsidyrecord__programname'].create()
+      housingType1.paramSets['coresubsidyrecord__programname'].paramMaps[0].update({
         e: new StandardizedInput({ name: 'value', value: 'LIHCT,J-51,421-a' }),
       })
 
@@ -132,7 +132,7 @@ describe('convertHousingTypesToSentence', () => {
       const housingType1 = new Filter({
         modelConstant: 'RENT_STABILIZED',
       })
-      housingType1.paramsObject['rsunitslost'].create()
+      housingType1.paramSets['rsunitslost'].create()
       const housingTypes = [housingType1]
 
       const result = 'rent stabilized properties that lost at least 25% rent stabilized units after 2010'
