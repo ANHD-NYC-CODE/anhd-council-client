@@ -1,11 +1,11 @@
 @import './src/shared/styles/bootstrap/index.scss';
 
-.search-module,
-.search-module .table-hover tbody tr:hover {
+.address-search,
+.address-search .table-hover tbody tr:hover {
   z-index: 1000;
 }
 
-.search-module .table-hover tbody tr:hover {
+.address-search .table-hover tbody tr:hover {
   color: white;
 }
 

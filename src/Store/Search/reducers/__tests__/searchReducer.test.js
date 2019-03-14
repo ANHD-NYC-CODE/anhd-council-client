@@ -9,10 +9,9 @@ describe('Search reducer', () => {
   describe('HANDLE_READ_X_RESPONSE', () => {
     const response = [{ bin: 1 }, { bin: 2 }]
     it('fetches the Search results', () => {
-      expect(reducer.searchReducer(undefined, actions.handleReadSearchResponse({ data: response }))).toEqual({
-        ...reducer.initialState,
-        results: response,
-      })
+      expect(
+        reducer.searchReducer(undefined, actions.handleReadSearchResponse({ data: response })).results.length
+      ).toEqual(2)
     })
   })
 })

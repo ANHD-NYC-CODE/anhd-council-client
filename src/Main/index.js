@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import BuildingSearchModule from '../BuildingSearchModule'
+import AddressSearch from 'Lookup/AddressSearch'
 import BoundarySelect from 'shared/components/BoundarySelect'
 import { Form, Row, Col, Jumbotron, Container } from 'react-bootstrap'
 class Main extends React.Component {
@@ -34,7 +34,7 @@ class Main extends React.Component {
             <h5>Select a district to begin, or search for a building address.</h5>
             <Form autoComplete="off">
               <Form.Group>
-                <BuildingSearchModule placeholder="Building Lookup Tool" />
+                <AddressSearch placeholder="Building Lookup Tool" />
               </Form.Group>
               <Form.Group>
                 <BoundarySelect

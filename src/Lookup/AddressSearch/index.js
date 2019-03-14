@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import SearchBar from './SearchBar'
 import SearchResults from './SearchResults'
-import { clearSearch } from '../Store/Search/actions'
+import { clearSearch } from 'Store/Search/actions'
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
 
@@ -12,7 +12,7 @@ import { handleClearErrors } from 'Store/Error/actions'
 
 import './style.scss'
 
-class BuildingSearchModule extends React.Component {
+class AddressSearch extends React.Component {
   constructor(props) {
     super(props)
 
@@ -56,7 +56,7 @@ class BuildingSearchModule extends React.Component {
 
   render() {
     return (
-      <div className="search-module">
+      <div className="address-search">
         <SearchBar
           clearSelectedSearch={this.clearSelectedSearch}
           dispatch={this.props.dispatch}
@@ -69,6 +69,7 @@ class BuildingSearchModule extends React.Component {
           setSearchValue={this.setSearchValue}
         />
         <SearchResults
+          dispatch={this.props.dispatch}
           loading={this.props.loading}
           error={this.props.error}
           selectBuildingResult={this.selectBuildingResult}
@@ -79,7 +80,7 @@ class BuildingSearchModule extends React.Component {
   }
 }
 
-BuildingSearchModule.propTypes = {
+AddressSearch.propTypes = {
   setViewCoordinates: PropTypes.func,
   search: PropTypes.object,
   error: PropTypes.object,
@@ -98,4 +99,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(BuildingSearchModule)
+export default connect(mapStateToProps)(AddressSearch)

@@ -1,8 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { setSearchTimeout, queryBuildingAddress } from 'Store/Search/actions'
+import { setSearchTimeout, queryAddress } from 'Store/Search/actions'
 import { requestWithAuth } from 'shared/utilities/authUtils'
 import { Form } from 'react-bootstrap'
+import { StandardizedInput } from 'shared/classes/StandardizedInput'
 import './style.scss'
 
 export default class SearchBar extends React.Component {
@@ -30,33 +31,33 @@ export default class SearchBar extends React.Component {
   }
 
   dispatchQuery(value) {
-    this.props.dispatch(requestWithAuth(queryBuildingAddress(value)))
+    this.props.dispatch(requestWithAuth(queryAddress(value)))
   }
 
-  onInputChange(event) {
+  onInputChange(e) {
+    e = new StandardizedInput(e)
     this.props.clearSelectedSearch()
 
-    this.props.setSearchValue(event.target.value)
+    this.props.setSearchValue(e.value)
     clearTimeout(this.props.searchTimeout)
-    if (event.target.value) {
-      this.props.dispatch(setSearchTimeout(setTimeout(this.dispatchQuery, 250, event.target.value)))
+    if (e.value) {
+      this.props.dispatch(setSearchTimeout(setTimeout(this.dispatchQuery, 250, e.value)))
     }
   }
 
   render() {
     return (
-      <div className="search-bar">
-        <Form.Group className="search-form" onSubmit={this.onFormSubmit}>
-          <Form.Control
-            size="sm"
-            onChange={this.onInputChange}
-            placeholder={this.props.placeholder || 'Type an address to search'}
-            tabIndex={0}
-            type="text"
-            value={this.props.searchValue}
-          />
-        </Form.Group>
-      </div>
+      <Form.Group className="search-bar" onSubmit={this.onFormSubmit}>
+        <Form.Control
+          size="sm"
+          name="address-search"
+          onChange={this.onInputChange}
+          placeholder={this.props.placeholder || 'Type an address to search'}
+          tabIndex={0}
+          type="text"
+          value={this.props.searchValue}
+        />
+      </Form.Group>
     )
   }
 }

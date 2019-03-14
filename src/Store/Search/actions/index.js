@@ -4,13 +4,12 @@ import { GET_BUILDING_SEARCH } from 'shared/constants/actions'
 export const HANDLE_READ_SEARCH_RESPONSE = 'HANDLE_READ_SEARCH_RESPONSE'
 export const CLEAR_SEARCH = 'CLEAR_SEARCH'
 export const SET_SEARCH_TIMEOUT = 'SET_SEARCH_TIMEOUT'
-
+import { AddressResult } from 'shared/classes/AddressResult'
 export const handleReadSearchResponse = (response, key = null) => {
-  let results = response.data
+  let results = response.data.map(result => new AddressResult({ addressObject: result }))
   if (!results.length) {
-    results = [{ bin: undefined, housenumber: '', street: 'No results', borough: '' }]
+    results = [new AddressResult()]
   }
-
   return {
     type: HANDLE_READ_SEARCH_RESPONSE,
     data: results,
@@ -25,9 +24,8 @@ export const setSearchTimeout = event => ({
   data: event,
 })
 
-export const queryBuildingAddress = value => (dispatch, getState, access_token) => {
+export const queryAddress = value => (dispatch, getState, access_token) => {
   const requestId = Math.floor(Math.random() * 1000000)
-
   return constructAxiosGet(
     dispatch,
     getState,
