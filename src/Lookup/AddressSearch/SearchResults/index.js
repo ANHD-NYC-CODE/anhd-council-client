@@ -1,9 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import SearchResultRow from 'Lookup/AddressSearch/SearchResultRow'
-import { push } from 'connected-react-router'
 
-import { handleSetProperty, handleSetPropertyAndBuilding } from 'Store/AppState/actions'
+import { setLookupAndRequestsAndRedirect } from 'Store/AppState/actions'
 
 import './style.scss'
 import { Table } from 'react-bootstrap'
@@ -11,13 +10,7 @@ import { Table } from 'react-bootstrap'
 const SearchResults = props => {
   const handleRowClick = (e, result) => {
     e.preventDefault()
-    if (result.bbl && result.bin) {
-      props.dispatch(handleSetPropertyAndBuilding(result.bbl, result.bin))
-      props.dispatch(push(`/property/${result.bbl}/building/${result.bin}`))
-    } else if (!result.bin && result.bbl) {
-      props.dispatch(handleSetProperty(result.bbl))
-      props.dispatch(push(`/property/${result.bbl}`))
-    }
+    props.dispatch(setLookupAndRequestsAndRedirect({ propertyId: result.bbl, buildingId: result.bin }))
   }
 
   return (

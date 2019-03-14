@@ -7,7 +7,6 @@ import HiddenField from 'AdvancedSearch/FilterComponent/Field/HiddenField'
 
 export const HPD_VIOLATION = databaseObject => ({
   id: 'HPD_VIOLATION',
-  apiMap: new ApiMap({ constant: 'HPD_VIOLATION' }),
   schema: constructDefaultSchema({
     databaseObject,
     constant: 'HPD_VIOLATION',
@@ -22,7 +21,6 @@ export const HPD_VIOLATION = databaseObject => ({
 
 export const DOB_VIOLATION = databaseObject => ({
   id: 'DOB_VIOLATION',
-  apiMap: new ApiMap({ constant: 'DOB_VIOLATION' }),
   schema: constructDefaultSchema({
     databaseObject,
     constant: 'DOB_VIOLATION',
@@ -37,7 +35,6 @@ export const DOB_VIOLATION = databaseObject => ({
 
 export const ECB_VIOLATION = databaseObject => ({
   id: 'ECB_VIOLATION',
-  apiMap: new ApiMap({ constant: 'ECB_VIOLATION' }),
   schema: constructDefaultSchema({
     databaseObject,
     constant: 'ECB_VIOLATION',
@@ -52,7 +49,6 @@ export const ECB_VIOLATION = databaseObject => ({
 
 export const HPD_COMPLAINT = databaseObject => ({
   id: 'HPD_COMPLAINT',
-  apiMap: new ApiMap({ constant: 'HPD_COMPLAINT' }),
   schema: constructDefaultSchema({
     databaseObject,
     constant: 'HPD_COMPLAINT',
@@ -67,7 +63,6 @@ export const HPD_COMPLAINT = databaseObject => ({
 
 export const DOB_COMPLAINT = databaseObject => ({
   id: 'DOB_COMPLAINT',
-  apiMap: new ApiMap({ constant: 'DOB_COMPLAINT' }),
   schema: constructDefaultSchema({
     databaseObject,
     constant: 'DOB_COMPLAINT',
@@ -82,7 +77,6 @@ export const DOB_COMPLAINT = databaseObject => ({
 
 export const EVICTION = databaseObject => ({
   id: 'EVICTION',
-  apiMap: new ApiMap({ constant: 'EVICTION' }),
   schema: constructDefaultSchema({
     databaseObject,
     constant: 'EVICTION',
@@ -98,7 +92,6 @@ export const EVICTION = databaseObject => ({
 
 export const PROPERTY_SALE_BY_AMOUNT = databaseObject => ({
   id: 'PROPERTY_SALE_BY_AMOUNT',
-  apiMap: new ApiMap({ constant: 'ACRIS_REAL_LEGAL' }),
   schema: constructDefaultSchema({
     databaseObject,
     constant: 'PROPERTY_SALE_BY_AMOUNT',
@@ -117,7 +110,6 @@ export const PROPERTY_SALE_BY_AMOUNT = databaseObject => ({
 
 export const PROPERTY_SALE_BY_COUNT = databaseObject => ({
   id: 'PROPERTY_SALE_BY_COUNT',
-  apiMap: new ApiMap({ constant: 'ACRIS_REAL_LEGAL' }),
   schema: constructDefaultSchema({
     databaseObject,
     constant: 'PROPERTY_SALE_BY_COUNT',
@@ -136,7 +128,6 @@ export const PROPERTY_SALE_BY_COUNT = databaseObject => ({
 
 export const FORECLOSURE = databaseObject => ({
   id: 'FORECLOSURE',
-  apiMap: new ApiMap({ constant: 'LISPENDEN' }),
   schema: constructDefaultSchema({
     databaseObject,
     constant: 'FORECLOSURE',
@@ -160,7 +151,6 @@ export const FORECLOSURE = databaseObject => ({
 
 export const DOB_ISSUED_PERMIT = databaseObject => ({
   id: 'DOB_ISSUED_PERMIT',
-  apiMap: new ApiMap({ constant: 'DOB_ISSUED_PERMIT' }),
   schema: constructDefaultSchema({
     databaseObject,
     constant: 'DOB_ISSUED_PERMIT',
@@ -176,7 +166,6 @@ export const DOB_ISSUED_PERMIT = databaseObject => ({
 
 export const DOB_FILED_PERMIT = databaseObject => ({
   id: 'DOB_FILED_PERMIT',
-  apiMap: new ApiMap({ constant: 'DOB_LEGACY_FILED_PERMIT' }),
   schema: constructDefaultSchema({
     databaseObject,
     constant: 'DOB_FILED_PERMIT',
@@ -193,7 +182,6 @@ export const DOB_FILED_PERMIT = databaseObject => ({
 
 export const HOUSING_LITIGATION = databaseObject => ({
   id: 'HOUSING_LITIGATION',
-  apiMap: new ApiMap({ constant: 'HOUSING_LITIGATION' }),
   schema: constructDefaultSchema({
     databaseObject,
     constant: 'HOUSING_LITIGATION',

@@ -3,7 +3,6 @@ import moment from 'moment'
 import { rentRegulatedProgramOptions, comparisonOptions } from 'shared/utilities/filterUtils'
 import { ParameterMapSet } from 'shared/classes/ParameterMapSet'
 import { ParameterMapping } from 'shared/classes/ParameterMapping'
-import { ApiMap } from 'shared/classes/ApiMap'
 
 import MultiTypeFieldGroup from 'AdvancedSearch/FilterComponent/Group/MultiTypeFieldGroup'
 import GenericFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/GenericFieldSet'
@@ -15,14 +14,16 @@ import IntegerField from 'AdvancedSearch/FilterComponent/Field/IntegerField'
 import MultiSelectField from 'AdvancedSearch/FilterComponent/Field/MultiSelectField'
 import { LanguageModule } from 'shared/classes/LanguageModule'
 
+import { getApiMap } from 'shared/utilities/classUtils'
+
 export const ALLTYPES = databaseObject => ({
-  apiMap: new ApiMap({ name: 'All', queryName: 'all' }),
+  apiMap: getApiMap('ALL_TYPES'),
   id: 'ALL_TYPES',
   schema: {},
 })
 
 export const RENTSTABILIZED = databaseObject => ({
-  apiMap: new ApiMap({ name: 'Rent Stabilized', queryName: 'rs' }),
+  apiMap: getApiMap('RENT_STABILIZED'),
   id: 'RENT_STABILIZED',
   schema: {
     rsunitslost: new ParameterMapSet({
@@ -97,7 +98,7 @@ export const RENTSTABILIZED = databaseObject => ({
 })
 
 export const RENTREGULATED = databaseObject => ({
-  apiMap: new ApiMap({ name: 'Rent Regulated', queryName: 'rr' }),
+  apiMap: getApiMap('RENT_REGULATED'),
   id: 'RENT_REGULATED',
 
   schema: {
@@ -180,7 +181,7 @@ export const RENTREGULATED = databaseObject => ({
 })
 
 export const SMALLHOMES = databaseObject => ({
-  apiMap: new ApiMap({ name: 'Small Homes', queryName: 'sh' }),
+  apiMap: getApiMap('SMALL_HOMES'),
   id: 'SMALL_HOMES',
   schema: {
     unitsres: new ParameterMapSet({
@@ -212,13 +213,13 @@ export const SMALLHOMES = databaseObject => ({
 })
 
 export const MARKETRATE = databaseObject => ({
-  apiMap: new ApiMap({ name: 'Market Rate', queryName: 'mr' }),
+  apiMap: getApiMap('MARKET_RATE'),
   id: 'MARKET_RATE',
   schema: {},
 })
 
 export const PUBLICHOUSING = databaseObject => ({
-  apiMap: new ApiMap({ name: 'Public Housing', queryName: 'ph' }),
+  apiMap: getApiMap('PUBLIC_HOUSING'),
   id: 'PUBLIC_HOUSING',
   schema: {},
 })

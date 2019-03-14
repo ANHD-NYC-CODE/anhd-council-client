@@ -28,7 +28,7 @@ describe('transformStateIntoParamObject', () => {
       modelConstant: 'SMALL_HOMES',
     })
 
-    housingType1.paramsObject['unitsres'].create()
+    housingType1.paramSets['unitsres'].create()
 
     const advancedSearch = {
       conditions: conditions,

@@ -1,12 +1,13 @@
 import * as d from 'shared/models/datasets'
 import * as ht from 'shared/models/housingTypes'
 import { ParamError } from 'shared/classes/ParamError'
+import { getApiMap } from 'shared/utilities/classUtils'
 
 import { cloneInstance } from 'shared/utilities/classUtils'
 
 export class Filter {
-  constructor({ modelConstant = null, model = null, paramsObject = {}, errors = [] } = {}) {
-    this._paramsObject = paramsObject
+  constructor({ modelConstant = null, model = null, paramSets = {}, errors = [] } = {}) {
+    this._paramSets = paramSets
     this.id = modelConstant || model.id
     this.modelConstant = modelConstant
     this._model = model
@@ -30,9 +31,9 @@ export class Filter {
     if (modelConstant === 'NEW_FILTER' || modelConstant === 'ALL_TYPES') return
 
     // Post initialize actions
-    if (!Object.keys(paramsObject).length) {
-      Object.keys(this.paramsObject).forEach(key => {
-        const paramSet = this.paramsObject[key]
+    if (!Object.keys(paramSets).length) {
+      Object.keys(this.paramSets).forEach(key => {
+        const paramSet = this.paramSets[key]
         if (!paramSet.allowActions) {
           paramSet.create()
         }
@@ -53,6 +54,12 @@ export class Filter {
   }
 
   setModel(model) {
+    // Sets api map for model
+    if (!model.apiMap) {
+      model.apiMap = getApiMap(this.id)
+    }
+
+    // Sets api map for filter
     if ((model || {}).apiMap) {
       Object.keys(model.apiMap).forEach(key => {
         this[key] = model.apiMap[key]
@@ -61,16 +68,16 @@ export class Filter {
 
     this._model = model
     this._schema = this.model.schema
-    // Load the schema if no paramsObject was directly supplied
-    if (!Object.keys(this.paramsObject).length) {
+    // Load the schema if no paramSets was directly supplied
+    if (!Object.keys(this.paramSets).length) {
       Object.keys(this._schema)
         .reverse()
         .map(key => {
-          this._paramsObject = {
+          this._paramSets = {
             ...{
               [key]: cloneInstance(this.schema[key]),
             },
-            ...this.paramsObject,
+            ...this.paramSets,
           }
         })
     }
@@ -103,11 +110,11 @@ export class Filter {
     // Maps the params array into an object that Axios can plug in for requests.
     return Object.assign(
       {},
-      ...Object.keys(this.paramsObject).map(key => {
+      ...Object.keys(this.paramSets).map(key => {
         return {
           ...Object.assign(
             {},
-            ...this.paramsObject[key].paramMaps.map(paramMap => {
+            ...this.paramSets[key].paramMaps.map(paramMap => {
               return paramMap.toParamObject()
             })
           ),
@@ -116,20 +123,20 @@ export class Filter {
     )
   }
 
-  get paramsObject() {
-    return this._paramsObject
+  get paramSets() {
+    return this._paramSets
   }
 
   set model(model) {
     this.setModel(model)
   }
 
-  set paramsObject(newParamsObject) {
-    this._paramsObject = newParamsObject
+  set paramSets(newparamSets) {
+    this._paramSets = newparamSets
   }
 
   get paramMaps() {
-    return [].concat.apply([], Object.keys(this._paramsObject).map(key => this._paramsObject[key].paramMaps))
+    return [].concat.apply([], Object.keys(this._paramSets).map(key => this._paramSets[key].paramMaps))
   }
 
   get errors() {

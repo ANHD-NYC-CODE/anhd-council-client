@@ -5,7 +5,7 @@ export const createFilterMock = ({ constant = '' } = {}) => {
   const filter = new Filter({
     modelConstant: constant,
   })
-  filter.paramsObject[constantToQueryName(constant)].createOppositeRangeMap()
+  filter.paramSets[constantToQueryName(constant)].createOppositeRangeMap()
   return filter
 }
 

@@ -143,9 +143,9 @@ export const convertBoundariesToSentence = boundaries => {
 
 export const convertFilterToSentence = filter => {
   if (Object.keys(filter.params).length) {
-    return ` ${Object.keys(filter.paramsObject)
+    return ` ${Object.keys(filter.paramSets)
       .map(key => {
-        const paramSet = filter.paramsObject[key]
+        const paramSet = filter.paramSets[key]
         return paramSet.paramMaps
           .map(paramMap => {
             // Process range paramMap separately

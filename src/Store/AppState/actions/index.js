@@ -1,6 +1,8 @@
 import * as c from '../constants'
 import { push } from 'connected-react-router'
-import { getBoundaryPath } from 'shared/utilities/routeUtils'
+import { getBoundaryPath, addressResultToPath } from 'shared/utilities/routeUtils'
+
+import { newLookupRequests } from 'shared/utilities/actionUtils'
 
 export const handleSetBoundaryType = boundaryType => ({
   type: c.SET_BOUNDARY_TYPE,
@@ -34,11 +36,12 @@ export const handleSetPropertyAndBuilding = (propertyId, buildingId) => ({
   buildingId,
 })
 
-export const setBoundaryTypeAndIdAndRedirect = (boundaryType, boundaryId) => dispatch => {
-  dispatch(handleSetBoundaryTypeAndId(boundaryType, boundaryId))
-  const path = getBoundaryPath(boundaryType)
-  dispatch(push(`/${path}/${boundaryId}`))
-}
+export const handleSetPropertyBuildingLookupRequests = (propertyId, buildingId, lookupFilters) => ({
+  type: c.SET_PROPERTY_BUILDING_LOOKUP_REQUESTS,
+  propertyId,
+  buildingId,
+  lookupFilters,
+})
 
 export const updateMapFilter = (filter, filterIndex) => ({
   type: c.UPDATE_MAP_FILTER,
@@ -51,3 +54,17 @@ export const updateLookupFilter = (filter, filterIndex) => ({
   filter,
   filterIndex,
 })
+
+export const setBoundaryTypeAndIdAndRedirect = (boundaryType, boundaryId) => dispatch => {
+  dispatch(handleSetBoundaryTypeAndId(boundaryType, boundaryId))
+  const path = getBoundaryPath(boundaryType)
+  dispatch(push(`/${path}/${boundaryId}`))
+}
+
+export const setLookupAndRequestsAndRedirect = ({ propertyId, buildingId }) => dispatch => {
+  const lookupFilters = newLookupRequests({ propertyId, buildingId })
+
+  debugger
+  dispatch(handleSetPropertyBuildingLookupRequests(propertyId, buildingId, lookupFilters))
+  dispatch(push(addressResultToPath({ bbl: propertyId, bin: buildingId })))
+}
