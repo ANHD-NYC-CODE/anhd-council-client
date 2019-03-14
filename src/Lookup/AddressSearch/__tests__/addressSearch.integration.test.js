@@ -36,6 +36,28 @@ const setupWrapper = state => {
   return wrapper
 }
 
+const searchResultWrapper = async ({ state = undefined, searchValue = '', results = [] } = {}) => {
+  state = configuredState(state)
+
+  const store = setupStore({ ...state })
+  const wrapper = mount(
+    <Provider store={store}>
+      <ConnectedRouter history={history}>
+        <AddressSearch />
+      </ConnectedRouter>
+    </Provider>
+  )
+
+  mock.onGet('/search/buildings/').reply(200, results)
+
+  wrapper.find('SearchBar input[name="address-search"]').simulate('change', { target: { value: searchValue } })
+
+  jest.runAllTimers()
+  await flushAllPromises()
+  wrapper.update()
+  return [wrapper, store]
+}
+
 describe('Address Search Module', () => {
   it('has initial state', () => {
     const wrapper = setupWrapper()
@@ -46,55 +68,55 @@ describe('Address Search Module', () => {
   })
 
   describe('entering fruitful query', () => {
+    const searchValue = '100 Awesome Street'
+
+    const results = [
+      {
+        bbl: 1,
+        bin: 1,
+        housenumber: '100',
+        street: 'awesome street',
+        borough: 'brooklyn',
+        buildingnumber: '100',
+        buildingstreet: 'awesome street',
+      },
+      {
+        bbl: 2,
+        bin: 2,
+        housenumber: '100a',
+        street: 'awesome street',
+        borough: 'brooklyn',
+        buildingnumber: '100a',
+        buildingstreet: 'awesome street',
+      },
+    ]
+
     it('updates the reducer state and shows results', async () => {
-      const wrapper = setupWrapper()
-      const searchValue = '100 Awesome Street'
-      const results = [
-        {
-          bbl: 1,
-          bin: 1,
-          housenumber: '100',
-          street: 'awesome street',
-          borough: 'brooklyn',
-          buildingnumber: '100',
-          buildingstreet: 'awesome street',
-        },
-        {
-          bbl: 2,
-          bin: 2,
-          housenumber: '100a',
-          street: 'awesome street',
-          borough: 'brooklyn',
-          buildingnumber: '100a',
-          buildingstreet: 'awesome street',
-        },
-      ]
-      mock.onGet('/search/buildings/').reply(200, results)
-
-      wrapper.find('SearchBar input[name="address-search"]').simulate('change', { target: { value: searchValue } })
-
-      jest.runAllTimers()
-      await flushAllPromises()
-      wrapper.update()
+      const [wrapper] = await searchResultWrapper({ searchValue, results })
 
       expect(wrapper.find('SearchBar input[name="address-search"]').props().value).toEqual(searchValue)
       expect(wrapper.find('SearchResultRow')).toHaveLength(2)
       expect(wrapper.find('SearchResults').text()).toMatch(/100 awesome street, brooklyn100a awesome street, brooklyn/)
     })
+
+    it('handles navigation on result click', async () => {
+      const [wrapper, store] = await searchResultWrapper({ searchValue, results })
+
+      wrapper
+        .find('SearchResultRow LinkContainer')
+        .at(0)
+        .simulate('click')
+      wrapper.update()
+
+      expect(store.getState().router.location.pathname).toEqual('/property/1/building/1')
+    })
   })
 
   describe('entering non-fruitful query', () => {
     it('shows the No Results row', async () => {
-      const wrapper = setupWrapper()
       const searchValue = '100 Awesome Street'
       const results = []
-      mock.onGet('/search/buildings/').reply(200, results)
-
-      wrapper.find('SearchBar input[name="address-search"]').simulate('change', { target: { value: searchValue } })
-
-      jest.runAllTimers()
-      await flushAllPromises()
-      wrapper.update()
+      const [wrapper] = await searchResultWrapper({ searchValue, results })
 
       expect(wrapper.find('SearchBar input[name="address-search"]').props().value).toEqual(searchValue)
       expect(wrapper.find('SearchResultRow')).toHaveLength(1)

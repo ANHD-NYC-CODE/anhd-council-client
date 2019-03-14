@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Navbar, Nav, Col } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { getBoundaryPath } from 'shared/utilities/componentUtils'
+import { getBoundaryPath, addressResultToPath } from 'shared/utilities/routeUtils'
 import logo from 'shared/images/portallogo.png'
 import './style.scss'
 class SubHeader extends React.Component {
@@ -27,7 +27,15 @@ class SubHeader extends React.Component {
           <Nav variant="tabs" defaultActiveKey="/buildings">
             <Nav.Item>
               <Nav.Link as="li">
-                <Link to="/lookup">Building Lookup</Link>
+                <Link
+                  to={
+                    this.props.currentProperty
+                      ? addressResultToPath({ bbl: this.props.currentProperty, bin: this.props.currentBuilding })
+                      : '/lookup'
+                  }
+                >
+                  Building Lookup
+                </Link>
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
@@ -63,6 +71,8 @@ const mapStateToProps = state => {
   return {
     currentBoundaryType: state.appState.currentBoundaryType,
     currentBoundaryId: state.appState.currentBoundaryId,
+    currentProperty: state.appState.currentProperty,
+    currentBuilding: state.appState.currentBuilding,
   }
 }
 
