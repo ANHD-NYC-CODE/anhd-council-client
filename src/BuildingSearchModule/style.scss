@@ -1,12 +1,5 @@
 @import './src/shared/styles/bootstrap/index.scss';
 
-.search-module {
-  display: inline-block;
-  height: 60px;
-  position: relative;
-  width: 400px;
-}
-
 .search-module,
 .search-module .table-hover tbody tr:hover {
   z-index: 1000;
@@ -17,8 +10,4 @@
 }
 
 @media screen and (orientation: portrait) {
-  .search-module {
-    right: $large-spacing;
-    width: 200px;
-  }
 }

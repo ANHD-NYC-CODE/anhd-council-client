@@ -37,11 +37,10 @@ class BoundarySelect extends React.Component {
       <ConfigContext.Consumer>
         {config => (
           <Form.Group as={Row}>
-            <Col xs={6}>
+            <Col xs={!this.state.boundaryType ? 12 : 6}>
               <Form.Control
                 required
                 size="sm"
-                placeholder="Search boundary"
                 name="boundaryType"
                 as="select"
                 data-key="boundaryType"
@@ -54,7 +53,7 @@ class BoundarySelect extends React.Component {
                 value={this.state.boundaryType || -1}
               >
                 <option disabled value={-1} key={-1}>
-                  Select a boundary type
+                  {this.props.placeholder || 'Select a boundary type'}
                 </option>
                 <option value={b.COUNCILBOUNDARY.constant}>{b.COUNCILBOUNDARY.name}</option>
                 <option value={b.COMMUNITYBOUNDARY.constant}>{b.COMMUNITYBOUNDARY.name}</option>
@@ -105,6 +104,7 @@ BoundarySelect.propTypes = {
   currentBoundaryId: PropTypes.string,
   dispatch: PropTypes.func,
   confirmChange: PropTypes.bool,
+  placeholder: PropTypes.string,
 }
 
 export default BoundarySelect
