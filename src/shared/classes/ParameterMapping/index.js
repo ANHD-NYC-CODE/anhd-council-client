@@ -131,7 +131,7 @@ export class ParameterMapping {
 
   update({ dispatchAction = undefined, e = undefined } = {}) {
     if (e && !(e instanceof StandardizedInput))
-      throw 'please pass a StandardizedInput class insance into the "e" parameter'
+      throw 'please pass a StandardizedInput class instance into the "e" parameter'
 
     let updated = this.updateParameterMapValue(e)
 
@@ -176,5 +176,12 @@ export class ParameterMapping {
           break
       }
     })
+  }
+
+  toParamObject() {
+    return {
+      [`${this.field}${this.comparison ? '__' + this.comparison : ''}`]:
+        this.type === 'PERCENT' ? this.value / 100 : this.value,
+    }
   }
 }

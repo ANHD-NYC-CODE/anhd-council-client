@@ -40,8 +40,14 @@ export const setBoundaryTypeAndIdAndRedirect = (boundaryType, boundaryId) => dis
   dispatch(push(`/${path}/${boundaryId}`))
 }
 
-export const updateBoundaryFilter = (filter, filterIndex) => ({
-  type: c.SET_BOUNDARY_ID,
+export const updateMapFilter = (filter, filterIndex) => ({
+  type: c.UPDATE_MAP_FILTER,
+  filter,
+  filterIndex,
+})
+
+export const updateLookupFilter = (filter, filterIndex) => ({
+  type: c.UPDATE_LOOKUP_FILTER,
   filter,
   filterIndex,
 })
