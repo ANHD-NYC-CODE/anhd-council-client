@@ -1,6 +1,6 @@
 import * as c from '../constants'
 import { push } from 'connected-react-router'
-import { getBoundaryPath } from 'shared/utilities/componentUtils'
+import { getBoundaryPath } from 'shared/utilities/routeUtils'
 
 export const handleSetBoundaryType = boundaryType => ({
   type: c.SET_BOUNDARY_TYPE,

@@ -71,4 +71,26 @@ describe('navigation', () => {
       ).toEqual('/district/3')
     })
   })
+
+  describe('with current property app state', () => {
+    it('changes lookup link to the selected property', () => {
+      const wrapper = setupWrapper({ appState: { currentProperty: '1' } })
+      expect(
+        wrapper
+          .find('SubHeader a')
+          .at(1)
+          .props().href
+      ).toEqual('/property/1')
+    })
+
+    it('changes lookup link to the selected property and building', () => {
+      const wrapper = setupWrapper({ appState: { currentProperty: '1', currentBuilding: '7' } })
+      expect(
+        wrapper
+          .find('SubHeader a')
+          .at(1)
+          .props().href
+      ).toEqual('/property/1/building/7')
+    })
+  })
 })

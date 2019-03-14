@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import MapMarkerIcon from 'shared/styles/icons/MapMarkerIcon'
 import BuildingIcon from 'shared/styles/icons/BuildingIcon'
-
+import { addressResultToPath } from 'shared/utilities/routeUtils'
 import { LinkContainer } from 'react-router-bootstrap'
 
 import './style.scss'
@@ -16,7 +16,7 @@ const SearchResultRow = props => {
         </td>
         <LinkContainer
           onClick={e => props.onClick(e, props.result)}
-          to={`/property/${props.result.bbl}/building/${props.result.bin}`}
+          to={addressResultToPath({ bbl: props.result.bbl, bin: props.result.bin })}
         >
           <td>{`${props.result.buildingnumber} ${props.result.buildingstreet}, ${props.result.borough}`}</td>
         </LinkContainer>
@@ -31,7 +31,7 @@ const SearchResultRow = props => {
         </td>
         <LinkContainer
           onClick={e => props.onClick(e, props.result)}
-          to={`/property/${props.result.bbl}/building/${props.result.bin}`}
+          to={addressResultToPath({ bbl: props.result.bbl, bin: props.result.bin })}
         >
           <td>
             {`${props.result.propertyaddress}, ${props.result.borough}`}
@@ -47,7 +47,10 @@ const SearchResultRow = props => {
         <td>
           <MapMarkerIcon />
         </td>
-        <LinkContainer onClick={e => props.onClick(e, props.result)} to={`/property/${props.result.bbl}`}>
+        <LinkContainer
+          onClick={e => props.onClick(e, props.result)}
+          to={addressResultToPath({ bbl: props.result.bbl, bin: props.result.bin })}
+        >
           <td>{`Property address: ${props.result.propertyaddress} - ${props.result.borough}`}</td>
         </LinkContainer>
       </tr>
