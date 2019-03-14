@@ -18,7 +18,7 @@ import { getCouncilPropertySummary } from 'Store/Council/actions'
 import { constructActionKey } from 'shared/utilities/actionUtils'
 import BuildingHistoryTable from 'Lookup/BuildingHistoryTable'
 
-class DistrictMap extends React.Component {
+class AlertMap extends React.Component {
   constructor(props) {
     super(props)
     if (props.path && props.id && (!props.appState.currentBoundaryType || !props.appState.currentBoundaryId)) {
@@ -61,7 +61,7 @@ class DistrictMap extends React.Component {
   }
 }
 
-DistrictMap.propTypes = {
+AlertMap.propTypes = {
   dispatch: PropTypes.func,
 }
 
@@ -89,4 +89,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(DistrictMap)
+export default connect(mapStateToProps)(AlertMap)
