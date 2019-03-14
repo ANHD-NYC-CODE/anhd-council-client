@@ -8,14 +8,13 @@ import FormError from 'shared/components/FormError'
 import { StandardizedInput } from 'shared/classes/StandardizedInput'
 
 import { addBoundary, updateBoundary } from 'Store/AdvancedSearch/actions'
-
+import { getBoundaryIdOptions } from 'shared/utilities/componentUtils'
 import { Form, Row, Col } from 'react-bootstrap'
 
 export class BoundaryQuery extends React.Component {
   constructor(props) {
     super(props)
 
-    this.getBoundaryIdOptions = this.getBoundaryIdOptions.bind(this)
     this.addBoundary = this.addBoundary.bind(this)
     this.changeBoundary = this.changeBoundary.bind(this)
   }
@@ -31,33 +30,6 @@ export class BoundaryQuery extends React.Component {
     e = new StandardizedInput(e)
     boundary[e.key] = e.value
     this.props.dispatch(updateBoundary(index, boundary))
-  }
-
-  getBoundaryIdOptions(type) {
-    switch (type) {
-      case 'council':
-        return [
-          <option disabled value={-1} key={-1}>
-            #
-          </option>,
-          ...this.props.districts.map(d => (
-            <option key={`boundary-id-option-${d.id}`} value={d.id}>
-              {d.id}
-            </option>
-          )),
-        ]
-      case 'cd':
-        return [
-          <option disabled value={-1} key={-1}>
-            #
-          </option>,
-          ...this.props.boards.map(d => (
-            <option key={`boundary-id-option-${d.id}`} value={d.id}>
-              {d.id}
-            </option>
-          )),
-        ]
-    }
   }
 
   render() {
@@ -104,7 +76,7 @@ export class BoundaryQuery extends React.Component {
                 isInvalid={(this.props.touched.boundaryId || !!this.props.submitCount) && this.props.errors.boundaryId}
                 value={boundary.id || -1}
               >
-                {this.getBoundaryIdOptions(boundary.queryName)}
+                {getBoundaryIdOptions(this.props.districts, this.props.boards, boundary.queryName)}
               </Form.Control>
 
               <FormError

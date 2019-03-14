@@ -4,10 +4,10 @@ export class Boundary {
   constructor(boundaryConstant, id) {
     this._id = id
     this._errors = []
-    this.setBoundaryType(boundaryConstant)
+    this.handleSetBoundaryType(boundaryConstant)
   }
 
-  setBoundaryType(boundaryConstant) {
+  handleSetBoundaryType(boundaryConstant) {
     const boundaryType = b[Object.keys(b).find(obj => b[obj].constant === boundaryConstant)]
     if (boundaryType) {
       this._boundaryType = boundaryType
@@ -55,7 +55,7 @@ export class Boundary {
   }
 
   set boundaryType(boundaryConstant) {
-    this.setBoundaryType(boundaryConstant)
+    this.handleSetBoundaryType(boundaryConstant)
     this.id = undefined // Clear the ID to avoid boundary/id mismatches
   }
 

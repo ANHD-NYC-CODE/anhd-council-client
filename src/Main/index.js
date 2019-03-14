@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import BuildingSearchModule from '../BuildingSearchModule'
+import BoundarySelect from 'shared/components/BoundarySelect'
 
 class Main extends React.Component {
   constructor(props) {
@@ -12,6 +13,11 @@ class Main extends React.Component {
     return (
       <div className="main">
         <BuildingSearchModule />
+        <BoundarySelect
+          currentBoundaryType={this.props.appState.currentBoundaryType}
+          currentBoundaryId={this.props.appState.currentBoundaryId}
+          dispatch={this.props.dispatch}
+        />
       </div>
     )
   }
@@ -26,8 +32,7 @@ Main.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    auth: state.auth,
-    path: state.router.location.pathname,
+    appState: state.appState,
   }
 }
 
