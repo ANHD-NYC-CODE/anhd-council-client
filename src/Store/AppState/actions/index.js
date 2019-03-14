@@ -18,6 +18,22 @@ export const handleSetBoundaryTypeAndId = (boundaryType, boundaryId) => ({
   boundaryId,
 })
 
+export const handleSetProperty = propertyId => ({
+  type: c.SET_PROPERTY,
+  data: propertyId,
+})
+
+export const handleSetBuilding = buildingId => ({
+  type: c.SET_BUILDING,
+  data: buildingId,
+})
+
+export const handleSetPropertyAndBuilding = (propertyId, buildingId) => ({
+  type: c.SET_PROPERTY_AND_BUILDING,
+  propertyId,
+  buildingId,
+})
+
 export const setBoundaryTypeAndIdAndRedirect = (boundaryType, boundaryId) => dispatch => {
   dispatch(handleSetBoundaryTypeAndId(boundaryType, boundaryId))
   const path = getBoundaryPath(boundaryType)

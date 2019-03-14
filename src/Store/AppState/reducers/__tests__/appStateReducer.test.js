@@ -39,4 +39,36 @@ describe('App State reducer', () => {
       })
     })
   })
+
+  describe('SET_PROPERTY', () => {
+    const property = '1000010001'
+    it('sets the boundary', () => {
+      expect(r.appStateReducer(undefined, a.handleSetProperty(property))).toEqual({
+        ...r.initialState,
+        currentProperty: property,
+      })
+    })
+  })
+
+  describe('SET_BUILDING', () => {
+    const building = '9999999'
+    it('sets the boundary', () => {
+      expect(r.appStateReducer(undefined, a.handleSetBuilding(building))).toEqual({
+        ...r.initialState,
+        currentBuilding: building,
+      })
+    })
+  })
+
+  describe('SET_PROPERTY_AND_BUILDING', () => {
+    const property = '1000010001'
+    const building = '9999999'
+    it('sets the boundary', () => {
+      expect(r.appStateReducer(undefined, a.handleSetPropertyAndBuilding(property, building))).toEqual({
+        ...r.initialState,
+        currentProperty: property,
+        currentBuilding: building,
+      })
+    })
+  })
 })

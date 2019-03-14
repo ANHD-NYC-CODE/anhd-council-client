@@ -32,7 +32,7 @@ class Main extends React.Component {
           </Col>
           <Col xs={12} sm={12} md={6} lg={7}>
             <h5>Select a district to begin, or search for a building address.</h5>
-            <Form>
+            <Form autoComplete="off">
               <Form.Group>
                 <BuildingSearchModule placeholder="Building Lookup Tool" />
               </Form.Group>

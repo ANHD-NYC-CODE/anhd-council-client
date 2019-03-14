@@ -3,6 +3,8 @@ import * as c from '../constants'
 export const initialState = {
   currentBoundaryType: undefined,
   currentBoudaryId: undefined,
+  currentProperty: undefined,
+  currentBuilding: undefined,
   boundaryFilters: [],
 }
 
@@ -35,6 +37,25 @@ export const appStateReducer = (state = Object.freeze(initialState), action = { 
           action.filter,
           ...state.boundaryFilters.slice(action.filterIndex),
         ],
+      }
+    }
+    case c.SET_PROPERTY: {
+      return {
+        ...state,
+        currentProperty: action.data,
+      }
+    }
+    case c.SET_BUILDING: {
+      return {
+        ...state,
+        currentBuilding: action.data,
+      }
+    }
+    case c.SET_PROPERTY_AND_BUILDING: {
+      return {
+        ...state,
+        currentProperty: action.propertyId,
+        currentBuilding: action.buildingId,
       }
     }
     default:
