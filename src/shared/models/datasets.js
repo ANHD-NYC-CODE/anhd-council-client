@@ -10,7 +10,6 @@ export const HPD_VIOLATION = databaseObject => ({
   schema: constructDefaultSchema({
     databaseObject,
     constant: 'HPD_VIOLATION',
-    dateFieldQuery: 'approveddate',
     amountFieldQuery: 'count',
     capitalizeDepartment: true,
   }),
@@ -24,7 +23,6 @@ export const DOB_VIOLATION = databaseObject => ({
   schema: constructDefaultSchema({
     databaseObject,
     constant: 'DOB_VIOLATION',
-    dateFieldQuery: 'issuedate',
     amountFieldQuery: 'count',
     capitalizeDepartment: true,
   }),
@@ -38,7 +36,6 @@ export const ECB_VIOLATION = databaseObject => ({
   schema: constructDefaultSchema({
     databaseObject,
     constant: 'ECB_VIOLATION',
-    dateFieldQuery: 'issuedate',
     amountFieldQuery: 'count',
     capitalizeDepartment: true,
   }),
@@ -52,7 +49,6 @@ export const HPD_COMPLAINT = databaseObject => ({
   schema: constructDefaultSchema({
     databaseObject,
     constant: 'HPD_COMPLAINT',
-    dateFieldQuery: 'receiveddate',
     amountFieldQuery: 'count',
     capitalizeDepartment: true,
   }),
@@ -66,7 +62,6 @@ export const DOB_COMPLAINT = databaseObject => ({
   schema: constructDefaultSchema({
     databaseObject,
     constant: 'DOB_COMPLAINT',
-    dateFieldQuery: 'dateentered',
     amountFieldQuery: 'count',
     capitalizeDepartment: true,
   }),
@@ -80,7 +75,6 @@ export const EVICTION = databaseObject => ({
   schema: constructDefaultSchema({
     databaseObject,
     constant: 'EVICTION',
-    dateFieldQuery: 'executeddate',
     amountFieldQuery: 'count',
     capitalizeDepartment: false,
     defaultAmount: 1,
@@ -96,7 +90,6 @@ export const PROPERTY_SALE_BY_AMOUNT = databaseObject => ({
     databaseObject,
     constant: 'PROPERTY_SALE_BY_AMOUNT',
     apiField: 'acrisreallegals',
-    dateFieldQuery: 'documentid__docdate',
     amountFieldQuery: 'documentid__docamount',
     amountNoun: '',
     amountValuePrefix: '$',
@@ -114,7 +107,6 @@ export const PROPERTY_SALE_BY_COUNT = databaseObject => ({
     databaseObject,
     constant: 'PROPERTY_SALE_BY_COUNT',
     apiField: 'acrisreallegals',
-    dateFieldQuery: 'documentid__docdate',
     amountFieldQuery: 'documentid__count',
     amountPropertyAdjective: 'were sold',
     defaultAmount: 2,
@@ -132,7 +124,6 @@ export const FORECLOSURE = databaseObject => ({
     databaseObject,
     constant: 'FORECLOSURE',
     apiField: 'lispendens',
-    dateFieldQuery: 'fileddate',
     amountFieldQuery: 'count',
     defaultAmount: '1',
     capitalizeDepartment: false,
@@ -154,7 +145,6 @@ export const DOB_ISSUED_PERMIT = databaseObject => ({
   schema: constructDefaultSchema({
     databaseObject,
     constant: 'DOB_ISSUED_PERMIT',
-    dateFieldQuery: 'issuedate',
     amountFieldQuery: 'count',
     capitalizeDepartment: true,
     defaultAmount: 5,
@@ -170,7 +160,6 @@ export const DOB_FILED_PERMIT = databaseObject => ({
     databaseObject,
     constant: 'DOB_FILED_PERMIT',
     apiField: 'doblegacyfiledpermits',
-    dateFieldQuery: 'dobrundate',
     amountFieldQuery: 'count',
     capitalizeDepartment: true,
     defaultAmount: 5,
@@ -185,7 +174,6 @@ export const HOUSING_LITIGATION = databaseObject => ({
   schema: constructDefaultSchema({
     databaseObject,
     constant: 'HOUSING_LITIGATION',
-    dateFieldQuery: 'caseopendate',
     amountFieldQuery: 'count',
     capitalizeDepartment: false,
     defaultAmount: 1,

@@ -6,23 +6,49 @@ import * as d from 'shared/constants/datasets'
 
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
-import { createMatchSelector } from 'connected-react-router'
+import { push, createMatchSelector } from 'connected-react-router'
 import GeographySelect from 'shared/components/GeographySelect'
 
 import LeafletMap from 'LeafletMap'
 import { Row, Col } from 'react-bootstrap'
-import { setGeographyTypeAndIdAndRedirect } from 'Store/AppState/actions'
-import { pathToGeography } from 'shared/utilities/routeUtils'
-import RecordsFetchModule from 'shared/components/RecordsFetchModule'
+import { setGeographyAndRequestsAndRedirect } from 'Store/AppState/actions'
+import { pathToGeographyConstant } from 'shared/utilities/routeUtils'
 import { getCouncilPropertySummary } from 'Store/Council/actions'
-import { constructActionKey } from 'shared/utilities/actionUtils'
-import BuildingHistoryTable from 'Lookup/BuildingHistoryTable'
+import { lookupRequests } from 'Store/AppState/selectors'
+import RequestWrapper from 'shared/components/RequestWrapper'
 
 class AlertMap extends React.Component {
   constructor(props) {
     super(props)
-    if (props.path && props.id && (!props.appState.currentGeographyType || !props.appState.currentGeographyId)) {
-      props.dispatch(setGeographyTypeAndIdAndRedirect(pathToGeography(props.path), props.id))
+
+    if (!props.geographyType) {
+      props.dispatch(push('/map'))
+    } else if (!props.appState.currentGeographyType && props.geographyType) {
+      props.dispatch(
+        setGeographyAndRequestsAndRedirect({
+          geographyType: pathToGeographyConstant(props.geographyType),
+          geographyId: props.geographyId,
+        })
+      )
+    } else {
+      return
+      // Request geography profile
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.geographyType) {
+      nextProps.dispatch(push('/map'))
+    } else if (!nextProps.appState.currentGeographyType && nextProps.geographyType) {
+      nextProps.dispatch(
+        setGeographyAndRequestsAndRedirect({
+          geographyType: pathToGeographyConstant(nextProps.geographyType),
+          geographyId: nextProps.geographyId,
+        })
+      )
+    } else {
+      return
+      // Request geography profile
     }
   }
 
@@ -39,22 +65,9 @@ class AlertMap extends React.Component {
           />
         </Col>
         <Col sm={12} md={8}>
-          {!!this.props.appState.currentGeographyType && !!this.props.appState.currentGeographyId && (
-            <div className="district-map-show">
-              <RecordsFetchModule
-                actionKey={constructActionKey([c.GET_COUNCIL_PROPERTIES, d.HPDVIOLATIONS.constant])}
-                id={this.props.appState.currentGeographyId}
-                dataset={d.HPDVIOLATIONS}
-                recordsFetch={getCouncilPropertySummary}
-                reducerPath="council.districtPropertySummaries"
-                render={(title, records, loading, error) => (
-                  <BuildingHistoryTable title={title} records={records} loading={loading} error={error} />
-                )}
-                title="Properties with +10 HPD Violations Last Month"
-                urlParams={{ type: d.HPDVIOLATIONS.queryName, comparison: 'gte', value: '10', startDate: '2019-01-01' }}
-              />
-            </div>
-          )}
+          {this.props.mapRequests.map((request, index) => {
+            return <RequestWrapper key={`map-request-wrapper-${index}`} request={request} />
+          })}
         </Col>
       </Row>
     )
@@ -75,7 +88,6 @@ const mapStateToProps = state => {
     path: `/${path}/:id`,
   })
   const match = matchSelector(state)
-
   return {
     appState: state.appState,
     districts: state.council.districts,
@@ -83,9 +95,10 @@ const mapStateToProps = state => {
     districtHousing: state.council.districtHousing,
     loading: loadingSelector(state),
     error: errorSelector(state),
-    id: match ? match.params.id : null,
-    path: path,
+    geographyId: match ? match.params.id : null,
+    geographyType: path,
     router: state.router,
+    mapRequests: lookupRequests(state, 'MAP_FILTER'),
   }
 }
 

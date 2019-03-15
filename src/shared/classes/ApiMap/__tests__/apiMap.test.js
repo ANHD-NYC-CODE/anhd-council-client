@@ -13,6 +13,11 @@ describe('ApiMap', () => {
       const apiMap = new ApiMap({ constant: 'HPD_VIOLATION' })
       expect(apiMap.queryName).toEqual('hpdviolations')
     })
+
+    it('returns the calculated queryName that ends in y', () => {
+      const apiMap = new ApiMap({ constant: 'COMMUNITY' })
+      expect(apiMap.queryName).toEqual('communities')
+    })
   })
 
   describe('get model', () => {
@@ -26,6 +31,11 @@ describe('ApiMap', () => {
     it('returns the calculated url', () => {
       const apiMap = new ApiMap({ constant: 'HPD_VIOLATION' })
       expect(apiMap.url).toEqual('/hpdviolations/')
+    })
+
+    it('returns the calculated url that ends in y', () => {
+      const apiMap = new ApiMap({ constant: 'PROPERTY' })
+      expect(apiMap.url).toEqual('/properties/')
     })
 
     it('returns the calculated url with id', () => {

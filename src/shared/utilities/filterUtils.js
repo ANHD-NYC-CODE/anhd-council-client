@@ -8,8 +8,12 @@ import ComparisonFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/Comparis
 import DateField from 'AdvancedSearch/FilterComponent/Field/DateField'
 import IntegerField from 'AdvancedSearch/FilterComponent/Field/IntegerField'
 
+const pluralize = constant => {
+  return constant.toUpperCase().endsWith('Y') ? constant.slice(0, -1) + 'ies' : constant + 's'
+}
+
 export const constantToQueryName = constant => {
-  return `${constant.replace(/_/g, '').toLowerCase()}s`
+  return `${pluralize(constant.replace(/_/g, '').toLowerCase())}`
 }
 
 export const constantToModelName = constant => {
@@ -22,21 +26,21 @@ export const constantToName = ({ constant = '', plural = true, capitalizeDepartm
       return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase()
     })
     tokens[0] = tokens[0].toUpperCase()
-    return `${tokens.join(' ')}${plural ? 's' : ''}`
+    return `${plural ? pluralize(tokens.join(' ')) : tokens.join(' ')}`
   } else {
-    return `${constant
+    const name = constant
       .split('_')
       .map(string => {
         return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase()
       })
-      .join(' ')}${plural ? 's' : ''}`
+      .join(' ')
+    return `${plural ? pluralize(name) : name}`
   }
 }
 
 export const constructDefaultSchema = ({
   constant = '',
   apiField = undefined,
-  dateFieldQuery = '',
   defaultDate = '',
   amountFieldQuery = '',
   defaultAmount = '',
@@ -104,7 +108,7 @@ export const constructDefaultSchema = ({
             'DATE',
             `${constantToQueryName(constant)}Range`
           ),
-          field: `${apiField ? apiField : constantToQueryName(constant)}${dateFieldQuery ? '__' + dateFieldQuery : ''}`,
+          field: `${apiField ? apiField : constantToQueryName(constant)}__${getDatasetDateField(constant)}`,
           comparison: 'gte',
           value:
             defaultDate ||
@@ -134,7 +138,7 @@ export const constructDefaultSchema = ({
             'DATE',
             `${constantToQueryName(constant)}Range`
           ),
-          field: `${apiField ? apiField : constantToQueryName(constant)}${dateFieldQuery ? '__' + dateFieldQuery : ''}`,
+          field: `${apiField ? apiField : constantToQueryName(constant)}__${getDatasetDateField(constant)}`,
           comparison: 'lte',
           value:
             defaultDate ||
@@ -225,4 +229,33 @@ export const comparisonOptions = (comparisons, labels, type, rangeKey) => {
     label: labels[index] || defaultLabels[comparison],
     rangeKey: rangeKey,
   }))
+}
+
+export const getDatasetDateField = datasetConstant => {
+  switch (datasetConstant) {
+    case 'HPD_VIOLATION':
+      return 'approveddate'
+    case 'DOB_VIOLATION':
+      return 'issuedate'
+    case 'ECB_VIOLATION':
+      return 'issuedate'
+    case 'HPD_COMPLAINT':
+      return 'receiveddate'
+    case 'DOB_COMPLAINT':
+      return 'dateentered'
+    case 'EVICTION':
+      return 'executeddate'
+    case 'PROPERTY_SALE_BY_AMOUNT':
+      return 'documentid__docdate'
+    case 'PROPERTY_SALE_BY_COUNT':
+      return 'documentid__docdate'
+    case 'FORECLOSURE':
+      return 'fileddate'
+    case 'DOB_ISSUED_PERMIT':
+      return 'issuedate'
+    case 'DOB_FILED_PERMIT':
+      return 'dobrundate'
+    case 'HOUSING_LITIGATION':
+      return 'caseopendate'
+  }
 }

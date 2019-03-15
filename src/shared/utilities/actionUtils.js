@@ -7,9 +7,10 @@ import { DataRequest } from 'shared/classes/DataRequest'
 import { getApiMap } from 'shared/utilities/classUtils'
 
 import { ApiMap } from 'shared/classes/ApiMap'
-
+import { ParameterMapping } from 'shared/classes/ParameterMapping'
 import { Dataset } from 'shared/classes/Dataset'
-import { constantToModelName } from 'shared/utilities/filterUtils'
+import { constantToModelName, constantToQueryName, getDatasetDateField } from 'shared/utilities/filterUtils'
+import moment from 'moment'
 
 const ERROR_400_MESSAGE = 'Incorrect username or password.'
 const ERROR_401_MESSAGE = 'Please login for access.'
@@ -142,7 +143,7 @@ export const newPropertyRequest = ({ type = undefined, bbl = undefined, resource
   return new DataRequest({
     type: type,
     apiMaps: [
-      new ApiMap({ constant: 'PROPERTY', queryName: 'properties', resourceId: bbl }),
+      new ApiMap({ constant: 'PROPERTY', resourceId: bbl }),
       resourceConstant ? getApiMap(resourceConstant) : undefined,
     ].filter(a => !!a),
   })
@@ -179,4 +180,36 @@ export const newLookupRequests = ({ bbl, bin } = {}) => {
       ? newBuildingRequest({ type: 'LOOKUP_FILTER', bin: bin, resourceConstant: 'HOUSING_LITIGATION' })
       : newPropertyRequest({ type: 'LOOKUP_FILTER', bbl: bbl, resourceConstant: 'HOUSING_LITIGATION' }),
   ].filter(r => !!r)
+}
+
+export const newGeographyRequest = ({
+  type = undefined,
+  geographyType = undefined,
+  geographyId,
+  resourceConstant = undefined,
+} = {}) => {
+  return new DataRequest({
+    type: type,
+    apiMaps: [new ApiMap({ constant: geographyType, resourceId: geographyId }), new ApiMap({ constant: 'PROPERTY' })],
+    paramMaps: [
+      new ParameterMapping({ field: constantToQueryName(resourceConstant), comparison: 'gte', value: 10 }),
+      new ParameterMapping({
+        field: getDatasetDateField(resourceConstant),
+        comparison: 'gte',
+        value: moment(moment.now())
+          .subtract(1, 'M')
+          .format('YYYY-MM-DD'),
+      }),
+    ],
+  })
+}
+
+export const newMapRequests = ({ geographyType, geographyId } = {}) => {
+  return [
+    newGeographyRequest({ type: 'MAP_FILTER', geographyType, geographyId, resourceConstant: 'HPD_VIOLATION' }),
+    newGeographyRequest({ type: 'MAP_FILTER', geographyType, geographyId, resourceConstant: 'DOB_VIOLATION' }),
+    newGeographyRequest({ type: 'MAP_FILTER', geographyType, geographyId, resourceConstant: 'HPD_COMPLAINT' }),
+    newGeographyRequest({ type: 'MAP_FILTER', geographyType, geographyId, resourceConstant: 'EVICTION' }),
+    newGeographyRequest({ type: 'MAP_FILTER', geographyType, geographyId, resourceConstant: 'DOB_ISSUED_PERMIT' }),
+  ]
 }

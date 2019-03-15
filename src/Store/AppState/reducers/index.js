@@ -29,6 +29,14 @@ export const appStateReducer = (state = Object.freeze(initialState), action = { 
         currentGeographyId: action.geographyId,
       }
     }
+    case c.SET_GEOGRAPHY_REQUESTS: {
+      return {
+        ...state,
+        currentGeographyType: action.geographyType,
+        currentGeographyId: action.geographyId,
+        requests: [...state.requests, ...action.requests],
+      }
+    }
     case c.SET_PROPERTY: {
       return {
         ...state,
@@ -53,7 +61,13 @@ export const appStateReducer = (state = Object.freeze(initialState), action = { 
         ...state,
         currentProperty: action.propertyId,
         currentBuilding: action.buildingId,
-        requests: action.requests,
+        requests: [...state.requests, ...action.requests],
+      }
+    }
+    case c.REMOVE_REQUEST_TYPE: {
+      return {
+        ...state,
+        requests: state.requests.filter(request => request.type === action.requestType),
       }
     }
     default:
