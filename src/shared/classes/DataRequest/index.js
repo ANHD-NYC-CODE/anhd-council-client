@@ -1,7 +1,6 @@
 export class DataRequest {
-  constructor({ type = undefined, results = [], paramMaps = [], apiMaps = [] } = {}) {
+  constructor({ type = undefined, paramMaps = [], apiMaps = [] } = {}) {
     this._type = type
-    this._results = results
     this._paramMaps = paramMaps
     this._apiMaps = apiMaps
     this._called = false
@@ -13,14 +12,6 @@ export class DataRequest {
 
   set type(type) {
     this._type = type
-  }
-
-  get results() {
-    return this._results
-  }
-
-  set results(results) {
-    this._results = results
   }
 
   get paramMaps() {
