@@ -194,8 +194,8 @@ export const newGeographyRequest = ({
     paramMaps: [
       new ParameterMapping({ field: constantToQueryName(resourceConstant), comparison: 'gte', value: 10 }),
       new ParameterMapping({
-        field: `${constantToQueryName(resourceConstant)}__${getDatasetDateField(resourceConstant)}`,
-        comparison: 'gte',
+        field: `${constantToQueryName(resourceConstant)}__start`,
+        comparison: '',
         value: moment(moment.now())
           .subtract(1, 'M')
           .format('YYYY-MM-DD'),
