@@ -27,6 +27,17 @@ export const requestReducer = (state = Object.freeze(initialState), action = { d
       }
     }
 
+    case c.REMOVE_MANY_REQUESTS: {
+      let newState = state
+      action.requestConstantsArray.forEach(constant => {
+        delete newState[constant]
+      })
+
+      return {
+        ...newState,
+      }
+    }
+
     default:
       return {
         ...state,

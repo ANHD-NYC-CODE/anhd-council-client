@@ -18,10 +18,6 @@ class RequestWrapper extends React.Component {
     nextProps.dispatch(requestWithAuth(makeRequest(nextProps.request)))
   }
 
-  componentWillUnmount() {
-    this.props.request.called = false
-  }
-
   render() {
     return (
       <div className="request-wrapper">

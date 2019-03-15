@@ -45,4 +45,13 @@ describe('App State reducer', () => {
       })
     })
   })
+
+  describe('REMOVE_MANY_REQUESTS', () => {
+    const remove = ['A', 'B']
+    it('removes the request key', () => {
+      expect(r.requestReducer({ A: 1, B: 1, C: 0 }, a.removeManyRequests(remove))).toEqual({
+        C: 0,
+      })
+    })
+  })
 })
