@@ -7,6 +7,7 @@ import { StandardizedInput } from 'shared/classes/StandardizedInput'
 import { getAdvancedSearch } from 'Store/AdvancedSearch/actions'
 import { requestWithAuth } from 'shared/utilities/authUtils'
 import { getAdvancedSearchParamMaps } from 'Store/AdvancedSearch/utilities/advancedSearchStoreUtils'
+import ConfigContext from 'Config/ConfigContext'
 
 import { addHousingType, updateHousingType } from 'Store/AdvancedSearch/actions'
 
@@ -94,16 +95,24 @@ class AdvancedSearchForm extends React.Component {
         {({ handleSubmit, handleChange, handleBlur, touched, errors, submitCount }) => (
           <Form noValidate className="advanced-search-form" onSubmit={handleSubmit} validated={this.state.validated}>
             <FormError show={!!this.props.error} message={(this.props.error || {}).message} />
-            <GeographyQuery
-              addGeography={this.addGeography}
-              geographies={this.props.advancedSearch.geographies}
-              changeGeography={this.changeGeography}
-              handleChange={handleChange}
-              handleBlur={handleBlur}
-              touched={touched}
-              errors={errors}
-              submitCount={submitCount}
-            />
+            <ConfigContext.Consumer>
+              {config => {
+                return (
+                  <GeographyQuery
+                    addGeography={this.addGeography}
+                    geographies={this.props.advancedSearch.geographies}
+                    changeGeography={this.changeGeography}
+                    config={config}
+                    dispatch={this.props.dispatch}
+                    handleChange={handleChange}
+                    handleBlur={handleBlur}
+                    touched={touched}
+                    errors={errors}
+                    submitCount={submitCount}
+                  />
+                )
+              }}
+            </ConfigContext.Consumer>
             <HousingTypeQuery
               addHousingType={this.addHousingType}
               changeHousingType={this.changeHousingType}

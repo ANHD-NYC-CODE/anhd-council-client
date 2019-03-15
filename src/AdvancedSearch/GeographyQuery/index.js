@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 import * as b from 'shared/constants/geographies'
 import { Geography } from 'shared/classes/Geography'
 import FormError from 'shared/components/FormError'
@@ -80,7 +79,11 @@ export class GeographyQuery extends React.Component {
                 }
                 value={geography.id || -1}
               >
-                {getGeographyIdOptions(this.props.districts, this.props.boards, geography.queryName)}
+                {getGeographyIdOptions(
+                  this.props.config.councilDistricts,
+                  this.props.config.communityDistricts,
+                  geography.queryName
+                )}
               </Form.Control>
 
               <FormError
@@ -127,16 +130,8 @@ export class GeographyQuery extends React.Component {
 GeographyQuery.propTypes = {
   addGeography: PropTypes.func,
   changeGeography: PropTypes.func,
-  boards: PropTypes.array,
+  config: PropTypes.object,
   geographies: PropTypes.array,
-  districts: PropTypes.array,
 }
 
-const mapStateToProps = state => {
-  return {
-    boards: state.community.boards,
-    districts: state.council.districts,
-  }
-}
-
-export default connect(mapStateToProps)(GeographyQuery)
+export default GeographyQuery

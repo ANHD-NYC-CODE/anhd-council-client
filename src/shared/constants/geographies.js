@@ -5,7 +5,7 @@ export const COUNCILGEOGRAPHY = {
 }
 
 export const COMMUNITYGEOGRAPHY = {
-  name: 'Community Board',
+  name: 'Community District',
   queryName: 'cd',
   constant: 'COMMUNITY',
 }

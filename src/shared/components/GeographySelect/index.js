@@ -76,7 +76,7 @@ class GeographySelect extends React.Component {
                   size="sm"
                   value={this.state.geographyId || -1}
                 >
-                  {getGeographyIdOptions(config.districts, config.boards, this.state.geographyType)}
+                  {getGeographyIdOptions(config.councilDistricts, config.communityDistricts, this.state.geographyType)}
                 </Form.Control>
               </Col>
             )}
@@ -107,6 +107,7 @@ class GeographySelect extends React.Component {
 GeographySelect.propTypes = {
   currentGeographyType: PropTypes.string,
   currentGeographyId: PropTypes.string,
+  config: PropTypes.object,
   dispatch: PropTypes.func,
   confirmChange: PropTypes.bool,
   placeholder: PropTypes.string,
