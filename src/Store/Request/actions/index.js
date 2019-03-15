@@ -6,10 +6,10 @@ export const addRequest = requestConstant => ({
   requestConstant,
 })
 
-export const receiveRequestResults = (results, requestConstant) => ({
-  type: c.RECEIVE_REQUEST_RESULTS,
-  requestConstant,
-  results,
+export const handleRequestResults = (response, requestConstant) => ({
+  type: c.HANDLE_REQUEST_RESULTS,
+  requestConstant: requestConstant,
+  results: response.data,
 })
 
 export const removeRequest = requestConstant => ({
@@ -30,6 +30,6 @@ export const makeRequest = dataRequest => (dispatch, getState, access_token) => 
     dataRequest.params,
     access_token,
     dataRequest.requestConstant,
-    receiveRequestResults
+    handleRequestResults
   )
 }

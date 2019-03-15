@@ -8,11 +8,18 @@ export const requestReducer = (state = Object.freeze(initialState), action = { d
         ...state,
         [action.requestConstant]: undefined,
       }
-    case c.RECEIVE_REQUEST_RESULTS:
-      return {
-        ...state,
-        [action.requestConstant]: action.results,
+    case c.HANDLE_REQUEST_RESULTS: {
+      if (action.requestConstant in state) {
+        return {
+          ...state,
+          [action.requestConstant]: action.results,
+        }
+      } else {
+        return {
+          ...state,
+        }
       }
+    }
     case c.REMOVE_REQUEST: {
       const { [action.requestConstant]: undefined, ...newState } = state
       return {

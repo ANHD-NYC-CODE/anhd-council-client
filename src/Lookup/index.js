@@ -2,14 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { push, createMatchSelector } from 'connected-react-router'
-import * as a from 'Store/Building/actions'
 import * as c from 'Store/Building/constants'
 import * as d from 'shared/constants/datasets'
 import { lookupRequests } from 'Store/AppState/selectors'
 import { setLookupAndRequestsAndRedirect } from 'Store/AppState/actions'
 import { makeRequest } from 'Store/Request/actions'
 
-import { requestWithAuth } from 'shared/utilities/authUtils'
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
 import { getBuildingResource } from 'Store/Building/actions'
@@ -19,6 +17,8 @@ import AddressSearch from 'Lookup/AddressSearch'
 import { Row, Col, Jumbotron } from 'react-bootstrap'
 import RecordsFetchModule from 'shared/components/RecordsFetchModule'
 import BuildingHistoryTable from 'Lookup/BuildingHistoryTable'
+
+import RequestWrapper from 'shared/components/RequestWrapper'
 
 class Lookup extends React.Component {
   constructor(props) {
@@ -42,45 +42,19 @@ class Lookup extends React.Component {
   }
 
   render() {
+    console.log(this.props.lookupRequests)
     return (
       <Row>
-        <h1>Building Lookup</h1>
         <Col sm={12} md={5}>
           <AddressSearch />
+          {!!this.props.propertyProfileRequest && <RequestWrapper request={this.props.propertyProfileRequest} />}
           <LeafletMap />
         </Col>
         <Col sm={12} md={7}>
-          {this.props.bin && (
-            <div>
-              <h2>Building Info</h2>
-              <Jumbotron style={{ maxHeight: '500px' }}>
-                {this.props.loading ? <div>Loading</div> : JSON.stringify(this.props.building.currentBuilding, null, 2)}
-              </Jumbotron>
-              <h2>Building History</h2>
-              <RecordsFetchModule
-                actionKey={constructActionKey([c.GET_BUILDING_RESOURCE, d.HPDVIOLATIONS.constant])}
-                id={this.props.bin}
-                dataset={d.HPDVIOLATIONS}
-                recordsFetch={getBuildingResource}
-                reducerPath="building"
-                render={(title, records, loading, error) => (
-                  <BuildingHistoryTable loading={loading} error={error} title={title} records={records} />
-                )}
-                title="HPD Violations"
-              />
-              <RecordsFetchModule
-                actionKey={constructActionKey([c.GET_BUILDING_RESOURCE, d.DOBVIOLATIONS.constant])}
-                id={this.props.bin}
-                dataset={d.DOBVIOLATIONS}
-                recordsFetch={getBuildingResource}
-                reducerPath="building"
-                render={(title, records, loading, error) => (
-                  <BuildingHistoryTable loading={loading} error={error} title={title} records={records} />
-                )}
-                title="DOB Violations"
-              />
-            </div>
-          )}
+          {this.props.lookupRequests.map((request, index) => {
+            console.log(request)
+            return <RequestWrapper key={`lookup-request-wrapper-${index}`} request={request} />
+          })}
         </Col>
       </Row>
     )
@@ -106,6 +80,7 @@ const mapStateToProps = state => {
     loading: loadingSelector(state),
     error: errorSelector(state),
     propertyProfileRequest: lookupRequests(state, 'LOOKUP_PROFILE')[0],
+    lookupRequests: lookupRequests(state, 'LOOKUP_FILTER'),
     appState: state.appState,
   }
 }
