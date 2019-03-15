@@ -4,6 +4,7 @@ import { toast } from 'react-toastify'
 import * as d from 'shared/models/datasets'
 import * as ht from 'shared/models/housingTypes'
 import { DataRequest } from 'shared/classes/DataRequest'
+import { getApiMap } from 'shared/utilities/classUtils'
 
 import { ApiMap } from 'shared/classes/ApiMap'
 
@@ -132,7 +133,7 @@ export const newBuildingRequest = ({ type = undefined, bin = undefined, resource
     type: type,
     apiMaps: [
       new ApiMap({ constant: 'BUILDING', resourceId: bin }),
-      resourceConstant ? new ApiMap({ constant: resourceConstant }) : undefined,
+      resourceConstant ? getApiMap(resourceConstant) : undefined,
     ].filter(a => !!a),
   })
 }
@@ -142,7 +143,7 @@ export const newPropertyRequest = ({ type = undefined, bbl = undefined, resource
     type: type,
     apiMaps: [
       new ApiMap({ constant: 'PROPERTY', queryName: 'properties', resourceId: bbl }),
-      resourceConstant ? new ApiMap({ constant: resourceConstant }) : undefined,
+      resourceConstant ? getApiMap(resourceConstant) : undefined,
     ].filter(a => !!a),
   })
 }
