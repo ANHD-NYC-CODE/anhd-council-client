@@ -24,8 +24,8 @@ class Router extends React.Component {
             <Route exact path="/property/:bbl" render={() => <Lookup />} />
             <Route exact path="/building/:bin" render={() => <Lookup />} />
             <Route exact path="/map" render={() => <AlertMap />} />
-            <Route exact path="/district/:id" render={() => <AlertMap />} />
-            <Route exact path="/board/:id" render={() => <AlertMap />} />
+            <Route exact path="/council/:id" render={() => <AlertMap />} />
+            <Route exact path="/community/:id" render={() => <AlertMap />} />
             <Route exact path="/search" render={() => <AdvancedSearch />} />
             <Route exact path="/login" render={() => <Main showLoginModal={true} />} />
             <Route exact path="/logout" render={() => <Main />} />

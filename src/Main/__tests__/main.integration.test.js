@@ -80,7 +80,7 @@ describe('Landing page', () => {
           .find('SubHeader a')
           .at(2)
           .props().href
-      ).toEqual('/board/7')
+      ).toEqual('/community/7')
     })
   })
 })

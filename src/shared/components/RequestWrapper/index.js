@@ -30,6 +30,7 @@ class RequestWrapper extends React.Component {
       >
         <h6>{this.props.request.requestConstant}</h6>
         {this.props.loading && <InnerLoader />}
+        {this.props.error && <div className="text-danger">{this.props.error.message}</div>}
         {JSON.stringify(this.props.results, null, 2)}
       </div>
     )

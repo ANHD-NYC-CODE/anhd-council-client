@@ -68,7 +68,7 @@ describe('navigation', () => {
           .find('SubHeader a')
           .at(2)
           .props().href
-      ).toEqual('/district/3')
+      ).toEqual('/council/3')
     })
   })
 

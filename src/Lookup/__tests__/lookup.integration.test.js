@@ -47,13 +47,21 @@ describe('Lookup', () => {
       const [wrapper, store] = setupWrapper({
         router: { location: { pathname: '/property/1' }, action: 'POP' },
       })
-      wrapper.update()
       await flushAllPromises()
       wrapper.update()
       expect(wrapper.find('Lookup')).toBeDefined()
       expect(store.getState().router.location.pathname).toEqual('/property/1')
       expect(store.getState().appState.currentProperty).toEqual('1')
       expect(store.getState().appState.currentBuilding).toEqual(undefined)
+    })
+
+    it('renders the request wrappers', async () => {
+      const [wrapper, store] = setupWrapper({
+        router: { location: { pathname: '/property/1' }, action: 'POP' },
+      })
+      await flushAllPromises()
+      wrapper.update()
+      expect(wrapper.find('RequestWrapper')).toHaveLength(12)
     })
   })
 
@@ -62,13 +70,21 @@ describe('Lookup', () => {
       const [wrapper, store] = setupWrapper({
         router: { location: { pathname: '/property/1/building/2' }, action: 'POP' },
       })
-      wrapper.update()
       await flushAllPromises()
       wrapper.update()
       expect(wrapper.find('Lookup')).toBeDefined()
       expect(store.getState().router.location.pathname).toEqual('/property/1/building/2')
       expect(store.getState().appState.currentProperty).toEqual('1')
       expect(store.getState().appState.currentBuilding).toEqual('2')
+    })
+
+    it('renders the request wrappers', async () => {
+      const [wrapper, store] = setupWrapper({
+        router: { location: { pathname: '/property/1/building/2' }, action: 'POP' },
+      })
+      await flushAllPromises()
+      wrapper.update()
+      expect(wrapper.find('RequestWrapper')).toHaveLength(9)
     })
   })
 })
