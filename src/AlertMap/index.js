@@ -18,7 +18,6 @@ import RequestWrapper from 'shared/components/RequestWrapper'
 class AlertMap extends React.Component {
   constructor(props) {
     super(props)
-
     if (!props.geographyType) {
       props.dispatch(push('/map'))
     } else if (!props.appState.currentGeographyType && props.geographyType) {
@@ -26,7 +25,7 @@ class AlertMap extends React.Component {
         setGeographyAndRequestsAndRedirect({
           geographyType: pathToGeographyConstant(props.geographyType),
           geographyId: props.geographyId,
-          redirect: false,
+          replaceHistory: true,
         })
       )
     } else {
@@ -41,7 +40,7 @@ class AlertMap extends React.Component {
         setGeographyAndRequestsAndRedirect({
           geographyType: pathToGeographyConstant(nextProps.geographyType),
           geographyId: nextProps.geographyId,
-          redirect: false,
+          replaceHistory: true,
         })
       )
     } else {

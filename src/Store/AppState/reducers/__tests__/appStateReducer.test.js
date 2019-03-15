@@ -6,68 +6,41 @@ describe('App State reducer', () => {
     expect(r.appStateReducer(undefined, {})).toEqual(r.initialState)
   })
 
-  describe('SET_GEOGRAPHY_TYPE', () => {
-    const type = 'COUNCIL'
-    it('sets the geography', () => {
-      expect(r.appStateReducer(undefined, a.handleSetGeographyType(type))).toEqual({
-        ...r.initialState,
-        currentGeographyType: type,
-      })
-    })
-  })
-
-  describe('SET_GEOGRAPHY_ID', () => {
-    const type = 'COUNCIL'
-    const id = '1'
-    it('sets the geography', () => {
-      expect(r.appStateReducer({ ...r.initialState, currentGeographyType: type }, a.handleSetGeographyId(id))).toEqual({
-        ...r.initialState,
-        currentGeographyType: type,
-        currentGeographyId: id,
-      })
-    })
-  })
-
   describe('SET_GEOGRAPHY_TYPE_AND_ID', () => {
     const type = 'COUNCIL'
     const id = '1'
+    const requests = [1, 2, 3]
     it('sets the geography', () => {
-      expect(r.appStateReducer(undefined, a.handleSetGeographyTypeAndId(type, id))).toEqual({
+      expect(r.appStateReducer(undefined, a.handleSetGeographyRequests(type, id, requests))).toEqual({
         ...r.initialState,
         currentGeographyType: type,
         currentGeographyId: id,
-      })
-    })
-  })
-
-  describe('SET_PROPERTY', () => {
-    const property = '1000010001'
-    it('sets the geography', () => {
-      expect(r.appStateReducer(undefined, a.handleSetProperty(property))).toEqual({
-        ...r.initialState,
-        currentProperty: property,
-      })
-    })
-  })
-
-  describe('SET_BUILDING', () => {
-    const building = '9999999'
-    it('sets the geography', () => {
-      expect(r.appStateReducer(undefined, a.handleSetBuilding(building))).toEqual({
-        ...r.initialState,
-        currentBuilding: building,
+        requests: requests,
       })
     })
   })
 
   describe('SET_PROPERTY_AND_BUILDING', () => {
-    const property = '1000010001'
-    const building = '9999999'
+    const bbl = '1000010001'
+    const bin = '9999999'
+    const requests = [1, 2, 3]
     it('sets the geography', () => {
-      expect(r.appStateReducer(undefined, a.handleSetPropertyAndBuilding(property, building))).toEqual({
+      expect(r.appStateReducer(undefined, a.handleSetPropertyBuildingLookupRequests(bbl, bin, requests))).toEqual({
         ...r.initialState,
-        currentProperty: property,
-        currentBuilding: building,
+        currentProperty: bbl,
+        currentBuilding: bin,
+        requests: requests,
+      })
+    })
+  })
+
+  describe('REMOVE_REQUEST_TYPE', () => {
+    const requests = [{ type: 'A' }, { type: 'B' }]
+    it('removes requests of the specified type', () => {
+      expect(r.appStateReducer({ requests }, a.removeRequestType('A'))).toEqual({
+        ...r.initialState,
+
+        requests: [{ type: 'B' }],
       })
     })
   })
