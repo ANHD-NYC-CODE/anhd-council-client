@@ -6,10 +6,9 @@ import MockAdapter from 'axios-mock-adapter'
 import { setupStore, configuredState, flushAllPromises } from 'shared/testUtilities'
 import { history } from 'Store/configureStore'
 
-import { push, ConnectedRouter, connectRouter } from 'connected-react-router'
+import { ConnectedRouter } from 'connected-react-router'
 
 import { Provider } from 'react-redux'
-import ConfigContext from 'Config/ConfigContext'
 
 const mock = new MockAdapter(Axios)
 
@@ -45,14 +44,31 @@ describe('Lookup', () => {
 
   describe('with a bbl', () => {
     it('sets the currentProperty', async () => {
-      const [wrapper, store] = setupWrapper()
-      store.dispatch(push('/property/1'))
+      const [wrapper, store] = setupWrapper({
+        router: { location: { pathname: '/property/1' }, action: 'POP' },
+      })
       wrapper.update()
       await flushAllPromises()
       wrapper.update()
       expect(wrapper.find('Lookup')).toBeDefined()
       expect(store.getState().router.location.pathname).toEqual('/property/1')
       expect(store.getState().appState.currentProperty).toEqual('1')
+      expect(store.getState().appState.currentBuilding).toEqual(undefined)
+    })
+  })
+
+  describe('with a bbl and bin', () => {
+    it('sets the currentProperty', async () => {
+      const [wrapper, store] = setupWrapper({
+        router: { location: { pathname: '/property/1/building/2' }, action: 'POP' },
+      })
+      wrapper.update()
+      await flushAllPromises()
+      wrapper.update()
+      expect(wrapper.find('Lookup')).toBeDefined()
+      expect(store.getState().router.location.pathname).toEqual('/property/1/building/2')
+      expect(store.getState().appState.currentProperty).toEqual('1')
+      expect(store.getState().appState.currentBuilding).toEqual('2')
     })
   })
 })
