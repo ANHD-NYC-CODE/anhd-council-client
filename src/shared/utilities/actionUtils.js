@@ -124,56 +124,58 @@ export const setupDatasetModels = datasets => {
         return new Dataset({ model: d[constant](databaseObject) })
       }
     })
-    .filter(ds => ds)
+    .filter(ds => !!ds)
 }
 
-export const newBuildingRequest = ({ buildingId, resourceConstant }) => {
+export const newBuildingRequest = ({ type = undefined, bin = undefined, resourceConstant = undefined }) => {
   return new DataRequest({
+    type: type,
     apiMaps: [
-      new ApiMap({ constant: 'BUILDING', resourceId: buildingId }),
-      resourceConstant ? new ApiMap({ constant: resourceConstant }) : null,
-    ].filter(a => a),
+      new ApiMap({ constant: 'BUILDING', resourceId: bin }),
+      resourceConstant ? new ApiMap({ constant: resourceConstant }) : undefined,
+    ].filter(a => !!a),
   })
 }
 
-export const newPropertyRequest = ({ propertyId, resourceConstant } = {}) => {
+export const newPropertyRequest = ({ type = undefined, bbl = undefined, resourceConstant = undefined } = {}) => {
   return new DataRequest({
+    type: type,
     apiMaps: [
-      new ApiMap({ constant: 'PROPERTY', queryName: 'properties', resourceId: propertyId }),
-      new ApiMap({ constant: resourceConstant }),
-    ],
+      new ApiMap({ constant: 'PROPERTY', queryName: 'properties', resourceId: bbl }),
+      resourceConstant ? new ApiMap({ constant: resourceConstant }) : undefined,
+    ].filter(a => !!a),
   })
 }
 
-export const newLookupRequests = ({ propertyId, buildingId } = {}) => {
+export const newLookupRequests = ({ bbl, bin } = {}) => {
   return [
-    newPropertyRequest({ propertyId }),
-    newPropertyRequest({ propertyId, resourceConstant: 'ACRISREALMASTER' }),
-    newPropertyRequest({ propertyId, resourceConstant: 'EVICTION' }),
-    newPropertyRequest({ propertyId, resourceConstant: 'FORECLOSURE' }),
-    buildingId
-      ? newBuildingRequest({ buildingId, resourceConstant: 'HPD_VIOLATION' })
-      : newPropertyRequest({ propertyId, resourceConstant: 'HPD_VIOLATION' }),
-    buildingId
-      ? newBuildingRequest({ buildingId, resourceConstant: 'HPD_COMPLAINT' })
-      : newPropertyRequest({ propertyId, resourceConstant: 'HPD_COMPLAINT' }),
-    buildingId
-      ? newBuildingRequest({ buildingId, resourceConstant: 'DOB_VIOLATION' })
-      : newPropertyRequest({ propertyId, resourceConstant: 'DOB_VIOLATION' }),
-    buildingId
-      ? newBuildingRequest({ buildingId, resourceConstant: 'DOB_COMPLAINT' })
-      : newPropertyRequest({ propertyId, resourceConstant: 'DOB_COMPLAINT' }),
-    buildingId
-      ? newBuildingRequest({ buildingId, resourceConstant: 'ECB_VIOLATION' })
-      : newPropertyRequest({ propertyId, resourceConstant: 'ECB_VIOLATION' }),
-    buildingId
-      ? newBuildingRequest({ buildingId, resourceConstant: 'DOB_ISSUED_PERMIT' })
-      : newPropertyRequest({ propertyId, resourceConstant: 'DOB_ISSUED_PERMIT' }),
-    buildingId
-      ? newBuildingRequest({ buildingId, resourceConstant: 'DOB_FILED_PERMIT' })
-      : newPropertyRequest({ propertyId, resourceConstant: 'DOB_FILED_PERMIT' }),
-    buildingId
-      ? newBuildingRequest({ buildingId, resourceConstant: 'HOUSING_LITIGATION' })
-      : newPropertyRequest({ propertyId, resourceConstant: 'HOUSING_LITIGATION' }),
-  ].filter(r => r)
+    newPropertyRequest({ type: 'LOOKUP_PROFILE', bbl: bbl }),
+    newPropertyRequest({ type: 'LOOKUP_FILTER', bbl: bbl, resourceConstant: 'ACRISREALMASTER' }),
+    newPropertyRequest({ type: 'LOOKUP_FILTER', bbl: bbl, resourceConstant: 'EVICTION' }),
+    newPropertyRequest({ type: 'LOOKUP_FILTER', bbl: bbl, resourceConstant: 'FORECLOSURE' }),
+    bin
+      ? newBuildingRequest({ type: 'LOOKUP_FILTER', bin: bin, resourceConstant: 'HPD_VIOLATION' })
+      : newPropertyRequest({ type: 'LOOKUP_FILTER', bbl: bbl, resourceConstant: 'HPD_VIOLATION' }),
+    bin
+      ? newBuildingRequest({ type: 'LOOKUP_FILTER', bin: bin, resourceConstant: 'HPD_COMPLAINT' })
+      : newPropertyRequest({ type: 'LOOKUP_FILTER', bbl: bbl, resourceConstant: 'HPD_COMPLAINT' }),
+    bin
+      ? newBuildingRequest({ type: 'LOOKUP_FILTER', bin: bin, resourceConstant: 'DOB_VIOLATION' })
+      : newPropertyRequest({ type: 'LOOKUP_FILTER', bbl: bbl, resourceConstant: 'DOB_VIOLATION' }),
+    bin
+      ? newBuildingRequest({ type: 'LOOKUP_FILTER', bin: bin, resourceConstant: 'DOB_COMPLAINT' })
+      : newPropertyRequest({ type: 'LOOKUP_FILTER', bbl: bbl, resourceConstant: 'DOB_COMPLAINT' }),
+    bin
+      ? newBuildingRequest({ type: 'LOOKUP_FILTER', bin: bin, resourceConstant: 'ECB_VIOLATION' })
+      : newPropertyRequest({ type: 'LOOKUP_FILTER', bbl: bbl, resourceConstant: 'ECB_VIOLATION' }),
+    bin
+      ? newBuildingRequest({ type: 'LOOKUP_FILTER', bin: bin, resourceConstant: 'DOB_ISSUED_PERMIT' })
+      : newPropertyRequest({ type: 'LOOKUP_FILTER', bbl: bbl, resourceConstant: 'DOB_ISSUED_PERMIT' }),
+    bin
+      ? newBuildingRequest({ type: 'LOOKUP_FILTER', bin: bin, resourceConstant: 'DOB_FILED_PERMIT' })
+      : newPropertyRequest({ type: 'LOOKUP_FILTER', bbl: bbl, resourceConstant: 'DOB_FILED_PERMIT' }),
+    bin
+      ? newBuildingRequest({ type: 'LOOKUP_FILTER', bin: bin, resourceConstant: 'HOUSING_LITIGATION' })
+      : newPropertyRequest({ type: 'LOOKUP_FILTER', bbl: bbl, resourceConstant: 'HOUSING_LITIGATION' }),
+  ].filter(r => !!r)
 }

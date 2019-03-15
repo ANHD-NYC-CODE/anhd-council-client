@@ -16,6 +16,5 @@ export const configuredState = state => {
   }
   const council = { districts: [{ id: 1 }, { id: 2 }, { id: 3 }] }
   const community = { boards: [{ id: 1 }] }
-  const router = { location: { pathname: '/search' } }
-  return { dataset, council, community, router, ...state }
+  return { dataset, council, community, ...state }
 }
