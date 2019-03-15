@@ -1,15 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { createMatchSelector } from 'connected-react-router'
+import { push, createMatchSelector } from 'connected-react-router'
 import * as a from 'Store/Building/actions'
 import * as c from 'Store/Building/constants'
 import * as d from 'shared/constants/datasets'
-
+import { lookupRequests } from 'Store/AppState/selectors'
+import { setLookupAndRequestsAndRedirect, makeDataRequest } from 'Store/AppState/actions'
 import { requestWithAuth } from 'shared/utilities/authUtils'
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
-import { resourceRouteChanged } from 'shared/utilities/routeUtils'
 import { getBuildingResource } from 'Store/Building/actions'
 import { constructActionKey } from 'shared/utilities/actionUtils'
 import LeafletMap from 'LeafletMap'
@@ -22,22 +22,21 @@ class Lookup extends React.Component {
   constructor(props) {
     super(props)
 
-    this.fetchBuildingById = this.fetchBuildingById.bind(this)
-
-    if (props.bin && !props.loading) {
-      this.fetchBuildingById(props)
+    console.log(props.bbl, props.appState.currentProperty)
+    if (!props.bbl) {
+      props.dispatch(push('/lookup'))
+    } else if (!props.appState.currentProperty && props.bbl) {
+      props.dispatch(setLookupAndRequestsAndRedirect({ bbl: props.bbl, bin: props.bin }))
+    } else {
+      props.dispatch(makeDataRequest(props.propertyProfileRequest))
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.bin && !nextProps.loading) {
-      this.fetchBuildingById(nextProps)
-    }
-  }
-
-  fetchBuildingById(props) {
-    if (!(props.building || {}).currentBuilding || resourceRouteChanged(this.props, props)) {
-      props.dispatch(requestWithAuth(a.getBuilding(props.bin)))
+    if (!nextProps.appState.currentProperty && nextProps.bbl) {
+      nextProps.dispatch(setLookupAndRequestsAndRedirect({ bbl: nextProps.bbl, bin: nextProps.bin }))
+    } else {
+      nextProps.dispatch(makeDataRequest(nextProps.propertyProfileRequest))
     }
   }
 
@@ -96,14 +95,17 @@ const loadingSelector = createLoadingSelector([c.GET_BUILDING])
 const errorSelector = createErrorSelector([c.GET_BUILDING])
 
 const mapStateToProps = state => {
-  const matchSelector = createMatchSelector({ path: '/buildings/:bin' })
-  const match = matchSelector(state)
-
+  const propertyMatchSelector = createMatchSelector({ path: '/property/:bbl' })
+  const propertyBuildingMatchSelector = createMatchSelector({ path: '/property/:bbl/building/:bin' })
+  const match = propertyBuildingMatchSelector(state) || propertyMatchSelector(state)
   return {
     bin: match ? match.params.bin : null,
+    bbl: match ? match.params.bbl : null,
     building: state.building,
     loading: loadingSelector(state),
     error: errorSelector(state),
+    propertyProfileRequest: lookupRequests(state, 'LOOKUP_PROFILE')[0],
+    appState: state.appState,
   }
 }
 

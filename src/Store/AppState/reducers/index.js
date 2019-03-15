@@ -5,8 +5,7 @@ export const initialState = {
   currentBoudaryId: undefined,
   currentProperty: undefined,
   currentBuilding: undefined,
-  mapFilters: [],
-  lookupFilters: [],
+  requests: [],
 }
 
 export const appStateReducer = (state = Object.freeze(initialState), action = { data: [] }) => {
@@ -28,16 +27,6 @@ export const appStateReducer = (state = Object.freeze(initialState), action = { 
         ...state,
         currentBoundaryType: action.boundaryType,
         currentBoundaryId: action.boundaryId,
-      }
-    }
-    case c.UPDATE_MAP_FILTER: {
-      return {
-        state,
-        mapFilters: [
-          ...state.mapFilters.slice(0, action.filterIndex),
-          action.filter,
-          ...state.mapFilters.slice(action.filterIndex),
-        ],
       }
     }
     case c.SET_PROPERTY: {
@@ -64,7 +53,7 @@ export const appStateReducer = (state = Object.freeze(initialState), action = { 
         ...state,
         currentProperty: action.propertyId,
         currentBuilding: action.buildingId,
-        lookupFilters: action.lookupFilters,
+        requests: action.requests,
       }
     }
     default:

@@ -1,10 +1,18 @@
-import { getApiMap } from 'shared/utilities/classUtils'
-
 export class DataRequest {
-  constructor({ results = [], paramMaps = [], apiMaps = [] } = {}) {
+  constructor({ type = undefined, results = [], paramMaps = [], apiMaps = [] } = {}) {
+    this._type = type
     this._results = results
     this._paramMaps = paramMaps
     this._apiMaps = apiMaps
+    this._called = false
+  }
+
+  get type() {
+    return this._type
+  }
+
+  set type(type) {
+    this._type = type
   }
 
   get results() {
@@ -37,6 +45,14 @@ export class DataRequest {
 
   set apiMaps(apiMaps) {
     this._apiMaps = apiMaps
+  }
+
+  get called() {
+    return this._called
+  }
+
+  set called(called) {
+    this._called = called
   }
 
   get path() {

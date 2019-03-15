@@ -23,7 +23,7 @@ export class ApiMap {
   }
 
   get queryName() {
-    return this._queryName || constantToQueryName(this._constant)
+    return this._queryName.toLowerCase() || constantToQueryName(this._constant).toLowerCase()
   }
 
   get resourceId() {
@@ -35,13 +35,10 @@ export class ApiMap {
   }
 
   get url() {
-    return (
-      this._url ||
-      `/${constantToQueryName(this.constant).toLowerCase()}/${this.resourceId ? this.resourceId + '/' : ''}`
-    )
+    return this._url || `/${this.queryName}/${this.resourceId ? this.resourceId + '/' : ''}`
   }
 
   get model() {
-    return this._model || constantToModelName(this._constant)
+    return this._model.toLowerCase() || constantToModelName(this._constant).toLowerCase()
   }
 }

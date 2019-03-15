@@ -10,7 +10,7 @@ import { Table } from 'react-bootstrap'
 const SearchResults = props => {
   const handleRowClick = (e, result) => {
     e.preventDefault()
-    props.dispatch(setLookupAndRequestsAndRedirect({ propertyId: result.bbl, buildingId: result.bin }))
+    props.dispatch(setLookupAndRequestsAndRedirect({ bbl: result.bbl, bin: result.bin }))
   }
 
   return (
