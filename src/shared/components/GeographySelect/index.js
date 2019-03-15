@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import * as b from 'shared/constants/geographies'
-import { setGeographyTypeAndIdAndRedirect } from 'Store/AppState/actions'
+import { setGeographyAndRequestsAndRedirect } from 'Store/AppState/actions'
 import { getGeographyIdOptions } from 'shared/utilities/componentUtils'
 import { Row, Col, Form, Button } from 'react-bootstrap'
 import { StandardizedInput } from 'shared/classes/StandardizedInput'
@@ -22,7 +22,12 @@ class GeographySelect extends React.Component {
 
   changeGeographyAndId(e) {
     this.setState({ changing: false })
-    this.props.dispatch(setGeographyTypeAndIdAndRedirect(this.state.geographyType, new StandardizedInput(e).value))
+    this.props.dispatch(
+      setGeographyAndRequestsAndRedirect({
+        geographyType: this.state.geographyType,
+        geographyId: new StandardizedInput(e).value,
+      })
+    )
   }
 
   componentWillReceiveProps(nextProps) {

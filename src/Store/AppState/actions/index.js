@@ -2,7 +2,12 @@ import * as c from '../constants'
 import { push } from 'connected-react-router'
 import { getGeographyPath, addressResultToPath } from 'shared/utilities/routeUtils'
 
-import { newLookupRequests } from 'shared/utilities/actionUtils'
+import { newMapRequests, newLookupRequests } from 'shared/utilities/actionUtils'
+
+export const removeRequestType = requestType => ({
+  type: c.REMOVE_REQUEST_TYPE,
+  requestType,
+})
 
 export const handleSetGeographyType = geographyType => ({
   type: c.SET_GEOGRAPHY_TYPE,
@@ -18,6 +23,13 @@ export const handleSetGeographyTypeAndId = (geographyType, geographyId) => ({
   type: c.SET_GEOGRAPHY_TYPE_AND_ID,
   geographyType,
   geographyId,
+})
+
+export const handleSetGeographyRequests = (geographyType, geographyId, requests) => ({
+  type: c.SET_GEOGRAPHY_REQUESTS,
+  geographyType,
+  geographyId,
+  requests,
 })
 
 export const handleSetProperty = propertyId => ({
@@ -49,8 +61,20 @@ export const setGeographyTypeAndIdAndRedirect = (geographyType, geographyId) => 
   dispatch(push(`/${path}/${geographyId}`))
 }
 
-export const setLookupAndRequestsAndRedirect = ({ bbl, bin }) => dispatch => {
+export const setGeographyAndRequestsAndRedirect = ({ geographyType, geographyId } = {}) => dispatch => {
+  const requests = newMapRequests({ geographyType, geographyId })
+  dispatch(removeRequestType('MAP_FILTER'))
+  dispatch(removeRequestType('MAP_PROFILE'))
+  dispatch(handleSetGeographyRequests(geographyType, geographyId, requests))
+
+  const path = getGeographyPath(geographyType)
+  dispatch(push(`/${path}/${geographyId}`))
+}
+
+export const setLookupAndRequestsAndRedirect = ({ bbl, bin } = {}) => dispatch => {
   const requests = newLookupRequests({ bbl, bin })
+  dispatch(removeRequestType('LOOKUP_FILTER'))
+  dispatch(removeRequestType('LOOKUP_PROFILE'))
 
   dispatch(handleSetPropertyBuildingLookupRequests(bbl, bin, requests))
   dispatch(push(addressResultToPath({ bbl: bbl, bin: bin })))

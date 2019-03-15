@@ -14,7 +14,7 @@ export const getGeographyPath = type => {
   }
 }
 
-export const pathToGeography = type => {
+export const pathToGeographyConstant = type => {
   type = type.toUpperCase()
   switch (type) {
     case 'DISTRICT':

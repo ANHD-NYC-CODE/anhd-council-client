@@ -65,6 +65,12 @@ export class DataRequest {
   }
 
   get requestConstant() {
-    return this.apiMaps.map(apiMap => apiMap.constant).join('_')
+    return []
+      .concat(
+        this.apiMaps.map(apiMap => apiMap.constant).join('_'),
+        this.paramMaps.map(paramMap => paramMap.field.toUpperCase()).join('_')
+      )
+      .filter(a => a)
+      .join('_')
   }
 }
