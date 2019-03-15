@@ -1,23 +1,23 @@
 import * as c from '../constants'
 import { push } from 'connected-react-router'
-import { getBoundaryPath, addressResultToPath } from 'shared/utilities/routeUtils'
+import { getGeographyPath, addressResultToPath } from 'shared/utilities/routeUtils'
 
 import { newLookupRequests } from 'shared/utilities/actionUtils'
 
-export const handleSetBoundaryType = boundaryType => ({
-  type: c.SET_BOUNDARY_TYPE,
-  data: boundaryType,
+export const handleSetGeographyType = geographyType => ({
+  type: c.SET_GEOGRAPHY_TYPE,
+  data: geographyType,
 })
 
-export const handleSetBoundaryId = boundaryId => ({
-  type: c.SET_BOUNDARY_ID,
-  data: boundaryId,
+export const handleSetGeographyId = geographyId => ({
+  type: c.SET_GEOGRAPHY_ID,
+  data: geographyId,
 })
 
-export const handleSetBoundaryTypeAndId = (boundaryType, boundaryId) => ({
-  type: c.SET_BOUNDARY_TYPE_AND_ID,
-  boundaryType,
-  boundaryId,
+export const handleSetGeographyTypeAndId = (geographyType, geographyId) => ({
+  type: c.SET_GEOGRAPHY_TYPE_AND_ID,
+  geographyType,
+  geographyId,
 })
 
 export const handleSetProperty = propertyId => ({
@@ -43,10 +43,10 @@ export const handleSetPropertyBuildingLookupRequests = (propertyId, buildingId, 
   requests,
 })
 
-export const setBoundaryTypeAndIdAndRedirect = (boundaryType, boundaryId) => dispatch => {
-  dispatch(handleSetBoundaryTypeAndId(boundaryType, boundaryId))
-  const path = getBoundaryPath(boundaryType)
-  dispatch(push(`/${path}/${boundaryId}`))
+export const setGeographyTypeAndIdAndRedirect = (geographyType, geographyId) => dispatch => {
+  dispatch(handleSetGeographyTypeAndId(geographyType, geographyId))
+  const path = getGeographyPath(geographyType)
+  dispatch(push(`/${path}/${geographyId}`))
 }
 
 export const setLookupAndRequestsAndRedirect = ({ bbl, bin }) => dispatch => {

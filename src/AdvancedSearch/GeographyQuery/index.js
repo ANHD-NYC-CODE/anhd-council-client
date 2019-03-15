@@ -36,12 +36,12 @@ export class GeographyQuery extends React.Component {
     return this.props.geographies.length ? (
       this.props.geographies.map((geography, geographyIndex) => {
         return (
-          <Form.Group as={Row} key={`geography-${geography.name}`}>
+          <Form.Group as={Row} key={`Geography-${geography.name}`}>
             <Col xs={6}>
               <Form.Control
                 required
                 size="sm"
-                placeholder="Search geography"
+                placeholder="Search Geography"
                 name="geographyType"
                 as="select"
                 onBlur={this.props.handleBlur}
@@ -59,7 +59,9 @@ export class GeographyQuery extends React.Component {
                 <option value={b.COMMUNITYGEOGRAPHY.constant}>{b.COMMUNITYGEOGRAPHY.name}</option>
               </Form.Control>
               <FormError
-                show={!!(this.props.touched.geographyType || !!this.props.submitCount) && this.props.errors.geographyType}
+                show={
+                  !!(this.props.touched.geographyType || !!this.props.submitCount) && this.props.errors.geographyType
+                }
                 message={this.props.errors.geographyType}
               />
             </Col>
@@ -70,10 +72,12 @@ export class GeographyQuery extends React.Component {
                 data-key="id"
                 name="geographyId"
                 onChange={e => this.changeGeography(geographyIndex, geography, e)}
-                placeholder="Search geography"
+                placeholder="Search Geography"
                 size="sm"
                 onBlur={this.props.handleBlur}
-                isInvalid={(this.props.touched.geographyId || !!this.props.submitCount) && this.props.errors.geographyId}
+                isInvalid={
+                  (this.props.touched.geographyId || !!this.props.submitCount) && this.props.errors.geographyId
+                }
                 value={geography.id || -1}
               >
                 {getGeographyIdOptions(this.props.districts, this.props.boards, geography.queryName)}
@@ -93,12 +97,14 @@ export class GeographyQuery extends React.Component {
           <Form.Control
             required
             size="sm"
-            placeholder="Search geography"
+            placeholder="Search Geography"
             name="geographyType"
             as="select"
             onChange={this.addGeography}
             onBlur={this.props.handleBlur}
-            isInvalid={(this.props.touched.geographyType || !!this.props.submitCount) && this.props.errors.geographyType}
+            isInvalid={
+              (this.props.touched.geographyType || !!this.props.submitCount) && this.props.errors.geographyType
+            }
             value={-1}
           >
             <option disabled value={-1} key={-1}>

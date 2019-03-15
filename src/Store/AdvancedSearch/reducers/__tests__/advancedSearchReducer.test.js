@@ -1,6 +1,6 @@
 import * as r from '../'
 import * as a from '../../actions'
-import { Boundary } from 'shared/classes/Boundary'
+import { Geography } from 'shared/classes/Geography'
 import { Condition } from 'shared/classes/Condition'
 
 import { ConditionFilter } from 'shared/classes/ConditionFilter'
@@ -127,51 +127,51 @@ describe('Advanced Search reducer', () => {
     })
   })
 
-  describe('ADD_BOUNDARY', () => {
-    it('adds a boundaries', () => {
+  describe('ADD_GEOGRAPHY', () => {
+    it('adds a geographies', () => {
       const state = {
         ...r.initialState(),
       }
 
-      const boundary = new Boundary('COUNCIL', 1)
-      const expectedBoundaries = [boundary]
-      expect(r.advancedSearchReducer(state, a.addBoundary(boundary))).toEqual({
+      const geography = new Geography('COUNCIL', 1)
+      const expectedGeographies = [geography]
+      expect(r.advancedSearchReducer(state, a.addGeography(geography))).toEqual({
         ...r.initialState(),
-        boundaries: expectedBoundaries,
+        geographies: expectedGeographies,
       })
     })
   })
 
-  describe('UPDATE_BOUNDARY', () => {
-    it('updates a boundaries', () => {
-      const boundary = new Boundary('COUNCIL', 1)
+  describe('UPDATE_GEOGRAPHY', () => {
+    it('updates a geographies', () => {
+      const geography = new Geography('COUNCIL', 1)
       const state = {
         ...r.initialState(),
-        boundaries: [boundary],
+        geographies: [geography],
       }
 
-      boundary.id = 2
-      const expectedBoundaries = [boundary]
+      geography.id = 2
+      const expectedGeographies = [geography]
 
-      expect(r.advancedSearchReducer(state, a.updateBoundary(0, boundary))).toEqual({
+      expect(r.advancedSearchReducer(state, a.updateGeography(0, geography))).toEqual({
         ...r.initialState(),
-        boundaries: expectedBoundaries,
+        geographies: expectedGeographies,
       })
     })
   })
 
-  describe('REMOVE_BOUNDARY', () => {
-    it('removes a boundaries', () => {
+  describe('REMOVE_GEOGRAPHY', () => {
+    it('removes a geographies', () => {
       const state = {
         ...r.initialState(),
-        boundaries: [{ object: { queryName: 'council' }, id: '1' }],
+        geographies: [{ object: { queryName: 'council' }, id: '1' }],
       }
 
-      const expectedBoundaries = []
+      const expectedGeographies = []
 
-      expect(r.advancedSearchReducer(state, a.removeBoundary(0))).toEqual({
+      expect(r.advancedSearchReducer(state, a.removeGeography(0))).toEqual({
         ...r.initialState(),
-        boundaries: expectedBoundaries,
+        geographies: expectedGeographies,
       })
     })
   })

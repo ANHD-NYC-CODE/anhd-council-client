@@ -28,9 +28,9 @@ class Config extends React.Component {
     }
 
     this.state = {
-      boundaryType: undefined,
-      boundaryId: undefined,
-      boundaryObjects: [],
+      geographyType: undefined,
+      geographyId: undefined,
+      geographyObjects: [],
     }
   }
 
@@ -48,13 +48,13 @@ class Config extends React.Component {
       }
     }
 
-    if (nextState.boundaryType === 'council') {
+    if (nextState.geographyType === 'council') {
       this.setState({
-        boundaryObjects: this.props.councils,
+        geographyObjects: this.props.councils,
       })
-    } else if (nextState.boundaryType === 'cd') {
+    } else if (nextState.geographyType === 'cd') {
       this.setState({
-        boundaryObjects: this.props.communities,
+        geographyObjects: this.props.communities,
       })
     }
   }

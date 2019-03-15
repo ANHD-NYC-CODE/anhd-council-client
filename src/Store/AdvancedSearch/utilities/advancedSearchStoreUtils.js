@@ -3,8 +3,8 @@ export const transformStateIntoParamObject = (datasetsConfig, advancedSearch) =>
   return {
     ...Object.assign(
       {},
-      ...advancedSearch.boundaries.map(b => ({
-        [b.boundaryType.queryName]: b.id,
+      ...advancedSearch.geographies.map(b => ({
+        [b.geographyType.queryName]: b.id,
       }))
     ),
     ...Object.assign(

@@ -18,7 +18,7 @@ export const removeRequest = requestConstant => ({
 })
 
 export const makeRequest = dataRequest => (dispatch, getState, access_token) => {
-  if (dataRequest.called) return
+  if (!dataRequest || dataRequest.called) return
   dispatch(addRequest(dataRequest.requestConstant))
   dataRequest.called = true
   const requestId = Math.floor(Math.random() * 1000000)

@@ -1,5 +1,5 @@
 import * as u from 'Store/AdvancedSearch/utilities/advancedSearchStoreUtils'
-import { Boundary } from 'shared/classes/Boundary'
+import { Geography } from 'shared/classes/Geography'
 import { Filter } from 'shared/classes/Filter'
 import { filterMocks } from 'shared/models/__mocks__/filterMocks'
 import { Condition } from 'shared/classes/Condition'
@@ -21,8 +21,8 @@ describe('transformStateIntoParamObject', () => {
       '0': new Condition({ type: 'AND', filters: condition0Filters }),
     }
 
-    const boundary1 = new Boundary('COUNCIL', '1')
-    const boundary2 = new Boundary('COMMUNITY', '1')
+    const geography1 = new Geography('COUNCIL', '1')
+    const geography2 = new Geography('COMMUNITY', '1')
 
     const housingType1 = new Filter({
       modelConstant: 'SMALL_HOMES',
@@ -32,7 +32,7 @@ describe('transformStateIntoParamObject', () => {
 
     const advancedSearch = {
       conditions: conditions,
-      boundaries: [boundary1, boundary2],
+      geographies: [geography1, geography2],
       housingTypes: [housingType1],
     }
 

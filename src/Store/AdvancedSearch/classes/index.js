@@ -42,7 +42,7 @@ export class HousingType {
 
   set object(value) {
     this.setObject(value)
-    this.id = undefined // Clear the ID to avoid boundary/id mismatches
+    this.id = undefined // Clear the ID to avoid geography/id mismatches
   }
 
   set params(params) {

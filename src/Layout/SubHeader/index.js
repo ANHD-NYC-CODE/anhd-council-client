@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Navbar, Nav, Col } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { getBoundaryPath, addressResultToPath } from 'shared/utilities/routeUtils'
+import { getGeographyPath, addressResultToPath } from 'shared/utilities/routeUtils'
 import logo from 'shared/images/portallogo.png'
 import './style.scss'
 class SubHeader extends React.Component {
@@ -42,8 +42,8 @@ class SubHeader extends React.Component {
               <Nav.Link as="li">
                 <Link
                   to={`${
-                    this.props.currentBoundaryType && this.props.currentBoundaryId
-                      ? '/' + getBoundaryPath(this.props.currentBoundaryType) + '/' + this.props.currentBoundaryId
+                    this.props.currentGeographyType && this.props.currentGeographyId
+                      ? '/' + getGeographyPath(this.props.currentGeographyType) + '/' + this.props.currentGeographyId
                       : '/map'
                   }`}
                 >
@@ -69,8 +69,8 @@ SubHeader.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    currentBoundaryType: state.appState.currentBoundaryType,
-    currentBoundaryId: state.appState.currentBoundaryId,
+    currentGeographyType: state.appState.currentGeographyType,
+    currentGeographyId: state.appState.currentGeographyId,
     currentProperty: state.appState.currentProperty,
     currentBuilding: state.appState.currentBuilding,
   }
