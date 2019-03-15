@@ -11,6 +11,8 @@ class RequestWrapper extends React.Component {
   constructor(props) {
     super(props)
 
+    this.retryRequest = this.retryRequest.bind(this)
+    this.processError = this.processError.bind(this)
     props.dispatch(requestWithAuth(makeRequest(props.request)))
   }
 
@@ -18,12 +20,25 @@ class RequestWrapper extends React.Component {
     nextProps.dispatch(requestWithAuth(makeRequest(nextProps.request)))
   }
 
+  processError(error) {
+    if ((error || {}).status === 504) {
+      error.message = 'The request exceeded 2 minutes and timed out. Trying again may yield a result.'
+    }
+    return error
+  }
+
+  retryRequest() {
+    this.props.request.called = false
+    this.props.dispatch(requestWithAuth(makeRequest(this.props.request)))
+  }
+
   render() {
     return (
       <div className="request-wrapper">
         <BaseTable
           dispatch={this.props.dispatch}
-          error={this.props.error}
+          error={this.processError(this.props.error)}
+          errorAction={(this.props.error || {}).status === 504 ? this.retryRequest : null}
           loading={this.props.loading}
           records={this.props.results || []}
           caption={this.props.request.requestConstant}
