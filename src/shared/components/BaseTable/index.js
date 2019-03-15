@@ -54,6 +54,7 @@ const BaseTable = props => {
     custom: true,
     totalSize: props.records.length,
     sizePerPageList: [10, 50, 100],
+    page: 1,
   }
 
   return (
