@@ -1,7 +1,6 @@
 import * as c from '../constants'
 import { push } from 'connected-react-router'
 import { getBoundaryPath, addressResultToPath } from 'shared/utilities/routeUtils'
-import { constructAxiosGet } from 'shared/utilities/Axios'
 
 import { newLookupRequests } from 'shared/utilities/actionUtils'
 
@@ -44,11 +43,6 @@ export const handleSetPropertyBuildingLookupRequests = (propertyId, buildingId, 
   requests,
 })
 
-export const handleDataRequest = (response, requestConstant = undefined) => ({
-  type: c.HANDLE_DATA_REQUEST,
-  data: response.data,
-})
-
 export const setBoundaryTypeAndIdAndRedirect = (boundaryType, boundaryId) => dispatch => {
   dispatch(handleSetBoundaryTypeAndId(boundaryType, boundaryId))
   const path = getBoundaryPath(boundaryType)
@@ -60,20 +54,4 @@ export const setLookupAndRequestsAndRedirect = ({ bbl, bin }) => dispatch => {
 
   dispatch(handleSetPropertyBuildingLookupRequests(bbl, bin, requests))
   dispatch(push(addressResultToPath({ bbl: bbl, bin: bin })))
-}
-
-export const makeDataRequest = dataRequest => (dispatch, getState, access_token) => {
-  if (dataRequest.called) return
-  dataRequest.called = true
-  const requestId = Math.floor(Math.random() * 1000000)
-  return constructAxiosGet(
-    dispatch,
-    getState,
-    requestId,
-    dataRequest.path,
-    dataRequest.params,
-    access_token,
-    dataRequest.requestConstant,
-    handleDataRequest
-  )
 }

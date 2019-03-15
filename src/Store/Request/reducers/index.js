@@ -19,5 +19,9 @@ export const requestReducer = (state = Object.freeze(initialState), action = { d
         ...newState,
       }
     }
+    default:
+      return {
+        ...state,
+      }
   }
 }
