@@ -19,11 +19,11 @@ class Config extends React.Component {
     if (!props.datasets.length) {
       this.props.dispatch(getDatasets())
     }
-    if (!props.councils.length) {
+    if (!props.councilDistricts.length) {
       this.props.dispatch(getCouncils())
     }
 
-    if (!props.communities.length) {
+    if (!props.communityDistricts.length) {
       this.props.dispatch(getCommunities())
     }
 
@@ -40,21 +40,21 @@ class Config extends React.Component {
         this.props.dispatch(getDatasets())
       }
 
-      if (!nextProps.error && !nextProps.councils.length) {
+      if (!nextProps.error && !nextProps.councilDistricts.length) {
         this.props.dispatch(getCouncils())
       }
-      if (!nextProps.error && !nextProps.communities.length) {
+      if (!nextProps.error && !nextProps.communityDistricts.length) {
         this.props.dispatch(getCommunities())
       }
     }
 
     if (nextState.geographyType === 'council') {
       this.setState({
-        geographyObjects: this.props.councils,
+        geographyObjects: this.props.councilDistricts,
       })
     } else if (nextState.geographyType === 'cd') {
       this.setState({
-        geographyObjects: this.props.communities,
+        geographyObjects: this.props.communityDistricts,
       })
     }
   }
@@ -68,12 +68,16 @@ class Config extends React.Component {
           datasets: this.props.datasets,
           datasetModels: this.props.datasetModels,
           housingTypeModels: this.props.housingTypeModels,
-          boards: this.props.communities,
-          districts: this.props.councils,
+          communityDistricts: this.props.communityDistricts,
+          councilDistricts: this.props.councilDistricts,
         }}
       >
         {this.props.loading ||
-        !(!!this.props.datasets.length && !!this.props.councils.length && !!this.props.communities.length) ? (
+        !(
+          !!this.props.datasets.length &&
+          !!this.props.councilDistricts.length &&
+          !!this.props.communityDistricts.length
+        ) ? (
           <Loading monitoredRequests={[GET_DATASETS, GET_COUNCILS, GET_COMMUNITIES]} />
         ) : (
           this.props.children
@@ -98,8 +102,8 @@ const mapStateToProps = state => {
     datasets: state.dataset.datasets,
     datasetModels: state.dataset.datasetModels,
     housingTypeModels: state.dataset.housingTypeModels,
-    councils: state.council.districts,
-    communities: state.community.boards,
+    councilDistricts: state.council.districts,
+    communityDistricts: state.community.boards,
     error: errorSelector(state),
     loading: loadingSelector(state),
   }

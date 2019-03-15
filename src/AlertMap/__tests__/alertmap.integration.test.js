@@ -32,8 +32,8 @@ const setupWrapper = state => {
           datasets: state.dataset.datasets,
           datasetModels: state.dataset.datasetModels,
           housingTypeModels: state.dataset.housingTypeModels,
-          boards: state.community.boards,
-          districts: state.council.districts,
+          communityDistricts: state.community.boards,
+          councilDistricts: state.council.districts,
         }}
       >
         <ConnectedRouter history={history}>

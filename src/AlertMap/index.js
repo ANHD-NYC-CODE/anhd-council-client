@@ -86,7 +86,7 @@ const mapStateToProps = state => {
   const match = matchSelector(state)
   return {
     appState: state.appState,
-    districts: state.council.districts,
+    councilDistricts: state.council.districts,
     district: state.council.district,
     districtHousing: state.council.districtHousing,
     loading: loadingSelector(state),

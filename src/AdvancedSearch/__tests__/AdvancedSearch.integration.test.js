@@ -29,6 +29,8 @@ const setupWrapper = state => {
           datasets: state.dataset.datasets,
           datasetModels: state.dataset.datasetModels,
           housingTypeModels: state.dataset.housingTypeModels,
+          councilDistricts: state.council.districts,
+          communityDistricts: state.community.boards,
         }}
       >
         <AdvancedSearch />
@@ -99,7 +101,7 @@ describe('AdvancedSearch', () => {
       expect(wrapper.find('select[name="geographyType"]').props().value).toEqual(-1)
       expect(wrapper.find('select[name="geographyType"] option')).toHaveLength(3)
       expect(wrapper.find('select[name="geographyType"]').text()).toEqual(
-        'Select a geography typeCouncil DistrictCommunity Board'
+        'Select a geography typeCouncil DistrictCommunity District'
       )
     })
 

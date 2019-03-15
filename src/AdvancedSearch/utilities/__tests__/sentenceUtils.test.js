@@ -42,7 +42,7 @@ describe('convertGeographiesToSentence', () => {
     it('converts the object into a sentence', () => {
       const geographies = [new Geography('COUNCIL', 1), new Geography('COMMUNITY', 2)]
 
-      const result = 'in council district 1 and community board 2'
+      const result = 'in council district 1 and community district 2'
 
       expect(a.convertGeographiesToSentence(geographies)).toEqual(result)
     })
