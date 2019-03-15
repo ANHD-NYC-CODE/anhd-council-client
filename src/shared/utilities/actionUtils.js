@@ -65,6 +65,7 @@ export const handleCatchError = (error, type, dispatch, requestId) => {
     }
   }
   dispatch(errorActions.handleFailure(type, errorStatus, errorMessage))
+
   toast.error(`Error: ${errorStatus} - ${errorMessage}`)
 
   dispatch(loadingActions.handleCompletedRequest(type, requestId))
@@ -152,9 +153,9 @@ export const newPropertyRequest = ({ type = undefined, bbl = undefined, resource
 export const newLookupRequests = ({ bbl, bin } = {}) => {
   return [
     newPropertyRequest({ type: 'LOOKUP_PROFILE', bbl: bbl }),
-    newPropertyRequest({ type: 'LOOKUP_FILTER', bbl: bbl, resourceConstant: 'ACRISREALMASTER' }),
-    newPropertyRequest({ type: 'LOOKUP_FILTER', bbl: bbl, resourceConstant: 'EVICTION' }),
-    newPropertyRequest({ type: 'LOOKUP_FILTER', bbl: bbl, resourceConstant: 'FORECLOSURE' }),
+    !bin ? newPropertyRequest({ type: 'LOOKUP_FILTER', bbl: bbl, resourceConstant: 'ACRISREALMASTER' }) : null,
+    !bin ? newPropertyRequest({ type: 'LOOKUP_FILTER', bbl: bbl, resourceConstant: 'EVICTION' }) : null,
+    !bin ? newPropertyRequest({ type: 'LOOKUP_FILTER', bbl: bbl, resourceConstant: 'FORECLOSURE' }) : null,
     bin
       ? newBuildingRequest({ type: 'LOOKUP_FILTER', bin: bin, resourceConstant: 'HPD_VIOLATION' })
       : newPropertyRequest({ type: 'LOOKUP_FILTER', bbl: bbl, resourceConstant: 'HPD_VIOLATION' }),

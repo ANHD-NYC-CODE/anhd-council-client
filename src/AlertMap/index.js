@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import * as c from 'Store/Council/constants'
-import * as d from 'shared/constants/datasets'
 
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
@@ -13,7 +12,6 @@ import LeafletMap from 'LeafletMap'
 import { Row, Col } from 'react-bootstrap'
 import { setGeographyAndRequestsAndRedirect } from 'Store/AppState/actions'
 import { pathToGeographyConstant } from 'shared/utilities/routeUtils'
-import { getCouncilPropertySummary } from 'Store/Council/actions'
 import { lookupRequests } from 'Store/AppState/selectors'
 import RequestWrapper from 'shared/components/RequestWrapper'
 
@@ -37,9 +35,7 @@ class AlertMap extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!nextProps.geographyType) {
-      nextProps.dispatch(push('/map'))
-    } else if (!nextProps.appState.currentGeographyType && nextProps.geographyType) {
+    if (!nextProps.appState.currentGeographyType && nextProps.geographyType) {
       nextProps.dispatch(
         setGeographyAndRequestsAndRedirect({
           geographyType: pathToGeographyConstant(nextProps.geographyType),
@@ -82,7 +78,7 @@ const loadingSelector = createLoadingSelector([c.GET_COUNCILS])
 const errorSelector = createErrorSelector([c.GET_COUNCILS])
 
 const mapStateToProps = state => {
-  const pathMatch = state.router.location.pathname.match(/(board|district)/)
+  const pathMatch = state.router.location.pathname.match(/(council|community)/)
   const path = pathMatch ? pathMatch[0] : null
   const matchSelector = createMatchSelector({
     path: `/${path}/:id`,

@@ -6,20 +6,20 @@ export const getGeographyPath = type => {
   type = type.toUpperCase()
   switch (type) {
     case 'COUNCIL':
-      return 'district'
+      return 'council'
     case 'COMMUNITY':
-      return 'board'
+      return 'community'
     case 'CD':
-      return 'board'
+      return 'community'
   }
 }
 
 export const pathToGeographyConstant = type => {
   type = type.toUpperCase()
   switch (type) {
-    case 'DISTRICT':
+    case 'COUNCIL':
       return 'COUNCIL'
-    case 'BOARD':
+    case 'COMMUNITY':
       return 'COMMUNITY'
   }
 }
