@@ -22,7 +22,6 @@ class Lookup extends React.Component {
   constructor(props) {
     super(props)
 
-    console.log(props.bbl, props.appState.currentProperty)
     if (!props.bbl) {
       props.dispatch(push('/lookup'))
     } else if (!props.appState.currentProperty && props.bbl) {
