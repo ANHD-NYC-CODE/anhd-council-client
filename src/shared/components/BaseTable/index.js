@@ -9,7 +9,7 @@ import paginationFactory, {
   PaginationListStandalone,
 } from 'react-bootstrap-table2-paginator'
 import { Row, Col } from 'react-bootstrap'
-
+import TableError from 'shared/components/BaseTable/TableError'
 import './style.scss'
 
 const columns = [
@@ -89,7 +89,7 @@ const BaseTable = props => {
             rowEvents={rowEvents}
           />
           {props.loading && <InnerLoader />}
-          {props.error && <div className="text-danger">{props.error.message}</div>}
+          {props.error && <TableError error={props.error} errorAction={props.errorAction} />}
         </div>
       )}
     </PaginationProvider>
