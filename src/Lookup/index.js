@@ -23,7 +23,7 @@ class Lookup extends React.Component {
     if (!props.bbl) {
       props.dispatch(push('/lookup'))
     } else if (!props.appState.currentProperty && props.bbl) {
-      props.dispatch(setLookupAndRequestsAndRedirect({ bbl: props.bbl, bin: props.bin }))
+      props.dispatch(setLookupAndRequestsAndRedirect({ bbl: props.bbl, bin: props.bin, redirect: false }))
     } else {
       props.dispatch(makeRequest(props.propertyProfileRequest))
     }
@@ -31,7 +31,7 @@ class Lookup extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (!nextProps.appState.currentProperty && nextProps.bbl) {
-      nextProps.dispatch(setLookupAndRequestsAndRedirect({ bbl: nextProps.bbl, bin: nextProps.bin }))
+      nextProps.dispatch(setLookupAndRequestsAndRedirect({ bbl: nextProps.bbl, bin: nextProps.bin, redirect: false }))
     } else {
       nextProps.dispatch(makeRequest(nextProps.propertyProfileRequest))
     }

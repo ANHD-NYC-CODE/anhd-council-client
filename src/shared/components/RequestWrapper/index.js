@@ -18,11 +18,20 @@ class RequestWrapper extends React.Component {
     nextProps.dispatch(requestWithAuth(makeRequest(nextProps.request)))
   }
 
+  componentWillUnmount() {
+    this.props.request.called = false
+  }
+
   render() {
     return (
       <div className="request-wrapper">
-        <h6>{this.props.request.requestConstant}</h6>
-        <BaseTable error={this.props.error} loading={this.props.loading} records={this.props.results || []} />
+        <BaseTable
+          dispatch={this.props.dispatch}
+          error={this.props.error}
+          loading={this.props.loading}
+          records={this.props.results || []}
+          caption={this.props.request.requestConstant}
+        />
       </div>
     )
   }

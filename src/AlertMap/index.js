@@ -26,6 +26,7 @@ class AlertMap extends React.Component {
         setGeographyAndRequestsAndRedirect({
           geographyType: pathToGeographyConstant(props.geographyType),
           geographyId: props.geographyId,
+          redirect: false,
         })
       )
     } else {
@@ -40,6 +41,7 @@ class AlertMap extends React.Component {
         setGeographyAndRequestsAndRedirect({
           geographyType: pathToGeographyConstant(nextProps.geographyType),
           geographyId: nextProps.geographyId,
+          redirect: false,
         })
       )
     } else {

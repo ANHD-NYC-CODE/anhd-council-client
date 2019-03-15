@@ -61,21 +61,29 @@ export const setGeographyTypeAndIdAndRedirect = (geographyType, geographyId) => 
   dispatch(push(`/${path}/${geographyId}`))
 }
 
-export const setGeographyAndRequestsAndRedirect = ({ geographyType, geographyId } = {}) => dispatch => {
+export const setGeographyAndRequestsAndRedirect = ({
+  geographyType,
+  geographyId,
+  redirect = true,
+} = {}) => dispatch => {
   const requests = newMapRequests({ geographyType, geographyId })
   dispatch(removeRequestType('MAP_FILTER'))
   dispatch(removeRequestType('MAP_PROFILE'))
   dispatch(handleSetGeographyRequests(geographyType, geographyId, requests))
 
-  const path = getGeographyPath(geographyType)
-  dispatch(push(`/${path}/${geographyId}`))
+  if (redirect) {
+    const path = getGeographyPath(geographyType)
+    dispatch(push(`/${path}/${geographyId}`))
+  }
 }
 
-export const setLookupAndRequestsAndRedirect = ({ bbl, bin } = {}) => dispatch => {
+export const setLookupAndRequestsAndRedirect = ({ bbl, bin, redirect = true } = {}) => dispatch => {
   const requests = newLookupRequests({ bbl, bin })
   dispatch(removeRequestType('LOOKUP_FILTER'))
   dispatch(removeRequestType('LOOKUP_PROFILE'))
 
   dispatch(handleSetPropertyBuildingLookupRequests(bbl, bin, requests))
-  dispatch(push(addressResultToPath({ bbl: bbl, bin: bin })))
+  if (redirect) {
+    dispatch(push(addressResultToPath({ bbl: bbl, bin: bin })))
+  }
 }
