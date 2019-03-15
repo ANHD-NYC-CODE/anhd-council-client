@@ -3,20 +3,16 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { push, createMatchSelector } from 'connected-react-router'
 import * as c from 'Store/Building/constants'
-import * as d from 'shared/constants/datasets'
 import { lookupRequests } from 'Store/AppState/selectors'
 import { setLookupAndRequestsAndRedirect } from 'Store/AppState/actions'
 import { makeRequest } from 'Store/Request/actions'
 
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
-import { getBuildingResource } from 'Store/Building/actions'
-import { constructActionKey } from 'shared/utilities/actionUtils'
+
 import LeafletMap from 'LeafletMap'
 import AddressSearch from 'Lookup/AddressSearch'
 import { Row, Col, Jumbotron } from 'react-bootstrap'
-import RecordsFetchModule from 'shared/components/RecordsFetchModule'
-import BuildingHistoryTable from 'Lookup/BuildingHistoryTable'
 
 import RequestWrapper from 'shared/components/RequestWrapper'
 
@@ -42,7 +38,6 @@ class Lookup extends React.Component {
   }
 
   render() {
-    console.log(this.props.lookupRequests)
     return (
       <Row>
         <Col sm={12} md={5}>
@@ -52,7 +47,6 @@ class Lookup extends React.Component {
         </Col>
         <Col sm={12} md={7}>
           {this.props.lookupRequests.map((request, index) => {
-            console.log(request)
             return <RequestWrapper key={`lookup-request-wrapper-${index}`} request={request} />
           })}
         </Col>

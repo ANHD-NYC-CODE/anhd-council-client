@@ -33,20 +33,20 @@ export const removeCondition = conditionKey => ({
   conditionKey,
 })
 
-export const addBoundary = boundary => ({
-  type: c.ADD_BOUNDARY,
-  boundary,
+export const addGeography = geography => ({
+  type: c.ADD_GEOGRAPHY,
+  geography,
 })
 
-export const updateBoundary = (boundaryIndex, boundary) => ({
-  type: c.UPDATE_BOUNDARY,
-  boundaryIndex,
-  boundary,
+export const updateGeography = (geographyIndex, geography) => ({
+  type: c.UPDATE_GEOGRAPHY,
+  geographyIndex,
+  geography,
 })
 
-export const removeBoundary = boundaryIndex => ({
-  type: c.REMOVE_BOUNDARY,
-  boundaryIndex,
+export const removeGeography = geographyIndex => ({
+  type: c.REMOVE_GEOGRAPHY,
+  geographyIndex,
 })
 
 export const addHousingType = housingType => ({

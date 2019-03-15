@@ -53,7 +53,7 @@ class GeographySelect extends React.Component {
                 value={this.state.geographyType || -1}
               >
                 <option disabled value={-1} key={-1}>
-                  {this.props.placeholder || 'Select a geography type'}
+                  {this.props.placeholder || 'Select a Geography type'}
                 </option>
                 <option value={b.COUNCILGEOGRAPHY.constant}>{b.COUNCILGEOGRAPHY.name}</option>
                 <option value={b.COMMUNITYGEOGRAPHY.constant}>{b.COMMUNITYGEOGRAPHY.name}</option>
@@ -78,7 +78,7 @@ class GeographySelect extends React.Component {
             {this.props.confirmChange && this.state.changing && (
               <Col xs={12}>
                 <Button
-                  className="cancel-geography-change"
+                  className="cancel-Geography-change"
                   onClick={() =>
                     this.setState({
                       changing: false,

@@ -60,15 +60,15 @@ describe('Landing page', () => {
     ).toEqual('/search')
   })
 
-  describe('After setting a boundary select', () => {
-    it('redirects to the map page for the boundary', () => {
+  describe('After setting a geography select', () => {
+    it('redirects to the map page for the geography', () => {
       const wrapper = setupWrapper({ router: { location: { pathname: '/' } } })
       wrapper
-        .find('BoundarySelect select')
+        .find('GeographySelect select')
         .at(0)
         .simulate('change', { target: { value: 'COMMUNITY' } })
       wrapper
-        .find('BoundarySelect select')
+        .find('GeographySelect select')
         .at(1)
         .simulate('change', { target: { value: '7' } })
 

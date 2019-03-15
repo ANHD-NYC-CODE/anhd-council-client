@@ -1,8 +1,8 @@
 import * as c from '../constants'
 
 export const initialState = {
-  currentBoundaryType: undefined,
-  currentBoudaryId: undefined,
+  currentGeographyType: undefined,
+  currentGeographyId: undefined,
   currentProperty: undefined,
   currentBuilding: undefined,
   requests: [],
@@ -10,23 +10,23 @@ export const initialState = {
 
 export const appStateReducer = (state = Object.freeze(initialState), action = { data: [] }) => {
   switch (action.type) {
-    case c.SET_BOUNDARY_TYPE: {
+    case c.SET_GEOGRAPHY_TYPE: {
       return {
         ...state,
-        currentBoundaryType: action.data,
+        currentGeographyType: action.data,
       }
     }
-    case c.SET_BOUNDARY_ID: {
+    case c.SET_GEOGRAPHY_ID: {
       return {
         ...state,
-        currentBoundaryId: action.data,
+        currentGeographyId: action.data,
       }
     }
-    case c.SET_BOUNDARY_TYPE_AND_ID: {
+    case c.SET_GEOGRAPHY_TYPE_AND_ID: {
       return {
         ...state,
-        currentBoundaryType: action.boundaryType,
-        currentBoundaryId: action.boundaryId,
+        currentGeographyType: action.geographyType,
+        currentGeographyId: action.geographyId,
       }
     }
     case c.SET_PROPERTY: {

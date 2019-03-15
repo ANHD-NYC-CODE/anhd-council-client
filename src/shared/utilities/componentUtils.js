@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const getBoundaryIdOptions = (districts, boards, type) => {
+export const getGeographyIdOptions = (districts, boards, type) => {
   type = type.toUpperCase()
   switch (type) {
     case 'COUNCIL':
@@ -9,7 +9,7 @@ export const getBoundaryIdOptions = (districts, boards, type) => {
           #
         </option>,
         ...districts.map(d => (
-          <option key={`boundary-id-option-${d.id}`} value={d.id}>
+          <option key={`geography-id-option-${d.id}`} value={d.id}>
             {d.id}
           </option>
         )),
@@ -20,7 +20,7 @@ export const getBoundaryIdOptions = (districts, boards, type) => {
           #
         </option>,
         ...boards.map(d => (
-          <option key={`boundary-id-option-${d.id}`} value={d.id}>
+          <option key={`geography-id-option-${d.id}`} value={d.id}>
             {d.id}
           </option>
         )),
@@ -31,7 +31,7 @@ export const getBoundaryIdOptions = (districts, boards, type) => {
           #
         </option>,
         ...boards.map(d => (
-          <option key={`boundary-id-option-${d.id}`} value={d.id}>
+          <option key={`geography-id-option-${d.id}`} value={d.id}>
             {d.id}
           </option>
         )),

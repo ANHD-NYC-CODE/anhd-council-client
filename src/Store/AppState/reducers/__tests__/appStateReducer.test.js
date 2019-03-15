@@ -6,43 +6,43 @@ describe('App State reducer', () => {
     expect(r.appStateReducer(undefined, {})).toEqual(r.initialState)
   })
 
-  describe('SET_BOUNDARY_TYPE', () => {
+  describe('SET_GEOGRAPHY_TYPE', () => {
     const type = 'COUNCIL'
-    it('sets the boundary', () => {
-      expect(r.appStateReducer(undefined, a.handleSetBoundaryType(type))).toEqual({
+    it('sets the geography', () => {
+      expect(r.appStateReducer(undefined, a.handleSetGeographyType(type))).toEqual({
         ...r.initialState,
-        currentBoundaryType: type,
+        currentGeographyType: type,
       })
     })
   })
 
-  describe('SET_BOUNDARY_ID', () => {
+  describe('SET_GEOGRAPHY_ID', () => {
     const type = 'COUNCIL'
     const id = '1'
-    it('sets the boundary', () => {
-      expect(r.appStateReducer({ ...r.initialState, currentBoundaryType: type }, a.handleSetBoundaryId(id))).toEqual({
+    it('sets the geography', () => {
+      expect(r.appStateReducer({ ...r.initialState, currentGeographyType: type }, a.handleSetGeographyId(id))).toEqual({
         ...r.initialState,
-        currentBoundaryType: type,
-        currentBoundaryId: id,
+        currentGeographyType: type,
+        currentGeographyId: id,
       })
     })
   })
 
-  describe('SET_BOUNDARY_TYPE_AND_ID', () => {
+  describe('SET_GEOGRAPHY_TYPE_AND_ID', () => {
     const type = 'COUNCIL'
     const id = '1'
-    it('sets the boundary', () => {
-      expect(r.appStateReducer(undefined, a.handleSetBoundaryTypeAndId(type, id))).toEqual({
+    it('sets the geography', () => {
+      expect(r.appStateReducer(undefined, a.handleSetGeographyTypeAndId(type, id))).toEqual({
         ...r.initialState,
-        currentBoundaryType: type,
-        currentBoundaryId: id,
+        currentGeographyType: type,
+        currentGeographyId: id,
       })
     })
   })
 
   describe('SET_PROPERTY', () => {
     const property = '1000010001'
-    it('sets the boundary', () => {
+    it('sets the geography', () => {
       expect(r.appStateReducer(undefined, a.handleSetProperty(property))).toEqual({
         ...r.initialState,
         currentProperty: property,
@@ -52,7 +52,7 @@ describe('App State reducer', () => {
 
   describe('SET_BUILDING', () => {
     const building = '9999999'
-    it('sets the boundary', () => {
+    it('sets the geography', () => {
       expect(r.appStateReducer(undefined, a.handleSetBuilding(building))).toEqual({
         ...r.initialState,
         currentBuilding: building,
@@ -63,7 +63,7 @@ describe('App State reducer', () => {
   describe('SET_PROPERTY_AND_BUILDING', () => {
     const property = '1000010001'
     const building = '9999999'
-    it('sets the boundary', () => {
+    it('sets the geography', () => {
       expect(r.appStateReducer(undefined, a.handleSetPropertyAndBuilding(property, building))).toEqual({
         ...r.initialState,
         currentProperty: property,

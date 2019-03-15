@@ -133,10 +133,12 @@ export const convertConditionMappingToSentence = conditions => {
   return `${convertConditionToSentence(conditions, conditions['0'])}.`
 }
 
-export const convertBoundariesToSentence = boundaries => {
+export const convertGeographiesToSentence = geographies => {
   return `in ${
-    boundaries.length
-      ? boundaries.map(boundary => `${boundary.name.toLowerCase()} ${boundary.id ? boundary.id : '_'}`).join(' and ')
+    geographies.length
+      ? geographies
+          .map(geography => `${geography.name.toLowerCase()} ${geography.id ? geography.id : '_'}`)
+          .join(' and ')
       : '...'
   }`
 }
@@ -185,6 +187,6 @@ export const convertHousingTypesToSentence = housingTypes => {
 export const constructSentence = advancedSearch => {
   return `Show me ${[
     convertHousingTypesToSentence(advancedSearch.housingTypes),
-    convertBoundariesToSentence(advancedSearch.boundaries),
+    convertGeographiesToSentence(advancedSearch.geographies),
   ].join(' ')} ${convertConditionMappingToSentence(advancedSearch.conditions)}`
 }

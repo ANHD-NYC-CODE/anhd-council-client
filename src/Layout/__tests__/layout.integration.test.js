@@ -60,9 +60,9 @@ describe('navigation', () => {
     ).toEqual('/search')
   })
 
-  describe('with current boundary app state', () => {
-    it('changes district map link to the selected boundary', () => {
-      const wrapper = setupWrapper({ appState: { currentBoundaryType: 'COUNCIL', currentBoundaryId: '3' } })
+  describe('with current geography app state', () => {
+    it('changes district map link to the selected geography', () => {
+      const wrapper = setupWrapper({ appState: { currentGeographyType: 'COUNCIL', currentGeographyId: '3' } })
       expect(
         wrapper
           .find('SubHeader a')

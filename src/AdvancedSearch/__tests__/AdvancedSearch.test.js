@@ -6,14 +6,14 @@ import sinon from 'sinon'
 import { AdvancedSearch } from 'AdvancedSearch'
 import { AdvancedSearchSentence } from 'AdvancedSearch/Sentence'
 
-import { Boundary } from 'shared/classes/Boundary'
+import { Geography } from 'shared/classes/Geography'
 import { Condition } from 'shared/classes/Condition'
 configure({ adapter: new Adapter() })
 
 describe('AdvancedSearch', () => {
   const dispatch = sinon.spy()
   const advancedSearch = {
-    boundaries: [new Boundary('COUNCIL', 1)],
+    geographies: [new Geography('COUNCIL', 1)],
     conditions: { '0': new Condition({ type: 'AND', filters: [] }) },
     housingTypes: [],
   }

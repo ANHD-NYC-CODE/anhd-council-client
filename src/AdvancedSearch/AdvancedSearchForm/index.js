@@ -11,7 +11,7 @@ import { getAdvancedSearchParamMaps } from 'Store/AdvancedSearch/utilities/advan
 import { addHousingType, updateHousingType } from 'Store/AdvancedSearch/actions'
 
 import ConditionComponent from 'AdvancedSearch/ConditionComponent'
-import BoundaryQuery from 'AdvancedSearch/BoundaryQuery'
+import GeographyQuery from 'AdvancedSearch/GeographyQuery'
 import HousingTypeQuery from 'AdvancedSearch/HousingTypeQuery'
 import FormError from 'shared/components/FormError'
 
@@ -19,13 +19,13 @@ import { Form, Button } from 'react-bootstrap'
 import { Formik } from 'formik'
 import './style.scss'
 const schema = yup.object({
-  boundaryType: yup
+  geographyType: yup
     .string()
     .test('selectValid', 'Please make a selection', value => {
       return !!value && value !== '-1'
     })
     .required('Please make a selection'),
-  boundaryId: yup.string().required('Please make a selection'),
+  geographyId: yup.string().required('Please make a selection'),
 })
 
 class AdvancedSearchForm extends React.Component {
@@ -94,10 +94,10 @@ class AdvancedSearchForm extends React.Component {
         {({ handleSubmit, handleChange, handleBlur, touched, errors, submitCount }) => (
           <Form noValidate className="advanced-search-form" onSubmit={handleSubmit} validated={this.state.validated}>
             <FormError show={!!this.props.error} message={(this.props.error || {}).message} />
-            <BoundaryQuery
-              addBoundary={this.addBoundary}
-              boundaries={this.props.advancedSearch.boundaries}
-              changeBoundary={this.changeBoundary}
+            <GeographyQuery
+              addGeography={this.addGeography}
+              geographies={this.props.advancedSearch.geographies}
+              changeGeography={this.changeGeography}
               handleChange={handleChange}
               handleBlur={handleBlur}
               touched={touched}

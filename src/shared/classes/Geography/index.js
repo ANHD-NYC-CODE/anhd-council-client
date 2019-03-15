@@ -1,16 +1,16 @@
 import * as b from 'shared/constants/geographies'
 
 export class Geography {
-  constructor(geographyConstant, id) {
+  constructor(GeographyConstant, id) {
     this._id = id
     this._errors = []
-    this.handleSetGeographyType(geographyConstant)
+    this.handleSetgeographyType(GeographyConstant)
   }
 
-  handleSetGeographyType(geographyConstant) {
-    const geographyType = b[Object.keys(b).find(obj => b[obj].constant === geographyConstant)]
+  handleSetgeographyType(GeographyConstant) {
+    const geographyType = b[Object.keys(b).find(obj => b[obj].constant === GeographyConstant)]
     if (geographyType) {
-      this._geographyType = geographyType
+      this._GEOGRAPHYType = geographyType
       this._name = this.geographyType.name
       this._queryName = this.geographyType.queryName
       this._constant = this.geographyType.constant
@@ -22,7 +22,7 @@ export class Geography {
   }
 
   get geographyType() {
-    return this._geographyType
+    return this._GEOGRAPHYType
   }
   get id() {
     return this._id
@@ -54,9 +54,9 @@ export class Geography {
     this._errors = []
   }
 
-  set geographyType(geographyConstant) {
-    this.handleSetGeographyType(geographyConstant)
-    this.id = undefined // Clear the ID to avoid geography/id mismatches
+  set geographyType(GeographyConstant) {
+    this.handleSetgeographyType(GeographyConstant)
+    this.id = undefined // Clear the ID to avoid Geography/id mismatches
   }
 
   set id(value) {

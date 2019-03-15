@@ -8,7 +8,7 @@ export const initialState = () => ({
   conditions: {
     '0': new Condition({ key: '0', type: 'AND', filters: [] }),
   },
-  boundaries: [],
+  geographies: [],
   housingTypes: [new Filter({ modelConstant: 'ALL_TYPES' })],
   results: undefined,
 })
@@ -86,28 +86,28 @@ export const advancedSearchReducer = (state = Object.freeze(initialState()), act
       }
     }
 
-    case c.ADD_BOUNDARY: {
+    case c.ADD_GEOGRAPHY: {
       return {
         ...state,
-        boundaries: [...state.boundaries, action.boundary],
+        geographies: [...state.geographies, action.geography],
       }
     }
-    case c.UPDATE_BOUNDARY: {
+    case c.UPDATE_GEOGRAPHY: {
       return {
         ...state,
-        boundaries: [
-          ...state.boundaries.slice(0, action.boundaryIndex),
-          action.boundary,
-          ...state.boundaries.slice(action.boundaryIndex + 1),
+        geographies: [
+          ...state.geographies.slice(0, action.geographyIndex),
+          action.geography,
+          ...state.geographies.slice(action.geographyIndex + 1),
         ],
       }
     }
-    case c.REMOVE_BOUNDARY: {
+    case c.REMOVE_GEOGRAPHY: {
       return {
         ...state,
-        boundaries: [
-          ...state.boundaries.slice(0, action.boundaryIndex),
-          ...state.boundaries.slice(action.boundaryIndex + 1),
+        geographies: [
+          ...state.geographies.slice(0, action.geographyIndex),
+          ...state.geographies.slice(action.geographyIndex + 1),
         ],
       }
     }

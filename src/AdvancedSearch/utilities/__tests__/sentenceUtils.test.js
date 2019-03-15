@@ -1,6 +1,6 @@
 import * as a from 'AdvancedSearch/utilities/sentenceUtils'
 import * as d from 'shared/constants/datasets'
-import { Boundary } from 'shared/classes/Boundary'
+import { Geography } from 'shared/classes/Geography'
 import { Filter } from 'shared/classes/Filter'
 import { Condition } from 'shared/classes/Condition'
 import { ConditionFilter } from 'shared/classes/ConditionFilter'
@@ -27,24 +27,24 @@ describe('convertFilterToSentence', () => {
   })
 })
 
-describe('convertBoundariesToSentence', () => {
-  describe('1 boundary', () => {
+describe('convertGeographiesToSentence', () => {
+  describe('1 geography', () => {
     it('converts the object into a sentence', () => {
-      const boundaries = [new Boundary('COUNCIL', 1)]
+      const geographies = [new Geography('COUNCIL', 1)]
 
       const result = 'in council district 1'
 
-      expect(a.convertBoundariesToSentence(boundaries)).toEqual(result)
+      expect(a.convertGeographiesToSentence(geographies)).toEqual(result)
     })
   })
 
-  describe('2 boundaries', () => {
+  describe('2 geographies', () => {
     it('converts the object into a sentence', () => {
-      const boundaries = [new Boundary('COUNCIL', 1), new Boundary('COMMUNITY', 2)]
+      const geographies = [new Geography('COUNCIL', 1), new Geography('COMMUNITY', 2)]
 
       const result = 'in council district 1 and community board 2'
 
-      expect(a.convertBoundariesToSentence(boundaries)).toEqual(result)
+      expect(a.convertGeographiesToSentence(geographies)).toEqual(result)
     })
   })
 })

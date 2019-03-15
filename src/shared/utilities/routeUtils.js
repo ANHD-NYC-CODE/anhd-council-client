@@ -2,7 +2,7 @@ export const resourceRouteChanged = (oldProps, newProps) => {
   return oldProps.id !== newProps.id
 }
 
-export const getBoundaryPath = type => {
+export const getGeographyPath = type => {
   type = type.toUpperCase()
   switch (type) {
     case 'COUNCIL':
@@ -14,7 +14,7 @@ export const getBoundaryPath = type => {
   }
 }
 
-export const pathToBoundary = type => {
+export const pathToGeography = type => {
   type = type.toUpperCase()
   switch (type) {
     case 'DISTRICT':

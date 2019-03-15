@@ -7,12 +7,12 @@ import * as d from 'shared/constants/datasets'
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
 import { createMatchSelector } from 'connected-react-router'
-import BoundarySelect from 'shared/components/BoundarySelect'
+import GeographySelect from 'shared/components/GeographySelect'
 
 import LeafletMap from 'LeafletMap'
 import { Row, Col } from 'react-bootstrap'
-import { setBoundaryTypeAndIdAndRedirect } from 'Store/AppState/actions'
-import { pathToBoundary } from 'shared/utilities/routeUtils'
+import { setGeographyTypeAndIdAndRedirect } from 'Store/AppState/actions'
+import { pathToGeography } from 'shared/utilities/routeUtils'
 import RecordsFetchModule from 'shared/components/RecordsFetchModule'
 import { getCouncilPropertySummary } from 'Store/Council/actions'
 import { constructActionKey } from 'shared/utilities/actionUtils'
@@ -21,8 +21,8 @@ import BuildingHistoryTable from 'Lookup/BuildingHistoryTable'
 class AlertMap extends React.Component {
   constructor(props) {
     super(props)
-    if (props.path && props.id && (!props.appState.currentBoundaryType || !props.appState.currentBoundaryId)) {
-      props.dispatch(setBoundaryTypeAndIdAndRedirect(pathToBoundary(props.path), props.id))
+    if (props.path && props.id && (!props.appState.currentGeographyType || !props.appState.currentGeographyId)) {
+      props.dispatch(setGeographyTypeAndIdAndRedirect(pathToGeography(props.path), props.id))
     }
   }
 
@@ -31,19 +31,19 @@ class AlertMap extends React.Component {
       <Row>
         <Col sm={12} md={4}>
           <LeafletMap />
-          <BoundarySelect
+          <GeographySelect
             confirmChange={true}
-            currentBoundaryType={this.props.appState.currentBoundaryType}
-            currentBoundaryId={this.props.appState.currentBoundaryId}
+            currentGeographyType={this.props.appState.currentGeographyType}
+            currentGeographyId={this.props.appState.currentGeographyId}
             dispatch={this.props.dispatch}
           />
         </Col>
         <Col sm={12} md={8}>
-          {!!this.props.appState.currentBoundaryType && !!this.props.appState.currentBoundaryId && (
+          {!!this.props.appState.currentGeographyType && !!this.props.appState.currentGeographyId && (
             <div className="district-map-show">
               <RecordsFetchModule
                 actionKey={constructActionKey([c.GET_COUNCIL_PROPERTIES, d.HPDVIOLATIONS.constant])}
-                id={this.props.appState.currentBoundaryId}
+                id={this.props.appState.currentGeographyId}
                 dataset={d.HPDVIOLATIONS}
                 recordsFetch={getCouncilPropertySummary}
                 reducerPath="council.districtPropertySummaries"

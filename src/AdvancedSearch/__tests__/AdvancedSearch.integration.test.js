@@ -38,20 +38,20 @@ const setupWrapper = state => {
   return wrapper
 }
 
-const selectedBoundaryWrapper = ({ wrapper = undefined, selectValue = undefined, idValue = undefined } = {}) => {
+const selectedGeographyWrapper = ({ wrapper = undefined, selectValue = undefined, idValue = undefined } = {}) => {
   if (!wrapper) {
     wrapper = setupWrapper()
   }
   wrapper
-    .find('select[name="boundaryType"]')
-    .simulate('change', { target: { name: 'boundaryType', value: selectValue, dataset: { key: 'boundaryType' } } })
+    .find('select[name="geographyType"]')
+    .simulate('change', { target: { name: 'geographyType', value: selectValue, dataset: { key: 'geographyType' } } })
 
   wrapper.update()
 
   if (idValue) {
     wrapper
-      .find('select[name="boundaryId"]')
-      .simulate('change', { target: { name: 'boundaryId', value: idValue, dataset: { key: 'id' } } })
+      .find('select[name="geographyId"]')
+      .simulate('change', { target: { name: 'geographyId', value: idValue, dataset: { key: 'id' } } })
   }
   wrapper.update()
   return wrapper
@@ -63,7 +63,7 @@ const selectedHousingTypeWrapper = ({ wrapper = undefined, selectValue = undefin
   }
   wrapper
     .find('select[name="housingTypeSelect"]')
-    .simulate('change', { target: { name: 'boundaryType', value: selectValue } })
+    .simulate('change', { target: { name: 'geographyType', value: selectValue } })
   wrapper.update()
   return wrapper
 }
@@ -89,37 +89,37 @@ describe('AdvancedSearch', () => {
     expect(wrapper.find('button[type="submit"]')).toHaveLength(1)
   })
 
-  describe('Boundary Query Select', () => {
+  describe('Geography Query Select', () => {
     it('has initial state', () => {
       const wrapper = setupWrapper()
-      expect(wrapper.find('BoundaryQuery')).toHaveLength(1)
-      expect(wrapper.find('select[name="boundaryType"]')).toHaveLength(1)
-      expect(wrapper.find('select[name="boundaryId"]')).toHaveLength(0)
+      expect(wrapper.find('GeographyQuery')).toHaveLength(1)
+      expect(wrapper.find('select[name="geographyType"]')).toHaveLength(1)
+      expect(wrapper.find('select[name="geographyId"]')).toHaveLength(0)
 
-      expect(wrapper.find('select[name="boundaryType"]').props().value).toEqual(-1)
-      expect(wrapper.find('select[name="boundaryType"] option')).toHaveLength(3)
-      expect(wrapper.find('select[name="boundaryType"]').text()).toEqual(
-        'Select a boundary typeCouncil DistrictCommunity Board'
+      expect(wrapper.find('select[name="geographyType"]').props().value).toEqual(-1)
+      expect(wrapper.find('select[name="geographyType"] option')).toHaveLength(3)
+      expect(wrapper.find('select[name="geographyType"]').text()).toEqual(
+        'Select a geography typeCouncil DistrictCommunity Board'
       )
     })
 
-    it('switches between boundaries', () => {
-      let wrapper = selectedBoundaryWrapper({ selectValue: 'COUNCIL' })
-      expect(wrapper.find('select[name="boundaryType"]')).toHaveLength(1)
-      expect(wrapper.find('select[name="boundaryType"]').props().value).toEqual('COUNCIL')
+    it('switches between geographies', () => {
+      let wrapper = selectedGeographyWrapper({ selectValue: 'COUNCIL' })
+      expect(wrapper.find('select[name="geographyType"]')).toHaveLength(1)
+      expect(wrapper.find('select[name="geographyType"]').props().value).toEqual('COUNCIL')
 
-      wrapper = selectedBoundaryWrapper({ wrapper: wrapper, selectValue: 'COMMUNITY' })
-      expect(wrapper.find('select[name="boundaryType"]')).toHaveLength(1)
-      expect(wrapper.find('select[name="boundaryType"]').props().value).toEqual('COMMUNITY')
+      wrapper = selectedGeographyWrapper({ wrapper: wrapper, selectValue: 'COMMUNITY' })
+      expect(wrapper.find('select[name="geographyType"]')).toHaveLength(1)
+      expect(wrapper.find('select[name="geographyType"]').props().value).toEqual('COMMUNITY')
     })
 
     it('adds council districts when selected', () => {
-      const wrapper = selectedBoundaryWrapper({ selectValue: 'COUNCIL', idValue: 3 })
-      expect(wrapper.find('select[name="boundaryType"]').props().value).toEqual('COUNCIL')
+      const wrapper = selectedGeographyWrapper({ selectValue: 'COUNCIL', idValue: 3 })
+      expect(wrapper.find('select[name="geographyType"]').props().value).toEqual('COUNCIL')
 
-      expect(wrapper.find('select[name="boundaryId"]')).toHaveLength(1)
-      expect(wrapper.find('select[name="boundaryId"] option')).toHaveLength(4)
-      expect(wrapper.find('select[name="boundaryId"]').props().value).toEqual(3)
+      expect(wrapper.find('select[name="geographyId"]')).toHaveLength(1)
+      expect(wrapper.find('select[name="geographyId"] option')).toHaveLength(4)
+      expect(wrapper.find('select[name="geographyId"]').props().value).toEqual(3)
       expect(wrapper.find('AdvancedSearchSentence').text()).toMatch(/Show me all properties in council district 3/)
     })
   })

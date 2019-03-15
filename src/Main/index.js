@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import AddressSearch from 'Lookup/AddressSearch'
-import BoundarySelect from 'shared/components/BoundarySelect'
+import GeographySelect from 'shared/components/GeographySelect'
 import { Form, Row, Col, Jumbotron, Container } from 'react-bootstrap'
 class Main extends React.Component {
   constructor(props) {
@@ -37,10 +37,10 @@ class Main extends React.Component {
                 <AddressSearch placeholder="Building Lookup Tool" />
               </Form.Group>
               <Form.Group>
-                <BoundarySelect
+                <GeographySelect
                   confirmChange={false}
-                  currentBoundaryType={this.props.appState.currentBoundaryType}
-                  currentBoundaryId={this.props.appState.currentBoundaryId}
+                  currentGeographyType={this.props.appState.currentGeographyType}
+                  currentGeographyId={this.props.appState.currentGeographyId}
                   dispatch={this.props.dispatch}
                   placeholder="District Alerts Map"
                 />
