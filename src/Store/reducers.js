@@ -4,6 +4,7 @@ import { connectRouter } from 'connected-react-router'
 import { searchReducer } from 'Store/Search/reducers'
 import { errorReducer } from 'Store/Error/reducers'
 import { loadingReducer } from 'Store/Loading/reducers'
+import { requestReducer } from 'Store/Request/reducers'
 import { modalReducer } from 'Store/Modal/reducers'
 import { authReducer } from 'Store/Auth/reducers'
 import { datasetReducer } from 'Store/Dataset/reducers'
@@ -18,6 +19,7 @@ export default history =>
     router: connectRouter(history),
     error: errorReducer,
     loading: loadingReducer,
+    requests: requestReducer,
     modal: modalReducer,
     dataset: datasetReducer,
     auth: authReducer,

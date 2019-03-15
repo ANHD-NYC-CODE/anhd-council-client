@@ -6,7 +6,9 @@ import * as a from 'Store/Building/actions'
 import * as c from 'Store/Building/constants'
 import * as d from 'shared/constants/datasets'
 import { lookupRequests } from 'Store/AppState/selectors'
-import { setLookupAndRequestsAndRedirect, makeDataRequest } from 'Store/AppState/actions'
+import { setLookupAndRequestsAndRedirect } from 'Store/AppState/actions'
+import { makeRequest } from 'Store/Request/actions'
+
 import { requestWithAuth } from 'shared/utilities/authUtils'
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
@@ -27,7 +29,7 @@ class Lookup extends React.Component {
     } else if (!props.appState.currentProperty && props.bbl) {
       props.dispatch(setLookupAndRequestsAndRedirect({ bbl: props.bbl, bin: props.bin }))
     } else {
-      props.dispatch(makeDataRequest(props.propertyProfileRequest))
+      props.dispatch(makeRequest(props.propertyProfileRequest))
     }
   }
 
@@ -35,7 +37,7 @@ class Lookup extends React.Component {
     if (!nextProps.appState.currentProperty && nextProps.bbl) {
       nextProps.dispatch(setLookupAndRequestsAndRedirect({ bbl: nextProps.bbl, bin: nextProps.bin }))
     } else {
-      nextProps.dispatch(makeDataRequest(nextProps.propertyProfileRequest))
+      nextProps.dispatch(makeRequest(nextProps.propertyProfileRequest))
     }
   }
 
