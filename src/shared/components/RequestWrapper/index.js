@@ -5,7 +5,7 @@ import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
 import { requestWithAuth } from 'shared/utilities/authUtils'
 import { makeRequest } from 'Store/Request/actions'
-import InnerLoader from 'shared/components/InnerLoader'
+import BaseTable from 'shared/components/BaseTable'
 
 class RequestWrapper extends React.Component {
   constructor(props) {
@@ -20,18 +20,9 @@ class RequestWrapper extends React.Component {
 
   render() {
     return (
-      <div
-        className="request-wrapper"
-        style={{
-          height: '400px',
-          margin: '40px 0',
-          overflow: 'hidden',
-        }}
-      >
+      <div className="request-wrapper">
         <h6>{this.props.request.requestConstant}</h6>
-        {this.props.loading && <InnerLoader />}
-        {this.props.error && <div className="text-danger">{this.props.error.message}</div>}
-        {JSON.stringify(this.props.results, null, 2)}
+        <BaseTable error={this.props.error} loading={this.props.loading} records={this.props.results || []} />
       </div>
     )
   }
