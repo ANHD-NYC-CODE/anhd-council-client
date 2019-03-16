@@ -18,7 +18,23 @@ class BaseTable extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      expandedRowContent: '',
       displayedRecordsCount: props.records.length,
+    }
+
+    this.setExpandedContent = this.setExpandedContent.bind(this)
+
+    this.expandRowFunc = (e, row, rowIndex) => {
+      // e.currentTarget.parentElement.querySelectorAll('tr').forEach((otherRow, index) => {
+      //   if (index === rowIndex) return
+      //   otherRow.classList.add('table-row--collapsed')
+      //   otherRow.classList.remove('table-row--expanded')
+      // })
+      //
+      // // Don't expand unless it has a descriptionKey
+      // if (!row[props.tableConfig.descriptionKey]) return
+      // e.target.closest('tr').classList.toggle('table-row--collapsed')
+      // e.target.closest('tr').classList.toggle('table-row--expanded')
     }
 
     this.rowEvents = rowEventType => {
@@ -27,20 +43,6 @@ class BaseTable extends React.Component {
           return {
             onClick: (e, row, rowIndex) => {
               this.props.dispatch(push(`/property/${row.bbl}`))
-            },
-          }
-        }
-        case 'EXPAND': {
-          return {
-            onClick: (e, row, rowIndex) => {
-              // Close other rows
-              e.currentTarget.parentElement.querySelectorAll('tr').forEach((otherRow, index) => {
-                if (index === rowIndex) return
-                otherRow.classList.add('table-row--collapsed')
-                otherRow.classList.remove('table-row--expanded')
-              })
-              e.currentTarget.classList.toggle('table-row--collapsed')
-              e.currentTarget.classList.toggle('table-row--expanded')
             },
           }
         }
@@ -54,7 +56,37 @@ class BaseTable extends React.Component {
     })
   }
 
+  setExpandedContent(content, row, rowId) {
+    this.setState({
+      expandedRowContent: content,
+      expanded: [row[rowId]],
+    })
+  }
+
   render() {
+    const expandRow = {
+      renderer: row => {
+        return (
+          <div className="table-row__expanded-box">
+            <p>
+              <span>>>&nbsp;</span>
+              {this.state.expandedRowContent}
+            </p>
+          </div>
+        )
+      },
+      expanded: this.state.expanded,
+      showExpandColumn: false,
+      onlyOneExpanding: true,
+      onExpand: (row, isExpand, rowIndex, e) => {
+        this.expandRowFunc(e, row, rowIndex)
+      },
+      onExpandAll: (isExpandAll, rows, e) => {
+        console.log(isExpandAll)
+        console.log(rows)
+        console.log(e)
+      },
+    }
     return (
       <PaginationProvider pagination={paginationFactory(this.props.tableConfig.paginationOptions(this.state))}>
         {({ paginationProps, paginationTableProps }) => (
@@ -80,13 +112,14 @@ class BaseTable extends React.Component {
             </Row>
             <BootstrapTable
               bootstrap4
-              columns={this.props.tableConfig.columns}
+              columns={this.props.tableConfig.getColumns({ expandColumnFunction: this.setExpandedContent })}
               data={this.props.records}
               {...paginationTableProps}
               defaultSorted={this.props.tableConfig.defaultSorted}
               filter={filterFactory()}
               keyField={this.props.tableConfig.keyField}
               rowClasses={this.props.tableConfig.tableRowClasses}
+              expandRow={expandRow}
               rowEvents={this.rowEvents(this.props.tableConfig.rowEventType)}
               striped
               hover={this.props.tableConfig.hover}
