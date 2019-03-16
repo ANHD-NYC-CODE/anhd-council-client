@@ -1,0 +1,15 @@
+@include media-breakpoint-up(xs) {
+  table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  table {
+    display: table;
+    width: 100%;
+    overflow-x: visible;
+  }
+}
