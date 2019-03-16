@@ -65,17 +65,17 @@ class BaseTable extends React.Component {
               </Col>
             </Row>
             <Row>
-              <Col xs={6} sm={2}>
+              <Col xs={6}>
+                <PaginationListStandalone {...paginationProps} />
+              </Col>
+              <Col>
                 <SizePerPageDropdownStandalone {...paginationProps} />
               </Col>
-              <Col xs={6} sm={2}>
+              <Col>
                 Total:
                 {paginationProps.dataSize === paginationProps.totalSize
                   ? paginationProps.totalSize
                   : `${paginationProps.dataSize}/${paginationProps.totalSize}`}
-              </Col>
-              <Col xs={12} sm={{ span: 4, offset: 4 }}>
-                <PaginationListStandalone {...paginationProps} />
               </Col>
             </Row>
             <BootstrapTable
