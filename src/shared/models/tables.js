@@ -1,4 +1,4 @@
-import { textFilter } from 'react-bootstrap-table2-filter'
+import { textFilter, numberFilter, Comparator } from 'react-bootstrap-table2-filter'
 
 import {
   dateFormatter,
@@ -36,39 +36,51 @@ export const getTableColumns = (constant, columnExpandFunction) => {
         {
           dataField: 'bbl',
           text: 'BBL',
+          sort: true,
         },
         {
           dataField: 'address',
           text: 'Address',
+          filter: textFilter(),
+          sort: true,
         },
         {
           dataField: 'bldgclass',
           text: 'Class',
+          filter: textFilter(),
           formatter: bldgClassFormater,
+          sort: true,
+        },
+        {
+          dataField: 'zonedist1',
+          text: 'Zone 1',
+          filter: textFilter(),
+          sort: true,
         },
         {
           dataField: 'yearbuilt',
           text: 'Year Built',
+          sort: true,
         },
         {
           dataField: 'unitstotal',
           text: 'Total Units',
+          sort: true,
         },
         {
           dataField: 'unitsres',
           text: 'Residential Units',
+          sort: true,
         },
         {
           dataField: 'unitsrentstabilized',
           text: 'Rent Stabilized Units',
+          sort: true,
         },
         {
           dataField: 'numbldgs',
           text: '# Buildings',
-        },
-        {
-          dataField: 'numfloors',
-          text: '# Floors',
+          sort: true,
         },
       ]
       break
@@ -125,10 +137,13 @@ export const getTableColumns = (constant, columnExpandFunction) => {
         {
           dataField: 'apartment',
           text: 'Apt.',
+          sort: true,
         },
         {
           dataField: 'status',
           text: 'Status',
+          filter: textFilter(),
+          sort: true,
         },
       ]
       break
@@ -147,11 +162,14 @@ export const getTableColumns = (constant, columnExpandFunction) => {
         {
           dataField: 'violationtype',
           text: 'Violation Type',
+          filter: textFilter(),
+          sort: true,
         },
         {
           dataField: 'description',
           text: 'Description',
           classes: 'table-column--description',
+          filter: textFilter(),
           events: {
             onClick: (e, column, columnIndex, row, rowIndex) => {
               columnExpandFunction(e.target.textContent, row, getKeyField(constant))
@@ -161,6 +179,8 @@ export const getTableColumns = (constant, columnExpandFunction) => {
         {
           dataField: 'violationcategory',
           text: 'Status',
+          filter: textFilter(),
+          sort: true,
         },
       ]
       break
@@ -186,10 +206,14 @@ export const getTableColumns = (constant, columnExpandFunction) => {
               columnExpandFunction(e.target.textContent, row, getKeyField(constant))
             },
           },
+          filter: textFilter(),
+          sort: true,
         },
         {
           dataField: 'status',
           text: 'Status',
+          filter: textFilter(),
+          sort: true,
         },
       ]
       break
@@ -208,24 +232,36 @@ export const getTableColumns = (constant, columnExpandFunction) => {
         {
           dataField: 'violationtype',
           text: 'Violation Type',
+          filter: textFilter(),
+          sort: true,
         },
         {
           dataField: 'severity',
           text: 'Severity',
+          filter: textFilter(),
+          sort: true,
         },
         {
           dataField: 'violationdescription',
           text: 'Description',
           classes: 'table-column--description',
+          filter: textFilter(),
         },
         {
           dataField: 'ecbviolationstatus',
           text: 'Status',
+          filter: textFilter(),
+          sort: true,
         },
       ]
       break
     case 'DOB_ISSUED_PERMIT':
       columns = [
+        {
+          dataField: 'key',
+          text: 'Key',
+          hidden: true,
+        },
         {
           dataField: 'jobfilingnumber',
           text: 'Job Filing #',
@@ -243,20 +279,30 @@ export const getTableColumns = (constant, columnExpandFunction) => {
         {
           dataField: 'worktype',
           text: 'Work Type',
+          filter: textFilter(),
+          sort: true,
         },
         {
           dataField: 'jobdescription',
           text: 'Description',
+          filter: textFilter(),
+          sort: true,
         },
         {
           dataField: 'type',
           text: 'Source',
           formatter: dobPermitSourceFormatter,
+          sort: true,
         },
       ]
       break
     case 'DOB_FILED_PERMIT':
       columns = [
+        {
+          dataField: 'id',
+          text: 'ID',
+          hidden: true,
+        },
         {
           dataField: 'job',
           text: 'Job #',
@@ -271,15 +317,21 @@ export const getTableColumns = (constant, columnExpandFunction) => {
           dataField: 'jobtype',
           text: 'Job Type',
           formatter: dobPermitWorkTypeFormatter,
+          filter: textFilter(),
+          sort: true,
         },
         {
           dataField: 'jobdescription',
           text: 'Description',
           classes: 'table-column--description',
+          filter: textFilter(),
+          sort: true,
         },
         {
           dataField: 'jobstatusdescrp',
           text: 'Status',
+          filter: textFilter(),
+          sort: true,
         },
       ]
       break
@@ -298,18 +350,25 @@ export const getTableColumns = (constant, columnExpandFunction) => {
         {
           dataField: 'casetype',
           text: 'Case Type',
+          filter: textFilter(),
+          sort: true,
         },
         {
           dataField: 'openjudgement',
           text: 'Open Judgement?',
+          filter: textFilter(),
+          sort: true,
         },
         {
           dataField: 'penalty',
           text: 'Penalty',
+          sort: true,
         },
         {
           dataField: 'casestatus',
           text: 'Status',
+          filter: textFilter(),
+          sort: true,
         },
       ]
       break
@@ -329,10 +388,13 @@ export const getTableColumns = (constant, columnExpandFunction) => {
           dataField: 'doctype',
           text: 'Document Type',
           formatter: acrisDocTypeFormatter,
+          filter: textFilter(),
+          sort: true,
         },
         {
           dataField: 'docamount',
           text: 'Amount',
+          sort: true,
         },
       ]
       break
@@ -355,6 +417,8 @@ export const getTableColumns = (constant, columnExpandFunction) => {
         {
           dataField: 'evictionaddress',
           text: 'Address Description',
+          filter: textFilter(),
+          sort: true,
         },
       ]
       break
@@ -373,6 +437,8 @@ export const getTableColumns = (constant, columnExpandFunction) => {
         {
           dataField: 'debtor',
           text: 'Debtor',
+          filter: textFilter(),
+          sort: true,
         },
       ]
       break
@@ -409,9 +475,9 @@ export const getKeyField = constant => {
     case 'ECB_VIOLATION':
       return 'ecbviolationnumber'
     case 'DOB_ISSUED_PERMIT':
-      return 'jobfilingnumber'
+      return 'key'
     case 'DOB_FILED_PERMIT':
-      return 'job'
+      return 'id'
     case 'HOUSING_LITIGATION':
       return 'litigationid'
     case 'ACRIS_REAL_MASTER':

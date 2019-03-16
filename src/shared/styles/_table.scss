@@ -1,15 +1,17 @@
-@include media-breakpoint-up(xs) {
-  table {
+table {
+  @include media-breakpoint-up(xs) {
     display: block;
     width: 100%;
     overflow-x: auto;
   }
-}
 
-@include media-breakpoint-up(lg) {
-  table {
-    display: table;
-    width: 100%;
-    overflow-x: visible;
+  td {
+    @include media-breakpoint-up(xs) {
+      max-width: 200px;
+    }
+
+    @include media-breakpoint-up(md) {
+      max-width: 500px;
+    }
   }
 }

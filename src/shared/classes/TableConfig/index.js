@@ -53,12 +53,15 @@ export class TableConfig {
     this._rowEventType = rowEventType
   }
 
-  paginationOptions(componentState) {
+  paginationOptions(componentState, setPage) {
     return {
       custom: true,
       totalSize: componentState.displayedRecordsCount,
       sizePerPageList: [10, 50, 100],
-      page: 1,
+      page: componentState.page,
+      onPageChange: (page, sizePerPage) => {
+        setPage(page)
+      },
     }
   }
 
