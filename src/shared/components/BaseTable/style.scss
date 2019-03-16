@@ -2,4 +2,18 @@
   tbody tr {
     cursor: pointer;
   }
+
+  .filter {
+    min-width: initial;
+  }
+
+  .table-row--collapsed * {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow-x: hidden;
+  }
+
+  .table-row--expanded * {
+    overflow-x: hidden;
+  }
 }
