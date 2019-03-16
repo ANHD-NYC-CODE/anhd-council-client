@@ -12,37 +12,6 @@ import { Row, Col } from 'react-bootstrap'
 import TableError from 'shared/components/BaseTable/TableError'
 import './style.scss'
 
-const columns = [
-  {
-    dataField: 'bbl',
-    text: 'BBL',
-  },
-  {
-    dataField: 'address',
-    text: 'Address',
-  },
-  {
-    dataField: 'yearbuilt',
-    text: 'Year Built',
-  },
-  {
-    dataField: 'unitsres',
-    text: 'Residential Units',
-  },
-  {
-    dataField: 'unitsrentstabilized',
-    text: 'Rent Stabilized Units',
-  },
-  {
-    dataField: 'numbldgs',
-    text: '# Buildings',
-  },
-  {
-    dataField: 'numfloors',
-    text: '# Floors',
-  },
-]
-
 const BaseTable = props => {
   const rowEvents = {
     onClick: (e, row, rowIndex) => {
@@ -78,8 +47,8 @@ const BaseTable = props => {
             </Col>
           </Row>
           <BootstrapTable
-            columns={columns}
-            keyField="bbl"
+            columns={props.tableConfig.columns}
+            keyField={props.tableConfig.keyField}
             data={props.records}
             {...paginationTableProps}
             striped
@@ -102,6 +71,7 @@ BaseTable.propTypes = {
   loading: PropTypes.bool,
   error: PropTypes.object,
   records: PropTypes.array,
+  tableConfig: PropTypes.object,
 }
 
 export default BaseTable

@@ -53,6 +53,7 @@ class GeographySelect extends React.Component {
                   this.setState({
                     changing: true,
                     geographyType: new StandardizedInput(e).value,
+                    geographyId: -1,
                   })
                 }
                 value={this.state.geographyType || -1}

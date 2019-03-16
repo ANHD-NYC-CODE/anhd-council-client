@@ -1,8 +1,9 @@
 export class DataRequest {
-  constructor({ type = undefined, paramMaps = [], apiMaps = [] } = {}) {
+  constructor({ type = undefined, paramMaps = [], apiMaps = [], tableConfig = undefined } = {}) {
     this._type = type
     this._paramMaps = paramMaps
     this._apiMaps = apiMaps
+    this._tableConfig = tableConfig
     this._called = false
   }
 
@@ -36,6 +37,14 @@ export class DataRequest {
 
   set apiMaps(apiMaps) {
     this._apiMaps = apiMaps
+  }
+
+  get tableConfig() {
+    return this._tableConfig
+  }
+
+  set tableConfig(tableConfig) {
+    this._tableConfig = tableConfig
   }
 
   get called() {

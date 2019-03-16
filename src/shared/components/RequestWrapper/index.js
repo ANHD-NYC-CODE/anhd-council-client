@@ -5,7 +5,6 @@ import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
 import { requestWithAuth } from 'shared/utilities/authUtils'
 import { makeRequest } from 'Store/Request/actions'
-import BaseTable from 'shared/components/BaseTable'
 
 class RequestWrapper extends React.Component {
   constructor(props) {
@@ -21,7 +20,7 @@ class RequestWrapper extends React.Component {
   }
 
   processError(error) {
-    if ((error || {}).status === 504) {
+    if ((error || {}).status === 408) {
       error.message = 'The request exceeded 2 minutes and timed out. Trying again may yield a result.'
     }
     return error
@@ -35,14 +34,15 @@ class RequestWrapper extends React.Component {
   render() {
     return (
       <div className="request-wrapper">
-        <BaseTable
-          dispatch={this.props.dispatch}
-          error={this.processError(this.props.error)}
-          errorAction={(this.props.error || {}).status === 504 ? this.retryRequest : null}
-          loading={this.props.loading}
-          records={this.props.results || []}
-          caption={this.props.request.requestConstant}
-        />
+        {this.props.request.tableConfig.component({
+          dispatch: this.props.dispatch,
+          error: this.processError(this.props.error),
+          errorAction: (this.props.error || {}).status === 504 ? this.retryRequest : null,
+          loading: this.props.loading,
+          records: this.props.results || [],
+          caption: this.props.request.requestConstant,
+          tableConfig: this.props.request.tableConfig,
+        })}
       </div>
     )
   }
