@@ -5,7 +5,7 @@ import * as d from 'shared/models/datasets'
 import * as ht from 'shared/models/housingTypes'
 import { DataRequest } from 'shared/classes/DataRequest'
 import { getApiMap } from 'shared/utilities/classUtils'
-
+import { TableConfig } from 'shared/classes/TableConfig'
 import { ApiMap } from 'shared/classes/ApiMap'
 import { ParameterMapping } from 'shared/classes/ParameterMapping'
 import { Dataset } from 'shared/classes/Dataset'
@@ -16,7 +16,7 @@ const ERROR_400_MESSAGE = 'Incorrect username or password.'
 const ERROR_401_MESSAGE = 'Please login for access.'
 const ERROR_404_MESSAGE = 'Not found.'
 const ERROR_500_MESSAGE = 'Oops, something went wrong.'
-const ERROR_504_MESSGE = 'The request timed out after 2 minutes. Try again?'
+const ERROR_408_MESSAGE = 'The request timed out after 2 minutes. Try again?'
 
 export const handleActionDispatch = (dispatch, constant, requestId) => {
   dispatch(loadingActions.handleRequest(constant, requestId))
@@ -45,9 +45,9 @@ export const handleCatchError = (error, type, dispatch, requestId) => {
   let errorMessage = ''
   let errorStatus = ''
   if (!error.response) {
-    if (error.message && error.message.toUpperCase().match(/(TIMEOUT|NETWORK)/)) {
-      errorMessage = ERROR_504_MESSGE
-      errorStatus = 504
+    if (error.message && error.message.toUpperCase().match(/(TIME)/)) {
+      errorMessage = ERROR_408_MESSAGE
+      errorStatus = 408
     } else if (error.status === 504) {
       errorMessage = ERROR_500_MESSAGE
       errorStatus = error.status
@@ -136,6 +136,7 @@ export const newBuildingRequest = ({ type = undefined, bin = undefined, resource
       new ApiMap({ constant: 'BUILDING', resourceId: bin }),
       resourceConstant ? getApiMap(resourceConstant) : undefined,
     ].filter(a => !!a),
+    tableConfig: new TableConfig({ resourceConstant: resourceConstant }),
   })
 }
 
@@ -146,6 +147,7 @@ export const newPropertyRequest = ({ type = undefined, bbl = undefined, resource
       new ApiMap({ constant: 'PROPERTY', resourceId: bbl }),
       resourceConstant ? getApiMap(resourceConstant) : undefined,
     ].filter(a => !!a),
+    tableConfig: new TableConfig({ resourceConstant: resourceConstant }),
   })
 }
 
@@ -187,12 +189,13 @@ export const newGeographyRequest = ({
   geographyType = undefined,
   geographyId,
   resourceConstant = undefined,
+  defaultValue = 10,
 } = {}) => {
   return new DataRequest({
     type: type,
     apiMaps: [new ApiMap({ constant: geographyType, resourceId: geographyId }), new ApiMap({ constant: 'PROPERTY' })],
     paramMaps: [
-      new ParameterMapping({ field: constantToQueryName(resourceConstant), comparison: 'gte', value: 10 }),
+      new ParameterMapping({ field: constantToQueryName(resourceConstant), comparison: 'gte', value: defaultValue }),
       new ParameterMapping({
         field: `${constantToQueryName(resourceConstant)}__start`,
         comparison: '',
@@ -201,15 +204,40 @@ export const newGeographyRequest = ({
           .format('YYYY-MM-DD'),
       }),
     ],
+    tableConfig: new TableConfig({ resourceConstant: 'PROPERTY' }),
   })
 }
 
 export const newMapRequests = ({ geographyType, geographyId } = {}) => {
   return [
     newGeographyRequest({ type: 'MAP_FILTER', geographyType, geographyId, resourceConstant: 'HPD_VIOLATION' }),
-    newGeographyRequest({ type: 'MAP_FILTER', geographyType, geographyId, resourceConstant: 'DOB_VIOLATION' }),
-    newGeographyRequest({ type: 'MAP_FILTER', geographyType, geographyId, resourceConstant: 'HPD_COMPLAINT' }),
-    newGeographyRequest({ type: 'MAP_FILTER', geographyType, geographyId, resourceConstant: 'EVICTION' }),
-    newGeographyRequest({ type: 'MAP_FILTER', geographyType, geographyId, resourceConstant: 'DOB_ISSUED_PERMIT' }),
+    newGeographyRequest({
+      type: 'MAP_FILTER',
+      geographyType,
+      geographyId,
+      resourceConstant: 'DOB_COMPLAINT',
+      defaultValue: 2,
+    }),
+    newGeographyRequest({
+      type: 'MAP_FILTER',
+      geographyType,
+      geographyId,
+      resourceConstant: 'HPD_COMPLAINT',
+      defaultValue: 5,
+    }),
+    newGeographyRequest({
+      type: 'MAP_FILTER',
+      geographyType,
+      geographyId,
+      resourceConstant: 'EVICTION',
+      defaultValue: 1,
+    }),
+    newGeographyRequest({
+      type: 'MAP_FILTER',
+      geographyType,
+      geographyId,
+      resourceConstant: 'DOB_ISSUED_PERMIT',
+      defaultValue: 1,
+    }),
   ]
 }
