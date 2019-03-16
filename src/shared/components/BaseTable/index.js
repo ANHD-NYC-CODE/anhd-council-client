@@ -8,61 +8,98 @@ import paginationFactory, {
   SizePerPageDropdownStandalone,
   PaginationListStandalone,
 } from 'react-bootstrap-table2-paginator'
+import filterFactory from 'react-bootstrap-table2-filter'
+
 import { Row, Col } from 'react-bootstrap'
 import TableError from 'shared/components/BaseTable/TableError'
 import './style.scss'
 
-const BaseTable = props => {
-  const rowEvents = {
-    onClick: (e, row, rowIndex) => {
-      props.dispatch(push(`/property/${row.bbl}`))
-    },
+class BaseTable extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      displayedRecordsCount: props.records.length,
+    }
+
+    this.rowEvents = rowEventType => {
+      switch (rowEventType) {
+        case 'LINK': {
+          return {
+            onClick: (e, row, rowIndex) => {
+              this.props.dispatch(push(`/property/${row.bbl}`))
+            },
+          }
+        }
+        case 'EXPAND': {
+          return {
+            onClick: (e, row, rowIndex) => {
+              // Close other rows
+              e.currentTarget.parentElement.querySelectorAll('tr').forEach((otherRow, index) => {
+                if (index === rowIndex) return
+                otherRow.classList.add('table-row--collapsed')
+                otherRow.classList.remove('table-row--expanded')
+              })
+              e.currentTarget.classList.toggle('table-row--collapsed')
+              e.currentTarget.classList.toggle('table-row--expanded')
+            },
+          }
+        }
+      }
+    }
   }
 
-  const options = {
-    custom: true,
-    totalSize: props.records.length,
-    sizePerPageList: [10, 50, 100],
-    page: 1,
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      displayedRecordsCount: nextProps.records.length,
+    })
   }
 
-  return (
-    <PaginationProvider pagination={paginationFactory(options)}>
-      {({ paginationProps, paginationTableProps }) => (
-        <div className="base-table">
-          <Row>
-            <Col>
-              <h6 className="base-table__header">{props.caption}</h6>
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={6} sm={2}>
-              <SizePerPageDropdownStandalone {...paginationProps} />
-            </Col>
-            <Col xs={6} sm={2}>
-              Total: {paginationProps.totalSize}
-            </Col>
-            <Col xs={12} sm={{ span: 4, offset: 4 }}>
-              <PaginationListStandalone {...paginationProps} />
-            </Col>
-          </Row>
-          <BootstrapTable
-            columns={props.tableConfig.columns}
-            keyField={props.tableConfig.keyField}
-            data={props.records}
-            {...paginationTableProps}
-            striped
-            hover
-            condensed
-            bordered={false}
-            rowEvents={rowEvents}
-          />
-          {props.loading && <InnerLoader />}
-          {props.error && <TableError error={props.error} errorAction={props.errorAction} />}
-        </div>
-      )}
-    </PaginationProvider>
-  )
+  render() {
+    return (
+      <PaginationProvider pagination={paginationFactory(this.props.tableConfig.paginationOptions(this.state))}>
+        {({ paginationProps, paginationTableProps }) => (
+          <div className="base-table">
+            <Row>
+              <Col>
+                <h6 className="base-table__header">{this.props.caption}</h6>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={6} sm={2}>
+                <SizePerPageDropdownStandalone {...paginationProps} />
+              </Col>
+              <Col xs={6} sm={2}>
+                Total:
+                {paginationProps.dataSize === paginationProps.totalSize
+                  ? paginationProps.totalSize
+                  : `${paginationProps.dataSize}/${paginationProps.totalSize}`}
+              </Col>
+              <Col xs={12} sm={{ span: 4, offset: 4 }}>
+                <PaginationListStandalone {...paginationProps} />
+              </Col>
+            </Row>
+            <BootstrapTable
+              bootstrap4
+              columns={this.props.tableConfig.columns}
+              data={this.props.records}
+              {...paginationTableProps}
+              defaultSorted={this.props.tableConfig.defaultSorted}
+              filter={filterFactory()}
+              keyField={this.props.tableConfig.keyField}
+              rowClasses={this.props.tableConfig.tableRowClasses}
+              rowEvents={this.rowEvents(this.props.tableConfig.rowEventType)}
+              striped
+              hover={this.props.tableConfig.hover}
+              condensed
+              tabIndexCell
+            />
+            {this.props.loading && <InnerLoader />}
+            {this.props.error && <TableError error={this.props.error} errorAction={this.props.errorAction} />}
+          </div>
+        )}
+      </PaginationProvider>
+    )
+  }
 }
 
 BaseTable.propTypes = {

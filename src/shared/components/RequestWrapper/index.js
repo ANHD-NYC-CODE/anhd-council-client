@@ -32,17 +32,18 @@ class RequestWrapper extends React.Component {
   }
 
   render() {
+    const TableComponent = this.props.request.tableConfig.component
     return (
       <div className="request-wrapper">
-        {this.props.request.tableConfig.component({
-          dispatch: this.props.dispatch,
-          error: this.processError(this.props.error),
-          errorAction: (this.props.error || {}).status === 504 ? this.retryRequest : null,
-          loading: this.props.loading,
-          records: this.props.results || [],
-          caption: this.props.request.requestConstant,
-          tableConfig: this.props.request.tableConfig,
-        })}
+        <TableComponent
+          dispatch={this.props.dispatch}
+          error={this.processError(this.props.error)}
+          errorAction={(this.props.error || {}).status === 504 ? this.retryRequest : null}
+          loading={this.props.loading}
+          records={this.props.results || []}
+          caption={this.props.request.requestConstant}
+          tableConfig={this.props.request.tableConfig}
+        />
       </div>
     )
   }

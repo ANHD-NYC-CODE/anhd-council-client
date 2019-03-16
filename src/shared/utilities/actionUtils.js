@@ -136,7 +136,7 @@ export const newBuildingRequest = ({ type = undefined, bin = undefined, resource
       new ApiMap({ constant: 'BUILDING', resourceId: bin }),
       resourceConstant ? getApiMap(resourceConstant) : undefined,
     ].filter(a => !!a),
-    tableConfig: new TableConfig({ resourceConstant: resourceConstant }),
+    tableConfig: new TableConfig({ resourceConstant: resourceConstant, rowEventType: 'EXPAND' }),
   })
 }
 
@@ -147,14 +147,14 @@ export const newPropertyRequest = ({ type = undefined, bbl = undefined, resource
       new ApiMap({ constant: 'PROPERTY', resourceId: bbl }),
       resourceConstant ? getApiMap(resourceConstant) : undefined,
     ].filter(a => !!a),
-    tableConfig: new TableConfig({ resourceConstant: resourceConstant }),
+    tableConfig: new TableConfig({ resourceConstant: resourceConstant, rowEventType: 'EXPAND' }),
   })
 }
 
 export const newLookupRequests = ({ bbl, bin } = {}) => {
   return [
     newPropertyRequest({ type: 'LOOKUP_PROFILE', bbl: bbl }),
-    !bin ? newPropertyRequest({ type: 'LOOKUP_FILTER', bbl: bbl, resourceConstant: 'ACRISREALMASTER' }) : null,
+    !bin ? newPropertyRequest({ type: 'LOOKUP_FILTER', bbl: bbl, resourceConstant: 'ACRIS_REAL_MASTER' }) : null,
     !bin ? newPropertyRequest({ type: 'LOOKUP_FILTER', bbl: bbl, resourceConstant: 'EVICTION' }) : null,
     !bin ? newPropertyRequest({ type: 'LOOKUP_FILTER', bbl: bbl, resourceConstant: 'FORECLOSURE' }) : null,
     bin
@@ -204,7 +204,7 @@ export const newGeographyRequest = ({
           .format('YYYY-MM-DD'),
       }),
     ],
-    tableConfig: new TableConfig({ resourceConstant: 'PROPERTY' }),
+    tableConfig: new TableConfig({ resourceConstant: 'PROPERTY', rowEventType: 'LINK', hover: true }),
   })
 }
 
