@@ -1,4 +1,3 @@
-import moment from 'moment'
 import { textFilter } from 'react-bootstrap-table2-filter'
 
 import {
@@ -10,19 +9,30 @@ import {
   dobPermitSourceFormatter,
 } from 'shared/utilities/tableUtils'
 
-//
-// const expandRowDescription = (descriptionKey = {
-//   renderer: row => (
-//     <div>
-//       <p>{`This Expand row is belong to rowKey ${row.id}`}</p>
-//     </div>
-//   ),
-// }
-
-export const getTableColumns = constant => {
+export const getDescriptionKey = constant => {
   switch (constant) {
     case 'PROPERTY':
-      return [
+      return 'bldgclass'
+    case 'HPD_VIOLATION':
+      return 'novdescription'
+    case 'DOB_VIOLATION':
+      return 'description'
+    case 'DOB_COMPLAINT':
+      return 'complaintcategory'
+    case 'ECB_VIOLATION':
+      return 'violationdescription'
+    case 'DOB_ISSUED_PERMIT':
+      return 'jobdescription'
+    case 'DOB_FILED_PERMIT':
+      return 'jobdescription'
+  }
+}
+
+export const getTableColumns = (constant, columnExpandFunction) => {
+  let columns
+  switch (constant) {
+    case 'PROPERTY':
+      columns = [
         {
           dataField: 'bbl',
           text: 'BBL',
@@ -61,8 +71,9 @@ export const getTableColumns = constant => {
           text: '# Floors',
         },
       ]
+      break
     case 'HPD_VIOLATION':
-      return [
+      columns = [
         {
           dataField: 'violationid',
           text: 'Violation ID',
@@ -72,7 +83,6 @@ export const getTableColumns = constant => {
           text: 'Date Approved',
           formatter: dateFormatter,
           sort: true,
-          // filter: dateFilter({ defaultValue: { date: new Date(2018, 0, 1), comparator: '>=' } }),
         },
         {
           dataField: 'class_name',
@@ -84,6 +94,7 @@ export const getTableColumns = constant => {
           dataField: 'novdescription',
           text: 'Description',
           filter: textFilter(),
+          classes: 'table-column--description',
         },
         {
           dataField: 'currentstatus',
@@ -98,8 +109,9 @@ export const getTableColumns = constant => {
           sort: true,
         },
       ]
+      break
     case 'HPD_COMPLAINT':
-      return [
+      columns = [
         {
           dataField: 'complaintid',
           text: 'Complaint ID',
@@ -109,7 +121,6 @@ export const getTableColumns = constant => {
           text: 'Date Received',
           formatter: dateFormatter,
           sort: true,
-          // filter: dateFilter({ defaultValue: { date: new Date(2018, 0, 1), comparator: '>=' } }),
         },
         {
           dataField: 'apartment',
@@ -120,8 +131,9 @@ export const getTableColumns = constant => {
           text: 'Status',
         },
       ]
+      break
     case 'DOB_VIOLATION':
-      return [
+      columns = [
         {
           dataField: 'isndobbisviol',
           text: 'isndobbisviol',
@@ -131,7 +143,6 @@ export const getTableColumns = constant => {
           text: 'Date Issued',
           formatter: dateFormatter,
           sort: true,
-          // filter: dateFilter({ defaultValue: { date: new Date(2018, 0, 1), comparator: '>=' } }),
         },
         {
           dataField: 'violationtype',
@@ -140,14 +151,21 @@ export const getTableColumns = constant => {
         {
           dataField: 'description',
           text: 'Description',
+          classes: 'table-column--description',
+          events: {
+            onClick: (e, column, columnIndex, row, rowIndex) => {
+              columnExpandFunction(e.target.textContent, row, getKeyField(constant))
+            },
+          },
         },
         {
           dataField: 'violationcategory',
           text: 'Status',
         },
       ]
+      break
     case 'DOB_COMPLAINT':
-      return [
+      columns = [
         {
           dataField: 'complaintnumber',
           text: 'Complaint #',
@@ -157,20 +175,26 @@ export const getTableColumns = constant => {
           text: 'Date Entered',
           formatter: dateFormatter,
           sort: true,
-          // filter: dateFilter({ defaultValue: { date: new Date(2018, 0, 1), comparator: '>=' } }),
         },
         {
           dataField: 'complaintcategory',
           text: 'Category',
           formatter: dobComplaintCategoryFormatter,
+          classes: 'table-column--description',
+          events: {
+            onClick: (e, column, columnIndex, row, rowIndex) => {
+              columnExpandFunction(e.target.textContent, row, getKeyField(constant))
+            },
+          },
         },
         {
           dataField: 'status',
           text: 'Status',
         },
       ]
+      break
     case 'ECB_VIOLATION':
-      return [
+      columns = [
         {
           dataField: 'ecbviolationnumber',
           text: 'Violation #',
@@ -180,7 +204,6 @@ export const getTableColumns = constant => {
           text: 'Date Issued',
           formatter: dateFormatter,
           sort: true,
-          // filter: dateFilter({ defaultValue: { date: new Date(2018, 0, 1), comparator: '>=' } }),
         },
         {
           dataField: 'violationtype',
@@ -193,14 +216,16 @@ export const getTableColumns = constant => {
         {
           dataField: 'violationdescription',
           text: 'Description',
+          classes: 'table-column--description',
         },
         {
           dataField: 'ecbviolationstatus',
           text: 'Status',
         },
       ]
+      break
     case 'DOB_ISSUED_PERMIT':
-      return [
+      columns = [
         {
           dataField: 'jobfilingnumber',
           text: 'Job Filing #',
@@ -214,7 +239,6 @@ export const getTableColumns = constant => {
           text: 'Date Issued',
           formatter: dateFormatter,
           sort: true,
-          // filter: dateFilter({ defaultValue: { date: new Date(2018, 0, 1), comparator: '>=' } }),
         },
         {
           dataField: 'worktype',
@@ -223,7 +247,6 @@ export const getTableColumns = constant => {
         {
           dataField: 'jobdescription',
           text: 'Description',
-          formatter: dobPermitWorkTypeFormatter,
         },
         {
           dataField: 'type',
@@ -231,8 +254,9 @@ export const getTableColumns = constant => {
           formatter: dobPermitSourceFormatter,
         },
       ]
+      break
     case 'DOB_FILED_PERMIT':
-      return [
+      columns = [
         {
           dataField: 'job',
           text: 'Job #',
@@ -242,7 +266,6 @@ export const getTableColumns = constant => {
           text: 'Date Run',
           formatter: dateFormatter,
           sort: true,
-          // filter: dateFilter({ defaultValue: { date: new Date(2018, 0, 1), comparator: '>=' } }),
         },
         {
           dataField: 'jobtype',
@@ -252,14 +275,16 @@ export const getTableColumns = constant => {
         {
           dataField: 'jobdescription',
           text: 'Description',
+          classes: 'table-column--description',
         },
         {
           dataField: 'jobstatusdescrp',
           text: 'Status',
         },
       ]
+      break
     case 'HOUSING_LITIGATION':
-      return [
+      columns = [
         {
           dataField: 'litigationid',
           text: 'Litigation ID',
@@ -269,7 +294,6 @@ export const getTableColumns = constant => {
           text: 'Date Open',
           formatter: dateFormatter,
           sort: true,
-          // filter: dateFilter({ defaultValue: { date: new Date(2018, 0, 1), comparator: '>=' } }),
         },
         {
           dataField: 'casetype',
@@ -288,8 +312,9 @@ export const getTableColumns = constant => {
           text: 'Status',
         },
       ]
+      break
     case 'ACRIS_REAL_MASTER':
-      return [
+      columns = [
         {
           dataField: 'documentid',
           text: 'Document ID',
@@ -299,7 +324,6 @@ export const getTableColumns = constant => {
           text: 'Date',
           formatter: dateFormatter,
           sort: true,
-          // filter: dateFilter({ defaultValue: { date: new Date(2018, 0, 1), comparator: '>=' } }),
         },
         {
           dataField: 'doctype',
@@ -311,8 +335,9 @@ export const getTableColumns = constant => {
           text: 'Amount',
         },
       ]
+      break
     case 'EVICTION':
-      return [
+      columns = [
         {
           dataField: 'courtindexnumber',
           text: 'Court Index #',
@@ -326,15 +351,15 @@ export const getTableColumns = constant => {
           text: 'Date',
           formatter: dateFormatter,
           sort: true,
-          // filter: dateFilter({ defaultValue: { date: new Date(2018, 0, 1), comparator: '>=' } }),
         },
         {
           dataField: 'evictionaddress',
           text: 'Address Description',
         },
       ]
+      break
     case 'FORECLOSURE':
-      return [
+      columns = [
         {
           dataField: 'key',
           text: 'Key',
@@ -344,16 +369,27 @@ export const getTableColumns = constant => {
           text: 'Date Filed',
           formatter: dateFormatter,
           sort: true,
-          // filter: dateFilter({ defaultValue: { date: new Date(2018, 0, 1), comparator: '>=' } }),
         },
         {
           dataField: 'debtor',
           text: 'Debtor',
         },
       ]
+      break
     default:
-      return [{ dataField: 'id', text: 'ID' }]
+      columns = [{ dataField: 'id', text: 'ID' }]
   }
+  return columns.map(column => {
+    column['events'] = {
+      onClick: (e, column, columnIndex, row, rowIndex) => {
+        columnExpandFunction(e.target.textContent, row, getKeyField(constant))
+      },
+      onTouchStart: (e, column, columnIndex, row, rowIndex) => {
+        columnExpandFunction(e.target.textContent, row, getKeyField(constant))
+      },
+    }
+    return column
+  })
 }
 
 export const getKeyField = constant => {

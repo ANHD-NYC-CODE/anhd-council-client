@@ -16,4 +16,17 @@
   .table-row--expanded * {
     overflow-x: hidden;
   }
+
+  .table-row--expanded .table-column--description {
+    display: block;
+    width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .table-row--expanded .table-column--description:after {
+    text-transform: capitalize;
+    display: block;
+    content: '(below)';
+    font-weight: bold;
+  }
 }

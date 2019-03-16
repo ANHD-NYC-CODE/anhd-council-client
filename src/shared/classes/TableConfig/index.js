@@ -1,5 +1,5 @@
 import BaseTable from 'shared/components/BaseTable'
-import { getTableColumns, getKeyField } from 'shared/models/tables'
+import { getTableColumns, getKeyField, getDescriptionKey } from 'shared/models/tables'
 import { getDatasetDateField } from 'shared/utilities/filterUtils'
 export class TableConfig {
   constructor({ component = BaseTable, resourceConstant = undefined, hover = false, rowEventType = undefined } = {}) {
@@ -37,8 +37,12 @@ export class TableConfig {
     return getKeyField(this._resourceConstant)
   }
 
-  get columns() {
-    return getTableColumns(this._resourceConstant)
+  get descriptionKey() {
+    return getDescriptionKey(this._resourceConstant)
+  }
+
+  getColumns({ expandColumnFunction } = {}) {
+    return getTableColumns(this._resourceConstant, expandColumnFunction)
   }
 
   get rowEventType() {
