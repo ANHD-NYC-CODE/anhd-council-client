@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import BootstrapTable from 'react-bootstrap-table-next'
 import InnerLoader from 'shared/components/InnerLoader'
-import { push } from 'connected-react-router'
 import paginationFactory, {
   PaginationProvider,
   SizePerPageDropdownStandalone,
@@ -26,17 +25,6 @@ class BaseTable extends React.Component {
 
     this.setExpandedContent = this.setExpandedContent.bind(this)
     this.setPage = this.setPage.bind(this)
-    this.rowEvents = rowEventType => {
-      switch (rowEventType) {
-        case 'LINK': {
-          return {
-            onClick: (e, row, rowIndex) => {
-              this.props.dispatch(push(`/property/${row.bbl}`))
-            },
-          }
-        }
-      }
-    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -51,16 +39,32 @@ class BaseTable extends React.Component {
     })
   }
 
-  setExpandedContent(content, row, rowId) {
+  setExpandedContent({ component, expandedRowProps, row, rowId, e }) {
     let expandedSet
-    if (content === this.state.expandedRowContent) {
+    if (
+      this.state.expanded.some(ex => ex === rowId) &&
+      expandedRowProps.content === (this.state.expandedRowProps || {}).content
+    ) {
       // Toggle off if clicked column twice
       expandedSet = []
+      expandedRowProps = undefined
+      // Remove active column class
+      e.currentTarget
+        .closest('tbody')
+        .querySelectorAll('td')
+        .forEach(col => col.classList.remove('table-column--active'))
     } else {
-      expandedSet = [row[rowId]]
+      expandedSet = [rowId]
+      // Add active column class
+      e.currentTarget
+        .closest('tbody')
+        .querySelectorAll('td')
+        .forEach(col => col.classList.remove('table-column--active'))
+      e.currentTarget.classList.add('table-column--active')
     }
     this.setState({
-      expandedRowContent: content,
+      expandedRowProps,
+      expandedRowComponent: component,
       expanded: expandedSet,
     })
   }
@@ -68,14 +72,7 @@ class BaseTable extends React.Component {
   render() {
     const expandRow = {
       renderer: row => {
-        return (
-          <div className="table-row__expanded-box">
-            <p>
-              <span className="table-row__expanded--icon">>>&nbsp;</span>
-              {this.state.expandedRowContent}
-            </p>
-          </div>
-        )
+        return this.state.expandedRowComponent(this.state.expandedRowProps)
       },
 
       expanded: this.state.expanded,
@@ -117,8 +114,7 @@ class BaseTable extends React.Component {
               keyField={`${this.props.tableConfig.keyField}`}
               rowClasses={this.props.tableConfig.tableRowClasses}
               expandRow={expandRow}
-              rowEvents={this.rowEvents(this.props.tableConfig.rowEventType)}
-              striped
+              rowEvents={this.rowEvents}
               hover={this.props.tableConfig.hover}
               condensed
               bordered={false}

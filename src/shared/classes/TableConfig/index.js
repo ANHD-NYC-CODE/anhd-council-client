@@ -1,12 +1,11 @@
 import BaseTable from 'shared/components/BaseTable'
-import { getTableColumns, getKeyField, getDescriptionKey } from 'shared/models/tables'
+import { getTableColumns, getKeyField, getDescriptionKey, getLinkProps } from 'shared/models/tables'
 import { getDatasetDateField } from 'shared/utilities/filterUtils'
 export class TableConfig {
-  constructor({ component = BaseTable, resourceConstant = undefined, hover = false, rowEventType = undefined } = {}) {
+  constructor({ component = BaseTable, resourceConstant = undefined, hover = false } = {}) {
     this._component = component
     this._resourceConstant = resourceConstant
     this._hover = hover
-    this._rowEventType = rowEventType
   }
 
   get component() {
@@ -42,15 +41,7 @@ export class TableConfig {
   }
 
   getColumns({ expandColumnFunction } = {}) {
-    return getTableColumns(this._resourceConstant, expandColumnFunction)
-  }
-
-  get rowEventType() {
-    return this._rowEventType
-  }
-
-  set rowEventType(rowEventType) {
-    this._rowEventType = rowEventType
+    return getTableColumns(this._resourceConstant, expandColumnFunction, getLinkProps(this._resourceConstant))
   }
 
   paginationOptions(componentState, setPage) {
