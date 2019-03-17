@@ -79,7 +79,9 @@ class BaseTable extends React.Component {
 
   expandRow() {
     const isNestedTable = component => {
-      return component.name === 'NestedTable'
+      return (
+        component.name === 'NestedTable' || (typeof component === 'function' && component.prototype.isReactComponent)
+      )
     }
     return {
       renderer: row => {
