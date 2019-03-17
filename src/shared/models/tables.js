@@ -135,7 +135,7 @@ export const getDescriptionKey = constant => {
   }
 }
 
-export const getTableColumns = (constant, columnExpandFunction, getLinkProps = () => null) => {
+export const getTableColumns = (constant, columnExpandFunction, getLinkProps = () => null, constructFilter) => {
   let columns
 
   const handleColumnEvent = ({ e, row, component, dataKey, nestedModelKey } = {}) => {
@@ -224,20 +224,20 @@ export const getTableColumns = (constant, columnExpandFunction, getLinkProps = (
         constructStandardColumn({
           dataField: 'address',
           text: 'Address',
-          filter: textFilter(),
+          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
           dataField: 'bldgclass',
           text: 'Class',
-          filter: textFilter(),
+          filter: constructFilter(textFilter),
           formatter: bldgClassFormater,
           sort: true,
         }),
         constructStandardColumn({
           dataField: 'zonedist1',
           text: 'Zone 1',
-          filter: textFilter(),
+          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
@@ -282,25 +282,25 @@ export const getTableColumns = (constant, columnExpandFunction, getLinkProps = (
         constructStandardColumn({
           dataField: 'class_name',
           text: 'Class',
-          filter: textFilter(),
+          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
           dataField: 'novdescription',
           text: 'Description',
-          filter: textFilter(),
+          filter: constructFilter(textFilter),
           classes: 'table-column--description',
         }),
         constructStandardColumn({
           dataField: 'currentstatus',
           text: 'Notice Status',
-          filter: textFilter(),
+          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
           dataField: 'violationstatus',
           text: 'Violation Status',
-          filter: textFilter(),
+          filter: constructFilter(textFilter),
           sort: true,
         }),
       ]
@@ -325,7 +325,7 @@ export const getTableColumns = (constant, columnExpandFunction, getLinkProps = (
         constructStandardColumn({
           dataField: 'status',
           text: 'Status',
-          filter: textFilter(),
+          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
@@ -352,43 +352,43 @@ export const getTableColumns = (constant, columnExpandFunction, getLinkProps = (
         constructStandardColumn({
           dataField: 'type',
           text: 'Urgency',
-          filter: textFilter(),
+          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
           dataField: 'unittype',
           text: 'Unit Type',
-          filter: textFilter(),
+          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
           dataField: 'spacetype',
           text: 'Space Type',
-          filter: textFilter(),
+          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
           dataField: 'majorcategory',
           text: 'Major Category',
-          filter: textFilter(),
+          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
           dataField: 'minorcategory',
           text: 'Minor Category',
-          filter: textFilter(),
+          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
           dataField: 'code',
           text: 'Descriptor',
-          filter: textFilter(),
+          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
           dataField: 'statusdescription',
           text: 'Full Description',
-          filter: textFilter(),
+          filter: constructFilter(textFilter),
           sort: true,
         }),
       ]
@@ -408,19 +408,19 @@ export const getTableColumns = (constant, columnExpandFunction, getLinkProps = (
         constructStandardColumn({
           dataField: 'violationtype',
           text: 'Violation Type',
-          filter: textFilter(),
+          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
           dataField: 'description',
           text: 'Description',
           classes: 'table-column--description',
-          filter: textFilter(),
+          filter: constructFilter(textFilter),
         }),
         constructStandardColumn({
           dataField: 'violationcategory',
           text: 'Status',
-          filter: textFilter(),
+          filter: constructFilter(textFilter),
           sort: true,
         }),
       ]
@@ -442,13 +442,13 @@ export const getTableColumns = (constant, columnExpandFunction, getLinkProps = (
           text: 'Category',
           formatter: dobComplaintCategoryFormatter,
           classes: 'table-column--description',
-          filter: textFilter(),
+          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
           dataField: 'status',
           text: 'Status',
-          filter: textFilter(),
+          filter: constructFilter(textFilter),
           sort: true,
         }),
       ]
@@ -468,25 +468,25 @@ export const getTableColumns = (constant, columnExpandFunction, getLinkProps = (
         constructStandardColumn({
           dataField: 'violationtype',
           text: 'Violation Type',
-          filter: textFilter(),
+          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
           dataField: 'severity',
           text: 'Severity',
-          filter: textFilter(),
+          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
           dataField: 'violationdescription',
           text: 'Description',
           classes: 'table-column--description',
-          filter: textFilter(),
+          filter: constructFilter(textFilter),
         }),
         constructStandardColumn({
           dataField: 'ecbviolationstatus',
           text: 'Status',
-          filter: textFilter(),
+          filter: constructFilter(textFilter),
           sort: true,
         }),
       ]
@@ -515,13 +515,13 @@ export const getTableColumns = (constant, columnExpandFunction, getLinkProps = (
         constructStandardColumn({
           dataField: 'worktype',
           text: 'Work Type',
-          filter: textFilter(),
+          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
           dataField: 'jobdescription',
           text: 'Description',
-          filter: textFilter(),
+          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
@@ -553,20 +553,20 @@ export const getTableColumns = (constant, columnExpandFunction, getLinkProps = (
           dataField: 'jobtype',
           text: 'Job Type',
           formatter: dobPermitWorkTypeFormatter,
-          filter: textFilter(),
+          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
           dataField: 'jobdescription',
           text: 'Description',
           classes: 'table-column--description',
-          filter: textFilter(),
+          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
           dataField: 'jobstatusdescrp',
           text: 'Status',
-          filter: textFilter(),
+          filter: constructFilter(textFilter),
           sort: true,
         }),
       ]
@@ -586,13 +586,13 @@ export const getTableColumns = (constant, columnExpandFunction, getLinkProps = (
         constructStandardColumn({
           dataField: 'casetype',
           text: 'Case Type',
-          filter: textFilter(),
+          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
           dataField: 'openjudgement',
           text: 'Open Judgement?',
-          filter: textFilter(),
+          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
@@ -603,7 +603,7 @@ export const getTableColumns = (constant, columnExpandFunction, getLinkProps = (
         constructStandardColumn({
           dataField: 'casestatus',
           text: 'Status',
-          filter: textFilter(),
+          filter: constructFilter(textFilter),
           sort: true,
         }),
       ]
@@ -624,7 +624,7 @@ export const getTableColumns = (constant, columnExpandFunction, getLinkProps = (
           dataField: 'doctype',
           text: 'Document Type',
           formatter: acrisDocTypeFormatter,
-          filter: textFilter(),
+          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
@@ -655,49 +655,49 @@ export const getTableColumns = (constant, columnExpandFunction, getLinkProps = (
         constructStandardColumn({
           dataField: 'partytype',
           text: 'Party Type',
-          filter: textFilter(),
+          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
           dataField: 'name',
           text: 'Name',
-          filter: textFilter(),
+          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
           dataField: 'address1',
           text: 'Address 1',
-          filter: textFilter(),
+          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
           dataField: 'address2',
           text: 'Address 2',
-          filter: textFilter(),
+          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
           dataField: 'city',
           text: 'City',
-          filter: textFilter(),
+          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
           dataField: 'state',
           text: 'State',
-          filter: textFilter(),
+          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
           dataField: 'zip',
           text: 'Zip',
-          filter: textFilter(),
+          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
           dataField: 'country',
           text: 'Country',
-          filter: textFilter(),
+          filter: constructFilter(textFilter),
           sort: true,
         }),
       ]
@@ -721,7 +721,7 @@ export const getTableColumns = (constant, columnExpandFunction, getLinkProps = (
         constructStandardColumn({
           dataField: 'evictionaddress',
           text: 'Address Description',
-          filter: textFilter(),
+          filter: constructFilter(textFilter),
           sort: true,
         }),
       ]
@@ -741,7 +741,7 @@ export const getTableColumns = (constant, columnExpandFunction, getLinkProps = (
         constructStandardColumn({
           dataField: 'debtor',
           text: 'Debtor',
-          filter: textFilter(),
+          filter: constructFilter(textFilter),
           sort: true,
         }),
       ]
@@ -749,5 +749,6 @@ export const getTableColumns = (constant, columnExpandFunction, getLinkProps = (
     default:
       columns = [{ dataField: 'id', text: 'ID' }]
   }
+
   return columns
 }

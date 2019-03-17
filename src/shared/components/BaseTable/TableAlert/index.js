@@ -6,16 +6,27 @@ const TableAlert = props => {
     <Alert variant={props.variant} className="table-alert">
       <h6 className={props.textType}>{props.message}</h6>
       {props.action && (
-        <Button variant="primary" onClick={props.action}>
-          Proceed
+        <Button variant={props.buttonVariant} onClick={props.action}>
+          {props.buttonText}
         </Button>
       )}
     </Alert>
   )
 }
 
+TableAlert.defaultProps = {
+  action: undefined,
+  buttonText: 'Proceed',
+  buttonVariant: 'primary',
+  textType: '',
+  variant: '',
+  message: '',
+}
+
 TableAlert.propTypes = {
   action: PropTypes.func,
+  buttonText: PropTypes.string,
+  buttonVariant: PropTypes.string,
   textType: PropTypes.string,
   variant: PropTypes.string,
   message: PropTypes.object,

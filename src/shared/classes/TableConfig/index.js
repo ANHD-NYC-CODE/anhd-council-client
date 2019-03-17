@@ -40,8 +40,13 @@ export class TableConfig {
     return getDescriptionKey(this._resourceConstant)
   }
 
-  getColumns({ expandColumnFunction } = {}) {
-    return getTableColumns(this._resourceConstant, expandColumnFunction, getLinkProps(this._resourceConstant))
+  getColumns({ expandColumnFunction, constructFilter } = {}) {
+    return getTableColumns(
+      this._resourceConstant,
+      expandColumnFunction,
+      getLinkProps(this._resourceConstant),
+      constructFilter
+    )
   }
 
   paginationOptions(componentState, setPage) {

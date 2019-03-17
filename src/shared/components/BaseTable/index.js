@@ -21,11 +21,15 @@ class BaseTable extends React.Component {
       displayedRecordsCount: (props.records || {}).length,
       page: 1,
       expanded: [],
+      filters: {},
     }
+
+    this.filters = {}
 
     this.setExpandedContent = this.setExpandedContent.bind(this)
     this.setPage = this.setPage.bind(this)
     this.expandRow = this.expandRow.bind(this)
+    this.constructFilter = this.constructFilter.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -99,7 +103,21 @@ class BaseTable extends React.Component {
     }
   }
 
+  constructFilter(filterType) {
+    console.log(this.filters)
+    return filterType({
+      getFilter: filter => {
+        const filterKey = (Math.random() * 100000).toString()
+        this.filters = { ...this.filters, [filterKey]: filter }
+      },
+    })
+  }
+
   render() {
+    const columns = this.props.tableConfig.getColumns({
+      expandColumnFunction: this.setExpandedContent,
+      constructFilter: this.constructFilter,
+    })
     return (
       <PaginationProvider
         pagination={paginationFactory(this.props.tableConfig.paginationOptions(this.state, this.setPage))}
@@ -127,7 +145,7 @@ class BaseTable extends React.Component {
             </Row>
             <BootstrapTable
               bootstrap4
-              columns={this.props.tableConfig.getColumns({ expandColumnFunction: this.setExpandedContent })}
+              columns={columns}
               data={this.props.records}
               {...paginationTableProps}
               defaultSorted={this.props.tableConfig.defaultSorted}
@@ -139,7 +157,16 @@ class BaseTable extends React.Component {
               condensed
               bordered={false}
               tabIndexCell
-              noDataIndication={<TableAlert textType="text-dark" variant="warning" message={"There's nothing here."} />}
+              noDataIndication={
+                <TableAlert
+                  textType="text-dark"
+                  variant="warning"
+                  message={"There's nothing here."}
+                  buttonText="Clear Filters"
+                  buttonVariant="secondary"
+                  action={() => Object.keys(this.filters).forEach(key => this.filters[key](''))}
+                />
+              }
             />
             {this.props.loading && <InnerLoader />}
             {this.props.error && (
