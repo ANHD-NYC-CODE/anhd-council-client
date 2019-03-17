@@ -10,7 +10,7 @@ import paginationFactory, {
 import filterFactory from 'react-bootstrap-table2-filter'
 
 import { Row, Col } from 'react-bootstrap'
-import TableError from 'shared/components/BaseTable/TableError'
+import TableAlert from 'shared/components/BaseTable/TableAlert'
 import './style.scss'
 
 class BaseTable extends React.Component {
@@ -18,18 +18,19 @@ class BaseTable extends React.Component {
     super(props)
     this.state = {
       expandedRowContent: '',
-      displayedRecordsCount: props.records.length,
+      displayedRecordsCount: (props.records || {}).length,
       page: 1,
       expanded: [],
     }
 
     this.setExpandedContent = this.setExpandedContent.bind(this)
     this.setPage = this.setPage.bind(this)
+    this.expandRow = this.expandRow.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      displayedRecordsCount: nextProps.records.length,
+      displayedRecordsCount: (nextProps.records || {}).length,
     })
   }
 
@@ -39,7 +40,7 @@ class BaseTable extends React.Component {
     })
   }
 
-  setExpandedContent({ component, expandedRowProps, row, rowId, e }) {
+  setExpandedContent({ component, expandedRowProps, rowId, e }) {
     let expandedSet
     if (
       this.state.expanded.some(ex => ex === rowId) &&
@@ -62,6 +63,7 @@ class BaseTable extends React.Component {
         .forEach(col => col.classList.remove('table-column--active'))
       e.currentTarget.classList.add('table-column--active')
     }
+
     this.setState({
       expandedRowProps,
       expandedRowComponent: component,
@@ -69,16 +71,35 @@ class BaseTable extends React.Component {
     })
   }
 
-  render() {
-    const expandRow = {
+  expandRow() {
+    const isReactComponent = component => {
+      return typeof component === 'function' && !!component.prototype.isReactComponent
+    }
+    return {
       renderer: row => {
-        return this.state.expandedRowComponent(this.state.expandedRowProps)
+        if (isReactComponent(this.state.expandedRowComponent)) {
+          const ExpandComponent = this.state.expandedRowComponent
+          return (
+            <div className="table-row--nested-bumper">
+              <ExpandComponent {...this.state.expandedRowProps} />
+            </div>
+          )
+        } else {
+          return (
+            <div className="table-row--nested-bumper">
+              {this.state.expandedRowComponent(this.state.expandedRowProps)}
+            </div>
+          )
+        }
       },
 
       expanded: this.state.expanded,
       showExpandColumn: false,
       onlyOneExpanding: true,
     }
+  }
+
+  render() {
     return (
       <PaginationProvider
         pagination={paginationFactory(this.props.tableConfig.paginationOptions(this.state, this.setPage))}
@@ -113,15 +134,22 @@ class BaseTable extends React.Component {
               filter={filterFactory()}
               keyField={`${this.props.tableConfig.keyField}`}
               rowClasses={this.props.tableConfig.tableRowClasses}
-              expandRow={expandRow}
-              rowEvents={this.rowEvents}
+              expandRow={this.expandRow()}
               hover={this.props.tableConfig.hover}
               condensed
               bordered={false}
               tabIndexCell
+              noDataIndication={<TableAlert textType="text-dark" variant="warning" message={"There's nothing here."} />}
             />
             {this.props.loading && <InnerLoader />}
-            {this.props.error && <TableError error={this.props.error} errorAction={this.props.errorAction} />}
+            {this.props.error && (
+              <TableAlert
+                variant="danger"
+                textType="text-danger"
+                message={this.props.error.message}
+                action={this.props.errorAction}
+              />
+            )}
           </div>
         )}
       </PaginationProvider>
