@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
 import CardLoader from 'shared/components/CardLoader'
-import { Card } from 'react-bootstrap'
+import { Card, Button } from 'react-bootstrap'
 class RequestSummary extends React.Component {
   constructor(props) {
     super(props)
@@ -18,7 +18,7 @@ class RequestSummary extends React.Component {
 
   render() {
     return (
-      <Card className="request-wrapper" onClick={this.handleClick}>
+      <Card as={Button} variant="light" className=" request-wrapper" onClick={this.handleClick}>
         <Card.Body>
           <Card.Title>{this.props.request.label}</Card.Title>
           {this.props.loading ? <CardLoader /> : <Card.Text>{this.props.results.length}</Card.Text>}
