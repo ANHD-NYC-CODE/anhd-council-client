@@ -233,6 +233,8 @@ export const comparisonOptions = (comparisons, labels, type, rangeKey) => {
 
 export const getDatasetDateField = datasetConstant => {
   switch (datasetConstant) {
+    case 'PROPERTY':
+      return 'bbl'
     case 'HPD_VIOLATION':
       return 'approveddate'
     case 'DOB_VIOLATION':
@@ -241,10 +243,16 @@ export const getDatasetDateField = datasetConstant => {
       return 'issuedate'
     case 'HPD_COMPLAINT':
       return 'receiveddate'
+    case 'HPD_PROBLEM':
+      return 'problemid'
     case 'DOB_COMPLAINT':
       return 'dateentered'
     case 'EVICTION':
       return 'executeddate'
+    case 'ACRIS_REAL_MASTER':
+      return 'docdate'
+    case 'ACRIS_REAL_PARTY':
+      return 'documentid'
     case 'PROPERTY_SALE_BY_AMOUNT':
       return 'documentid__docdate'
     case 'PROPERTY_SALE_BY_COUNT':
