@@ -136,7 +136,7 @@ export const newBuildingRequest = ({ type = undefined, bin = undefined, resource
       new ApiMap({ constant: 'BUILDING', resourceId: bin }),
       resourceConstant ? getApiMap(resourceConstant) : undefined,
     ].filter(a => !!a),
-    tableConfig: new TableConfig({ resourceConstant: resourceConstant, rowEventType: 'EXPAND' }),
+    tableConfig: new TableConfig({ resourceConstant: resourceConstant }),
   })
 }
 
@@ -147,7 +147,7 @@ export const newPropertyRequest = ({ type = undefined, bbl = undefined, resource
       new ApiMap({ constant: 'PROPERTY', resourceId: bbl }),
       resourceConstant ? getApiMap(resourceConstant) : undefined,
     ].filter(a => !!a),
-    tableConfig: new TableConfig({ resourceConstant: resourceConstant, rowEventType: 'EXPAND' }),
+    tableConfig: new TableConfig({ resourceConstant: resourceConstant }),
   })
 }
 

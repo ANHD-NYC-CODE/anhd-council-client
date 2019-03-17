@@ -12,7 +12,14 @@ export const dateFormatter = (cell, row, index) => {
 }
 
 export const expandTableFormatter = (cell, row, index) => {
-  return <Button>Expand Table</Button>
+  return (
+    <div>
+      <span>({cell.length}) </span>
+      <span>
+        <Button size="sm">Expand</Button>
+      </span>
+    </div>
+  )
 }
 
 export const nestedDataLengthFormatter = (cell, row, index) => {

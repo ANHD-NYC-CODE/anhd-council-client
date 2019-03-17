@@ -5,7 +5,7 @@ const TableAlert = props => {
   return (
     <Alert variant={props.variant} className="table-alert">
       <h6 className={props.textType}>{props.message}</h6>
-      {props.action && (
+      {!!props.action && (
         <Button variant={props.buttonVariant} onClick={props.action}>
           {props.buttonText}
         </Button>
@@ -29,7 +29,7 @@ TableAlert.propTypes = {
   buttonVariant: PropTypes.string,
   textType: PropTypes.string,
   variant: PropTypes.string,
-  message: PropTypes.object,
+  message: PropTypes.string,
 }
 
 export default TableAlert
