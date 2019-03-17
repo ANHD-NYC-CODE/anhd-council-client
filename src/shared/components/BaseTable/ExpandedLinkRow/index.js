@@ -5,7 +5,7 @@ import BaseLink from 'shared/components/BaseLink'
 
 const ExpandedLinkRow = props => {
   return (
-    <Card className="expanded-row">
+    <Card bg="light" border="secondary" className="expanded-row">
       <Card.Body>
         <Card.Text>{props.content}</Card.Text>
         {props.href && <Button variant="primary" as={BaseLink} href={props.href} text={props.linkText} />}

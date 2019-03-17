@@ -1,4 +1,6 @@
+import React from 'react'
 import moment from 'moment'
+import { Button } from 'react-bootstrap'
 
 export const dateFormatter = (cell, row, index) => {
   try {
@@ -9,6 +11,13 @@ export const dateFormatter = (cell, row, index) => {
   }
 }
 
+export const expandTableFormatter = (cell, row, index) => {
+  return <Button>Expand Table</Button>
+}
+
+export const nestedDataLengthFormatter = (cell, row, index) => {
+  return cell.length
+}
 export const bldgClassFormater = (cell, row, index) => {
   switch (cell) {
     case 'A0':
