@@ -5,7 +5,6 @@ import filterFactory from 'react-bootstrap-table2-filter'
 import TableAlert from 'shared/components/BaseTable/TableAlert'
 
 import BaseTable from 'shared/components/BaseTable'
-import { getTableColumns, getKeyField } from 'shared/models/tables'
 import { Card } from 'react-bootstrap'
 
 class NestedTable extends BaseTable {
@@ -14,20 +13,18 @@ class NestedTable extends BaseTable {
   }
 
   render() {
-    const state = this.state
     return (
       <Card bg="light" border="secondary" className="nested-table">
         <BootstrapTable
-          keyField={`${this.props.tableConfig.keyField}`}
-          rowClasses={this.props.tableConfig.tableRowClasses}
-          expandRow={this.expandRow()}
           bootstrap4
-          columns={this.state.columns}
-          data={this.props.records}
-          condensed
-          filter={filterFactory()}
           bordered={false}
-          tabIndexCell
+          columns={this.state.columns}
+          condensed
+          data={this.props.records}
+          defaultSorted={this.props.tableConfig.defaultSorted}
+          expandRow={this.expandRow()}
+          filter={filterFactory()}
+          keyField={`${this.props.tableConfig.keyField}`}
           noDataIndication={
             <TableAlert
               textType="text-dark"
@@ -35,7 +32,11 @@ class NestedTable extends BaseTable {
               message={"There's nothing here."}
               buttonText="Clear Filters"
               buttonVariant="secondary"
-              action={() => Object.keys(this.filters).forEach(key => this.filters[key](''))}
+              action={
+                this.props.records.length ? () => Object.keys(this.filters).forEach(key => this.filters[key]('')) : null
+              }
+              rowClasses={this.props.tableConfig.tableRowClasses}
+              tabIndexCell
             />
           }
         />

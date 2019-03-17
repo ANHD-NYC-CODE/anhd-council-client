@@ -2,10 +2,9 @@ import BaseTable from 'shared/components/BaseTable'
 import { getTableColumns, getKeyField, getDescriptionKey, getLinkProps } from 'shared/models/tables'
 import { getDatasetDateField } from 'shared/utilities/filterUtils'
 export class TableConfig {
-  constructor({ component = BaseTable, resourceConstant = undefined, hover = false } = {}) {
+  constructor({ component = BaseTable, resourceConstant = undefined } = {}) {
     this._component = component
     this._resourceConstant = resourceConstant
-    this._hover = hover
   }
 
   get component() {

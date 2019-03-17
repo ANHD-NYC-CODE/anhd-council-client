@@ -21,12 +21,12 @@ class BaseTable extends React.Component {
     this.setPage = this.setPage.bind(this)
     this.expandRow = this.expandRow.bind(this)
     this.constructFilter = this.constructFilter.bind(this)
+    this.filters = {}
     this.state = {
       expandedRowContent: '',
       displayedRecordsCount: (props.records || {}).length,
       page: 1,
       expanded: [],
-      filters: {},
       columns: props.tableConfig.getColumns({
         expandColumnFunction: this.setExpandedContent,
         constructFilter: this.constructFilter,
@@ -111,7 +111,7 @@ class BaseTable extends React.Component {
     return filterType({
       getFilter: filter => {
         const filterKey = (Math.random() * 100000).toString()
-        this.setState({ filters: { ...this.state.filters, [filterKey]: filter } })
+        this.filters = { ...this.filters, [filterKey]: filter }
       },
     })
   }
@@ -144,18 +144,15 @@ class BaseTable extends React.Component {
             </Row>
             <BootstrapTable
               bootstrap4
+              bordered={false}
               columns={this.state.columns}
+              condensed
               data={this.props.records}
               {...paginationTableProps}
               defaultSorted={this.props.tableConfig.defaultSorted}
+              expandRow={this.expandRow()}
               filter={filterFactory()}
               keyField={`${this.props.tableConfig.keyField}`}
-              rowClasses={this.props.tableConfig.tableRowClasses}
-              expandRow={this.expandRow()}
-              hover={this.props.tableConfig.hover}
-              condensed
-              bordered={false}
-              tabIndexCell
               noDataIndication={
                 <TableAlert
                   textType="text-dark"
@@ -164,10 +161,12 @@ class BaseTable extends React.Component {
                   buttonText="Clear Filters"
                   buttonVariant="secondary"
                   action={
-                    Object.keys(this.state.filters).length && this.props.records.length
-                      ? () => Object.keys(this.state.filters).forEach(key => this.state.filters[key](''))
+                    this.props.records.length
+                      ? () => Object.keys(this.filters).forEach(key => this.filters[key](''))
                       : null
                   }
+                  rowClasses={this.props.tableConfig.tableRowClasses}
+                  tabIndexCell
                 />
               }
             />
