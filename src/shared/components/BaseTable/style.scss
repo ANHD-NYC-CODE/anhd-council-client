@@ -4,6 +4,13 @@
     cursor: pointer;
   }
 
+  tr:not(.expanding-row) td:not(.table-column--active):not(.react-bs-table-no-data):hover {
+    background-color: deepskyblue;
+  }
+  tr:not(.expanding-row) td:not(.table-column--active):not(.react-bs-table-no-data):hover:before {
+    content: '(+) ';
+  }
+
   .filter {
     min-width: initial;
   }
@@ -37,5 +44,9 @@
 
   .table-column--active {
     background-color: deepskyblue;
+  }
+
+  .table-column--active:before {
+    content: '(-) ';
   }
 }
