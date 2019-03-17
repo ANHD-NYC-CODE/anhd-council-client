@@ -12,7 +12,7 @@ import { createErrorSelector } from 'Store/Error/selectors'
 
 import LeafletMap from 'LeafletMap'
 import AddressSearch from 'Lookup/AddressSearch'
-import { Row, Col, Jumbotron } from 'react-bootstrap'
+import { Row, Col } from 'react-bootstrap'
 
 import RequestWrapper from 'shared/components/RequestWrapper'
 
@@ -22,7 +22,7 @@ class Lookup extends React.Component {
 
     if (!props.bbl) {
       props.dispatch(push('/lookup'))
-    } else if (!props.appState.currentProperty && props.bbl) {
+    } else if ((!props.appState.currentProperty && props.bbl) || props.appState.currentProperty !== props.bbl) {
       props.dispatch(setLookupAndRequestsAndRedirect({ bbl: props.bbl, bin: props.bin, replaceHistory: true }))
     } else {
       props.dispatch(makeRequest(props.propertyProfileRequest))

@@ -204,7 +204,7 @@ export const newGeographyRequest = ({
           .format('YYYY-MM-DD'),
       }),
     ],
-    tableConfig: new TableConfig({ resourceConstant: 'PROPERTY', rowEventType: 'LINK', hover: true }),
+    tableConfig: new TableConfig({ resourceConstant: 'PROPERTY', hover: true }),
   })
 }
 

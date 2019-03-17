@@ -1,5 +1,5 @@
 import { textFilter, numberFilter, Comparator } from 'react-bootstrap-table2-filter'
-
+import ExpandedLinkRow from 'shared/components/BaseTable/ExpandedLinkRow'
 import {
   dateFormatter,
   bldgClassFormater,
@@ -8,6 +8,98 @@ import {
   acrisDocTypeFormatter,
   dobPermitSourceFormatter,
 } from 'shared/utilities/tableUtils'
+
+export const getKeyField = constant => {
+  switch (constant) {
+    case 'PROPERTY':
+      return 'bbl'
+    case 'BUILDING':
+      return 'bin'
+    case 'HPD_VIOLATION':
+      return 'violationid'
+    case 'HPD_COMPLAINT':
+      return 'complaintid'
+    case 'DOB_VIOLATION':
+      return 'isndobbisviol'
+    case 'DOB_COMPLAINT':
+      return 'complaintnumber'
+    case 'ECB_VIOLATION':
+      return 'ecbviolationnumber'
+    case 'DOB_ISSUED_PERMIT':
+      return 'key'
+    case 'DOB_FILED_PERMIT':
+      return 'id'
+    case 'HOUSING_LITIGATION':
+      return 'litigationid'
+    case 'ACRIS_REAL_MASTER':
+      return 'documentid'
+    case 'EVICTION':
+      return 'courtindexnumber'
+    case 'FORECLOSURE':
+      return 'key'
+    default:
+      return 'id'
+  }
+}
+
+export const getLinkId = constant => {
+  switch (constant) {
+    case 'PROPERTY':
+      return 'bbl'
+    case 'ECB_VIOLATION':
+      return 'ecbviolationnumber'
+    case 'DOB_COMPLAINT':
+      return 'complaintnumber'
+    case 'DOB_ISSUED_PERMIT':
+      return 'jobfilingnumber'
+    case 'DOB_FILED_PERMIT':
+      return 'job'
+    case 'ACRIS_REAL_MASTER':
+      return 'documentid'
+    default:
+      return 'id'
+  }
+}
+
+export const getLinkProps = constant => {
+  switch (constant) {
+    case 'PROPERTY':
+      return linkId => ({ href: `/property/${linkId}`, linkText: 'View Property' })
+    case 'HPD_VIOLATION':
+      return () => ({ href: 'https://www1.nyc.gov/site/hpd/about/hpdonline.page', linkText: 'View HPD Online' })
+    case 'HPD_COMPLAINT':
+      return () => ({ href: 'https://www1.nyc.gov/site/hpd/about/hpdonline.page', linkText: 'View HPD Online' })
+    case 'HOUSING_LITIGATION':
+      return () => ({ href: 'https://www1.nyc.gov/site/hpd/about/hpdonline.page', linkText: 'View HPD Online' })
+    case 'ECB_VIOLATION':
+      return linkId => ({
+        href: `http://a810-bisweb.nyc.gov/bisweb/ECBQueryByNumberServlet?ecbin=${linkId}&go7=+GO+&requestid=0`,
+        linkText: 'View BIS Record',
+      })
+    case 'DOB_COMPLAINT':
+      return linkId => ({
+        href: `http://a810-bisweb.nyc.gov/bisweb/OverviewForComplaintServlet?complaintno=${linkId}&go6=+GO+&requestid=0`,
+        linkText: 'View BIS Record',
+      })
+    case 'DOB_ISSUED_PERMIT':
+      return linkId => ({
+        href: `http://a810-bisweb.nyc.gov/bisweb/JobsQueryByNumberServlet?passjobnumber=${linkId}&passdocnumber=&go10=+GO+&requestid=0`,
+        linkText: 'View BIS Record',
+      })
+    case 'DOB_FILED_PERMIT':
+      return linkId => ({
+        href: `http://a810-bisweb.nyc.gov/bisweb/JobsQueryByNumberServlet?passjobnumber=${linkId}&passdocnumber=&go10=+GO+&requestid=0`,
+        linkText: 'View BIS Record',
+      })
+    case 'ACRIS_REAL_MASTER':
+      return linkId => ({
+        href: `https://a836-acris.nyc.gov/DS/DocumentSearch/DocumentDetail?doc_id=${linkId}`,
+        linkText: 'View ACRIS Document',
+      })
+    default:
+      return () => null
+  }
+}
 
 export const getDescriptionKey = constant => {
   switch (constant) {
@@ -28,8 +120,20 @@ export const getDescriptionKey = constant => {
   }
 }
 
-export const getTableColumns = (constant, columnExpandFunction) => {
+export const getTableColumns = (constant, columnExpandFunction, getLinkProps) => {
   let columns
+
+  const handleColumnEvent = (e, column, columnIndex, row, rowIndex) => {
+    const rowKey = getKeyField(constant)
+    columnExpandFunction({
+      component: ExpandedLinkRow,
+      expandedRowProps: { content: e.target.textContent, ...getLinkProps(row[getLinkId(constant)]) },
+      row,
+      rowId: row[rowKey],
+      e,
+    })
+  }
+
   switch (constant) {
     case 'PROPERTY':
       columns = [
@@ -308,8 +412,8 @@ export const getTableColumns = (constant, columnExpandFunction) => {
           text: 'Job #',
         },
         {
-          dataField: 'dobrundate',
-          text: 'Date Run',
+          dataField: 'prefilingdate',
+          text: 'Date Filed',
           formatter: dateFormatter,
           sort: true,
         },
@@ -448,45 +552,12 @@ export const getTableColumns = (constant, columnExpandFunction) => {
   return columns.map(column => {
     column['events'] = {
       onClick: (e, column, columnIndex, row, rowIndex) => {
-        columnExpandFunction(e.target.textContent, row, getKeyField(constant))
+        handleColumnEvent(e, column, columnIndex, row, rowIndex)
       },
       onTouchStart: (e, column, columnIndex, row, rowIndex) => {
-        columnExpandFunction(e.target.textContent, row, getKeyField(constant))
+        handleColumnEvent(e, column, columnIndex, row, rowIndex)
       },
     }
     return column
   })
-}
-
-export const getKeyField = constant => {
-  switch (constant) {
-    case 'PROPERTY':
-      return 'bbl'
-    case 'BUILDING':
-      return 'bin'
-    case 'HPD_VIOLATION':
-      return 'violationid'
-    case 'HPD_COMPLAINT':
-      return 'complaintid'
-    case 'DOB_VIOLATION':
-      return 'isndobbisviol'
-    case 'DOB_COMPLAINT':
-      return 'complaintnumber'
-    case 'ECB_VIOLATION':
-      return 'ecbviolationnumber'
-    case 'DOB_ISSUED_PERMIT':
-      return 'key'
-    case 'DOB_FILED_PERMIT':
-      return 'id'
-    case 'HOUSING_LITIGATION':
-      return 'litigationid'
-    case 'ACRIS_REAL_MASTER':
-      return 'documentid'
-    case 'EVICTION':
-      return 'courtindexnumber'
-    case 'FORECLOSURE':
-      return 'key'
-    default:
-      return 'id'
-  }
 }
