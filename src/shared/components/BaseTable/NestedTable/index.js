@@ -35,10 +35,10 @@ class NestedTable extends BaseTable {
               action={
                 this.props.records.length ? () => Object.keys(this.filters).forEach(key => this.filters[key]('')) : null
               }
-              rowClasses={this.props.tableConfig.tableRowClasses}
-              tabIndexCell
             />
           }
+          rowClasses={this.props.tableConfig.tableRowClasses}
+          tabIndexCell
         />
       </Card>
     )

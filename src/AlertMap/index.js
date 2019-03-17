@@ -6,18 +6,23 @@ import * as c from 'Store/Council/constants'
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
 import { push, createMatchSelector } from 'connected-react-router'
-import GeographySelect from 'shared/components/GeographySelect'
 
-import LeafletMap from 'LeafletMap'
-import { Row, Col } from 'react-bootstrap'
 import { setGeographyAndRequestsAndRedirect } from 'Store/AppState/actions'
 import { pathToGeographyConstant } from 'shared/utilities/routeUtils'
 import { lookupRequests } from 'Store/AppState/selectors'
+import { requestWithAuth } from 'shared/utilities/authUtils'
+import { makeRequest } from 'Store/Request/actions'
+
+import GeographySelect from 'shared/components/GeographySelect'
+import { Row, Col } from 'react-bootstrap'
+import LeafletMap from 'LeafletMap'
 import RequestWrapper from 'shared/components/RequestWrapper'
 
 class AlertMap extends React.Component {
   constructor(props) {
     super(props)
+
+    this.loadRequests = this.loadRequests.bind(this)
     if (!props.geographyType) {
       props.dispatch(push('/map'))
     } else if (!props.appState.currentGeographyType && props.geographyType) {
@@ -28,8 +33,9 @@ class AlertMap extends React.Component {
           replaceHistory: true,
         })
       )
-    } else {
-      return
+    } else if (props.mapRequests) {
+      this.loadRequests(props.mapRequests)
+
       // Request geography profile
     }
   }
@@ -43,10 +49,17 @@ class AlertMap extends React.Component {
           replaceHistory: true,
         })
       )
-    } else {
-      return
+    } else if (nextProps.mapRequests) {
+      this.loadRequests(nextProps.mapRequests)
+
       // Request geography profile
     }
+  }
+
+  loadRequests(requests) {
+    requests.forEach(request => {
+      this.props.dispatch(requestWithAuth(makeRequest(request)))
+    })
   }
 
   render() {

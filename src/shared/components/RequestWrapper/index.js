@@ -12,11 +12,6 @@ class RequestWrapper extends React.Component {
 
     this.retryRequest = this.retryRequest.bind(this)
     this.processError = this.processError.bind(this)
-    props.dispatch(requestWithAuth(makeRequest(props.request)))
-  }
-
-  componentWillReceiveProps(nextProps) {
-    nextProps.dispatch(requestWithAuth(makeRequest(nextProps.request)))
   }
 
   processError(error) {
