@@ -13,6 +13,7 @@ import { createErrorSelector } from 'Store/Error/selectors'
 import LeafletMap from 'LeafletMap'
 import AddressSearch from 'Lookup/AddressSearch'
 import { Row, Col } from 'react-bootstrap'
+import { requestWithAuth } from 'shared/utilities/authUtils'
 
 import RequestWrapper from 'shared/components/RequestWrapper'
 
@@ -20,11 +21,13 @@ class Lookup extends React.Component {
   constructor(props) {
     super(props)
 
+    this.loadRequests = this.loadRequests.bind(this)
     if (!props.bbl) {
       props.dispatch(push('/lookup'))
     } else if ((!props.appState.currentProperty && props.bbl) || props.appState.currentProperty !== props.bbl) {
       props.dispatch(setLookupAndRequestsAndRedirect({ bbl: props.bbl, bin: props.bin, replaceHistory: true }))
-    } else {
+    } else if (props.lookupRequests) {
+      this.loadRequests(props.lookupRequests)
       props.dispatch(makeRequest(props.propertyProfileRequest))
     }
   }
@@ -34,9 +37,16 @@ class Lookup extends React.Component {
       nextProps.dispatch(
         setLookupAndRequestsAndRedirect({ bbl: nextProps.bbl, bin: nextProps.bin, replaceHistory: true })
       )
-    } else {
+    } else if (nextProps.lookupRequests) {
+      this.loadRequests(nextProps.lookupRequests)
       nextProps.dispatch(makeRequest(nextProps.propertyProfileRequest))
     }
+  }
+
+  loadRequests(requests) {
+    requests.forEach(request => {
+      this.props.dispatch(requestWithAuth(makeRequest(request)))
+    })
   }
 
   render() {

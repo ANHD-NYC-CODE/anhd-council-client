@@ -168,10 +168,10 @@ class BaseTable extends React.Component {
                       ? () => Object.keys(this.filters).forEach(key => this.filters[key](''))
                       : null
                   }
-                  rowClasses={this.props.tableConfig.tableRowClasses}
-                  tabIndexCell
                 />
               }
+              rowClasses={this.props.tableConfig.tableRowClasses}
+              tabIndexCell
             />
             {this.props.loading && <InnerLoader />}
             {this.props.error && (
