@@ -27,7 +27,7 @@ class AlertMap extends React.Component {
     this.switchTable = this.switchTable.bind(this)
 
     this.state = {
-      requestSelection: undefined,
+      requestSelection: props.requests.length ? props.requests[0] : undefined,
     }
 
     if (!props.geographyType) {
@@ -40,8 +40,8 @@ class AlertMap extends React.Component {
           replaceHistory: true,
         })
       )
-    } else if (props.mapRequests) {
-      this.loadRequests(props.mapRequests)
+    } else if (props.requests) {
+      this.loadRequests(props)
 
       // Request geography profile
     }
@@ -56,21 +56,26 @@ class AlertMap extends React.Component {
           replaceHistory: true,
         })
       )
-    } else if (nextProps.mapRequests) {
-      this.loadRequests(nextProps.mapRequests)
+    } else if (nextProps.requests) {
+      this.loadRequests(nextProps)
 
       // Request geography profile
     }
   }
 
-  loadRequests(requests) {
-    requests.forEach(request => {
+  loadRequests(props) {
+    props.requests.forEach(request => {
       this.props.dispatch(requestWithAuth(makeRequest(request)))
     })
+
+    if (!this.state.requestSelection) {
+      this.setState({
+        requestSelection: props.requests[0],
+      })
+    }
   }
 
   switchTable(e, request) {
-    console.log(request)
     this.setState({
       requestSelection: request,
     })
@@ -78,25 +83,44 @@ class AlertMap extends React.Component {
 
   render() {
     return (
-      <Row>
-        <Col sm={12} md={4}>
-          <LeafletMap />
+      <div>
+        <Row>
           <GeographySelect
             confirmChange={true}
             currentGeographyType={this.props.appState.currentGeographyType}
             currentGeographyId={this.props.appState.currentGeographyId}
             dispatch={this.props.dispatch}
           />
-        </Col>
-        <Col sm={12} md={8}>
-          <Row>
-            {this.props.mapRequests.map((request, index) => {
-              return <RequestSummary key={`request-summary-${index}`} request={request} onClick={this.switchTable} />
-            })}
-          </Row>
-          {this.state.requestSelection && <RequestWrapper request={this.state.requestSelection} />}
-        </Col>
-      </Row>
+        </Row>
+        <Row>
+          <Col xs={12} sm={6} md={4}>
+            Request Summary + Editing
+          </Col>
+          <Col xs={12} sm={6} md={8}>
+            <Row>
+              {this.props.requests.map((request, index) => {
+                return (
+                  <Col xs={12} sm={6} lg={4} key={`request-summary-${index}`}>
+                    <RequestSummary request={request} onClick={this.switchTable} />
+                  </Col>
+                )
+              })}
+            </Row>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12} lg={3}>
+            Housing type boxes
+          </Col>
+          <Col xs={12} lg={5}>
+            {this.state.requestSelection && <RequestWrapper request={this.state.requestSelection} />}
+            <LeafletMap />
+          </Col>
+          <Col sm={12} lg={4}>
+            Geography Profile
+          </Col>
+        </Row>
+      </div>
     )
   }
 }
@@ -117,15 +141,12 @@ const mapStateToProps = state => {
   const match = matchSelector(state)
   return {
     appState: state.appState,
-    councilDistricts: state.council.districts,
-    district: state.council.district,
-    districtHousing: state.council.districtHousing,
     loading: loadingSelector(state),
     error: errorSelector(state),
     geographyId: match ? match.params.id : null,
     geographyType: path,
     router: state.router,
-    mapRequests: lookupRequests(state, 'MAP_FILTER'),
+    requests: lookupRequests(state, 'MAP_FILTER'),
   }
 }
 
