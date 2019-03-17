@@ -17,12 +17,19 @@ import GeographySelect from 'shared/components/GeographySelect'
 import { Row, Col } from 'react-bootstrap'
 import LeafletMap from 'LeafletMap'
 import RequestWrapper from 'shared/components/RequestWrapper'
+import RequestSummary from 'shared/components/RequestSummary'
 
 class AlertMap extends React.Component {
   constructor(props) {
     super(props)
 
     this.loadRequests = this.loadRequests.bind(this)
+    this.switchTable = this.switchTable.bind(this)
+
+    this.state = {
+      requestSelection: undefined,
+    }
+
     if (!props.geographyType) {
       props.dispatch(push('/map'))
     } else if (!props.appState.currentGeographyType && props.geographyType) {
@@ -62,6 +69,13 @@ class AlertMap extends React.Component {
     })
   }
 
+  switchTable(e, request) {
+    console.log(request)
+    this.setState({
+      requestSelection: request,
+    })
+  }
+
   render() {
     return (
       <Row>
@@ -75,9 +89,12 @@ class AlertMap extends React.Component {
           />
         </Col>
         <Col sm={12} md={8}>
-          {this.props.mapRequests.map((request, index) => {
-            return <RequestWrapper key={`map-request-wrapper-${index}`} request={request} />
-          })}
+          <Row>
+            {this.props.mapRequests.map((request, index) => {
+              return <RequestSummary key={`request-summary-${index}`} request={request} onClick={this.switchTable} />
+            })}
+          </Row>
+          {this.state.requestSelection && <RequestWrapper request={this.state.requestSelection} />}
         </Col>
       </Row>
     )
