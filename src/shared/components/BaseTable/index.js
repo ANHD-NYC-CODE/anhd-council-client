@@ -16,20 +16,22 @@ import './style.scss'
 class BaseTable extends React.Component {
   constructor(props) {
     super(props)
+
+    this.setExpandedContent = this.setExpandedContent.bind(this)
+    this.setPage = this.setPage.bind(this)
+    this.expandRow = this.expandRow.bind(this)
+    this.constructFilter = this.constructFilter.bind(this)
     this.state = {
       expandedRowContent: '',
       displayedRecordsCount: (props.records || {}).length,
       page: 1,
       expanded: [],
       filters: {},
+      columns: props.tableConfig.getColumns({
+        expandColumnFunction: this.setExpandedContent,
+        constructFilter: this.constructFilter,
+      }),
     }
-
-    this.filters = {}
-
-    this.setExpandedContent = this.setExpandedContent.bind(this)
-    this.setPage = this.setPage.bind(this)
-    this.expandRow = this.expandRow.bind(this)
-    this.constructFilter = this.constructFilter.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -76,16 +78,18 @@ class BaseTable extends React.Component {
   }
 
   expandRow() {
-    const isReactComponent = component => {
-      return typeof component === 'function' && !!component.prototype.isReactComponent
+    const isNestedTable = component => {
+      return component.name === 'NestedTable'
     }
     return {
       renderer: row => {
-        if (isReactComponent(this.state.expandedRowComponent)) {
-          const ExpandComponent = this.state.expandedRowComponent
+        if (isNestedTable(this.state.expandedRowComponent)) {
+          const NestedTable = this.state.expandedRowComponent
+          const state = this.state.expandedRowProps
+
           return (
             <div className="table-row--nested-bumper">
-              <ExpandComponent {...this.state.expandedRowProps} />
+              <NestedTable {...this.state.expandedRowProps} />
             </div>
           )
         } else {
@@ -104,20 +108,15 @@ class BaseTable extends React.Component {
   }
 
   constructFilter(filterType) {
-    console.log(this.filters)
     return filterType({
       getFilter: filter => {
         const filterKey = (Math.random() * 100000).toString()
-        this.filters = { ...this.filters, [filterKey]: filter }
+        this.setState({ filters: { ...this.state.filters, [filterKey]: filter } })
       },
     })
   }
 
   render() {
-    const columns = this.props.tableConfig.getColumns({
-      expandColumnFunction: this.setExpandedContent,
-      constructFilter: this.constructFilter,
-    })
     return (
       <PaginationProvider
         pagination={paginationFactory(this.props.tableConfig.paginationOptions(this.state, this.setPage))}
@@ -145,7 +144,7 @@ class BaseTable extends React.Component {
             </Row>
             <BootstrapTable
               bootstrap4
-              columns={columns}
+              columns={this.state.columns}
               data={this.props.records}
               {...paginationTableProps}
               defaultSorted={this.props.tableConfig.defaultSorted}
@@ -164,7 +163,11 @@ class BaseTable extends React.Component {
                   message={"There's nothing here."}
                   buttonText="Clear Filters"
                   buttonVariant="secondary"
-                  action={() => Object.keys(this.filters).forEach(key => this.filters[key](''))}
+                  action={
+                    Object.keys(this.state.filters).length && this.props.records.length
+                      ? () => Object.keys(this.state.filters).forEach(key => this.state.filters[key](''))
+                      : null
+                  }
                 />
               }
             />

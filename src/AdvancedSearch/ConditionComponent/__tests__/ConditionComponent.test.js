@@ -5,7 +5,6 @@ import sinon from 'sinon'
 
 import { ConditionComponent } from 'AdvancedSearch/ConditionComponent'
 import { FilterComponent } from 'AdvancedSearch/FilterComponent'
-import CustomSelect from 'shared/components/CustomSelect'
 
 import { Condition } from 'shared/classes/Condition'
 import { ConditionFilter } from 'shared/classes/ConditionFilter'

@@ -14,20 +14,20 @@ class NestedTable extends BaseTable {
   }
 
   render() {
-    const columns = getTableColumns(this.props.nestedModelKey, this.setExpandedContent, null, this.constructFilter)
+    const state = this.state
     return (
       <Card bg="light" border="secondary" className="nested-table">
         <BootstrapTable
-          keyField={getKeyField(this.props.nestedModelKey)}
+          keyField={`${this.props.tableConfig.keyField}`}
+          rowClasses={this.props.tableConfig.tableRowClasses}
+          expandRow={this.expandRow()}
           bootstrap4
-          columns={columns}
-          data={this.props.data}
+          columns={this.state.columns}
+          data={this.props.records}
           condensed
           filter={filterFactory()}
           bordered={false}
-          expandRow={this.expandRow()}
           tabIndexCell
-          rowClasses={'table-row--collapsed'}
           noDataIndication={
             <TableAlert
               textType="text-dark"
@@ -45,7 +45,8 @@ class NestedTable extends BaseTable {
 }
 
 NestedTable.propTypes = {
-  jsonData: PropTypes.object,
+  records: PropTypes.array,
+  tableConfig: PropTypes.object,
 }
 
 export default NestedTable

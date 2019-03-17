@@ -1,4 +1,5 @@
 import { textFilter } from 'react-bootstrap-table2-filter'
+import { TableConfig } from 'shared/classes/TableConfig'
 import ExpandedLinkRow from 'shared/components/BaseTable/ExpandedLinkRow'
 import NestedTable from 'shared/components/BaseTable/NestedTable'
 import {
@@ -8,7 +9,6 @@ import {
   dobPermitWorkTypeFormatter,
   acrisDocTypeFormatter,
   dobPermitSourceFormatter,
-  nestedDataLengthFormatter,
   expandTableFormatter,
 } from 'shared/utilities/tableUtils'
 
@@ -138,13 +138,14 @@ export const getDescriptionKey = constant => {
 export const getTableColumns = (constant, columnExpandFunction, getLinkProps = () => null, constructFilter) => {
   let columns
 
-  const handleColumnEvent = ({ e, row, component, dataKey, nestedModelKey } = {}) => {
+  const handleColumnEvent = ({ e, row, component, dataKey, tableConfig } = {}) => {
     const rowKey = getKeyField(constant)
+
     columnExpandFunction({
       component,
       expandedRowProps: {
-        data: row[dataKey],
-        nestedModelKey,
+        records: row[dataKey],
+        tableConfig,
         content: e.target.textContent,
         ...getLinkProps({ linkId: row[getLinkId(constant)], bin: row.bin }),
       },
@@ -192,7 +193,7 @@ export const getTableColumns = (constant, columnExpandFunction, getLinkProps = (
     hidden,
     component = NestedTable,
     dataKey,
-    nestedModelKey,
+    tableConfig,
   }) => {
     return {
       dataField,
@@ -204,10 +205,10 @@ export const getTableColumns = (constant, columnExpandFunction, getLinkProps = (
       hidden,
       events: {
         onClick: (e, column, columnIndex, row, rowIndex) => {
-          handleColumnEvent({ e, column, columnIndex, row, rowIndex, component, dataKey, nestedModelKey })
+          handleColumnEvent({ e, column, columnIndex, row, rowIndex, component, dataKey, tableConfig })
         },
         onTouchStart: (e, column, columnIndex, row, rowIndex) => {
-          handleColumnEvent({ e, column, columnIndex, row, rowIndex, component, dataKey, nestedModelKey })
+          handleColumnEvent({ e, column, columnIndex, row, rowIndex, component, dataKey, tableConfig })
         },
       },
     }
@@ -328,18 +329,12 @@ export const getTableColumns = (constant, columnExpandFunction, getLinkProps = (
           filter: constructFilter(textFilter),
           sort: true,
         }),
-        constructStandardColumn({
-          dataField: 'hpdproblems',
-          text: 'Problem Count',
-          formatter: nestedDataLengthFormatter,
-          sort: true,
-        }),
         constructNestedTableColumn({
           dataField: 'hpdproblems',
           text: 'View Problems',
           formatter: expandTableFormatter,
           dataKey: 'hpdproblems',
-          nestedModelKey: 'HPD_PROBLEM',
+          tableConfig: new TableConfig({ resourceConstant: 'HPD_PROBLEM' }),
         }),
       ]
       break
@@ -632,17 +627,12 @@ export const getTableColumns = (constant, columnExpandFunction, getLinkProps = (
           text: 'Amount',
           sort: true,
         }),
-        constructStandardColumn({
-          dataField: 'acrisrealparties',
-          text: '# of Parties',
-          formatter: nestedDataLengthFormatter,
-        }),
         constructNestedTableColumn({
           dataField: 'acrisrealparties',
           text: 'View Parties',
           formatter: expandTableFormatter,
           dataKey: 'acrisrealparties',
-          nestedModelKey: 'ACRIS_REAL_PARTY',
+          tableConfig: new TableConfig({ resourceConstant: 'ACRIS_REAL_PARTY' }),
         }),
       ]
       break
