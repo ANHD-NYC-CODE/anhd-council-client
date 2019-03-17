@@ -1,3 +1,5 @@
+import { constantToName } from 'shared/utilities/filterUtils'
+
 export class DataRequest {
   constructor({ type = undefined, paramMaps = [], apiMaps = [], tableConfig = undefined } = {}) {
     this._type = type
@@ -81,5 +83,12 @@ export class DataRequest {
       )
       .filter(a => a)
       .join('_')
+  }
+
+  get label() {
+    const amountPm = this._paramMaps.find(pm => pm.type === 'AMOUNT')
+    return `${this._apiMaps[this._apiMaps.length - 1].name}${
+      amountPm ? ` with ${amountPm.summaryString} ${constantToName({ constant: amountPm.resourceConstant })}` : ''
+    }`
   }
 }

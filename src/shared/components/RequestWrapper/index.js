@@ -36,7 +36,7 @@ class RequestWrapper extends React.Component {
           errorAction={(this.props.error || {}).status === 504 ? this.retryRequest : null}
           loading={this.props.loading}
           records={this.props.results || []}
-          caption={this.props.request.requestConstant}
+          caption={this.props.request.label}
           tableConfig={this.props.request.tableConfig}
         />
       </div>

@@ -71,4 +71,44 @@ describe('DataRequest', () => {
       expect(dataRequest.params).toEqual({ hpdviolations__gte: '10', hpdviolations__approveddate__gte: '10' })
     })
   })
+
+  describe('get label', () => {
+    it('label with param maps', () => {
+      const dataRequest = new DataRequest({
+        apiMaps: [
+          new ApiMap({ constant: 'COUNCIL', resourceId: '1' }),
+          new ApiMap({ constant: 'PROPERTY', resourceId: '1', name: 'Properties' }),
+        ],
+        paramMaps: [
+          new ParameterMapping({
+            resourceConstant: 'HPD_VIOLATION',
+            field: 'hpdviolations',
+            comparison: 'gte',
+            value: '10',
+            type: 'AMOUNT',
+          }),
+          new ParameterMapping({
+            resourceConstant: 'HPD_VIOLATION',
+            field: 'hpdviolations',
+            comparison: 'gte',
+            value: '2018-01-01',
+            type: 'DATE',
+          }),
+        ],
+      })
+
+      expect(dataRequest.label).toEqual('Properties with 10+ HPD Violations')
+    })
+
+    it('label without param maps', () => {
+      const dataRequest = new DataRequest({
+        apiMaps: [
+          new ApiMap({ constant: 'PROPERTY', resourceId: '1', name: 'Properties' }),
+          new ApiMap({ constant: 'HPD_VIOLATION' }),
+        ],
+      })
+
+      expect(dataRequest.label).toEqual('HPD Violations')
+    })
+  })
 })

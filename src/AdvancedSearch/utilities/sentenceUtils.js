@@ -1,63 +1,12 @@
 import moment from 'moment'
+import {
+  singular,
+  grammaticalList,
+  longAmountComparisonString,
+  constructDateComparisonString,
+} from 'shared/utilities/languageUtils'
 //////////////////
 // Sentence
-
-const grammaticalList = (array, conjunction = 'and') => {
-  let lastItem
-  let sentence
-  if (array.length === 2) {
-    sentence = array.join(` ${conjunction} `)
-  } else if (array.length > 2) {
-    lastItem = array.pop()
-    sentence = array.join(', ')
-  } else {
-    sentence = array[0]
-  }
-  return lastItem ? `${sentence}, ${conjunction} ${lastItem}` : sentence
-}
-
-const singularPlease = string => {
-  if (string.charAt(string.length - 1).toLowerCase() === 's') {
-    return string.slice(0, -1)
-  } else {
-    return string
-  }
-}
-
-export const constructComparisonString = comparison => {
-  switch (comparison) {
-    case 'gte':
-      return 'at least'
-    case 'exact':
-      return 'exactly'
-    case 'lte':
-      return 'at most'
-  }
-}
-
-export const constructAmountComparisonString = comparison => {
-  switch (comparison) {
-    case 'gte':
-      return 'at least'
-    case 'exact':
-      return 'exactly'
-    case 'lte':
-      return 'at most'
-  }
-}
-
-export const constructDateComparisonString = comparison => {
-  switch (comparison) {
-    case 'gte':
-      return 'after'
-    case 'start':
-      return 'after'
-    case 'lte':
-      return 'before'
-    case 'end':
-      return 'before'
-  }
-}
 
 export const constructAmountSentence = (dataset, comparison, value) => {
   return dataset.amountSentenceParser(dataset, comparison, value)
@@ -66,14 +15,14 @@ export const constructAmountSentence = (dataset, comparison, value) => {
 const parseParamMapComparison = paramMap => {
   switch (paramMap.type) {
     case 'AMOUNT':
-      return `${constructAmountComparisonString(paramMap.comparison)} ${paramMap.languageModule.valuePrefix}${
+      return `${longAmountComparisonString(paramMap.comparison)} ${paramMap.languageModule.valuePrefix}${
         paramMap.value
       }${paramMap.languageModule.valueSuffix}${paramMap.languageModule.grammaticalNoun(
         paramMap.languageModule.noun,
         paramMap.value
       )}`
     case 'PERCENT':
-      return `${constructAmountComparisonString(paramMap.comparison)} ${paramMap.languageModule.valuePrefix}${
+      return `${longAmountComparisonString(paramMap.comparison)} ${paramMap.languageModule.valuePrefix}${
         paramMap.value
       }${paramMap.languageModule.valueSuffix}${paramMap.languageModule.grammaticalNoun(
         paramMap.languageModule.noun,
@@ -178,7 +127,7 @@ export const convertFilterToSentence = filter => {
 export const convertHousingTypesToSentence = housingTypes => {
   return `${grammaticalList(
     housingTypes.map(housingType => {
-      return singularPlease(housingType.name).toLowerCase() + ' properties' + convertFilterToSentence(housingType)
+      return singular(housingType.name).toLowerCase() + ' properties' + convertFilterToSentence(housingType)
     }),
     'and'
   )}`
