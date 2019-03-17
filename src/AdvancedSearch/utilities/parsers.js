@@ -1,5 +1,5 @@
 import moment from 'moment'
-import { constructComparisonString } from 'AdvancedSearch/utilities/sentenceUtils'
+import { longAmountComparisonString } from 'AdvancedSearch/utilities/sentenceUtils'
 
 export const standardUrlAmountParser = (dataset, comparison, value) => {
   return `${dataset.queryName}__${dataset.amountField()}__${comparison}=${value}`
@@ -65,19 +65,19 @@ export const acrisUrlDateParser = (datasetsConfig, dataset, startDate, endDate) 
 }
 
 export const standardAmountSentenceParser = (filter, comparison, value) => {
-  return `${constructComparisonString(comparison)} ${value} ${filter.name}`
+  return `${longAmountComparisonString(comparison)} ${value} ${filter.name}`
 }
 
 export const rsunitsAmountSentenceParser = (dataset, comparison, value) => {
-  return `lost ${constructComparisonString(comparison)} ${value}% of their ${dataset.name}`
+  return `lost ${longAmountComparisonString(comparison)} ${value}% of their ${dataset.name}`
 }
 
 export const soldForAmountSentenceParser = (dataset, comparison, value) => {
-  return `sold for ${constructComparisonString(comparison)} $${value}`
+  return `sold for ${longAmountComparisonString(comparison)} $${value}`
 }
 
 export const soldTimesAmountSentenceParser = (dataset, comparison, value) => {
-  return `been sold ${constructComparisonString(comparison)} ${value} times`
+  return `been sold ${longAmountComparisonString(comparison)} ${value} times`
 }
 
 export const standardDateSentenceParser = (startDate, endDate) => {

@@ -144,7 +144,7 @@ export const newPropertyRequest = ({ type = undefined, bbl = undefined, resource
   return new DataRequest({
     type: type,
     apiMaps: [
-      new ApiMap({ constant: 'PROPERTY', resourceId: bbl }),
+      new ApiMap({ constant: 'PROPERTY', resourceId: bbl, name: 'Properties' }),
       resourceConstant ? getApiMap(resourceConstant) : undefined,
     ].filter(a => !!a),
     tableConfig: new TableConfig({ resourceConstant: resourceConstant }),
@@ -193,10 +193,21 @@ export const newGeographyRequest = ({
 } = {}) => {
   return new DataRequest({
     type: type,
-    apiMaps: [new ApiMap({ constant: geographyType, resourceId: geographyId }), new ApiMap({ constant: 'PROPERTY' })],
+    apiMaps: [
+      new ApiMap({ constant: geographyType, resourceId: geographyId }),
+      new ApiMap({ constant: 'PROPERTY', name: 'Properties' }),
+    ],
     paramMaps: [
-      new ParameterMapping({ field: constantToQueryName(resourceConstant), comparison: 'gte', value: defaultValue }),
       new ParameterMapping({
+        resourceConstant,
+        type: 'AMOUNT',
+        field: constantToQueryName(resourceConstant),
+        comparison: 'gte',
+        value: defaultValue,
+      }),
+      new ParameterMapping({
+        resourceConstant,
+        type: 'DATE',
         field: `${constantToQueryName(resourceConstant)}__start`,
         comparison: '',
         value: moment(moment.now())

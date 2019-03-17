@@ -8,6 +8,8 @@ import ComparisonFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/Comparis
 import DateField from 'AdvancedSearch/FilterComponent/Field/DateField'
 import IntegerField from 'AdvancedSearch/FilterComponent/Field/IntegerField'
 
+import { capitalizeWords } from 'shared/utilities/languageUtils'
+
 const pluralize = constant => {
   return constant.toUpperCase().endsWith('Y') ? constant.slice(0, -1) + 'ies' : constant + 's'
 }
@@ -21,9 +23,10 @@ export const constantToModelName = constant => {
 }
 
 export const constantToName = ({ constant = '', plural = true, capitalizeDepartment = true } = {}) => {
-  if (capitalizeDepartment) {
-    const tokens = constant.split('_').map(string => {
-      return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase()
+  const constantTokens = constant.split('_')
+  if (capitalizeDepartment && constantTokens.length > 1) {
+    const tokens = constantTokens.map(string => {
+      return capitalizeWords(string)
     })
     tokens[0] = tokens[0].toUpperCase()
     return `${plural ? pluralize(tokens.join(' ')) : tokens.join(' ')}`
@@ -31,7 +34,7 @@ export const constantToName = ({ constant = '', plural = true, capitalizeDepartm
     const name = constant
       .split('_')
       .map(string => {
-        return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase()
+        return capitalizeWords(string)
       })
       .join(' ')
     return `${plural ? pluralize(name) : name}`

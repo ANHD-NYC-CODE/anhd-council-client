@@ -1,5 +1,8 @@
 import { StandardizedInput } from 'shared/classes/StandardizedInput'
 import { comparisonOptions } from 'shared/utilities/filterUtils'
+
+import { shortAmountComparisonString } from 'shared/utilities/languageUtils'
+
 import {
   minValidate,
   maxValidate,
@@ -21,6 +24,7 @@ export class ParameterMapping {
     type = '',
     rangeKey = undefined,
     rangePosition = undefined,
+    resourceConstant = '',
   } = {}) {
     this._component = component
     this._baseComponent = baseComponent
@@ -35,6 +39,7 @@ export class ParameterMapping {
     this._rangeKey = rangeKey
     this._rangePosition = rangePosition
     this._errors = []
+    this._resourceConstant = resourceConstant
   }
 
   get field() {
@@ -123,6 +128,18 @@ export class ParameterMapping {
 
   get options() {
     return this._defaultOptions || comparisonOptions(['gte', 'exact', 'lte'])
+  }
+
+  get resourceConstant() {
+    return this._resourceConstant
+  }
+
+  set resourceConstant(resourceConstant) {
+    this._resourceConstant = resourceConstant
+  }
+
+  get summaryString() {
+    return `${shortAmountComparisonString(this._comparison, this._value)}`
   }
 
   createOptions(values) {

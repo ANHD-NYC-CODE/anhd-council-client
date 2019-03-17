@@ -20,7 +20,7 @@ class RequestSummary extends React.Component {
     return (
       <Card className="request-wrapper" onClick={this.handleClick}>
         <Card.Body>
-          <Card.Title>Card Title</Card.Title>
+          <Card.Title>{this.props.request.label}</Card.Title>
           {this.props.loading ? <CardLoader /> : <Card.Text>{this.props.results.length}</Card.Text>}
         </Card.Body>
       </Card>
