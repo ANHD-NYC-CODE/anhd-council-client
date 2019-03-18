@@ -73,7 +73,7 @@ class Lookup extends React.Component {
       <Row>
         <Col xs={12} md={4}>
           <AddressSearch />
-          {!!this.props.propertyProfileRequest && <RequestWrapper request={this.props.propertyProfileRequest} />}
+
           <LeafletMap />
         </Col>
         <Col xs={12} md={2}>

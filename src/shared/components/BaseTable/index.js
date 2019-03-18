@@ -55,7 +55,6 @@ class BaseTable extends React.Component {
   componentWillUnmount() {
     Object.keys(this.filters).forEach(key => this.filters[key](''))
     this.filters = {}
-    console.log('unmount')
   }
 
   setPage(page) {
