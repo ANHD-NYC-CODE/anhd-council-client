@@ -28,7 +28,7 @@ class RequestWrapper extends React.Component {
 
   render() {
     const TableComponent = this.props.request.tableConfig.component
-    return (
+    return this.props.visible ? (
       <div className="request-wrapper">
         <TableComponent
           dispatch={this.props.dispatch}
@@ -40,13 +40,18 @@ class RequestWrapper extends React.Component {
           tableConfig={this.props.request.tableConfig}
         />
       </div>
-    )
+    ) : null
   }
+}
+
+RequestWrapper.defaultProps = {
+  visible: false,
 }
 
 RequestWrapper.propTypes = {
   dispatch: PropTypes.func,
   request: PropTypes.object,
+  visible: PropTypes.bool,
 }
 
 const mapStateToProps = (state, ownProps) => {

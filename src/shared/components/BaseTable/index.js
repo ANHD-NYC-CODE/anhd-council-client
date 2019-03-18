@@ -22,10 +22,12 @@ class BaseTable extends React.Component {
     this.expandRow = this.expandRow.bind(this)
     this.constructFilter = this.constructFilter.bind(this)
     this.filters = {}
+
     this.state = {
       expandedRowContent: '',
       displayedRecordsCount: (props.records || {}).length,
       page: 1,
+      defaultSorted: props.tableConfig.defaultSorted,
       expanded: [],
       columns: props.tableConfig.getColumns({
         expandColumnFunction: this.setExpandedContent,
@@ -35,9 +37,25 @@ class BaseTable extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    Object.keys(this.filters).forEach(key => this.filters[key](''))
+
     this.setState({
+      expandedRowContent: '',
       displayedRecordsCount: (nextProps.records || {}).length,
+      page: 1,
+      defaultSorted: nextProps.tableConfig.defaultSorted,
+      expanded: [],
+      columns: nextProps.tableConfig.getColumns({
+        expandColumnFunction: this.setExpandedContent,
+        constructFilter: this.constructFilter,
+      }),
     })
+  }
+
+  componentWillUnmount() {
+    Object.keys(this.filters).forEach(key => this.filters[key](''))
+    this.filters = {}
+    console.log('unmount')
   }
 
   setPage(page) {
@@ -88,7 +106,6 @@ class BaseTable extends React.Component {
       renderer: row => {
         if (isNestedTable(this.state.expandedRowComponent)) {
           const NestedTable = this.state.expandedRowComponent
-          const state = this.state.expandedRowProps
 
           return (
             <div className="table-row--nested-bumper">
@@ -152,7 +169,7 @@ class BaseTable extends React.Component {
               condensed
               data={this.props.records}
               {...paginationTableProps}
-              defaultSorted={this.props.tableConfig.defaultSorted}
+              defaultSorted={this.state.defaultSorted}
               expandRow={this.expandRow()}
               filter={filterFactory()}
               keyField={`${this.props.tableConfig.keyField}`}

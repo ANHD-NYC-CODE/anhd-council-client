@@ -27,7 +27,7 @@ class AlertMap extends React.Component {
     this.switchTable = this.switchTable.bind(this)
 
     this.state = {
-      requestSelection: props.requests.length ? props.requests[0] : undefined,
+      selectedRequestIndex: props.requests.length ? 0 : undefined,
     }
 
     if (!props.geographyType) {
@@ -68,16 +68,16 @@ class AlertMap extends React.Component {
       this.props.dispatch(requestWithAuth(makeRequest(request)))
     })
 
-    if (!this.state.requestSelection) {
+    if (!this.state.selectedRequestIndex) {
       this.setState({
-        requestSelection: props.requests[0],
+        selectedRequestIndex: 0,
       })
     }
   }
 
-  switchTable(e, request) {
+  switchTable(e, index) {
     this.setState({
-      requestSelection: request,
+      selectedRequestIndex: index,
     })
   }
 
@@ -101,7 +101,7 @@ class AlertMap extends React.Component {
               {this.props.requests.map((request, index) => {
                 return (
                   <Col xs={12} sm={6} lg={4} key={`request-summary-${index}`}>
-                    <RequestSummary request={request} onClick={this.switchTable} />
+                    <RequestSummary request={request} onClick={e => this.switchTable(e, index)} />
                   </Col>
                 )
               })}
@@ -113,7 +113,15 @@ class AlertMap extends React.Component {
             Housing type boxes
           </Col>
           <Col xs={12} lg={5}>
-            {this.state.requestSelection && <RequestWrapper request={this.state.requestSelection} />}
+            {this.props.requests.map((request, index) => {
+              return (
+                <RequestWrapper
+                  key={`request-wrapper-${index}`}
+                  visible={this.state.selectedRequestIndex === index}
+                  request={request}
+                />
+              )
+            })}
             <LeafletMap />
           </Col>
           <Col sm={12} lg={4}>

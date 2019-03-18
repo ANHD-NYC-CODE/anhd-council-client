@@ -14,7 +14,7 @@ export const dateFormatter = (cell, row, index) => {
 export const expandTableFormatter = (cell, row, index) => {
   return (
     <div>
-      <span>({cell.length}) </span>
+      <span>({cell ? cell.length : ''}) </span>
       <span>
         <Button size="sm">Expand</Button>
       </span>
