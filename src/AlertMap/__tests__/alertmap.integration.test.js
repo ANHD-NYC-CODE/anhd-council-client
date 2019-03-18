@@ -53,25 +53,57 @@ describe('AlertMap', () => {
   })
 
   describe('with a geography type and id', () => {
-    it('sets the currentGeographyType and currentGeographyId', async () => {
+    it('sets the currentGeographyType and currentGeographyId', () => {
       const [wrapper, store] = setupWrapper({
         router: { location: { pathname: '/council/1' }, action: 'POP' },
       })
-      await flushAllPromises()
-      wrapper.update()
+
       expect(wrapper.find('AlertMap')).toBeDefined()
       expect(store.getState().router.location.pathname).toEqual('/council/1')
       expect(store.getState().appState.currentGeographyType).toEqual('COUNCIL')
       expect(store.getState().appState.currentGeographyId).toEqual('1')
     })
 
-    it('renders the request wrappers', async () => {
+    it('renders the request wrappers', () => {
       const [wrapper, store] = setupWrapper({
         router: { location: { pathname: '/council/1' }, action: 'POP' },
       })
-      await flushAllPromises()
-      wrapper.update()
+
       expect(wrapper.find('RequestWrapper')).toHaveLength(5)
+      expect(
+        wrapper
+          .find('RequestWrapper')
+          .at(0)
+          .props().visible
+      ).toEqual(true)
+      wrapper.find('RequestWrapper').forEach((w, index) => {
+        if (index === 0) return
+        expect(w.props().visible).toEqual(false)
+      })
+    })
+
+    it('Switches the visible request wrapper', () => {
+      const [wrapper, store] = setupWrapper({
+        router: { location: { pathname: '/council/1' }, action: 'POP' },
+      })
+      wrapper
+        .find('RequestSummary')
+        .at(1)
+        .simulate('click')
+
+      wrapper.update()
+      expect(
+        wrapper
+          .find('RequestWrapper')
+          .at(0)
+          .props().visible
+      ).toEqual(false)
+      expect(
+        wrapper
+          .find('RequestWrapper')
+          .at(1)
+          .props().visible
+      ).toEqual(true)
     })
   })
 })
