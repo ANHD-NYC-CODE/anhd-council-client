@@ -18,7 +18,7 @@ import { requestWithAuth } from 'shared/utilities/authUtils'
 import RequestWrapper from 'shared/components/RequestWrapper'
 
 import RequestSummary from 'shared/components/RequestSummary'
-
+import LookupLinks from 'Lookup/LookupLinks'
 class Lookup extends React.Component {
   constructor(props) {
     super(props)
@@ -72,9 +72,24 @@ class Lookup extends React.Component {
     return (
       <Row>
         <Col xs={12} lg={4}>
-          <AddressSearch />
-          {this.props.profileRequest && <RequestWrapper request={this.props.profileRequest} visible={true} />}
-          <LeafletMap />
+          <Row>
+            <Col>
+              <AddressSearch />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              {this.props.profileRequest && <RequestWrapper request={this.props.profileRequest} visible={true} />}
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <LeafletMap />
+            </Col>
+          </Row>
+          <Row>
+            <Col>{this.props.profileRequest && <LookupLinks bbl={this.props.bbl} />}</Col>
+          </Row>
         </Col>
         <Col xs={12} lg={8}>
           <Row>
