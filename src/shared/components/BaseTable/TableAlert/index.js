@@ -18,8 +18,8 @@ TableAlert.defaultProps = {
   action: undefined,
   buttonText: 'Proceed',
   buttonVariant: 'primary',
-  textType: '',
-  variant: '',
+  textType: 'text-danger',
+  variant: 'danger',
   message: '',
 }
 
