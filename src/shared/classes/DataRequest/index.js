@@ -61,7 +61,7 @@ export class DataRequest {
     return `${this.apiMaps
       .map(apiMap => apiMap.url)
       .join('')
-      .replace('//', '/')}`
+      .replace(/\/\//g, '/')}`
   }
 
   get params() {

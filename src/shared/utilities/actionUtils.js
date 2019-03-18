@@ -1,6 +1,7 @@
+import moment from 'moment'
+import { toast } from 'react-toastify'
 import * as loadingActions from 'Store/Loading/actions'
 import * as errorActions from 'Store/Error/actions'
-import { toast } from 'react-toastify'
 import * as d from 'shared/models/datasets'
 import * as ht from 'shared/models/housingTypes'
 import { DataRequest } from 'shared/classes/DataRequest'
@@ -10,7 +11,8 @@ import { ApiMap } from 'shared/classes/ApiMap'
 import { ParameterMapping } from 'shared/classes/ParameterMapping'
 import { Dataset } from 'shared/classes/Dataset'
 import { constantToModelName, constantToQueryName, getDatasetDateField } from 'shared/utilities/filterUtils'
-import moment from 'moment'
+
+import LookupProfileSummary from 'Lookup/LookupProfileSummary'
 
 const ERROR_400_MESSAGE = 'Incorrect username or password.'
 const ERROR_401_MESSAGE = 'Please login for access.'
@@ -140,20 +142,26 @@ export const newBuildingRequest = ({ type = undefined, bin = undefined, resource
   })
 }
 
-export const newPropertyRequest = ({ type = undefined, bbl = undefined, resourceConstant = undefined } = {}) => {
+export const newPropertyRequest = ({
+  type = undefined,
+  bbl = undefined,
+  resourceConstant = undefined,
+  tableComponent = undefined,
+} = {}) => {
   return new DataRequest({
     type: type,
     apiMaps: [
       new ApiMap({ constant: 'PROPERTY', resourceId: bbl, name: 'Properties' }),
       resourceConstant ? getApiMap(resourceConstant) : undefined,
+      type === 'LOOKUP_PROFILE' ? new ApiMap({ queryName: 'summary' }) : undefined,
     ].filter(a => !!a),
-    tableConfig: new TableConfig({ resourceConstant: resourceConstant }),
+    tableConfig: new TableConfig({ resourceConstant: resourceConstant, component: tableComponent }),
   })
 }
 
 export const newLookupRequests = ({ bbl, bin } = {}) => {
   return [
-    newPropertyRequest({ type: 'LOOKUP_PROFILE', bbl: bbl }),
+    newPropertyRequest({ type: 'LOOKUP_PROFILE', bbl: bbl, tableComponent: LookupProfileSummary }),
     !bin ? newPropertyRequest({ type: 'LOOKUP_FILTER', bbl: bbl, resourceConstant: 'ACRIS_REAL_MASTER' }) : null,
     !bin ? newPropertyRequest({ type: 'LOOKUP_FILTER', bbl: bbl, resourceConstant: 'EVICTION' }) : null,
     !bin ? newPropertyRequest({ type: 'LOOKUP_FILTER', bbl: bbl, resourceConstant: 'FORECLOSURE' }) : null,

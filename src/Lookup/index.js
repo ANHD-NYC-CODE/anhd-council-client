@@ -35,7 +35,7 @@ class Lookup extends React.Component {
       props.dispatch(setLookupAndRequestsAndRedirect({ bbl: props.bbl, bin: props.bin, replaceHistory: true }))
     } else if (props.requests) {
       this.loadRequests(props)
-      // props.dispatch(makeRequest(props.propertyProfileRequest))
+      props.dispatch(makeRequest(props.profileRequest))
     }
   }
 
@@ -46,7 +46,7 @@ class Lookup extends React.Component {
       )
     } else if (nextProps.requests) {
       this.loadRequests(nextProps)
-      // nextProps.dispatch(makeRequest(nextProps.propertyProfileRequest))
+      nextProps.dispatch(makeRequest(nextProps.profileRequest))
     }
   }
 
@@ -71,30 +71,37 @@ class Lookup extends React.Component {
   render() {
     return (
       <Row>
-        <Col xs={12} md={4}>
+        <Col xs={12} lg={4}>
+          {this.props.profileRequest && <RequestWrapper request={this.props.profileRequest} visible={true} />}
           <AddressSearch />
 
           <LeafletMap />
         </Col>
-        <Col xs={12} md={2}>
-          {this.props.requests.map((request, index) => {
-            return (
-              <Col xs={12} sm={6} lg={4} key={`request-summary-${index}`}>
-                <RequestSummary request={request} onClick={e => this.switchTable(e, index)} />
-              </Col>
-            )
-          })}
-        </Col>
-        <Col xs={12} md={6}>
-          {this.props.requests.map((request, index) => {
-            return (
-              <RequestWrapper
-                key={`request-wrapper-${index}`}
-                visible={this.state.selectedRequestIndex === index}
-                request={request}
-              />
-            )
-          })}
+        <Col xs={12} lg={8}>
+          <Row>
+            <Col xs={12} lg={3}>
+              <Row>
+                {this.props.requests.map((request, index) => {
+                  return (
+                    <Col xs={12} sm={6} md={4} lg={12} key={`request-summary-${index}`}>
+                      <RequestSummary request={request} onClick={e => this.switchTable(e, index)} />
+                    </Col>
+                  )
+                })}
+              </Row>
+            </Col>
+            <Col xs={12} lg={9}>
+              <Row>
+                {this.props.requests.map((request, index) => {
+                  return (
+                    <Col xs={12} key={`request-wrapper-${index}`}>
+                      <RequestWrapper visible={this.state.selectedRequestIndex === index} request={request} />
+                    </Col>
+                  )
+                })}
+              </Row>
+            </Col>
+          </Row>
         </Col>
       </Row>
     )
@@ -119,8 +126,8 @@ const mapStateToProps = state => {
     building: state.building,
     loading: loadingSelector(state),
     error: errorSelector(state),
-    propertyProfileRequest: lookupRequests(state, 'LOOKUP_PROFILE')[0],
     requests: lookupRequests(state, 'LOOKUP_FILTER'),
+    profileRequest: lookupRequests(state, 'LOOKUP_PROFILE')[0],
     appState: state.appState,
   }
 }
