@@ -95,7 +95,7 @@ class Lookup extends React.Component {
             </Col>
           </Row>
           <Row>
-            <Col>{this.props.profileRequest && <LookupLinks bbl={this.props.bbl} />}</Col>
+            <Col>{this.props.profileRequest && <LookupLinks request={this.props.profileRequest} />}</Col>
           </Row>
         </Col>
         <Col xs={12} lg={8}>

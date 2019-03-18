@@ -1,8 +1,10 @@
 table {
-  @include media-breakpoint-up(xs) {
-    display: block;
-    width: 100%;
-    overflow-x: auto;
+  &:not(.fluid-table) {
+    @include media-breakpoint-up(xs) {
+      display: block;
+      width: 100%;
+      overflow-x: auto;
+    }
   }
 
   td {

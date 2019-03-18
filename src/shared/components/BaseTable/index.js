@@ -166,6 +166,7 @@ class BaseTable extends React.Component {
               bordered={false}
               columns={this.state.columns}
               condensed
+              classes={this.props.classes}
               data={this.props.records}
               {...paginationTableProps}
               defaultSorted={this.state.defaultSorted}
@@ -207,6 +208,7 @@ class BaseTable extends React.Component {
 
 BaseTable.propTypes = {
   caption: PropTypes.string,
+  classes: PropTypes.string,
   dispatch: PropTypes.func,
   loading: PropTypes.bool,
   error: PropTypes.object,
