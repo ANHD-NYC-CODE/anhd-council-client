@@ -63,3 +63,45 @@ export const constructDateComparisonString = comparison => {
       return 'before'
   }
 }
+
+export const boroCodeToName = code => {
+  switch (code) {
+    case '1':
+      return 'Manhattan'
+    case '2':
+      return 'Bronx'
+    case '3':
+      return 'Brooklyn'
+    case '4':
+      return 'Queens'
+    case '5':
+      return 'Staten Island'
+    case 'MN':
+      return 'Manhattan'
+    case 'BX':
+      return 'Bronx'
+    case 'BK':
+      return 'Brooklyn'
+    case 'QN':
+      return 'Queens'
+    case 'SI':
+      return 'Staten Island'
+    default:
+      return code
+  }
+}
+
+export const constructAddressString = ({ number, street, borough, zip } = {}) => {
+  return `${number ? `${number} ` : ''}${street ? `${borough ? `${street}, ` : `${street}`}` : ''}${
+    borough ? `${borough} ` : ''
+  }${zip ? `${zip} ` : zip}`
+}
+
+export const councilIdToString = id => {
+  return `Council Distrct ${id}`
+}
+
+export const communityIdToString = id => {
+  const borough = boroCodeToName(id.toString().charAt(0))
+  return `${borough} ${id.toString().slice(1)}`
+}

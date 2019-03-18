@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { communityIdToString } from 'shared/utilities/languageUtils'
 export const getGeographyIdOptions = (districts, boards, type) => {
   type = type.toUpperCase()
   switch (type) {
@@ -21,7 +21,7 @@ export const getGeographyIdOptions = (districts, boards, type) => {
         </option>,
         ...boards.map(d => (
           <option key={`geography-id-option-${d.id}`} value={d.id}>
-            {d.id}
+            {communityIdToString(d.id)}
           </option>
         )),
       ]
@@ -32,7 +32,7 @@ export const getGeographyIdOptions = (districts, boards, type) => {
         </option>,
         ...boards.map(d => (
           <option key={`geography-id-option-${d.id}`} value={d.id}>
-            {d.id}
+            {communityIdToString(d.id)}
           </option>
         )),
       ]
