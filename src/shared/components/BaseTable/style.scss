@@ -1,3 +1,5 @@
+@import 'shared/styles/bootstrap/index.scss';
+
 .base-table,
 .nested-table {
   tbody tr {
@@ -26,7 +28,11 @@
   }
 
   .table-row--nested-bumper {
-    margin-left: 2em;
+    margin-left: 10px;
+
+    @include media-breakpoint-up(sm) {
+      margin-left: 20px;
+    }
   }
 
   .table-row--expanded .table-column--description {

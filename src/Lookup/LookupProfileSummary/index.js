@@ -7,7 +7,9 @@ import { boroCodeToName, constructAddressString } from 'shared/utilities/languag
 import { councilIdToString, communityIdToString } from 'shared/utilities/languageUtils'
 import { geographyToLink } from 'shared/utilities/routeUtils'
 import BaseLink from 'shared/components/BaseLink'
-
+import BaseTable from 'shared/components/BaseTable'
+import { getTableColumns } from 'shared/models/tables'
+import { TableConfig } from 'shared/classes/TableConfig'
 import { Card, Row, Col } from 'react-bootstrap'
 import './style.scss'
 
@@ -23,23 +25,24 @@ const LookupProfileSummary = props => {
         <Card.Body className="lookup-profile-summary__body">
           <Row>
             <Col xs={12}>
-              <h5>
-                {constructAddressString({
-                  street: profile.address,
-                  borough: boroCodeToName(profile.borough),
-                  zip: profile.zipcode,
-                })}
-              </h5>
+              <Row>
+                <Col>
+                  <h5>
+                    {constructAddressString({
+                      street: profile.address,
+                      borough: boroCodeToName(profile.borough),
+                      zip: profile.zipcode,
+                    })}
+                  </h5>
+                </Col>
+              </Row>
             </Col>
             <Col xs={6}>
-              {profile.hpdcontacts.length ? (
-                <div>HPD CONTACTS FOUND</div>
-              ) : (
-                <Card.Text className="lookup-profile-summary__group">
-                  <label className="lookup-profile-summary__label--block">Owner Name: </label>
-                  <span className="lookup-profile-summary__value">{profile.ownername}</span>
-                </Card.Text>
-              )}
+              <Card.Text className="lookup-profile-summary__group">
+                <label className="lookup-profile-summary__label--block">Owner Name: </label>
+                <span className="lookup-profile-summary__value">{profile.ownername}</span>
+              </Card.Text>
+
               <Card.Text className="lookup-profile-summary__group">
                 <label className="lookup-profile-summary__label">Year Built: </label>
                 <span className="lookup-profile-summary__value">{profile.yearbuilt}</span>
@@ -47,6 +50,14 @@ const LookupProfileSummary = props => {
               <Card.Text className="lookup-profile-summary__group">
                 <label className="lookup-profile-summary__label">Zoning: </label>
                 <span className="lookup-profile-summary__value">{profile.zonedist1}</span>
+              </Card.Text>
+              <Card.Text className="lookup-profile-summary__group">
+                <label className="lookup-profile-summary__label--block">Rent Programs: </label>
+                <span className="lookup-profile-summary__value">
+                  {profile.coresubsidyrecords.length
+                    ? profile.coresubsidyrecords.map(record => record.programname).join(' ')
+                    : ''}
+                </span>
               </Card.Text>
               <Card.Text className="lookup-profile-summary__group">
                 <label className="lookup-profile-summary__label">NYCHA? </label>
@@ -60,7 +71,7 @@ const LookupProfileSummary = props => {
               </Card.Text>
               <Card.Text className="lookup-profile-summary__group">
                 <label className="lookup-profile-summary__label">Total Units: </label>
-                <span className="lookup-profile-summary__value">{profile.totalunits || 0}</span>
+                <span className="lookup-profile-summary__value">{profile.unitstotal || 0}</span>
               </Card.Text>
               <Card.Text className="lookup-profile-summary__group">
                 <label className="lookup-profile-summary__label">Residential Units: </label>
@@ -74,6 +85,23 @@ const LookupProfileSummary = props => {
                 <label className="lookup-profile-summary__label">Tax Lien? </label>
                 <span className="lookup-profile-summary__value">{profile.taxliens || 'No'}</span>
               </Card.Text>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              {profile.hpdregistrations.length ? (
+                <div>
+                  <Card.Text>HPD Registrations</Card.Text>
+                  <BaseTable
+                    classes="fluid-table"
+                    columns={getTableColumns('HPD_REGISTRATION')}
+                    records={profile.hpdregistrations}
+                    tableConfig={new TableConfig({ resourceConstant: 'HPD_REGISTRATION' })}
+                  />
+                </div>
+              ) : (
+                <Card.Text>No HPD Registrations Found</Card.Text>
+              )}
             </Col>
           </Row>
           <Row>

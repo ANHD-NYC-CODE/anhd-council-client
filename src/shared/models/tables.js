@@ -18,6 +18,10 @@ export const getKeyField = constant => {
       return 'bbl'
     case 'BUILDING':
       return 'bin'
+    case 'HPD_REGISTRATION':
+      return 'registrationid'
+    case 'HPD_CONTACT':
+      return 'registrationcontactid'
     case 'HPD_VIOLATION':
       return 'violationid'
     case 'HPD_COMPLAINT':
@@ -73,11 +77,11 @@ export const getLinkProps = constant => {
     case 'PROPERTY':
       return ({ linkId } = {}) => ({ href: `/property/${linkId}`, linkText: 'View Property' })
     case 'HPD_VIOLATION':
-      return () => ({ href: 'https://www1.nyc.gov/site/hpd/about/hpdonline.page', linkText: 'View HPD Online' })
+      return () => ({ href: 'https://www1.nyc.gov/site/hpd/about/hpdonline.page', linkText: 'Search HPD Online' })
     case 'HPD_COMPLAINT':
-      return () => ({ href: 'https://www1.nyc.gov/site/hpd/about/hpdonline.page', linkText: 'View HPD Online' })
+      return () => ({ href: 'https://www1.nyc.gov/site/hpd/about/hpdonline.page', linkText: 'Search HPD Online' })
     case 'HOUSING_LITIGATION':
-      return () => ({ href: 'https://www1.nyc.gov/site/hpd/about/hpdonline.page', linkText: 'View HPD Online' })
+      return () => ({ href: 'https://www1.nyc.gov/site/hpd/about/hpdonline.page', linkText: 'Search HPD Online' })
     case 'DOB_VIOLATION':
       return ({ linkId, bin }) => ({
         href: `http://a810-bisweb.nyc.gov/bisweb/ActionViolationDisplayServlet?requestid=2&allbin=${bin}&allinquirytype=BXS3OCV4&allboroughname=&allstrt=&allnumbhous=&allisn=${linkId.padStart(
@@ -268,8 +272,35 @@ export const getTableColumns = (constant, columnExpandFunction, getLinkProps = (
         }),
       ]
       break
+    case 'HPD_REGISTRATION':
+      columns = [
+        constructStandardColumn({
+          dataField: 'registrationid',
+          text: 'ID',
+          hidden: true,
+        }),
+        constructStandardColumn({
+          dataField: 'registrationenddate',
+          text: 'End Date',
+          formatter: dateFormatter,
+          sort: true,
+        }),
+        constructNestedTableColumn({
+          dataField: 'contacts',
+          text: 'View Contacts',
+          formatter: expandTableFormatter,
+          dataKey: 'contacts',
+          tableConfig: new TableConfig({ resourceConstant: 'HPD_CONTACT' }),
+        }),
+      ]
+      break
     case 'HPD_VIOLATION':
       columns = [
+        constructStandardColumn({
+          dataField: 'registrationcontactid',
+          text: 'ID',
+          hidden: true,
+        }),
         constructStandardColumn({
           dataField: 'violationid',
           text: 'Violation ID',
@@ -303,6 +334,54 @@ export const getTableColumns = (constant, columnExpandFunction, getLinkProps = (
           text: 'Violation Status',
           filter: constructFilter(textFilter),
           sort: true,
+        }),
+      ]
+      break
+    case 'HPD_CONTACT':
+      columns = [
+        constructStandardColumn({
+          dataField: 'type',
+          text: 'Type',
+        }),
+        constructStandardColumn({
+          dataField: 'corporationname',
+          text: 'Corp Name',
+        }),
+        constructStandardColumn({
+          dataField: 'title',
+          text: 'Title',
+        }),
+        constructStandardColumn({
+          dataField: 'firstname',
+          text: 'First Name',
+        }),
+        constructStandardColumn({
+          dataField: 'lastname',
+          text: 'Last Name',
+        }),
+        constructStandardColumn({
+          dataField: 'businesshousenumber',
+          text: 'Address No.',
+        }),
+        constructStandardColumn({
+          dataField: 'businessstreetname',
+          text: 'Street',
+        }),
+        constructStandardColumn({
+          dataField: 'businessapartment',
+          text: 'Apt.',
+        }),
+        constructStandardColumn({
+          dataField: 'businesscity',
+          text: 'City',
+        }),
+        constructStandardColumn({
+          dataField: 'businessstate',
+          text: 'State',
+        }),
+        constructStandardColumn({
+          dataField: 'businesszip',
+          text: 'Zip',
         }),
       ]
       break
