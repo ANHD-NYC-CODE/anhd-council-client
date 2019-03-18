@@ -2,6 +2,15 @@ export const resourceRouteChanged = (oldProps, newProps) => {
   return oldProps.id !== newProps.id
 }
 
+export const geographyToLink = (constant, id) => {
+  switch (constant) {
+    case 'COUNCIL':
+      return `/council/${id}`
+    case 'COMMUNITY':
+      return `/community/${id}`
+  }
+}
+
 export const getGeographyPath = type => {
   type = type.toUpperCase()
   switch (type) {

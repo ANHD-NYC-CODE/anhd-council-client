@@ -9,9 +9,9 @@ import { makeRequest } from 'Store/Request/actions'
 
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
-
 import LeafletMap from 'LeafletMap'
 import AddressSearch from 'Lookup/AddressSearch'
+
 import { Row, Col } from 'react-bootstrap'
 import { requestWithAuth } from 'shared/utilities/authUtils'
 
@@ -72,9 +72,8 @@ class Lookup extends React.Component {
     return (
       <Row>
         <Col xs={12} lg={4}>
-          {this.props.profileRequest && <RequestWrapper request={this.props.profileRequest} visible={true} />}
           <AddressSearch />
-
+          {this.props.profileRequest && <RequestWrapper request={this.props.profileRequest} visible={true} />}
           <LeafletMap />
         </Col>
         <Col xs={12} lg={8}>

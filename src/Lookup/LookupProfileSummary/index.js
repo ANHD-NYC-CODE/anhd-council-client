@@ -3,6 +3,10 @@ import PropTypes from 'prop-types'
 import InnerLoader from 'shared/components/InnerLoader'
 
 import TableAlert from 'shared/components/BaseTable/TableAlert'
+import { boroCodeToName, constructAddressString } from 'shared/utilities/languageUtils'
+import { councilIdToString, communityIdToString } from 'shared/utilities/languageUtils'
+import { geographyToLink } from 'shared/utilities/routeUtils'
+import BaseLink from 'shared/components/BaseLink'
 
 import { Card, Row, Col } from 'react-bootstrap'
 import './style.scss'
@@ -18,6 +22,15 @@ const LookupProfileSummary = props => {
       <Card className="lookup-profile-summary">
         <Card.Body className="lookup-profile-summary__body">
           <Row>
+            <Col xs={12}>
+              <h5>
+                {constructAddressString({
+                  street: profile.address,
+                  borough: boroCodeToName(profile.borough),
+                  zip: profile.zipcode,
+                })}
+              </h5>
+            </Col>
             <Col xs={6}>
               {profile.hpdcontacts.length ? (
                 <div>HPD CONTACTS FOUND</div>
@@ -60,6 +73,22 @@ const LookupProfileSummary = props => {
               <Card.Text className="lookup-profile-summary__group">
                 <label className="lookup-profile-summary__label">Tax Lien? </label>
                 <span className="lookup-profile-summary__value">{profile.taxliens || 'No'}</span>
+              </Card.Text>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Card.Text className="lookup-profile-summary__group">
+                <BaseLink
+                  href={geographyToLink('COUNCIL', profile.council)}
+                  text={councilIdToString(profile.council)}
+                />
+              </Card.Text>
+              <Card.Text className="lookup-profile-summary__group">
+                <BaseLink
+                  href={geographyToLink('COMMUNITY', profile.cd)}
+                  text={`Community District  ${communityIdToString(profile.cd)}`}
+                />
               </Card.Text>
             </Col>
           </Row>
