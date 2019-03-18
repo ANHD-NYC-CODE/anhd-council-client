@@ -23,11 +23,22 @@ const customStyle = size => {
         }),
         container: base => ({
           ...base,
+          marginTop: '0px',
           minHeight: '1px',
           height: '38px',
         }),
+        menu: base => ({
+          ...base,
+          marginTop: '0px',
+          zIndex: '10',
+        }),
+        menuList: base => ({
+          ...base,
+          marginTop: '0px',
+        }),
         valueContainer: base => ({
           ...base,
+          marginTop: '0px',
           minHeight: '1px',
           height: '38px',
         }),

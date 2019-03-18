@@ -16,7 +16,7 @@ import { Row, Col } from 'react-bootstrap'
 import { requestWithAuth } from 'shared/utilities/authUtils'
 
 import RequestWrapper from 'shared/components/RequestWrapper'
-
+import BuildingSelect from 'Lookup/BuildingSelect'
 import RequestSummary from 'shared/components/RequestSummary'
 import LookupLinks from 'Lookup/LookupLinks'
 class Lookup extends React.Component {
@@ -33,6 +33,8 @@ class Lookup extends React.Component {
       props.dispatch(push('/lookup'))
     } else if ((!props.appState.currentProperty && props.bbl) || props.appState.currentProperty !== props.bbl) {
       props.dispatch(setLookupAndRequestsAndRedirect({ bbl: props.bbl, bin: props.bin, replaceHistory: true }))
+    } else if ((!props.appState.currentBuilding && props.bin) || props.appState.currentBuilding !== props.bin) {
+      props.dispatch(setLookupAndRequestsAndRedirect({ bbl: props.bbl, replaceHistory: true }))
     } else if (props.requests) {
       this.loadRequests(props)
       props.dispatch(makeRequest(props.profileRequest))
@@ -44,6 +46,11 @@ class Lookup extends React.Component {
       nextProps.dispatch(
         setLookupAndRequestsAndRedirect({ bbl: nextProps.bbl, bin: nextProps.bin, replaceHistory: true })
       )
+    } else if (
+      (!nextProps.appState.currentBuilding && nextProps.bin) ||
+      nextProps.appState.currentBuilding !== nextProps.bin
+    ) {
+      nextProps.dispatch(setLookupAndRequestsAndRedirect({ bbl: nextProps.bbl, replaceHistory: true }))
     } else if (nextProps.requests) {
       this.loadRequests(nextProps)
       nextProps.dispatch(makeRequest(nextProps.profileRequest))
@@ -105,6 +112,13 @@ class Lookup extends React.Component {
               </Row>
             </Col>
             <Col xs={12} lg={9}>
+              <Row>
+                <Col>
+                  {this.props.profileRequest && (
+                    <BuildingSelect dispatch={this.props.dispatch} request={this.props.profileRequest} />
+                  )}
+                </Col>
+              </Row>
               <Row>
                 {this.props.requests.map((request, index) => {
                   return (
