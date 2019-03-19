@@ -10,6 +10,7 @@ import { TableConfig } from 'shared/classes/TableConfig'
 import { ApiMap } from 'shared/classes/ApiMap'
 import { ParameterMapping } from 'shared/classes/ParameterMapping'
 import { Dataset } from 'shared/classes/Dataset'
+import { housingTypeCodeToName } from 'shared/utilities/languageUtils'
 import { constantToModelName, constantToQueryName, getDatasetDateField } from 'shared/utilities/filterUtils'
 
 import LookupProfileSummary from 'Lookup/LookupProfileSummary'
@@ -223,13 +224,43 @@ export const newGeographyRequest = ({
           .format('YYYY-MM-DD'),
       }),
     ],
-    tableConfig: new TableConfig({ resourceConstant: 'PROPERTY', hover: true }),
+    tableConfig: new TableConfig({ resourceConstant: 'PROPERTY' }),
+  })
+}
+
+export const newGeographyHousingTypeRequest = ({
+  type = undefined,
+  geographyType = undefined,
+  geographyId,
+  paramValue = undefined,
+} = {}) => {
+  return new DataRequest({
+    type: type,
+    requestConstant: `${type}_${paramValue.toUpperCase()}`,
+    apiMaps: [
+      new ApiMap({ constant: geographyType, resourceId: geographyId }),
+      new ApiMap({ constant: 'PROPERTY', name: `${housingTypeCodeToName(paramValue)}` }),
+    ],
+    paramMaps: [
+      new ParameterMapping({
+        type: 'TEXT',
+        field: 'housingtype',
+        comparison: '',
+        value: paramValue,
+      }),
+    ],
+    tableConfig: new TableConfig({ resourceConstant: 'PROPERTY' }),
   })
 }
 
 export const newMapRequests = ({ geographyType, geographyId } = {}) => {
   return [
     newGeographyRequest({ type: 'MAP_FILTER', geographyType, geographyId, resourceConstant: 'HPD_VIOLATION' }),
+    newGeographyHousingTypeRequest({ type: 'GEOGRAPHY_HOUSING_TYPE', geographyType, geographyId, paramValue: 'rs' }),
+    newGeographyHousingTypeRequest({ type: 'GEOGRAPHY_HOUSING_TYPE', geographyType, geographyId, paramValue: 'rr' }),
+    newGeographyHousingTypeRequest({ type: 'GEOGRAPHY_HOUSING_TYPE', geographyType, geographyId, paramValue: 'sh' }),
+    newGeographyHousingTypeRequest({ type: 'GEOGRAPHY_HOUSING_TYPE', geographyType, geographyId, paramValue: 'mr' }),
+    newGeographyHousingTypeRequest({ type: 'GEOGRAPHY_HOUSING_TYPE', geographyType, geographyId, paramValue: 'ph' }),
     newGeographyRequest({
       type: 'MAP_FILTER',
       geographyType,

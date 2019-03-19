@@ -1,8 +1,15 @@
 import { constantToName } from 'shared/utilities/filterUtils'
 
 export class DataRequest {
-  constructor({ type = undefined, paramMaps = [], apiMaps = [], tableConfig = undefined } = {}) {
+  constructor({
+    type = undefined,
+    requestConstant = undefined,
+    paramMaps = [],
+    apiMaps = [],
+    tableConfig = undefined,
+  } = {}) {
     this._type = type
+    this._requestConstant = requestConstant
     this._paramMaps = paramMaps
     this._apiMaps = apiMaps
     this._tableConfig = tableConfig
@@ -76,13 +83,20 @@ export class DataRequest {
   }
 
   get requestConstant() {
-    return []
-      .concat(
-        this.apiMaps.map(apiMap => apiMap.constant).join('_'),
-        this.paramMaps.map(paramMap => paramMap.field.toUpperCase()).join('_')
-      )
-      .filter(a => a)
-      .join('_')
+    return (
+      this._requestConstant ||
+      []
+        .concat(
+          this.apiMaps.map(apiMap => apiMap.constant).join('_'),
+          this.paramMaps.map(paramMap => paramMap.field.toUpperCase()).join('_')
+        )
+        .filter(a => a)
+        .join('_')
+    )
+  }
+
+  set requestConstant(requestConstant) {
+    this._requestConstant = requestConstant
   }
 
   get label() {

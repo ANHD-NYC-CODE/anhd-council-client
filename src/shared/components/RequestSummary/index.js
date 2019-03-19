@@ -12,8 +12,8 @@ class RequestSummary extends React.Component {
     this.handleClick = this.handleClick.bind(this)
   }
 
-  handleClick(e) {
-    this.props.onClick(e, this.props.request)
+  handleClick() {
+    this.props.onClick(this.props.request)
   }
 
   render() {
