@@ -2,12 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import * as c from 'Store/Council/constants'
-
+import moment from 'moment'
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
 import { push, createMatchSelector } from 'connected-react-router'
-import { setGeographyAndRequestsAndRedirect } from 'Store/AppState/actions'
-
+import { setMapFilterDate, setGeographyAndRequestsAndRedirect } from 'Store/AppState/actions'
 import { pathToGeographyConstant } from 'shared/utilities/routeUtils'
 import { getRequestType, getManyRequestTypes } from 'Store/AppState/selectors'
 import { requestWithAuth } from 'shared/utilities/authUtils'
@@ -23,13 +22,14 @@ import SummaryResultCard from 'shared/components/SummaryResultCard'
 import HousingTypeSummaryResultCard from 'AlertMap/HousingTypeSummaryResultCard'
 
 import GeographyProfile from 'AlertMap/GeographyProfile'
-
+import { alertMapFilterdates } from 'shared/utilities/componentUtils'
 class AlertMap extends React.Component {
   constructor(props) {
     super(props)
     this.loadRequests = this.loadRequests.bind(this)
     this.switchTable = this.switchTable.bind(this)
     this.toggleView = this.toggleView.bind(this)
+    this.toggleDateRange = this.toggleDateRange.bind(this)
     this.changeGeographyAndId = this.changeGeographyAndId.bind(this)
     this.state = {
       view: 1,
@@ -47,9 +47,7 @@ class AlertMap extends React.Component {
         })
       )
     } else if (props.requests) {
-      this.loadRequests(props)
-
-      // Request geography profile
+      this.loadRequests(props.requests)
     }
   }
 
@@ -63,8 +61,24 @@ class AlertMap extends React.Component {
         })
       )
     } else if (nextProps.requests) {
-      this.loadRequests(nextProps)
+      this.loadRequests(nextProps.requests)
     }
+  }
+
+  toggleDateRange(value) {
+    this.props.dispatch(setMapFilterDate(value))
+
+    const mapRequests = getRequestType(this.props.requests, 'MAP_FILTER')
+    mapRequests.forEach(request => {
+      request.called = false
+      request.paramMaps
+        .filter(p => p.type === 'DATE')
+        .forEach(paramMap => {
+          paramMap.value = value
+        })
+    })
+
+    this.loadRequests(mapRequests)
   }
 
   toggleView(value) {
@@ -73,13 +87,13 @@ class AlertMap extends React.Component {
     })
   }
 
-  loadRequests(props) {
-    props.requests.forEach(request => {
+  loadRequests(requests = []) {
+    requests.forEach(request => {
       this.props.dispatch(requestWithAuth(makeRequest(request)))
     })
 
     this.setState({
-      selectedRequest: getRequestType(props.requests, ['MAP_FILTER'])[0],
+      selectedRequest: getRequestType(requests, ['MAP_FILTER'])[0],
     })
   }
 
@@ -115,7 +129,22 @@ class AlertMap extends React.Component {
         </Row>
         <Row>
           <Col xs={12} sm={6} md={4}>
-            Request Summary + Editing
+            <ToggleButtonGroup
+              name="dateRange"
+              type="radio"
+              value={this.props.appState.mapFilterDate}
+              onChange={this.toggleDateRange}
+            >
+              <ToggleButton value={alertMapFilterdates()[2]}>{`Past 3 Years (${moment(alertMapFilterdates()[2]).format(
+                'YYYY'
+              )})`}</ToggleButton>
+              <ToggleButton value={alertMapFilterdates()[1]}>{`Past Year (${moment(alertMapFilterdates()[1]).format(
+                'YYYY'
+              )})`}</ToggleButton>
+              <ToggleButton value={alertMapFilterdates()[0]}>{`Past Month (${moment(alertMapFilterdates()[0]).format(
+                'MM/YYYY'
+              )})`}</ToggleButton>
+            </ToggleButtonGroup>
           </Col>
           <Col xs={12} sm={6} md={8}>
             <Row>

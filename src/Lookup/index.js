@@ -83,7 +83,7 @@ class Lookup extends React.Component {
           </Row>
           <Row>
             <Col>
-              {getRequestType(this.props.requests, 'LOOKUP_PROFILE').length && (
+              {!!getRequestType(this.props.requests, 'LOOKUP_PROFILE').length && (
                 <RequestWrapper request={getRequestType(this.props.requests, 'LOOKUP_PROFILE')[0]} visible={true} />
               )}
             </Col>
@@ -95,7 +95,7 @@ class Lookup extends React.Component {
           </Row>
           <Row>
             <Col>
-              {getRequestType(this.props.requests, 'LOOKUP_PROFILE').length && (
+              {!!getRequestType(this.props.requests, 'LOOKUP_PROFILE').length && (
                 <LookupLinks request={getRequestType(this.props.requests, 'LOOKUP_PROFILE')[0]} />
               )}
             </Col>
@@ -121,7 +121,7 @@ class Lookup extends React.Component {
             <Col xs={12} lg={9}>
               <Row>
                 <Col>
-                  {getRequestType(this.props.requests, 'LOOKUP_PROFILE').length && (
+                  {!!getRequestType(this.props.requests, 'LOOKUP_PROFILE').length && (
                     <BuildingSelect
                       dispatch={this.props.dispatch}
                       request={getRequestType(this.props.requests, 'LOOKUP_PROFILE')[0]}

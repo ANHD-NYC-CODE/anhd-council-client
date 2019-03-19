@@ -1,4 +1,5 @@
 import React from 'react'
+import moment from 'moment'
 import { communityIdToString } from 'shared/utilities/languageUtils'
 export const getGeographyIdOptions = (districts, boards, type) => {
   type = type.toUpperCase()
@@ -37,4 +38,19 @@ export const getGeographyIdOptions = (districts, boards, type) => {
         )),
       ]
   }
+}
+
+export const alertMapFilterdates = () => {
+  return [
+    moment()
+      .subtract(1, 'months')
+      .startOf('month')
+      .format('YYYY-MM-DD'),
+    moment()
+      .subtract('1', 'year')
+      .format('YYYY-MM-DD'),
+    moment()
+      .subtract('3', 'year')
+      .format('YYYY-MM-DD'),
+  ]
 }

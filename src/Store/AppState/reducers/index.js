@@ -1,10 +1,12 @@
 import * as c from '../constants'
+import { alertMapFilterdates } from 'shared/utilities/componentUtils'
 
 export const initialState = {
   currentGeographyType: undefined,
   currentGeographyId: undefined,
   currentProperty: undefined,
   currentBuilding: undefined,
+  mapFilterDate: alertMapFilterdates()[0],
   requests: [],
 }
 
@@ -37,6 +39,12 @@ export const appStateReducer = (state = Object.freeze(initialState), action = { 
       return {
         ...state,
         requests: state.requests.filter(request => request.type !== action.requestType),
+      }
+    }
+    case c.SET_MAP_FILTER_DATE: {
+      return {
+        ...state,
+        mapFilterDate: action.date,
       }
     }
     default:
