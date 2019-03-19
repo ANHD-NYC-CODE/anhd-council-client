@@ -12,8 +12,8 @@ class GeographySelect extends React.Component {
     super(props)
     this.state = {
       changing: false,
-      geographyType: props.currentGeographyType,
-      geographyId: props.currentGeographyId,
+      changingGeographyType: undefined,
+      changingGeographyId: undefined,
     }
     this.handleChangeType = this.handleChangeType.bind(this)
     this.handleChangeGeography = this.handleChangeGeography.bind(this)
@@ -22,16 +22,16 @@ class GeographySelect extends React.Component {
   handleChangeType(e) {
     this.setState({
       changing: true,
-      geographyType: new StandardizedInput(e).value,
-      geographyId: -1,
+      changingGeographyType: new StandardizedInput(e).value,
+      changingGeographyId: -1,
     })
     if (this.props.handleChange) this.props.handleChange(e)
   }
 
   handleChangeGeography(e) {
     const standardE = new StandardizedInput(e)
-    this.setState({ changing: false, geographyId: standardE.value })
-    this.props.onChange(this.state.geographyType, standardE.value)
+    this.setState({ changing: false, changingGeographyType: undefined, changingGeographyId: undefined })
+    this.props.onChange(this.state.changingGeographyType || this.props.currentGeographyType, standardE.value)
     if (this.props.handleChange) this.props.handleChange(e)
   }
 
@@ -40,7 +40,7 @@ class GeographySelect extends React.Component {
       <ConfigContext.Consumer>
         {config => (
           <Form.Group as={Row}>
-            <Col xs={!this.state.geographyType ? 12 : 6}>
+            <Col xs={!(this.state.changingGeographyType || this.props.currentGeographyType) ? 12 : 6}>
               <Form.Control
                 required
                 size="sm"
@@ -48,7 +48,7 @@ class GeographySelect extends React.Component {
                 as="select"
                 data-key="geographyType"
                 onChange={this.handleChangeType}
-                value={this.state.geographyType || -1}
+                value={this.state.changingGeographyType || this.props.currentGeographyType || -1}
                 onBlur={this.props.handleBlur}
                 isInvalid={
                   ((this.props.touched || {}).geographyType || !!this.props.submitCount) &&
@@ -71,7 +71,7 @@ class GeographySelect extends React.Component {
                 message={(this.props.errors || {}).geographyType}
               />
             </Col>
-            {!!this.state.geographyType && (
+            {!!(this.props.currentGeographyType || this.state.changingGeographyType) && (
               <Col xs={6}>
                 <Form.Control
                   required
@@ -81,14 +81,18 @@ class GeographySelect extends React.Component {
                   onChange={e => this.handleChangeGeography(e)}
                   placeholder="#"
                   size="sm"
-                  value={this.state.geographyId || -1}
+                  value={this.state.changingGeographyId || this.props.currentGeographyId || -1}
                   onBlur={this.props.handleBlur}
                   isInvalid={
                     ((this.props.touched || {}).geographyId || !!this.props.submitCount) &&
                     (this.props.errors || {}).geographyId
                   }
                 >
-                  {getGeographyIdOptions(config.councilDistricts, config.communityDistricts, this.state.geographyType)}
+                  {getGeographyIdOptions(
+                    config.councilDistricts,
+                    config.communityDistricts,
+                    this.state.changingGeographyType || this.props.currentGeographyType
+                  )}
                 </Form.Control>
                 <FormError
                   show={
@@ -108,8 +112,8 @@ class GeographySelect extends React.Component {
                   onClick={() =>
                     this.setState({
                       changing: false,
-                      geographyType: this.props.currentGeographyType,
-                      geographyId: this.props.currentGeographyId,
+                      changingGeographyType: this.props.currentGeographyType,
+                      changingGeographyId: this.props.currentGeographyId,
                     })
                   }
                   variant="warning"

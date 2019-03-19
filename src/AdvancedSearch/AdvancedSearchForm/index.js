@@ -5,8 +5,6 @@ import { Geography } from 'shared/classes/Geography'
 import * as yup from 'yup'
 
 import { StandardizedInput } from 'shared/classes/StandardizedInput'
-import { getAdvancedSearch } from 'Store/AdvancedSearch/actions'
-import { requestWithAuth } from 'shared/utilities/authUtils'
 import { getAdvancedSearchParamMaps } from 'Store/AdvancedSearch/utilities/advancedSearchStoreUtils'
 import { setGeographyAndRequestsAndRedirect } from 'Store/AppState/actions'
 
@@ -54,17 +52,20 @@ class AdvancedSearchForm extends React.Component {
   }
 
   syncGeographyToAppState(props) {
-    if (props.appState.currentGeographyType && props.advancedSearch.geographies.length) {
+    if (props.appState.currentGeographyType && !!props.advancedSearch.geographies.length) {
       const geography = props.advancedSearch.geographies[0]
       if (
         props.appState.currentGeographyType !== geography.geographyType.constant ||
         props.appState.currentGeographyId !== geography.id
       ) {
-        console.log('syncing!')
         geography['geographyType'] = props.appState.currentGeographyType
         geography['id'] = props.appState.currentGeographyId
         props.dispatch(updateGeography(0, geography))
       }
+    } else if (props.appState.currentGeographyType && !props.advancedSearch.geographies.length) {
+      this.props.dispatch(
+        addGeography(new Geography(props.appState.currentGeographyType, props.appState.currentGeographyId))
+      )
     }
   }
 
@@ -126,7 +127,6 @@ class AdvancedSearchForm extends React.Component {
         return
       } else {
         this.props.dispatch(setAdvancedSearchRequestAndRedirect({ redirect: true }))
-        // this.props.dispatch(requestWithAuth(getAdvancedSearch()))
       }
     })
   }

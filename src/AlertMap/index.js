@@ -38,7 +38,10 @@ class AlertMap extends React.Component {
 
     if (!props.geographyType) {
       props.dispatch(push('/map'))
-    } else if (!props.appState.currentGeographyType && props.geographyType) {
+    } else if (
+      props.appState.currentGeographyType !== props.geographyType ||
+      props.appState.currentGeographyId !== props.geographyId
+    ) {
       props.dispatch(
         setGeographyAndRequestsAndRedirect({
           geographyType: pathToGeographyConstant(props.geographyType),
@@ -52,7 +55,10 @@ class AlertMap extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!nextProps.appState.currentGeographyType && nextProps.geographyType) {
+    if (
+      nextProps.appState.currentGeographyType !== nextProps.geographyType ||
+      nextProps.appState.currentGeographyId !== nextProps.geographyId
+    ) {
       nextProps.dispatch(
         setGeographyAndRequestsAndRedirect({
           geographyType: pathToGeographyConstant(nextProps.geographyType),
@@ -225,7 +231,7 @@ const errorSelector = createErrorSelector([c.GET_COUNCILS])
 
 const mapStateToProps = state => {
   const pathMatch = state.router.location.pathname.match(/(council|community)/)
-  const path = pathMatch ? pathMatch[0] : null
+  const path = pathMatch ? pathMatch[0] : undefined
   const matchSelector = createMatchSelector({
     path: `/${path}/:id`,
   })
@@ -234,8 +240,8 @@ const mapStateToProps = state => {
     appState: state.appState,
     loading: loadingSelector(state),
     error: errorSelector(state),
-    geographyId: match ? match.params.id : null,
-    geographyType: path,
+    geographyId: match ? match.params.id : undefined,
+    geographyType: path ? path.toUpperCase() : undefined,
     router: state.router,
     requests: getManyRequestTypes(state.appState.requests, ['MAP_FILTER', 'ADVANCED_SEARCH', 'GEOGRAPHY_HOUSING_TYPE']),
   }
