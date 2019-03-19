@@ -135,22 +135,24 @@ class AlertMap extends React.Component {
         </Row>
         <Row>
           <Col xs={12} sm={6} md={4}>
-            <ToggleButtonGroup
-              name="dateRange"
-              type="radio"
-              value={this.props.appState.mapFilterDate}
-              onChange={this.toggleDateRange}
-            >
-              <ToggleButton value={alertMapFilterdates()[2]}>{`Past 3 Years (${moment(alertMapFilterdates()[2]).format(
-                'YYYY'
-              )})`}</ToggleButton>
-              <ToggleButton value={alertMapFilterdates()[1]}>{`Past Year (${moment(alertMapFilterdates()[1]).format(
-                'YYYY'
-              )})`}</ToggleButton>
-              <ToggleButton value={alertMapFilterdates()[0]}>{`Past Month (${moment(alertMapFilterdates()[0]).format(
-                'MM/YYYY'
-              )})`}</ToggleButton>
-            </ToggleButtonGroup>
+            {!!this.props.requests.length && (
+              <ToggleButtonGroup
+                name="dateRange"
+                type="radio"
+                value={this.props.appState.mapFilterDate}
+                onChange={this.toggleDateRange}
+              >
+                <ToggleButton value={alertMapFilterdates()[2]}>{`Past 3 Years (${moment(
+                  alertMapFilterdates()[2]
+                ).format('YYYY')})`}</ToggleButton>
+                <ToggleButton value={alertMapFilterdates()[1]}>{`Past Year (${moment(alertMapFilterdates()[1]).format(
+                  'YYYY'
+                )})`}</ToggleButton>
+                <ToggleButton value={alertMapFilterdates()[0]}>{`Past Month (${moment(alertMapFilterdates()[0]).format(
+                  'MM/YYYY'
+                )})`}</ToggleButton>
+              </ToggleButtonGroup>
+            )}
           </Col>
           <Col xs={12} sm={6} md={8}>
             <Row>
@@ -165,7 +167,7 @@ class AlertMap extends React.Component {
                   </Col>
                 )
               })}
-              {!geographyRequests.some(r => r.type === 'ADVANCED_SEARCH') && (
+              {!!this.props.requests.length && !geographyRequests.some(r => r.type === 'ADVANCED_SEARCH') && (
                 <Col xs={12} sm={6} lg={4}>
                   <Card>
                     <Card.Body>
@@ -192,10 +194,12 @@ class AlertMap extends React.Component {
             })}
           </Col>
           <Col xs={12} lg={6}>
-            <ToggleButtonGroup name="view" type="radio" value={this.state.view} onChange={this.toggleView}>
-              <ToggleButton value={1}>Map View</ToggleButton>
-              <ToggleButton value={2}>Table View</ToggleButton>
-            </ToggleButtonGroup>
+            {!!this.props.requests.length && (
+              <ToggleButtonGroup name="view" type="radio" value={this.state.view} onChange={this.toggleView}>
+                <ToggleButton value={1}>Map View</ToggleButton>
+                <ToggleButton value={2}>Table View</ToggleButton>
+              </ToggleButtonGroup>
+            )}
             {this.state.view === 1 ? (
               <LeafletMap />
             ) : (
