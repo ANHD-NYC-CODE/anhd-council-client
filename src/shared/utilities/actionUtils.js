@@ -300,7 +300,7 @@ export const newAdvancedSearchRequest = ({ geographyType, geographyId, advancedS
     resourceConstant: 'PROPERTY_ADVANCED_SEARCH',
     apiMaps: [
       new ApiMap({ constant: geographyType, resourceId: geographyId }),
-      new ApiMap({ constant: 'PROPERTY', name: 'Properties' }),
+      new ApiMap({ constant: 'PROPERTY', name: 'Custom Search' }),
     ],
     paramMaps: paramMaps,
     tableConfig: new TableConfig({ resourceConstant: 'PROPERTY' }),
