@@ -64,6 +64,21 @@ export const constructDateComparisonString = comparison => {
   }
 }
 
+export const housingTypeCodeToName = code => {
+  switch (code) {
+    case 'rs':
+      return 'Rent Stabilized'
+    case 'rr':
+      return 'Rent Regulated'
+    case 'sh':
+      return 'Small Homes'
+    case 'mr':
+      return 'Market Rate'
+    case 'ph':
+      return 'Public Housing'
+  }
+}
+
 export const boroCodeToName = code => {
   switch (code) {
     case '1':

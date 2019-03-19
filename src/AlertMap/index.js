@@ -27,7 +27,9 @@ class AlertMap extends React.Component {
     this.switchTable = this.switchTable.bind(this)
 
     this.state = {
-      selectedRequestIndex: props.requests.length ? 0 : undefined,
+      selectedRequest: [].concat(props.mapRequests, props.housingTypeRequests).length
+        ? [].concat(props.mapRequests, props.housingTypeRequests)[0]
+        : undefined,
     }
 
     if (!props.geographyType) {
@@ -40,7 +42,7 @@ class AlertMap extends React.Component {
           replaceHistory: true,
         })
       )
-    } else if (props.requests) {
+    } else if (props.mapRequests) {
       this.loadRequests(props)
 
       // Request geography profile
@@ -56,7 +58,7 @@ class AlertMap extends React.Component {
           replaceHistory: true,
         })
       )
-    } else if (nextProps.requests) {
+    } else if (nextProps.mapRequests) {
       this.loadRequests(nextProps)
 
       // Request geography profile
@@ -64,20 +66,21 @@ class AlertMap extends React.Component {
   }
 
   loadRequests(props) {
-    props.requests.forEach(request => {
+    const requests = [].concat(props.mapRequests, props.housingTypeRequests)
+    requests.forEach(request => {
       this.props.dispatch(requestWithAuth(makeRequest(request)))
     })
 
-    if (!this.state.selectedRequestIndex) {
+    if (!this.state.selectedRequest) {
       this.setState({
-        selectedRequestIndex: 0,
+        selectedRequest: requests[0],
       })
     }
   }
 
-  switchTable(e, index) {
+  switchTable(request) {
     this.setState({
-      selectedRequestIndex: index,
+      selectedRequest: request,
     })
   }
 
@@ -98,10 +101,10 @@ class AlertMap extends React.Component {
           </Col>
           <Col xs={12} sm={6} md={8}>
             <Row>
-              {this.props.requests.map((request, index) => {
+              {this.props.mapRequests.map((request, index) => {
                 return (
                   <Col xs={12} sm={6} lg={4} key={`request-summary-${index}`}>
-                    <RequestSummary request={request} onClick={e => this.switchTable(e, index)} />
+                    <RequestSummary request={request} onClick={r => this.switchTable(r)} />
                   </Col>
                 )
               })}
@@ -110,14 +113,20 @@ class AlertMap extends React.Component {
         </Row>
         <Row>
           <Col xs={12} lg={3}>
-            Housing type boxes
+            {this.props.housingTypeRequests.map((request, index) => {
+              return (
+                <Col xs={12} sm={6} lg={4} key={`request-summary-${index}`}>
+                  <RequestSummary request={request} onClick={r => this.switchTable(r)} />
+                </Col>
+              )
+            })}
           </Col>
           <Col xs={12} lg={5}>
-            {this.props.requests.map((request, index) => {
+            {[].concat(this.props.mapRequests, this.props.housingTypeRequests).map((request, index) => {
               return (
                 <RequestWrapper
                   key={`request-wrapper-${index}`}
-                  visible={this.state.selectedRequestIndex === index}
+                  visible={this.state.selectedRequest === request}
                   request={request}
                 />
               )
@@ -154,7 +163,8 @@ const mapStateToProps = state => {
     geographyId: match ? match.params.id : null,
     geographyType: path,
     router: state.router,
-    requests: lookupRequests(state, 'MAP_FILTER'),
+    mapRequests: lookupRequests(state, 'MAP_FILTER'),
+    housingTypeRequests: lookupRequests(state, 'GEOGRAPHY_HOUSING_TYPE'),
   }
 }
 
