@@ -105,7 +105,7 @@ class GeographySelect extends React.Component {
                 />
               </Col>
             )}
-            {this.props.confirmChange && this.state.changing && (
+            {this.state.changing && (
               <Col xs={12}>
                 <Button
                   className="cancel-Geography-change"
@@ -134,7 +134,6 @@ GeographySelect.propTypes = {
   currentGeographyId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   config: PropTypes.object,
   dispatch: PropTypes.func,
-  confirmChange: PropTypes.bool,
   placeholder: PropTypes.string,
   onChange: PropTypes.func,
   handleBlur: PropTypes.func,

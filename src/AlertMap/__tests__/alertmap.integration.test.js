@@ -50,6 +50,10 @@ describe('AlertMap', () => {
     const [wrapper, store] = setupWrapper()
     expect(wrapper.find('AlertMap')).toBeDefined()
     expect(store.getState().router.location.pathname).toEqual('/map')
+    expect(wrapper.find('RequestWrapper')).toHaveLength(0)
+    expect(wrapper.find('RequestSummary')).toHaveLength(0)
+    expect(wrapper.find('GeographyProfile')).toHaveLength(0)
+    expect(wrapper.find('ToggleButtonGroup')).toHaveLength(0)
   })
 
   describe('with a geography type and id', () => {
@@ -64,46 +68,68 @@ describe('AlertMap', () => {
       expect(store.getState().appState.currentGeographyId).toEqual('1')
     })
 
-    it('renders the request wrappers', () => {
-      const [wrapper, store] = setupWrapper({
-        router: { location: { pathname: '/council/1' }, action: 'POP' },
-      })
-
-      expect(wrapper.find('RequestWrapper')).toHaveLength(5)
-      expect(
-        wrapper
-          .find('RequestWrapper')
-          .at(0)
-          .props().visible
-      ).toEqual(true)
-      wrapper.find('RequestWrapper').forEach((w, index) => {
-        if (index === 0) return
-        expect(w.props().visible).toEqual(false)
+    describe('map view', () => {
+      it('renders the map, not tables', async () => {
+        const [wrapper, store] = setupWrapper({
+          router: { location: { pathname: '/council/1' }, action: 'POP' },
+        })
+        expect(wrapper.find('ToggleButtonGroup')).toHaveLength(2)
+        expect(wrapper.find('LeafletMap')).toHaveLength(1)
+        expect(wrapper.find('RequestSummary')).toHaveLength(10)
+        expect(wrapper.find('RequestWrapper')).toHaveLength(0)
       })
     })
 
-    it('Switches the visible request wrapper', () => {
-      const [wrapper, store] = setupWrapper({
-        router: { location: { pathname: '/council/1' }, action: 'POP' },
-      })
-      wrapper
-        .find('RequestSummary')
-        .at(1)
-        .simulate('click')
+    describe('table view', () => {
+      it('renders the tables, not map', async () => {
+        const [wrapper, store] = setupWrapper({
+          router: { location: { pathname: '/council/1' }, action: 'POP' },
+        })
 
-      wrapper.update()
-      expect(
         wrapper
-          .find('RequestWrapper')
-          .at(0)
-          .props().visible
-      ).toEqual(false)
-      expect(
-        wrapper
-          .find('RequestWrapper')
+          .find('input[name="view"]')
           .at(1)
-          .props().visible
-      ).toEqual(true)
+          .simulate('change', { target: { checked: true } })
+        await flushAllPromises()
+        wrapper.update()
+        expect(wrapper.find('ToggleButtonGroup')).toHaveLength(2)
+        expect(wrapper.find('GeographySelect')).toHaveLength(1)
+        expect(wrapper.find('LeafletMap')).toHaveLength(0)
+        expect(wrapper.find('RequestWrapper')).toHaveLength(10)
+        expect(
+          wrapper
+            .find('RequestWrapper')
+            .at(0)
+            .props().visible
+        ).toEqual(true)
+        wrapper.find('RequestWrapper').forEach((w, index) => {
+          if (index === 0) return
+          expect(w.props().visible).toEqual(false)
+        })
+      })
+      it('Switches the visible request wrapper', () => {
+        const [wrapper, store] = setupWrapper({
+          router: { location: { pathname: '/council/1' }, action: 'POP' },
+        })
+        wrapper
+          .find('RequestSummary')
+          .at(1)
+          .simulate('click')
+
+        wrapper.update()
+        expect(
+          wrapper
+            .find('RequestWrapper')
+            .at(0)
+            .props().visible
+        ).toEqual(false)
+        expect(
+          wrapper
+            .find('RequestWrapper')
+            .at(1)
+            .props().visible
+        ).toEqual(true)
+      })
     })
   })
 })
