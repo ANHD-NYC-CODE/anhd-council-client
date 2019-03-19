@@ -14,7 +14,8 @@ import { requestWithAuth } from 'shared/utilities/authUtils'
 import { makeRequest } from 'Store/Request/actions'
 
 import GeographySelect from 'shared/components/GeographySelect'
-import { Row, Col, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
+import { Card, Row, Col, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
+import BaseLink from 'shared/components/BaseLink'
 import LeafletMap from 'LeafletMap'
 import RequestWrapper from 'shared/components/RequestWrapper'
 import RequestSummary from 'shared/components/RequestSummary'
@@ -98,6 +99,9 @@ class AlertMap extends React.Component {
   }
 
   render() {
+    const geographyRequests = getManyRequestTypes(this.props.requests, ['MAP_FILTER', 'ADVANCED_SEARCH'])
+
+    const housingTypeRequests = getRequestType(this.props.requests, 'GEOGRAPHY_HOUSING_TYPE')
     return (
       <div>
         <Row>
@@ -115,7 +119,7 @@ class AlertMap extends React.Component {
           </Col>
           <Col xs={12} sm={6} md={8}>
             <Row>
-              {getManyRequestTypes(this.props.requests, ['MAP_FILTER', 'ADVANCED_SEARCH']).map((request, index) => {
+              {geographyRequests.map((request, index) => {
                 return (
                   <Col xs={12} sm={6} lg={4} key={`request-summary-${index}`}>
                     <RequestSummary
@@ -126,12 +130,21 @@ class AlertMap extends React.Component {
                   </Col>
                 )
               })}
+              {!geographyRequests.some(r => r.type === 'ADVANCED_SEARCH') && (
+                <Col xs={12} sm={6} lg={4}>
+                  <Card>
+                    <Card.Body>
+                      <BaseLink href="/search" text="+ Add Custom Filter" />
+                    </Card.Body>
+                  </Card>
+                </Col>
+              )}
             </Row>
           </Col>
         </Row>
         <Row>
           <Col xs={12} lg={3}>
-            {getRequestType(this.props.requests, 'GEOGRAPHY_HOUSING_TYPE').map((request, index) => {
+            {housingTypeRequests.map((request, index) => {
               return (
                 <Col xs={12} sm={6} lg={4} key={`request-summary-${index}`}>
                   <RequestSummary
