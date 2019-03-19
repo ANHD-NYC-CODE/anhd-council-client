@@ -12,6 +12,8 @@ import { ParameterMapping } from 'shared/classes/ParameterMapping'
 import { Dataset } from 'shared/classes/Dataset'
 import { housingTypeCodeToName } from 'shared/utilities/languageUtils'
 import { constantToModelName, constantToQueryName } from 'shared/utilities/filterUtils'
+import { alertMapFilterdates } from 'shared/utilities/componentUtils'
+
 import { getUrlFormattedParamMaps } from 'Store/AdvancedSearch/utilities/advancedSearchStoreUtils'
 
 import LookupProfileSummary from 'Lookup/LookupProfileSummary'
@@ -220,9 +222,7 @@ export const newGeographyRequest = ({
         type: 'DATE',
         field: `${constantToQueryName(resourceConstant)}__start`,
         comparison: '',
-        value: moment(moment.now())
-          .subtract(1, 'M')
-          .format('YYYY-MM-DD'),
+        value: alertMapFilterdates()[0],
       }),
     ],
     tableConfig: new TableConfig({ resourceConstant: 'PROPERTY' }),

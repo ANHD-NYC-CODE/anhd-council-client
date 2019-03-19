@@ -122,7 +122,7 @@ export const constructAddressString = ({ number, street, borough, zip } = {}) =>
 }
 
 export const councilIdToString = id => {
-  return `Council Distrct ${id}`
+  return `Council District ${id}`
 }
 
 export const communityIdToString = id => {
