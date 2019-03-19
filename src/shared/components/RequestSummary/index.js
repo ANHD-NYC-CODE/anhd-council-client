@@ -3,8 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
-import CardLoader from 'shared/components/CardLoader'
-import { Card, Button } from 'react-bootstrap'
+
 class RequestSummary extends React.Component {
   constructor(props) {
     super(props)
@@ -17,14 +16,13 @@ class RequestSummary extends React.Component {
   }
 
   render() {
-    return (
-      <Card as={Button} variant="light" className=" request-wrapper" onClick={this.handleClick}>
-        <Card.Body>
-          <Card.Title>{this.props.request.label}</Card.Title>
-          {this.props.loading ? <CardLoader /> : <Card.Text>{this.props.results.length}</Card.Text>}
-        </Card.Body>
-      </Card>
-    )
+    return this.props.resultsComponent({
+      request: this.props.request,
+      results: this.props.results,
+      loading: this.props.loading,
+      error: this.props.error,
+      handleClick: this.handleClick,
+    })
   }
 }
 
@@ -36,10 +34,11 @@ RequestSummary.defaultProps = {
 
 RequestSummary.propTypes = {
   onClick: PropTypes.func,
+  resultsComponent: PropTypes.func,
   request: PropTypes.object,
 }
 
-const mapStateToProps = (state, ownProps) => {
+export const mapStateToProps = (state, ownProps) => {
   const loadingSelector = createLoadingSelector([ownProps.request.requestConstant])
   const errorSelector = createErrorSelector([ownProps.request.requestConstant])
 
