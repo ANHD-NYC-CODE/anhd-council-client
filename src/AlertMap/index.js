@@ -14,7 +14,7 @@ import { requestWithAuth } from 'shared/utilities/authUtils'
 import { makeRequest } from 'Store/Request/actions'
 
 import GeographySelect from 'shared/components/GeographySelect'
-import { Row, Col } from 'react-bootstrap'
+import { Row, Col, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
 import LeafletMap from 'LeafletMap'
 import RequestWrapper from 'shared/components/RequestWrapper'
 import RequestSummary from 'shared/components/RequestSummary'
@@ -26,8 +26,9 @@ class AlertMap extends React.Component {
 
     this.loadRequests = this.loadRequests.bind(this)
     this.switchTable = this.switchTable.bind(this)
-
+    this.toggleView = this.toggleView.bind(this)
     this.state = {
+      view: 1,
       selectedRequest: props.mapRequests.length ? props.mapRequests[0] : undefined,
     }
 
@@ -62,6 +63,13 @@ class AlertMap extends React.Component {
 
       // Request geography profile
     }
+  }
+
+  toggleView(value) {
+    console.log(value)
+    this.setState({
+      view: value,
+    })
   }
 
   loadRequests(props) {
@@ -127,16 +135,23 @@ class AlertMap extends React.Component {
             })}
           </Col>
           <Col xs={12} lg={5}>
-            {[].concat(this.props.mapRequests, this.props.housingTypeRequests).map((request, index) => {
-              return (
-                <RequestWrapper
-                  key={`request-wrapper-${index}`}
-                  visible={this.state.selectedRequest === request}
-                  request={request}
-                />
-              )
-            })}
-            <LeafletMap />
+            <ToggleButtonGroup name="view" type="radio" value={this.state.view} onChange={this.toggleView}>
+              <ToggleButton value={1}>Map View</ToggleButton>
+              <ToggleButton value={2}>Table View</ToggleButton>
+            </ToggleButtonGroup>
+            {this.state.view === 1 ? (
+              <LeafletMap />
+            ) : (
+              [].concat(this.props.mapRequests, this.props.housingTypeRequests).map((request, index) => {
+                return (
+                  <RequestWrapper
+                    key={`request-wrapper-${index}`}
+                    visible={this.state.selectedRequest === request}
+                    request={request}
+                  />
+                )
+              })
+            )}
           </Col>
           <Col sm={12} lg={4}>
             Geography Profile
