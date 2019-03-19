@@ -1,18 +1,20 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Filter } from 'shared/classes/Filter'
+import { Geography } from 'shared/classes/Geography'
 import * as yup from 'yup'
 
 import { StandardizedInput } from 'shared/classes/StandardizedInput'
 import { getAdvancedSearch } from 'Store/AdvancedSearch/actions'
 import { requestWithAuth } from 'shared/utilities/authUtils'
 import { getAdvancedSearchParamMaps } from 'Store/AdvancedSearch/utilities/advancedSearchStoreUtils'
-import ConfigContext from 'Config/ConfigContext'
+import { setGeographyAndRequestsAndRedirect } from 'Store/AppState/actions'
 
+import { addGeography, updateGeography } from 'Store/AdvancedSearch/actions'
 import { addHousingType, updateHousingType } from 'Store/AdvancedSearch/actions'
 
 import ConditionComponent from 'AdvancedSearch/ConditionComponent'
-import GeographyQuery from 'AdvancedSearch/GeographyQuery'
+import GeographySelect from 'shared/components/GeographySelect'
 import HousingTypeQuery from 'AdvancedSearch/HousingTypeQuery'
 import FormError from 'shared/components/FormError'
 
@@ -41,6 +43,48 @@ class AdvancedSearchForm extends React.Component {
     this.addHousingType = this.addHousingType.bind(this)
     this.changeHousingType = this.changeHousingType.bind(this)
     this.validateForm = this.validateForm.bind(this)
+    this.changeGeography = this.changeGeography.bind(this)
+    this.syncGeographyToAppState = this.syncGeographyToAppState.bind(this)
+
+    this.syncGeographyToAppState(props)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps.advancedSearch.geographies)
+    this.syncGeographyToAppState(nextProps)
+  }
+
+  syncGeographyToAppState(props) {
+    if (props.appState.currentGeographyType && props.advancedSearch.geographies.length) {
+      const geography = props.advancedSearch.geographies[0]
+      if (
+        props.appState.currentGeographyType !== geography.geographyType.constant ||
+        props.appState.currentGeographyId !== geography.id
+      ) {
+        console.log('syncing!')
+        geography['geographyType'] = props.appState.currentGeographyType
+        geography['id'] = props.appState.currentGeographyId
+        props.dispatch(updateGeography(0, geography))
+      }
+    }
+  }
+
+  changeGeography(type, id) {
+    if (!this.props.advancedSearch.geographies.length) {
+      this.props.dispatch(addGeography(new Geography(type, id)))
+    } else {
+      const geography = this.props.advancedSearch.geographies[0]
+      geography['geographyType'] = type
+      geography['id'] = id
+      this.props.dispatch(updateGeography(0, geography))
+    }
+    this.props.dispatch(
+      setGeographyAndRequestsAndRedirect({
+        geographyType: type,
+        geographyId: id,
+        redirect: false,
+      })
+    )
   }
 
   addHousingType(e) {
@@ -69,13 +113,11 @@ class AdvancedSearchForm extends React.Component {
     allConditions.forEach(condition => condition.validate())
     allFilters.forEach(filter => filter.validate())
     allParamMaps.forEach(paramMap => paramMap.validate())
-
     return [allConditions, allFilters, allParamMaps]
   }
 
   submitForm(values, formik) {
     const [allConditions, allFilters, allParamMaps] = this.validateForm()
-
     formik.validateForm(values).then(() => {
       if (
         allConditions.some(condition => !!condition.errors.length) ||
@@ -91,28 +133,31 @@ class AdvancedSearchForm extends React.Component {
 
   render() {
     return (
-      <Formik onSubmit={this.submitForm} validationSchema={schema}>
+      <Formik
+        enableReinitialize={true}
+        initialValues={{
+          geographyType: this.props.appState.currentGeographyType,
+          geographyId: this.props.appState.currentGeographyId,
+        }}
+        onSubmit={this.submitForm}
+        validationSchema={schema}
+      >
         {({ handleSubmit, handleChange, handleBlur, touched, errors, submitCount }) => (
           <Form noValidate className="advanced-search-form" onSubmit={handleSubmit} validated={this.state.validated}>
             <FormError show={!!this.props.error} message={(this.props.error || {}).message} />
-            <ConfigContext.Consumer>
-              {config => {
-                return (
-                  <GeographyQuery
-                    addGeography={this.addGeography}
-                    geographies={this.props.advancedSearch.geographies}
-                    changeGeography={this.changeGeography}
-                    config={config}
-                    dispatch={this.props.dispatch}
-                    handleChange={handleChange}
-                    handleBlur={handleBlur}
-                    touched={touched}
-                    errors={errors}
-                    submitCount={submitCount}
-                  />
-                )
-              }}
-            </ConfigContext.Consumer>
+
+            <GeographySelect
+              confirmChange={true}
+              currentGeographyType={this.props.appState.currentGeographyType}
+              currentGeographyId={this.props.appState.currentGeographyId}
+              dispatch={this.props.dispatch}
+              onChange={this.changeGeography}
+              handleBlur={handleBlur}
+              touched={touched}
+              errors={errors}
+              handleChange={handleChange}
+            />
+
             <HousingTypeQuery
               addHousingType={this.addHousingType}
               changeHousingType={this.changeHousingType}
@@ -147,6 +192,7 @@ class AdvancedSearchForm extends React.Component {
 
 AdvancedSearchForm.propTypes = {
   advancedSearch: PropTypes.object,
+  appState: PropTypes.object,
   dispatch: PropTypes.func,
   error: PropTypes.object,
   loading: PropTypes.bool,

@@ -26,6 +26,7 @@ export const handleSetPropertyBuildingLookupRequests = (bbl, bin, requests) => (
 export const setGeographyAndRequestsAndRedirect = ({
   geographyType,
   geographyId,
+  redirect = true,
   replaceHistory = false,
 } = {}) => dispatch => {
   const requests = newMapRequests({ geographyType, geographyId })
@@ -35,12 +36,14 @@ export const setGeographyAndRequestsAndRedirect = ({
   dispatch(removeManyRequests(requests.map(r => r.requestConstant)))
   dispatch(handleSetGeographyRequests(geographyType, geographyId, requests))
 
-  if (replaceHistory) {
-    const path = getGeographyPath(geographyType)
-    dispatch(replace(`/${path}/${geographyId}`))
-  } else {
-    const path = getGeographyPath(geographyType)
-    dispatch(push(`/${path}/${geographyId}`))
+  if (redirect) {
+    if (replaceHistory) {
+      const path = getGeographyPath(geographyType)
+      dispatch(replace(`/${path}/${geographyId}`))
+    } else {
+      const path = getGeographyPath(geographyType)
+      dispatch(push(`/${path}/${geographyId}`))
+    }
   }
 }
 

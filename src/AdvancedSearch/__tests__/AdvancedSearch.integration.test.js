@@ -94,7 +94,7 @@ describe('AdvancedSearch', () => {
   describe('Geography Query Select', () => {
     it('has initial state', () => {
       const wrapper = setupWrapper()
-      expect(wrapper.find('GeographyQuery')).toHaveLength(1)
+      expect(wrapper.find('GeographySelect')).toHaveLength(1)
       expect(wrapper.find('select[name="geographyType"]')).toHaveLength(1)
       expect(wrapper.find('select[name="geographyId"]')).toHaveLength(0)
 

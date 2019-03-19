@@ -39,6 +39,7 @@ export class AdvancedSearch extends React.Component {
                 {config => (
                   <AdvancedSearchForm
                     advancedSearch={this.props.advancedSearch}
+                    appState={this.props.appState}
                     config={config}
                     dispatch={this.props.dispatch}
                     error={this.props.error}
@@ -64,6 +65,7 @@ const errorSelector = createErrorSelector([c.GET_ADVANCED_SEARCH])
 
 const mapStateToProps = state => {
   return {
+    appState: state.appState,
     advancedSearch: state.advancedSearch,
     error: errorSelector(state),
     loading: loadingSelector(state),
