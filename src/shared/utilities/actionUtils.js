@@ -48,7 +48,7 @@ export const handleCatchError = (error, type, dispatch, requestId) => {
   let errorMessage = ''
   let errorStatus = ''
   if (!error.response) {
-    if (error.message && error.message.toUpperCase().match(/(TIME)/)) {
+    if (error.status === 504 || (error.message && error.message.toUpperCase().match(/(TIME)/))) {
       errorMessage = ERROR_408_MESSAGE
       errorStatus = 408
     } else if (error.status === 504) {

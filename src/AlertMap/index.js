@@ -18,7 +18,8 @@ import { Row, Col } from 'react-bootstrap'
 import LeafletMap from 'LeafletMap'
 import RequestWrapper from 'shared/components/RequestWrapper'
 import RequestSummary from 'shared/components/RequestSummary'
-
+import SummaryResultCard from 'shared/components/SummaryResultCard'
+import HousingTypeSummaryResultCard from 'AlertMap/HousingTypeSummaryResultCard'
 class AlertMap extends React.Component {
   constructor(props) {
     super(props)
@@ -27,9 +28,7 @@ class AlertMap extends React.Component {
     this.switchTable = this.switchTable.bind(this)
 
     this.state = {
-      selectedRequest: [].concat(props.mapRequests, props.housingTypeRequests).length
-        ? [].concat(props.mapRequests, props.housingTypeRequests)[0]
-        : undefined,
+      selectedRequest: props.mapRequests.length ? props.mapRequests[0] : undefined,
     }
 
     if (!props.geographyType) {
@@ -71,11 +70,9 @@ class AlertMap extends React.Component {
       this.props.dispatch(requestWithAuth(makeRequest(request)))
     })
 
-    if (!this.state.selectedRequest) {
-      this.setState({
-        selectedRequest: requests[0],
-      })
-    }
+    this.setState({
+      selectedRequest: props.mapRequests[0],
+    })
   }
 
   switchTable(request) {
@@ -104,7 +101,11 @@ class AlertMap extends React.Component {
               {this.props.mapRequests.map((request, index) => {
                 return (
                   <Col xs={12} sm={6} lg={4} key={`request-summary-${index}`}>
-                    <RequestSummary request={request} onClick={r => this.switchTable(r)} />
+                    <RequestSummary
+                      request={request}
+                      onClick={r => this.switchTable(r)}
+                      resultsComponent={SummaryResultCard}
+                    />
                   </Col>
                 )
               })}
@@ -116,7 +117,11 @@ class AlertMap extends React.Component {
             {this.props.housingTypeRequests.map((request, index) => {
               return (
                 <Col xs={12} sm={6} lg={4} key={`request-summary-${index}`}>
-                  <RequestSummary request={request} onClick={r => this.switchTable(r)} />
+                  <RequestSummary
+                    request={request}
+                    onClick={r => this.switchTable(r)}
+                    resultsComponent={HousingTypeSummaryResultCard}
+                  />
                 </Col>
               )
             })}

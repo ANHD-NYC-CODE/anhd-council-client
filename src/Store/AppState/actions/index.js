@@ -31,6 +31,7 @@ export const setGeographyAndRequestsAndRedirect = ({
   const requests = newMapRequests({ geographyType, geographyId })
   dispatch(removeRequestType('MAP_FILTER'))
   dispatch(removeRequestType('MAP_PROFILE'))
+  dispatch(removeRequestType('GEOGRAPHY_HOUSING_TYPE'))
   dispatch(removeManyRequests(requests.map(r => r.requestConstant)))
   dispatch(handleSetGeographyRequests(geographyType, geographyId, requests))
 
