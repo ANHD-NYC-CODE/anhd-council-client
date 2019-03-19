@@ -6,6 +6,7 @@ import * as c from 'Store/Building/constants'
 import { lookupRequests } from 'Store/AppState/selectors'
 import { setLookupAndRequestsAndRedirect } from 'Store/AppState/actions'
 import { makeRequest } from 'Store/Request/actions'
+import SummaryResultCard from 'shared/components/SummaryResultCard'
 
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
@@ -24,7 +25,7 @@ class Lookup extends React.Component {
     super(props)
 
     this.state = {
-      selectedRequestIndex: props.requests.length ? 0 : undefined,
+      selectedRequest: props.requests.length ? props.requests[0] : undefined,
     }
 
     this.switchTable = this.switchTable.bind(this)
@@ -62,16 +63,16 @@ class Lookup extends React.Component {
       this.props.dispatch(requestWithAuth(makeRequest(request)))
     })
 
-    if (!this.state.selectedRequestIndex) {
+    if (!this.state.selectedRequest) {
       this.setState({
-        selectedRequestIndex: 0,
+        selectedRequest: props.requests[0],
       })
     }
   }
 
-  switchTable(e, index) {
+  switchTable(request) {
     this.setState({
-      selectedRequestIndex: index,
+      selectedRequest: request,
     })
   }
 
@@ -105,7 +106,11 @@ class Lookup extends React.Component {
                 {this.props.requests.map((request, index) => {
                   return (
                     <Col xs={12} sm={6} md={4} lg={12} key={`request-summary-${index}`}>
-                      <RequestSummary request={request} onClick={e => this.switchTable(e, index)} />
+                      <RequestSummary
+                        request={request}
+                        onClick={r => this.switchTable(r)}
+                        resultsComponent={SummaryResultCard}
+                      />
                     </Col>
                   )
                 })}
@@ -123,7 +128,7 @@ class Lookup extends React.Component {
                 {this.props.requests.map((request, index) => {
                   return (
                     <Col xs={12} key={`request-wrapper-${index}`}>
-                      <RequestWrapper visible={this.state.selectedRequestIndex === index} request={request} />
+                      <RequestWrapper visible={this.state.selectedRequest === request} request={request} />
                     </Col>
                   )
                 })}
@@ -149,8 +154,8 @@ const mapStateToProps = state => {
   const propertyBuildingMatchSelector = createMatchSelector({ path: '/property/:bbl/building/:bin' })
   const match = propertyBuildingMatchSelector(state) || propertyMatchSelector(state)
   return {
-    bin: match ? match.params.bin : null,
-    bbl: match ? match.params.bbl : null,
+    bin: match ? match.params.bin : undefined,
+    bbl: match ? match.params.bbl : undefined,
     building: state.building,
     loading: loadingSelector(state),
     error: errorSelector(state),

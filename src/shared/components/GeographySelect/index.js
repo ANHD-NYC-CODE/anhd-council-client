@@ -5,32 +5,34 @@ import { getGeographyIdOptions } from 'shared/utilities/componentUtils'
 import { Row, Col, Form, Button } from 'react-bootstrap'
 import { StandardizedInput } from 'shared/classes/StandardizedInput'
 import ConfigContext from 'Config/ConfigContext'
+import FormError from 'shared/components/FormError'
 
 class GeographySelect extends React.Component {
   constructor(props) {
     super(props)
-
     this.state = {
       changing: false,
       geographyType: props.currentGeographyType,
       geographyId: props.currentGeographyId,
     }
-
-    this.changeGeography = this.changeGeography.bind(this)
+    this.handleChangeType = this.handleChangeType.bind(this)
+    this.handleChangeGeography = this.handleChangeGeography.bind(this)
   }
 
-  changeGeography(e) {
-    this.props.onChange(this.state.geographyType, new StandardizedInput(e).value)
-    this.setState({ changing: false })
+  handleChangeType(e) {
+    this.setState({
+      changing: true,
+      geographyType: new StandardizedInput(e).value,
+      geographyId: -1,
+    })
+    if (this.props.handleChange) this.props.handleChange(e)
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (!this.state.changing) {
-      this.setState({
-        geographyType: nextProps.currentGeographyType,
-        geographyId: nextProps.currentGeographyId,
-      })
-    }
+  handleChangeGeography(e) {
+    const standardE = new StandardizedInput(e)
+    this.setState({ changing: false, geographyId: standardE.value })
+    this.props.onChange(this.state.geographyType, standardE.value)
+    if (this.props.handleChange) this.props.handleChange(e)
   }
 
   render() {
@@ -45,13 +47,7 @@ class GeographySelect extends React.Component {
                 name="geographyType"
                 as="select"
                 data-key="geographyType"
-                onChange={e =>
-                  this.setState({
-                    changing: true,
-                    geographyType: new StandardizedInput(e).value,
-                    geographyId: -1,
-                  })
-                }
+                onChange={this.handleChangeType}
                 value={this.state.geographyType || -1}
                 onBlur={this.props.handleBlur}
                 isInvalid={
@@ -65,6 +61,15 @@ class GeographySelect extends React.Component {
                 <option value={b.COUNCILGEOGRAPHY.constant}>{b.COUNCILGEOGRAPHY.name}</option>
                 <option value={b.COMMUNITYGEOGRAPHY.constant}>{b.COMMUNITYGEOGRAPHY.name}</option>
               </Form.Control>
+              <FormError
+                show={
+                  !!(
+                    ((this.props.touched || {}).geographyType || !!this.props.submitCount) &&
+                    (this.props.errors || {}).geographyType
+                  )
+                }
+                message={(this.props.errors || {}).geographyType}
+              />
             </Col>
             {!!this.state.geographyType && (
               <Col xs={6}>
@@ -73,7 +78,7 @@ class GeographySelect extends React.Component {
                   as="select"
                   data-key="id"
                   name="geographyId"
-                  onChange={e => this.changeGeography(e)}
+                  onChange={e => this.handleChangeGeography(e)}
                   placeholder="#"
                   size="sm"
                   value={this.state.geographyId || -1}
@@ -85,6 +90,15 @@ class GeographySelect extends React.Component {
                 >
                   {getGeographyIdOptions(config.councilDistricts, config.communityDistricts, this.state.geographyType)}
                 </Form.Control>
+                <FormError
+                  show={
+                    !!(
+                      ((this.props.touched || {}).geographyId || !!this.props.submitCount) &&
+                      (this.props.errors || {}).geographyId
+                    )
+                  }
+                  message={(this.props.errors || {}).geographyId}
+                />
               </Col>
             )}
             {this.props.confirmChange && this.state.changing && (
@@ -118,11 +132,12 @@ GeographySelect.propTypes = {
   dispatch: PropTypes.func,
   confirmChange: PropTypes.bool,
   placeholder: PropTypes.string,
-  onChange: PropTypes.string,
+  onChange: PropTypes.func,
   handleBlur: PropTypes.func,
   touched: PropTypes.object,
   errors: PropTypes.object,
   submitCount: PropTypes.number,
+  handleChange: PropTypes.func,
 }
 
 export default GeographySelect

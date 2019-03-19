@@ -8,7 +8,6 @@ import { createErrorSelector } from 'Store/Error/selectors'
 import { push, createMatchSelector } from 'connected-react-router'
 import { setGeographyAndRequestsAndRedirect } from 'Store/AppState/actions'
 
-import { StandardizedInput } from 'shared/classes/StandardizedInput'
 import { pathToGeographyConstant } from 'shared/utilities/routeUtils'
 import { lookupRequests } from 'Store/AppState/selectors'
 import { requestWithAuth } from 'shared/utilities/authUtils'
