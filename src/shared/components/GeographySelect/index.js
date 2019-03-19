@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import * as b from 'shared/constants/geographies'
-import { setGeographyAndRequestsAndRedirect } from 'Store/AppState/actions'
 import { getGeographyIdOptions } from 'shared/utilities/componentUtils'
 import { Row, Col, Form, Button } from 'react-bootstrap'
 import { StandardizedInput } from 'shared/classes/StandardizedInput'
@@ -17,24 +16,21 @@ class GeographySelect extends React.Component {
       geographyId: props.currentGeographyId,
     }
 
-    this.changeGeographyAndId = this.changeGeographyAndId.bind(this)
+    this.changeGeography = this.changeGeography.bind(this)
   }
 
-  changeGeographyAndId(e) {
+  changeGeography(e) {
+    this.props.onChange(this.state.geographyType, new StandardizedInput(e).value)
     this.setState({ changing: false })
-    this.props.dispatch(
-      setGeographyAndRequestsAndRedirect({
-        geographyType: this.state.geographyType,
-        geographyId: new StandardizedInput(e).value,
-      })
-    )
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({
-      geographyType: nextProps.currentGeographyType,
-      geographyId: nextProps.currentGeographyId,
-    })
+    if (!this.state.changing) {
+      this.setState({
+        geographyType: nextProps.currentGeographyType,
+        geographyId: nextProps.currentGeographyId,
+      })
+    }
   }
 
   render() {
@@ -57,6 +53,11 @@ class GeographySelect extends React.Component {
                   })
                 }
                 value={this.state.geographyType || -1}
+                onBlur={this.props.handleBlur}
+                isInvalid={
+                  ((this.props.touched || {}).geographyType || !!this.props.submitCount) &&
+                  (this.props.errors || {}).geographyType
+                }
               >
                 <option disabled value={-1} key={-1}>
                   {this.props.placeholder || 'Select a Geography type'}
@@ -72,10 +73,15 @@ class GeographySelect extends React.Component {
                   as="select"
                   data-key="id"
                   name="geographyId"
-                  onChange={e => this.changeGeographyAndId(e)}
+                  onChange={e => this.changeGeography(e)}
                   placeholder="#"
                   size="sm"
                   value={this.state.geographyId || -1}
+                  onBlur={this.props.handleBlur}
+                  isInvalid={
+                    ((this.props.touched || {}).geographyId || !!this.props.submitCount) &&
+                    (this.props.errors || {}).geographyId
+                  }
                 >
                   {getGeographyIdOptions(config.councilDistricts, config.communityDistricts, this.state.geographyType)}
                 </Form.Control>
@@ -112,6 +118,11 @@ GeographySelect.propTypes = {
   dispatch: PropTypes.func,
   confirmChange: PropTypes.bool,
   placeholder: PropTypes.string,
+  onChange: PropTypes.string,
+  handleBlur: PropTypes.func,
+  touched: PropTypes.object,
+  errors: PropTypes.object,
+  submitCount: PropTypes.number,
 }
 
 export default GeographySelect

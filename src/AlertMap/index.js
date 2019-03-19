@@ -6,8 +6,9 @@ import * as c from 'Store/Council/constants'
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
 import { push, createMatchSelector } from 'connected-react-router'
-
 import { setGeographyAndRequestsAndRedirect } from 'Store/AppState/actions'
+
+import { StandardizedInput } from 'shared/classes/StandardizedInput'
 import { pathToGeographyConstant } from 'shared/utilities/routeUtils'
 import { lookupRequests } from 'Store/AppState/selectors'
 import { requestWithAuth } from 'shared/utilities/authUtils'
@@ -30,6 +31,7 @@ class AlertMap extends React.Component {
     this.loadRequests = this.loadRequests.bind(this)
     this.switchTable = this.switchTable.bind(this)
     this.toggleView = this.toggleView.bind(this)
+    this.changeGeographyAndId = this.changeGeographyAndId.bind(this)
     this.state = {
       view: 1,
       selectedRequest: props.mapRequests.length ? props.mapRequests[0] : undefined,
@@ -63,8 +65,6 @@ class AlertMap extends React.Component {
       )
     } else if (nextProps.mapRequests) {
       this.loadRequests(nextProps)
-
-      // Request geography profile
     }
   }
 
@@ -91,6 +91,15 @@ class AlertMap extends React.Component {
     })
   }
 
+  changeGeographyAndId(type, value) {
+    this.props.dispatch(
+      setGeographyAndRequestsAndRedirect({
+        geographyType: type,
+        geographyId: value,
+      })
+    )
+  }
+
   render() {
     return (
       <div>
@@ -100,6 +109,7 @@ class AlertMap extends React.Component {
             currentGeographyType={this.props.appState.currentGeographyType}
             currentGeographyId={this.props.appState.currentGeographyId}
             dispatch={this.props.dispatch}
+            onChange={this.changeGeographyAndId}
           />
         </Row>
         <Row>
@@ -136,7 +146,7 @@ class AlertMap extends React.Component {
               )
             })}
           </Col>
-          <Col xs={12} lg={5}>
+          <Col xs={12} lg={6}>
             <ToggleButtonGroup name="view" type="radio" value={this.state.view} onChange={this.toggleView}>
               <ToggleButton value={1}>Map View</ToggleButton>
               <ToggleButton value={2}>Table View</ToggleButton>
@@ -155,7 +165,7 @@ class AlertMap extends React.Component {
               })
             )}
           </Col>
-          <Col sm={12} lg={4}>
+          <Col sm={12} lg={3}>
             <GeographyProfile
               geographyType={this.props.appState.currentGeographyType}
               geographyId={this.props.appState.currentGeographyId}
