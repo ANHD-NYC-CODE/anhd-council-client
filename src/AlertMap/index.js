@@ -9,7 +9,7 @@ import { push, createMatchSelector } from 'connected-react-router'
 import { setGeographyAndRequestsAndRedirect } from 'Store/AppState/actions'
 
 import { pathToGeographyConstant } from 'shared/utilities/routeUtils'
-import { lookupRequests } from 'Store/AppState/selectors'
+import { getRequestType, getManyRequestTypes } from 'Store/AppState/selectors'
 import { requestWithAuth } from 'shared/utilities/authUtils'
 import { makeRequest } from 'Store/Request/actions'
 
@@ -26,14 +26,13 @@ import GeographyProfile from 'AlertMap/GeographyProfile'
 class AlertMap extends React.Component {
   constructor(props) {
     super(props)
-
     this.loadRequests = this.loadRequests.bind(this)
     this.switchTable = this.switchTable.bind(this)
     this.toggleView = this.toggleView.bind(this)
     this.changeGeographyAndId = this.changeGeographyAndId.bind(this)
     this.state = {
       view: 1,
-      selectedRequest: props.mapRequests.length ? props.mapRequests[0] : undefined,
+      selectedRequest: props.requests.length ? getRequestType(this.props.requests, 'MAP_FILTER')[0] : undefined,
     }
 
     if (!props.geographyType) {
@@ -46,7 +45,7 @@ class AlertMap extends React.Component {
           replaceHistory: true,
         })
       )
-    } else if (props.mapRequests) {
+    } else if (props.requests) {
       this.loadRequests(props)
 
       // Request geography profile
@@ -62,7 +61,7 @@ class AlertMap extends React.Component {
           replaceHistory: true,
         })
       )
-    } else if (nextProps.mapRequests) {
+    } else if (nextProps.requests) {
       this.loadRequests(nextProps)
     }
   }
@@ -74,13 +73,12 @@ class AlertMap extends React.Component {
   }
 
   loadRequests(props) {
-    const requests = [].concat(props.mapRequests, props.housingTypeRequests)
-    requests.forEach(request => {
+    props.requests.forEach(request => {
       this.props.dispatch(requestWithAuth(makeRequest(request)))
     })
 
     this.setState({
-      selectedRequest: props.mapRequests[0],
+      selectedRequest: getRequestType(props.requests, ['MAP_FILTER'])[0],
     })
   }
 
@@ -117,7 +115,7 @@ class AlertMap extends React.Component {
           </Col>
           <Col xs={12} sm={6} md={8}>
             <Row>
-              {this.props.mapRequests.map((request, index) => {
+              {getManyRequestTypes(this.props.requests, ['MAP_FILTER', 'ADVANCED_SEARCH']).map((request, index) => {
                 return (
                   <Col xs={12} sm={6} lg={4} key={`request-summary-${index}`}>
                     <RequestSummary
@@ -133,7 +131,7 @@ class AlertMap extends React.Component {
         </Row>
         <Row>
           <Col xs={12} lg={3}>
-            {this.props.housingTypeRequests.map((request, index) => {
+            {getRequestType(this.props.requests, 'GEOGRAPHY_HOUSING_TYPE').map((request, index) => {
               return (
                 <Col xs={12} sm={6} lg={4} key={`request-summary-${index}`}>
                   <RequestSummary
@@ -153,7 +151,7 @@ class AlertMap extends React.Component {
             {this.state.view === 1 ? (
               <LeafletMap />
             ) : (
-              [].concat(this.props.mapRequests, this.props.housingTypeRequests).map((request, index) => {
+              this.props.requests.map((request, index) => {
                 return (
                   <RequestWrapper
                     key={`request-wrapper-${index}`}
@@ -197,8 +195,7 @@ const mapStateToProps = state => {
     geographyId: match ? match.params.id : null,
     geographyType: path,
     router: state.router,
-    mapRequests: lookupRequests(state, 'MAP_FILTER'),
-    housingTypeRequests: lookupRequests(state, 'GEOGRAPHY_HOUSING_TYPE'),
+    requests: getManyRequestTypes(state.appState.requests, ['MAP_FILTER', 'ADVANCED_SEARCH', 'GEOGRAPHY_HOUSING_TYPE']),
   }
 }
 

@@ -11,7 +11,8 @@ import { ApiMap } from 'shared/classes/ApiMap'
 import { ParameterMapping } from 'shared/classes/ParameterMapping'
 import { Dataset } from 'shared/classes/Dataset'
 import { housingTypeCodeToName } from 'shared/utilities/languageUtils'
-import { constantToModelName, constantToQueryName, getDatasetDateField } from 'shared/utilities/filterUtils'
+import { constantToModelName, constantToQueryName } from 'shared/utilities/filterUtils'
+import { getUrlFormattedParamMaps } from 'Store/AdvancedSearch/utilities/advancedSearchStoreUtils'
 
 import LookupProfileSummary from 'Lookup/LookupProfileSummary'
 
@@ -290,4 +291,18 @@ export const newMapRequests = ({ geographyType, geographyId } = {}) => {
       defaultValue: 1,
     }),
   ]
+}
+
+export const newAdvancedSearchRequest = ({ geographyType, geographyId, advancedSearch } = {}) => {
+  const paramMaps = getUrlFormattedParamMaps(advancedSearch)
+  return new DataRequest({
+    type: 'ADVANCED_SEARCH',
+    resourceConstant: 'PROPERTY_ADVANCED_SEARCH',
+    apiMaps: [
+      new ApiMap({ constant: geographyType, resourceId: geographyId }),
+      new ApiMap({ constant: 'PROPERTY', name: 'Properties' }),
+    ],
+    paramMaps: paramMaps,
+    tableConfig: new TableConfig({ resourceConstant: 'PROPERTY' }),
+  })
 }

@@ -34,6 +34,19 @@ describe('App State reducer', () => {
     })
   })
 
+  describe('SET_ADVANCED_SEARCH_REQUEST', () => {
+    const advancedSearchRequest = 4
+    const requests = [1, 2, 3]
+    it('sets the request', () => {
+      expect(
+        r.appStateReducer({ ...r.initialState, requests }, a.handleSetAdvancedSearchRequest(advancedSearchRequest))
+      ).toEqual({
+        ...r.initialState,
+        requests: [...requests, advancedSearchRequest],
+      })
+    })
+  })
+
   describe('REMOVE_REQUEST_TYPE', () => {
     const requests = [{ type: 'A' }, { type: 'B' }]
     it('removes requests of the specified type', () => {

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { push, createMatchSelector } from 'connected-react-router'
 import * as c from 'Store/Building/constants'
-import { lookupRequests } from 'Store/AppState/selectors'
+import { getRequestType, getManyRequestTypes } from 'Store/AppState/selectors'
 import { setLookupAndRequestsAndRedirect } from 'Store/AppState/actions'
 import { makeRequest } from 'Store/Request/actions'
 import SummaryResultCard from 'shared/components/SummaryResultCard'
@@ -25,7 +25,7 @@ class Lookup extends React.Component {
     super(props)
 
     this.state = {
-      selectedRequest: props.requests.length ? props.requests[0] : undefined,
+      selectedRequest: props.requests.length ? getRequestType(props.requests, 'LOOKUP_FILTER')[0] : undefined,
     }
 
     this.switchTable = this.switchTable.bind(this)
@@ -38,7 +38,6 @@ class Lookup extends React.Component {
       props.dispatch(setLookupAndRequestsAndRedirect({ bbl: props.bbl, replaceHistory: true }))
     } else if (props.requests) {
       this.loadRequests(props)
-      props.dispatch(makeRequest(props.profileRequest))
     }
   }
 
@@ -54,7 +53,6 @@ class Lookup extends React.Component {
       nextProps.dispatch(setLookupAndRequestsAndRedirect({ bbl: nextProps.bbl, replaceHistory: true }))
     } else if (nextProps.requests) {
       this.loadRequests(nextProps)
-      nextProps.dispatch(makeRequest(nextProps.profileRequest))
     }
   }
 
@@ -63,11 +61,9 @@ class Lookup extends React.Component {
       this.props.dispatch(requestWithAuth(makeRequest(request)))
     })
 
-    if (!this.state.selectedRequest) {
-      this.setState({
-        selectedRequest: props.requests[0],
-      })
-    }
+    this.setState({
+      selectedRequest: getRequestType(props.requests, 'LOOKUP_FILTER')[0],
+    })
   }
 
   switchTable(request) {
@@ -87,7 +83,9 @@ class Lookup extends React.Component {
           </Row>
           <Row>
             <Col>
-              {this.props.profileRequest && <RequestWrapper request={this.props.profileRequest} visible={true} />}
+              {getRequestType(this.props.requests, 'LOOKUP_PROFILE').length && (
+                <RequestWrapper request={getRequestType(this.props.requests, 'LOOKUP_PROFILE')[0]} visible={true} />
+              )}
             </Col>
           </Row>
           <Row>
@@ -96,14 +94,18 @@ class Lookup extends React.Component {
             </Col>
           </Row>
           <Row>
-            <Col>{this.props.profileRequest && <LookupLinks request={this.props.profileRequest} />}</Col>
+            <Col>
+              {getRequestType(this.props.requests, 'LOOKUP_PROFILE').length && (
+                <LookupLinks request={getRequestType(this.props.requests, 'LOOKUP_PROFILE')[0]} />
+              )}
+            </Col>
           </Row>
         </Col>
         <Col xs={12} lg={8}>
           <Row>
             <Col xs={12} lg={3}>
               <Row>
-                {this.props.requests.map((request, index) => {
+                {getRequestType(this.props.requests, 'LOOKUP_FILTER').map((request, index) => {
                   return (
                     <Col xs={12} sm={6} md={4} lg={12} key={`request-summary-${index}`}>
                       <RequestSummary
@@ -119,13 +121,16 @@ class Lookup extends React.Component {
             <Col xs={12} lg={9}>
               <Row>
                 <Col>
-                  {this.props.profileRequest && (
-                    <BuildingSelect dispatch={this.props.dispatch} request={this.props.profileRequest} />
+                  {getRequestType(this.props.requests, 'LOOKUP_PROFILE').length && (
+                    <BuildingSelect
+                      dispatch={this.props.dispatch}
+                      request={getRequestType(this.props.requests, 'LOOKUP_PROFILE')[0]}
+                    />
                   )}
                 </Col>
               </Row>
               <Row>
-                {this.props.requests.map((request, index) => {
+                {getRequestType(this.props.requests, 'LOOKUP_FILTER').map((request, index) => {
                   return (
                     <Col xs={12} key={`request-wrapper-${index}`}>
                       <RequestWrapper visible={this.state.selectedRequest === request} request={request} />
@@ -159,8 +164,7 @@ const mapStateToProps = state => {
     building: state.building,
     loading: loadingSelector(state),
     error: errorSelector(state),
-    requests: lookupRequests(state, 'LOOKUP_FILTER'),
-    profileRequest: lookupRequests(state, 'LOOKUP_PROFILE')[0],
+    requests: getManyRequestTypes(state.appState.requests, ['LOOKUP_FILTER', 'LOOKUP_PROFILE']),
     appState: state.appState,
   }
 }

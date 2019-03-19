@@ -72,13 +72,12 @@ export const handleGetAdvancedSearch = response => ({
 
 export const getAdvancedSearch = () => (dispatch, getState, access_token) => {
   const requestId = Math.floor(Math.random() * 1000000)
-  const datasetsConfig = getState().dataset.datasets
   return constructAxiosGet(
     dispatch,
     getState,
     requestId,
     `${u.PROPERTY_URL}`,
-    transformStateIntoParamObject(datasetsConfig, getState().advancedSearch),
+    transformStateIntoParamObject(getState().advancedSearch),
     access_token,
     c.GET_ADVANCED_SEARCH,
     handleGetAdvancedSearch

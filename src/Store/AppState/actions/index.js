@@ -1,8 +1,8 @@
 import * as c from '../constants'
 import { push, replace } from 'connected-react-router'
 import { getGeographyPath, addressResultToPath } from 'shared/utilities/routeUtils'
-import { removeManyRequests } from 'Store/Request/actions'
-import { newMapRequests, newLookupRequests } from 'shared/utilities/actionUtils'
+import { removeRequest, removeManyRequests } from 'Store/Request/actions'
+import { newMapRequests, newLookupRequests, newAdvancedSearchRequest } from 'shared/utilities/actionUtils'
 
 export const removeRequestType = requestType => ({
   type: c.REMOVE_REQUEST_TYPE,
@@ -23,6 +23,11 @@ export const handleSetPropertyBuildingLookupRequests = (bbl, bin, requests) => (
   requests,
 })
 
+export const handleSetAdvancedSearchRequest = advancedSearchRequest => ({
+  type: c.SET_ADVANCED_SEARCH_REQUEST,
+  advancedSearchRequest,
+})
+
 export const setGeographyAndRequestsAndRedirect = ({
   geographyType,
   geographyId,
@@ -37,11 +42,10 @@ export const setGeographyAndRequestsAndRedirect = ({
   dispatch(handleSetGeographyRequests(geographyType, geographyId, requests))
 
   if (redirect) {
+    const path = getGeographyPath(geographyType)
     if (replaceHistory) {
-      const path = getGeographyPath(geographyType)
       dispatch(replace(`/${path}/${geographyId}`))
     } else {
-      const path = getGeographyPath(geographyType)
       dispatch(push(`/${path}/${geographyId}`))
     }
   }
@@ -58,5 +62,26 @@ export const setLookupAndRequestsAndRedirect = ({ bbl, bin, replaceHistory = fal
     dispatch(replace(addressResultToPath({ bbl: bbl, bin: bin })))
   } else {
     dispatch(push(addressResultToPath({ bbl: bbl, bin: bin })))
+  }
+}
+
+export const setAdvancedSearchRequestAndRedirect = ({ redirect, replaceHistory } = {}) => (dispatch, getState) => {
+  const appState = getState().appState
+  const advancedSearchRequest = newAdvancedSearchRequest({
+    geographyType: appState.currentGeographyType,
+    geographyId: appState.currentGeographyId,
+    advancedSearch: getState().advancedSearch,
+  })
+  dispatch(removeRequestType('ADVANCED_SEARCH'))
+  dispatch(removeRequest(advancedSearchRequest.requestConstant))
+  dispatch(handleSetAdvancedSearchRequest(advancedSearchRequest))
+
+  if (redirect) {
+    const path = getGeographyPath(appState.currentGeographyType)
+    if (replaceHistory) {
+      dispatch(replace(`/${path}/${appState.currentGeographyId}`))
+    } else {
+      dispatch(push(`/${path}/${appState.currentGeographyId}`))
+    }
   }
 }

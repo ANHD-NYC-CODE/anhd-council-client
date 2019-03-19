@@ -33,7 +33,7 @@ describe('convertConditionMappingToQ', () => {
 
       const result = null
 
-      expect(a.convertConditionMappingToQ(undefined, conditions)).toEqual(result)
+      expect(a.convertConditionMappingToQ(conditions)).toEqual(result)
     })
   })
   describe('3 ANDS', () => {
@@ -49,7 +49,7 @@ describe('convertConditionMappingToQ', () => {
       }
 
       const result = `*condition_0=AND filter_0=hpdviolations__count__gte=5,hpdviolations__approveddate__gte=${todayminus1year},hpdviolations__approveddate__lte=${todayplus1year} filter_1=dobviolations__count__gte=5,dobviolations__issuedate__gte=${todayminus1year},dobviolations__issuedate__lte=${todayplus1year} filter_2=ecbviolations__count__gte=5,ecbviolations__issuedate__gte=${todayminus1year},ecbviolations__issuedate__lte=${todayplus1year}`
-      expect(a.convertConditionMappingToQ(undefined, conditions)).toEqual(result)
+      expect(a.convertConditionMappingToQ(conditions)).toEqual(result)
     })
   })
 
@@ -66,7 +66,7 @@ describe('convertConditionMappingToQ', () => {
       }
       //
       const result = `*condition_0=OR filter_0=hpdviolations__count__gte=5,hpdviolations__approveddate__gte=${todayminus1year},hpdviolations__approveddate__lte=${todayplus1year} filter_1=dobviolations__count__gte=5,dobviolations__issuedate__gte=${todayminus1year},dobviolations__issuedate__lte=${todayplus1year} filter_2=ecbviolations__count__gte=5,ecbviolations__issuedate__gte=${todayminus1year},ecbviolations__issuedate__lte=${todayplus1year}`
-      expect(a.convertConditionMappingToQ(undefined, conditions)).toEqual(result)
+      expect(a.convertConditionMappingToQ(conditions)).toEqual(result)
     })
   })
 
@@ -86,7 +86,7 @@ describe('convertConditionMappingToQ', () => {
       }
 
       const result = `*condition_0=AND filter_0=hpdviolations__count__gte=5,hpdviolations__approveddate__gte=${todayminus1year},hpdviolations__approveddate__lte=${todayplus1year} filter_1=condition_1 *condition_1=OR filter_0=dobviolations__count__gte=5,dobviolations__issuedate__gte=${todayminus1year},dobviolations__issuedate__lte=${todayplus1year} filter_1=ecbviolations__count__gte=5,ecbviolations__issuedate__gte=${todayminus1year},ecbviolations__issuedate__lte=${todayplus1year}`
-      expect(a.convertConditionMappingToQ(undefined, conditions)).toEqual(result)
+      expect(a.convertConditionMappingToQ(conditions)).toEqual(result)
     })
   })
 
@@ -106,7 +106,7 @@ describe('convertConditionMappingToQ', () => {
       }
 
       const result = `*condition_0=OR filter_0=hpdviolations__count__gte=5,hpdviolations__approveddate__gte=${todayminus1year},hpdviolations__approveddate__lte=${todayplus1year} filter_1=condition_1 *condition_1=AND filter_0=dobviolations__count__gte=5,dobviolations__issuedate__gte=${todayminus1year},dobviolations__issuedate__lte=${todayplus1year} filter_1=ecbviolations__count__gte=5,ecbviolations__issuedate__gte=${todayminus1year},ecbviolations__issuedate__lte=${todayplus1year}`
-      expect(a.convertConditionMappingToQ(undefined, conditions)).toEqual(result)
+      expect(a.convertConditionMappingToQ(conditions)).toEqual(result)
     })
   })
 
@@ -130,7 +130,7 @@ describe('convertConditionMappingToQ', () => {
       }
 
       const result = `*condition_0=AND filter_0=hpdviolations__count__gte=5,hpdviolations__approveddate__gte=${todayminus1year},hpdviolations__approveddate__lte=${todayplus1year} filter_1=condition_1 *condition_1=OR filter_0=dobviolations__count__gte=5,dobviolations__issuedate__gte=${todayminus1year},dobviolations__issuedate__lte=${todayplus1year} filter_1=ecbviolations__count__gte=5,ecbviolations__issuedate__gte=${todayminus1year},ecbviolations__issuedate__lte=${todayplus1year} filter_2=condition_2 *condition_2=AND filter_0=hpdcomplaints__count__gte=5,hpdcomplaints__receiveddate__gte=${todayminus1year},hpdcomplaints__receiveddate__lte=${todayplus1year} filter_1=dobcomplaints__count__gte=5,dobcomplaints__dateentered__gte=${todayminus1year},dobcomplaints__dateentered__lte=${todayplus1year}`
-      expect(a.convertConditionMappingToQ(undefined, conditions)).toEqual(result)
+      expect(a.convertConditionMappingToQ(conditions)).toEqual(result)
     })
   })
 
@@ -146,7 +146,7 @@ describe('convertConditionMappingToQ', () => {
 
       const result = `*condition_0=AND filter_0=acrisreallegals__documentid__docamount__gte=1000000,acrisreallegals__documentid__docdate__gte=${todayminus1year},acrisreallegals__documentid__docdate__lte=${todayplus1year}`
 
-      expect(a.convertConditionMappingToQ(undefined, conditions)).toEqual(result)
+      expect(a.convertConditionMappingToQ(conditions)).toEqual(result)
     })
   })
 
@@ -160,7 +160,7 @@ describe('convertConditionMappingToQ', () => {
       }
 
       const result = `*condition_0=AND filter_0=acrisreallegals__documentid__count__gte=2,acrisreallegals__documentid__docdate__gte=${todayminus1year},acrisreallegals__documentid__docdate__lte=${todayplus1year}`
-      expect(a.convertConditionMappingToQ(undefined, conditions)).toEqual(result)
+      expect(a.convertConditionMappingToQ(conditions)).toEqual(result)
     })
   })
 
@@ -174,7 +174,7 @@ describe('convertConditionMappingToQ', () => {
       }
 
       const result = `*condition_0=AND filter_0=lispendens__count__gte=1,lispendens__fileddate__gte=${todayminus1year},lispendens__type=foreclosure,lispendens__fileddate__lte=${todayplus1year}`
-      expect(a.convertConditionMappingToQ(undefined, conditions)).toEqual(result)
+      expect(a.convertConditionMappingToQ(conditions)).toEqual(result)
     })
   })
 
@@ -188,7 +188,7 @@ describe('convertConditionMappingToQ', () => {
       }
 
       const result = `*condition_0=AND filter_0=evictions__count__gte=1,evictions__executeddate__gte=${todayminus1year},evictions__executeddate__lte=${todayplus1year}`
-      expect(a.convertConditionMappingToQ(undefined, conditions)).toEqual(result)
+      expect(a.convertConditionMappingToQ(conditions)).toEqual(result)
     })
   })
 
@@ -202,7 +202,7 @@ describe('convertConditionMappingToQ', () => {
       }
 
       const result = `*condition_0=AND filter_0=dobissuedpermits__count__gte=5,dobissuedpermits__issuedate__gte=${todayminus1year},dobissuedpermits__issuedate__lte=${todayplus1year}`
-      expect(a.convertConditionMappingToQ(undefined, conditions)).toEqual(result)
+      expect(a.convertConditionMappingToQ(conditions)).toEqual(result)
     })
   })
 
@@ -216,7 +216,7 @@ describe('convertConditionMappingToQ', () => {
       }
 
       const result = `*condition_0=AND filter_0=doblegacyfiledpermits__count__gte=5,doblegacyfiledpermits__prefilingdate__gte=${todayminus1year},doblegacyfiledpermits__prefilingdate__lte=${todayplus1year}`
-      expect(a.convertConditionMappingToQ(undefined, conditions)).toEqual(result)
+      expect(a.convertConditionMappingToQ(conditions)).toEqual(result)
     })
   })
 
@@ -230,7 +230,7 @@ describe('convertConditionMappingToQ', () => {
       }
 
       const result = `*condition_0=AND filter_0=housinglitigations__count__gte=1,housinglitigations__caseopendate__gte=${todayminus1year},housinglitigations__caseopendate__lte=${todayplus1year}`
-      expect(a.convertConditionMappingToQ(undefined, conditions)).toEqual(result)
+      expect(a.convertConditionMappingToQ(conditions)).toEqual(result)
     })
   })
 })

@@ -127,7 +127,7 @@ class GeographySelect extends React.Component {
 
 GeographySelect.propTypes = {
   currentGeographyType: PropTypes.string,
-  currentGeographyId: PropTypes.string,
+  currentGeographyId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   config: PropTypes.object,
   dispatch: PropTypes.func,
   confirmChange: PropTypes.bool,

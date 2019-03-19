@@ -3,10 +3,22 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import AddressSearch from 'Lookup/AddressSearch'
 import GeographySelect from 'shared/components/GeographySelect'
+import { setGeographyAndRequestsAndRedirect } from 'Store/AppState/actions'
+
 import { Form, Row, Col, Jumbotron, Container } from 'react-bootstrap'
 class Main extends React.Component {
   constructor(props) {
     super(props)
+    this.changeGeographyAndId = this.changeGeographyAndId.bind(this)
+  }
+
+  changeGeographyAndId(type, value) {
+    this.props.dispatch(
+      setGeographyAndRequestsAndRedirect({
+        geographyType: type,
+        geographyId: value,
+      })
+    )
   }
 
   render() {
@@ -42,6 +54,7 @@ class Main extends React.Component {
                   currentGeographyType={this.props.appState.currentGeographyType}
                   currentGeographyId={this.props.appState.currentGeographyId}
                   dispatch={this.props.dispatch}
+                  onChange={this.changeGeographyAndId}
                   placeholder="District Alerts Map"
                 />
               </Form.Group>
