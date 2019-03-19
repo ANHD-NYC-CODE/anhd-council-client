@@ -1,3 +1,7 @@
-export const lookupRequests = (state, type) => {
-  return state.appState.requests.filter(request => request.type === type)
+export const getRequestType = (requests, type) => {
+  return requests.filter(request => request.type === type)
+}
+
+export const getManyRequestTypes = (requests, types = []) => {
+  return requests.filter(request => types.some(type => type === request.type))
 }

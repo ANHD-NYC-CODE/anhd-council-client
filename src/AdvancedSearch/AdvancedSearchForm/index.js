@@ -12,7 +12,7 @@ import { setGeographyAndRequestsAndRedirect } from 'Store/AppState/actions'
 
 import { addGeography, updateGeography } from 'Store/AdvancedSearch/actions'
 import { addHousingType, updateHousingType } from 'Store/AdvancedSearch/actions'
-
+import { setAdvancedSearchRequestAndRedirect } from 'Store/AppState/actions'
 import ConditionComponent from 'AdvancedSearch/ConditionComponent'
 import GeographySelect from 'shared/components/GeographySelect'
 import HousingTypeQuery from 'AdvancedSearch/HousingTypeQuery'
@@ -50,7 +50,6 @@ class AdvancedSearchForm extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps.advancedSearch.geographies)
     this.syncGeographyToAppState(nextProps)
   }
 
@@ -126,7 +125,8 @@ class AdvancedSearchForm extends React.Component {
       ) {
         return
       } else {
-        this.props.dispatch(requestWithAuth(getAdvancedSearch()))
+        this.props.dispatch(setAdvancedSearchRequestAndRedirect({ redirect: true }))
+        // this.props.dispatch(requestWithAuth(getAdvancedSearch()))
       }
     })
   }

@@ -27,6 +27,12 @@ export const appStateReducer = (state = Object.freeze(initialState), action = { 
         requests: [...state.requests, ...action.requests],
       }
     }
+    case c.SET_ADVANCED_SEARCH_REQUEST: {
+      return {
+        ...state,
+        requests: [...state.requests, action.advancedSearchRequest],
+      }
+    }
     case c.REMOVE_REQUEST_TYPE: {
       return {
         ...state,

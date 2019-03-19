@@ -36,8 +36,7 @@ describe('transformStateIntoParamObject', () => {
       housingTypes: [housingType1],
     }
 
-    const datasetsConfig = []
-    const result = u.transformStateIntoParamObject(datasetsConfig, advancedSearch)
+    const result = u.transformStateIntoParamObject(advancedSearch)
     const expected = {
       q: `*condition_0=AND filter_0=hpdviolations__count__gte=5,hpdviolations__approveddate__gte=${todayminus1year},hpdviolations__approveddate__lte=${todayplus1year}`,
       council: '1',
