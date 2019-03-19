@@ -1,5 +1,12 @@
+import { boroCodeToName } from 'shared/utilities/languageUtils'
 export const resourceRouteChanged = (oldProps, newProps) => {
   return oldProps.id !== newProps.id
+}
+
+export const communityToCommunityProfileLink = id => {
+  return `/${boroCodeToName(id.charAt(0))
+    .replace(' ', '-')
+    .toLowerCase()}/${id.slice(1)}`
 }
 
 export const geographyToLink = (constant, id) => {

@@ -79,6 +79,15 @@ export const housingTypeCodeToName = code => {
   }
 }
 
+export const geographySelectionToString = ({ type, id } = {}) => {
+  switch (type) {
+    case 'COUNCIL':
+      return `Council District ${id}`
+    case 'COMMUNITY':
+      return `Community District ${communityIdToString(id)}`
+  }
+}
+
 export const boroCodeToName = code => {
   switch (code) {
     case '1':

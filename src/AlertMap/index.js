@@ -20,6 +20,9 @@ import RequestWrapper from 'shared/components/RequestWrapper'
 import RequestSummary from 'shared/components/RequestSummary'
 import SummaryResultCard from 'shared/components/SummaryResultCard'
 import HousingTypeSummaryResultCard from 'AlertMap/HousingTypeSummaryResultCard'
+
+import GeographyProfile from 'AlertMap/GeographyProfile'
+
 class AlertMap extends React.Component {
   constructor(props) {
     super(props)
@@ -66,7 +69,6 @@ class AlertMap extends React.Component {
   }
 
   toggleView(value) {
-    console.log(value)
     this.setState({
       view: value,
     })
@@ -154,7 +156,10 @@ class AlertMap extends React.Component {
             )}
           </Col>
           <Col sm={12} lg={4}>
-            Geography Profile
+            <GeographyProfile
+              geographyType={this.props.appState.currentGeographyType}
+              geographyId={this.props.appState.currentGeographyId}
+            />
           </Col>
         </Row>
       </div>
