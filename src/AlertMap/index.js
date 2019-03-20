@@ -14,7 +14,10 @@ class AlertMap extends React.Component {
 
     if (!(props.geographyType && props.geographyId)) {
       props.dispatch(push('/map'))
-    } else if (props.geographyType && props.geographyId) {
+    } else if (
+      !(props.geographyType === props.appState.currentGeographyType) &&
+      !(props.geographyId === props.appState.currentGeographyId)
+    ) {
       this.changeGeographyAndId(props.geographyType, props.geographyId)
     }
   }

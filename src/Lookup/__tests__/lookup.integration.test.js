@@ -61,7 +61,7 @@ describe('Lookup', () => {
       })
       await flushAllPromises()
       wrapper.update()
-      expect(wrapper.find('RequestWrapper')).toHaveLength(11)
+      expect(wrapper.find('RequestWrapper')).toHaveLength(12)
     })
   })
 

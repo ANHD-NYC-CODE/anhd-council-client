@@ -12,7 +12,7 @@ const HousingTypeSummaryResultCard = props => {
           <CardLoader />
         ) : (
           <div>
-            <Card.Text>{props.results.length}</Card.Text>
+            <Card.Text>{props.results.length} properties</Card.Text>
             <Card.Text>
               {props.results.reduce((total, result) => parseInt(total) + parseInt(result['unitsres']), 0)} units
             </Card.Text>

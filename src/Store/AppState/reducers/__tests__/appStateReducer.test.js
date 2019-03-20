@@ -50,7 +50,7 @@ describe('App State reducer', () => {
   describe('REMOVE_REQUEST_TYPE', () => {
     const requests = [{ type: 'A' }, { type: 'B' }]
     it('removes requests of the specified type', () => {
-      expect(r.appStateReducer({ requests }, a.removeRequestType('A'))).toEqual({
+      expect(r.appStateReducer({ ...r.initialState, requests }, a.removeRequestType('A'))).toEqual({
         ...r.initialState,
 
         requests: [{ type: 'B' }],

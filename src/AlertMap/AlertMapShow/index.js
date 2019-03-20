@@ -61,13 +61,13 @@ class AlertMapShow extends React.Component {
               value={this.props.mapFilterDate}
               onChange={this.props.toggleDateRange}
             >
-              <ToggleButton value={alertMapFilterdates()[2]}>{`Past 3 Years (${moment(alertMapFilterdates()[2]).format(
+              <ToggleButton value={alertMapFilterdates()[2]}>{`Last 3 Years (${moment(alertMapFilterdates()[2]).format(
                 'YYYY'
               )})`}</ToggleButton>
-              <ToggleButton value={alertMapFilterdates()[1]}>{`Past Year (${moment(alertMapFilterdates()[1]).format(
+              <ToggleButton value={alertMapFilterdates()[1]}>{`Last Year (${moment(alertMapFilterdates()[1]).format(
                 'YYYY'
               )})`}</ToggleButton>
-              <ToggleButton value={alertMapFilterdates()[0]}>{`Past Month (${moment(alertMapFilterdates()[0]).format(
+              <ToggleButton value={alertMapFilterdates()[0]}>{`Last Month (${moment(alertMapFilterdates()[0]).format(
                 'MM/YYYY'
               )})`}</ToggleButton>
             </ToggleButtonGroup>
@@ -76,8 +76,9 @@ class AlertMapShow extends React.Component {
             <Row>
               {geographyRequests.map((request, index) => {
                 return (
-                  <Col xs={12} sm={6} lg={4} key={`request-summary-${index}`}>
+                  <Col xs={12} sm={6} lg={4} key={`rs-col-${index}`} className="geography-request-summary__container">
                     <RequestSummary
+                      key={`request-summary-${this.props.requests.indexOf(request)}`}
                       request={request}
                       onClick={r => this.switchTable(r)}
                       resultsComponent={SummaryResultCard}
@@ -101,8 +102,9 @@ class AlertMapShow extends React.Component {
           <Col xs={12} lg={3}>
             {housingTypeRequests.map((request, index) => {
               return (
-                <Col xs={12} sm={6} lg={4} key={`request-summary-${index}`}>
+                <Col xs={12} sm={6} lg={4} key={`rs-col-${index}`} className="housingtype-request-summary__container">
                   <RequestSummary
+                    key={`request-summary-${this.props.requests.indexOf(request)}`}
                     request={request}
                     onClick={r => this.switchTable(r)}
                     resultsComponent={HousingTypeSummaryResultCard}
@@ -129,7 +131,7 @@ class AlertMapShow extends React.Component {
               this.props.requests.map((request, index) => {
                 return (
                   <RequestWrapper
-                    key={`request-wrapper-${index}`}
+                    key={`request-wrapper-${this.props.requests.indexOf(request)}`}
                     visible={this.state.selectedRequest === request}
                     request={request}
                   />

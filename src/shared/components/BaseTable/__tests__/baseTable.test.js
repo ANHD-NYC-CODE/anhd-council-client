@@ -63,7 +63,7 @@ describe('BaseTable', () => {
       wrapper.update()
       expect(wrapper.find('tbody tr')).toHaveLength(3)
       expect(wrapper.find('tbody .card')).toHaveLength(1)
-      expect(wrapper.find('tbody .card').text()).toMatch(/01\/01\/2018View HPD Online/)
+      expect(wrapper.find('tbody .card').text()).toMatch(/01\/01\/2018Search HPD Online/)
     })
 
     it('expands the nested table row', () => {
