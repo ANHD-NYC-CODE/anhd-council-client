@@ -50,10 +50,9 @@ describe('AlertMap', () => {
     const [wrapper, store] = setupWrapper()
     expect(wrapper.find('AlertMap')).toBeDefined()
     expect(store.getState().router.location.pathname).toEqual('/map')
-    expect(wrapper.find('RequestWrapper')).toHaveLength(0)
-    expect(wrapper.find('RequestSummary')).toHaveLength(0)
-    expect(wrapper.find('GeographyProfile')).toHaveLength(0)
-    expect(wrapper.find('ToggleButtonGroup')).toHaveLength(0)
+    expect(wrapper.find('AlertMapIndex')).toHaveLength(1)
+    expect(wrapper.find('AlertMapRequestsWrapper')).toHaveLength(0)
+    expect(wrapper.find('AlertMapShow')).toHaveLength(0)
   })
 
   describe('with a geography type and id', () => {
@@ -66,6 +65,12 @@ describe('AlertMap', () => {
       expect(store.getState().router.location.pathname).toEqual('/council/1')
       expect(store.getState().appState.currentGeographyType).toEqual('COUNCIL')
       expect(store.getState().appState.currentGeographyId).toEqual('1')
+      expect(wrapper.find('AlertMapIndex')).toHaveLength(0)
+      expect(wrapper.find('AlertMapShow')).toHaveLength(1)
+      expect(wrapper.find('GeographySelect')).toHaveLength(1)
+      expect(wrapper.find('ToggleButtonGroup')).toHaveLength(2)
+      expect(wrapper.find('GeographyProfile')).toHaveLength(1)
+      expect(wrapper.find('LeafletMap')).toHaveLength(1)
     })
 
     describe('map view', () => {
@@ -81,7 +86,7 @@ describe('AlertMap', () => {
     })
 
     describe('table view', () => {
-      it('renders the tables, not map', async () => {
+      it('renders the tables, not map', () => {
         const [wrapper, store] = setupWrapper({
           router: { location: { pathname: '/council/1' }, action: 'POP' },
         })
@@ -90,7 +95,6 @@ describe('AlertMap', () => {
           .find('input[name="view"]')
           .at(1)
           .simulate('change', { target: { checked: true } })
-        await flushAllPromises()
         wrapper.update()
         expect(wrapper.find('ToggleButtonGroup')).toHaveLength(2)
         expect(wrapper.find('GeographySelect')).toHaveLength(1)
@@ -107,28 +111,57 @@ describe('AlertMap', () => {
           expect(w.props().visible).toEqual(false)
         })
       })
+
+      it('updates the request card summaries when data is received', async () => {
+        const results = [{ bbl: 1, unitsres: 1 }, { bbl: 2, unitsres: 1 }, { bbl: 3, unitsres: 1 }]
+        mock.onGet('/councils/1/properties/').reply(200, results)
+        const [wrapper, store] = setupWrapper({
+          router: { location: { pathname: '/council/1' }, action: 'POP' },
+        })
+
+        await flushAllPromises()
+        wrapper.update()
+        wrapper.find('RequestSummary').forEach(rs => {
+          expect(rs.text()).toMatch(new RegExp(results.length))
+        })
+      })
+
+      it('updates the tables when data is received', async () => {
+        const results = [
+          { bbl: 1, unitsres: 1 },
+          { bbl: 2, unitsres: 1 },
+          { bbl: 3, unitsres: 1 },
+          { bbl: 4, unitsres: 1 },
+        ]
+        mock.onGet('/councils/1/properties/').reply(200, results)
+        const [wrapper, store] = setupWrapper({
+          router: { location: { pathname: '/council/1' }, action: 'POP' },
+        })
+
+        await flushAllPromises()
+        wrapper.update()
+        wrapper.find('table').forEach(table => {
+          expect(table.find('tbody tr')).toHaveLength(results.length)
+        })
+      })
+
       it('Switches the visible request wrapper', () => {
         const [wrapper, store] = setupWrapper({
           router: { location: { pathname: '/council/1' }, action: 'POP' },
         })
+
         wrapper
-          .find('RequestSummary')
+          .find('input[name="view"]')
           .at(1)
-          .simulate('click')
+          .simulate('change', { target: { checked: true } })
+
+        expect(wrapper.findWhere(node => node.key() === 'request-wrapper-0').props().visible).toEqual(true)
+
+        wrapper.findWhere(node => node.key() === 'request-summary-1').simulate('click')
 
         wrapper.update()
-        expect(
-          wrapper
-            .find('RequestWrapper')
-            .at(0)
-            .props().visible
-        ).toEqual(false)
-        expect(
-          wrapper
-            .find('RequestWrapper')
-            .at(1)
-            .props().visible
-        ).toEqual(true)
+        expect(wrapper.findWhere(node => node.key() === 'request-wrapper-0').props().visible).toEqual(false)
+        expect(wrapper.findWhere(node => node.key() === 'request-wrapper-1').props().visible).toEqual(true)
       })
     })
   })

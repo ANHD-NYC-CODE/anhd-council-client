@@ -19,7 +19,7 @@ describe('convertDatasetFilterToParams', () => {
     it('converts the object into a field string', () => {
       const mock1 = filterMocks('HPD_VIOLATION')
       const result = `hpdviolations__count__gte=5,hpdviolations__approveddate__gte=${todayminus1year},hpdviolations__approveddate__lte=${todayplus1year}`
-      expect(a.convertDatasetFilterToParams(undefined, mock1)).toEqual(result)
+      expect(a.convertDatasetFilterToParams(mock1)).toEqual(result)
     })
   })
 })
