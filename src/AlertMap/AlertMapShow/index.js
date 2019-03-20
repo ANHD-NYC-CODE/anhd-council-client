@@ -22,7 +22,7 @@ class AlertMapShow extends React.Component {
     this.toggleView = this.toggleView.bind(this)
     this.state = {
       view: 1,
-      selectedRequest: getRequestType(this.props.requests, 'MAP_FILTER')
+      selectedRequest: getRequestType(this.props.requests, 'ADVANCED_SEARCH').length
         ? getRequestType(this.props.requests, 'ADVANCED_SEARCH')[0]
         : getRequestType(this.props.requests, 'MAP_FILTER')[0],
     }
@@ -130,7 +130,7 @@ class AlertMapShow extends React.Component {
             </ToggleButtonGroup>
 
             {this.state.view === 1 ? (
-              <LeafletMap />
+              <LeafletMap geographyType={this.props.geographyType} geographyId={this.props.geographyId} />
             ) : (
               this.props.requests.map((request, index) => {
                 return (
