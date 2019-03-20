@@ -7,16 +7,34 @@ const center = [40.71, -73.98]
 export default class LeafletMap extends Component {
   constructor(props) {
     super(props)
+    this.mapRef = React.createRef()
+    this.state = {
+      height: 0,
+    }
 
+    this.updateDimensions = this.updateDimensions.bind(this)
     this.handleClick = this.handleClick.bind(this)
   }
+  componentDidMount() {
+    this.updateDimensions()
+    window.addEventListener('resize', this.updateDimensions)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.updateDimensions)
+  }
+
+  updateDimensions() {
+    this.setState({ height: this.mapRef.current.offsetWidth })
+  }
+
   handleClick(e) {
     console.log(e)
   }
 
   render() {
     return (
-      <div id="map">
+      <div id="map" ref={this.mapRef} style={{ height: this.state.height }}>
         <Map
           onClick={this.handleClick}
           doubleClickZoom={false}
