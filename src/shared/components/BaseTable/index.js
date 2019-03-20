@@ -173,7 +173,7 @@ class BaseTable extends React.Component {
               expandRow={this.expandRow()}
               filter={filterFactory()}
               keyField={`${this.props.tableConfig.keyField}`}
-              noDataIndication={
+              noDataIndication={() => (
                 <TableAlert
                   textType="text-dark"
                   variant="warning"
@@ -186,7 +186,7 @@ class BaseTable extends React.Component {
                       : null
                   }
                 />
-              }
+              )}
               rowClasses={this.props.tableConfig.tableRowClasses}
               tabIndexCell
             />

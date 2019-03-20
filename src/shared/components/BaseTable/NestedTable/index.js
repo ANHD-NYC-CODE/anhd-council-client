@@ -25,7 +25,7 @@ class NestedTable extends BaseTable {
           expandRow={this.expandRow()}
           filter={filterFactory()}
           keyField={`${this.props.tableConfig.keyField}`}
-          noDataIndication={
+          noDataIndication={() => (
             <TableAlert
               textType="text-dark"
               variant="warning"
@@ -36,7 +36,7 @@ class NestedTable extends BaseTable {
                 this.props.records.length ? () => Object.keys(this.filters).forEach(key => this.filters[key]('')) : null
               }
             />
-          }
+          )}
           rowClasses={this.props.tableConfig.tableRowClasses}
           tabIndexCell
         />

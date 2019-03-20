@@ -13,7 +13,6 @@ class BuildingSelect extends React.Component {
     super(props)
 
     this.getBuildingOptions = this.getBuildingOptions.bind(this)
-    this.handleChange = this.handleChange.bind(this)
   }
 
   getBuildingOptions() {
@@ -25,40 +24,28 @@ class BuildingSelect extends React.Component {
     return buildings
   }
 
-  handleChange(e) {
-    e = new StandardizedInput(e)
-
-    this.props.dispatch(setLookupAndRequestsAndRedirect({ bbl: this.props.appState.currentProperty, bin: e.value }))
-  }
-
-  handlePropertyLink(e) {
-    e = new StandardizedInput(e)
-
-    this.props.dispatch(setLookupAndRequestsAndRedirect({ bbl: e.value }))
-  }
-
   render() {
-    const selectedBuilding =
-      this.props.buildings.find(building => building.bin === this.props.appState.currentBuilding) || {}
+    const selectedBuilding = this.props.buildings.find(building => building.bin === this.props.bin) || {}
     return this.props.buildings.length ? (
       <Form className="building-select">
         <Form.Label>Select Building</Form.Label>
         <CustomSelect
           size="sm"
-          onChange={this.handleChange}
+          onChange={e => this.props.changeLookup(this.props.bbl, new StandardizedInput(e).value)}
           options={this.getBuildingOptions()}
           value={
-            this.props.appState.currentBuilding
+            this.props.bin
               ? {
-                  value: this.props.appState.currentBuilding,
+                  value: this.props.bin,
                   label: `${selectedBuilding.house_number} ${selectedBuilding.stname}`,
                 }
               : -1
           }
         />
-        {this.props.appState.currentBuilding && (
+        {this.props.bin && (
           <BaseLink
-            href={`${addressResultToPath({ bbl: this.props.appState.currentProperty })}`}
+            href={`${addressResultToPath({ bbl: this.props.bbl })}`}
+            onClick={() => this.props.changeLookup(this.props.bbl)}
             text="View Property"
           />
         )}
@@ -68,18 +55,18 @@ class BuildingSelect extends React.Component {
 }
 
 BuildingSelect.defaultProps = {
-  appState: {},
   buildings: [],
 }
 
 BuildingSelect.propTypes = {
+  bbl: PropTypes.string,
+  bin: PropTypes.string,
   dispatch: PropTypes.func,
   request: PropTypes.object,
 }
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    appState: state.appState,
     buildings: (state.requests[ownProps.request.requestConstant] || {}).buildings,
   }
 }
