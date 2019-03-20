@@ -22,7 +22,9 @@ class AlertMapShow extends React.Component {
     this.toggleView = this.toggleView.bind(this)
     this.state = {
       view: 1,
-      selectedRequest: props.requests.length ? getRequestType(this.props.requests, 'MAP_FILTER')[0] : undefined,
+      selectedRequest: getRequestType(this.props.requests, 'MAP_FILTER')
+        ? getRequestType(this.props.requests, 'ADVANCED_SEARCH')[0]
+        : getRequestType(this.props.requests, 'MAP_FILTER')[0],
     }
   }
 
