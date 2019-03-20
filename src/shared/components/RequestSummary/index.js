@@ -17,6 +17,7 @@ class RequestSummary extends React.Component {
 
   render() {
     return this.props.resultsComponent({
+      selected: this.props.selected,
       request: this.props.request,
       results: this.props.results,
       loading: this.props.loading,
