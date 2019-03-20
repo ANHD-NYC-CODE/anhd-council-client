@@ -82,6 +82,7 @@ class AlertMapShow extends React.Component {
                       request={request}
                       onClick={r => this.switchTable(r)}
                       resultsComponent={SummaryResultCard}
+                      selected={this.state.selectedRequest === request}
                     />
                   </Col>
                 )
@@ -108,6 +109,7 @@ class AlertMapShow extends React.Component {
                     request={request}
                     onClick={r => this.switchTable(r)}
                     resultsComponent={HousingTypeSummaryResultCard}
+                    selected={this.state.selectedRequest === request}
                   />
                 </Col>
               )
