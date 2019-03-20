@@ -41,9 +41,7 @@ class LookupShow extends React.Component {
           </Row>
           <Row>
             <Col>
-              {!!getRequestType(this.props.requests, 'LOOKUP_PROFILE').length && (
-                <RequestWrapper request={getRequestType(this.props.requests, 'LOOKUP_PROFILE')[0]} visible={true} />
-              )}
+              <RequestWrapper request={getRequestType(this.props.requests, 'LOOKUP_PROFILE')[0]} visible={true} />
             </Col>
           </Row>
           <Row>
@@ -53,9 +51,7 @@ class LookupShow extends React.Component {
           </Row>
           <Row>
             <Col>
-              {!!getRequestType(this.props.requests, 'LOOKUP_PROFILE').length && (
-                <LookupLinks request={getRequestType(this.props.requests, 'LOOKUP_PROFILE')[0]} />
-              )}
+              <LookupLinks request={getRequestType(this.props.requests, 'LOOKUP_PROFILE')[0]} />
             </Col>
           </Row>
         </Col>
@@ -65,10 +61,12 @@ class LookupShow extends React.Component {
               <Row>
                 {getRequestType(this.props.requests, 'LOOKUP_FILTER').map((request, index) => {
                   return (
-                    <Col xs={12} sm={6} md={4} lg={12} key={`request-summary-${index}`}>
+                    <Col xs={12} sm={6} md={4} lg={12} key={`rs-col-${index}`}>
                       <RequestSummary
-                        request={request}
+                        key={`request-summary-${this.props.requests.indexOf(request)}`}
                         onClick={r => this.switchTable(r)}
+                        selected={this.state.selectedRequest === request}
+                        request={request}
                         resultsComponent={SummaryResultCard}
                       />
                     </Col>
@@ -79,21 +77,23 @@ class LookupShow extends React.Component {
             <Col xs={12} lg={9}>
               <Row>
                 <Col>
-                  {!!getRequestType(this.props.requests, 'LOOKUP_PROFILE').length && (
-                    <BuildingSelect
-                      bbl={this.props.bbl}
-                      bin={this.props.bin}
-                      changeLookup={this.props.changeLookup}
-                      request={getRequestType(this.props.requests, 'LOOKUP_PROFILE')[0]}
-                    />
-                  )}
+                  <BuildingSelect
+                    bbl={this.props.bbl}
+                    bin={this.props.bin}
+                    changeLookup={this.props.changeLookup}
+                    request={getRequestType(this.props.requests, 'LOOKUP_PROFILE')[0]}
+                  />
                 </Col>
               </Row>
               <Row>
                 {getRequestType(this.props.requests, 'LOOKUP_FILTER').map((request, index) => {
                   return (
-                    <Col xs={12} key={`request-wrapper-${index}`}>
-                      <RequestWrapper visible={this.state.selectedRequest === request} request={request} />
+                    <Col xs={12} key={`rw-col-${index}`} className="request-wrapper-container">
+                      <RequestWrapper
+                        key={`request-wrapper-${this.props.requests.indexOf(request)}`}
+                        visible={this.state.selectedRequest === request}
+                        request={request}
+                      />
                     </Col>
                   )
                 })}

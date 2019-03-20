@@ -40,16 +40,21 @@ describe('Lookup', () => {
     const [wrapper, store] = setupWrapper()
     expect(wrapper.find('Lookup')).toBeDefined()
     expect(store.getState().router.location.pathname).toEqual('/lookup')
+    expect(wrapper.find('LookupIndex')).toHaveLength(1)
+    expect(wrapper.find('LookupRequestsWrapper')).toHaveLength(0)
+    expect(wrapper.find('LookupShow')).toHaveLength(0)
   })
 
   describe('with a bbl', () => {
-    it('sets the currentProperty', async () => {
+    it('sets the currentProperty', () => {
       const [wrapper, store] = setupWrapper({
         router: { location: { pathname: '/property/1' }, action: 'POP' },
       })
-      await flushAllPromises()
-      wrapper.update()
-      expect(wrapper.find('Lookup')).toBeDefined()
+
+      expect(wrapper.find('LookupIndex')).toHaveLength(0)
+      expect(wrapper.find('LookupRequestsWrapper')).toHaveLength(1)
+      expect(wrapper.find('LookupShow')).toHaveLength(1)
+
       expect(store.getState().router.location.pathname).toEqual('/property/1')
       expect(store.getState().appState.currentProperty).toEqual('1')
       expect(store.getState().appState.currentBuilding).toEqual(undefined)
@@ -66,37 +71,38 @@ describe('Lookup', () => {
   })
 
   describe('with a bbl and bin', () => {
-    it('sets the currentProperty', () => {
+    it('sets the currentProperty and currentBuilding', () => {
       const [wrapper, store] = setupWrapper({
         router: { location: { pathname: '/property/1/building/2' }, action: 'POP' },
       })
 
       expect(wrapper.find('Lookup')).toBeDefined()
       expect(store.getState().router.location.pathname).toEqual('/property/1/building/2')
+      expect(wrapper.find('LookupIndex')).toHaveLength(0)
+      expect(wrapper.find('LookupRequestsWrapper')).toHaveLength(1)
+      expect(wrapper.find('LookupShow')).toHaveLength(1)
       expect(store.getState().appState.currentProperty).toEqual('1')
       expect(store.getState().appState.currentBuilding).toEqual('2')
     })
 
     it('renders the request wrappers', () => {
-      const [wrapper, store] = setupWrapper({
+      const [wrapper] = setupWrapper({
         router: { location: { pathname: '/property/1/building/2' }, action: 'POP' },
       })
 
-      expect(wrapper.find('RequestWrapper')).toHaveLength(8)
-      expect(
-        wrapper
-          .find('RequestWrapper')
-          .at(0)
-          .props().visible
-      ).toEqual(true)
+      expect(wrapper.find('RequestWrapper')).toHaveLength(9)
+
       wrapper.find('RequestWrapper').forEach((w, index) => {
-        if (index === 0) return
-        expect(w.props().visible).toEqual(false)
+        if (index === 0 || index === 1) {
+          expect(w.props().visible).toEqual(true)
+        } else {
+          expect(w.props().visible).toEqual(false)
+        }
       })
     })
 
     it('renders the request summaries', () => {
-      const [wrapper, store] = setupWrapper({
+      const [wrapper] = setupWrapper({
         router: { location: { pathname: '/property/1/building/2' }, action: 'POP' },
       })
 
@@ -104,28 +110,63 @@ describe('Lookup', () => {
     })
 
     it('Switches the visible request wrapper', () => {
-      const [wrapper, store] = setupWrapper({
+      const [wrapper] = setupWrapper({
+        router: { location: { pathname: '/property/1/building/2' }, action: 'POP' },
+      })
+      expect(wrapper.findWhere(node => node.key() === 'request-wrapper-1').props().visible).toEqual(true)
+
+      wrapper.findWhere(node => node.key() === 'request-summary-2').simulate('click')
+
+      wrapper.update()
+      expect(wrapper.findWhere(node => node.key() === 'request-wrapper-1').props().visible).toEqual(false)
+      expect(wrapper.findWhere(node => node.key() === 'request-wrapper-2').props().visible).toEqual(true)
+    })
+
+    it('updates the request card summaries when data is received', async () => {
+      const results = [{ bin: 2 }, { bin: 2 }, { bin: 2 }]
+      mock.onGet('/buildings/2/hpdviolations/').reply(200, results)
+      mock.onGet('/buildings/2/hpdcomplaints/').reply(200, results)
+      mock.onGet('/buildings/2/dobviolations/').reply(200, results)
+      mock.onGet('/buildings/2/dobcomplaints/').reply(200, results)
+      mock.onGet('/buildings/2/hpdcomplaints/').reply(200, results)
+      mock.onGet('/buildings/2/ecbviolations/').reply(200, results)
+      mock.onGet('/buildings/2/doblegacyfiledpermits/').reply(200, results)
+      mock.onGet('/buildings/2/dobissuedpermits/').reply(200, results)
+      mock.onGet('/buildings/2/housinglitigations/').reply(200, results)
+
+      const [wrapper] = setupWrapper({
         router: { location: { pathname: '/property/1/building/2' }, action: 'POP' },
       })
 
-      wrapper
-        .find('RequestSummary')
-        .at(1)
-        .simulate('click')
-
+      await flushAllPromises()
       wrapper.update()
-      expect(
-        wrapper
-          .find('RequestWrapper')
-          .at(0)
-          .props().visible
-      ).toEqual(false)
-      expect(
-        wrapper
-          .find('RequestWrapper')
-          .at(1)
-          .props().visible
-      ).toEqual(true)
+
+      wrapper.find('RequestSummary').forEach(rs => {
+        expect(rs.text()).toMatch(new RegExp(results.length))
+      })
+    })
+    it('updates the tables when data is received', async () => {
+      const results = [{ bin: 2 }, { bin: 2 }, { bin: 2 }]
+      mock.onGet('/buildings/2/hpdviolations/').reply(200, results)
+      mock.onGet('/buildings/2/hpdcomplaints/').reply(200, results)
+      mock.onGet('/buildings/2/dobviolations/').reply(200, results)
+      mock.onGet('/buildings/2/dobcomplaints/').reply(200, results)
+      mock.onGet('/buildings/2/hpdcomplaints/').reply(200, results)
+      mock.onGet('/buildings/2/ecbviolations/').reply(200, results)
+      mock.onGet('/buildings/2/doblegacyfiledpermits/').reply(200, results)
+      mock.onGet('/buildings/2/dobissuedpermits/').reply(200, results)
+      mock.onGet('/buildings/2/housinglitigations/').reply(200, results)
+
+      const [wrapper] = setupWrapper({
+        router: { location: { pathname: '/property/1/building/2' }, action: 'POP' },
+      })
+
+      await flushAllPromises()
+      wrapper.update()
+
+      wrapper.find('.request-wrapper-container table').forEach(table => {
+        expect(table.find('tbody tr')).toHaveLength(results.length)
+      })
     })
   })
 })
