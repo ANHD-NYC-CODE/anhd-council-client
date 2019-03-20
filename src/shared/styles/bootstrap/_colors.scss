@@ -41,6 +41,9 @@ $teal: #20c997 !default;
 $cyan: #17a2b8 !default;
 $transluscent: rgba(222, 222, 222, 0.8);
 
+$nyc-blue: #4c8ad8 !default;
+$nyc-orange: #e74c2d !default;
+
 $colors: () !default;
 // stylelint-disable-next-line scss/dollar-variable-default
 $colors: map-merge(
@@ -63,8 +66,8 @@ $colors: map-merge(
   $colors
 );
 
-$primary: $blue !default;
-$secondary: $gray-600 !default;
+$primary: $nyc-blue !default;
+$secondary: $nyc-orange !default;
 $success: $green !default;
 $info: $cyan !default;
 $warning: $yellow !default;
