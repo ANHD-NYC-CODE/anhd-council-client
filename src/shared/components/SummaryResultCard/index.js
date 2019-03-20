@@ -4,7 +4,6 @@ import { Card, Button } from 'react-bootstrap'
 import CardLoader from 'shared/components/CardLoader'
 import classnames from 'classnames'
 const SummaryResultCard = props => {
-  console.log(props)
   return (
     <Card
       as={Button}

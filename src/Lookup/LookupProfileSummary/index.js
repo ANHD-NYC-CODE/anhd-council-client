@@ -132,7 +132,7 @@ LookupProfileSummary.propTypes = {
 }
 
 LookupProfileSummary.propTypes = {
-  records: PropTypes.object,
+  records: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
 }
 
 export default LookupProfileSummary
