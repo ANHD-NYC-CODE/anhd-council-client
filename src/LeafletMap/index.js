@@ -1,24 +1,38 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Map, TileLayer, FeatureGroup, GeoJSON } from 'react-leaflet'
+import { Map, TileLayer, GeoJSON } from 'react-leaflet'
 import './style.scss'
 import ConfigContext from 'Config/ConfigContext'
+import GeographyGeoJson from 'LeafletMap/GeographyGeoJson'
 const center = [40.71, -73.98]
 
 export default class LeafletMap extends Component {
   constructor(props) {
     super(props)
+    this.mapContainerRef = React.createRef()
     this.mapRef = React.createRef()
+    this.geoJsonRef = React.createRef()
     this.state = {
       height: 0,
     }
 
     this.updateDimensions = this.updateDimensions.bind(this)
-    this.handleClick = this.handleClick.bind(this)
   }
+
+  componentDidUpdate() {
+    if (this.mapRef.current) {
+      this.mapRef.current.leafletElement.invalidateSize()
+    }
+
+    // Center over selected geography
+    if (this.mapRef.current && this.geoJsonRef.current) {
+      this.mapRef.current.leafletElement.fitBounds(this.geoJsonRef.current.leafletElement.getBounds())
+    }
+  }
+
   componentDidMount() {
-    this.updateDimensions()
     window.addEventListener('resize', this.updateDimensions)
+    this.updateDimensions()
   }
 
   componentWillUnmount() {
@@ -26,29 +40,26 @@ export default class LeafletMap extends Component {
   }
 
   updateDimensions() {
-    if (this.mapRef.current) {
-      this.setState({ height: this.mapRef.current.offsetWidth })
+    if (this.mapContainerRef.current && this.mapRef.current) {
+      this.mapRef.current.leafletElement.invalidateSize()
+      this.setState({ height: this.mapContainerRef.current.offsetWidth })
     }
-  }
-
-  handleClick(e) {
-    console.log(e)
   }
 
   render() {
     return (
-      <div id="map" ref={this.mapRef} style={{ height: this.state.height }}>
+      <div id="map" ref={this.mapContainerRef} style={{ height: this.state.height }}>
         <Map
-          onClick={this.handleClick}
+          center={center}
+          className="map"
           doubleClickZoom={false}
           id="leaflet-map"
           minZoom={10}
           maxZoom={20}
-          ref={this.props.mapRef}
-          zoomControl={false}
-          className="map"
-          center={center}
-          zoom={10}
+          onClick={this.handleClick}
+          ref={this.mapRef}
+          zoom={11}
+          zoomControl={true}
         >
           <TileLayer
             onClick={this.handleClick}
@@ -73,30 +84,15 @@ export default class LeafletMap extends Component {
           {this.props.geographyId && (
             <ConfigContext.Consumer>
               {config => {
-                const selectedGeography =
-                  this.props.geographyType === 'COUNCIL'
-                    ? config.councilDistricts.find(d => d.id == this.props.geographyId)
-                    : config.communityDistricts.find(d => d.id == this.props.geographyId)
-
-                const geoJson = {
-                  type: 'FeatureCollection',
-                  features: [
-                    {
-                      type: 'Feature',
-                      id: 1,
-                      geometry: selectedGeography.geometry,
-                    },
-                  ],
-                }
-                console.log(geoJson)
-                const getStyle = () => {
-                  return {
-                    color: 'cyan',
-                    weight: 10,
-                    opacity: 1,
-                  }
-                }
-                return <GeoJSON style={getStyle()} data={geoJson} />
+                const geographies =
+                  this.props.geographyType === 'COUNCIL' ? config.councilDistricts : config.communityDistricts
+                return (
+                  <GeographyGeoJson
+                    geographies={geographies}
+                    selectedId={this.props.geographyId}
+                    selectedType={this.props.geographyType}
+                  />
+                )
               }}
             </ConfigContext.Consumer>
           )}

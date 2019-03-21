@@ -21,6 +21,13 @@ class AlertMapRequestsWrapper extends React.Component {
     }
   }
 
+  componentDidUpdate() {
+    const uncalledRequests = this.props.requests.filter(r => !r.called)
+    if (uncalledRequests.length) {
+      this.loadRequests(uncalledRequests)
+    }
+  }
+
   loadRequests(requests = []) {
     requests.forEach(request => {
       this.props.dispatch(requestWithAuth(makeRequest(request)))

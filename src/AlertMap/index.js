@@ -37,9 +37,6 @@ class AlertMap extends React.Component {
       <AlertMapIndex changeGeographyAndId={this.changeGeographyAndId} dispatch={this.props.dispatch} />
     ) : (
       <AlertMapRequestsWrapper
-        key={`${this.props.appState.currentGeographyType}${this.props.appState.currentGeographyId}${
-          this.props.appState.mapFilterDate
-        }`}
         changeGeographyAndId={this.changeGeographyAndId}
         dispatch={this.props.dispatch}
         geographyType={this.props.appState.currentGeographyType}

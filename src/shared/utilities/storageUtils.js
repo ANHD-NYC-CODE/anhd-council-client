@@ -5,7 +5,7 @@ export const COUNCIL_DISTRICTS_INDEX = 'councils'
 export const COMMUNITY_BOARDS_INDEX = 'communities'
 import { logoutUser } from 'Store/Auth/actions'
 import { get, set, del } from 'idb-keyval'
-import { handleCatchError, handleActionDispatch } from 'shared/utilities/actionUtils'
+import { handleActionDispatch } from 'shared/utilities/actionUtils'
 import { handleCompletedRequest } from 'Store/Loading/actions'
 
 const TOKEN_EXPIRATIONS = {
