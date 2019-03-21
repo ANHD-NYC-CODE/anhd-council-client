@@ -155,7 +155,7 @@ LeafletMap.propTypes = {
   communityDistricts: PropTypes.array,
   councilDistricts: PropTypes.array,
   changingGeographyType: PropTypes.string,
-  changingGeographyId: PropTypes.string,
+  changingGeographyId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   currentGeographyType: PropTypes.string,
-  currentGeographyId: PropTypes.string,
+  currentGeographyId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 }

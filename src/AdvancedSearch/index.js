@@ -12,10 +12,17 @@ import BuildingHistoryTable from 'Lookup/BuildingHistoryTable'
 import { Row, Col } from 'react-bootstrap'
 import AdvancedSearchForm from 'AdvancedSearch/AdvancedSearchForm'
 import ConfigContext from 'Config/ConfigContext'
+import { setAppState } from 'Store/AppState/actions'
 import './style.scss'
 export class AdvancedSearch extends React.Component {
   constructor(props) {
     super(props)
+
+    if (this.props.appState.changingGeography) {
+      this.props.dispatch(
+        setAppState({ changingGeography: false, changingGeographyType: undefined, changingGeographyId: undefined })
+      )
+    }
   }
 
   render() {
