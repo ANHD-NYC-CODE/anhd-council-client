@@ -25,7 +25,6 @@ const GeographyGeoJson = props => {
       fill: true,
     }
   }
-
   return (
     <GeoJSON
       key={`geojson-${props.selectedType}`}
@@ -39,6 +38,7 @@ const GeographyGeoJson = props => {
 
 GeographyGeoJson.propTypes = {
   clickedGeographyId: PropTypes.number,
+  changingGeographyType: PropTypes.string,
   geographies: PropTypes,
   onClick: PropTypes.func,
   selectedRef: PropTypes.object,

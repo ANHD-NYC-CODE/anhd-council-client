@@ -82,16 +82,20 @@ export default class LeafletMap extends Component {
               url="https://api.mapbox.com/styles/v1/anhdnyc/cjtgmvhfl6nw01fs8sqjifqni/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYW5oZG55YyIsImEiOiJjanQ0ZWRqaDcxMmRxNDlsbHV1OXN0aGx6In0.i07oerfvXtcRfm3npws7mA"
             />
           )}
-          {this.props.geographyId && (
+          {this.props.geographyType && (
             <div>
               <GeographyGeoJson
                 geographies={
-                  this.props.geographyType === 'COUNCIL' ? this.props.councilDistricts : this.props.communityDistricts
+                  this.props.geographyType && this.props.geographyType === 'COUNCIL'
+                    ? this.props.councilDistricts
+                    : this.props.communityDistricts
                 }
-                selectedId={this.props.geographyId}
-                selectedType={this.props.geographyType}
-                clickedGeographyId={this.props.selectedGeographyData.properties.id}
-                onClick={this.props.handleGeoJsonClick}
+                selectedId={this.props.changingGeographyId || this.props.geographyId}
+                selectedType={this.props.changingGeographyType || this.props.geographyType}
+                clickedGeographyId={
+                  this.props.selectedGeographyData ? this.props.selectedGeographyData.properties.id : undefined
+                }
+                onClick={this.props.handleChangeGeographyId}
               />
               <GeographyMarkerLabels
                 geographyType={this.props.geographyType}
@@ -99,10 +103,9 @@ export default class LeafletMap extends Component {
                   this.props.geographyType === 'COUNCIL' ? this.props.councilDistricts : this.props.communityDistricts
                 }
               />
-              ) }
             </div>
           )}
-          } )}
+          )} } )}
         </Map>
       </div>
     )

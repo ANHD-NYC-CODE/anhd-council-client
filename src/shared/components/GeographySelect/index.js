@@ -10,28 +10,19 @@ import FormError from 'shared/components/FormError'
 class GeographySelect extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      changing: false,
-      changingGeographyType: undefined,
-      changingGeographyId: undefined,
-    }
-    this.handleChangeType = this.handleChangeType.bind(this)
-    this.handleChangeGeography = this.handleChangeGeography.bind(this)
+    this.passChangeType = this.passChangeType.bind(this)
+    this.passChangeGeography = this.passChangeGeography.bind(this)
   }
 
-  handleChangeType(e) {
-    this.setState({
-      changing: true,
-      changingGeographyType: new StandardizedInput(e).value,
-      changingGeographyId: -1,
-    })
+  passChangeType(e) {
+    this.props.handleChangeGeographyType(e)
     if (this.props.handleChange) this.props.handleChange(e)
   }
 
-  handleChangeGeography(e) {
+  passChangeGeography(e) {
     const standardE = new StandardizedInput(e)
-    this.setState({ changing: false, changingGeographyType: undefined, changingGeographyId: undefined })
-    this.props.onChange(this.state.changingGeographyType || this.props.currentGeographyType, standardE.value)
+
+    this.props.onChange(this.props.changingGeographyType || this.props.currentGeographyType, standardE.value)
     if (this.props.handleChange) this.props.handleChange(e)
   }
 
@@ -40,15 +31,15 @@ class GeographySelect extends React.Component {
       <ConfigContext.Consumer>
         {config => (
           <Form.Group as={Row}>
-            <Col xs={!(this.state.changingGeographyType || this.props.currentGeographyType) ? 12 : 6}>
+            <Col xs={!(this.props.changingGeographyType || this.props.currentGeographyType) ? 12 : 6}>
               <Form.Control
                 required
                 size="sm"
                 name="geographyType"
                 as="select"
                 data-key="geographyType"
-                onChange={this.handleChangeType}
-                value={this.state.changingGeographyType || this.props.currentGeographyType || -1}
+                onChange={this.passChangeType}
+                value={this.props.changingGeographyType || this.props.currentGeographyType || -1}
                 onBlur={this.props.handleBlur}
                 isInvalid={
                   ((this.props.touched || {}).geographyType || !!this.props.submitCount) &&
@@ -71,17 +62,17 @@ class GeographySelect extends React.Component {
                 message={(this.props.errors || {}).geographyType}
               />
             </Col>
-            {!!(this.props.currentGeographyType || this.state.changingGeographyType) && (
+            {!!(this.props.currentGeographyType || this.props.changingGeographyType) && (
               <Col xs={6}>
                 <Form.Control
                   required
                   as="select"
                   data-key="id"
                   name="geographyId"
-                  onChange={e => this.handleChangeGeography(e)}
+                  onChange={this.passChangeGeography}
                   placeholder="#"
                   size="sm"
-                  value={this.state.changingGeographyId || this.props.currentGeographyId || -1}
+                  value={this.props.changingGeographyId || this.props.currentGeographyId || -1}
                   onBlur={this.props.handleBlur}
                   isInvalid={
                     ((this.props.touched || {}).geographyId || !!this.props.submitCount) &&
@@ -91,7 +82,7 @@ class GeographySelect extends React.Component {
                   {getGeographyIdOptions(
                     config.councilDistricts,
                     config.communityDistricts,
-                    this.state.changingGeographyType || this.props.currentGeographyType
+                    this.props.changingGeographyType || this.props.currentGeographyType
                   )}
                 </Form.Control>
                 <FormError
@@ -105,20 +96,25 @@ class GeographySelect extends React.Component {
                 />
               </Col>
             )}
-            {this.state.changing && (
+            {this.props.changing && (
               <Col xs={12}>
                 <Button
                   className="cancel-Geography-change"
-                  onClick={() =>
-                    this.setState({
-                      changing: false,
-                      changingGeographyType: this.props.currentGeographyType,
-                      changingGeographyId: this.props.currentGeographyId,
-                    })
-                  }
+                  onClick={this.props.cancelChangeGeography}
                   variant="warning"
                 >
                   Cancel
+                </Button>
+              </Col>
+            )}
+            {this.props.changing && this.props.changingGeographyType && this.props.changingGeographyId > 0 && (
+              <Col xs={12}>
+                <Button
+                  className="submit-Geography-change"
+                  onClick={this.props.handleChangeGeography}
+                  variant="primary"
+                >
+                  Submit!
                 </Button>
               </Col>
             )}
@@ -141,6 +137,7 @@ GeographySelect.propTypes = {
   errors: PropTypes.object,
   submitCount: PropTypes.number,
   handleChange: PropTypes.func,
+  cancelChangeGeography: PropTypes.func,
 }
 
 export default GeographySelect
