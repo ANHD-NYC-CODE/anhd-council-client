@@ -39,10 +39,11 @@ const GeographyGeoJson = props => {
 
 GeographyGeoJson.propTypes = {
   changingGeographyType: PropTypes.string,
-  changingGeographyId: PropTypes.string,
-  geographies: PropTypes,
+  changingGeographyId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  geographies: PropTypes.array,
   onClick: PropTypes.func,
-  currentGeographyId: PropTypes.string,
+  currentGeographyId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+
   currentGeographyType: PropTypes.string,
 }
 

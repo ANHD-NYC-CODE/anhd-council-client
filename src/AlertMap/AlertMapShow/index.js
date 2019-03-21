@@ -59,6 +59,9 @@ class AlertMapShow extends React.Component {
             cancelChangeGeography={this.props.cancelChangeGeography}
             handleChangeGeographyType={this.props.handleChangeGeographyType}
             handleChangeGeography={this.props.handleChangeGeography}
+            showSubmit={
+              this.props.changingGeography && this.props.changingGeographyType && this.props.changingGeographyId > 0
+            }
           />
         </Row>
         <Row>

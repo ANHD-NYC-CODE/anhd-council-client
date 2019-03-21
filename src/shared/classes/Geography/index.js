@@ -4,10 +4,10 @@ export class Geography {
   constructor(GeographyConstant, id) {
     this._id = id
     this._errors = []
-    this.handleSetgeographyType(GeographyConstant)
+    this.handleSetGeographyType(GeographyConstant)
   }
 
-  handleSetgeographyType(GeographyConstant) {
+  handleSetGeographyType(GeographyConstant) {
     const geographyType = b[Object.keys(b).find(obj => b[obj].constant === GeographyConstant)]
     if (geographyType) {
       this._GEOGRAPHYType = geographyType
@@ -55,7 +55,7 @@ export class Geography {
   }
 
   set geographyType(GeographyConstant) {
-    this.handleSetgeographyType(GeographyConstant)
+    this.handleSetGeographyType(GeographyConstant)
     this.id = undefined // Clear the ID to avoid Geography/id mismatches
   }
 

@@ -71,7 +71,7 @@ const renderLinks = props => {
 
 GeographyProfile.propTypes = {
   currentGeographyType: PropTypes.string,
-  currentGeographyId: PropTypes.string,
+  currentGeographyId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 }
 
 export default GeographyProfile

@@ -10,12 +10,11 @@ import { setGeographyAndRequestsAndRedirect } from 'Store/AppState/actions'
 
 import { addGeography, updateGeography } from 'Store/AdvancedSearch/actions'
 import { addHousingType, updateHousingType } from 'Store/AdvancedSearch/actions'
-import { setAdvancedSearchRequestAndRedirect } from 'Store/AppState/actions'
+import { setAppState, setAdvancedSearchRequestAndRedirect } from 'Store/AppState/actions'
 import ConditionComponent from 'AdvancedSearch/ConditionComponent'
 import GeographySelect from 'shared/components/GeographySelect'
 import HousingTypeQuery from 'AdvancedSearch/HousingTypeQuery'
 import FormError from 'shared/components/FormError'
-
 import { Form, Button } from 'react-bootstrap'
 import { Formik } from 'formik'
 import './style.scss'
@@ -35,9 +34,6 @@ class AdvancedSearchForm extends React.Component {
 
     this.state = {
       validated: false,
-      changingGeography: false,
-      changingGeographyType: undefined,
-      changingGeographyId: undefined,
     }
 
     this.submitForm = this.submitForm.bind(this)
@@ -74,13 +70,16 @@ class AdvancedSearchForm extends React.Component {
     }
   }
 
-  changeGeography(type, id) {
+  changeGeography({ e, geographyType, geographyId } = {}) {
+    e = new StandardizedInput(e)
+    const type = geographyType || this.props.appState.changingGeographyType || this.props.appState.currentGeographyType
+    const id = geographyId || e.value
     if (!this.props.advancedSearch.geographies.length) {
-      this.props.dispatch(addGeography(new Geography(type, id)))
+      const newGeography = new Geography(type, id)
+      this.props.dispatch(addGeography(newGeography))
     } else {
       const geography = this.props.advancedSearch.geographies[0]
-      geography['geographyType'] = type
-      geography['id'] = id
+      geography[e.key] = e.value
       this.props.dispatch(updateGeography(0, geography))
     }
     this.props.dispatch(
@@ -94,20 +93,25 @@ class AdvancedSearchForm extends React.Component {
   }
 
   handleChangeGeographyType(e) {
-    this.setState({
-      changingGeography: true,
-      changingGeographyType: new StandardizedInput(e).value,
-      changingGeographyId: -1,
-    })
+    e = new StandardizedInput(e)
+    this.props.dispatch(
+      setAppState({
+        changingGeography: true,
+        changingGeographyType: e.value,
+        changingGeographyId: -1,
+      })
+    )
     if (this.props.handleChange) this.props.handleChange(e)
   }
 
   cancelChangeGeography() {
-    this.setState({
-      changingGeography: false,
-      changingGeographyType: undefined,
-      changingGeographyId: undefined,
-    })
+    this.props.dispatch(
+      setAppState({
+        changingGeography: false,
+        changingGeographyType: undefined,
+        changingGeographyId: undefined,
+      })
+    )
   }
 
   addHousingType(e) {
@@ -170,20 +174,20 @@ class AdvancedSearchForm extends React.Component {
             <FormError show={!!this.props.error} message={(this.props.error || {}).message} />
 
             <GeographySelect
+              cancelChangeGeography={this.cancelChangeGeography}
+              changing={this.props.appState.changingGeography}
+              changingGeographyType={this.props.appState.changingGeographyType}
+              changingGeographyId={this.props.appState.changingGeographyId}
               confirmChange={true}
               currentGeographyType={this.props.appState.currentGeographyType}
               currentGeographyId={this.props.appState.currentGeographyId}
               dispatch={this.props.dispatch}
               handleChangeGeography={this.changeGeography}
               handleBlur={handleBlur}
+              handleChange={handleChange}
               touched={touched}
               errors={errors}
-              handleChange={handleChange}
               handleChangeGeographyType={this.handleChangeGeographyType}
-              cancelChangeGeography={this.cancelChangeGeography}
-              changing={this.state.changingGeography}
-              changingGeographyType={this.state.changingGeographyType}
-              changingGeographyId={this.state.changingGeographyId}
             />
 
             <HousingTypeQuery

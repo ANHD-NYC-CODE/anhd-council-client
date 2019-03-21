@@ -22,11 +22,8 @@ class GeographySelect extends React.Component {
   }
 
   passChangeGeography(e) {
-    const standardE = new StandardizedInput(e)
-    this.props.handleChangeGeography({
-      geographyType: this.props.changingGeographyType || this.props.currentGeographyType,
-      geographyId: standardE.value,
-    })
+    e = new StandardizedInput(e)
+    this.props.handleChangeGeography({ e })
     if (this.props.handleChange) this.props.handleChange(e)
   }
 
@@ -111,19 +108,17 @@ class GeographySelect extends React.Component {
                 />
               </Col>
             )}
-            {(this.props.showSubmit || this.props.changing) &&
-              (this.props.changingGeographyType || (this.props.showSubmit && this.props.currentGeographyType)) &&
-              (this.props.changingGeographyId > 0 || (this.props.showSubmit && this.props.currentGeographyId)) > 0 && (
-                <Col xs={1}>
-                  <Button
-                    className="submit-Geography-change"
-                    onClick={this.props.handleChangeGeography}
-                    variant="primary"
-                  >
-                    Go
-                  </Button>
-                </Col>
-              )}
+            {this.props.showSubmit && (
+              <Col xs={1}>
+                <Button
+                  className="submit-Geography-change"
+                  onClick={this.props.handleChangeGeography}
+                  variant="primary"
+                >
+                  Go
+                </Button>
+              </Col>
+            )}
           </Form.Group>
         )}
       </ConfigContext.Consumer>

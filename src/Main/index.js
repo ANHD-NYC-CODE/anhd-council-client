@@ -14,14 +14,23 @@ class Main extends React.Component {
     this.submitGeography = this.submitGeography.bind(this)
     this.cancelChangeGeography = this.cancelChangeGeography.bind(this)
     this.handleChangeGeographyType = this.handleChangeGeographyType.bind(this)
+
+    if (this.props.appState.changingGeography) {
+      this.props.dispatch(
+        setAppState({ changingGeography: false, changingGeographyType: undefined, changingGeographyId: undefined })
+      )
+    }
   }
 
-  submitGeography({ geographyType, geographyId } = {}) {
+  submitGeography({ e, geographyType, geographyId } = {}) {
+    e = new StandardizedInput(e)
+    const type = geographyType || this.props.appState.changingGeographyType || this.props.appState.currentGeographyType
+    const id = geographyId || e.value
+
     this.props.dispatch(
       setGeographyAndRequestsAndRedirect({
-        geographyType:
-          geographyType || this.props.appState.changingGeographyType || this.props.appState.currentGeographyType,
-        geographyId: geographyId || this.props.appState.changingGeographyId || this.props.appState.currentGeographyId,
+        geographyType: type,
+        geographyId: id,
         redirect: true,
       })
     )
@@ -89,7 +98,11 @@ class Main extends React.Component {
                   handleChangeGeography={this.submitGeography}
                   handleChangeGeographyType={this.handleChangeGeographyType}
                   placeholder="District Alerts Map"
-                  showSubmit={true}
+                  showSubmit={
+                    !this.props.appState.changingGeography &&
+                    this.props.appState.currentGeographyType &&
+                    this.props.appState.currentGeographyId > 0
+                  }
                 />
               </Form.Group>
             </Form>

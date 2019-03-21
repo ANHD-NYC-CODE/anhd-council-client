@@ -25,13 +25,23 @@ class AlertMap extends React.Component {
     ) {
       this.submitGeography({ geographyType: props.geographyType, geographyId: props.geographyId })
     }
+
+    if (this.props.appState.changingGeography) {
+      this.props.dispatch(
+        setAppState({ changingGeography: false, changingGeographyType: undefined, changingGeographyId: undefined })
+      )
+    }
   }
 
-  submitGeography({ geographyType, geographyId } = {}) {
+  submitGeography({ e, geographyType, geographyId } = {}) {
+    e = new StandardizedInput(e)
+    const type = geographyType || this.props.appState.changingGeographyType || this.props.appState.currentGeographyType
+    const id = geographyId || e.value
+
     this.props.dispatch(
       setGeographyAndRequestsAndRedirect({
-        geographyType: geographyType || this.props.appState.changingGeographyType,
-        geographyId: geographyId || this.props.appState.changingGeographyId,
+        geographyType: type,
+        geographyId: id,
         redirect: true,
       })
     )
@@ -51,6 +61,7 @@ class AlertMap extends React.Component {
 
   handleChangeGeographyId(e) {
     const geographyId = new StandardizedInput(e).value
+
     if (parseInt(geographyId) <= 0) return
     this.props.dispatch(
       setAppState({

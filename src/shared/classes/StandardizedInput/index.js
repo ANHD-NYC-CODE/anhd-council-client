@@ -1,5 +1,6 @@
 export class StandardizedInput {
   constructor(e) {
+    if (!e) return
     this.cleanEvent(e)
   }
 
@@ -19,6 +20,7 @@ export class StandardizedInput {
       e.rangeKey = target.dataset ? target.dataset.rangeKey : undefined
       e.key = target.dataset ? target.dataset.key : undefined
       e.type = target.type
+      this.target = e.target
     }
 
     if (e.layer) {
@@ -29,5 +31,6 @@ export class StandardizedInput {
     this.value = e.value
     this.rangeKey = e.rangeKey
     this.key = e.key
+    this.type = e.type
   }
 }

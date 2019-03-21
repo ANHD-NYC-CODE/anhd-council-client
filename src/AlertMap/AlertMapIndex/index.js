@@ -17,6 +17,7 @@ const AlertMapIndex = props => {
           changing={props.changingGeography}
           changingGeographyType={props.changingGeographyType}
           changingGeographyId={props.changingGeographyId}
+          showSubmit={!props.changingGeography && props.currentGeographyType && props.currentGeographyId > 0}
         />
       </Row>
       <Row>
