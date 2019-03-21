@@ -11,6 +11,7 @@ import RequestWrapper from 'shared/components/RequestWrapper'
 import RequestSummary from 'shared/components/RequestSummary'
 import SummaryResultCard from 'shared/components/SummaryResultCard'
 import HousingTypeSummaryResultCard from 'AlertMap/HousingTypeSummaryResultCard'
+import ConfigContext from 'Config/ConfigContext'
 
 import GeographyProfile from 'AlertMap/GeographyProfile'
 import { alertMapFilterdates } from 'shared/utilities/componentUtils'
@@ -20,11 +21,15 @@ class AlertMapShow extends React.Component {
     super(props)
     this.switchTable = this.switchTable.bind(this)
     this.toggleView = this.toggleView.bind(this)
+    this.handleGeoJsonClick = this.handleGeoJsonClick.bind(this)
+    this.handleChangeGeography = this.handleChangeGeography.bind(this)
+    console.log('heyyy')
     this.state = {
       view: 1,
-      selectedRequest: getRequestType(this.props.requests, 'ADVANCED_SEARCH').length
+      selectedRequest: getRequestType(props.requests, 'ADVANCED_SEARCH').length
         ? getRequestType(this.props.requests, 'ADVANCED_SEARCH')[0]
         : getRequestType(this.props.requests, 'MAP_FILTER')[0],
+      selectedGeoJsonId: props.geographyId,
     }
   }
 
@@ -40,6 +45,19 @@ class AlertMapShow extends React.Component {
     })
   }
 
+  handleChangeGeography(type, value) {
+    this.setState({
+      selectedGeoJsonId: value,
+    })
+    this.props.changeGeographyAndId(type, value)
+  }
+
+  handleGeoJsonClick(e) {
+    this.setState({
+      selectedGeoJsonId: e.layer.feature.properties.id,
+    })
+  }
+
   render() {
     const geographyRequests = getManyRequestTypes(this.props.requests, ['MAP_FILTER', 'ADVANCED_SEARCH'])
 
@@ -52,7 +70,7 @@ class AlertMapShow extends React.Component {
             currentGeographyType={this.props.geographyType}
             currentGeographyId={this.props.geographyId}
             dispatch={this.props.dispatch}
-            onChange={this.props.changeGeographyAndId}
+            onChange={this.handleChangeGeography}
           />
         </Row>
         <Row>
@@ -130,7 +148,26 @@ class AlertMapShow extends React.Component {
             </ToggleButtonGroup>
 
             {this.state.view === 1 ? (
-              <LeafletMap geographyType={this.props.geographyType} geographyId={this.props.geographyId} />
+              <ConfigContext.Consumer>
+                {config => {
+                  return (
+                    <LeafletMap
+                      councilDistricts={config.councilDistricts}
+                      communityDistricts={config.communityDistricts}
+                      geographyType={this.props.geographyType}
+                      geographyId={this.props.geographyId}
+                      handleGeoJsonClick={this.handleGeoJsonClick}
+                      selectedGeographyData={
+                        (
+                          config[
+                            this.props.geographyType === 'COUNCIL' ? 'councilDistricts' : 'communityDistricts'
+                          ].find(g => g.data.properties.id == this.state.selectedGeoJsonId) || {}
+                        ).data
+                      }
+                    />
+                  )
+                }}
+              </ConfigContext.Consumer>
             ) : (
               this.props.requests.map((request, index) => {
                 return (
