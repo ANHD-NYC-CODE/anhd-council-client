@@ -35,6 +35,9 @@ class AdvancedSearchForm extends React.Component {
 
     this.state = {
       validated: false,
+      changingGeography: false,
+      changingGeographyType: undefined,
+      changingGeographyId: undefined,
     }
 
     this.submitForm = this.submitForm.bind(this)
@@ -42,6 +45,8 @@ class AdvancedSearchForm extends React.Component {
     this.changeHousingType = this.changeHousingType.bind(this)
     this.validateForm = this.validateForm.bind(this)
     this.changeGeography = this.changeGeography.bind(this)
+    this.handleChangeGeographyType = this.handleChangeGeographyType.bind(this)
+    this.cancelChangeGeography = this.cancelChangeGeography.bind(this)
     this.syncGeographyToAppState = this.syncGeographyToAppState.bind(this)
 
     this.syncGeographyToAppState(props)
@@ -85,6 +90,24 @@ class AdvancedSearchForm extends React.Component {
         redirect: false,
       })
     )
+    this.cancelChangeGeography()
+  }
+
+  handleChangeGeographyType(e) {
+    this.setState({
+      changingGeography: true,
+      changingGeographyType: new StandardizedInput(e).value,
+      changingGeographyId: -1,
+    })
+    if (this.props.handleChange) this.props.handleChange(e)
+  }
+
+  cancelChangeGeography() {
+    this.setState({
+      changingGeography: false,
+      changingGeographyType: undefined,
+      changingGeographyId: undefined,
+    })
   }
 
   addHousingType(e) {
@@ -156,6 +179,11 @@ class AdvancedSearchForm extends React.Component {
               touched={touched}
               errors={errors}
               handleChange={handleChange}
+              handleChangeGeographyType={this.handleChangeGeographyType}
+              cancelChangeGeography={this.cancelChangeGeography}
+              changing={this.state.changingGeography}
+              changingGeographyType={this.state.changingGeographyType}
+              changingGeographyId={this.state.changingGeographyId}
             />
 
             <HousingTypeQuery

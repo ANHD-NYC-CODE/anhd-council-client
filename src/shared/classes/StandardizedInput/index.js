@@ -20,6 +20,11 @@ export class StandardizedInput {
       e.key = target.dataset ? target.dataset.key : undefined
       e.type = target.type
     }
+
+    if (e.layer) {
+      e.value = e.layer.feature.properties.id
+    }
+
     this.name = e.name
     this.value = e.value
     this.rangeKey = e.rangeKey

@@ -21,14 +21,12 @@ class AlertMapShow extends React.Component {
     super(props)
     this.switchTable = this.switchTable.bind(this)
     this.toggleView = this.toggleView.bind(this)
-    this.handleGeoJsonClick = this.handleGeoJsonClick.bind(this)
-    this.handleChangeGeography = this.handleChangeGeography.bind(this)
+
     this.state = {
       view: 1,
       selectedRequest: getRequestType(props.requests, 'ADVANCED_SEARCH').length
         ? getRequestType(this.props.requests, 'ADVANCED_SEARCH')[0]
         : getRequestType(this.props.requests, 'MAP_FILTER')[0],
-      selectedGeoJsonId: props.geographyId,
     }
   }
 
@@ -44,19 +42,6 @@ class AlertMapShow extends React.Component {
     })
   }
 
-  handleChangeGeography(type, value) {
-    this.setState({
-      selectedGeoJsonId: value,
-    })
-    this.props.changeGeographyAndId(type, value)
-  }
-
-  handleGeoJsonClick(e) {
-    this.setState({
-      selectedGeoJsonId: e.layer.feature.properties.id,
-    })
-  }
-
   render() {
     const geographyRequests = getManyRequestTypes(this.props.requests, ['MAP_FILTER', 'ADVANCED_SEARCH'])
 
@@ -68,7 +53,12 @@ class AlertMapShow extends React.Component {
             currentGeographyType={this.props.geographyType}
             currentGeographyId={this.props.geographyId}
             dispatch={this.props.dispatch}
-            onChange={this.handleChangeGeography}
+            changing={this.props.changingGeography}
+            changingGeographyType={this.props.changingGeographyType}
+            changingGeographyId={this.props.changingGeographyId}
+            cancelChangeGeography={this.props.cancelChangeGeography}
+            handleChangeGeographyType={this.props.handleChangeGeographyType}
+            onChange={this.props.handleChangeGeography}
           />
         </Row>
         <Row>
@@ -152,14 +142,14 @@ class AlertMapShow extends React.Component {
                     <LeafletMap
                       councilDistricts={config.councilDistricts}
                       communityDistricts={config.communityDistricts}
-                      geographyType={this.props.geographyType}
-                      geographyId={this.props.geographyId}
-                      handleGeoJsonClick={this.handleGeoJsonClick}
+                      geographyType={this.props.changingGeographyType || this.props.geographyType}
+                      geographyId={this.props.changingGeographyId || this.props.geographyId}
+                      handleChangeGeographyId={this.props.handleChangeGeographyId}
                       selectedGeographyData={
                         (
                           config[
                             this.props.geographyType === 'COUNCIL' ? 'councilDistricts' : 'communityDistricts'
-                          ].find(g => g.data.properties.id == this.state.selectedGeoJsonId) || {}
+                          ].find(g => g.data.properties.id == this.props.changingGeographyId) || {}
                         ).data
                       }
                     />
