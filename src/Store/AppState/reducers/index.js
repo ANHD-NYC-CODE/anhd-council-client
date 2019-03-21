@@ -6,12 +6,21 @@ export const initialState = {
   currentGeographyId: undefined,
   currentProperty: undefined,
   currentBuilding: undefined,
+  changingGeography: false,
+  changingGeographyType: undefined,
+  changingGeographyId: undefined,
   mapFilterDate: alertMapFilterdates()[0],
   requests: [],
 }
 
 export const appStateReducer = (state = Object.freeze(initialState), action = { data: [] }) => {
   switch (action.type) {
+    case c.SET_APP_STATE: {
+      return {
+        ...state,
+        ...action.state,
+      }
+    }
     case c.SET_GEOGRAPHY_REQUESTS: {
       return {
         ...state,

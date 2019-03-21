@@ -8,7 +8,9 @@ const GeographyProfile = props => {
   return (
     <Card className="geography-links">
       <Card.Body>
-        <Card.Title>{geographySelectionToString({ type: props.geographyType, id: props.geographyId })}</Card.Title>
+        <Card.Title>
+          {geographySelectionToString({ type: props.currentGeographyType, id: props.currentGeographyId })}
+        </Card.Title>
         {renderLinks(props)}
       </Card.Body>
     </Card>
@@ -16,7 +18,7 @@ const GeographyProfile = props => {
 }
 
 const renderLinks = props => {
-  switch (props.geographyType) {
+  switch (props.currentGeographyType) {
     case 'COUNCIL':
       return (
         <Col>
@@ -42,7 +44,9 @@ const renderLinks = props => {
           <Row>
             <Button
               as={BaseLink}
-              href={`https://communityprofiles.planning.nyc.gov${communityToCommunityProfileLink(props.geographyId)}`}
+              href={`https://communityprofiles.planning.nyc.gov${communityToCommunityProfileLink(
+                props.currentGeographyId
+              )}`}
               text="NYC Planning Community Profile"
             />
           </Row>
@@ -66,8 +70,8 @@ const renderLinks = props => {
 }
 
 GeographyProfile.propTypes = {
-  geographyType: PropTypes.string,
-  geographyId: PropTypes.string,
+  currentGeographyType: PropTypes.string,
+  currentGeographyId: PropTypes.string,
 }
 
 export default GeographyProfile

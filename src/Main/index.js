@@ -4,19 +4,45 @@ import { connect } from 'react-redux'
 import AddressSearch from 'Lookup/AddressSearch'
 import GeographySelect from 'shared/components/GeographySelect'
 import { setGeographyAndRequestsAndRedirect } from 'Store/AppState/actions'
+import { setAppState } from 'Store/AppState/actions'
+import { StandardizedInput } from 'shared/classes/StandardizedInput'
 
-import { Form, Row, Col, Jumbotron, Container } from 'react-bootstrap'
+import { Form, Row, Col, Jumbotron } from 'react-bootstrap'
 class Main extends React.Component {
   constructor(props) {
     super(props)
-    this.changeGeographyAndId = this.changeGeographyAndId.bind(this)
+    this.submitGeography = this.submitGeography.bind(this)
+    this.handleChangeGeographyType = this.handleChangeGeographyType.bind(this)
   }
 
-  changeGeographyAndId(type, value) {
+  submitGeography(type, value) {
     this.props.dispatch(
       setGeographyAndRequestsAndRedirect({
-        geographyType: type,
-        geographyId: value,
+        geographyType: type || this.props.appState.changingGeographyType,
+        geographyId: value || this.props.appState.changingGeographyId,
+        redirect: true,
+      })
+    )
+
+    this.cancelChangeGeography()
+  }
+
+  handleChangeGeographyType(e) {
+    this.props.dispatch(
+      setAppState({
+        changingGeography: true,
+        changingGeographyType: new StandardizedInput(e).value,
+        changingGeographyId: -1,
+      })
+    )
+  }
+
+  cancelChangeGeography() {
+    this.props.dispatch(
+      setAppState({
+        changingGeography: false,
+        changingGeographyType: undefined,
+        changingGeographyId: undefined,
       })
     )
   }
@@ -50,12 +76,18 @@ class Main extends React.Component {
               </Form.Group>
               <Form.Group>
                 <GeographySelect
+                  cancelChangeGeography={this.cancelChangeGeography}
+                  changing={this.props.appState.changingGeography}
                   confirmChange={false}
-                  currentGeographyType={this.props.appState.currentGeographyType}
-                  currentGeographyId={this.props.appState.currentGeographyId}
+                  currentGeographyType={
+                    this.props.appState.changingGeographyType || this.props.appState.currentGeographyType
+                  }
+                  currentGeographyId={this.props.appState.changingGeographyId || this.props.appState.currentGeographyId}
                   dispatch={this.props.dispatch}
-                  onChange={this.changeGeographyAndId}
+                  handleChangeGeography={this.submitGeography}
+                  handleChangeGeographyType={this.handleChangeGeographyType}
                   placeholder="District Alerts Map"
+                  showsubmit={true}
                 />
               </Form.Group>
             </Form>

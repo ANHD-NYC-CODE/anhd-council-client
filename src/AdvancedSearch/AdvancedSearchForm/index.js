@@ -174,7 +174,7 @@ class AdvancedSearchForm extends React.Component {
               currentGeographyType={this.props.appState.currentGeographyType}
               currentGeographyId={this.props.appState.currentGeographyId}
               dispatch={this.props.dispatch}
-              onChange={this.changeGeography}
+              handleChangeGeography={this.changeGeography}
               handleBlur={handleBlur}
               touched={touched}
               errors={errors}

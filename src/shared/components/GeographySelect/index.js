@@ -21,8 +21,10 @@ class GeographySelect extends React.Component {
 
   passChangeGeography(e) {
     const standardE = new StandardizedInput(e)
-
-    this.props.onChange(this.props.changingGeographyType || this.props.currentGeographyType, standardE.value)
+    this.props.handleChangeGeography({
+      geographyType: this.props.changingGeographyType || this.props.currentGeographyType,
+      geographyId: standardE.value,
+    })
     if (this.props.handleChange) this.props.handleChange(e)
   }
 
@@ -107,17 +109,19 @@ class GeographySelect extends React.Component {
                 </Button>
               </Col>
             )}
-            {this.props.changing && this.props.changingGeographyType && this.props.changingGeographyId > 0 && (
-              <Col xs={12}>
-                <Button
-                  className="submit-Geography-change"
-                  onClick={this.props.handleChangeGeography}
-                  variant="primary"
-                >
-                  Submit!
-                </Button>
-              </Col>
-            )}
+            {(this.props.showSubmit || this.props.changing) &&
+              this.props.changingGeographyType &&
+              this.props.changingGeographyId > 0 && (
+                <Col xs={12}>
+                  <Button
+                    className="submit-Geography-change"
+                    onClick={this.props.handleChangeGeography}
+                    variant="primary"
+                  >
+                    Submit
+                  </Button>
+                </Col>
+              )}
           </Form.Group>
         )}
       </ConfigContext.Consumer>
@@ -126,18 +130,19 @@ class GeographySelect extends React.Component {
 }
 
 GeographySelect.propTypes = {
+  cancelChangeGeography: PropTypes.func,
+  config: PropTypes.object,
   currentGeographyType: PropTypes.string,
   currentGeographyId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  config: PropTypes.object,
   dispatch: PropTypes.func,
-  placeholder: PropTypes.string,
-  onChange: PropTypes.func,
-  handleBlur: PropTypes.func,
-  touched: PropTypes.object,
   errors: PropTypes.object,
-  submitCount: PropTypes.number,
   handleChange: PropTypes.func,
-  cancelChangeGeography: PropTypes.func,
+  handleChangeGeography: PropTypes.func,
+  handleBlur: PropTypes.func,
+  submitCount: PropTypes.number,
+  touched: PropTypes.object,
+  placeholder: PropTypes.string,
+  showSubmit: PropTypes.bool,
 }
 
 export default GeographySelect

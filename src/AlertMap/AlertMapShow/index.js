@@ -50,15 +50,15 @@ class AlertMapShow extends React.Component {
       <div>
         <Row>
           <GeographySelect
-            currentGeographyType={this.props.geographyType}
-            currentGeographyId={this.props.geographyId}
+            currentGeographyType={this.props.currentGeographyType}
+            currentGeographyId={this.props.currentGeographyId}
             dispatch={this.props.dispatch}
             changing={this.props.changingGeography}
             changingGeographyType={this.props.changingGeographyType}
             changingGeographyId={this.props.changingGeographyId}
             cancelChangeGeography={this.props.cancelChangeGeography}
             handleChangeGeographyType={this.props.handleChangeGeographyType}
-            onChange={this.props.handleChangeGeography}
+            handleChangeGeography={this.props.handleChangeGeography}
           />
         </Row>
         <Row>
@@ -142,16 +142,11 @@ class AlertMapShow extends React.Component {
                     <LeafletMap
                       councilDistricts={config.councilDistricts}
                       communityDistricts={config.communityDistricts}
-                      geographyType={this.props.changingGeographyType || this.props.geographyType}
-                      geographyId={this.props.changingGeographyId || this.props.geographyId}
+                      currentGeographyType={this.props.currentGeographyType}
+                      currentGeographyId={this.props.currentGeographyId}
+                      changingGeographyId={this.props.changingGeographyId}
+                      changingGeographyType={this.props.changingGeographyType}
                       handleChangeGeographyId={this.props.handleChangeGeographyId}
-                      selectedGeographyData={
-                        (
-                          config[
-                            this.props.geographyType === 'COUNCIL' ? 'councilDistricts' : 'communityDistricts'
-                          ].find(g => g.data.properties.id == this.props.changingGeographyId) || {}
-                        ).data
-                      }
                     />
                   )
                 }}
@@ -169,7 +164,10 @@ class AlertMapShow extends React.Component {
             )}
           </Col>
           <Col sm={12} lg={3}>
-            <GeographyProfile geographyType={this.props.geographyType} geographyId={this.props.geographyId} />
+            <GeographyProfile
+              currentGeographyType={this.props.currentGeographyType}
+              currentGeographyId={this.props.currentGeographyId}
+            />
           </Col>
         </Row>
       </div>
@@ -180,8 +178,8 @@ class AlertMapShow extends React.Component {
 AlertMapShow.propTypes = {
   changeGeographyAndId: PropTypes.func,
   dispatch: PropTypes.func,
-  geographyType: PropTypes.string,
-  geographyId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  currentGeographyType: PropTypes.string,
+  currentGeographyId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   mapFilterDate: PropTypes.string,
   requests: PropTypes.array,
   toggleDateRange: PropTypes.func,

@@ -52,18 +52,7 @@ class AlertMapRequestsWrapper extends React.Component {
 
   render() {
     return this.props.requests.length ? (
-      <AlertMapShow
-        toggleDateRange={this.toggleDateRange}
-        {...this.props}
-        cancelChangeGeography={this.props.cancelChangeGeography}
-        handleChangeGeography={this.props.handleChangeGeography}
-        handleChangeGeographyType={this.props.handleChangeGeographyType}
-        handleChangeGeographyId={this.props.handleChangeGeographyId}
-        selectedGeoJsonId={this.props.selectedGeoJsonId}
-        changingGeography={this.props.changingGeography}
-        changingGeographyType={this.props.changingGeographyType}
-        changingGeographyId={this.props.changingGeographyId}
-      />
+      <AlertMapShow toggleDateRange={this.toggleDateRange} {...this.props} />
     ) : (
       <InnerLoader />
     )
