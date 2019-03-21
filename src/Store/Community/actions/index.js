@@ -41,7 +41,8 @@ export const getCommunities = () => (dispatch, getState, access_token) => {
   const requestId = Math.floor(Math.random() * 1000000)
   return getStorageDataAction(dispatch, c.GET_COMMUNITIES, requestId, COMMUNITY_BOARDS_INDEX, handleGetCommunities)
     .then(storageData => {
-      if (!storageData) {
+      // Temporary - reset the DBs
+      if (storageData) {
         return communitiesAxios(dispatch, getState, access_token, requestId)
       }
     })
