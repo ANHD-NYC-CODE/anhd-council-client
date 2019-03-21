@@ -120,23 +120,25 @@ export default class LeafletMap extends Component {
               />
             </div>
           )}
-          {this.props.changingGeographyType && this.props.changingGeographyId && (
-            <Popup
-              key={`${Math.random() * 100000}`}
-              position={this.getGeographyBounds(
-                this.props.changingGeographyType,
-                this.props.changingGeographyId
-              ).getCenter()}
-            >
-              <p>
-                {geographySelectionToString({
-                  type: this.props.changingGeographyType,
-                  id: this.props.changingGeographyId,
-                })}
-              </p>
-              <Button onClick={this.props.handleChangeGeography}>Visit</Button>
-            </Popup>
-          )}
+          {this.props.changingGeographyType &&
+            (this.props.currentGeographyId !== this.props.changingGeographyId &&
+              this.props.changingGeographyId > 0) && (
+              <Popup
+                key={`${Math.random() * 100000}`}
+                position={this.getGeographyBounds(
+                  this.props.changingGeographyType,
+                  this.props.changingGeographyId
+                ).getCenter()}
+              >
+                <p>
+                  {geographySelectionToString({
+                    type: this.props.changingGeographyType,
+                    id: this.props.changingGeographyId,
+                  })}
+                </p>
+                <Button onClick={this.props.handleChangeGeography}>Visit</Button>
+              </Popup>
+            )}
           )} } )}
         </Map>
       </div>
