@@ -1,10 +1,14 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import { Map, TileLayer } from 'react-leaflet'
-import './style.scss'
+
+import { geographySelectionToString } from 'shared/utilities/languageUtils'
+
+import { Map, TileLayer, Popup } from 'react-leaflet'
+import { Button } from 'react-bootstrap'
 import GeographyGeoJson from 'LeafletMap/GeographyGeoJson'
 import GeographyMarkerLabels from 'LeafletMap/GeographyMarkerLabels'
 import L from 'leaflet'
+import './style.scss'
 const center = [40.71, -73.98]
 export default class LeafletMap extends Component {
   constructor(props) {
@@ -18,6 +22,7 @@ export default class LeafletMap extends Component {
 
     this.updateDimensions = this.updateDimensions.bind(this)
     this.centerMapOnGeography = this.centerMapOnGeography.bind(this)
+    this.getGeographyBounds = this.getGeographyBounds.bind(this)
   }
 
   componentDidUpdate() {
@@ -44,14 +49,18 @@ export default class LeafletMap extends Component {
       const changingOrCurrentType = this.props.changingGeographyType || this.props.currentGeographyType
       const changingOrCurrentId = this.props.changingGeographyId || this.props.currentGeographyId
       if (!(changingOrCurrentType && changingOrCurrentId)) return
-      const geographyDataset = this.props.selectGeographyData(changingOrCurrentType)
-      const selectedGeography = geographyDataset.find(
-        geography => geography.data.properties.id === parseInt(changingOrCurrentId)
-      )
+      const bounds = this.getGeographyBounds(changingOrCurrentType, changingOrCurrentId)
 
-      if (!selectedGeography) return
-      this.mapRef.current.leafletElement.fitBounds(new L.geoJSON(selectedGeography.data.geometry).getBounds())
+      if (bounds) {
+        this.mapRef.current.leafletElement.fitBounds(bounds)
+      }
     }
+  }
+
+  getGeographyBounds(type, id) {
+    const geographyDataset = this.props.selectGeographyData(type)
+    const selectedGeography = geographyDataset.find(geography => geography.data.properties.id === parseInt(id))
+    if (selectedGeography) return new L.geoJSON(selectedGeography.data.geometry).getBounds()
   }
 
   updateDimensions() {
@@ -111,6 +120,23 @@ export default class LeafletMap extends Component {
               />
             </div>
           )}
+          {this.props.changingGeographyType && this.props.changingGeographyId && (
+            <Popup
+              key={`${Math.random() * 100000}`}
+              position={this.getGeographyBounds(
+                this.props.changingGeographyType,
+                this.props.changingGeographyId
+              ).getCenter()}
+            >
+              <p>
+                {geographySelectionToString({
+                  type: this.props.changingGeographyType,
+                  id: this.props.changingGeographyId,
+                })}
+              </p>
+              <Button onClick={this.props.handleChangeGeography}>Visit</Button>
+            </Popup>
+          )}
           )} } )}
         </Map>
       </div>
@@ -126,8 +152,8 @@ LeafletMap.defaultProps = {
 LeafletMap.propTypes = {
   communityDistricts: PropTypes.array,
   councilDistricts: PropTypes.array,
+  changingGeographyType: PropTypes.string,
+  changingGeographyId: PropTypes.string,
   currentGeographyType: PropTypes.string,
   currentGeographyId: PropTypes.string,
-  selectedGeographyData: PropTypes.object,
-  handleGeoJsonClick: PropTypes.func,
 }
