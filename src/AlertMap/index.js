@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { push, createMatchSelector } from 'connected-react-router'
 import { setGeographyAndRequestsAndRedirect } from 'Store/AppState/actions'
-import { getManyRequestTypes } from 'Store/AppState/selectors'
+import { selectRequests, getManyRequestTypes } from 'Store/AppState/selectors'
 import AlertMapIndex from 'AlertMap/AlertMapIndex'
 import AlertMapRequestsWrapper from 'AlertMap/AlertMapRequestsWrapper'
 
@@ -15,8 +15,8 @@ class AlertMap extends React.Component {
     if (!(props.geographyType && props.geographyId)) {
       props.dispatch(push('/map'))
     } else if (
-      !(props.geographyType === props.appState.currentGeographyType) &&
-      !(props.geographyId === props.appState.currentGeographyId)
+      !(props.geographyType === props.currentGeographyType) &&
+      !(props.geographyId === props.currentGeographyId)
     ) {
       this.changeGeographyAndId(props.geographyType, props.geographyId)
     }
@@ -33,16 +33,16 @@ class AlertMap extends React.Component {
   }
 
   render() {
-    return !(this.props.appState.currentGeographyType && this.props.appState.currentGeographyId) ? (
+    return !(this.props.currentGeographyType && this.props.currentGeographyId) ? (
       <AlertMapIndex changeGeographyAndId={this.changeGeographyAndId} dispatch={this.props.dispatch} />
     ) : (
       <AlertMapRequestsWrapper
         changeGeographyAndId={this.changeGeographyAndId}
         dispatch={this.props.dispatch}
-        geographyType={this.props.appState.currentGeographyType}
-        geographyId={this.props.appState.currentGeographyId}
-        mapFilterDate={this.props.appState.mapFilterDate}
-        requests={this.props.requests}
+        geographyType={this.props.currentGeographyType}
+        geographyId={this.props.currentGeographyId}
+        mapFilterDate={this.props.mapFilterDate}
+        requests={getManyRequestTypes(this.props.requests, ['MAP_FILTER', 'ADVANCED_SEARCH', 'GEOGRAPHY_HOUSING_TYPE'])}
       />
     )
   }
@@ -66,10 +66,12 @@ const mapStateToProps = state => {
   })
   const match = matchSelector(state)
   return {
-    appState: state.appState,
+    mapFilterDate: state.appState.mapFilterDate,
+    currentGeographyType: state.appState.currentGeographyType,
+    currentGeographyId: state.appState.currentGeographyId,
     geographyId: match ? match.params.id : undefined,
     geographyType: path ? path.toUpperCase() : undefined,
-    requests: getManyRequestTypes(state.appState.requests, ['MAP_FILTER', 'GEOGRAPHY_HOUSING_TYPE', 'ADVANCED_SEARCH']),
+    requests: selectRequests(state),
   }
 }
 
