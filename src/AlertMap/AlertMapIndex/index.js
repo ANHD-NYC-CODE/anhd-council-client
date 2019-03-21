@@ -35,6 +35,7 @@ const AlertMapIndex = props => {
                   currentGeographyType={props.changingGeographyType}
                   currentGeographyId={props.changingGeographyId}
                   handleChangeGeographyId={props.handleChangeGeographyId}
+                  selectGeographyData={config.selectGeographyData}
                 />
               )
             }}

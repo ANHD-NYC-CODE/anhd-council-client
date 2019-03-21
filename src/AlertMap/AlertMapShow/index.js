@@ -147,6 +147,7 @@ class AlertMapShow extends React.Component {
                       changingGeographyId={this.props.changingGeographyId}
                       changingGeographyType={this.props.changingGeographyType}
                       handleChangeGeographyId={this.props.handleChangeGeographyId}
+                      selectGeographyData={config.selectGeographyData}
                     />
                   )
                 }}

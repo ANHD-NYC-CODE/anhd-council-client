@@ -27,6 +27,8 @@ class Config extends React.Component {
       this.props.dispatch(getCommunities())
     }
 
+    this.selectGeographyData = this.selectGeographyData.bind(this)
+
     this.state = {
       geographyType: undefined,
       geographyId: undefined,
@@ -58,6 +60,14 @@ class Config extends React.Component {
       })
     }
   }
+  selectGeographyData(type) {
+    switch (type) {
+      case 'COUNCIL':
+        return this.props.councilDistricts
+      case 'COMMUNITY':
+        return this.props.communityDistricts
+    }
+  }
 
   render() {
     return this.props.error ? (
@@ -70,6 +80,7 @@ class Config extends React.Component {
           housingTypeModels: this.props.housingTypeModels,
           communityDistricts: this.props.communityDistricts,
           councilDistricts: this.props.councilDistricts,
+          selectGeographyData: this.selectGeographyData,
         }}
       >
         {this.props.loading ||
