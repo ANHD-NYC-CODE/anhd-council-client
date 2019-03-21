@@ -23,7 +23,6 @@ class AlertMapShow extends React.Component {
     this.toggleView = this.toggleView.bind(this)
     this.handleGeoJsonClick = this.handleGeoJsonClick.bind(this)
     this.handleChangeGeography = this.handleChangeGeography.bind(this)
-    console.log('heyyy')
     this.state = {
       view: 1,
       selectedRequest: getRequestType(props.requests, 'ADVANCED_SEARCH').length
@@ -62,7 +61,6 @@ class AlertMapShow extends React.Component {
     const geographyRequests = getManyRequestTypes(this.props.requests, ['MAP_FILTER', 'ADVANCED_SEARCH'])
 
     const housingTypeRequests = getRequestType(this.props.requests, 'GEOGRAPHY_HOUSING_TYPE')
-
     return (
       <div>
         <Row>
