@@ -11,7 +11,6 @@ const AlertMapIndex = props => {
       <Row>
         <GeographySelect
           dispatch={props.dispatch}
-          onChange={props.handleChangeGeography}
           handleChangeGeography={props.handleChangeGeography}
           handleChangeGeographyType={props.handleChangeGeographyType}
           cancelChangeGeography={props.cancelChangeGeography}
@@ -33,8 +32,8 @@ const AlertMapIndex = props => {
                 <LeafletMap
                   councilDistricts={config.councilDistricts}
                   communityDistricts={config.communityDistricts}
-                  geographyType={props.changingGeographyType}
-                  geographyId={props.changingGeographyId}
+                  currentGeographyType={props.changingGeographyType}
+                  currentGeographyId={props.changingGeographyId}
                   handleChangeGeographyId={props.handleChangeGeographyId}
                 />
               )

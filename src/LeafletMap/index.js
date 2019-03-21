@@ -40,8 +40,17 @@ export default class LeafletMap extends Component {
   }
 
   centerMapOnGeography() {
-    if (this.mapRef.current && this.props.selectedGeographyData) {
-      this.mapRef.current.leafletElement.fitBounds(new L.geoJSON(this.props.selectedGeographyData.geometry).getBounds())
+    if (this.mapRef.current) {
+      const changingOrCurrentType = this.props.changingGeographyType || this.props.currentGeographyType
+      const changingOrCurrentId = this.props.changingGeographyId || this.props.currentGeographyId
+      if (!(changingOrCurrentType && changingOrCurrentId)) return
+      const geographyDataset =
+        changingOrCurrentType === 'COUNCIL' ? this.props.councilDistricts : this.props.communityDistricts
+      const selectedGeography = geographyDataset.find(
+        geography => geography.data.properties.id === parseInt(changingOrCurrentId)
+      )
+
+      this.mapRef.current.leafletElement.fitBounds(new L.geoJSON(selectedGeography.data.geometry).getBounds())
     }
   }
 
@@ -70,37 +79,37 @@ export default class LeafletMap extends Component {
             attribution="mapbox"
             url="https://api.mapbox.com/styles/v1/anhdnyc/cjtgo9wv009uw1fo0ubm7elun/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYW5oZG55YyIsImEiOiJjanQ0ZWRqaDcxMmRxNDlsbHV1OXN0aGx6In0.i07oerfvXtcRfm3npws7mA"
           />
-          {this.props.geographyType === 'COMMUNITY' && (
+          {this.props.currentGeographyType === 'COMMUNITY' && (
             <TileLayer
               attribution="mapbox"
               url="https://api.mapbox.com/styles/v1/anhdnyc/cjtgnuw5v04ad1fs950fzmkn1/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYW5oZG55YyIsImEiOiJjanQ0ZWRqaDcxMmRxNDlsbHV1OXN0aGx6In0.i07oerfvXtcRfm3npws7mA"
             />
           )}
-          {this.props.geographyType === 'COUNCIL' && (
+          {this.props.currentGeographyType === 'COUNCIL' && (
             <TileLayer
               attribution="mapbox"
               url="https://api.mapbox.com/styles/v1/anhdnyc/cjtgmvhfl6nw01fs8sqjifqni/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYW5oZG55YyIsImEiOiJjanQ0ZWRqaDcxMmRxNDlsbHV1OXN0aGx6In0.i07oerfvXtcRfm3npws7mA"
             />
           )}
-          {this.props.geographyType && (
+          {this.props.currentGeographyType && (
             <div>
               <GeographyGeoJson
                 geographies={
-                  this.props.geographyType && this.props.geographyType === 'COUNCIL'
+                  this.props.currentGeographyType && this.props.currentGeographyType === 'COUNCIL'
                     ? this.props.councilDistricts
                     : this.props.communityDistricts
                 }
-                selectedId={this.props.changingGeographyId || this.props.geographyId}
-                selectedType={this.props.changingGeographyType || this.props.geographyType}
-                clickedGeographyId={
-                  this.props.selectedGeographyData ? this.props.selectedGeographyData.properties.id : undefined
-                }
+                currentGeographyId={this.props.currentGeographyId}
+                changingGeographyId={this.props.changingGeographyId}
+                changingGeographyType={this.props.changingGeographyType}
                 onClick={this.props.handleChangeGeographyId}
               />
               <GeographyMarkerLabels
-                geographyType={this.props.geographyType}
+                currentGeographyType={this.props.currentGeographyType}
                 geographies={
-                  this.props.geographyType === 'COUNCIL' ? this.props.councilDistricts : this.props.communityDistricts
+                  this.props.currentGeographyType === 'COUNCIL'
+                    ? this.props.councilDistricts
+                    : this.props.communityDistricts
                 }
               />
             </div>
@@ -120,8 +129,8 @@ LeafletMap.defaultProps = {
 LeafletMap.propTypes = {
   communityDistricts: PropTypes.array,
   councilDistricts: PropTypes.array,
-  geographyId: PropTypes.string,
-  geographyType: PropTypes.string,
+  currentGeographyType: PropTypes.string,
+  currentGeographyId: PropTypes.string,
   selectedGeographyData: PropTypes.object,
   handleGeoJsonClick: PropTypes.func,
 }

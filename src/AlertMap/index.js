@@ -7,6 +7,7 @@ import { selectRequests, getManyRequestTypes } from 'Store/AppState/selectors'
 import AlertMapIndex from 'AlertMap/AlertMapIndex'
 import AlertMapRequestsWrapper from 'AlertMap/AlertMapRequestsWrapper'
 import { StandardizedInput } from 'shared/classes/StandardizedInput'
+import { setAppState } from 'Store/AppState/actions'
 
 class AlertMap extends React.Component {
   constructor(props) {
@@ -15,59 +16,57 @@ class AlertMap extends React.Component {
     this.handleChangeGeographyType = this.handleChangeGeographyType.bind(this)
     this.cancelChangeGeography = this.cancelChangeGeography.bind(this)
     this.handleChangeGeographyId = this.handleChangeGeographyId.bind(this)
-    this.state = {
-      changingGeography: false,
-      changingGeographyType: undefined,
-      changingGeographyId: undefined,
-    }
-
+    this.cancelChangeGeography = this.cancelChangeGeography.bind(this)
     if (!(props.geographyType && props.geographyId)) {
       props.dispatch(push('/map'))
     } else if (
       !(props.geographyType === props.appState.currentGeographyType) &&
       !(props.geographyId === props.appState.currentGeographyId)
     ) {
-      this.submitGeography(props.geographyType, props.geographyId)
+      this.submitGeography({ geographyType: props.geographyType, geographyId: props.geographyId })
     }
   }
 
-  submitGeography(type, value) {
+  submitGeography({ geographyType, geographyId } = {}) {
     this.props.dispatch(
       setGeographyAndRequestsAndRedirect({
-        geographyType: this.state.changingGeographyType || type,
-        geographyId: this.state.changingGeographyId || value,
+        geographyType: geographyType || this.props.appState.changingGeographyType,
+        geographyId: geographyId || this.props.appState.changingGeographyId,
         redirect: true,
       })
     )
-    this.setState({
-      selectedGeoJsonId: value,
-      changingGeography: false,
-      changingGeographyType: undefined,
-      changingGeographyId: undefined,
-    })
+
+    this.cancelChangeGeography()
   }
 
   handleChangeGeographyType(e) {
-    this.setState({
-      changingGeography: true,
-      changingGeographyType: new StandardizedInput(e).value,
-      changingGeographyId: -1,
-    })
+    this.props.dispatch(
+      setAppState({
+        changingGeography: true,
+        changingGeographyType: new StandardizedInput(e).value,
+        changingGeographyId: -1,
+      })
+    )
   }
 
   handleChangeGeographyId(e) {
-    this.setState({
-      changingGeography: true,
-      changingGeographyId: new StandardizedInput(e).value,
-    })
+    this.props.dispatch(
+      setAppState({
+        changingGeography: true,
+        changingGeographyType: this.props.appState.changingGeographyType || this.props.appState.currentGeographyType,
+        changingGeographyId: String(new StandardizedInput(e).value),
+      })
+    )
   }
 
   cancelChangeGeography() {
-    this.setState({
-      changingGeography: false,
-      changingGeographyType: undefined,
-      changingGeographyId: undefined,
-    })
+    this.props.dispatch(
+      setAppState({
+        changingGeography: false,
+        changingGeographyType: undefined,
+        changingGeographyId: undefined,
+      })
+    )
   }
 
   render() {
@@ -78,24 +77,24 @@ class AlertMap extends React.Component {
         handleChangeGeographyType={this.handleChangeGeographyType}
         handleChangeGeographyId={this.handleChangeGeographyId}
         cancelChangeGeography={this.cancelChangeGeography}
-        changingGeography={this.state.changingGeography}
-        changingGeographyType={this.state.changingGeographyType}
-        changingGeographyId={this.state.changingGeographyId}
+        changingGeography={this.props.appState.changingGeography}
+        changingGeographyType={this.props.appState.changingGeographyType}
+        changingGeographyId={this.props.appState.changingGeographyId}
       />
     ) : (
       <AlertMapRequestsWrapper
         dispatch={this.props.dispatch}
-        geographyType={this.props.appState.currentGeographyType}
-        geographyId={this.props.appState.currentGeographyId}
+        currentGeographyType={this.props.appState.currentGeographyType}
+        currentGeographyId={this.props.appState.currentGeographyId}
         mapFilterDate={this.props.appState.mapFilterDate}
         requests={getManyRequestTypes(this.props.requests, ['MAP_FILTER', 'ADVANCED_SEARCH', 'GEOGRAPHY_HOUSING_TYPE'])}
         handleChangeGeography={this.submitGeography}
         handleChangeGeographyType={this.handleChangeGeographyType}
         handleChangeGeographyId={this.handleChangeGeographyId}
         cancelChangeGeography={this.cancelChangeGeography}
-        changingGeography={this.state.changingGeography}
-        changingGeographyType={this.state.changingGeographyType}
-        changingGeographyId={this.state.changingGeographyId}
+        changingGeography={this.props.appState.changingGeography}
+        changingGeographyType={this.props.appState.changingGeographyType}
+        changingGeographyId={this.props.appState.changingGeographyId}
       />
     )
   }

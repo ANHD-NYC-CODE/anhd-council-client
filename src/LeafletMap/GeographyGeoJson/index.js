@@ -4,15 +4,15 @@ import { GeoJSON } from 'react-leaflet'
 
 const GeographyGeoJson = props => {
   const getGeographyColor = geography => {
-    if (props.selectedId == geography.properties.id) return '#f7f8c6' // yellow
-    if (props.clickedGeographyId == geography.properties.id) return '#dfcdd3'
+    if (props.currentGeographyId == geography.properties.id) return '#f7f8c6' // yellow
+    if (props.changingGeographyId == geography.properties.id) return '#dfcdd3'
     // crimson
     else return props.selectedType === 'COUNCIL' ? '#4c8ad8' : '#e74c2d' // blue | orange
   }
 
   const getFillOpacity = geography => {
-    if (props.selectedId == geography.properties.id) return '0.7'
-    if (props.clickedGeographyId == geography.properties.id) return '0.5'
+    if (props.currentGeographyId == geography.properties.id) return '0.7'
+    if (props.changingGeographyId == geography.properties.id) return '0.5'
     else return '0.3'
   }
   const getStyle = geography => {
@@ -27,7 +27,7 @@ const GeographyGeoJson = props => {
   }
   return (
     <GeoJSON
-      key={`geojson-${props.selectedType}`}
+      key={`geojson-${props.changingGeographyType}`}
       className="geography-geojson"
       data={props.geographies.map(g => g.data)}
       style={g => getStyle(g)}
@@ -37,13 +37,11 @@ const GeographyGeoJson = props => {
 }
 
 GeographyGeoJson.propTypes = {
-  clickedGeographyId: PropTypes.number,
   changingGeographyType: PropTypes.string,
+  changingGeographyId: PropTypes.string,
   geographies: PropTypes,
   onClick: PropTypes.func,
-  selectedRef: PropTypes.object,
-  selectedId: PropTypes.string,
-  selectedType: PropTypes.string,
+  currentGeographyId: PropTypes.string,
   setSelectedGeoData: PropTypes.func,
 }
 

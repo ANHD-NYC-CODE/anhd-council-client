@@ -4,6 +4,11 @@ import { getGeographyPath, addressResultToPath } from 'shared/utilities/routeUti
 import { removeRequest, removeManyRequests } from 'Store/Request/actions'
 import { newMapRequests, newLookupRequests, newAdvancedSearchRequest } from 'shared/utilities/actionUtils'
 
+export const setAppState = state => ({
+  type: c.SET_APP_STATE,
+  state,
+})
+
 export const removeRequestType = requestType => ({
   type: c.REMOVE_REQUEST_TYPE,
   requestType,

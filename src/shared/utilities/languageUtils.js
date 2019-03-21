@@ -82,9 +82,9 @@ export const housingTypeCodeToName = code => {
 export const geographySelectionToString = ({ type, id } = {}) => {
   switch (type) {
     case 'COUNCIL':
-      return `Council District ${id}`
+      return `Council District ${String(id)}`
     case 'COMMUNITY':
-      return `Community District ${communityIdToString(id)}`
+      return `Community District ${communityIdToString(String(id))}`
   }
 }
 
@@ -126,6 +126,6 @@ export const councilIdToString = id => {
 }
 
 export const communityIdToString = id => {
-  const borough = boroCodeToName(id.toString().charAt(0))
-  return `${borough} ${id.toString().slice(1)}`
+  const borough = boroCodeToName(String(id).charAt(0))
+  return `${borough} ${String(id).slice(1)}`
 }
