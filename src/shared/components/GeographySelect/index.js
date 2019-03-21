@@ -6,6 +6,8 @@ import { Row, Col, Form, Button } from 'react-bootstrap'
 import { StandardizedInput } from 'shared/classes/StandardizedInput'
 import ConfigContext from 'Config/ConfigContext'
 import FormError from 'shared/components/FormError'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTimesCircle } from '@fortawesome/free-regular-svg-icons'
 
 class GeographySelect extends React.Component {
   constructor(props) {
@@ -33,7 +35,18 @@ class GeographySelect extends React.Component {
       <ConfigContext.Consumer>
         {config => (
           <Form.Group as={Row}>
-            <Col xs={!(this.props.changingGeographyType || this.props.currentGeographyType) ? 12 : 6}>
+            {this.props.changing && (
+              <Col xs={1}>
+                <Button
+                  className="cancel-Geography-change"
+                  onClick={this.props.cancelChangeGeography}
+                  variant="warning"
+                >
+                  <FontAwesomeIcon icon={faTimesCircle} />
+                </Button>
+              </Col>
+            )}
+            <Col xs={!(this.props.changingGeographyType || this.props.currentGeographyType) ? 11 : 5}>
               <Form.Control
                 required
                 size="sm"
@@ -65,7 +78,7 @@ class GeographySelect extends React.Component {
               />
             </Col>
             {!!(this.props.currentGeographyType || this.props.changingGeographyType) && (
-              <Col xs={6}>
+              <Col xs={5}>
                 <Form.Control
                   required
                   as="select"
@@ -98,27 +111,16 @@ class GeographySelect extends React.Component {
                 />
               </Col>
             )}
-            {this.props.changing && (
-              <Col xs={12}>
-                <Button
-                  className="cancel-Geography-change"
-                  onClick={this.props.cancelChangeGeography}
-                  variant="warning"
-                >
-                  Cancel
-                </Button>
-              </Col>
-            )}
             {(this.props.showSubmit || this.props.changing) &&
-              this.props.changingGeographyType &&
-              this.props.changingGeographyId > 0 && (
-                <Col xs={12}>
+              (this.props.changingGeographyType || (this.props.showSubmit && this.props.currentGeographyType)) &&
+              (this.props.changingGeographyId > 0 || (this.props.showSubmit && this.props.currentGeographyId)) > 0 && (
+                <Col xs={1}>
                   <Button
                     className="submit-Geography-change"
                     onClick={this.props.handleChangeGeography}
                     variant="primary"
                   >
-                    Submit
+                    Go
                   </Button>
                 </Col>
               )}

@@ -50,11 +50,13 @@ class AlertMap extends React.Component {
   }
 
   handleChangeGeographyId(e) {
+    const geographyId = new StandardizedInput(e).value
+    if (parseInt(geographyId) <= 0) return
     this.props.dispatch(
       setAppState({
         changingGeography: true,
         changingGeographyType: this.props.appState.changingGeographyType || this.props.appState.currentGeographyType,
-        changingGeographyId: String(new StandardizedInput(e).value),
+        changingGeographyId: String(geographyId),
       })
     )
   }

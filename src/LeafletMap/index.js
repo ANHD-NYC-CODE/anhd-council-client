@@ -44,12 +44,12 @@ export default class LeafletMap extends Component {
       const changingOrCurrentType = this.props.changingGeographyType || this.props.currentGeographyType
       const changingOrCurrentId = this.props.changingGeographyId || this.props.currentGeographyId
       if (!(changingOrCurrentType && changingOrCurrentId)) return
-      const geographyDataset =
-        changingOrCurrentType === 'COUNCIL' ? this.props.councilDistricts : this.props.communityDistricts
+      const geographyDataset = this.props.selectGeographyData(changingOrCurrentType)
       const selectedGeography = geographyDataset.find(
         geography => geography.data.properties.id === parseInt(changingOrCurrentId)
       )
 
+      if (!selectedGeography) return
       this.mapRef.current.leafletElement.fitBounds(new L.geoJSON(selectedGeography.data.geometry).getBounds())
     }
   }
@@ -94,23 +94,20 @@ export default class LeafletMap extends Component {
           {this.props.currentGeographyType && (
             <div>
               <GeographyGeoJson
-                geographies={
-                  this.props.currentGeographyType && this.props.currentGeographyType === 'COUNCIL'
-                    ? this.props.councilDistricts
-                    : this.props.communityDistricts
-                }
+                geographies={this.props.selectGeographyData(
+                  this.props.changingGeographyType || this.props.currentGeographyType
+                )}
                 currentGeographyId={this.props.currentGeographyId}
+                currentGeographyType={this.props.currentGeographyType}
                 changingGeographyId={this.props.changingGeographyId}
                 changingGeographyType={this.props.changingGeographyType}
                 onClick={this.props.handleChangeGeographyId}
               />
               <GeographyMarkerLabels
                 currentGeographyType={this.props.currentGeographyType}
-                geographies={
-                  this.props.currentGeographyType === 'COUNCIL'
-                    ? this.props.councilDistricts
-                    : this.props.communityDistricts
-                }
+                geographies={this.props.selectGeographyData(
+                  this.props.changingGeographyType || this.props.currentGeographyType
+                )}
               />
             </div>
           )}

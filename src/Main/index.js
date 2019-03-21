@@ -12,14 +12,16 @@ class Main extends React.Component {
   constructor(props) {
     super(props)
     this.submitGeography = this.submitGeography.bind(this)
+    this.cancelChangeGeography = this.cancelChangeGeography.bind(this)
     this.handleChangeGeographyType = this.handleChangeGeographyType.bind(this)
   }
 
-  submitGeography(type, value) {
+  submitGeography({ geographyType, geographyId } = {}) {
     this.props.dispatch(
       setGeographyAndRequestsAndRedirect({
-        geographyType: type || this.props.appState.changingGeographyType,
-        geographyId: value || this.props.appState.changingGeographyId,
+        geographyType:
+          geographyType || this.props.appState.changingGeographyType || this.props.appState.currentGeographyType,
+        geographyId: geographyId || this.props.appState.changingGeographyId || this.props.appState.currentGeographyId,
         redirect: true,
       })
     )
@@ -87,7 +89,7 @@ class Main extends React.Component {
                   handleChangeGeography={this.submitGeography}
                   handleChangeGeographyType={this.handleChangeGeographyType}
                   placeholder="District Alerts Map"
-                  showsubmit={true}
+                  showSubmit={true}
                 />
               </Form.Group>
             </Form>
