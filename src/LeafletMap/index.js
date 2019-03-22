@@ -28,6 +28,7 @@ export default class LeafletMap extends Component {
     this.updateDimensions = this.updateDimensions.bind(this)
     this.centerMapOnGeography = this.centerMapOnGeography.bind(this)
     this.getGeographyBounds = this.getGeographyBounds.bind(this)
+    this.getGeographyCenter = this.getGeographyCenter.bind(this)
   }
 
   componentDidUpdate() {
@@ -78,6 +79,12 @@ export default class LeafletMap extends Component {
     const geographyDataset = this.props.selectGeographyData(type)
     const selectedGeography = geographyDataset.find(geography => geography.id === parseInt(id))
     if (selectedGeography) return new L.geoJSON(selectedGeography.data.geometry).getBounds()
+  }
+
+  getGeographyCenter(type, id) {
+    const bounds = this.getGeographyBounds(type, id)
+    if (bounds) return bounds.getCenter()
+    else return center
   }
 
   updateDimensions() {
@@ -157,10 +164,9 @@ export default class LeafletMap extends Component {
               this.props.changingGeographyId > 0) && (
               <Popup
                 key={`${Math.random() * 100000}`}
-                position={this.getGeographyBounds(
-                  this.props.changingGeographyType,
-                  this.props.changingGeographyId
-                ).getCenter()}
+                position={
+                  this.getGeographyCenter(this.props.changingGeographyType, this.props.changingGeographyId) || {}
+                }
               >
                 <p>
                   {geographySelectionToString({

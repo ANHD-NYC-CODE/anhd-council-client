@@ -54,6 +54,7 @@ describe('AlertMap', () => {
     expect(wrapper.find('AlertMapIndex')).toHaveLength(1)
     expect(wrapper.find('AlertMapRequestsWrapper')).toHaveLength(0)
     expect(wrapper.find('AlertMapShow')).toHaveLength(0)
+    expect(wrapper.find('GeographySelect select[name="geographyType"]').props().value).toEqual(-1)
   })
 
   describe('with a geography type and id', () => {
@@ -73,7 +74,46 @@ describe('AlertMap', () => {
       expect(wrapper.find('GeographyProfile')).toHaveLength(1)
       expect(wrapper.find('LeafletMap')).toHaveLength(1)
     })
+    describe('geography select', () => {
+      it('shows the selected geography values', () => {
+        const [wrapper, store] = setupWrapper({
+          router: { location: { pathname: '/council/1' }, action: 'POP' },
+        })
+        expect(wrapper.find('GeographySelect select[name="geographyType"]').props().value).toEqual('COUNCIL')
+        expect(wrapper.find('GeographySelect select[name="geographyId"]').props().value).toEqual('1')
+        expect(wrapper.find('button.cancel-geography-change')).toHaveLength(0)
+        expect(wrapper.find('button.submit-geography-change')).toHaveLength(0)
+      })
 
+      it('shows changing configuration', () => {
+        const [wrapper, store] = setupWrapper({
+          router: { location: { pathname: '/council/1' }, action: 'POP' },
+        })
+        wrapper
+          .find('GeographySelect select[name="geographyType"]')
+          .simulate('change', { target: { value: 'COMMUNITY' } })
+
+        wrapper.update()
+        expect(wrapper.find('GeographySelect select[name="geographyType"]').props().value).toEqual('COMMUNITY')
+        expect(wrapper.find('GeographySelect select[name="geographyId"]').props().value).toEqual(-1)
+        expect(wrapper.find('button.cancel-geography-change')).toHaveLength(1)
+        expect(wrapper.find('button.submit-geography-change')).toHaveLength(0)
+      })
+
+      it('submits the change', () => {
+        const [wrapper, store] = setupWrapper()
+        wrapper
+          .find('GeographySelect select[name="geographyType"]')
+          .simulate('change', { target: { value: 'COMMUNITY' } })
+        wrapper.find('GeographySelect select[name="geographyId"]').simulate('change', { target: { value: '2' } })
+        wrapper.update()
+        expect(store.getState().router.location.pathname).toEqual('/community/2')
+        expect(wrapper.find('GeographySelect select[name="geographyType"]').props().value).toEqual('COMMUNITY')
+        expect(wrapper.find('GeographySelect select[name="geographyId"]').props().value).toEqual('2')
+        expect(wrapper.find('button.cancel-geography-change')).toHaveLength(0)
+        expect(wrapper.find('button.submit-geography-change')).toHaveLength(0)
+      })
+    })
     describe('map view', () => {
       it('renders the map, not tables', async () => {
         const [wrapper, store] = setupWrapper({
