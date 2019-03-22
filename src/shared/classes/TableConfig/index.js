@@ -3,11 +3,10 @@ import { getTableColumns, getKeyField, getDescriptionKey, getLinkProps } from 's
 import { getDatasetDateField } from 'shared/utilities/filterUtils'
 import { constantToModelName } from 'shared/utilities/filterUtils'
 export class TableConfig {
-  constructor({ component = BaseTable, resourceConstant = undefined } = {}) {
-    console.log(resourceConstant)
+  constructor({ component = BaseTable, resourceConstant = undefined, datasetModelName = undefined } = {}) {
     this._component = component
     this._resourceConstant = resourceConstant
-    this._datasetModelName = constantToModelName(this.resourceConstant)
+    this._datasetModelName = datasetModelName || constantToModelName(this.resourceConstant)
   }
 
   get component() {

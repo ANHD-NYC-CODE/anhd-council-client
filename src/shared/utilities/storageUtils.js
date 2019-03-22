@@ -17,12 +17,12 @@ export const getStorageDataAction = async (dispatch, constant, requestId, path, 
   handleActionDispatch(dispatch, constant, requestId)
   return get(path)
     .then(storageData => {
-      if (storageData.data) {
+      if (storageData.data && moment(storageData.expires) > moment()) {
         dispatch(handleAction({ data: storageData.storageData.data }, null, false))
         dispatch(handleCompletedRequest(constant, requestId))
-        return storageData.data
+        return storageData
       } else {
-        return storageData.data
+        return null
       }
     })
     .catch(() => {
@@ -48,20 +48,24 @@ export const getCommunityBoardsData = () => {
 
 const addExpirationDate = data => {
   return {
-    expires: moment().add('2', 'day'),
+    expires: new Date(moment().subtract('2', 'day')),
     data,
   }
 }
 
 const setIndexedData = (path, data) => {
-  data = addExpirationDate(data)
-  return set(path, data)
+  const formattedData = addExpirationDate(data)
+  return set(path, formattedData)
 }
 
 export const setIndexedDataThenUpdateReducer = (path, response) => {
   return setIndexedData(path, response.data).catch(error => {
     console.log(error)
   })
+}
+
+export const deleteIndexedDate = path => {
+  return del(path)
 }
 
 export const delCouncilDistrictsData = () => {

@@ -5,6 +5,7 @@ import {
   COMMUNITY_BOARDS_INDEX,
   getStorageDataAction,
   setIndexedDataThenUpdateReducer,
+  delCommunityBoardsData,
 } from 'shared/utilities/storageUtils'
 
 import * as c from '../constants'
@@ -17,7 +18,9 @@ const getCommunitiesActionObject = response => ({
 
 export const handleGetCommunities = (response, key = null, setStorage = true) => {
   if (setStorage) {
-    setIndexedDataThenUpdateReducer(COMMUNITY_BOARDS_INDEX, response)
+    delCommunityBoardsData().then(() => {
+      setIndexedDataThenUpdateReducer(COMMUNITY_BOARDS_INDEX, response)
+    })
   }
   return getCommunitiesActionObject(response)
 }
@@ -42,8 +45,7 @@ export const getCommunities = () => (dispatch, getState, access_token) => {
   const requestId = Math.floor(Math.random() * 1000000)
   return getStorageDataAction(dispatch, c.GET_COMMUNITIES, requestId, COMMUNITY_BOARDS_INDEX, handleGetCommunities)
     .then(storageData => {
-      // TODO: Temporary - reset the DBs
-      if (!storageData || storageData.expires < moment()) {
+      if (!storageData) {
         return communitiesAxios(dispatch, getState, access_token, requestId)
       }
     })

@@ -5,6 +5,7 @@ import {
   COUNCIL_DISTRICTS_INDEX,
   getStorageDataAction,
   setIndexedDataThenUpdateReducer,
+  delCouncilDistrictsData,
 } from 'shared/utilities/storageUtils'
 
 import * as c from '../constants'
@@ -17,7 +18,9 @@ const getCouncilsActionObject = response => ({
 
 export const handleGetCouncils = (response, key = null, setStorage = true) => {
   if (setStorage) {
-    setIndexedDataThenUpdateReducer(COUNCIL_DISTRICTS_INDEX, response)
+    delCouncilDistrictsData().then(() => {
+      setIndexedDataThenUpdateReducer(COUNCIL_DISTRICTS_INDEX, response)
+    })
   }
   return getCouncilsActionObject(response)
 }
@@ -44,7 +47,7 @@ export const getCouncils = () => (dispatch, getState, access_token) => {
   return getStorageDataAction(dispatch, c.GET_COUNCILS, requestId, COUNCIL_DISTRICTS_INDEX, handleGetCouncils)
     .then(storageData => {
       // TODO: Temporary - reset the DBs
-      if (!storageData || storageData.expires < moment()) {
+      if (!storageData) {
         return councilsAxios(dispatch, getState, access_token, requestId)
       }
     })

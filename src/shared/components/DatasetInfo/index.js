@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ConfigContext from 'Config/ConfigContext'
+import moment from 'moment'
 const DatasetInfo = props => {
   return (
     <div className="dataset-info">
@@ -10,8 +11,16 @@ const DatasetInfo = props => {
           if (dataset) {
             return (
               <div>
-                <span>Last Updated:</span>
-                {dataset.last_update}
+                <div>
+                  <span>Last Updated: </span>
+                  {moment(dataset.last_update).format('MM/DD/YYYY')}
+                </div>
+                {dataset.version && (
+                  <div>
+                    <span>Version:</span>
+                    {dataset.version}
+                  </div>
+                )}
               </div>
             )
           } else return null
