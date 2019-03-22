@@ -7,7 +7,7 @@ import { setupStore, configuredState, flushAllPromises } from 'shared/testUtilit
 import { history } from 'Store/configureStore'
 import ConfigContext from 'Config/ConfigContext'
 import { ConnectedRouter } from 'connected-react-router'
-
+import sinon from 'sinon'
 import { Provider } from 'react-redux'
 
 const mock = new MockAdapter(Axios)
@@ -34,6 +34,7 @@ const setupWrapper = state => {
           housingTypeModels: state.dataset.housingTypeModels,
           communityDistricts: state.community.boards,
           councilDistricts: state.council.districts,
+          selectGeographyData: () => state.council.districts,
         }}
       >
         <ConnectedRouter history={history}>
@@ -66,7 +67,7 @@ describe('AlertMap', () => {
       expect(store.getState().appState.currentGeographyType).toEqual('COUNCIL')
       expect(store.getState().appState.currentGeographyId).toEqual('1')
       expect(wrapper.find('AlertMapIndex')).toHaveLength(0)
-      expect(wrapper.find('AlertMapShow')).toHaveLength(1)
+      expect(wrapper.find('AlertMapRequestsWrapper')).toHaveLength(1)
       expect(wrapper.find('GeographySelect')).toHaveLength(1)
       expect(wrapper.find('ToggleButtonGroup')).toHaveLength(2)
       expect(wrapper.find('GeographyProfile')).toHaveLength(1)

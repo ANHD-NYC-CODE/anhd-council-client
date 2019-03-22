@@ -4,7 +4,7 @@ import Adapter from 'enzyme-adapter-react-16'
 import { Axios } from 'shared/utilities/Axios'
 import MockAdapter from 'axios-mock-adapter'
 import { setupStore, configuredState } from 'shared/testUtilities'
-
+import sinon from 'sinon'
 import { Provider } from 'react-redux'
 
 const mock = new MockAdapter(Axios)
