@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { handleCatchError, handleActionDispatch } from 'shared/utilities/actionUtils'
 import { handleCompletedRequest } from 'Store/Loading/actions'
+import FileDownload from 'js-file-download'
 
 export const Axios = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
@@ -18,8 +19,14 @@ export const constructAxiosGet = (dispatch, getState, requestId, url, params, ac
     .then(response => {
       const requestIsValid = !!getState().loading.requests.filter(request => request.id === requestId).length
       if (requestIsValid) {
-        dispatch(handleAction(response, constant))
+        if (handleAction) {
+          dispatch(handleAction(response, constant))
+        }
         dispatch(handleCompletedRequest(constant, requestId))
+
+        if (response.headers['content-type'].match(/csv/)) {
+          FileDownload(response.data, response.config.params.filename)
+        }
       }
     })
     .catch(error => {

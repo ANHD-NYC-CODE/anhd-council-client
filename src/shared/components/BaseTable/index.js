@@ -144,7 +144,12 @@ class BaseTable extends React.Component {
           <div className="base-table">
             <Row>
               <Col xs={8}>
-                <TableHeader datasetModelName={this.props.datasetModelName} title={this.props.caption} />
+                <TableHeader
+                  datasetModelName={this.props.datasetModelName}
+                  dispatch={this.props.dispatch}
+                  request={this.props.request}
+                  title={this.props.caption}
+                />
               </Col>
               <Col>
                 Total:

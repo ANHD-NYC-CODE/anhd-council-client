@@ -3,6 +3,14 @@ export const resourceRouteChanged = (oldProps, newProps) => {
   return oldProps.id !== newProps.id
 }
 
+export const stringifyParamsObject = object => {
+  return Object.keys(object)
+    .map(key => {
+      return `${key}=${object[key]}`
+    })
+    .join('-')
+}
+
 export const communityToCommunityProfileLink = id => {
   return `/${boroCodeToName(id.charAt(0))
     .replace(' ', '-')

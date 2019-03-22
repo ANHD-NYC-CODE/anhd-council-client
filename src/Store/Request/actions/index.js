@@ -38,3 +38,19 @@ export const makeRequest = dataRequest => (dispatch, getState, access_token) => 
     handleRequestResults
   )
 }
+
+export const makeCsvRequest = dataRequest => (dispatch, getState, access_token) => {
+  const csv_constant = `${dataRequest.requestConstant}_CSV`
+  dispatch(addRequest(csv_constant))
+  const requestId = Math.floor(Math.random() * 1000000)
+  return constructAxiosGet(
+    dispatch,
+    getState,
+    requestId,
+    dataRequest.path,
+    dataRequest.csv_params,
+    access_token,
+    csv_constant,
+    undefined
+  )
+}
