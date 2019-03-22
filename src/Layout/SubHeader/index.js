@@ -12,6 +12,7 @@ class SubHeader extends React.Component {
   }
 
   render() {
+    if (this.props.print) return null
     return (
       <Navbar className="sub-header touch-left">
         <Navbar.Brand as="li">
@@ -73,6 +74,7 @@ const mapStateToProps = state => {
     currentGeographyId: state.appState.currentGeographyId,
     currentProperty: state.appState.currentProperty,
     currentBuilding: state.appState.currentBuilding,
+    print: state.appState.printView,
   }
 }
 

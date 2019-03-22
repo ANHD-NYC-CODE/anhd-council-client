@@ -2,9 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import { getRequestType, getManyRequestTypes } from 'Store/AppState/selectors'
-
 import GeographySelect from 'shared/components/GeographySelect'
-import { Card, Row, Col, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
+import { Card, Row, Col, ToggleButtonGroup, ToggleButton, Button } from 'react-bootstrap'
+import LayoutContext from 'Layout/LayoutContext'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPrint } from '@fortawesome/free-solid-svg-icons'
+
 import BaseLink from 'shared/components/BaseLink'
 import LeafletMap from 'LeafletMap'
 import RequestWrapper from 'shared/components/RequestWrapper'
@@ -67,6 +70,14 @@ class AlertMapShow extends React.Component {
               this.props.changingGeography && this.props.changingGeographyType && this.props.changingGeographyId > 0
             }
           />
+          <LayoutContext>
+            {layout => (
+              <Button onClick={() => layout.togglePrint()}>
+                <FontAwesomeIcon icon={faPrint} />
+                <span> {layout.print ? 'Exit Print' : 'Print'}</span>
+              </Button>
+            )}
+          </LayoutContext>
         </Row>
         <Row>
           <Col xs={12} sm={6} md={4}>
