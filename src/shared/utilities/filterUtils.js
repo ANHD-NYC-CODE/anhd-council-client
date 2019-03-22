@@ -19,6 +19,7 @@ export const constantToQueryName = constant => {
 }
 
 export const constantToModelName = constant => {
+  if (!constant) return
   return `${constant.replace(/_/g, '').toLowerCase()}`
 }
 

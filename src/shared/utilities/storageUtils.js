@@ -16,13 +16,13 @@ const TOKEN_EXPIRATIONS = {
 export const getStorageDataAction = async (dispatch, constant, requestId, path, handleAction) => {
   handleActionDispatch(dispatch, constant, requestId)
   return get(path)
-    .then(data => {
-      if (data) {
-        dispatch(handleAction({ data }, null, false))
+    .then(storageData => {
+      if (storageData.data) {
+        dispatch(handleAction({ data: storageData.storageData.data }, null, false))
         dispatch(handleCompletedRequest(constant, requestId))
-        return data
+        return storageData.data
       } else {
-        return data
+        return storageData.data
       }
     })
     .catch(() => {
@@ -46,7 +46,15 @@ export const getCommunityBoardsData = () => {
   return get(COMMUNITY_BOARDS_INDEX)
 }
 
+const addExpirationDate = data => {
+  return {
+    expires: moment().add('2', 'day'),
+    data,
+  }
+}
+
 const setIndexedData = (path, data) => {
+  data = addExpirationDate(data)
   return set(path, data)
 }
 

@@ -1,10 +1,13 @@
 import BaseTable from 'shared/components/BaseTable'
 import { getTableColumns, getKeyField, getDescriptionKey, getLinkProps } from 'shared/models/tables'
 import { getDatasetDateField } from 'shared/utilities/filterUtils'
+import { constantToModelName } from 'shared/utilities/filterUtils'
 export class TableConfig {
   constructor({ component = BaseTable, resourceConstant = undefined } = {}) {
+    console.log(resourceConstant)
     this._component = component
     this._resourceConstant = resourceConstant
+    this._datasetModelName = constantToModelName(this.resourceConstant)
   }
 
   get component() {
@@ -21,6 +24,14 @@ export class TableConfig {
 
   set resourceConstant(resourceConstant) {
     this._resourceConstant = resourceConstant
+  }
+
+  get datasetModelName() {
+    return this._datasetModelName
+  }
+
+  set datasetModelName(datasetModelName) {
+    this._datasetModelName = datasetModelName
   }
 
   get hover() {
