@@ -72,6 +72,21 @@ describe('DataRequest', () => {
     })
   })
 
+  describe('get csv_params', () => {
+    it('returns the csv params', () => {
+      const dataRequest = new DataRequest({
+        apiMaps: [new ApiMap({ constant: 'PROPERTY', resourceId: '1' }), new ApiMap({ constant: 'HPD_VIOLATION' })],
+        paramMaps: [new ParameterMapping({ field: 'hpdviolations', comparison: 'gte', value: '10' })],
+      })
+
+      expect(dataRequest.csv_params).toEqual({
+        hpdviolations__gte: '10',
+        format: 'csv',
+        filename: 'dapportal-properties-1-hpdviolations-hpdviolations__gte=10.csv',
+      })
+    })
+  })
+
   describe('get label', () => {
     it('label with param maps', () => {
       const dataRequest = new DataRequest({

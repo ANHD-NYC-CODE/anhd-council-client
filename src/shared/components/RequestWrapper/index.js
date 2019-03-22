@@ -31,13 +31,14 @@ class RequestWrapper extends React.Component {
     return this.props.visible ? (
       <div className="request-wrapper">
         <TableComponent
+          caption={this.props.request.label}
           datasetModelName={this.props.request.tableConfig.datasetModelName}
           dispatch={this.props.dispatch}
           error={this.processError(this.props.error)}
           errorAction={(this.props.error || {}).status === 504 ? this.retryRequest : null}
           loading={this.props.loading}
           records={this.props.results || []}
-          caption={this.props.request.label}
+          request={this.props.request}
           tableConfig={this.props.request.tableConfig}
         />
       </div>

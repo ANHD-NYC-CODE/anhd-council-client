@@ -1,5 +1,5 @@
 import { constantToName } from 'shared/utilities/filterUtils'
-
+import { stringifyParamsObject } from 'shared/utilities/routeUtils'
 export class DataRequest {
   constructor({
     type = undefined,
@@ -69,6 +69,26 @@ export class DataRequest {
       .map(apiMap => apiMap.url)
       .join('')
       .replace(/\/\//g, '/')}`
+  }
+
+  get csv_filename() {
+    return `dapportal-${this.path}${stringifyParamsObject(this.params)}.csv`
+      .replace(/\//g, '-')
+      .replace(/--/g, '-')
+      .replace('-.csv', '.csv')
+  }
+
+  get csv_params() {
+    return {
+      ...Object.assign(
+        {},
+        ...this.paramMaps.map(paramMap => {
+          return paramMap.toParamObject()
+        })
+      ),
+      format: 'csv',
+      filename: this.csv_filename,
+    }
   }
 
   get params() {
