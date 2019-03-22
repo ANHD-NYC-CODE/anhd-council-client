@@ -11,7 +11,7 @@ import GeographyMarkerLabels from 'LeafletMap/GeographyMarkerLabels'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBug } from '@fortawesome/free-solid-svg-icons'
-
+import PropertyIcons from 'LeafletMap/PropertyIcons'
 import './style.scss'
 const center = [40.71, -73.98]
 export default class LeafletMap extends Component {
@@ -181,7 +181,7 @@ export default class LeafletMap extends Component {
                 </Button>
               </Popup>
             )}
-          )} } )}
+          <PropertyIcons selectedRequest={this.props.selectedRequest} />
         </Map>
       </div>
     )
@@ -200,4 +200,5 @@ LeafletMap.propTypes = {
   changingGeographyId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   currentGeographyType: PropTypes.string,
   currentGeographyId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  selectedRequest: PropTypes.object,
 }
