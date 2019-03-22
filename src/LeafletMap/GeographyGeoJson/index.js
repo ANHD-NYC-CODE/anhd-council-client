@@ -26,15 +26,20 @@ const GeographyGeoJson = props => {
       fill: true,
     }
   }
-  return (
-    <GeoJSON
-      key={`geojson-${props.changingGeographyType}`}
-      className="geography-geojson"
-      data={props.geographies.map(g => g.data)}
-      style={g => getStyle(g)}
-      onClick={props.onClick}
-    />
-  )
+  if (!props.geographies.length) return null
+  try {
+    return (
+      <GeoJSON
+        key={`geojson-${props.changingGeographyType}`}
+        className="geography-geojson"
+        data={props.geographies.map(g => g.data)}
+        style={g => getStyle(g)}
+        onClick={props.onClick}
+      />
+    )
+  } catch (e) {
+    return null
+  }
 }
 
 GeographyGeoJson.propTypes = {

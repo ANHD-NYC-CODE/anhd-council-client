@@ -12,6 +12,7 @@ import { setAppState } from 'Store/AppState/actions'
 class AlertMap extends React.Component {
   constructor(props) {
     super(props)
+
     this.submitGeography = this.submitGeography.bind(this)
     this.handleChangeGeographyType = this.handleChangeGeographyType.bind(this)
     this.cancelChangeGeography = this.cancelChangeGeography.bind(this)
