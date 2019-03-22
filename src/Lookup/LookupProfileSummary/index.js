@@ -91,11 +91,13 @@ const LookupProfileSummary = props => {
             <Col>
               {profile.hpdregistrations.length ? (
                 <div>
-                  <Card.Text>HPD Registrations</Card.Text>
                   <BaseTable
+                    caption="HPD Registrations"
                     classes="fluid-table"
                     columns={getTableColumns('HPD_REGISTRATION')}
+                    dispatch={props.dispatch}
                     records={profile.hpdregistrations}
+                    request={props.request}
                     tableConfig={new TableConfig({ resourceConstant: 'HPD_REGISTRATION' })}
                   />
                 </div>
