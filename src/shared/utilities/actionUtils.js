@@ -135,14 +135,19 @@ export const setupDatasetModels = datasets => {
     .filter(ds => !!ds)
 }
 
-export const newBuildingRequest = ({ type = undefined, bin = undefined, resourceConstant = undefined }) => {
+export const newBuildingRequest = ({
+  type = undefined,
+  bin = undefined,
+  resourceConstant = undefined,
+  datasetModelName = undefined,
+}) => {
   return new DataRequest({
     type: type,
     apiMaps: [
       new ApiMap({ constant: 'BUILDING', resourceId: bin }),
       resourceConstant ? getApiMap(resourceConstant) : undefined,
     ].filter(a => !!a),
-    tableConfig: new TableConfig({ resourceConstant: resourceConstant }),
+    tableConfig: new TableConfig({ resourceConstant: resourceConstant, datasetModelName }),
   })
 }
 
@@ -150,6 +155,7 @@ export const newPropertyRequest = ({
   type = undefined,
   bbl = undefined,
   resourceConstant = undefined,
+  datasetModelName = undefined,
   tableComponent = undefined,
 } = {}) => {
   return new DataRequest({
@@ -159,7 +165,7 @@ export const newPropertyRequest = ({
       resourceConstant ? getApiMap(resourceConstant) : undefined,
       type === 'LOOKUP_PROFILE' ? new ApiMap({ queryName: 'summary' }) : undefined,
     ].filter(a => !!a),
-    tableConfig: new TableConfig({ resourceConstant: resourceConstant, component: tableComponent }),
+    tableConfig: new TableConfig({ resourceConstant: resourceConstant, component: tableComponent, datasetModelName }),
   })
 }
 
@@ -168,7 +174,14 @@ export const newLookupRequests = ({ bbl, bin } = {}) => {
     newPropertyRequest({ type: 'LOOKUP_PROFILE', bbl: bbl, tableComponent: LookupProfileSummary }),
     !bin ? newPropertyRequest({ type: 'LOOKUP_FILTER', bbl: bbl, resourceConstant: 'ACRIS_REAL_MASTER' }) : null,
     !bin ? newPropertyRequest({ type: 'LOOKUP_FILTER', bbl: bbl, resourceConstant: 'EVICTION' }) : null,
-    !bin ? newPropertyRequest({ type: 'LOOKUP_FILTER', bbl: bbl, resourceConstant: 'FORECLOSURE' }) : null,
+    !bin
+      ? newPropertyRequest({
+          type: 'LOOKUP_FILTER',
+          bbl: bbl,
+          resourceConstant: 'FORECLOSURE',
+          datasetModelName: constantToModelName('LISPENDEN'),
+        })
+      : null,
     bin
       ? newBuildingRequest({ type: 'LOOKUP_FILTER', bin: bin, resourceConstant: 'HPD_VIOLATION' })
       : newPropertyRequest({ type: 'LOOKUP_FILTER', bbl: bbl, resourceConstant: 'HPD_VIOLATION' }),
@@ -188,8 +201,18 @@ export const newLookupRequests = ({ bbl, bin } = {}) => {
       ? newBuildingRequest({ type: 'LOOKUP_FILTER', bin: bin, resourceConstant: 'DOB_ISSUED_PERMIT' })
       : newPropertyRequest({ type: 'LOOKUP_FILTER', bbl: bbl, resourceConstant: 'DOB_ISSUED_PERMIT' }),
     bin
-      ? newBuildingRequest({ type: 'LOOKUP_FILTER', bin: bin, resourceConstant: 'DOB_FILED_PERMIT' })
-      : newPropertyRequest({ type: 'LOOKUP_FILTER', bbl: bbl, resourceConstant: 'DOB_FILED_PERMIT' }),
+      ? newBuildingRequest({
+          type: 'LOOKUP_FILTER',
+          bin: bin,
+          resourceConstant: 'DOB_FILED_PERMIT',
+          datasetModelName: constantToModelName('DOB_LEGACY_FILED_PERMIT'),
+        })
+      : newPropertyRequest({
+          type: 'LOOKUP_FILTER',
+          bbl: bbl,
+          resourceConstant: 'DOB_FILED_PERMIT',
+          datasetModelName: constantToModelName('DOB_LEGACY_FILED_PERMIT'),
+        }),
     bin
       ? newBuildingRequest({ type: 'LOOKUP_FILTER', bin: bin, resourceConstant: 'HOUSING_LITIGATION' })
       : newPropertyRequest({ type: 'LOOKUP_FILTER', bbl: bbl, resourceConstant: 'HOUSING_LITIGATION' }),
