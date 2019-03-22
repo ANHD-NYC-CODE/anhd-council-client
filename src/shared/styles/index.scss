@@ -1,3 +1,7 @@
 @import './bootstrap/index.scss';
 @import './_layout.scss';
 @import './_table.scss';
+
+.leaflet-container {
+  @import './bootstrap/index.scss';
+}
