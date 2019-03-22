@@ -94,6 +94,8 @@ class AlertMap extends React.Component {
         changingGeography={this.props.appState.changingGeography}
         changingGeographyType={this.props.appState.changingGeographyType}
         changingGeographyId={this.props.appState.changingGeographyId}
+        currentGeographyType={this.props.appState.currentGeographyType}
+        currentGeographyId={this.props.appState.currentGeographyId}
       />
     ) : (
       <AlertMapRequestsWrapper
