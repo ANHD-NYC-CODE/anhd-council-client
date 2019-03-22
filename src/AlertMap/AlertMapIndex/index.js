@@ -10,14 +10,16 @@ const AlertMapIndex = props => {
     <div className="alert-map-index">
       <Row>
         <GeographySelect
+          currentGeographyType={props.currentGeographyType}
+          currentGeographyId={props.currentGeographyId}
           dispatch={props.dispatch}
-          handleChangeGeography={props.handleChangeGeography}
-          handleChangeGeographyType={props.handleChangeGeographyType}
-          cancelChangeGeography={props.cancelChangeGeography}
           changing={props.changingGeography}
           changingGeographyType={props.changingGeographyType}
           changingGeographyId={props.changingGeographyId}
-          showSubmit={!props.changingGeography && props.currentGeographyType && props.currentGeographyId > 0}
+          cancelChangeGeography={props.cancelChangeGeography}
+          handleChangeGeographyType={props.handleChangeGeographyType}
+          handleChangeGeography={props.handleChangeGeography}
+          showSubmit={props.changingGeography && props.changingGeographyType && props.changingGeographyId > 0}
         />
       </Row>
       <Row>
@@ -31,10 +33,13 @@ const AlertMapIndex = props => {
             {config => {
               return (
                 <LeafletMap
+                  changingGeographyId={props.changingGeographyId}
+                  changingGeographyType={props.changingGeographyType}
                   councilDistricts={config.councilDistricts}
                   communityDistricts={config.communityDistricts}
-                  currentGeographyType={props.changingGeographyType}
-                  currentGeographyId={props.changingGeographyId}
+                  currentGeographyType={props.changingGeographyType} // is changing
+                  currentGeographyId={props.currentGeographyId}
+                  handleChangeGeography={props.handleChangeGeography}
                   handleChangeGeographyId={props.handleChangeGeographyId}
                   selectGeographyData={config.selectGeographyData}
                 />

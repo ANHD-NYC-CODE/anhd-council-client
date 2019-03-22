@@ -109,7 +109,6 @@ export default class LeafletMap extends Component {
           if this continues to occur.
         </Jumbotron>
       )
-
     return (
       <div id="map" ref={this.mapContainerRef} style={{ height: this.state.height }}>
         {this.state.alertMessage && (
