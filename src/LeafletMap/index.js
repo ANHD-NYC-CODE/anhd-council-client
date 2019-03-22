@@ -13,7 +13,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBug } from '@fortawesome/free-solid-svg-icons'
 import PropertyIcons from 'LeafletMap/PropertyIcons'
 import './style.scss'
-const center = [40.71, -73.98]
 export default class LeafletMap extends Component {
   constructor(props) {
     super(props)
@@ -65,6 +64,7 @@ export default class LeafletMap extends Component {
   setAlertMessage(message) {
     this.setState({ alertMessage: message })
   }
+
   centerMapOnGeography() {
     if (this.mapRef.current) {
       const changingOrCurrentType = this.props.changingGeographyType || this.props.currentGeographyType
@@ -88,7 +88,7 @@ export default class LeafletMap extends Component {
   getGeographyCenter(type, id) {
     const bounds = this.getGeographyBounds(type, id)
     if (bounds) return bounds.getCenter()
-    else return center
+    else return this.props.center
   }
 
   updateDimensions() {
@@ -118,14 +118,14 @@ export default class LeafletMap extends Component {
           </Alert>
         )}
         <Map
-          center={center}
+          center={this.props.center}
           className="map"
           doubleClickZoom={false}
           id="leaflet-map"
           minZoom={10}
           maxZoom={20}
           ref={this.mapRef}
-          zoom={11}
+          zoom={this.props.zoom}
           zoomControl={true}
         >
           <TileLayer
@@ -191,10 +191,12 @@ export default class LeafletMap extends Component {
               </Popup>
             )}
           <PropertyIcons
+            iconConfig={this.props.iconConfig}
             setAlertMessage={this.setAlertMessage}
             selectedRequest={this.props.selectedRequest}
             visible={!(this.props.changingGeographyType && this.props.changingGeographyId)}
           />
+          }
         </Map>
       </div>
     )
@@ -202,8 +204,11 @@ export default class LeafletMap extends Component {
 }
 
 LeafletMap.defaultProps = {
+  center: [40.71, -73.98],
   councilDistricts: [],
   communityDistricts: [],
+  iconConfig: 'MULTIPLE',
+  zoom: 11,
 }
 
 LeafletMap.propTypes = {
@@ -213,5 +218,6 @@ LeafletMap.propTypes = {
   changingGeographyId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   currentGeographyType: PropTypes.string,
   currentGeographyId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  iconConfig: PropTypes.string,
   selectedRequest: PropTypes.object,
 }

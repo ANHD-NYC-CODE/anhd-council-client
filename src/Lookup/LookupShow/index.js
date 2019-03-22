@@ -46,7 +46,16 @@ class LookupShow extends React.Component {
           </Row>
           <Row>
             <Col>
-              <LeafletMap />
+              <LeafletMap
+                center={
+                  this.props.propertyResult.lat
+                    ? [this.props.propertyResult.lat, this.props.propertyResult.lng]
+                    : undefined
+                }
+                selectedRequest={getRequestType(this.props.requests, 'LOOKUP_PROFILE')[0]}
+                iconConfig="SINGLE"
+                zoom={15}
+              />
             </Col>
           </Row>
           <Row>
@@ -106,11 +115,16 @@ class LookupShow extends React.Component {
   }
 }
 
+LookupShow.defaultProps = {
+  propertyResult: {},
+}
+
 LookupShow.propTypes = {
   dispatch: PropTypes.func,
   bin: PropTypes.string,
   requests: PropTypes.array,
   changeLookup: PropTypes.func,
+  propertyResult: PropTypes.object,
 }
 
 export default LookupShow
