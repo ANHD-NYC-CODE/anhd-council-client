@@ -1,13 +1,17 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
+import L from 'leaflet'
 import { geographySelectionToString } from 'shared/utilities/languageUtils'
 
 import { Map, TileLayer, Popup } from 'react-leaflet'
-import { Button } from 'react-bootstrap'
+import { Jumbotron, Button } from 'react-bootstrap'
 import GeographyGeoJson from 'LeafletMap/GeographyGeoJson'
 import GeographyMarkerLabels from 'LeafletMap/GeographyMarkerLabels'
-import L from 'leaflet'
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBug } from '@fortawesome/free-solid-svg-icons'
+
 import './style.scss'
 const center = [40.71, -73.98]
 export default class LeafletMap extends Component {
@@ -84,7 +88,17 @@ export default class LeafletMap extends Component {
   }
 
   render() {
-    if (this.state.hasError) return null
+    if (this.state.hasError)
+      return (
+        <Jumbotron className="map-error">
+          <h4>
+            <FontAwesomeIcon icon={faBug} />
+          </h4>
+          Sorry, a map error occured. Please reload the page or <a href="mailto:anhd.tech@gmail.com">contact support</a>{' '}
+          if this continues to occur.
+        </Jumbotron>
+      )
+
     return (
       <div id="map" ref={this.mapContainerRef} style={{ height: this.state.height }}>
         <Map
