@@ -1,42 +1,27 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Marker } from 'react-leaflet'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import ReactDOMServer from 'react-dom/server'
 
-import { faBuilding, faHome } from '@fortawesome/free-solid-svg-icons'
-import L from 'leaflet'
+import PropertyIcon from 'LeafletMap/PropertyIcon'
+
 class PropertyIcons extends React.Component {
   constructor(props) {
     super(props)
 
-    this.constructIcon = this.constructIcon.bind(this)
+    this.handleAlert = this.handleAlert.bind(this)
+    this.handleAlert()
   }
 
-  getIconSize(result) {
-    if (result.numfloors > 40) {
-      return '5x'
-    } else if (result.numfloors > 30) {
-      return '4x'
-    } else if (result.numfloors > 20) {
-      return '3x'
-    } else return '2x'
+  componentDidUpdate() {
+    this.handleAlert()
   }
-  constructIcon(result) {
-    let element
-    if (result.numfloors < 4) {
-      element = <FontAwesomeIcon icon={faHome} size="2x" />
+
+  handleAlert() {
+    if (this.props.results.length > 1000) {
+      this.props.setAlertMessage('Can not render more than 1000 map icons because most devices can not handle this.')
     } else {
-      element = <FontAwesomeIcon icon={faBuilding} size={this.getIconSize(result)} />
+      this.props.setAlertMessage('')
     }
-    return L.divIcon({
-      html: `${ReactDOMServer.renderToString(element)}`,
-      iconSize: [0, 0],
-      iconAnchor: [10, 0],
-      popupAnchor: [0, 0],
-      className: 'myDivIcon',
-    })
   }
 
   getLatLng(result) {
@@ -46,14 +31,16 @@ class PropertyIcons extends React.Component {
   }
 
   render() {
+    if (this.props.results.length > 1000 || !this.props.selectedRequest) return null
     return this.props.results
       .map((result, index) => {
         if (this.getLatLng(result)) {
           return (
-            <Marker
+            <PropertyIcon
               key={`property-popup-${index}`}
+              result={result}
+              handlePropertyAction={this.props.handlePropertyAction}
               position={this.getLatLng(result)}
-              icon={this.constructIcon(result)}
             />
           )
         } else {
@@ -69,6 +56,7 @@ PropertyIcons.defaultProps = {
 }
 
 PropertyIcons.propTypes = {
+  handlePropertyAction: PropTypes.func,
   dispatch: PropTypes.func,
   results: PropTypes.array,
   selectedRequest: PropTypes.object,

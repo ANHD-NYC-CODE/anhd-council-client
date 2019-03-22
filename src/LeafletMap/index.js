@@ -5,7 +5,7 @@ import L from 'leaflet'
 import { geographySelectionToString } from 'shared/utilities/languageUtils'
 
 import { Map, TileLayer, Popup } from 'react-leaflet'
-import { Jumbotron, Button } from 'react-bootstrap'
+import { Jumbotron, Button, Alert } from 'react-bootstrap'
 import GeographyGeoJson from 'LeafletMap/GeographyGeoJson'
 import GeographyMarkerLabels from 'LeafletMap/GeographyMarkerLabels'
 
@@ -23,12 +23,14 @@ export default class LeafletMap extends Component {
     this.state = {
       height: 0,
       hasError: false,
+      alertMessage: undefined,
     }
 
     this.updateDimensions = this.updateDimensions.bind(this)
     this.centerMapOnGeography = this.centerMapOnGeography.bind(this)
     this.getGeographyBounds = this.getGeographyBounds.bind(this)
     this.getGeographyCenter = this.getGeographyCenter.bind(this)
+    this.setAlertMessage = this.setAlertMessage.bind(this)
   }
 
   componentDidUpdate() {
@@ -60,7 +62,9 @@ export default class LeafletMap extends Component {
   componentDidCatch(error, info) {
     return null
   }
-
+  setAlertMessage(message) {
+    this.setState({ alertMessage: message })
+  }
   centerMapOnGeography() {
     if (this.mapRef.current) {
       const changingOrCurrentType = this.props.changingGeographyType || this.props.currentGeographyType
@@ -108,6 +112,11 @@ export default class LeafletMap extends Component {
 
     return (
       <div id="map" ref={this.mapContainerRef} style={{ height: this.state.height }}>
+        {this.state.alertMessage && (
+          <Alert dismissable={true} variant="danger">
+            {this.state.alertMessage}
+          </Alert>
+        )}
         <Map
           center={center}
           className="map"
@@ -181,7 +190,7 @@ export default class LeafletMap extends Component {
                 </Button>
               </Popup>
             )}
-          <PropertyIcons selectedRequest={this.props.selectedRequest} />
+          <PropertyIcons setAlertMessage={this.setAlertMessage} selectedRequest={this.props.selectedRequest} />
         </Map>
       </div>
     )
