@@ -35,7 +35,7 @@ class GeographySelect extends React.Component {
             {this.props.changing && (
               <Col xs={1}>
                 <Button
-                  className="cancel-Geography-change"
+                  className="cancel-geography-change"
                   onClick={this.props.cancelChangeGeography}
                   variant="warning"
                 >
@@ -111,7 +111,7 @@ class GeographySelect extends React.Component {
             {this.props.showSubmit && (
               <Col xs={1}>
                 <Button
-                  className="submit-Geography-change"
+                  className="submit-geography-change"
                   onClick={this.props.handleChangeGeography}
                   variant="primary"
                 >
