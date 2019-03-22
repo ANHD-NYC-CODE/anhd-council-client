@@ -31,6 +31,7 @@ class RequestWrapper extends React.Component {
     return this.props.visible ? (
       <div className="request-wrapper">
         <TableComponent
+          datasetModelName={this.props.request.tableConfig.datasetModelName}
           dispatch={this.props.dispatch}
           error={this.processError(this.props.error)}
           errorAction={(this.props.error || {}).status === 504 ? this.retryRequest : null}

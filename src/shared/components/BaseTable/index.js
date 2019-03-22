@@ -8,7 +8,7 @@ import paginationFactory, {
   PaginationListStandalone,
 } from 'react-bootstrap-table2-paginator'
 import filterFactory from 'react-bootstrap-table2-filter'
-
+import TableHeader from 'shared/components/BaseTable/TableHeader'
 import { Row, Col } from 'react-bootstrap'
 import TableAlert from 'shared/components/BaseTable/TableAlert'
 import './style.scss'
@@ -143,22 +143,17 @@ class BaseTable extends React.Component {
         {({ paginationProps, paginationTableProps }) => (
           <div className="base-table">
             <Row>
-              <Col>
-                <h6 className="base-table__header">{this.props.caption}</h6>
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={6}>
-                <PaginationListStandalone {...paginationProps} />
-              </Col>
-              <Col>
-                <SizePerPageDropdownStandalone {...paginationProps} />
+              <Col xs={8}>
+                <TableHeader datasetModelName={this.props.datasetModelName} title={this.props.caption} />
               </Col>
               <Col>
                 Total:
                 {paginationProps.dataSize === paginationProps.totalSize
                   ? paginationProps.totalSize
                   : `${paginationProps.dataSize}/${paginationProps.totalSize}`}
+              </Col>
+              <Col>
+                <SizePerPageDropdownStandalone {...paginationProps} />
               </Col>
             </Row>
             <BootstrapTable
@@ -199,6 +194,11 @@ class BaseTable extends React.Component {
                 action={this.props.errorAction}
               />
             )}
+            <Row>
+              <Col xs={6}>
+                <PaginationListStandalone {...paginationProps} />
+              </Col>
+            </Row>
           </div>
         )}
       </PaginationProvider>

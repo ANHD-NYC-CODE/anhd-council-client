@@ -1,5 +1,6 @@
 import { constructAxiosGet } from 'shared/utilities/Axios'
 import * as u from 'shared/constants/urls'
+import moment from 'moment'
 import {
   COMMUNITY_BOARDS_INDEX,
   getStorageDataAction,
@@ -41,8 +42,8 @@ export const getCommunities = () => (dispatch, getState, access_token) => {
   const requestId = Math.floor(Math.random() * 1000000)
   return getStorageDataAction(dispatch, c.GET_COMMUNITIES, requestId, COMMUNITY_BOARDS_INDEX, handleGetCommunities)
     .then(storageData => {
-      // Temporary - reset the DBs
-      if (storageData) {
+      // TODO: Temporary - reset the DBs
+      if (!storageData || storageData.expires < moment()) {
         return communitiesAxios(dispatch, getState, access_token, requestId)
       }
     })

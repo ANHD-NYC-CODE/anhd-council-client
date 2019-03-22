@@ -1,5 +1,6 @@
 import { constructAxiosGet } from 'shared/utilities/Axios'
 import * as u from 'shared/constants/urls'
+import moment from 'moment'
 import {
   COUNCIL_DISTRICTS_INDEX,
   getStorageDataAction,
@@ -42,8 +43,8 @@ export const getCouncils = () => (dispatch, getState, access_token) => {
 
   return getStorageDataAction(dispatch, c.GET_COUNCILS, requestId, COUNCIL_DISTRICTS_INDEX, handleGetCouncils)
     .then(storageData => {
-      // Temporary - reset the DBs
-      if (storageData) {
+      // TODO: Temporary - reset the DBs
+      if (!storageData || storageData.expires < moment()) {
         return councilsAxios(dispatch, getState, access_token, requestId)
       }
     })
