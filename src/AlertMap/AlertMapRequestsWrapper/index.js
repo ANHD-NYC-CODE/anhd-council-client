@@ -16,8 +16,15 @@ class AlertMapRequestsWrapper extends React.Component {
     this.toggleDateRange = this.toggleDateRange.bind(this)
 
     this.loadRequests = this.loadRequests.bind(this)
-    if (props.requests.length) {
-      this.loadRequests(props.requests)
+    this.switchSelectedRequest = this.switchSelectedRequest.bind(this)
+    this.state = {
+      selectedRequest: this.getInitialRequest(),
+    }
+  }
+
+  componentDidMount() {
+    if (this.props.requests.length) {
+      this.loadRequests(this.props.requests)
     }
   }
 
@@ -28,9 +35,19 @@ class AlertMapRequestsWrapper extends React.Component {
     }
   }
 
+  getInitialRequest() {
+    return getRequestType(this.props.requests, 'ADVANCED_SEARCH').length
+      ? getRequestType(this.props.requests, 'ADVANCED_SEARCH')[0]
+      : getRequestType(this.props.requests, 'MAP_FILTER')[0]
+  }
+
   loadRequests(requests = []) {
     requests.forEach(request => {
       this.props.dispatch(requestWithAuth(makeRequest(request)))
+    })
+
+    this.setState({
+      selectedRequest: this.getInitialRequest(),
     })
   }
 
@@ -50,9 +67,20 @@ class AlertMapRequestsWrapper extends React.Component {
     this.loadRequests(mapRequests)
   }
 
+  switchSelectedRequest(request) {
+    this.setState({
+      selectedRequest: request,
+    })
+  }
+
   render() {
     return this.props.requests.length ? (
-      <AlertMapShow toggleDateRange={this.toggleDateRange} {...this.props} />
+      <AlertMapShow
+        toggleDateRange={this.toggleDateRange}
+        selectedRequest={this.state.selectedRequest}
+        switchSelectedRequest={this.switchSelectedRequest}
+        {...this.props}
+      />
     ) : (
       <InnerLoader />
     )

@@ -24,9 +24,15 @@ class AlertMapShow extends React.Component {
 
     this.state = {
       view: 1,
-      selectedRequest: getRequestType(props.requests, 'ADVANCED_SEARCH').length
-        ? getRequestType(this.props.requests, 'ADVANCED_SEARCH')[0]
-        : getRequestType(this.props.requests, 'MAP_FILTER')[0],
+    }
+  }
+
+  componentDidUpdate() {
+    if (
+      this.props.changingGeographyType === this.props.currentGeographyType &&
+      this.props.changingGeographyId === this.props.currentGeographyId
+    ) {
+      this.props.cancelChangeGeography()
     }
   }
 
@@ -37,9 +43,7 @@ class AlertMapShow extends React.Component {
   }
 
   switchTable(request) {
-    this.setState({
-      selectedRequest: request,
-    })
+    this.props.switchSelectedRequest(request)
   }
 
   render() {
@@ -93,7 +97,7 @@ class AlertMapShow extends React.Component {
                       request={request}
                       onClick={r => this.switchTable(r)}
                       resultsComponent={SummaryResultCard}
-                      selected={this.state.selectedRequest === request}
+                      selected={this.props.selectedRequest === request}
                     />
                   </Col>
                 )
@@ -120,7 +124,7 @@ class AlertMapShow extends React.Component {
                     request={request}
                     onClick={r => this.switchTable(r)}
                     resultsComponent={HousingTypeSummaryResultCard}
-                    selected={this.state.selectedRequest === request}
+                    selected={this.props.selectedRequest === request}
                   />
                 </Col>
               )
@@ -151,7 +155,7 @@ class AlertMapShow extends React.Component {
                       changingGeographyType={this.props.changingGeographyType}
                       handleChangeGeography={this.props.handleChangeGeography}
                       handleChangeGeographyId={this.props.handleChangeGeographyId}
-                      selectedRequest={this.state.selectedRequest}
+                      selectedRequest={this.props.selectedRequest}
                       selectGeographyData={config.selectGeographyData}
                     />
                   )
@@ -162,7 +166,7 @@ class AlertMapShow extends React.Component {
                 return (
                   <RequestWrapper
                     key={`request-wrapper-${this.props.requests.indexOf(request)}`}
-                    visible={this.state.selectedRequest === request}
+                    visible={this.props.selectedRequest === request}
                     request={request}
                   />
                 )
