@@ -268,5 +268,9 @@ export const getDatasetDateField = datasetConstant => {
       return 'prefilingdate'
     case 'HOUSING_LITIGATION':
       return 'caseopendate'
+    case 'HPD_REGISTRATION':
+      return 'enddate'
+    default:
+      return 'id'
   }
 }

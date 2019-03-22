@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { push, createMatchSelector } from 'connected-react-router'
 import { setLookupAndRequestsAndRedirect } from 'Store/AppState/actions'
-import { getManyRequestTypes } from 'Store/AppState/selectors'
+import { getManyRequestTypes, getRequestType } from 'Store/AppState/selectors'
 import LookupIndex from 'Lookup/LookupIndex'
 import LookupRequestsWrapper from 'Lookup/LookupRequestsWrapper'
 
@@ -37,6 +37,7 @@ class Lookup extends React.Component {
         changeLookup={this.changeLookup}
         dispatch={this.props.dispatch}
         requests={this.props.requests}
+        propertyResult={this.props.propertyResult}
       />
     ) : (
       <LookupIndex />
@@ -63,6 +64,8 @@ const mapStateToProps = state => {
     bin: match ? match.params.bin : undefined,
     appState: state.appState,
     requests: getManyRequestTypes(state.appState.requests, ['LOOKUP_FILTER', 'LOOKUP_PROFILE']),
+    propertyResult:
+      state.requests[(getRequestType(state.appState.requests, 'LOOKUP_PROFILE')[0] || {}).requestConstant],
   }
 }
 

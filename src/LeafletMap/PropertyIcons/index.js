@@ -31,23 +31,38 @@ class PropertyIcons extends React.Component {
   }
 
   render() {
-    if (!this.props.visible || !this.props.selectedRequest || this.props.results.length > 1000) return null
-    return this.props.results
-      .map((result, index) => {
-        if (this.getLatLng(result)) {
-          return (
-            <PropertyIcon
-              key={`property-popup-${index}`}
-              result={result}
-              handlePropertyAction={this.props.handlePropertyAction}
-              position={this.getLatLng(result)}
-            />
-          )
-        } else {
-          return null
-        }
-      })
-      .filter(i => i)
+    if (!(this.props.visible && this.props.selectedRequest)) return null
+    if (this.props.iconConfig === 'MULTIPLE') {
+      if (this.props.results.length > 1000) return null
+      return this.props.results
+        .map((result, index) => {
+          if (this.getLatLng(result)) {
+            return (
+              <PropertyIcon
+                key={`property-popup-${index}`}
+                result={result}
+                interactable={true}
+                handlePropertyAction={this.props.handlePropertyAction}
+                position={this.getLatLng(result)}
+              />
+            )
+          } else {
+            return null
+          }
+        })
+        .filter(i => i)
+    } else {
+      return (
+        !!this.props.results.length ||
+        (Object.keys(this.props.results).length && (
+          <PropertyIcon
+            interactable={false}
+            result={this.props.results}
+            position={this.getLatLng(this.props.results)}
+          />
+        ))
+      )
+    }
   }
 }
 
@@ -58,14 +73,14 @@ PropertyIcons.defaultProps = {
 PropertyIcons.propTypes = {
   handlePropertyAction: PropTypes.func,
   dispatch: PropTypes.func,
-  results: PropTypes.array,
+  results: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   selectedRequest: PropTypes.object,
   visible: PropTypes.bool,
 }
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    results: state.requests[ownProps.selectedRequest.requestConstant],
+    results: state.requests[(ownProps.selectedRequest || {}).requestConstant],
   }
 }
 

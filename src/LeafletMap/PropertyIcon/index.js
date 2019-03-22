@@ -23,22 +23,26 @@ class PropertyIcon extends React.Component {
     return (
       <div className="property-icon">
         <Marker position={this.props.position}>
-          <Tooltip>{this.props.result.address}</Tooltip>
-          <Popup>
-            <Card style={{ border: 'none' }}>
-              <Card.Body>
-                <Card.Title>{this.props.result.address}</Card.Title>
-                <Card.Text>
-                  <Button
-                    as={BaseLink}
-                    variant="primary"
-                    href={`/property/${this.props.result.bbl}`}
-                    text="View Property"
-                  />
-                </Card.Text>
-              </Card.Body>
-            </Card>
-          </Popup>
+          {this.props.interactable && (
+            <div>
+              <Popup>
+                <Card style={{ border: 'none' }}>
+                  <Card.Body>
+                    <Card.Title>{this.props.result.address}</Card.Title>
+                    <Card.Text>
+                      <Button
+                        as={BaseLink}
+                        variant="primary"
+                        href={`/property/${this.props.result.bbl}`}
+                        text="View Property"
+                      />
+                    </Card.Text>
+                  </Card.Body>
+                </Card>
+              </Popup>
+              <Tooltip>{this.props.result.address}</Tooltip>
+            </div>
+          )}
         </Marker>
       </div>
     )
