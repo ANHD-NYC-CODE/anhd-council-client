@@ -72,10 +72,17 @@ export class DataRequest {
   }
 
   get csv_filename() {
-    return `dapportal-${this.path}${stringifyParamsObject(this.params)}.csv`
-      .replace(/\//g, '-')
-      .replace(/--/g, '-')
-      .replace('-.csv', '.csv')
+    if (this.type === 'ADVANCED_SEARCH') {
+      return `dapportal-${this.path}-custom-search.csv`
+        .replace(/\//g, '-')
+        .replace(/--/g, '-')
+        .replace('-.csv', '.csv')
+    } else {
+      return `dapportal-${this.path}${stringifyParamsObject(this.params)}.csv`
+        .replace(/\//g, '-')
+        .replace(/--/g, '-')
+        .replace('-.csv', '.csv')
+    }
   }
 
   get csv_params() {

@@ -13,11 +13,14 @@ const TableHeader = props => {
         <Col>
           <h4>{props.title}</h4>
         </Col>
-        <Col>
-          <Button onClick={() => props.dispatch(makeCsvRequest(props.request))}>
-            <FontAwesomeIcon icon={faFileCsv} />
-          </Button>
-        </Col>
+        {window.innerWidth > 767 && (
+          <Col class="table-header__share-column">
+            <Button onClick={() => props.dispatch(makeCsvRequest(props.request))}>
+              <FontAwesomeIcon icon={faFileCsv} />
+              <span> Csv Download</span>
+            </Button>
+          </Col>
+        )}
       </Row>
       <Row>
         <Col>

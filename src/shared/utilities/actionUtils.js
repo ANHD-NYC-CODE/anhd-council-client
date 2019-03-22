@@ -1,4 +1,3 @@
-import moment from 'moment'
 import { toast } from 'react-toastify'
 import * as loadingActions from 'Store/Loading/actions'
 import * as errorActions from 'Store/Error/actions'
