@@ -31,7 +31,7 @@ class PropertyIcons extends React.Component {
   }
 
   render() {
-    if (this.props.results.length > 1000 || !this.props.selectedRequest) return null
+    if (!this.props.visible || !this.props.selectedRequest || this.props.results.length > 1000) return null
     return this.props.results
       .map((result, index) => {
         if (this.getLatLng(result)) {
@@ -60,6 +60,7 @@ PropertyIcons.propTypes = {
   dispatch: PropTypes.func,
   results: PropTypes.array,
   selectedRequest: PropTypes.object,
+  visible: PropTypes.bool,
 }
 
 const mapStateToProps = (state, ownProps) => {

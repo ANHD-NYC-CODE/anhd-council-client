@@ -113,7 +113,7 @@ export default class LeafletMap extends Component {
     return (
       <div id="map" ref={this.mapContainerRef} style={{ height: this.state.height }}>
         {this.state.alertMessage && (
-          <Alert dismissable={true} variant="danger">
+          <Alert dismissable variant="danger">
             {this.state.alertMessage}
           </Alert>
         )}
@@ -190,7 +190,11 @@ export default class LeafletMap extends Component {
                 </Button>
               </Popup>
             )}
-          <PropertyIcons setAlertMessage={this.setAlertMessage} selectedRequest={this.props.selectedRequest} />
+          <PropertyIcons
+            setAlertMessage={this.setAlertMessage}
+            selectedRequest={this.props.selectedRequest}
+            visible={!(this.props.changingGeographyType && this.props.changingGeographyId)}
+          />
         </Map>
       </div>
     )
