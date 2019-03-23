@@ -14,7 +14,6 @@ export const initialState = {
 }
 
 export const appStateReducer = (state = Object.freeze(initialState), action = { data: [] }) => {
-  console.log(action.type)
   switch (action.type) {
     case c.SET_APP_STATE: {
       return {

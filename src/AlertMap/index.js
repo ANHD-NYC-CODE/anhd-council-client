@@ -9,7 +9,7 @@ import { StandardizedInput } from 'shared/classes/StandardizedInput'
 import { setAppState } from 'Store/AppState/actions'
 import { makeSelectRequests } from 'Store/AppState/selectors'
 
-class AlertMap extends React.Component {
+class AlertMap extends React.PureComponent {
   constructor(props) {
     super(props)
 
@@ -84,7 +84,6 @@ class AlertMap extends React.Component {
   }
 
   render() {
-    console.log('alert map render')
     return !(this.props.appState.currentGeographyType && this.props.appState.currentGeographyId) ? (
       <AlertMapIndex
         appState={this.props.appState}
