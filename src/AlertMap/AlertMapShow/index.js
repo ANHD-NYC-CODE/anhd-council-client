@@ -145,7 +145,7 @@ class AlertMapShow extends React.PureComponent {
                       <Col
                         xs={12}
                         sm={6}
-                        lg={4}
+                        lg={12}
                         key={`rs-col-${index}`}
                         className="housingtype-request-summary__container"
                       >
