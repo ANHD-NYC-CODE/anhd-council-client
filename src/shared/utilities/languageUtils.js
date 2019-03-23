@@ -66,6 +66,8 @@ export const constructDateComparisonString = comparison => {
 
 export const housingTypeCodeToName = code => {
   switch (code) {
+    case 'all':
+      return 'All Residential'
     case 'rs':
       return 'Rent Stabilized'
     case 'rr':

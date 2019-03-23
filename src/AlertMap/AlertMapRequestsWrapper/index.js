@@ -23,22 +23,22 @@ class AlertMapRequestsWrapper extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.requests.length) {
-      this.loadRequests(this.props.requests)
+    if (this.props.appState.requests.length) {
+      this.loadRequests(this.props.appState.requests)
     }
   }
 
   componentDidUpdate() {
-    const uncalledRequests = this.props.requests.filter(r => !r.called)
+    const uncalledRequests = this.props.appState.requests.filter(r => !r.called)
     if (uncalledRequests.length) {
       this.loadRequests(uncalledRequests)
     }
   }
 
   getInitialRequest() {
-    return getRequestType(this.props.requests, 'ADVANCED_SEARCH').length
-      ? getRequestType(this.props.requests, 'ADVANCED_SEARCH')[0]
-      : getRequestType(this.props.requests, 'MAP_FILTER')[0]
+    return getRequestType(this.props.appState.requests, 'ADVANCED_SEARCH').length
+      ? getRequestType(this.props.appState.requests, 'ADVANCED_SEARCH')[0]
+      : getRequestType(this.props.appState.requests, 'MAP_FILTER')[0]
   }
 
   loadRequests(requests = []) {
@@ -54,7 +54,7 @@ class AlertMapRequestsWrapper extends React.Component {
   toggleDateRange(value) {
     this.props.dispatch(setMapFilterDate(value))
 
-    const mapRequests = getRequestType(this.props.requests, 'MAP_FILTER')
+    const mapRequests = getRequestType(this.props.appState.requests, 'MAP_FILTER')
     mapRequests.forEach(request => {
       request.called = false
       request.paramMaps
@@ -74,7 +74,7 @@ class AlertMapRequestsWrapper extends React.Component {
   }
 
   render() {
-    return this.props.requests.length ? (
+    return this.props.appState.requests.length ? (
       <AlertMapShow
         toggleDateRange={this.toggleDateRange}
         selectedRequest={this.state.selectedRequest}

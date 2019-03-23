@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { push, createMatchSelector } from 'connected-react-router'
 import { setGeographyAndRequestsAndRedirect } from 'Store/AppState/actions'
-import { selectRequests, getManyRequestTypes } from 'Store/AppState/selectors'
 import AlertMapIndex from 'AlertMap/AlertMapIndex'
 import AlertMapRequestsWrapper from 'AlertMap/AlertMapRequestsWrapper'
 import { StandardizedInput } from 'shared/classes/StandardizedInput'
@@ -97,7 +96,6 @@ class AlertMap extends React.Component {
       <AlertMapRequestsWrapper
         appState={this.props.appState}
         dispatch={this.props.dispatch}
-        requests={getManyRequestTypes(this.props.requests, ['MAP_FILTER', 'ADVANCED_SEARCH', 'GEOGRAPHY_HOUSING_TYPE'])}
         handleChangeGeography={this.submitGeography}
         handleChangeGeographyType={this.handleChangeGeographyType}
         handleChangeGeographyId={this.handleChangeGeographyId}
@@ -110,12 +108,10 @@ class AlertMap extends React.Component {
 AlertMap.defaultProps = {
   geographyType: undefined,
   geographyId: undefined,
-  requests: [],
 }
 
 AlertMap.propTypes = {
   dispatch: PropTypes.func,
-  requests: PropTypes.array,
 }
 
 const mapStateToProps = state => {
@@ -129,7 +125,6 @@ const mapStateToProps = state => {
     appState: state.appState,
     geographyId: match ? match.params.id : undefined,
     geographyType: path ? path.toUpperCase() : undefined,
-    requests: selectRequests(state),
   }
 }
 

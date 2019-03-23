@@ -20,7 +20,7 @@ export default class LeafletMap extends Component {
     this.mapRef = React.createRef()
     this.geoJsonRef = React.createRef()
     this.state = {
-      height: 0,
+      height: this.props.height,
       hasError: false,
       alertMessage: undefined,
     }
@@ -93,6 +93,7 @@ export default class LeafletMap extends Component {
   }
 
   updateDimensions() {
+    if (this.props.height) return
     if (this.mapContainerRef.current && this.mapRef.current) {
       this.mapRef.current.leafletElement.invalidateSize()
       this.setState({ height: this.mapContainerRef.current.offsetWidth })
@@ -111,7 +112,11 @@ export default class LeafletMap extends Component {
         </Jumbotron>
       )
     return (
-      <div id="map" ref={this.mapContainerRef} style={{ height: this.state.height }}>
+      <div
+        id="map"
+        ref={this.mapContainerRef}
+        style={{ height: this.props.height || this.state.height, width: this.props.width || '100%' }}
+      >
         {this.state.alertMessage && (
           <Alert dismissable variant="danger">
             {this.state.alertMessage}
@@ -220,6 +225,7 @@ LeafletMap.defaultProps = {
   communityDistricts: [],
   iconConfig: 'MULTIPLE',
   interactable: true,
+  height: 0,
   zoom: 11,
 }
 
