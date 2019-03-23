@@ -24,7 +24,6 @@ export default class LeafletMap extends Component {
       hasError: false,
       alertMessage: undefined,
     }
-
     this.updateDimensions = this.updateDimensions.bind(this)
     this.centerMapOnGeography = this.centerMapOnGeography.bind(this)
     this.getGeographyBounds = this.getGeographyBounds.bind(this)
@@ -123,21 +122,21 @@ export default class LeafletMap extends Component {
           </Alert>
         )}
         <Map
-          boxZoom={this.props.interactable}
+          boxZoom={this.props.interactive}
           center={this.props.center}
           className="map"
-          doubleClickZoom={this.props.interactable}
-          dragging={this.props.interactable}
+          doubleClickZoom={this.props.interactive}
+          dragging={this.props.interactive}
           id="leaflet-map"
-          keyboard={this.props.interactable}
+          keyboard={this.props.interactive}
           minZoom={10}
           maxZoom={20}
           ref={this.mapRef}
-          scrollWheelZoom={this.props.interactable}
-          tap={this.props.interactable}
-          touchZoom={this.props.interactable}
+          scrollWheelZoom={this.props.interactive}
+          tap={this.props.interactive}
+          touchZoom={this.props.interactive}
           zoom={this.props.zoom}
-          zoomControl={this.props.interactable}
+          zoomControl={this.props.interactive}
         >
           <TileLayer
             attribution="mapbox"
@@ -212,7 +211,6 @@ export default class LeafletMap extends Component {
             selectedRequest={this.props.selectedRequest}
             visible={!(this.props.appState.changingGeographyType && this.props.appState.changingGeographyId)}
           />
-          }
         </Map>
       </div>
     )
@@ -224,7 +222,7 @@ LeafletMap.defaultProps = {
   councilDistricts: [],
   communityDistricts: [],
   iconConfig: 'MULTIPLE',
-  interactable: true,
+  interactive: true,
   height: 0,
   zoom: 11,
 }
@@ -238,5 +236,5 @@ LeafletMap.propTypes = {
   currentGeographyId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   iconConfig: PropTypes.string,
   selectedRequest: PropTypes.object,
-  interactable: PropTypes.bool,
+  interactive: PropTypes.bool,
 }

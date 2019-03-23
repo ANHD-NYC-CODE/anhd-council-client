@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import { requestWithAuth } from 'shared/utilities/authUtils'
 import { makeRequest } from 'Store/Request/actions'
+import { getRequestType } from 'Store/AppState/selectors'
 
 import LookupShow from 'Lookup/LookupShow'
 import InnerLoader from 'shared/components/InnerLoader'
@@ -13,8 +14,8 @@ class LookupRequestsWrapper extends React.Component {
 
     this.loadRequests = this.loadRequests.bind(this)
 
-    if (props.requests.length) {
-      this.loadRequests(props.requests)
+    if (props.appState.requests.length) {
+      this.loadRequests(props.appState.requests)
     }
   }
 
@@ -25,12 +26,22 @@ class LookupRequestsWrapper extends React.Component {
   }
 
   render() {
-    return this.props.requests.length ? <LookupShow {...this.props} /> : <InnerLoader />
+    return this.props.appState.requests.length ? (
+      <LookupShow
+        appState={this.props.appState}
+        lookupRequests={getRequestType(this.props.appState.requests, 'LOOKUP_FILTER')}
+        profileRequest={getRequestType(this.props.appState.requests, 'LOOKUP_PROFILE')[0]}
+        propertyResult={this.props.propertyResult}
+        {...this.props}
+      />
+    ) : (
+      <InnerLoader />
+    )
   }
 }
 
 LookupRequestsWrapper.propTypes = {
-  requests: PropTypes.array,
+  appState: PropTypes.object,
 }
 
 export default LookupRequestsWrapper

@@ -3,10 +3,11 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { push, createMatchSelector } from 'connected-react-router'
 import { setLookupAndRequestsAndRedirect } from 'Store/AppState/actions'
-import { getManyRequestTypes, getRequestType } from 'Store/AppState/selectors'
+import { getRequestType } from 'Store/AppState/selectors'
+
 import LookupIndex from 'Lookup/LookupIndex'
 import LookupRequestsWrapper from 'Lookup/LookupRequestsWrapper'
-
+import InnerLoader from 'shared/components/InnerLoader'
 class Lookup extends React.Component {
   constructor(props) {
     super(props)
@@ -29,14 +30,15 @@ class Lookup extends React.Component {
   }
 
   render() {
+    if (this.props.bbl && !this.props.appState.currentProperty) return <InnerLoader />
     return this.props.appState.currentProperty ? (
       <LookupRequestsWrapper
+        appState={this.props.appState}
         bbl={this.props.bbl}
         bin={this.props.bin}
         key={`${this.props.appState.currentProperty}${this.props.appState.currentBuilding}`}
         changeLookup={this.changeLookup}
         dispatch={this.props.dispatch}
-        requests={this.props.requests}
         propertyResult={this.props.propertyResult}
       />
     ) : (
@@ -48,14 +50,13 @@ class Lookup extends React.Component {
 Lookup.defaultProps = {
   bbl: undefined,
   bin: undefined,
-  requests: [],
 }
 
 Lookup.propTypes = {
   dispatch: PropTypes.func,
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
   const propertyMatchSelector = createMatchSelector({ path: '/property/:bbl' })
   const propertyBuildingMatchSelector = createMatchSelector({ path: '/property/:bbl/building/:bin' })
   const match = propertyBuildingMatchSelector(state) || propertyMatchSelector(state)
@@ -63,7 +64,6 @@ const mapStateToProps = state => {
     bbl: match ? match.params.bbl : undefined,
     bin: match ? match.params.bin : undefined,
     appState: state.appState,
-    requests: getManyRequestTypes(state.appState.requests, ['LOOKUP_FILTER', 'LOOKUP_PROFILE']),
     propertyResult:
       state.requests[(getRequestType(state.appState.requests, 'LOOKUP_PROFILE')[0] || {}).requestConstant],
   }

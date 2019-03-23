@@ -54,12 +54,8 @@ class PropertyIcons extends React.Component {
     } else {
       return (
         !!this.props.results.length ||
-        (Object.keys(this.props.results).length && (
-          <PropertyIcon
-            interactable={false}
-            result={this.props.results}
-            position={this.getLatLng(this.props.results)}
-          />
+        (!!Object.keys(this.props.results).length && (
+          <PropertyIcon interactive={false} result={this.props.results} position={this.getLatLng(this.props.results)} />
         ))
       )
     }
