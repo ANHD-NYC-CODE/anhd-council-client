@@ -33,8 +33,8 @@ class AlertMapShow extends React.Component {
 
   componentDidUpdate() {
     if (
-      this.props.changingGeographyType === this.props.currentGeographyType &&
-      this.props.changingGeographyId === this.props.currentGeographyId
+      this.props.appState.changingGeographyType === this.props.appState.currentGeographyType &&
+      this.props.appState.changingGeographyId === this.props.appState.currentGeographyId
     ) {
       this.props.cancelChangeGeography()
     }
@@ -63,19 +63,19 @@ class AlertMapShow extends React.Component {
             <div>
               <Row>
                 <GeographySelect
-                  currentGeographyType={this.props.currentGeographyType}
-                  currentGeographyId={this.props.currentGeographyId}
+                  currentGeographyType={this.props.appState.currentGeographyType}
+                  currentGeographyId={this.props.appState.currentGeographyId}
                   dispatch={this.props.dispatch}
-                  changing={this.props.changingGeography}
-                  changingGeographyType={this.props.changingGeographyType}
-                  changingGeographyId={this.props.changingGeographyId}
+                  changing={this.props.appState.changingGeography}
+                  changingGeographyType={this.props.appState.changingGeographyType}
+                  changingGeographyId={this.props.appState.changingGeographyId}
                   cancelChangeGeography={this.props.cancelChangeGeography}
                   handleChangeGeographyType={this.props.handleChangeGeographyType}
                   handleChangeGeography={this.props.handleChangeGeography}
                   showSubmit={
-                    this.props.changingGeography &&
-                    this.props.changingGeographyType &&
-                    this.props.changingGeographyId > 0
+                    this.props.appState.changingGeography &&
+                    this.props.appState.changingGeographyType &&
+                    this.props.appState.changingGeographyId > 0
                   }
                 />
 
@@ -83,8 +83,8 @@ class AlertMapShow extends React.Component {
                   onClick={() =>
                     layout.togglePrint(
                       `${geographySelectionToString({
-                        type: this.props.currentGeographyType,
-                        id: this.props.currentGeographyId,
+                        type: this.props.appState.currentGeographyType,
+                        id: this.props.appState.currentGeographyId,
                       })} summary`
                     )
                   }
@@ -98,7 +98,7 @@ class AlertMapShow extends React.Component {
                   <ToggleButtonGroup
                     name="dateRange"
                     type="radio"
-                    value={this.props.mapFilterDate}
+                    value={this.props.appState.mapFilterDate}
                     onChange={this.props.toggleDateRange}
                   >
                     <ToggleButton value={alertMapFilterdates()[2]}>{`Last 3 Years (${moment(
@@ -186,10 +186,10 @@ class AlertMapShow extends React.Component {
                           <LeafletMap
                             councilDistricts={config.councilDistricts}
                             communityDistricts={config.communityDistricts}
-                            currentGeographyType={this.props.currentGeographyType}
-                            currentGeographyId={this.props.currentGeographyId}
-                            changingGeographyId={this.props.changingGeographyId}
-                            changingGeographyType={this.props.changingGeographyType}
+                            currentGeographyType={this.props.appState.currentGeographyType}
+                            currentGeographyId={this.props.appState.currentGeographyId}
+                            changingGeographyId={this.props.appState.changingGeographyId}
+                            changingGeographyType={this.props.appState.changingGeographyType}
                             handleChangeGeography={this.props.handleChangeGeography}
                             handleChangeGeographyId={this.props.handleChangeGeographyId}
                             iconConfig="MULTIPLE"
@@ -213,8 +213,8 @@ class AlertMapShow extends React.Component {
                 </Col>
                 <Col sm={12} lg={3}>
                   <GeographyProfile
-                    currentGeographyType={this.props.currentGeographyType}
-                    currentGeographyId={this.props.currentGeographyId}
+                    currentGeographyType={this.props.appState.currentGeographyType}
+                    currentGeographyId={this.props.appState.currentGeographyId}
                   />
                 </Col>
               </Row>
@@ -227,11 +227,8 @@ class AlertMapShow extends React.Component {
 }
 
 AlertMapShow.propTypes = {
-  changeGeographyAndId: PropTypes.func,
+  appState: PropTypes.object,
   dispatch: PropTypes.func,
-  currentGeographyType: PropTypes.string,
-  currentGeographyId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  mapFilterDate: PropTypes.string,
   requests: PropTypes.array,
   toggleDateRange: PropTypes.func,
 }
