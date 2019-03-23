@@ -66,8 +66,7 @@ export default class LeafletMap extends React.PureComponent {
 
   centerMapOnGeography() {
     if (this.mapRef.current) {
-      const changingOrCurrentType =
-        this.props.appState.changingGeographyType || this.props.appState.currentGeographyType
+      const changingOrCurrentType = this.props.appState.changingGeographyType || this.props.currentGeographyType
       const changingOrCurrentId = this.props.appState.changingGeographyId || this.props.appState.currentGeographyId
       if (!(changingOrCurrentType && changingOrCurrentId)) return
       const bounds = this.getGeographyBounds(changingOrCurrentType, changingOrCurrentId)
@@ -142,13 +141,13 @@ export default class LeafletMap extends React.PureComponent {
             attribution="mapbox"
             url="https://api.mapbox.com/styles/v1/anhdnyc/cjtgo9wv009uw1fo0ubm7elun/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYW5oZG55YyIsImEiOiJjanQ0ZWRqaDcxMmRxNDlsbHV1OXN0aGx6In0.i07oerfvXtcRfm3npws7mA"
           />
-          {this.props.appState.currentGeographyType === 'COMMUNITY' && (
+          {this.props.currentGeographyType === 'COMMUNITY' && (
             <TileLayer
               attribution="mapbox"
               url="https://api.mapbox.com/styles/v1/anhdnyc/cjtgnuw5v04ad1fs950fzmkn1/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYW5oZG55YyIsImEiOiJjanQ0ZWRqaDcxMmRxNDlsbHV1OXN0aGx6In0.i07oerfvXtcRfm3npws7mA"
             />
           )}
-          {this.props.appState.currentGeographyType === 'COUNCIL' && (
+          {this.props.currentGeographyType === 'COUNCIL' && (
             <TileLayer
               attribution="mapbox"
               url="https://api.mapbox.com/styles/v1/anhdnyc/cjtgmvhfl6nw01fs8sqjifqni/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYW5oZG55YyIsImEiOiJjanQ0ZWRqaDcxMmRxNDlsbHV1OXN0aGx6In0.i07oerfvXtcRfm3npws7mA"
@@ -156,22 +155,22 @@ export default class LeafletMap extends React.PureComponent {
           )}
           {!!this.props.communityDistricts.length &&
             !!this.props.councilDistricts.length &&
-            this.props.appState.currentGeographyType && (
+            this.props.currentGeographyType && (
               <div>
                 <GeographyGeoJson
                   geographies={this.props.selectGeographyData(
-                    this.props.appState.changingGeographyType || this.props.appState.currentGeographyType
+                    this.props.appState.changingGeographyType || this.props.currentGeographyType
                   )}
                   currentGeographyId={this.props.appState.currentGeographyId}
-                  currentGeographyType={this.props.appState.currentGeographyType}
+                  currentGeographyType={this.props.currentGeographyType}
                   changingGeographyId={this.props.appState.changingGeographyId}
                   changingGeographyType={this.props.appState.changingGeographyType}
                   onClick={this.props.handleChangeGeographyId}
                 />
                 <GeographyMarkerLabels
-                  currentGeographyType={this.props.appState.currentGeographyType}
+                  currentGeographyType={this.props.currentGeographyType}
                   geographies={this.props.selectGeographyData(
-                    this.props.appState.changingGeographyType || this.props.appState.currentGeographyType
+                    this.props.appState.changingGeographyType || this.props.currentGeographyType
                   )}
                 />
               </div>
@@ -228,12 +227,9 @@ LeafletMap.defaultProps = {
 }
 
 LeafletMap.propTypes = {
+  appState: PropTypes.object,
   communityDistricts: PropTypes.array,
   councilDistricts: PropTypes.array,
-  changingGeographyType: PropTypes.string,
-  changingGeographyId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  currentGeographyType: PropTypes.string,
-  currentGeographyId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   iconConfig: PropTypes.string,
   selectedRequest: PropTypes.object,
   interactive: PropTypes.bool,

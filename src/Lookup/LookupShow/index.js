@@ -81,6 +81,7 @@ class LookupShow extends React.Component {
                   <Col>
                     <LeafletMap
                       appState={this.props.appState}
+                      currentGeographyType={this.props.appState.currentGeographyType}
                       center={
                         this.props.propertyResult.lat
                           ? [this.props.propertyResult.lat, this.props.propertyResult.lng]
