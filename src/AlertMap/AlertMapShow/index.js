@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import { getRequestType, getManyRequestTypes } from 'Store/AppState/selectors'
 import GeographySelect from 'shared/components/GeographySelect'
-import { Card, Row, Col, ToggleButtonGroup, ToggleButton, Button } from 'react-bootstrap'
+import { Card, Row, Col, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
 import LayoutContext from 'Layout/LayoutContext'
 
 import BaseLink from 'shared/components/BaseLink'
@@ -55,7 +55,7 @@ class AlertMapShow extends React.Component {
 
     const housingTypeRequests = getRequestType(this.props.appState.requests, 'GEOGRAPHY_HOUSING_TYPE')
     return (
-      <LayoutContext>
+      <LayoutContext.Consumer>
         {layout =>
           layout.print ? (
             <PrintAlertMap
@@ -64,7 +64,7 @@ class AlertMapShow extends React.Component {
               selectedRequest={this.props.selectedRequest}
             />
           ) : (
-            <div>
+            <div className="alert-map-show">
               <Row>
                 <GeographySelect
                   currentGeographyType={this.props.appState.currentGeographyType}
@@ -215,7 +215,7 @@ class AlertMapShow extends React.Component {
             </div>
           )
         }
-      </LayoutContext>
+      </LayoutContext.Consumer>
     )
   }
 }

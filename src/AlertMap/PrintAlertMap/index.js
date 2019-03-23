@@ -37,7 +37,7 @@ const PrintAlertMap = props => {
                   height="300px"
                   width="300px"
                   iconConfig="MULTIPLE"
-                  interactable={false}
+                  interactive={false}
                   selectGeographyData={config.selectGeographyData}
                 />
               )
@@ -55,7 +55,6 @@ const PrintAlertMap = props => {
               <RequestSummary
                 key={`request-summary-${props.appState.requests.indexOf(request)}`}
                 request={request}
-                onClick={r => this.switchTable(r)}
                 resultsComponent={HousingTypeSummaryResultCard}
               />
             </Col>
@@ -72,7 +71,6 @@ const PrintAlertMap = props => {
               <RequestSummary
                 key={`request-summary-${props.appState.requests.indexOf(request)}`}
                 request={request}
-                onClick={r => this.switchTable(r)}
                 resultsComponent={SummaryResultCard}
               />
             </Col>

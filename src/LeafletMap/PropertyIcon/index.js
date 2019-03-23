@@ -23,7 +23,7 @@ class PropertyIcon extends React.Component {
     return (
       <div className="property-icon">
         <Marker position={this.props.position}>
-          {this.props.interactable && (
+          {this.props.interactive && (
             <div>
               <Popup>
                 <Card style={{ border: 'none' }}>

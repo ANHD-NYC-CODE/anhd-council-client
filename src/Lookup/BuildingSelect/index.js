@@ -1,10 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-
+import { getCurrentBuilding } from 'Lookup/utilities'
 import { addressResultToPath } from 'shared/utilities/routeUtils'
 import { StandardizedInput } from 'shared/classes/StandardizedInput'
-import { setLookupAndRequestsAndRedirect } from 'Store/AppState/actions'
 import { Form } from 'react-bootstrap'
 import CustomSelect from 'shared/components/CustomSelect'
 import BaseLink from 'shared/components/BaseLink'
@@ -25,7 +24,7 @@ class BuildingSelect extends React.Component {
   }
 
   render() {
-    const selectedBuilding = this.props.buildings.find(building => building.bin === this.props.bin) || {}
+    const selectedBuilding = getCurrentBuilding(this.props.buildings, this.props.bin)
     return this.props.buildings.length ? (
       <Form className="building-select">
         <Form.Label>Select Building</Form.Label>
