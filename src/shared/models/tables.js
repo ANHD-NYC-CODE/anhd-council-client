@@ -1,7 +1,7 @@
 import { textFilter } from 'react-bootstrap-table2-filter'
 import { TableConfig } from 'shared/classes/TableConfig'
 import ExpandedLinkRow from 'shared/components/BaseTable/ExpandedLinkRow'
-import NestedTable from 'shared/components/BaseTable/NestedTable'
+import BaseTable from 'shared/components/BaseTable'
 import {
   dateFormatter,
   bldgClassFormater,
@@ -195,7 +195,7 @@ export const getTableColumns = (constant, columnExpandFunction, getLinkProps = (
     classes,
     formatter,
     hidden,
-    component = NestedTable,
+    component = BaseTable,
     dataKey,
     tableConfig,
   }) => {

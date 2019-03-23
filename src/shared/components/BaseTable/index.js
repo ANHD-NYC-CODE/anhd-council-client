@@ -108,7 +108,7 @@ class BaseTable extends React.Component {
 
           return (
             <div className="table-row--nested-bumper">
-              <NestedTable {...this.state.expandedRowProps} />
+              <NestedTable nested={true} {...this.state.expandedRowProps} />
             </div>
           )
         } else {
@@ -142,25 +142,28 @@ class BaseTable extends React.Component {
       >
         {({ paginationProps, paginationTableProps }) => (
           <div className="base-table">
-            <Row>
-              <Col xs={8}>
-                <TableHeader
-                  datasetModelName={this.props.datasetModelName}
-                  dispatch={this.props.dispatch}
-                  request={this.props.request}
-                  title={this.props.caption}
-                />
-              </Col>
-              <Col>
-                Total:
-                {paginationProps.dataSize === paginationProps.totalSize
-                  ? paginationProps.totalSize
-                  : `${paginationProps.dataSize}/${paginationProps.totalSize}`}
-              </Col>
-              <Col>
-                <SizePerPageDropdownStandalone {...paginationProps} />
-              </Col>
-            </Row>
+            {!this.props.nested && (
+              <Row>
+                <Col xs={8}>
+                  <TableHeader
+                    datasetModelName={this.props.datasetModelName}
+                    dispatch={this.props.dispatch}
+                    request={this.props.request}
+                    title={this.props.caption}
+                  />
+                </Col>
+                <Col>
+                  Total:
+                  {paginationProps.dataSize === paginationProps.totalSize
+                    ? paginationProps.totalSize
+                    : `${paginationProps.dataSize}/${paginationProps.totalSize}`}
+                </Col>
+                <Col>
+                  <SizePerPageDropdownStandalone {...paginationProps} />
+                </Col>
+              </Row>
+            )}
+
             <BootstrapTable
               bootstrap4
               bordered={false}
@@ -199,16 +202,22 @@ class BaseTable extends React.Component {
                 action={this.props.errorAction}
               />
             )}
-            <Row>
-              <Col xs={6}>
-                <PaginationListStandalone {...paginationProps} />
-              </Col>
-            </Row>
+            {!this.props.nested && (
+              <Row>
+                <Col xs={6}>
+                  <PaginationListStandalone {...paginationProps} />
+                </Col>
+              </Row>
+            )}
           </div>
         )}
       </PaginationProvider>
     )
   }
+}
+
+BaseTable.defaultProps = {
+  nested: false,
 }
 
 BaseTable.propTypes = {
@@ -219,6 +228,7 @@ BaseTable.propTypes = {
   error: PropTypes.object,
   records: PropTypes.array,
   tableConfig: PropTypes.object,
+  nested: PropTypes.bool,
 }
 
 export default BaseTable

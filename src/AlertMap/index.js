@@ -86,6 +86,7 @@ class AlertMap extends React.Component {
   render() {
     return !(this.props.appState.currentGeographyType && this.props.appState.currentGeographyId) ? (
       <AlertMapIndex
+        appState={this.props.appState}
         dispatch={this.props.dispatch}
         handleChangeGeography={this.submitGeography}
         handleChangeGeographyType={this.handleChangeGeographyType}

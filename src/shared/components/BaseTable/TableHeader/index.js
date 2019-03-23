@@ -14,7 +14,7 @@ const TableHeader = props => {
           <h4>{props.title}</h4>
         </Col>
         {window.innerWidth > 767 && (
-          <Col class="table-header__share-column">
+          <Col className="table-header__share-column">
             <Button onClick={() => props.dispatch(makeCsvRequest(props.request))}>
               <FontAwesomeIcon icon={faFileCsv} />
               <span> Csv Download</span>
