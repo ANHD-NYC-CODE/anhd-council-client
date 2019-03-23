@@ -70,28 +70,6 @@ const NavigationBar = props => {
               Contact
             </a>
           </Nav.Link>
-          <Nav className="mr-auto">
-            {props.user && (
-              <Nav.Link as="li">
-                <Link className="text-light" to="/profile">
-                  {props.user.username}
-                </Link>
-              </Nav.Link>
-            )}
-            {props.user ? (
-              <Nav.Link as="li">
-                <Link className="text-light" to="/logout">
-                  Logout
-                </Link>
-              </Nav.Link>
-            ) : (
-              <Nav.Link as="li">
-                <Link className="text-light" to="/login">
-                  Login
-                </Link>
-              </Nav.Link>
-            )}
-          </Nav>
         </Navbar.Collapse>
       </Navbar>
     </div>

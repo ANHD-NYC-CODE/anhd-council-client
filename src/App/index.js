@@ -4,7 +4,7 @@ import Router from 'Router'
 import { ToastContainer } from 'react-toastify'
 import Auth from 'Auth'
 import Config from 'Config'
-import ModalContainer from 'ModalContainer'
+import Modal from 'Modal'
 import ErrorBoundary from 'shared/components/ErrorBoundary'
 import 'react-toastify/dist/ReactToastify.css'
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css'
@@ -18,13 +18,14 @@ export class App extends React.Component {
   render() {
     return (
       <ErrorBoundary>
-        <Auth>
-          <Config>
-            <Router />
-            <ToastContainer />
-            <ModalContainer />
-          </Config>
-        </Auth>
+        <Modal>
+          <Auth>
+            <Config>
+              <Router />
+              <ToastContainer />
+            </Config>
+          </Auth>
+        </Modal>
       </ErrorBoundary>
     )
   }

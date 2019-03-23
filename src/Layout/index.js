@@ -9,6 +9,7 @@ import PrintLayout from 'Layout/PrintLayout'
 import './style.scss'
 import { Container } from 'react-bootstrap'
 import LayoutContext from 'Layout/LayoutContext'
+import ModalContext from 'Modal/ModalContext'
 
 class Layout extends React.Component {
   constructor(props) {
@@ -45,8 +46,12 @@ class Layout extends React.Component {
               <UserContext.Consumer>
                 {user => (
                   <div>
-                    <NavigationBar user={user} />
-                    <SubHeader user={user} />
+                    <NavigationBar />
+                    <ModalContext.Consumer>
+                      {modal => {
+                        return <SubHeader modal={modal} user={user} />
+                      }}
+                    </ModalContext.Consumer>
                   </div>
                 )}
               </UserContext.Consumer>

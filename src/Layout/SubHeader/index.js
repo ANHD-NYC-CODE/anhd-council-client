@@ -5,6 +5,8 @@ import { Navbar, Nav, Col } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { getGeographyPath, addressResultToPath } from 'shared/utilities/routeUtils'
 import logo from 'shared/images/portallogo.png'
+import LoginModal from 'Auth/LoginModal'
+
 import './style.scss'
 class SubHeader extends React.Component {
   constructor(props) {
@@ -15,17 +17,19 @@ class SubHeader extends React.Component {
     if (this.props.print) return null
     return (
       <Navbar className="sub-header touch-left">
-        <Navbar.Brand as="li">
-          <Link to="/">
-            <img
-              src={logo}
-              className="sub-header__logo d-inline-block align-top"
-              alt="Displacement Alert Portal Logo"
-            />
-          </Link>
-        </Navbar.Brand>
-        <Col sm={12} md={6}>
-          <Nav variant="tabs" defaultActiveKey="/buildings">
+        <Col xs={4}>
+          <Navbar.Brand as="li">
+            <Link to="/">
+              <img
+                src={logo}
+                className="sub-header__logo d-inline-block align-top"
+                alt="Displacement Alert Portal Logo"
+              />
+            </Link>
+          </Navbar.Brand>
+        </Col>
+        <Col xs={8}>
+          <Nav variant="tabs">
             <Nav.Item>
               <Nav.Link as="li">
                 <Link
@@ -57,6 +61,34 @@ class SubHeader extends React.Component {
                 <Link to="/search">Advanced Search</Link>
               </Nav.Link>
             </Nav.Item>
+            <Nav.Item>
+              {this.props.user && (
+                <Nav.Link as="li">
+                  <Link className="text-secondary" to="/profile">
+                    {this.props.user.username}
+                  </Link>
+                </Nav.Link>
+              )}
+              {this.props.user ? (
+                <Nav.Link as="li">
+                  <Link className="text-secondary" to="/logout">
+                    Logout
+                  </Link>
+                </Nav.Link>
+              ) : (
+                <Nav.Link
+                  as="a"
+                  className="text-secondary"
+                  onClick={() =>
+                    this.props.modal.setModal({
+                      modalComponent: LoginModal,
+                    })
+                  }
+                >
+                  Login
+                </Nav.Link>
+              )}
+            </Nav.Item>
           </Nav>
         </Col>
       </Navbar>
@@ -66,6 +98,8 @@ class SubHeader extends React.Component {
 
 SubHeader.propTypes = {
   dispatch: PropTypes.func,
+  modal: PropTypes.object,
+  user: PropTypes.object,
 }
 
 const mapStateToProps = state => {
