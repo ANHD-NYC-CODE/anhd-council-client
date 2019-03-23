@@ -16,6 +16,7 @@ const PrintLookup = props => {
         <Col>
           <LeafletMap
             appState={props.appState}
+            currentGeographyType={props.appState.currentGeographyType}
             center={props.propertyResult.lat ? [props.propertyResult.lat, props.propertyResult.lng] : undefined}
             selectedRequest={props.profileRequest}
             iconConfig="SINGLE"

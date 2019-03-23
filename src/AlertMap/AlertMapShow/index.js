@@ -180,6 +180,7 @@ class AlertMapShow extends React.PureComponent {
                             appState={this.props.appState}
                             councilDistricts={config.councilDistricts}
                             communityDistricts={config.communityDistricts}
+                            currentGeographyType={this.props.appState.currentGeographyType}
                             handleChangeGeography={this.props.handleChangeGeography}
                             handleChangeGeographyId={this.props.handleChangeGeographyId}
                             iconConfig="MULTIPLE"

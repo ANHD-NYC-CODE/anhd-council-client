@@ -32,6 +32,7 @@ const PrintAlertMap = props => {
               return (
                 <LeafletMap
                   appState={props.appState}
+                  currentGeographyType={props.appState.currentGeographyType}
                   councilDistricts={config.councilDistricts}
                   communityDistricts={config.communityDistricts}
                   height="300px"

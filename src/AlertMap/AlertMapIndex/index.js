@@ -38,6 +38,7 @@ const AlertMapIndex = props => {
               return (
                 <LeafletMap
                   appState={props.appState}
+                  currentGeographyType={props.appState.changingGeographyType}
                   councilDistricts={config.councilDistricts}
                   communityDistricts={config.communityDistricts}
                   handleChangeGeography={props.handleChangeGeography}

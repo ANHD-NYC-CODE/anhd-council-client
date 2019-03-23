@@ -25,7 +25,8 @@ class Main extends React.Component {
   submitGeography({ e, geographyType, geographyId } = {}) {
     e = new StandardizedInput(e)
     const type = geographyType || this.props.appState.changingGeographyType || this.props.appState.currentGeographyType
-    const id = geographyId || e.value
+    const id =
+      geographyId || e.value || this.props.appState.changingGeographyId || this.props.appState.currentGeographyId
 
     this.props.dispatch(
       setGeographyAndRequestsAndRedirect({

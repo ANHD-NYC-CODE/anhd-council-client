@@ -125,7 +125,7 @@ describe('AlertMap', () => {
         })
         expect(wrapper.find('ToggleButtonGroup')).toHaveLength(2)
         expect(wrapper.find('LeafletMap')).toHaveLength(1)
-        expect(wrapper.find('RequestSummary')).toHaveLength(10)
+        expect(wrapper.find('RequestSummary')).toHaveLength(11)
         expect(wrapper.find('RequestWrapper')).toHaveLength(0)
       })
     })
@@ -144,7 +144,7 @@ describe('AlertMap', () => {
         expect(wrapper.find('ToggleButtonGroup')).toHaveLength(2)
         expect(wrapper.find('GeographySelect')).toHaveLength(1)
         expect(wrapper.find('LeafletMap')).toHaveLength(0)
-        expect(wrapper.find('RequestWrapper')).toHaveLength(10)
+        expect(wrapper.find('RequestWrapper')).toHaveLength(11)
         expect(
           wrapper
             .find('RequestWrapper')
