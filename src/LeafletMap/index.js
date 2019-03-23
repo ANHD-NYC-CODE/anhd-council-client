@@ -67,8 +67,9 @@ export default class LeafletMap extends Component {
 
   centerMapOnGeography() {
     if (this.mapRef.current) {
-      const changingOrCurrentType = this.props.changingGeographyType || this.props.currentGeographyType
-      const changingOrCurrentId = this.props.changingGeographyId || this.props.currentGeographyId
+      const changingOrCurrentType =
+        this.props.appState.changingGeographyType || this.props.appState.currentGeographyType
+      const changingOrCurrentId = this.props.appState.changingGeographyId || this.props.appState.currentGeographyId
       if (!(changingOrCurrentType && changingOrCurrentId)) return
       const bounds = this.getGeographyBounds(changingOrCurrentType, changingOrCurrentId)
 
@@ -131,13 +132,13 @@ export default class LeafletMap extends Component {
             attribution="mapbox"
             url="https://api.mapbox.com/styles/v1/anhdnyc/cjtgo9wv009uw1fo0ubm7elun/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYW5oZG55YyIsImEiOiJjanQ0ZWRqaDcxMmRxNDlsbHV1OXN0aGx6In0.i07oerfvXtcRfm3npws7mA"
           />
-          {this.props.currentGeographyType === 'COMMUNITY' && (
+          {this.props.appState.currentGeographyType === 'COMMUNITY' && (
             <TileLayer
               attribution="mapbox"
               url="https://api.mapbox.com/styles/v1/anhdnyc/cjtgnuw5v04ad1fs950fzmkn1/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYW5oZG55YyIsImEiOiJjanQ0ZWRqaDcxMmRxNDlsbHV1OXN0aGx6In0.i07oerfvXtcRfm3npws7mA"
             />
           )}
-          {this.props.currentGeographyType === 'COUNCIL' && (
+          {this.props.appState.currentGeographyType === 'COUNCIL' && (
             <TileLayer
               attribution="mapbox"
               url="https://api.mapbox.com/styles/v1/anhdnyc/cjtgmvhfl6nw01fs8sqjifqni/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYW5oZG55YyIsImEiOiJjanQ0ZWRqaDcxMmRxNDlsbHV1OXN0aGx6In0.i07oerfvXtcRfm3npws7mA"
@@ -145,45 +146,50 @@ export default class LeafletMap extends Component {
           )}
           {!!this.props.communityDistricts.length &&
             !!this.props.councilDistricts.length &&
-            this.props.currentGeographyType && (
+            this.props.appState.currentGeographyType && (
               <div>
                 <GeographyGeoJson
                   geographies={this.props.selectGeographyData(
-                    this.props.changingGeographyType || this.props.currentGeographyType
+                    this.props.appState.changingGeographyType || this.props.appState.currentGeographyType
                   )}
-                  currentGeographyId={this.props.currentGeographyId}
-                  currentGeographyType={this.props.currentGeographyType}
-                  changingGeographyId={this.props.changingGeographyId}
-                  changingGeographyType={this.props.changingGeographyType}
+                  currentGeographyId={this.props.appState.currentGeographyId}
+                  currentGeographyType={this.props.appState.currentGeographyType}
+                  changingGeographyId={this.props.appState.changingGeographyId}
+                  changingGeographyType={this.props.appState.changingGeographyType}
                   onClick={this.props.handleChangeGeographyId}
                 />
                 <GeographyMarkerLabels
-                  currentGeographyType={this.props.currentGeographyType}
+                  currentGeographyType={this.props.appState.currentGeographyType}
                   geographies={this.props.selectGeographyData(
-                    this.props.changingGeographyType || this.props.currentGeographyType
+                    this.props.appState.changingGeographyType || this.props.appState.currentGeographyType
                   )}
                 />
               </div>
             )}
           {!!this.props.communityDistricts.length &&
             !!this.props.councilDistricts.length &&
-            this.props.changingGeographyType &&
-            (this.props.currentGeographyId !== this.props.changingGeographyId &&
-              this.props.changingGeographyId > 0) && (
+            this.props.appState.changingGeographyType &&
+            (this.props.appState.currentGeographyId !== this.props.appState.changingGeographyId &&
+              this.props.appState.changingGeographyId > 0) && (
               <Popup
                 key={`${Math.random() * 100000}`}
                 position={
-                  this.getGeographyCenter(this.props.changingGeographyType, this.props.changingGeographyId) || {}
+                  this.getGeographyCenter(
+                    this.props.appState.changingGeographyType,
+                    this.props.appState.changingGeographyId
+                  ) || {}
                 }
               >
                 <p>
                   {geographySelectionToString({
-                    type: this.props.changingGeographyType,
-                    id: this.props.changingGeographyId,
+                    type: this.props.appState.changingGeographyType,
+                    id: this.props.appState.changingGeographyId,
                   })}
                 </p>
                 <Button
-                  onClick={() => this.props.handleChangeGeography({ geographyId: this.props.changingGeographyId })}
+                  onClick={() =>
+                    this.props.handleChangeGeography({ geographyId: this.props.appState.changingGeographyId })
+                  }
                 >
                   Visit
                 </Button>
@@ -193,7 +199,7 @@ export default class LeafletMap extends Component {
             iconConfig={this.props.iconConfig}
             setAlertMessage={this.setAlertMessage}
             selectedRequest={this.props.selectedRequest}
-            visible={!(this.props.changingGeographyType && this.props.changingGeographyId)}
+            visible={!(this.props.appState.changingGeographyType && this.props.appState.changingGeographyId)}
           />
           }
         </Map>

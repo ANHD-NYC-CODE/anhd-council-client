@@ -184,12 +184,9 @@ class AlertMapShow extends React.Component {
                       {config => {
                         return (
                           <LeafletMap
+                            appState={this.props.appState}
                             councilDistricts={config.councilDistricts}
                             communityDistricts={config.communityDistricts}
-                            currentGeographyType={this.props.appState.currentGeographyType}
-                            currentGeographyId={this.props.appState.currentGeographyId}
-                            changingGeographyId={this.props.appState.changingGeographyId}
-                            changingGeographyType={this.props.appState.changingGeographyType}
                             handleChangeGeography={this.props.handleChangeGeography}
                             handleChangeGeographyId={this.props.handleChangeGeographyId}
                             iconConfig="MULTIPLE"
