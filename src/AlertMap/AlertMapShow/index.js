@@ -58,7 +58,11 @@ class AlertMapShow extends React.Component {
       <LayoutContext>
         {layout =>
           layout.print ? (
-            <PrintAlertMap layout={layout} />
+            <PrintAlertMap
+              appState={this.props.appState}
+              layout={layout}
+              selectedRequest={this.props.selectedRequest}
+            />
           ) : (
             <div>
               <Row>

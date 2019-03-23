@@ -118,15 +118,21 @@ export default class LeafletMap extends Component {
           </Alert>
         )}
         <Map
+          boxZoom={this.props.interactable}
           center={this.props.center}
           className="map"
-          doubleClickZoom={false}
+          doubleClickZoom={this.props.interactable}
+          dragging={this.props.interactable}
           id="leaflet-map"
+          keyboard={this.props.interactable}
           minZoom={10}
           maxZoom={20}
           ref={this.mapRef}
+          scrollWheelZoom={this.props.interactable}
+          tap={this.props.interactable}
+          touchZoom={this.props.interactable}
           zoom={this.props.zoom}
-          zoomControl={true}
+          zoomControl={this.props.interactable}
         >
           <TileLayer
             attribution="mapbox"
@@ -213,6 +219,7 @@ LeafletMap.defaultProps = {
   councilDistricts: [],
   communityDistricts: [],
   iconConfig: 'MULTIPLE',
+  interactable: true,
   zoom: 11,
 }
 
@@ -225,4 +232,5 @@ LeafletMap.propTypes = {
   currentGeographyId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   iconConfig: PropTypes.string,
   selectedRequest: PropTypes.object,
+  interactable: PropTypes.bool,
 }
