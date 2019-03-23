@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Navbar, Col, Row, Button } from 'react-bootstrap'
+import { Col, Row, Button } from 'react-bootstrap'
 import logo from 'shared/images/portallogo.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPrint } from '@fortawesome/free-solid-svg-icons'
@@ -23,6 +23,13 @@ const PrintHeader = props => {
   )
 }
 
-PrintHeader.propTypes = {}
+PrintHeader.defaultProps = {
+  title: 'Print Report',
+}
+
+PrintHeader.propTypes = {
+  layout: PropTypes.object,
+  title: PropTypes.string,
+}
 
 export default PrintHeader

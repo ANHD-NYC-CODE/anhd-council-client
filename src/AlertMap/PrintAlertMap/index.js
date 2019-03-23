@@ -86,7 +86,6 @@ const PrintAlertMap = props => {
 PrintAlertMap.propTypes = {
   appState: PropTypes.object,
   layout: PropTypes.object,
-  selectedRequest: PropTypes.object,
 }
 
 export default PrintAlertMap

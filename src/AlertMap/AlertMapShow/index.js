@@ -5,8 +5,6 @@ import { getRequestType, getManyRequestTypes } from 'Store/AppState/selectors'
 import GeographySelect from 'shared/components/GeographySelect'
 import { Card, Row, Col, ToggleButtonGroup, ToggleButton, Button } from 'react-bootstrap'
 import LayoutContext from 'Layout/LayoutContext'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPrint } from '@fortawesome/free-solid-svg-icons'
 
 import BaseLink from 'shared/components/BaseLink'
 import LeafletMap from 'LeafletMap'
@@ -15,6 +13,8 @@ import RequestSummary from 'shared/components/RequestSummary'
 import SummaryResultCard from 'shared/components/SummaryResultCard'
 import HousingTypeSummaryResultCard from 'AlertMap/HousingTypeSummaryResultCard'
 import ConfigContext from 'Config/ConfigContext'
+import PrintButton from 'shared/components/PrintButton'
+
 import { geographySelectionToString } from 'shared/utilities/languageUtils'
 
 import GeographyProfile from 'AlertMap/GeographyProfile'
@@ -83,19 +83,12 @@ class AlertMapShow extends React.Component {
                   }
                 />
 
-                <Button
-                  onClick={() =>
-                    layout.togglePrint(
-                      `${geographySelectionToString({
-                        type: this.props.appState.currentGeographyType,
-                        id: this.props.appState.currentGeographyId,
-                      })} summary`
-                    )
-                  }
-                >
-                  <FontAwesomeIcon icon={faPrint} />
-                  <span> Print</span>
-                </Button>
+                <PrintButton
+                  title={`${geographySelectionToString({
+                    type: this.props.appState.currentGeographyType,
+                    id: this.props.appState.currentGeographyId,
+                  })} summary`}
+                />
               </Row>
               <Row>
                 <Col xs={12} sm={6} md={4}>

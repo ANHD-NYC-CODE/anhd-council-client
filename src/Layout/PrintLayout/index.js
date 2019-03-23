@@ -6,7 +6,9 @@ import LayoutContext from 'Layout/LayoutContext'
 const PrintLayout = props => {
   return (
     <Container className="print-layout">
-      <LayoutContext.Consumer>{layout => <PrintHeader title={layout.printTitle} />}</LayoutContext.Consumer>
+      <LayoutContext.Consumer>
+        {layout => <PrintHeader layout={layout} title={layout.printTitle} />}
+      </LayoutContext.Consumer>
       {props.children}
     </Container>
   )
