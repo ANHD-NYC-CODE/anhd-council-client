@@ -51,9 +51,9 @@ class AlertMapShow extends React.Component {
   }
 
   render() {
-    const geographyRequests = getManyRequestTypes(this.props.requests, ['MAP_FILTER', 'ADVANCED_SEARCH'])
+    const geographyRequests = getManyRequestTypes(this.props.appState.requests, ['MAP_FILTER', 'ADVANCED_SEARCH'])
 
-    const housingTypeRequests = getRequestType(this.props.requests, 'GEOGRAPHY_HOUSING_TYPE')
+    const housingTypeRequests = getRequestType(this.props.appState.requests, 'GEOGRAPHY_HOUSING_TYPE')
     return (
       <LayoutContext>
         {layout =>
@@ -128,7 +128,7 @@ class AlertMapShow extends React.Component {
                           className="geography-request-summary__container"
                         >
                           <RequestSummary
-                            key={`request-summary-${this.props.requests.indexOf(request)}`}
+                            key={`request-summary-${this.props.appState.requests.indexOf(request)}`}
                             request={request}
                             onClick={r => this.switchTable(r)}
                             resultsComponent={SummaryResultCard}
@@ -161,7 +161,7 @@ class AlertMapShow extends React.Component {
                         className="housingtype-request-summary__container"
                       >
                         <RequestSummary
-                          key={`request-summary-${this.props.requests.indexOf(request)}`}
+                          key={`request-summary-${this.props.appState.requests.indexOf(request)}`}
                           request={request}
                           onClick={r => this.switchTable(r)}
                           resultsComponent={HousingTypeSummaryResultCard}
@@ -201,10 +201,10 @@ class AlertMapShow extends React.Component {
                       }}
                     </ConfigContext.Consumer>
                   ) : (
-                    this.props.requests.map((request, index) => {
+                    geographyRequests.concat(housingTypeRequests).map((request, index) => {
                       return (
                         <RequestWrapper
-                          key={`request-wrapper-${this.props.requests.indexOf(request)}`}
+                          key={`request-wrapper-${this.props.appState.requests.indexOf(request)}`}
                           visible={this.props.selectedRequest === request}
                           request={request}
                         />

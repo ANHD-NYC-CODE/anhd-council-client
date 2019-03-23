@@ -279,6 +279,7 @@ export const newGeographyHousingTypeRequest = ({
 export const newMapRequests = ({ geographyType, geographyId } = {}) => {
   return [
     newGeographyRequest({ type: 'MAP_FILTER', geographyType, geographyId, resourceConstant: 'HPD_VIOLATION' }),
+    newGeographyHousingTypeRequest({ type: 'GEOGRAPHY_HOUSING_TYPE', geographyType, geographyId, paramValue: 'all' }),
     newGeographyHousingTypeRequest({ type: 'GEOGRAPHY_HOUSING_TYPE', geographyType, geographyId, paramValue: 'rs' }),
     newGeographyHousingTypeRequest({ type: 'GEOGRAPHY_HOUSING_TYPE', geographyType, geographyId, paramValue: 'rr' }),
     newGeographyHousingTypeRequest({ type: 'GEOGRAPHY_HOUSING_TYPE', geographyType, geographyId, paramValue: 'sh' }),
