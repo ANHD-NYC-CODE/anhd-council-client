@@ -18,7 +18,7 @@ const LookupIndex = props => {
         </Row>
         <Row>
           <Col>
-            <LeafletMap />
+            <LeafletMap appState={props.appState} iconConfig="SINGLE" zoom={15} />
           </Col>
         </Row>
         <Row>
@@ -42,6 +42,8 @@ const LookupIndex = props => {
   )
 }
 
-LookupIndex.propTypes = {}
+LookupIndex.propTypes = {
+  appState: PropTypes.appState,
+}
 
 export default LookupIndex

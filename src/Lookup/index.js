@@ -42,7 +42,7 @@ class Lookup extends React.Component {
         propertyResult={this.props.propertyResult}
       />
     ) : (
-      <LookupIndex />
+      <LookupIndex appState={this.props.appState} />
     )
   }
 }
