@@ -41,7 +41,7 @@ class PropertyIcons extends React.Component {
               <PropertyIcon
                 key={`property-popup-${index}`}
                 result={result}
-                interactable={true}
+                interactive={true}
                 handlePropertyAction={this.props.handlePropertyAction}
                 position={this.getLatLng(result)}
               />
