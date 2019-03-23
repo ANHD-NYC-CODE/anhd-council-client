@@ -6,6 +6,8 @@ import MockAdapter from 'axios-mock-adapter'
 import { setupStore, configuredState, flushAllPromises } from 'shared/testUtilities'
 import { history } from 'Store/configureStore'
 import ConfigContext from 'Config/ConfigContext'
+import LayoutContext from 'Layout/LayoutContext'
+
 import { ConnectedRouter } from 'connected-react-router'
 import sinon from 'sinon'
 import { Provider } from 'react-redux'
@@ -27,20 +29,22 @@ const setupWrapper = state => {
   const store = setupStore({ ...state })
   const wrapper = mount(
     <Provider store={store}>
-      <ConfigContext.Provider
-        value={{
-          datasets: state.dataset.datasets,
-          datasetModels: state.dataset.datasetModels,
-          housingTypeModels: state.dataset.housingTypeModels,
-          communityDistricts: state.community.boards,
-          councilDistricts: state.council.districts,
-          selectGeographyData: () => state.council.districts,
-        }}
-      >
-        <ConnectedRouter history={history}>
-          <AlertMap />
-        </ConnectedRouter>
-      </ConfigContext.Provider>
+      <LayoutContext.Provider value={{ print: false }}>
+        <ConfigContext.Provider
+          value={{
+            datasets: state.dataset.datasets,
+            datasetModels: state.dataset.datasetModels,
+            housingTypeModels: state.dataset.housingTypeModels,
+            communityDistricts: state.community.boards,
+            councilDistricts: state.council.districts,
+            selectGeographyData: () => state.council.districts,
+          }}
+        >
+          <ConnectedRouter history={history}>
+            <AlertMap />
+          </ConnectedRouter>
+        </ConfigContext.Provider>
+      </LayoutContext.Provider>
     </Provider>
   )
   return [wrapper, store]

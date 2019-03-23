@@ -5,6 +5,7 @@ import { Axios } from 'shared/utilities/Axios'
 import MockAdapter from 'axios-mock-adapter'
 import { setupStore, configuredState, flushAllPromises } from 'shared/testUtilities'
 import { history } from 'Store/configureStore'
+import ConfigContext from 'Config/ConfigContext'
 
 import { ConnectedRouter } from 'connected-react-router'
 
@@ -28,7 +29,18 @@ const setupWrapper = state => {
   const wrapper = mount(
     <Provider store={store}>
       <ConnectedRouter history={history}>
-        <Lookup />
+        <ConfigContext.Provider
+          value={{
+            datasets: state.dataset.datasets,
+            datasetModels: state.dataset.datasetModels,
+            housingTypeModels: state.dataset.housingTypeModels,
+            communityDistricts: state.community.boards,
+            councilDistricts: state.council.districts,
+            selectGeographyData: () => state.council.districts,
+          }}
+        >
+          <Lookup />
+        </ConfigContext.Provider>
       </ConnectedRouter>
     </Provider>
   )

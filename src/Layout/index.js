@@ -16,14 +16,16 @@ class Layout extends React.Component {
 
     this.state = {
       print: false,
+      printTitle: undefined,
     }
 
     this.togglePrint = this.togglePrint.bind(this)
   }
 
-  togglePrint() {
+  togglePrint(title) {
     this.setState({
       print: !this.state.print,
+      printTitle: title,
     })
   }
   render() {
@@ -31,6 +33,7 @@ class Layout extends React.Component {
       <LayoutContext.Provider
         value={{
           print: this.state.print,
+          printTitle: this.state.printTitle,
           togglePrint: this.togglePrint,
         }}
       >

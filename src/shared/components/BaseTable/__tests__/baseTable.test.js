@@ -4,7 +4,7 @@ import Adapter from 'enzyme-adapter-react-16'
 import sinon from 'sinon'
 import BaseTable from 'shared/components/BaseTable'
 import { TableConfig } from 'shared/classes/TableConfig'
-
+import ConfigContext from 'Config/ConfigContext'
 configure({ adapter: new Adapter() })
 
 const hpdProblemRecords = [
@@ -47,15 +47,26 @@ const records = [
 ]
 
 const tableConfig = new TableConfig({ resourceConstant: 'HPD_COMPLAINT' })
+
+const setupWrapper = (records, tableConfig) => {
+  return mount(
+    <ConfigContext.Provider
+      value={{ datasets: [{ model_name: 'hpdcomplaint', last_updated: '2018-01-01', version: '' }] }}
+    >
+      <BaseTable records={records} tableConfig={tableConfig} />
+    </ConfigContext.Provider>
+  )
+}
+
 describe('BaseTable', () => {
   it('loads table data', () => {
-    const wrapper = mount(<BaseTable records={records} tableConfig={tableConfig} />)
+    const wrapper = setupWrapper(records, tableConfig)
     expect(wrapper.find('tbody tr')).toHaveLength(2)
   })
 
   describe('cell click', () => {
     it('expands the row with the cell data', () => {
-      const wrapper = mount(<BaseTable records={records} tableConfig={tableConfig} />)
+      const wrapper = setupWrapper(records, tableConfig)
       wrapper
         .find('tbody td')
         .at(1)
@@ -67,7 +78,7 @@ describe('BaseTable', () => {
     })
 
     it('expands the nested table row', () => {
-      const wrapper = mount(<BaseTable records={records} tableConfig={tableConfig} />)
+      const wrapper = setupWrapper(records, tableConfig)
       wrapper
         .find('tbody td')
         .at(4)
@@ -75,8 +86,8 @@ describe('BaseTable', () => {
       wrapper.update()
 
       expect(wrapper.find('tbody tr')).toHaveLength(6)
-      expect(wrapper.find('tbody .card')).toHaveLength(1)
-      expect(wrapper.find('tbody .card').text()).toMatch(
+      expect(wrapper.find('tbody table')).toHaveLength(1)
+      expect(wrapper.find('tbody table').text()).toMatch(
         /Problem IDUrgencyUnit TypeSpace TypeMajor CategoryMinor CategoryDescriptorFull Description/
       )
     })
@@ -86,7 +97,7 @@ describe('BaseTable', () => {
     jest.useFakeTimers()
 
     it('clears filters', () => {
-      const wrapper = mount(<BaseTable records={records} tableConfig={tableConfig} />)
+      const wrapper = setupWrapper(records, tableConfig)
       wrapper
         .find('thead th')
         .at(3)

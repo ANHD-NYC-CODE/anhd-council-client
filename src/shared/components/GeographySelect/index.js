@@ -8,7 +8,6 @@ import ConfigContext from 'Config/ConfigContext'
 import FormError from 'shared/components/FormError'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimesCircle } from '@fortawesome/free-regular-svg-icons'
-
 class GeographySelect extends React.Component {
   constructor(props) {
     super(props)
