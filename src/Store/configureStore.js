@@ -8,11 +8,12 @@ import createRootReducer from './reducers'
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
 export const history = createBrowserHistory()
+const appRootReducer = createRootReducer(history)
 const middleware = [routerMiddleware(history), thunk, requestMiddleware()]
 
 export default function configureStore(preloadedState) {
   const store = createStore(
-    createRootReducer(history), // root reducer with router state
+    appRootReducer, // root reducer with router state
     preloadedState,
     composeEnhancers(applyMiddleware(...middleware))
   )

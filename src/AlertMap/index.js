@@ -7,6 +7,7 @@ import AlertMapIndex from 'AlertMap/AlertMapIndex'
 import AlertMapRequestsWrapper from 'AlertMap/AlertMapRequestsWrapper'
 import { StandardizedInput } from 'shared/classes/StandardizedInput'
 import { setAppState } from 'Store/AppState/actions'
+import { makeSelectRequests } from 'Store/AppState/selectors'
 
 class AlertMap extends React.Component {
   constructor(props) {
@@ -83,6 +84,7 @@ class AlertMap extends React.Component {
   }
 
   render() {
+    console.log('alert map render')
     return !(this.props.appState.currentGeographyType && this.props.appState.currentGeographyId) ? (
       <AlertMapIndex
         appState={this.props.appState}
@@ -96,10 +98,11 @@ class AlertMap extends React.Component {
       <AlertMapRequestsWrapper
         appState={this.props.appState}
         dispatch={this.props.dispatch}
+        cancelChangeGeography={this.cancelChangeGeography}
         handleChangeGeography={this.submitGeography}
         handleChangeGeographyType={this.handleChangeGeographyType}
         handleChangeGeographyId={this.handleChangeGeographyId}
-        cancelChangeGeography={this.cancelChangeGeography}
+        requests={this.props.requests}
       />
     )
   }
@@ -114,18 +117,23 @@ AlertMap.propTypes = {
   dispatch: PropTypes.func,
 }
 
-const mapStateToProps = state => {
-  const pathMatch = state.router.location.pathname.match(/(council|community)/)
-  const path = pathMatch ? pathMatch[0] : undefined
-  const matchSelector = createMatchSelector({
-    path: `/${path}/:id`,
-  })
-  const match = matchSelector(state)
-  return {
-    appState: state.appState,
-    geographyId: match ? match.params.id : undefined,
-    geographyType: path ? path.toUpperCase() : undefined,
+const makeMapStateToProps = () => {
+  const mapStateToProps = state => {
+    const selectRequests = makeSelectRequests
+    const pathMatch = state.router.location.pathname.match(/(council|community)/)
+    const path = pathMatch ? pathMatch[0] : undefined
+    const matchSelector = createMatchSelector({
+      path: `/${path}/:id`,
+    })
+    const match = matchSelector(state)
+    return {
+      appState: state.appState,
+      geographyId: match ? match.params.id : undefined,
+      geographyType: path ? path.toUpperCase() : undefined,
+      requests: selectRequests(state),
+    }
   }
+  return mapStateToProps
 }
 
-export default connect(mapStateToProps)(AlertMap)
+export default connect(makeMapStateToProps)(AlertMap)

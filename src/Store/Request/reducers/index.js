@@ -15,9 +15,7 @@ export const requestReducer = (state = Object.freeze(initialState), action = { d
           [action.requestConstant]: action.results,
         }
       } else {
-        return {
-          ...state,
-        }
+        return state
       }
     }
     case c.REMOVE_REQUEST: {

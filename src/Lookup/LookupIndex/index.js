@@ -43,7 +43,7 @@ const LookupIndex = props => {
 }
 
 LookupIndex.propTypes = {
-  appState: PropTypes.appState,
+  appState: PropTypes.object,
 }
 
 export default LookupIndex

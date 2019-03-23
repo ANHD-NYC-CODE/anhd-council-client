@@ -18,7 +18,7 @@ class PropertyIcons extends React.Component {
 
   handleAlert() {
     if (this.props.results.length > 1000) {
-      this.props.setAlertMessage('Can not render more than 1000 map icons because most devices can not handle this.')
+      this.props.setAlertMessage('Can not render more than 1000 map icons due to device limitations.')
     } else {
       this.props.setAlertMessage('')
     }

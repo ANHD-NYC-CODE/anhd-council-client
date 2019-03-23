@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
-import { getRequestType, getManyRequestTypes } from 'Store/AppState/selectors'
 import GeographySelect from 'shared/components/GeographySelect'
 import { Card, Row, Col, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
 import LayoutContext from 'Layout/LayoutContext'
@@ -51,9 +50,6 @@ class AlertMapShow extends React.Component {
   }
 
   render() {
-    const geographyRequests = getManyRequestTypes(this.props.appState.requests, ['MAP_FILTER', 'ADVANCED_SEARCH'])
-
-    const housingTypeRequests = getRequestType(this.props.appState.requests, 'GEOGRAPHY_HOUSING_TYPE')
     return (
       <LayoutContext.Consumer>
         {layout =>
@@ -111,7 +107,7 @@ class AlertMapShow extends React.Component {
                 </Col>
                 <Col xs={12} sm={6} md={8}>
                   <Row>
-                    {geographyRequests.map((request, index) => {
+                    {this.props.geographyRequests.map((request, index) => {
                       return (
                         <Col
                           xs={12}
@@ -130,7 +126,7 @@ class AlertMapShow extends React.Component {
                         </Col>
                       )
                     })}
-                    {!geographyRequests.some(r => r.type === 'ADVANCED_SEARCH') && (
+                    {!this.props.geographyRequests.some(r => r.type === 'ADVANCED_SEARCH') && (
                       <Col xs={12} sm={6} lg={4}>
                         <Card>
                           <Card.Body>
@@ -144,7 +140,7 @@ class AlertMapShow extends React.Component {
               </Row>
               <Row>
                 <Col xs={12} lg={3}>
-                  {housingTypeRequests.map((request, index) => {
+                  {this.props.housingTypeRequests.map((request, index) => {
                     return (
                       <Col
                         xs={12}
@@ -194,7 +190,7 @@ class AlertMapShow extends React.Component {
                       }}
                     </ConfigContext.Consumer>
                   ) : (
-                    geographyRequests.concat(housingTypeRequests).map((request, index) => {
+                    this.props.geographyRequests.concat(this.props.housingTypeRequests).map((request, index) => {
                       return (
                         <RequestWrapper
                           key={`request-wrapper-${this.props.appState.requests.indexOf(request)}`}

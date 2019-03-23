@@ -100,6 +100,7 @@ export default class LeafletMap extends Component {
   }
 
   render() {
+    console.log('render map')
     if (this.state.hasError)
       return (
         <Jumbotron className="map-error">
@@ -117,7 +118,7 @@ export default class LeafletMap extends Component {
         style={{ height: this.props.height || this.state.height, width: this.props.width || '100%' }}
       >
         {this.state.alertMessage && (
-          <Alert dismissable variant="danger">
+          <Alert dismissible={true} variant="danger">
             {this.state.alertMessage}
           </Alert>
         )}

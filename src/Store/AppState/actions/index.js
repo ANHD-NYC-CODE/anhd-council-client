@@ -76,7 +76,10 @@ export const setLookupAndRequestsAndRedirect = ({ bbl, bin, replaceHistory = fal
   }
 }
 
-export const setAdvancedSearchRequestAndRedirect = ({ redirect, replaceHistory } = {}) => (dispatch, getState) => {
+export const setAdvancedSearchRequestAndRedirect = ({ redirect = true, replaceHistory = false } = {}) => (
+  dispatch,
+  getState
+) => {
   const appState = getState().appState
   const advancedSearchRequest = newAdvancedSearchRequest({
     geographyType: appState.currentGeographyType,
