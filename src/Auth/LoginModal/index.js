@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import BaseModal from 'shared/components/BaseModal'
 import LoginForm from 'Auth/LoginForm'
+import { connect } from 'react-redux'
 
 const LoginModal = props => {
   return (
@@ -34,4 +35,8 @@ LoginModal.propTypes = {
   title: PropTypes.string,
 }
 
-export default LoginModal
+const mapStateToProps = state => {
+  return {}
+}
+
+export default connect(mapStateToProps)(LoginModal)
