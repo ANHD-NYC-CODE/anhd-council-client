@@ -59,6 +59,7 @@ const PrintLookup = props => {
               <RequestSummary
                 key={`request-summary-${props.appState.requests.indexOf(request)}`}
                 request={request}
+                print={true}
                 resultsComponent={SummaryResultCard}
               />
             </Col>

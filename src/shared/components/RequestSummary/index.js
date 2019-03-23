@@ -3,7 +3,9 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faQuestion } from '@fortawesome/free-solid-svg-icons'
+import { Col, Row } from 'react-bootstrap'
 class RequestSummary extends React.Component {
   constructor(props) {
     super(props)
@@ -16,14 +18,25 @@ class RequestSummary extends React.Component {
   }
 
   render() {
-    return this.props.resultsComponent({
-      selected: this.props.selected,
-      request: this.props.request,
-      results: this.props.results,
-      loading: this.props.loading,
-      error: this.props.error,
-      handleClick: this.handleClick,
-    })
+    return (
+      <Row className="request-summary">
+        <Col xs={10}>
+          {this.props.resultsComponent({
+            selected: this.props.selected,
+            request: this.props.request,
+            results: this.props.results,
+            loading: this.props.loading,
+            error: this.props.error,
+            handleClick: this.handleClick,
+          })}
+        </Col>
+        {!this.props.print && (
+          <Col xs={2}>
+            <FontAwesomeIcon icon={faQuestion} onClick={() => console.log(this.props.request.requestConstant)} />
+          </Col>
+        )}
+      </Row>
+    )
   }
 }
 
@@ -31,12 +44,14 @@ RequestSummary.defaultProps = {
   loading: false,
   error: undefined,
   results: [],
+  print: false,
 }
 
 RequestSummary.propTypes = {
   onClick: PropTypes.func,
   resultsComponent: PropTypes.func,
   request: PropTypes.object,
+  print: PropTypes.bool,
 }
 
 export const mapStateToProps = (state, ownProps) => {
