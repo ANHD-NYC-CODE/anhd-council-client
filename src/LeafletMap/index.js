@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
 import L from 'leaflet'
@@ -13,7 +13,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBug } from '@fortawesome/free-solid-svg-icons'
 import PropertyIcons from 'LeafletMap/PropertyIcons'
 import './style.scss'
-export default class LeafletMap extends Component {
+export default class LeafletMap extends React.PureComponent {
   constructor(props) {
     super(props)
     this.mapContainerRef = React.createRef()
@@ -100,7 +100,6 @@ export default class LeafletMap extends Component {
   }
 
   render() {
-    console.log('render map')
     if (this.state.hasError)
       return (
         <Jumbotron className="map-error">

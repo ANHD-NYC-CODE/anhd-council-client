@@ -19,7 +19,7 @@ import { geographySelectionToString } from 'shared/utilities/languageUtils'
 import GeographyProfile from 'AlertMap/GeographyProfile'
 import { alertMapFilterdates } from 'shared/utilities/componentUtils'
 import PrintAlertMap from 'AlertMap/PrintAlertMap'
-class AlertMapShow extends React.Component {
+class AlertMapShow extends React.PureComponent {
   constructor(props) {
     super(props)
     this.switchTable = this.switchTable.bind(this)

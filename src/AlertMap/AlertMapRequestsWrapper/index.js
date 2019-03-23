@@ -10,7 +10,7 @@ import { makeRequest } from 'Store/Request/actions'
 import AlertMapShow from 'AlertMap/AlertMapShow'
 import InnerLoader from 'shared/components/InnerLoader'
 
-class AlertMapRequestsWrapper extends React.Component {
+class AlertMapRequestsWrapper extends React.PureComponent {
   constructor(props) {
     super(props)
     this.toggleDateRange = this.toggleDateRange.bind(this)
