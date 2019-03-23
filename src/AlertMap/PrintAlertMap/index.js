@@ -19,16 +19,12 @@ const PrintAlertMap = props => {
           {config => {
             return (
               <LeafletMap
+                appState={props.appState}
                 councilDistricts={config.councilDistricts}
                 communityDistricts={config.communityDistricts}
-                currentGeographyType={this.props.currentGeographyType}
-                currentGeographyId={this.props.currentGeographyId}
-                changingGeographyId={this.props.changingGeographyId}
-                changingGeographyType={this.props.changingGeographyType}
-                handleChangeGeography={this.props.handleChangeGeography}
-                handleChangeGeographyId={this.props.handleChangeGeographyId}
                 iconConfig="MULTIPLE"
-                selectedRequest={this.props.selectedRequest}
+                interactable={false}
+                selectedRequest={props.selectedRequest}
                 selectGeographyData={config.selectGeographyData}
               />
             )
@@ -40,7 +36,9 @@ const PrintAlertMap = props => {
 }
 
 PrintAlertMap.propTypes = {
+  appState: PropTypes.object,
   layout: PropTypes.object,
+  selectedRequest: PropTypes.object,
 }
 
 export default PrintAlertMap

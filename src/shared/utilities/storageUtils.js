@@ -17,8 +17,10 @@ export const getStorageDataAction = async (dispatch, constant, requestId, path, 
   handleActionDispatch(dispatch, constant, requestId)
   return get(path)
     .then(storageData => {
-      if (storageData.data && moment(storageData.expires) > moment()) {
-        dispatch(handleAction({ data: storageData.storageData.data }, null, false))
+      const now = moment()
+      const expiration = moment(storageData.expires)
+      if (storageData.data && expiration > now) {
+        dispatch(handleAction({ data: storageData.data }, null, false))
         dispatch(handleCompletedRequest(constant, requestId))
         return storageData
       } else {
@@ -48,7 +50,7 @@ export const getCommunityBoardsData = () => {
 
 const addExpirationDate = data => {
   return {
-    expires: new Date(moment().subtract('2', 'day')),
+    expires: new Date(moment().add('2', 'day')),
     data,
   }
 }
