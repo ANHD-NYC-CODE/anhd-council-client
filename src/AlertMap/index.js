@@ -92,26 +92,16 @@ class AlertMap extends React.Component {
         handleChangeGeographyType={this.handleChangeGeographyType}
         handleChangeGeographyId={this.handleChangeGeographyId}
         cancelChangeGeography={this.cancelChangeGeography}
-        changingGeography={this.props.appState.changingGeography}
-        changingGeographyType={this.props.appState.changingGeographyType}
-        changingGeographyId={this.props.appState.changingGeographyId}
-        currentGeographyType={this.props.appState.currentGeographyType}
-        currentGeographyId={this.props.appState.currentGeographyId}
       />
     ) : (
       <AlertMapRequestsWrapper
+        appState={this.props.appState}
         dispatch={this.props.dispatch}
-        currentGeographyType={this.props.appState.currentGeographyType}
-        currentGeographyId={this.props.appState.currentGeographyId}
-        mapFilterDate={this.props.appState.mapFilterDate}
         requests={getManyRequestTypes(this.props.requests, ['MAP_FILTER', 'ADVANCED_SEARCH', 'GEOGRAPHY_HOUSING_TYPE'])}
         handleChangeGeography={this.submitGeography}
         handleChangeGeographyType={this.handleChangeGeographyType}
         handleChangeGeographyId={this.handleChangeGeographyId}
         cancelChangeGeography={this.cancelChangeGeography}
-        changingGeography={this.props.appState.changingGeography}
-        changingGeographyType={this.props.appState.changingGeographyType}
-        changingGeographyId={this.props.appState.changingGeographyId}
       />
     )
   }

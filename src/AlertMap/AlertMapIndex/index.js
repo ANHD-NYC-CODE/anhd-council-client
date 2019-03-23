@@ -10,16 +10,20 @@ const AlertMapIndex = props => {
     <div className="alert-map-index">
       <Row>
         <GeographySelect
-          currentGeographyType={props.currentGeographyType}
-          currentGeographyId={props.currentGeographyId}
+          currentGeographyType={props.appState.currentGeographyType}
+          currentGeographyId={props.appState.currentGeographyId}
           dispatch={props.dispatch}
-          changing={props.changingGeography}
-          changingGeographyType={props.changingGeographyType}
-          changingGeographyId={props.changingGeographyId}
+          changing={props.appState.changingGeography}
+          changingGeographyType={props.appState.changingGeographyType}
+          changingGeographyId={props.appState.changingGeographyId}
           cancelChangeGeography={props.cancelChangeGeography}
           handleChangeGeographyType={props.handleChangeGeographyType}
           handleChangeGeography={props.handleChangeGeography}
-          showSubmit={props.changingGeography && props.changingGeographyType && props.changingGeographyId > 0}
+          showSubmit={
+            props.appState.changingGeography &&
+            props.appState.changingGeographyType &&
+            props.appState.changingGeographyId > 0
+          }
         />
       </Row>
       <Row>
@@ -33,12 +37,12 @@ const AlertMapIndex = props => {
             {config => {
               return (
                 <LeafletMap
-                  changingGeographyId={props.changingGeographyId}
-                  changingGeographyType={props.changingGeographyType}
+                  changingGeographyId={props.appState.changingGeographyId}
+                  changingGeographyType={props.appState.changingGeographyType}
                   councilDistricts={config.councilDistricts}
                   communityDistricts={config.communityDistricts}
-                  currentGeographyType={props.changingGeographyType} // is changing
-                  currentGeographyId={props.currentGeographyId}
+                  currentGeographyType={props.appState.changingGeographyType} // is changing
+                  currentGeographyId={props.appState.currentGeographyId}
                   handleChangeGeography={props.handleChangeGeography}
                   handleChangeGeographyId={props.handleChangeGeographyId}
                   selectGeographyData={config.selectGeographyData}
