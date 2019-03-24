@@ -1,0 +1,9 @@
+@import 'shared/styles/bootstrap/index.scss';
+
+.alert-map-show {
+  .geography-select-row {
+    background-color: $gray-700;
+    display: flex;
+    align-items: center;
+  }
+}

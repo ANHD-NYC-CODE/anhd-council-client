@@ -3,11 +3,14 @@
 @import './_table.scss';
 @import './_print.scss';
 @import './_modal.scss';
+@import './_form.scss';
 
 body {
   padding: 0 !important;
 }
 
 .leaflet-container {
-  @import './bootstrap/index.scss';
+  a {
+    color: inherit;
+  }
 }

@@ -20,6 +20,9 @@ import { geographySelectionToString } from 'shared/utilities/languageUtils'
 import GeographyProfile from 'AlertMap/GeographyProfile'
 import { alertMapFilterdates } from 'shared/utilities/componentUtils'
 import PrintAlertMap from 'AlertMap/PrintAlertMap'
+
+import './style.scss'
+
 class AlertMapShow extends React.PureComponent {
   constructor(props) {
     super(props)
@@ -62,30 +65,34 @@ class AlertMapShow extends React.PureComponent {
             />
           ) : (
             <div className="alert-map-show">
-              <Row>
-                <GeographySelect
-                  currentGeographyType={this.props.appState.currentGeographyType}
-                  currentGeographyId={this.props.appState.currentGeographyId}
-                  dispatch={this.props.dispatch}
-                  changing={this.props.appState.changingGeography}
-                  changingGeographyType={this.props.appState.changingGeographyType}
-                  changingGeographyId={this.props.appState.changingGeographyId}
-                  cancelChangeGeography={this.props.cancelChangeGeography}
-                  handleChangeGeographyType={this.props.handleChangeGeographyType}
-                  handleChangeGeography={this.props.handleChangeGeography}
-                  showSubmit={
-                    this.props.appState.changingGeography &&
-                    this.props.appState.changingGeographyType &&
-                    this.props.appState.changingGeographyId > 0
-                  }
-                />
-
-                <PrintButton
-                  title={`${geographySelectionToString({
-                    type: this.props.appState.currentGeographyType,
-                    id: this.props.appState.currentGeographyId,
-                  })} summary`}
-                />
+              <Row className="geography-select-row">
+                <Col xs={12} md={6}>
+                  <GeographySelect
+                    selectClass=""
+                    currentGeographyType={this.props.appState.currentGeographyType}
+                    currentGeographyId={this.props.appState.currentGeographyId}
+                    dispatch={this.props.dispatch}
+                    changing={this.props.appState.changingGeography}
+                    changingGeographyType={this.props.appState.changingGeographyType}
+                    changingGeographyId={this.props.appState.changingGeographyId}
+                    cancelChangeGeography={this.props.cancelChangeGeography}
+                    handleChangeGeographyType={this.props.handleChangeGeographyType}
+                    handleChangeGeography={this.props.handleChangeGeography}
+                    showSubmit={
+                      this.props.appState.changingGeography &&
+                      this.props.appState.changingGeographyType &&
+                      this.props.appState.changingGeographyId > 0
+                    }
+                  />
+                </Col>
+                <Col xs={12} md={{ span: 1, offset: 5 }}>
+                  <PrintButton
+                    title={`${geographySelectionToString({
+                      type: this.props.appState.currentGeographyType,
+                      id: this.props.appState.currentGeographyId,
+                    })} summary`}
+                  />
+                </Col>
               </Row>
               <Row>
                 <Col xs={12} sm={6} md={4}>

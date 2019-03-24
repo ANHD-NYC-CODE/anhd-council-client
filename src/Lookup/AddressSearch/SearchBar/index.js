@@ -49,7 +49,7 @@ export default class SearchBar extends React.Component {
     return (
       <Form.Group className="search-bar" onSubmit={this.onFormSubmit}>
         <Form.Control
-          size="sm"
+          className="xl-form-control"
           name="address-search"
           onChange={this.onInputChange}
           placeholder={this.props.placeholder || 'Type an address to search'}
