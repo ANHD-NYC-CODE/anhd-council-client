@@ -4,17 +4,18 @@ import PropTypes from 'prop-types'
 import { Row, Col } from 'react-bootstrap'
 import AddressSearch from 'Lookup/AddressSearch'
 import LeafletMap from 'LeafletMap'
+import IntroductionBlock from 'shared/components/IntroductionBlock'
 const LookupIndex = props => {
   return (
     <Row>
-      <Col xs={12} lg={4}>
+      <Col className="touch-left" xs={12} md={6} lg={5}>
+        <IntroductionBlock />
+      </Col>
+      <Col xs={12} md={6} lg={7}>
         <Row>
           <Col>
             <AddressSearch />
           </Col>
-        </Row>
-        <Row>
-          <Col />
         </Row>
         <Row>
           <Col>
@@ -23,19 +24,6 @@ const LookupIndex = props => {
         </Row>
         <Row>
           <Col />
-        </Row>
-      </Col>
-      <Col xs={12} lg={8}>
-        <Row>
-          <Col xs={12} lg={3}>
-            <Row />
-          </Col>
-          <Col xs={12} lg={9}>
-            <Row>
-              <Col />
-            </Row>
-            <Row />
-          </Col>
         </Row>
       </Col>
     </Row>

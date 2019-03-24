@@ -4,52 +4,51 @@ import { Col, Row } from 'react-bootstrap'
 import GeographySelect from 'shared/components/GeographySelect'
 import LeafletMap from 'LeafletMap'
 import ConfigContext from 'Config/ConfigContext'
-
+import IntroductionBlock from 'shared/components/IntroductionBlock'
 const AlertMapIndex = props => {
   return (
     <div className="alert-map-index">
       <Row>
-        <GeographySelect
-          currentGeographyType={props.appState.currentGeographyType}
-          currentGeographyId={props.appState.currentGeographyId}
-          dispatch={props.dispatch}
-          changing={props.appState.changingGeography}
-          changingGeographyType={props.appState.changingGeographyType}
-          changingGeographyId={props.appState.changingGeographyId}
-          cancelChangeGeography={props.cancelChangeGeography}
-          handleChangeGeographyType={props.handleChangeGeographyType}
-          handleChangeGeography={props.handleChangeGeography}
-          showSubmit={
-            props.appState.changingGeography &&
-            props.appState.changingGeographyType &&
-            props.appState.changingGeographyId > 0
-          }
-        />
-      </Row>
-      <Row>
-        <Col xs={12} sm={6} md={4} />
-        <Col xs={12} sm={6} md={8} />
-      </Row>
-      <Row>
-        <Col xs={12} lg={3} />
-        <Col xs={12} lg={6}>
-          <ConfigContext.Consumer>
-            {config => {
-              return (
-                <LeafletMap
-                  appState={props.appState}
-                  currentGeographyType={props.appState.changingGeographyType}
-                  councilDistricts={config.councilDistricts}
-                  communityDistricts={config.communityDistricts}
-                  handleChangeGeography={props.handleChangeGeography}
-                  handleChangeGeographyId={props.handleChangeGeographyId}
-                  selectGeographyData={config.selectGeographyData}
-                />
-              )
-            }}
-          </ConfigContext.Consumer>
+        <Col className="touch-left" xs={12} md={6} lg={5}>
+          <IntroductionBlock />
         </Col>
-        <Col sm={12} lg={3} />
+        <Col xs={12} md={6} lg={7}>
+          <Row>
+            <GeographySelect
+              currentGeographyType={props.appState.currentGeographyType}
+              currentGeographyId={props.appState.currentGeographyId}
+              dispatch={props.dispatch}
+              changing={props.appState.changingGeography}
+              changingGeographyType={props.appState.changingGeographyType}
+              changingGeographyId={props.appState.changingGeographyId}
+              cancelChangeGeography={props.cancelChangeGeography}
+              handleChangeGeographyType={props.handleChangeGeographyType}
+              handleChangeGeography={props.handleChangeGeography}
+              showSubmit={
+                props.appState.changingGeography &&
+                props.appState.changingGeographyType &&
+                props.appState.changingGeographyId > 0
+              }
+            />
+          </Row>
+          <Row>
+            <ConfigContext.Consumer>
+              {config => {
+                return (
+                  <LeafletMap
+                    appState={props.appState}
+                    currentGeographyType={props.appState.changingGeographyType}
+                    councilDistricts={config.councilDistricts}
+                    communityDistricts={config.communityDistricts}
+                    handleChangeGeography={props.handleChangeGeography}
+                    handleChangeGeographyId={props.handleChangeGeographyId}
+                    selectGeographyData={config.selectGeographyData}
+                  />
+                )
+              }}
+            </ConfigContext.Consumer>
+          </Row>
+        </Col>
       </Row>
     </div>
   )
