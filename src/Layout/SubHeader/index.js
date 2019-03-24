@@ -72,41 +72,44 @@ class SubHeader extends React.Component {
             </Row>
             <Row className="sub-header__wrapper--bottom">
               <Col xs={12}>
-                <Row className="">
-                  <Nav className="flex-column flex-sm-row" variant="tabs">
-                    <Nav.Item>
-                      <Link
-                        to={
-                          this.props.currentProperty
-                            ? addressResultToPath({
-                                bbl: this.props.currentProperty,
-                                bin: this.props.currentBuilding,
-                              })
-                            : '/lookup'
-                        }
-                      >
-                        Building Lookup
-                      </Link>
-                    </Nav.Item>
-                    <Nav.Item>
-                      <Link
-                        to={`${
-                          this.props.currentGeographyType && this.props.currentGeographyId
-                            ? '/' +
-                              getGeographyPath(this.props.currentGeographyType) +
-                              '/' +
-                              this.props.currentGeographyId
-                            : '/map'
-                        }`}
-                      >
-                        Alert Map
-                      </Link>
-                    </Nav.Item>
-                    <Nav.Item>
-                      <Link to="/search">Advanced Search</Link>
-                    </Nav.Item>
-                  </Nav>
-                </Row>
+                <Nav
+                  className="sub-header__nav-row flex-column flex-sm-row"
+                  variant="pills"
+                  activeKey={this.state.key}
+                  onSelect={key => this.setState({ key })}
+                >
+                  <Nav.Item className="sub-header__nav-tab" eventKey="lookup">
+                    <Link
+                      to={
+                        this.props.currentProperty
+                          ? addressResultToPath({
+                              bbl: this.props.currentProperty,
+                              bin: this.props.currentBuilding,
+                            })
+                          : '/lookup'
+                      }
+                    >
+                      Building Lookup
+                    </Link>
+                  </Nav.Item>
+                  <Nav.Item className="sub-header__nav-tab" eventKey="map">
+                    <Link
+                      to={`${
+                        this.props.currentGeographyType && this.props.currentGeographyId
+                          ? '/' +
+                            getGeographyPath(this.props.currentGeographyType) +
+                            '/' +
+                            this.props.currentGeographyId
+                          : '/map'
+                      }`}
+                    >
+                      Alert Map
+                    </Link>
+                  </Nav.Item>
+                  <Nav.Item className="sub-header__nav-tab" eventKey="search">
+                    <Link to="/search">Advanced Search</Link>
+                  </Nav.Item>
+                </Nav>
               </Col>
             </Row>
           </Col>

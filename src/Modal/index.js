@@ -20,11 +20,11 @@ class Modal extends React.Component {
         onHide: this.hideModal,
         title: 'Modal Title',
       },
-      show: true,
+      show: false,
     }
   }
 
-  setModal({ modalComponent, modalProps }) {
+  setModal({ modalComponent = BaseModal, modalProps }) {
     this.setState({
       modalComponent,
       modalProps,

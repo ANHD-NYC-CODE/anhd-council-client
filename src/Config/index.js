@@ -10,6 +10,7 @@ import ConfigContext from 'Config/ConfigContext'
 import { getDatasets } from 'Store/Dataset/actions'
 import { getCouncils } from 'Store/Council/actions'
 import { getCommunities } from 'Store/Community/actions'
+import { infoModals } from 'shared/models/modals'
 import Loading from 'shared/components/Loading'
 import PageError from 'shared/components/PageError'
 
@@ -81,6 +82,7 @@ class Config extends React.Component {
           communityDistricts: this.props.communityDistricts,
           councilDistricts: this.props.councilDistricts,
           selectGeographyData: this.selectGeographyData,
+          infoModals: infoModals,
         }}
       >
         {this.props.loading ||

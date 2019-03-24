@@ -18,7 +18,7 @@ const BaseModal = props => {
       <Modal.Header closeButton>
         <Modal.Title id={props.labelId}>{props.title}</Modal.Title>
       </Modal.Header>
-      <Modal.Body>{props.children}</Modal.Body>
+      <Modal.Body>{props.body || props.children}</Modal.Body>
       {props.modalFooter}
     </Modal>
   )
@@ -39,6 +39,7 @@ BaseModal.propTypes = {
 BaseModal.defaultProps = {
   className: 'modal',
   title: 'Modal Title',
+  centered: true,
 }
 
 export default BaseModal
