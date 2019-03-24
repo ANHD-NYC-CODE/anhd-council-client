@@ -8,7 +8,7 @@ import ConfigContext from 'Config/ConfigContext'
 import FormError from 'shared/components/FormError'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimesCircle } from '@fortawesome/free-regular-svg-icons'
-
+import classnames from 'classnames'
 import './style.scss'
 
 class GeographySelect extends React.Component {
@@ -38,7 +38,9 @@ class GeographySelect extends React.Component {
               <Col xs={12} md={this.props.changingGeographyType || this.props.currentGeographyType ? 6 : 12}>
                 <Form.Control
                   required
-                  className={this.props.selectClass}
+                  className={classnames(this.props.selectClass, {
+                    valued: this.props.currentGeographyType || this.props.changingGeographyType,
+                  })}
                   size="lg"
                   name="geographyType"
                   as="select"
@@ -76,7 +78,9 @@ class GeographySelect extends React.Component {
                     name="geographyId"
                     onChange={this.passChangeGeography}
                     placeholder="#"
-                    className={this.props.selectClass}
+                    className={classnames(this.props.selectClass, {
+                      valued: this.props.currentGeographyId || this.props.changingGeographyId,
+                    })}
                     size="lg"
                     value={this.props.changingGeographyId || this.props.currentGeographyId || -1}
                     onBlur={this.props.handleBlur}
