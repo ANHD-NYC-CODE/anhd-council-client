@@ -96,6 +96,7 @@ class AlertMap extends React.PureComponent {
       />
     ) : (
       <AlertMapRequestsWrapper
+        advancedSearch={this.props.advancedSearch}
         appState={this.props.appState}
         dispatch={this.props.dispatch}
         cancelChangeGeography={this.cancelChangeGeography}
@@ -128,6 +129,7 @@ const makeMapStateToProps = () => {
     const match = matchSelector(state)
     return {
       appState: state.appState,
+      advancedSearch: state.advancedSearch,
       geographyId: match ? match.params.id : undefined,
       geographyType: path ? path.toUpperCase() : undefined,
       requests: selectRequests(state),

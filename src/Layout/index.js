@@ -67,8 +67,4 @@ class Layout extends React.Component {
 
 Layout.propTypes = {}
 
-const mapStateToProps = state => {
-  return { print: state.appState.printView }
-}
-
-export default connect(mapStateToProps)(Layout)
+export default Layout

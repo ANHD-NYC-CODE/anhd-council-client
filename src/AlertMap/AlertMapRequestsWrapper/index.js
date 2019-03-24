@@ -76,6 +76,7 @@ class AlertMapRequestsWrapper extends React.PureComponent {
   render() {
     return this.props.requests.length ? (
       <AlertMapShow
+        advancedSearch={this.props.advancedSearch}
         geographyRequests={getManyRequestTypes(this.props.requests, ['MAP_FILTER', 'ADVANCED_SEARCH'])}
         housingTypeRequests={getRequestType(this.props.requests, 'GEOGRAPHY_HOUSING_TYPE')}
         toggleDateRange={this.toggleDateRange}

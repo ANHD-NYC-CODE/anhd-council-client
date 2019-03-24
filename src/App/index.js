@@ -21,8 +21,8 @@ export class App extends React.Component {
         <Modal>
           <Auth>
             <Config>
-              <Router />
               <ToastContainer />
+              <Router />
             </Config>
           </Auth>
         </Modal>
