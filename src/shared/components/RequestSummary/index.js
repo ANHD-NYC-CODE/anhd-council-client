@@ -3,8 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faQuestion } from '@fortawesome/free-solid-svg-icons'
+import InfoModalButton from 'shared/components/InfoModalButton'
 import { Col, Row } from 'react-bootstrap'
 class RequestSummary extends React.Component {
   constructor(props) {
@@ -32,7 +31,7 @@ class RequestSummary extends React.Component {
         </Col>
         {!this.props.print && (
           <Col xs={2}>
-            <FontAwesomeIcon icon={faQuestion} onClick={() => console.log(this.props.request.requestConstant)} />
+            <InfoModalButton modalConstant={this.props.request.requestConstant} />
           </Col>
         )}
       </Row>
