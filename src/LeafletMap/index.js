@@ -72,7 +72,7 @@ export default class LeafletMap extends React.PureComponent {
       const bounds = this.getGeographyBounds(changingOrCurrentType, changingOrCurrentId)
 
       if (bounds) {
-        this.mapRef.current.leafletElement.fitBounds(bounds)
+        this.mapRef.current.leafletElement.fitBounds(bounds, { padding: [-100, 0] })
       }
     }
   }

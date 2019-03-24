@@ -72,8 +72,8 @@ $colors: map-merge(
 $primary: $nyc-blue !default;
 $secondary: $nyc-orange !default;
 $success: $green !default;
-$info: $cyan !default;
-$warning: $yellow !default;
+$info: $primary !default;
+$warning: lighten($secondary, 20%) !default;
 $danger: $red !default;
 $light: $gray-100 !default;
 $dark: $black !default;
