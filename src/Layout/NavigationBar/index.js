@@ -8,8 +8,8 @@ const NavigationBar = props => {
   return (
     <div className="navigation-bar">
       <Navbar bg="dark" variant="dark" expand="lg">
-        <Nav.Link as="span">
-          <Link className="text-light" to="/">
+        <Nav.Link as="li">
+          <Link className="text-muted" to="/">
             Home
           </Link>
         </Nav.Link>
@@ -17,7 +17,7 @@ const NavigationBar = props => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav.Link as="li">
             <a
-              className="text-light"
+              className="text-muted"
               target="_blank"
               rel="noopener noreferrer"
               href="https://map.displacementalert.org/"
@@ -27,7 +27,7 @@ const NavigationBar = props => {
           </Nav.Link>
           <Nav.Link as="li">
             <a
-              className="text-light"
+              className="text-muted"
               target="_blank"
               rel="noopener noreferrer"
               href="https://reports.displacementalert.org/"
@@ -37,7 +37,7 @@ const NavigationBar = props => {
           </Nav.Link>
           <Nav.Link as="li">
             <a
-              className="text-light"
+              className="text-muted"
               target="_blank"
               rel="noopener noreferrer"
               href="https://www.displacementalert.org/watchlist"
@@ -46,13 +46,13 @@ const NavigationBar = props => {
             </a>
           </Nav.Link>
           <Nav.Link as="li">
-            <Link className="text-light" to="/">
+            <Link className="text-portal-orange" to="/">
               Portal
             </Link>
           </Nav.Link>
           <Nav.Link as="li">
             <a
-              className="text-light"
+              className="text-muted"
               target="_blank"
               rel="noopener noreferrer"
               href="https://www.displacementalert.org/about"
@@ -62,7 +62,7 @@ const NavigationBar = props => {
           </Nav.Link>
           <Nav.Link as="li">
             <a
-              className="text-light"
+              className="text-muted"
               target="_blank"
               rel="noopener noreferrer"
               href="https://www.displacementalert.org/contact-us"
