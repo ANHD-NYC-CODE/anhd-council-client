@@ -22,7 +22,7 @@ class SubHeader extends React.Component {
     return (
       <Container fluid>
         <Row className="sub-header touch-left">
-          <Col xs={12} md={4} lg={3}>
+          <Col className="d-flex justify-content-center" xs={12} md={4} lg={3}>
             <Navbar.Brand as="li">
               <Link to="/">
                 <img
@@ -80,52 +80,47 @@ class SubHeader extends React.Component {
                   activeKey={this.state.key}
                   onSelect={key => this.setState({ key })}
                 >
-                  <Nav.Item
+                  <Link
                     className={classnames('sub-header__nav-tab', {
                       active: this.props.pathname.match(/(lookup|property)/),
                     })}
-                    eventKey="lookup"
+                    to={
+                      this.props.currentProperty
+                        ? addressResultToPath({
+                            bbl: this.props.currentProperty,
+                            bin: this.props.currentBuilding,
+                          })
+                        : '/lookup'
+                    }
                   >
-                    <Link
-                      to={
-                        this.props.currentProperty
-                          ? addressResultToPath({
-                              bbl: this.props.currentProperty,
-                              bin: this.props.currentBuilding,
-                            })
-                          : '/lookup'
-                      }
-                    >
-                      Building Lookup
-                    </Link>
-                  </Nav.Item>
-                  <Nav.Item
+                    <div className="sub-header__nav-tab--inner">
+                      <Nav.Item eventKey="lookup">Building Lookup</Nav.Item>
+                    </div>
+                  </Link>
+                  <Link
                     className={classnames('sub-header__nav-tab', {
                       active: this.props.pathname.match(/(map|council|community)/),
                     })}
-                    eventKey="map"
+                    to={`${
+                      this.props.currentGeographyType && this.props.currentGeographyId
+                        ? '/' + getGeographyPath(this.props.currentGeographyType) + '/' + this.props.currentGeographyId
+                        : '/map'
+                    }`}
                   >
-                    <Link
-                      to={`${
-                        this.props.currentGeographyType && this.props.currentGeographyId
-                          ? '/' +
-                            getGeographyPath(this.props.currentGeographyType) +
-                            '/' +
-                            this.props.currentGeographyId
-                          : '/map'
-                      }`}
-                    >
-                      Alert Map
-                    </Link>
-                  </Nav.Item>
-                  <Nav.Item
+                    <div className="sub-header__nav-tab--inner">
+                      <Nav.Item eventKey="map">Alert Map</Nav.Item>
+                    </div>
+                  </Link>
+                  <Link
+                    to="/search"
                     className={classnames('sub-header__nav-tab', {
                       active: this.props.pathname.match(/(search)/),
                     })}
-                    eventKey="search"
                   >
-                    <Link to="/search">Advanced Search</Link>
-                  </Nav.Item>
+                    <div className="sub-header__nav-tab--inner">
+                      <Nav.Item eventKey="search">Advanced Search</Nav.Item>
+                    </div>
+                  </Link>
                 </Nav>
               </Col>
             </Row>

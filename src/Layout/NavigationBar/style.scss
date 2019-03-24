@@ -1,0 +1,35 @@
+@import 'shared/styles/bootstrap/index.scss';
+
+.navigation-bar {
+  height: auto;
+  @include media-breakpoint-up(lg) {
+    height: 40px;
+  }
+  button {
+    height: 60px;
+  }
+
+  .navbar-collapse {
+    padding-bottom: 20px;
+    @include media-breakpoint-up(lg) {
+      padding-bottom: 0px;
+    }
+  }
+
+  .navbar,
+  span,
+  li {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+.text-portal-orange {
+  color: #fdaf7e;
+}
+
+.text-portal-orange:hover {
+  color: lighten(#fdaf7e, 10%);
+}
