@@ -16,6 +16,17 @@ class RequestSummary extends React.Component {
     this.props.onClick(this.props.request)
   }
 
+  getInfoKey() {
+    switch (this.props.request.type) {
+      case 'GEOGRAPHY_HOUSING_TYPE':
+        return this.props.request.requestConstant
+      case 'LOOKUP_FILTER':
+        return this.props.request.apiMaps[1].constant
+      default:
+        return this.props.request.paramMaps[0].resourceConstant
+    }
+  }
+
   render() {
     return (
       <Row className="request-summary">
@@ -31,7 +42,7 @@ class RequestSummary extends React.Component {
         </Col>
         {!this.props.print && (
           <Col xs={2}>
-            <InfoModalButton modalConstant={this.props.request.requestConstant} />
+            <InfoModalButton modalConstant={this.getInfoKey()} />
           </Col>
         )}
       </Row>
