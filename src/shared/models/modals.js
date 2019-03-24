@@ -19,4 +19,8 @@ export const infoModals = {
     title: 'Market Rate',
     body: 'Lorem ipsum...',
   },
+  HPD_VIOLATION: {
+    title: 'HPD Violations',
+    body: 'Lorem ipsum...',
+  },
 }
