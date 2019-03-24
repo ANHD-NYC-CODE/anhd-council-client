@@ -61,18 +61,18 @@ class Main extends React.Component {
 
   render() {
     return (
-      <div className="main">
+      <div className="main mb-4">
         <Row>
-          <Col className="touch-left padding-xs-sm-0" xs={12} sm={12} md={6} lg={5}>
+          <Col className="touch-left padding-xs-sm-0" xs={12} sm={12} lg={5}>
             <IntroductionBlock />
           </Col>
-          <Col className="px-md-4 py-3 py-md-6" xs={12} md={6} lg={7}>
+          <Col className="px-md-4 py-3 py-lg-6" xs={12} lg={7}>
             <p className="text-muted font-weight-bold">Select a district or enter a building address to begin.</p>
-            <Form autoComplete="off">
-              <Form.Group>
+            <div className="mt-5">
+              <div cl>
                 <AddressSearch inputClass="xl-form-control" placeholder="Building Lookup Tool" />
-              </Form.Group>
-              <Form.Group>
+              </div>
+              <div className="mt-5">
                 <GeographySelect
                   selectClass="xl-form-control"
                   cancelChangeGeography={this.cancelChangeGeography}
@@ -92,8 +92,8 @@ class Main extends React.Component {
                     this.props.appState.currentGeographyId > 0
                   }
                 />
-              </Form.Group>
-            </Form>
+              </div>
+            </div>
           </Col>
         </Row>
       </div>
