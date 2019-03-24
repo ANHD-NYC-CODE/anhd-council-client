@@ -2,4 +2,9 @@
 
 .search-bar {
   z-index: 501;
+
+  input.form-control.valued {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
 }

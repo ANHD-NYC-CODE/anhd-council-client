@@ -3,63 +3,54 @@ import PropTypes from 'prop-types'
 import MapMarkerIcon from 'shared/styles/icons/MapMarkerIcon'
 import BuildingIcon from 'shared/styles/icons/BuildingIcon'
 import { addressResultToPath } from 'shared/utilities/routeUtils'
-import { LinkContainer } from 'react-router-bootstrap'
 
 import './style.scss'
 
 const SearchResultRow = props => {
   if (props.result.bin && !props.result.alternateaddress) {
     return (
-      <tr className="search-result-row">
-        <td>
+      <div
+        className="search-result-row"
+        onClick={e => props.onClick(e, props.result)}
+        to={addressResultToPath({ bbl: props.result.bbl, bin: props.result.bin })}
+      >
+        <span>
           <BuildingIcon />
-        </td>
-        <LinkContainer
-          onClick={e => props.onClick(e, props.result)}
-          to={addressResultToPath({ bbl: props.result.bbl, bin: props.result.bin })}
-        >
-          <td>{`${props.result.buildingnumber} ${props.result.buildingstreet}, ${props.result.borough}`}</td>
-        </LinkContainer>
-      </tr>
+        </span>
+        <span>{`${props.result.buildingnumber} ${props.result.buildingstreet.trim()}, ${props.result.borough}`}</span>
+      </div>
     )
   } else if (props.result.bin && props.result.alternateaddress) {
     return (
-      <tr className="search-result-row">
-        <td>
-          <MapMarkerIcon />
+      <div
+        className="search-result-row"
+        onClick={e => props.onClick(e, props.result)}
+        to={addressResultToPath({ bbl: props.result.bbl, bin: props.result.bin })}
+      >
+        <span>
           <BuildingIcon />
-        </td>
-        <LinkContainer
-          onClick={e => props.onClick(e, props.result)}
-          to={addressResultToPath({ bbl: props.result.bbl, bin: props.result.bin })}
-        >
-          <td>
-            {`${props.result.propertyaddress}, ${props.result.borough}`}
-            <br />
-            {`Alt Address: ${props.result.buildingnumber} ${props.result.buildingstreet}, ${props.result.borough}`}
-          </td>
-        </LinkContainer>
-      </tr>
+        </span>
+        <span>{`${props.result.propertyaddress.trim()}, ${props.result.borough}`}</span>
+      </div>
     )
   } else if (props.result.alternateaddress) {
     return (
-      <tr className="search-result-row">
-        <td>
-          <MapMarkerIcon />
-        </td>
-        <LinkContainer
-          onClick={e => props.onClick(e, props.result)}
-          to={addressResultToPath({ bbl: props.result.bbl, bin: props.result.bin })}
-        >
-          <td>{`Property address: ${props.result.propertyaddress} - ${props.result.borough}`}</td>
-        </LinkContainer>
-      </tr>
+      <div
+        className="search-result-row"
+        onClick={e => props.onClick(e, props.result)}
+        to={addressResultToPath({ bbl: props.result.bbl, bin: props.result.bin })}
+      >
+        <span>
+          <BuildingIcon />
+        </span>
+        <span>{`${props.result.propertyaddress.trim()}, ${props.result.borough}`}</span>
+      </div>
     )
   } else {
     return (
-      <tr className="search-result-row">
-        <td>No results.</td>
-      </tr>
+      <div className="search-result-row no-result">
+        <span>No results.</span>
+      </div>
     )
   }
 }
