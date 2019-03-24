@@ -74,8 +74,9 @@ class Main extends React.Component {
               </Form.Group>
               <Form.Group>
                 <GeographySelect
+                  selectClass="xl-form-control"
                   cancelChangeGeography={this.cancelChangeGeography}
-                  changing={this.props.appState.changingGeography}
+                  changingGeographyType={this.props.appState.changingGeographyType}
                   confirmChange={false}
                   currentGeographyType={
                     this.props.appState.changingGeographyType || this.props.appState.currentGeographyType
@@ -84,7 +85,7 @@ class Main extends React.Component {
                   dispatch={this.props.dispatch}
                   handleChangeGeography={this.submitGeography}
                   handleChangeGeographyType={this.handleChangeGeographyType}
-                  placeholder="District Alerts Map"
+                  placeholder="Select a geography"
                   showSubmit={
                     !this.props.appState.changingGeography &&
                     this.props.appState.currentGeographyType &&

@@ -1,0 +1,18 @@
+@import 'shared/styles/bootstrap/index.scss';
+.xl-form-control {
+  background-color: $gray-300;
+  height: calc(3.5rem + 2px);
+  padding: 0.5rem 1rem;
+  font-size: 1.25rem;
+  line-height: 1.5;
+  border-radius: 0.3rem;
+
+  @include media-breakpoint-up(xl) {
+    font-size: 2rem;
+    line-height: 2.25;
+  }
+}
+
+.xl-form-control:focus {
+  background-color: $tab-blue;
+}
