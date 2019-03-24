@@ -20,11 +20,41 @@ class AddressSearch extends React.Component {
     this.dispatchSelectedBuildingResult = this.dispatchSelectedBuildingResult.bind(this)
     this.clearSelectedSearch = this.clearSelectedSearch.bind(this)
     this.setSearchValue = this.setSearchValue.bind(this)
-
+    this.showSearch = this.showSearch.bind(this)
+    this.hideSearch = this.hideSearch.bind(this)
+    this.searchBarRef = React.createRef()
+    this.searchResultsRef = React.createRef()
+    this.addressRef = React.createRef()
     this.state = {
+      show: false,
       selectedResult: null,
       searchValue: '',
     }
+  }
+
+  componentDidMount() {
+    this.addressRef.current.addEventListener('focus', this.showSearch)
+    this.searchBarRef.current.addEventListener('focus', this.showSearch)
+    window.addEventListener('click', this.hideSearch)
+  }
+
+  componentWillUnmount() {
+    this.addressRef.current.removeEventListener('focus', this.showSearch)
+    this.searchBarRef.current.removeEventListener('focus', this.showSearch)
+    window.removeEventListener('click', this.hideSearch)
+  }
+
+  hideSearch(e) {
+    if (e.target.closest('.address-search')) return
+    this.setState({
+      show: false,
+    })
+  }
+
+  showSearch() {
+    this.setState({
+      show: true,
+    })
   }
 
   setSearchValue(value) {
@@ -34,6 +64,7 @@ class AddressSearch extends React.Component {
     }
     this.setState({
       searchValue: value,
+      show: true,
     })
   }
 
@@ -49,6 +80,9 @@ class AddressSearch extends React.Component {
 
   dispatchSelectedBuildingResult(result = null) {
     const selectedResult = result || this.state.selectedResult || this.props.search.results[0]
+    this.setState({
+      show: false,
+    })
     if (!selectedResult) return
     this.setState({ selectedResult: selectedResult })
     this.props.dispatch(clearSearch())
@@ -56,8 +90,9 @@ class AddressSearch extends React.Component {
 
   render() {
     return (
-      <div className="address-search">
+      <div className="address-search mb-2" ref={this.addressRef}>
         <SearchBar
+          searchBarRef={this.searchBarRef}
           inputClass={this.props.inputClass}
           clearSelectedSearch={this.clearSelectedSearch}
           dispatch={this.props.dispatch}
@@ -73,7 +108,9 @@ class AddressSearch extends React.Component {
           dispatch={this.props.dispatch}
           loading={this.props.loading}
           error={this.props.error}
+          searchResultsRef={this.searchResultsRef}
           selectBuildingResult={this.selectBuildingResult}
+          show={this.state.show}
           results={this.props.search.results}
         />
       </div>

@@ -4,6 +4,9 @@ import { setSearchTimeout, queryAddress } from 'Store/Search/actions'
 import { requestWithAuth } from 'shared/utilities/authUtils'
 import { Form } from 'react-bootstrap'
 import { StandardizedInput } from 'shared/classes/StandardizedInput'
+
+import classnames from 'classnames'
+
 import './style.scss'
 
 export default class SearchBar extends React.Component {
@@ -47,17 +50,18 @@ export default class SearchBar extends React.Component {
 
   render() {
     return (
-      <Form.Group className="search-bar" onSubmit={this.onFormSubmit}>
+      <div className="search-bar" onSubmit={this.onFormSubmit}>
         <Form.Control
-          className={`${this.props.inputClass}`}
+          className={classnames(this.props.inputClass, { valued: !!this.props.searchValue })}
           name="address-search"
+          ref={this.props.searchBarRef}
           onChange={this.onInputChange}
           placeholder={this.props.placeholder || 'Type an address to search'}
           tabIndex={0}
           type="text"
           value={this.props.searchValue}
         />
-      </Form.Group>
+      </div>
     )
   }
 }

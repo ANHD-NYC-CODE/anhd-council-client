@@ -5,7 +5,6 @@ import SearchResultRow from 'Lookup/AddressSearch/SearchResultRow'
 import { setLookupAndRequestsAndRedirect } from 'Store/AppState/actions'
 
 import './style.scss'
-import { Table } from 'react-bootstrap'
 
 const SearchResults = props => {
   const handleRowClick = (e, result) => {
@@ -14,22 +13,21 @@ const SearchResults = props => {
   }
 
   return (
-    <div>
+    <div ref={props.searchResultsRef} className="search-results">
       {props.loading && <div className="text-info">loading</div>}
       {props.error && <div className="text-danger">{props.error.message}</div>}
-      <Table className="search-results" size="sm" bordered hover>
-        <tbody>
-          {!!props.results.length &&
-            props.results.map((result, index) => (
-              <SearchResultRow
-                onClick={handleRowClick}
-                selectBuildingResult={props.selectBuildingResult}
-                key={`result-${index}`}
-                result={result}
-              />
-            ))}
-        </tbody>
-      </Table>
+      <div className="search-results__wrapper" size="sm" bordered hover>
+        {props.show &&
+          !!props.results.length &&
+          props.results.map((result, index) => (
+            <SearchResultRow
+              onClick={handleRowClick}
+              selectBuildingResult={props.selectBuildingResult}
+              key={`result-${index}`}
+              result={result}
+            />
+          ))}
+      </div>
     </div>
   )
 }

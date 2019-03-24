@@ -2,12 +2,10 @@
 
 .address-search,
 .address-search .table-hover tbody tr:hover {
-  z-index: 1000;
+  position: relative;
+  z-index: 10000;
 }
 
 .address-search .table-hover tbody tr:hover {
   color: white;
-}
-
-@media screen and (orientation: portrait) {
 }
