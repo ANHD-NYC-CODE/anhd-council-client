@@ -5,7 +5,7 @@ import { Form, Col, ButtonGroup, Button } from 'react-bootstrap'
 
 const HousingTypeParamSet = props => {
   return (
-    <Form.Row className="housingtype-paramset align-items-center">
+    <Form.Row className="housingtype-paramset align-content-center">
       <Form.Group className="housingtype-paramset--group" as={Col} xs={10}>
         {props.paramSet.component({
           key: 'housing-type-param-set',
@@ -15,7 +15,7 @@ const HousingTypeParamSet = props => {
         })}
       </Form.Group>
       <Col xs={2} className="flex-column">
-        <ButtonGroup className="align-center">
+        <ButtonGroup className="align-self-center">
           <Button
             size="sm"
             onClick={() => props.paramSet.deleteAll({ dispatchAction: props.dispatchAction })}

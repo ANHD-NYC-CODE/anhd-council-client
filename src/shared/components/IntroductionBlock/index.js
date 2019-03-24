@@ -6,7 +6,7 @@ import './style.scss'
 const IntroductionBlock = props => {
   return (
     <Jumbotron className="introduction-block text-light">
-      <h4>Welcome to DAP Portal</h4>
+      <h4 className="font-weight-bold mb-5">Welcome to DAP Portal</h4>
       <p>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras id lobortis diam. Praesent neque purus, mattis eu
         interdum eget, maximus a purus. Quisque interdum auctor ligula vel commodo. Aliquam est arcu, gravida at

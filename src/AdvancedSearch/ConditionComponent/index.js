@@ -109,7 +109,7 @@ export class ConditionComponent extends React.Component {
 
     return (
       <Form.Row className="condition">
-        <Col xs={2} className="condition-control flex-column align-center">
+        <Col xs={2} className="condition-control flex-column align-self-center">
           <ButtonGroup vertical>
             {isCondition0() && !this.props.condition.hasCondition() ? (
               <Button className="switch-condition" size="sm" onClick={() => this.switchCondition()}>

@@ -25,13 +25,9 @@
   }
   .sub-header__wrapper--bottom {
     align-items: flex-end;
-    padding-bottom: 10px;
 
     @include media-breakpoint-up(sm) {
-    }
-    @include media-breakpoint-up(sm) {
       height: 60%;
-      padding-bottom: 0px;
     }
 
     .col-12 {
