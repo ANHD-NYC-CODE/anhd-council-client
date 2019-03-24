@@ -1,18 +1,30 @@
-.align-center {
-  align-self: center;
-}
-
-.align-items-center {
-  align-items: center;
-}
-
 .touch-left {
   @include media-breakpoint-up(md) {
-    // Styles
     margin-left: -15px;
   }
 }
 
 .touch-right {
   margin-right: -15px;
+}
+
+.padding-xs-0 {
+  @include media-breakpoint-between(xs, xs) {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+.padding-sm-0 {
+  @include media-breakpoint-between(sm, sm) {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+.padding-xs-sm-0 {
+  @include media-breakpoint-between(xs, sm) {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }

@@ -22,7 +22,7 @@ export class FilterComponent extends React.Component {
   render() {
     return (
       <div>
-        <Form.Row className="filter align-items-center">
+        <Form.Row className="filter align-content-center">
           <Form.Group as={Col} xs={10}>
             {this.props.filter &&
               Object.keys(this.props.filter.paramSets).map((paramsSetKey, paramSetIndex) =>
@@ -38,7 +38,7 @@ export class FilterComponent extends React.Component {
               )}
           </Form.Group>
           <Col xs={2} className="flex-column">
-            <ButtonGroup className="align-center">
+            <ButtonGroup className="align-self-center">
               <Button size="sm" className="remove-filter" onClick={this.removeFilter} variant="danger">
                 -
               </Button>

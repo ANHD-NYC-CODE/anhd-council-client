@@ -63,11 +63,11 @@ class Main extends React.Component {
     return (
       <div className="main">
         <Row>
-          <Col className="touch-left" xs={12} sm={12} md={6} lg={5}>
+          <Col className="touch-left padding-xs-sm-0" xs={12} sm={12} md={6} lg={5}>
             <IntroductionBlock />
           </Col>
-          <Col xs={12} md={6} lg={7}>
-            <h5>Select a district to begin, or search for a building address.</h5>
+          <Col className="px-4 py-6" xs={12} md={6} lg={7}>
+            <p className="text-muted font-weight-bold">Select a district or enter a building address to begin.</p>
             <Form autoComplete="off">
               <Form.Group>
                 <AddressSearch placeholder="Building Lookup Tool" />
