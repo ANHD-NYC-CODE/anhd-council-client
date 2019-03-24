@@ -11,7 +11,7 @@ const LookupIndex = props => {
       <Col className="touch-left padding-xs-sm-0" xs={12} md={6} lg={5}>
         <IntroductionBlock />
       </Col>
-      <Col className="px-4 py-6" xs={12} md={6} lg={7}>
+      <Col className="px-md-4 py-3 py-md-6" xs={12} md={6} lg={7}>
         <p className="text-muted font-weight-bold">Enter a building address to begin.</p>
         <Row>
           <Col>
