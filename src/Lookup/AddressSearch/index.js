@@ -16,7 +16,6 @@ class AddressSearch extends React.Component {
   constructor(props) {
     super(props)
 
-    this.selectBuildingResult = this.selectBuildingResult.bind(this)
     this.dispatchSelectedBuildingResult = this.dispatchSelectedBuildingResult.bind(this)
     this.clearSelectedSearch = this.clearSelectedSearch.bind(this)
     this.setSearchValue = this.setSearchValue.bind(this)
@@ -28,7 +27,7 @@ class AddressSearch extends React.Component {
     this.state = {
       show: false,
       selectedResult: null,
-      searchValue: '',
+      searchValue: undefined,
     }
   }
 
@@ -73,11 +72,6 @@ class AddressSearch extends React.Component {
     this.props.dispatch(clearSearch())
   }
 
-  selectBuildingResult(result) {
-    this.setState({ selectedResult: result })
-    this.dispatchSelectedBuildingResult(result)
-  }
-
   dispatchSelectedBuildingResult(result = null) {
     const selectedResult = result || this.state.selectedResult || this.props.search.results[0]
     this.setState({
@@ -99,9 +93,8 @@ class AddressSearch extends React.Component {
           dispatchSelectedBuildingResult={this.dispatchSelectedBuildingResult}
           placeholder={this.props.placeholder}
           searchTimeout={this.props.search.searchTimeout}
-          selectBuildingResult={this.selectBuildingResult}
           selectedResult={this.state.selectedResult}
-          searchValue={this.state.searchValue}
+          searchValue={this.state.searchValue || this.props.search.searchQuery}
           setSearchValue={this.setSearchValue}
         />
         <SearchResults
@@ -109,7 +102,6 @@ class AddressSearch extends React.Component {
           loading={this.props.loading}
           error={this.props.error}
           searchResultsRef={this.searchResultsRef}
-          selectBuildingResult={this.selectBuildingResult}
           show={this.state.show}
           results={this.props.search.results}
         />

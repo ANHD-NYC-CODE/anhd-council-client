@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import MapMarkerIcon from 'shared/styles/icons/MapMarkerIcon'
 import BuildingIcon from 'shared/styles/icons/BuildingIcon'
 import { addressResultToPath } from 'shared/utilities/routeUtils'
 

@@ -9,7 +9,7 @@ import classnames from 'classnames'
 
 import './style.scss'
 
-export default class SearchBar extends React.Component {
+export default class SearchBar extends React.PureComponent {
   constructor(props) {
     super(props)
 
@@ -56,6 +56,7 @@ export default class SearchBar extends React.Component {
           name="address-search"
           ref={this.props.searchBarRef}
           onChange={this.onInputChange}
+          size="lg"
           placeholder={this.props.placeholder || 'Type an address to search'}
           tabIndex={0}
           type="text"
