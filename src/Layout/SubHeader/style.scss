@@ -96,9 +96,11 @@
     }
   }
 
-  .sub-header__nav-tab:hover {
-    background-color: lighten($tab-blue, 20%);
-    color: lighten($secondary, 20%);
+  @media (hover: hover) {
+    .sub-header__nav-tab:hover {
+      background-color: lighten($tab-blue, 20%);
+      color: lighten($secondary, 20%);
+    }
   }
   .sub-header__nav-tab.active {
     background-color: $tab-blue;
