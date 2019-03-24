@@ -7,7 +7,7 @@ import { setGeographyAndRequestsAndRedirect } from 'Store/AppState/actions'
 import { setAppState } from 'Store/AppState/actions'
 import { StandardizedInput } from 'shared/classes/StandardizedInput'
 import IntroductionBlock from 'shared/components/IntroductionBlock'
-import { Form, Row, Col, Jumbotron } from 'react-bootstrap'
+import { Form, Row, Col } from 'react-bootstrap'
 class Main extends React.Component {
   constructor(props) {
     super(props)
@@ -70,7 +70,7 @@ class Main extends React.Component {
             <p className="text-muted font-weight-bold">Select a district or enter a building address to begin.</p>
             <Form autoComplete="off">
               <Form.Group>
-                <AddressSearch placeholder="Building Lookup Tool" />
+                <AddressSearch inputClass="xl-form-control" placeholder="Building Lookup Tool" />
               </Form.Group>
               <Form.Group>
                 <GeographySelect

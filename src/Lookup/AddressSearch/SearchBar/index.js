@@ -49,7 +49,7 @@ export default class SearchBar extends React.Component {
     return (
       <Form.Group className="search-bar" onSubmit={this.onFormSubmit}>
         <Form.Control
-          className="xl-form-control"
+          className={`${this.props.inputClass}`}
           name="address-search"
           onChange={this.onInputChange}
           placeholder={this.props.placeholder || 'Type an address to search'}
@@ -62,10 +62,15 @@ export default class SearchBar extends React.Component {
   }
 }
 
+SearchBar.defaultProps = {
+  inputClass: '',
+}
+
 SearchBar.propTypes = {
   clearSelectedSearch: PropTypes.func,
   dispatch: PropTypes.func,
   placeholder: PropTypes.string,
+  inputClass: PropTypes.string,
   searchTimeout: PropTypes.number,
   selectBuildingResult: PropTypes.func,
   selectedResult: PropTypes.object,

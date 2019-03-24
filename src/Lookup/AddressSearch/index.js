@@ -58,6 +58,7 @@ class AddressSearch extends React.Component {
     return (
       <div className="address-search">
         <SearchBar
+          inputClass={this.props.inputClass}
           clearSelectedSearch={this.clearSelectedSearch}
           dispatch={this.props.dispatch}
           dispatchSelectedBuildingResult={this.dispatchSelectedBuildingResult}
@@ -80,7 +81,12 @@ class AddressSearch extends React.Component {
   }
 }
 
+AddressSearch.defaultProps = {
+  inputClass: '',
+}
+
 AddressSearch.propTypes = {
+  inputClass: PropTypes.string,
   setViewCoordinates: PropTypes.func,
   search: PropTypes.object,
   error: PropTypes.object,

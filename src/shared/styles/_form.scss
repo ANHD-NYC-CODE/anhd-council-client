@@ -1,4 +1,20 @@
 @import 'shared/styles/bootstrap/index.scss';
+
+select.form-control {
+  color: $gray-600;
+}
+select.form-control.valued {
+  color: $black;
+}
+
+input.form-control:focus,
+input.form-control {
+  color: $black;
+}
+input.form-control::placeholder {
+  color: $gray-600;
+}
+
 .xl-form-control {
   background-color: $gray-300;
   height: calc(3.5rem + 2px);
