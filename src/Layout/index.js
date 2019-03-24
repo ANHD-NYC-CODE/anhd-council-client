@@ -44,12 +44,12 @@ class Layout extends React.Component {
           <div className="layout">
             <div className="footer-push">
               <UserContext.Consumer>
-                {user => (
+                {auth => (
                   <div>
                     <NavigationBar />
                     <ModalContext.Consumer>
                       {modal => {
-                        return <SubHeader modal={modal} user={user} />
+                        return <SubHeader modal={modal} auth={auth} />
                       }}
                     </ModalContext.Consumer>
                   </div>

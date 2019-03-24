@@ -1,6 +1,43 @@
+@import 'shared/styles/bootstrap/index.scss';
+
 .sub-header {
+  .navbar-brand {
+    margin-right: 0;
+  }
   .sub-header__logo {
     height: auto;
-    width: 320px;
+    width: 100%;
+  }
+
+  .sub-header__wrapper--top {
+    height: 30%;
+    justify-content: flex-end;
+  }
+  .sub-header__wrapper--bottom {
+    height: 70%;
+    align-items: flex-end;
+
+    .row {
+      justify-content: flex-end;
+    }
+    .nav-item {
+      @include media-breakpoint-up(md) {
+        align-items: center;
+        border-top-right-radius: 30px;
+        background-color: $gray-400;
+
+        display: flex;
+        margin-right: 4px;
+        padding: 8px;
+        height: 80px;
+        justify-content: center;
+        min-width: 240px;
+      }
+
+      a {
+        color: $gray-600;
+        font-weight: bold;
+      }
+    }
   }
 }

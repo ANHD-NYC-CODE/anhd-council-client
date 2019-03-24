@@ -10,7 +10,6 @@ import { requestWithAuth } from 'shared/utilities/authUtils'
 import { updateAuthLocalStorage } from 'shared/utilities/storageUtils'
 
 import { toast } from 'react-toastify'
-import { push } from 'connected-react-router'
 
 export const HANDLE_SYNC_STORAGE = 'HANDLE_SYNC_STORAGE'
 export const HANDLE_USER_LOGOUT = 'HANDLE_USER_LOGOUT'
@@ -92,6 +91,5 @@ export const loginUser = data => dispatch => {
 export const logoutUser = () => dispatch => {
   removeUserStorageData()
   dispatch(handleUserLogout())
-  dispatch(push('/'))
   toast.info("You've been logged out.")
 }

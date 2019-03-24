@@ -5,6 +5,9 @@ import LoginForm from 'Auth/LoginForm'
 import { connect } from 'react-redux'
 
 const LoginModal = props => {
+  if (Object.keys(props.user).length) {
+    props.onHide()
+  }
   return (
     <BaseModal
       centered={true}
@@ -18,6 +21,10 @@ const LoginModal = props => {
       <LoginForm dispatch={props.dispatch} error={props.error} loading={props.loading} />
     </BaseModal>
   )
+}
+
+LoginModal.defaultProps = {
+  user: {},
 }
 
 LoginModal.propTypes = {
@@ -36,7 +43,9 @@ LoginModal.propTypes = {
 }
 
 const mapStateToProps = state => {
-  return {}
+  return {
+    user: state.auth.user,
+  }
 }
 
 export default connect(mapStateToProps)(LoginModal)
