@@ -14,6 +14,8 @@ import SummaryResultCard from 'shared/components/SummaryResultCard'
 import HousingTypeSummaryResultCard from 'AlertMap/HousingTypeSummaryResultCard'
 import ConfigContext from 'Config/ConfigContext'
 import PrintButton from 'shared/components/PrintButton'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
 
 import { geographySelectionToString } from 'shared/utilities/languageUtils'
 
@@ -65,8 +67,11 @@ class AlertMapShow extends React.PureComponent {
             />
           ) : (
             <div className="alert-map-show">
-              <Row className="geography-select-row">
-                <Col xs={12} md={6}>
+              <Row className="geography-select-row py-2">
+                <Col md={1} className="geography-select-row__icon d-none d-md-block">
+                  <FontAwesomeIcon className="text-white" icon={faMapMarkerAlt} size="2x" />
+                </Col>
+                <Col xs={12} md={8} lg={7}>
                   <GeographySelect
                     selectClass=""
                     currentGeographyType={this.props.appState.currentGeographyType}
@@ -85,8 +90,9 @@ class AlertMapShow extends React.PureComponent {
                     }
                   />
                 </Col>
-                <Col xs={12} md={{ span: 1, offset: 5 }}>
+                <Col className="d-none d-md-block" xs={12} md={{ span: 2, offset: 1 }} lg={{ span: 2, offset: 2 }}>
                   <PrintButton
+                    textClass="text-muted"
                     title={`${geographySelectionToString({
                       type: this.props.appState.currentGeographyType,
                       id: this.props.appState.currentGeographyId,

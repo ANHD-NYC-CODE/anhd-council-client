@@ -27,21 +27,21 @@
 
 .padding-xs-0 {
   @include media-breakpoint-between(xs, xs) {
-    padding-left: 0;
-    padding-right: 0;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
 }
 
 .padding-sm-0 {
   @include media-breakpoint-between(sm, sm) {
-    padding-left: 0;
-    padding-right: 0;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
 }
 
 .padding-xs-sm-0 {
   @include media-breakpoint-between(xs, sm) {
-    padding-left: 0;
-    padding-right: 0;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
   }
 }

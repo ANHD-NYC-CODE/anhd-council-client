@@ -5,21 +5,33 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPrint } from '@fortawesome/free-solid-svg-icons'
 
 import { Button } from 'react-bootstrap'
+
+import './style.scss'
+
 const PrintButton = props => {
-  if (window.innerWidth < 768) return null
   return (
-    <LayoutContext.Consumer>
-      {layout => (
-        <Button onClick={() => layout.togglePrint(props.title)}>
-          <FontAwesomeIcon icon={faPrint} />
-          <span> Print</span>
-        </Button>
-      )}
-    </LayoutContext.Consumer>
+    <div className="print-button">
+      <LayoutContext.Consumer>
+        {layout => (
+          <a
+            className={props.textClass}
+            href="#"
+            onClick={e => {
+              e.preventDefault()
+              layout.togglePrint(props.title)
+            }}
+          >
+            <FontAwesomeIcon size="lg" icon={faPrint} />
+            <h5 className="d-inline"> Print</h5>
+          </a>
+        )}
+      </LayoutContext.Consumer>
+    </div>
   )
 }
 
 PrintButton.propTypes = {
+  textClass: PropTypes.string,
   title: PropTypes.string,
 }
 
