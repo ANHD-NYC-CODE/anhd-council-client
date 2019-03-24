@@ -166,7 +166,6 @@ class BaseTable extends React.Component {
 
             <BootstrapTable
               bootstrap4
-              bordered={false}
               columns={this.state.columns}
               condensed
               classes={this.props.classes}

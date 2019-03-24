@@ -2,6 +2,7 @@ import * as searchActions from '../actions'
 
 export const initialState = {
   results: [],
+  searchQuery: undefined,
   searchTimeout: undefined,
 }
 
@@ -16,8 +17,11 @@ export const searchReducer = (state = Object.freeze(initialState), action = { da
         results: action.data || [],
       }
     }
+    case searchActions.SET_SEARCH_VALUE: {
+      return { ...state, searchQuery: action.data }
+    }
     case searchActions.CLEAR_SEARCH: {
-      return { ...state, results: [] }
+      return { ...state, searchQuery: undefined, results: [] }
     }
 
     default:

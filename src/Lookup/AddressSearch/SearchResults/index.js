@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import SearchResultRow from 'Lookup/AddressSearch/SearchResultRow'
+import { setSearchValue } from 'Store/Search/actions'
 
 import { setLookupAndRequestsAndRedirect } from 'Store/AppState/actions'
 
@@ -9,6 +10,12 @@ import './style.scss'
 const SearchResults = props => {
   const handleRowClick = (e, result) => {
     e.preventDefault()
+    props.dispatch(
+      setSearchValue(
+        `${result.buildingnumber ? result.buildingnumber + ' ' : ''}${result.buildingstreet ||
+          result.propertyaddress}, ${result.borough}`
+      )
+    )
     props.dispatch(setLookupAndRequestsAndRedirect({ bbl: result.bbl, bin: result.bin }))
   }
 

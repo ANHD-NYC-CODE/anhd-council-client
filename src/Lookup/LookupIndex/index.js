@@ -5,6 +5,7 @@ import { Row, Col } from 'react-bootstrap'
 import AddressSearch from 'Lookup/AddressSearch'
 import LeafletMap from 'LeafletMap'
 import IntroductionBlock from 'shared/components/IntroductionBlock'
+
 const LookupIndex = props => {
   return (
     <Row>
@@ -13,7 +14,7 @@ const LookupIndex = props => {
       </Col>
       <Col className="px-md-4 py-3 py-md-6" xs={12} md={6} lg={7}>
         <p className="text-muted font-weight-bold">Enter a building address to begin.</p>
-        <Row>
+        <Row className="mt-4">
           <Col>
             <AddressSearch />
           </Col>

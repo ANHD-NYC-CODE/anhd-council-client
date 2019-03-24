@@ -15,6 +15,9 @@ import RequestSummary from 'shared/components/RequestSummary'
 import LookupLinks from 'Lookup/LookupLinks'
 import PrintLookup from 'Lookup/PrintLookup'
 import PrintButton from 'shared/components/PrintButton'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSearch } from '@fortawesome/free-solid-svg-icons'
+
 class LookupShow extends React.Component {
   constructor(props) {
     super(props)
@@ -67,8 +70,22 @@ class LookupShow extends React.Component {
           ) : (
             <Row>
               <Col xs={12} lg={4}>
-                <Row>
-                  <Col>
+                <Row className="mt-4">
+                  <Col xs={12}>
+                    <h3>Property Info</h3>
+                  </Col>
+                </Row>
+                <Row className="mt-2">
+                  <Col
+                    className="d-flex flex-column align-content-center justify-content-center"
+                    xs={1}
+                    sm={1}
+                    md={1}
+                    lg={1}
+                  >
+                    <FontAwesomeIcon size="lg" icon={faSearch} />
+                  </Col>
+                  <Col xs={11} sm={11} md={11} lg={11}>
                     <AddressSearch />
                   </Col>
                 </Row>

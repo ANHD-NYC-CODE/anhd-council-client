@@ -17,7 +17,6 @@ class NestedTable extends BaseTable {
       <Card bg="light" border="secondary" className="nested-table">
         <BootstrapTable
           bootstrap4
-          bordered={false}
           columns={this.state.columns}
           condensed
           data={this.props.records}
