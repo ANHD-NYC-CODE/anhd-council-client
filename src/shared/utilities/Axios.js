@@ -5,7 +5,7 @@ import FileDownload from 'js-file-download'
 
 export const Axios = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
-  timeout: 240000,
+  timeout: 300000,
   headers: { 'Content-type': 'application/json' },
 })
 

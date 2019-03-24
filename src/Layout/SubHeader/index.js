@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import { getGeographyPath, addressResultToPath } from 'shared/utilities/routeUtils'
 import logo from 'shared/images/portallogo.png'
 import LoginModal from 'Auth/LoginModal'
+import classnames from 'classnames'
 
 import './style.scss'
 class SubHeader extends React.Component {
@@ -18,11 +19,10 @@ class SubHeader extends React.Component {
   }
 
   render() {
-    if (this.props.print) return null
     return (
       <Container fluid>
         <Row className="sub-header touch-left">
-          <Col xs={12} md={4}>
+          <Col xs={12} md={4} lg={3}>
             <Navbar.Brand as="li">
               <Link to="/">
                 <img
@@ -33,11 +33,11 @@ class SubHeader extends React.Component {
               </Link>
             </Navbar.Brand>
           </Col>
-          <Col xs={12} md={8}>
+          <Col xs={12} md={8} lg={9}>
             <Row className="sub-header__wrapper--top">
-              <Col xs={12} md={{ span: 4, offset: 8 }}>
+              <Col xs={12} md={{ span: 5, offset: 7 }}>
                 {this.props.auth.user ? (
-                  <Row className="flex-column flex-sm-row">
+                  <Row className="sub-header__auth-row flex-column flex-sm-row">
                     <Col>
                       <Nav.Item className="text-secondary">{this.props.auth.user.username}</Nav.Item>
                     </Col>
@@ -55,18 +55,20 @@ class SubHeader extends React.Component {
                     </Col>
                   </Row>
                 ) : (
-                  <Nav.Item
-                    onClick={e => {
-                      e.preventDefault()
-                      this.props.modal.setModal({
-                        modalComponent: LoginModal,
-                      })
-                    }}
-                  >
-                    <a className="text-secondary" href="#">
-                      Login
-                    </a>
-                  </Nav.Item>
+                  <Row className="sub-header__auth-row flex-column flex-sm-row">
+                    <Nav.Item
+                      onClick={e => {
+                        e.preventDefault()
+                        this.props.modal.setModal({
+                          modalComponent: LoginModal,
+                        })
+                      }}
+                    >
+                      <a className="text-secondary" href="#">
+                        Login
+                      </a>
+                    </Nav.Item>
+                  </Row>
                 )}
               </Col>
             </Row>
@@ -78,7 +80,12 @@ class SubHeader extends React.Component {
                   activeKey={this.state.key}
                   onSelect={key => this.setState({ key })}
                 >
-                  <Nav.Item className="sub-header__nav-tab" eventKey="lookup">
+                  <Nav.Item
+                    className={classnames('sub-header__nav-tab', {
+                      active: this.props.pathname.match(/(lookup|property)/),
+                    })}
+                    eventKey="lookup"
+                  >
                     <Link
                       to={
                         this.props.currentProperty
@@ -92,7 +99,12 @@ class SubHeader extends React.Component {
                       Building Lookup
                     </Link>
                   </Nav.Item>
-                  <Nav.Item className="sub-header__nav-tab" eventKey="map">
+                  <Nav.Item
+                    className={classnames('sub-header__nav-tab', {
+                      active: this.props.pathname.match(/(map|council|community)/),
+                    })}
+                    eventKey="map"
+                  >
                     <Link
                       to={`${
                         this.props.currentGeographyType && this.props.currentGeographyId
@@ -106,7 +118,12 @@ class SubHeader extends React.Component {
                       Alert Map
                     </Link>
                   </Nav.Item>
-                  <Nav.Item className="sub-header__nav-tab" eventKey="search">
+                  <Nav.Item
+                    className={classnames('sub-header__nav-tab', {
+                      active: this.props.pathname.match(/(search)/),
+                    })}
+                    eventKey="search"
+                  >
                     <Link to="/search">Advanced Search</Link>
                   </Nav.Item>
                 </Nav>
@@ -131,7 +148,7 @@ const mapStateToProps = state => {
     currentGeographyId: state.appState.currentGeographyId,
     currentProperty: state.appState.currentProperty,
     currentBuilding: state.appState.currentBuilding,
-    print: state.appState.printView,
+    pathname: state.router.location.pathname,
   }
 }
 

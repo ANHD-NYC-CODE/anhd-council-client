@@ -2,6 +2,11 @@
 @import './_layout.scss';
 @import './_table.scss';
 @import './_print.scss';
+@import './_modal.scss';
+
+body {
+  padding: 0 !important;
+}
 
 .leaflet-container {
   @import './bootstrap/index.scss';

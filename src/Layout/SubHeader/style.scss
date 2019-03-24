@@ -1,6 +1,8 @@
 @import 'shared/styles/bootstrap/index.scss';
 
 .sub-header {
+  background-color: $logo-gray;
+
   .navbar-brand {
     margin-right: 0;
   }
@@ -10,41 +12,67 @@
   }
 
   .sub-header__wrapper--top {
-    height: 30%;
+    height: 40%;
+    align-items: center;
     justify-content: flex-end;
+
+    text-align: right;
   }
   .sub-header__wrapper--bottom {
-    height: 70%;
+    height: 60%;
     align-items: flex-end;
   }
 
+  .sub-header__auth-row {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow-x: hidden;
+  }
+  .sub-header__auth-row,
   .sub-header__nav-row {
-    @include media-breakpoint-up(md) {
+    @include media-breakpoint-up(sm) {
       justify-content: flex-end;
+    }
+
+    @include media-breakpoint-up(xl) {
+      margin-right: 40px;
     }
   }
 
   .sub-header__nav-tab {
+    background-color: $gray-400;
     @include media-breakpoint-up(sm) {
       flex: 0 0 32%;
       align-items: center;
       border-top-right-radius: 30px;
-      background-color: $gray-400;
 
       display: flex;
       margin-right: 4px;
-      padding: 0 20px;
-      height: 80px;
+      height: 70px;
       justify-content: center;
     }
-
     @include media-breakpoint-up(lg) {
-      min-width: 200px;
+      flex: 0 0 200px;
+      height: 70px;
+    }
+    @include media-breakpoint-up(xl) {
+      flex: 0 0 240px;
+      height: 80px;
     }
 
     a {
       color: $gray-600;
       font-weight: bold;
+      padding: 0 20px;
     }
+  }
+
+  .sub-header__nav-tab.active {
+    background-color: $tab-blue;
+  }
+
+  .sub-header__nav-tab.active a {
+    border-left: 3px solid $secondary;
+    color: $secondary;
   }
 }
