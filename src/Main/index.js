@@ -68,8 +68,8 @@ class Main extends React.Component {
           </Col>
           <Col className="px-md-4 py-3 py-lg-6" xs={12} lg={7}>
             <p className="text-muted font-weight-bold">Select a district or enter a building address to begin.</p>
-            <div className="mt-5">
-              <div cl>
+            <div className="mb-4">
+              <div>
                 <AddressSearch inputClass="xl-form-control" placeholder="Building Lookup Tool" />
               </div>
               <div className="mt-5">
