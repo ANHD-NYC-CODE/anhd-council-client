@@ -6,7 +6,7 @@ import { Form } from 'react-bootstrap'
 import { StandardizedInput } from 'shared/classes/StandardizedInput'
 
 import classnames from 'classnames'
-
+import SpinnerLoader from 'shared/components/Loaders/SpinnerLoader'
 import './style.scss'
 
 export default class SearchBar extends React.PureComponent {
@@ -62,6 +62,7 @@ export default class SearchBar extends React.PureComponent {
           type="text"
           value={this.props.searchValue}
         />
+        <div className="search-bar__loading">{this.props.loading && <SpinnerLoader size="40px" />}</div>
       </div>
     )
   }
