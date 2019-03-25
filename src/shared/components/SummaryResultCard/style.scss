@@ -3,6 +3,12 @@
 .result-card.card {
   border: 1px solid $black;
   border-radius: 20px;
+  padding: 0 10px;
+}
+
+.result-card.card.btn-primary:not(:disabled).active {
+  border: 4px dotted $white;
+  padding: 0 7px;
 }
 
 .summary-result-card {

@@ -11,7 +11,9 @@ const HousingTypeSummaryResultCard = props => {
       as={Button}
       bg={classnames({ primary: props.selected })}
       text={classnames({ light: props.selected, dark: !props.selected })}
-      className="housingtype-summary-result-card flex-row result-card py-0 mb-2"
+      className={classnames('housingtype-summary-result-card', 'result-card flex-row', 'mb-2', {
+        active: props.selected,
+      })}
       onClick={props.handleClick}
     >
       <div className="housingtype-summary-result-card__wrapper">
