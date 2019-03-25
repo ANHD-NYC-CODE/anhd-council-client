@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { boroCodeToName, constructAddressString } from 'shared/utilities/languageUtils'
-
+import './style.scss'
 import { Card, Row, Col } from 'react-bootstrap'
 const PropertySummaryBody = props => {
   return (
-    <Row>
+    <Row className="property-summary-body">
       <Col xs={12}>
         <Row>
           <Col>
