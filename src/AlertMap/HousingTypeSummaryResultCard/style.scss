@@ -1,0 +1,21 @@
+.housingtype-summary-result-card {
+  min-height: 120px;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .housingtype-summary-result-card__wrapper {
+    min-width: 220px;
+  }
+
+  .housingtype-summary-result-card__top-row {
+    justify-content: space-between;
+  }
+
+  p {
+    margin: 0;
+  }
+}

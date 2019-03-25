@@ -112,14 +112,19 @@ class AlertMapShow extends React.PureComponent {
                       >
                         <ToggleButton
                           variant="outline-primary"
+                          className="p-1"
                           value={alertMapFilterdates()[2]}
                         >{`Last 3 Years (${moment(alertMapFilterdates()[2]).format('YYYY')})`}</ToggleButton>
-                        <ToggleButton variant="outline-primary" value={alertMapFilterdates()[1]}>{`Last Year (${moment(
-                          alertMapFilterdates()[1]
-                        ).format('YYYY')})`}</ToggleButton>
-                        <ToggleButton variant="outline-primary" value={alertMapFilterdates()[0]}>{`Last Month (${moment(
-                          alertMapFilterdates()[0]
-                        ).format('MM/YYYY')})`}</ToggleButton>
+                        <ToggleButton
+                          className="p-1"
+                          variant="outline-primary"
+                          value={alertMapFilterdates()[1]}
+                        >{`Last Year (${moment(alertMapFilterdates()[1]).format('YYYY')})`}</ToggleButton>
+                        <ToggleButton
+                          className="p-1"
+                          variant="outline-primary"
+                          value={alertMapFilterdates()[0]}
+                        >{`Last Month (${moment(alertMapFilterdates()[0]).format('MM/YYYY')})`}</ToggleButton>
                       </ToggleButtonGroup>
                     </Col>
                   </Row>
@@ -181,6 +186,9 @@ class AlertMapShow extends React.PureComponent {
                         <RequestSummary
                           key={`request-summary-${this.props.appState.requests.indexOf(request)}`}
                           request={request}
+                          totalRequest={this.props.housingTypeRequests.find(
+                            r => r.requestConstant === 'GEOGRAPHY_HOUSING_TYPE_ALL'
+                          )}
                           onClick={r => this.switchTable(r)}
                           resultsComponent={HousingTypeSummaryResultCard}
                           selected={this.props.selectedRequest === request}
