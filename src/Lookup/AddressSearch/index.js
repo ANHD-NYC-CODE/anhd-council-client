@@ -86,6 +86,7 @@ class AddressSearch extends React.Component {
     return (
       <div className="address-search mb-2" ref={this.addressRef}>
         <SearchBar
+          loading={this.props.loading}
           searchBarRef={this.searchBarRef}
           inputClass={this.props.inputClass}
           clearSelectedSearch={this.clearSelectedSearch}
@@ -99,7 +100,6 @@ class AddressSearch extends React.Component {
         />
         <SearchResults
           dispatch={this.props.dispatch}
-          loading={this.props.loading}
           error={this.props.error}
           searchResultsRef={this.searchResultsRef}
           show={this.state.show}

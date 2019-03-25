@@ -10,6 +10,8 @@ class PropertyIcons extends React.Component {
 
     this.handleAlert = this.handleAlert.bind(this)
     this.handleAlert()
+
+    this.iconLimit = 2000
   }
 
   componentDidUpdate() {
@@ -17,8 +19,8 @@ class PropertyIcons extends React.Component {
   }
 
   handleAlert() {
-    if (this.props.results.length > 1000) {
-      this.props.setAlertMessage('Can not render more than 1000 map icons due to device limitations.')
+    if (this.props.results.length > this.iconLimit) {
+      this.props.setAlertMessage(`Will not render more than ${this.iconLimit} map icons due to device limitations.`)
     } else {
       this.props.setAlertMessage('')
     }
@@ -33,7 +35,7 @@ class PropertyIcons extends React.Component {
   render() {
     if (!(this.props.visible && this.props.selectedRequest)) return null
     if (this.props.iconConfig === 'MULTIPLE') {
-      if (this.props.results.length > 1000) return null
+      if (this.props.results.length > this.iconLimit) return null
       return this.props.results
         .map((result, index) => {
           if (this.getLatLng(result)) {

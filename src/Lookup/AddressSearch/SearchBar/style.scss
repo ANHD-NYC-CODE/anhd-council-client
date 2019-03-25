@@ -7,4 +7,12 @@
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
   }
+
+  .search-bar__loading {
+    position: absolute;
+    right: 5px;
+    top: 0;
+    height: 100%;
+    width: 50px;
+  }
 }

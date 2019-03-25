@@ -21,7 +21,6 @@ const SearchResults = props => {
 
   return (
     <div ref={props.searchResultsRef} className="search-results">
-      {props.loading && <div className="text-info">loading</div>}
       {props.error && <div className="text-danger">{props.error.message}</div>}
       <div className="search-results__wrapper" size="sm">
         {props.show &&
@@ -40,7 +39,6 @@ const SearchResults = props => {
 }
 
 SearchResults.propTypes = {
-  loading: PropTypes.bool,
   error: PropTypes.object,
   selectBuildingResult: PropTypes.func,
   results: PropTypes.array,
