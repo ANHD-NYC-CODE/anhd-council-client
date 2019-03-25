@@ -137,8 +137,8 @@ class AlertMapShow extends React.PureComponent {
                       return (
                         <Col
                           xs={12}
-                          sm={6}
-                          lg={4}
+                          md={6}
+                          xl={4}
                           key={`rs-col-${index}`}
                           className="geography-request-summary__container"
                         >
@@ -153,12 +153,15 @@ class AlertMapShow extends React.PureComponent {
                       )
                     })}
                     {!this.props.geographyRequests.some(r => r.type === 'ADVANCED_SEARCH') && (
-                      <Col xs={12} sm={6} lg={4}>
-                        <Card>
-                          <Card.Body>
-                            <BaseLink href="/search" text="+ Add Custom Filter" />
-                          </Card.Body>
-                        </Card>
+                      <Col className="geography-request-summary__container" xs={12} md={6} xl={4}>
+                        <Col className="pr-0" xs={11}>
+                          <Card className="border-0">
+                            <Card.Body>
+                              <BaseLink href="/search" text="+ Add Custom Filter" />
+                            </Card.Body>
+                          </Card>
+                        </Col>
+                        <Col xs={1} className="pl-0 pr-1" />
                       </Col>
                     )}
                   </Row>

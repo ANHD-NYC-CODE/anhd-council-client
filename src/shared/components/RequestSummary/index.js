@@ -30,7 +30,7 @@ class RequestSummary extends React.Component {
   render() {
     return (
       <Row className="request-summary">
-        <Col xs={10}>
+        <Col className="pr-0" xs={11}>
           {this.props.resultsComponent({
             selected: this.props.selected,
             request: this.props.request,
@@ -41,7 +41,7 @@ class RequestSummary extends React.Component {
           })}
         </Col>
         {!this.props.print && (
-          <Col xs={2}>
+          <Col xs={1} className="pl-0 pr-1">
             <InfoModalButton modalConstant={this.getInfoKey()} />
           </Col>
         )}
