@@ -7,7 +7,7 @@ import LeafletMap from 'LeafletMap'
 import AddressSearch from 'Lookup/AddressSearch'
 import LayoutContext from 'Layout/LayoutContext'
 
-import { Row, Col } from 'react-bootstrap'
+import { Row, Col, InputGroup } from 'react-bootstrap'
 
 import RequestWrapper from 'shared/components/RequestWrapper'
 import BuildingSelect from 'Lookup/BuildingSelect'
@@ -17,7 +17,7 @@ import PrintLookup from 'Lookup/PrintLookup'
 import PrintButton from 'shared/components/PrintButton'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
-
+import './style.scss'
 class LookupShow extends React.Component {
   constructor(props) {
     super(props)
@@ -68,25 +68,21 @@ class LookupShow extends React.Component {
               profileRequest={this.props.profileRequest}
             />
           ) : (
-            <Row>
-              <Col xs={12} lg={4}>
+            <Row className="lookup-show">
+              <Col className="lookup-show__property-column px-lg-2 px-xl-5" xs={12} lg={4}>
                 <Row className="mt-4">
                   <Col xs={12}>
-                    <h3 className="text-muted font-weight-bold text-uppercase">Property Info</h3>
+                    <h3 className="text-light-gray font-weight-bold text-uppercase">Property Info</h3>
                   </Col>
                 </Row>
-                <Row className="mt-2">
-                  <Col
-                    className="d-flex flex-column align-content-center justify-content-center"
-                    xs={1}
-                    sm={1}
-                    md={1}
-                    lg={1}
-                  >
-                    <FontAwesomeIcon size="lg" icon={faSearch} />
-                  </Col>
-                  <Col xs={11} sm={11} md={11} lg={11}>
-                    <AddressSearch />
+                <Row className="mt-2 mb-4">
+                  <Col>
+                    <InputGroup className="lookup-show__address-group flex-nowrap">
+                      <InputGroup.Append className="flex-column justify-content-center">
+                        <FontAwesomeIcon className=" mr-2 text-white" size="2x" icon={faSearch} />
+                      </InputGroup.Append>
+                      <AddressSearch />
+                    </InputGroup>
                   </Col>
                 </Row>
                 <Row>
@@ -137,6 +133,11 @@ class LookupShow extends React.Component {
                           changeLookup={this.props.changeLookup}
                           request={this.props.profileRequest}
                         />
+                      </Col>
+                    </Row>
+                    <Row className="mb-2">
+                      <Col>
+                        <h6 className="font-weight-bold">Select Filter ></h6>
                       </Col>
                     </Row>
                     <Row>

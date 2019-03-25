@@ -47,6 +47,7 @@ $nyc-crimson: #dfcdd3 !default;
 $tab-blue: #a0b9d1 !default;
 $logo-gray: #f2f2f2 !default;
 $housing-blue: #96a6d8 !default;
+$light-gray: #a39e9e !default;
 
 $colors: () !default;
 // stylelint-disable-next-line scss/dollar-variable-default
@@ -64,7 +65,7 @@ $colors: map-merge(
     'cyan': $cyan,
     'white': $white,
     'gray': $gray-600,
-    'gray-dark': $gray-800,
+    'gray-dark': $gray-700,
     'transluscent': $transluscent,
   ),
   $colors
