@@ -1,6 +1,7 @@
 @import 'shared/styles/bootstrap/index.scss';
 
-.summary-result-card.card {
+.result-card.card {
+  border: 1px solid $black;
   border-radius: 20px;
 }
 

@@ -9,29 +9,29 @@ const HousingTypeSummaryResultCard = props => {
   return (
     <Card
       as={Button}
-      bg={classnames({ primary: props.selected, light: !props.selected })}
+      bg={classnames({ primary: props.selected })}
       text={classnames({ light: props.selected, dark: !props.selected })}
-      className="housingtype-summary-result-card px-2 py-0 mb-2"
+      className="housingtype-summary-result-card flex-row result-card py-0 mb-2"
       onClick={props.handleClick}
     >
       <div className="housingtype-summary-result-card__wrapper">
-        <p className="font-weight-bold">{props.request.label}</p>
+        <p className="housingtype-summary-result-card__title font-weight-bold">{props.request.label}</p>
         {props.loading ? (
           <SpinnerLoader />
         ) : (
-          <div>
-            <Row className="housingtype-summary-result-card__top-row">
+          <div className="housingtype-summary-result-card__inner-wrapper d-flex flex-row justify-content-between w-100">
+            <div className="d-flex flex-column align-items-flex-start h-100 text-left">
               <p>{props.results.length} properties</p>
+              <p>{props.results.reduce((total, result) => parseInt(total) + parseInt(result['unitsres']), 0)} units</p>
+            </div>
+            <div className="d-flex flex-column align-items-flex-end h-100 text-right">
               {props.totalResults && !!props.totalResults.length && (
-                <p className="text-right font-weight-bold">{`${(
+                <h5 className="text-right font-weight-bold ">{`${(
                   (props.results.length / props.totalResults.length) *
                   100
-                ).toFixed(2)}%`}</p>
+                ).toFixed(2)}%`}</h5>
               )}
-            </Row>
-            <Row>
-              <p>{props.results.reduce((total, result) => parseInt(total) + parseInt(result['unitsres']), 0)} units</p>
-            </Row>
+            </div>
           </div>
         )}
       </div>
