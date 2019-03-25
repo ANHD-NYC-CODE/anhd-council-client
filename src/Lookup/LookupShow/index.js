@@ -137,6 +137,17 @@ class LookupShow extends React.Component {
                     </Row>
                     <Row className="mb-2">
                       <Col>
+                        <h4 className="text-muted font-weight-bold">
+                          {this.props.bin && !!Object.keys(this.props.propertyResult).length
+                            ? `${
+                                getCurrentBuilding(this.props.propertyResult.buildings, this.props.bin).house_number
+                              } ${getCurrentBuilding(this.props.propertyResult.buildings, this.props.bin).stname}`
+                            : this.props.propertyResult.address}
+                        </h4>
+                      </Col>
+                    </Row>
+                    <Row className="mb-2">
+                      <Col>
                         <h6 className="font-weight-bold">Select Filter ></h6>
                       </Col>
                     </Row>
