@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Card, Button } from 'react-bootstrap'
-import CardLoaderMapIcon from 'shared/components/CardLoaderMapIcon'
+import SpinnerLoader from 'shared/components/Loaders/SpinnerLoader'
 import classnames from 'classnames'
 
 import './style.scss'
@@ -20,7 +20,7 @@ const SummaryResultCard = props => {
           {props.request.label}
         </p>
         <div className="align-self-center summary-result-card__result">
-          {props.loading ? <CardLoaderMapIcon /> : <h2 className="m-0">{props.results.length}</h2>}
+          {props.loading ? <SpinnerLoader /> : <h2 className="m-0">{props.results.length}</h2>}
         </div>
       </Card.Body>
     </Card>

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Card, Button } from 'react-bootstrap'
-import CardLoaderMapIcon from 'shared/components/CardLoaderMapIcon'
+import SpinnerLoader from 'shared/components/Loaders/SpinnerLoader'
 import classnames from 'classnames'
 import { Row, Col } from 'react-bootstrap'
 import './style.scss'
@@ -17,7 +17,7 @@ const HousingTypeSummaryResultCard = props => {
       <div className="housingtype-summary-result-card__wrapper">
         <p className="font-weight-bold">{props.request.label}</p>
         {props.loading ? (
-          <CardLoaderMapIcon />
+          <SpinnerLoader />
         ) : (
           <div>
             <Row className="housingtype-summary-result-card__top-row">
