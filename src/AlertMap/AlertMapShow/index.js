@@ -100,30 +100,35 @@ class AlertMapShow extends React.PureComponent {
                   />
                 </Col>
               </Row>
-              <Row>
+              <Row className="py-2">
                 <Col xs={12} sm={6} md={4}>
-                  <Row>
-                    <ToggleButtonGroup
-                      name="dateRange"
-                      type="radio"
-                      value={this.props.appState.mapFilterDate}
-                      onChange={this.props.toggleDateRange}
-                    >
-                      <ToggleButton value={alertMapFilterdates()[2]}>{`Last 3 Years (${moment(
-                        alertMapFilterdates()[2]
-                      ).format('YYYY')})`}</ToggleButton>
-                      <ToggleButton value={alertMapFilterdates()[1]}>{`Last Year (${moment(
-                        alertMapFilterdates()[1]
-                      ).format('YYYY')})`}</ToggleButton>
-                      <ToggleButton value={alertMapFilterdates()[0]}>{`Last Month (${moment(
-                        alertMapFilterdates()[0]
-                      ).format('MM/YYYY')})`}</ToggleButton>
-                    </ToggleButtonGroup>
+                  <Row className="mb-2">
+                    <Col>
+                      <ToggleButtonGroup
+                        name="dateRange"
+                        type="radio"
+                        value={this.props.appState.mapFilterDate}
+                        onChange={this.props.toggleDateRange}
+                      >
+                        <ToggleButton
+                          variant="outline-primary"
+                          value={alertMapFilterdates()[2]}
+                        >{`Last 3 Years (${moment(alertMapFilterdates()[2]).format('YYYY')})`}</ToggleButton>
+                        <ToggleButton variant="outline-primary" value={alertMapFilterdates()[1]}>{`Last Year (${moment(
+                          alertMapFilterdates()[1]
+                        ).format('YYYY')})`}</ToggleButton>
+                        <ToggleButton variant="outline-primary" value={alertMapFilterdates()[0]}>{`Last Month (${moment(
+                          alertMapFilterdates()[0]
+                        ).format('MM/YYYY')})`}</ToggleButton>
+                      </ToggleButtonGroup>
+                    </Col>
                   </Row>
                   <Row>
-                    {this.props.selectedRequest.type === 'ADVANCED_SEARCH' && (
-                      <AdvancedSearchSentence advancedSearch={this.props.advancedSearch} />
-                    )}
+                    <Col>
+                      {this.props.selectedRequest.type === 'ADVANCED_SEARCH' && (
+                        <AdvancedSearchSentence advancedSearch={this.props.advancedSearch} />
+                      )}
+                    </Col>
                   </Row>
                 </Col>
                 <Col xs={12} sm={6} md={8}>
