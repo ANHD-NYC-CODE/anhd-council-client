@@ -13,7 +13,7 @@ const BaseLink = props => {
     </a>
   ) : (
     <Link {...props} to={props.href}>
-      {props.text}
+      {props.text || props.children}
     </Link>
   )
 }

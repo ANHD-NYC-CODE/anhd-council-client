@@ -72,7 +72,7 @@ class LookupShow extends React.Component {
               <Col xs={12} lg={4}>
                 <Row className="mt-4">
                   <Col xs={12}>
-                    <h3>Property Info</h3>
+                    <h3 className="text-muted font-weight-bold text-uppercase">Property Info</h3>
                   </Col>
                 </Row>
                 <Row className="mt-2">
@@ -117,33 +117,18 @@ class LookupShow extends React.Component {
                 </Row>
               </Col>
               <Col xs={12} lg={8}>
-                <Row>
-                  <Col xs={12} lg={3}>
-                    <Row>
-                      {this.props.lookupRequests.map((request, index) => {
-                        return (
-                          <Col xs={12} sm={6} md={4} lg={12} key={`rs-col-${index}`}>
-                            <RequestSummary
-                              key={`request-summary-${this.props.appState.requests.indexOf(request)}`}
-                              onClick={r => this.switchTable(r)}
-                              selected={this.state.selectedRequest === request}
-                              request={request}
-                              resultsComponent={SummaryResultCard}
-                            />
-                          </Col>
-                        )
-                      })}
-                    </Row>
-                  </Col>
-                  <Col xs={12} lg={9}>
+                <Row className="mt-2 mb-4 mt-lg-4 mb-lg-2">
+                  <Col>
                     <Row>
                       <Col>
                         <Row>
-                          <Col xs={8}>
-                            <h4>Building Info</h4>
+                          <Col xs={9}>
+                            <h3 className="text-muted font-weight-bold text-uppercase">
+                              {this.props.bin ? 'Building Data' : 'Property Data'}
+                            </h3>
                           </Col>
-                          <Col xs={4}>
-                            <PrintButton title={this.getPrintTitle()} />
+                          <Col xs={3}>
+                            <PrintButton textClass="text-muted" title={this.getPrintTitle()} />
                           </Col>
                         </Row>
                         <BuildingSelect
@@ -155,17 +140,38 @@ class LookupShow extends React.Component {
                       </Col>
                     </Row>
                     <Row>
-                      {this.props.lookupRequests.map((request, index) => {
-                        return (
-                          <Col xs={12} key={`rw-col-${index}`} className="request-wrapper-container">
-                            <RequestWrapper
-                              key={`request-wrapper-${this.props.appState.requests.indexOf(request)}`}
-                              visible={this.state.selectedRequest === request}
-                              request={request}
-                            />
-                          </Col>
-                        )
-                      })}
+                      <Col xs={12} lg={3}>
+                        <Row>
+                          {this.props.lookupRequests.map((request, index) => {
+                            return (
+                              <Col xs={12} sm={6} md={4} lg={12} key={`rs-col-${index}`}>
+                                <RequestSummary
+                                  key={`request-summary-${this.props.appState.requests.indexOf(request)}`}
+                                  onClick={r => this.switchTable(r)}
+                                  selected={this.state.selectedRequest === request}
+                                  request={request}
+                                  resultsComponent={SummaryResultCard}
+                                />
+                              </Col>
+                            )
+                          })}
+                        </Row>
+                      </Col>
+                      <Col xs={12} lg={9}>
+                        <Row>
+                          {this.props.lookupRequests.map((request, index) => {
+                            return (
+                              <Col xs={12} key={`rw-col-${index}`} className="request-wrapper-container">
+                                <RequestWrapper
+                                  key={`request-wrapper-${this.props.appState.requests.indexOf(request)}`}
+                                  visible={this.state.selectedRequest === request}
+                                  request={request}
+                                />
+                              </Col>
+                            )
+                          })}
+                        </Row>
+                      </Col>
                     </Row>
                   </Col>
                 </Row>
