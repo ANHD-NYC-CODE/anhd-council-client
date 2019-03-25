@@ -12,7 +12,7 @@ const SummaryResultCard = props => {
       as={Button}
       bg={classnames({ primary: props.selected, light: !props.selected })}
       text={classnames({ light: props.selected, dark: !props.selected })}
-      className="summary-result-card flex-row px-2 py-0 mb-2"
+      className="summary-result-card result-card flex-row px-2 py-0 mb-2"
       onClick={props.handleClick}
     >
       <Card.Body className="d-flex flex-row p-0">

@@ -174,28 +174,30 @@ class AlertMapShow extends React.PureComponent {
               </Row>
               <Row>
                 <Col xs={12} lg={3}>
-                  {this.props.housingTypeRequests.map((request, index) => {
-                    return (
-                      <Col
-                        xs={12}
-                        sm={6}
-                        lg={12}
-                        key={`rs-col-${index}`}
-                        className="housingtype-request-summary__container"
-                      >
-                        <RequestSummary
-                          key={`request-summary-${this.props.appState.requests.indexOf(request)}`}
-                          request={request}
-                          totalRequest={this.props.housingTypeRequests.find(
-                            r => r.requestConstant === 'GEOGRAPHY_HOUSING_TYPE_ALL'
-                          )}
-                          onClick={r => this.switchTable(r)}
-                          resultsComponent={HousingTypeSummaryResultCard}
-                          selected={this.props.selectedRequest === request}
-                        />
-                      </Col>
-                    )
-                  })}
+                  <Row>
+                    {this.props.housingTypeRequests.map((request, index) => {
+                      return (
+                        <Col
+                          xs={12}
+                          sm={6}
+                          lg={12}
+                          key={`rs-col-${index}`}
+                          className="housingtype-request-summary__container"
+                        >
+                          <RequestSummary
+                            key={`request-summary-${this.props.appState.requests.indexOf(request)}`}
+                            request={request}
+                            totalRequest={this.props.housingTypeRequests.find(
+                              r => r.requestConstant === 'GEOGRAPHY_HOUSING_TYPE_ALL'
+                            )}
+                            onClick={r => this.switchTable(r)}
+                            resultsComponent={HousingTypeSummaryResultCard}
+                            selected={this.props.selectedRequest === request}
+                          />
+                        </Col>
+                      )
+                    })}
+                  </Row>
                 </Col>
                 <Col xs={12} lg={6}>
                   <ToggleButtonGroup

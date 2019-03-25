@@ -1,18 +1,27 @@
+@import 'shared/styles/bootstrap/index.scss';
+
+.housingtype-summary-result-card.btn {
+  border-radius: 1px;
+  background-color: $housing-blue;
+}
+
 .housingtype-summary-result-card {
   min-height: 120px;
+  max-width: 400px;
   width: 100%;
 
-  display: flex;
-  flex-direction: column;
   align-items: center;
+  display: flex;
+  flex-direction: row;
   justify-content: center;
 
-  .housingtype-summary-result-card__wrapper {
-    min-width: 220px;
+  .housingtype-summary-result-card__wrapper,
+  .housingtype-summary-result-card__inner-wrapper {
+    flex: 1 1 100%;
   }
 
-  .housingtype-summary-result-card__top-row {
-    justify-content: space-between;
+  .housingtype-summary-result-card__title {
+    text-align: left;
   }
 
   p {
