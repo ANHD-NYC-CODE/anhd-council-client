@@ -76,6 +76,45 @@ const customStyle = size => {
           paddingBottom: 0,
         }),
       }
+    case 'lg':
+      return {
+        control: base => ({
+          ...base,
+          minHeight: '1px',
+          height: '60px',
+        }),
+        dropdownIndicator: base => ({
+          ...base,
+          paddingTop: 0,
+          paddingBottom: 0,
+        }),
+        clearIndicator: base => ({
+          ...base,
+          paddingTop: 0,
+          paddingBottom: 0,
+        }),
+        container: base => ({
+          ...base,
+          marginTop: '0px',
+          minHeight: '1px',
+          height: '60px',
+        }),
+        menu: base => ({
+          ...base,
+          marginTop: '0px',
+          zIndex: '10',
+        }),
+        menuList: base => ({
+          ...base,
+          marginTop: '0px',
+        }),
+        valueContainer: base => ({
+          ...base,
+          marginTop: '0px',
+          minHeight: '1px',
+          height: '60px',
+        }),
+      }
   }
 }
 

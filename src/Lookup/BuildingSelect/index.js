@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { getCurrentBuilding } from 'Lookup/utilities'
 import { addressResultToPath } from 'shared/utilities/routeUtils'
 import { StandardizedInput } from 'shared/classes/StandardizedInput'
-import { Form } from 'react-bootstrap'
+import { Form, InputGroup, Row, Col, Button } from 'react-bootstrap'
 import CustomSelect from 'shared/components/CustomSelect'
 import BaseLink from 'shared/components/BaseLink'
 class BuildingSelect extends React.Component {
@@ -27,27 +27,42 @@ class BuildingSelect extends React.Component {
     const selectedBuilding = getCurrentBuilding(this.props.buildings, this.props.bin)
     return this.props.buildings.length ? (
       <Form className="building-select">
-        <Form.Label>Select Building</Form.Label>
-        <CustomSelect
-          size="sm"
-          onChange={e => this.props.changeLookup(this.props.bbl, new StandardizedInput(e).value)}
-          options={this.getBuildingOptions()}
-          value={
-            this.props.bin
-              ? {
-                  value: this.props.bin,
-                  label: `${selectedBuilding.house_number} ${selectedBuilding.stname}`,
+        <Row className="mb-2">
+          <Col className="text-muted font-weight-bold">List of buildings</Col>
+        </Row>
+        <Row className="mb-2">
+          <Col>
+            <InputGroup className="mb-2">
+              <CustomSelect
+                className="w-75 mb-2"
+                size="lg"
+                onChange={e => this.props.changeLookup(this.props.bbl, new StandardizedInput(e).value)}
+                options={this.getBuildingOptions()}
+                value={
+                  this.props.bin
+                    ? {
+                        value: this.props.bin,
+                        label: `${selectedBuilding.house_number} ${selectedBuilding.stname}`,
+                      }
+                    : -1
                 }
-              : -1
-          }
-        />
-        {this.props.bin && (
-          <BaseLink
-            href={`${addressResultToPath({ bbl: this.props.bbl })}`}
-            onClick={() => this.props.changeLookup(this.props.bbl)}
-            text="View Property"
-          />
-        )}
+              />
+              {this.props.bin && (
+                <InputGroup.Append>
+                  <BaseLink
+                    className="d-inline-block mb-2"
+                    href={`${addressResultToPath({ bbl: this.props.bbl })}`}
+                    onClick={() => this.props.changeLookup(this.props.bbl)}
+                  >
+                    <Button variant="secondary" size="lg">
+                      Back to Property
+                    </Button>
+                  </BaseLink>
+                </InputGroup.Append>
+              )}
+            </InputGroup>
+          </Col>
+        </Row>
       </Form>
     ) : null
   }
