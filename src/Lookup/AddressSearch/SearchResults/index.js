@@ -23,7 +23,7 @@ const SearchResults = props => {
     <div ref={props.searchResultsRef} className="search-results">
       {props.loading && <div className="text-info">loading</div>}
       {props.error && <div className="text-danger">{props.error.message}</div>}
-      <div className="search-results__wrapper" size="sm" bordered hover>
+      <div className="search-results__wrapper" size="sm">
         {props.show &&
           !!props.results.length &&
           props.results.map((result, index) => (

@@ -94,7 +94,7 @@ class SubHeader extends React.Component {
                     }
                   >
                     <div className="sub-header__nav-tab--inner">
-                      <Nav.Item eventKey="lookup">Building Lookup</Nav.Item>
+                      <Nav.Item>Building Lookup</Nav.Item>
                     </div>
                   </Link>
                   <Link
@@ -108,7 +108,7 @@ class SubHeader extends React.Component {
                     }`}
                   >
                     <div className="sub-header__nav-tab--inner">
-                      <Nav.Item eventKey="map">Alert Map</Nav.Item>
+                      <Nav.Item>Alert Map</Nav.Item>
                     </div>
                   </Link>
                   <Link
@@ -118,7 +118,7 @@ class SubHeader extends React.Component {
                     })}
                   >
                     <div className="sub-header__nav-tab--inner">
-                      <Nav.Item eventKey="search">Advanced Search</Nav.Item>
+                      <Nav.Item>Advanced Search</Nav.Item>
                     </div>
                   </Link>
                 </Nav>
