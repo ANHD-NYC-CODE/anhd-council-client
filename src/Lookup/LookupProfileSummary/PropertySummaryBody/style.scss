@@ -1,5 +1,21 @@
 @import 'shared/styles/bootstrap/index.scss';
 .property-summary-body {
   background-color: $property-blue;
+  border: 2px dotted white;
+  box-sizing: border-box;
   margin: 0 15px;
+
+  .profile-summary-body__label {
+    display: inline;
+    font-weight: bold;
+  }
+
+  .profile-summary-body__label:after {
+    content: ' ';
+  }
+
+  .profile-summary-body__value {
+    display: inline;
+    font-weight: normal;
+  }
 }

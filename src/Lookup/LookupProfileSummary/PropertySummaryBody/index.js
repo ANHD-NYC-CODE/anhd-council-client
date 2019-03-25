@@ -5,7 +5,7 @@ import './style.scss'
 import { Card, Row, Col } from 'react-bootstrap'
 const PropertySummaryBody = props => {
   return (
-    <Row className="property-summary-body">
+    <Row className="property-summary-body p-2">
       <Col xs={12}>
         <Row>
           <Col>
@@ -21,51 +21,51 @@ const PropertySummaryBody = props => {
       </Col>
       <Col xs={6}>
         <Card.Text className="lookup-profile-summary__group">
-          <label className="lookup-profile-summary__label--block">Owner Name: </label>
-          <span className="lookup-profile-summary__value">{props.profile.ownername}</span>
+          <label className="profile-summary-body__label">Owner Name: </label>
+          <span className="profile-summary-body__value">{props.profile.ownername}</span>
         </Card.Text>
 
         <Card.Text className="lookup-profile-summary__group">
-          <label className="lookup-profile-summary__label">Year Built: </label>
-          <span className="lookup-profile-summary__value">{props.profile.yearbuilt}</span>
+          <label className="profile-summary-body__label">Year Built: </label>
+          <span className="profile-summary-body__value">{props.profile.yearbuilt}</span>
         </Card.Text>
         <Card.Text className="lookup-profile-summary__group">
-          <label className="lookup-profile-summary__label">Zoning: </label>
-          <span className="lookup-profile-summary__value">{props.profile.zonedist1}</span>
+          <label className="profile-summary-body__label">Zoning: </label>
+          <span className="profile-summary-body__value">{props.profile.zonedist1}</span>
         </Card.Text>
         <Card.Text className="lookup-profile-summary__group">
-          <label className="lookup-profile-summary__label--block">Rent Programs: </label>
-          <span className="lookup-profile-summary__value">
+          <label className="profile-summary-body__label">Rent Programs: </label>
+          <span className="profile-summary-body__value">
             {props.profile.coresubsidyrecords.length
               ? props.profile.coresubsidyrecords.map(record => record.programname).join(' ')
               : ''}
           </span>
         </Card.Text>
         <Card.Text className="lookup-profile-summary__group">
-          <label className="lookup-profile-summary__label">NYCHA? </label>
-          <span className="lookup-profile-summary__value">{props.profile.nycha ? 'Yes' : 'No'}</span>
+          <label className="profile-summary-body__label">NYCHA? </label>
+          <span className="profile-summary-body__value">{props.profile.nycha ? 'Yes' : 'No'}</span>
         </Card.Text>
       </Col>
       <Col xs={6}>
         <Card.Text className="lookup-profile-summary__group">
-          <label className="lookup-profile-summary__label">BBL: </label>
-          <span className="lookup-profile-summary__value">{props.profile.bbl}</span>
+          <label className="profile-summary-body__label">BBL: </label>
+          <span className="profile-summary-body__value">{props.profile.bbl}</span>
         </Card.Text>
         <Card.Text className="lookup-profile-summary__group">
-          <label className="lookup-profile-summary__label">Total Units: </label>
-          <span className="lookup-profile-summary__value">{props.profile.unitstotal || 0}</span>
+          <label className="profile-summary-body__label">Total Units: </label>
+          <span className="profile-summary-body__value">{props.profile.unitstotal || 0}</span>
         </Card.Text>
         <Card.Text className="lookup-profile-summary__group">
-          <label className="lookup-profile-summary__label">Residential Units: </label>
-          <span className="lookup-profile-summary__value">{props.profile.unitsres || 0}</span>
+          <label className="profile-summary-body__label">Residential Units: </label>
+          <span className="profile-summary-body__value">{props.profile.unitsres || 0}</span>
         </Card.Text>
         <Card.Text className="lookup-profile-summary__group">
-          <label className="lookup-profile-summary__label">Stabilized Units: </label>
-          <span className="lookup-profile-summary__value">{props.profile.unitsrentstabilized || 0}</span>
+          <label className="profile-summary-body__label">Stabilized Units: </label>
+          <span className="profile-summary-body__value">{props.profile.unitsrentstabilized || 0}</span>
         </Card.Text>
         <Card.Text className="lookup-profile-summary__group">
-          <label className="lookup-profile-summary__label">Tax Lien? </label>
-          <span className="lookup-profile-summary__value">{props.profile.taxliens || 'No'}</span>
+          <label className="profile-summary-body__label">Tax Lien? </label>
+          <span className="profile-summary-body__value">{props.profile.taxliens || 'No'}</span>
         </Card.Text>
       </Col>
     </Row>
