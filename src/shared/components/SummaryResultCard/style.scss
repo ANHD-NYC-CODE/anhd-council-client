@@ -1,0 +1,26 @@
+@import 'shared/styles/bootstrap/index.scss';
+
+.summary-result-card {
+  @include media-breakpoint-up(xs) {
+    height: 100px;
+    width: 100%;
+  }
+  @include media-breakpoint-up(md) {
+    height: 100px;
+    width: 100%;
+  }
+
+  @include media-breakpoint-up(lg) {
+    height: 100px;
+    width: 100%;
+  }
+
+  .summary-result-card__label {
+    flex: 0 1 100%;
+  }
+
+  .summary-result-card__result {
+    flex-shrink: 0;
+    min-width: 80px;
+  }
+}

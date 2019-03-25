@@ -1,4 +1,4 @@
-$duration: 1.8s;
+$duration: 2s;
 $dimension: 30px;
 
 /**
@@ -31,6 +31,12 @@ $dimension: 30px;
  * Square layer styles
  */
 .card-loader {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   .layer {
     display: block;
     position: absolute;

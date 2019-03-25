@@ -4,10 +4,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faQuestion } from '@fortawesome/free-solid-svg-icons'
 import ConfigContext from 'Config/ConfigContext'
 import ModalContext from 'Modal/ModalContext'
-
+import './style.scss'
 const InfoModalButton = props => {
   return (
-    <ConfigContext.Consumer className="info-modal-button">
+    <ConfigContext.Consumer>
       {config => {
         if (!config.infoModals[props.modalConstant]) return null
         return (
@@ -15,6 +15,7 @@ const InfoModalButton = props => {
             {modal => {
               return (
                 <FontAwesomeIcon
+                  className="info-modal-button"
                   icon={faQuestion}
                   onClick={() =>
                     modal.setModal({
