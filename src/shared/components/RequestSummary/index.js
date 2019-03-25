@@ -30,18 +30,19 @@ class RequestSummary extends React.Component {
   render() {
     return (
       <Row className="request-summary">
-        <Col className="pr-0" xs={11}>
+        <Col className="pr-md-0" xs={10} md={11}>
           {this.props.resultsComponent({
             selected: this.props.selected,
             request: this.props.request,
             results: this.props.results,
+            totalResults: this.props.totalResults,
             loading: this.props.loading,
             error: this.props.error,
             handleClick: this.handleClick,
           })}
         </Col>
         {!this.props.print && (
-          <Col xs={1} className="pl-0 pr-1">
+          <Col xs={2} md={1} className="px-1">
             <InfoModalButton modalConstant={this.getInfoKey()} />
           </Col>
         )}
@@ -72,6 +73,7 @@ export const mapStateToProps = (state, ownProps) => {
     loading: loadingSelector(state),
     error: errorSelector(state),
     results: state.requests[ownProps.request.requestConstant],
+    totalResults: state.requests[(ownProps.totalRequest || {}).requestConstant],
   }
 }
 

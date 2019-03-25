@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Card, Button } from 'react-bootstrap'
-import CardLoader from 'shared/components/CardLoader'
+import CardLoaderMapIcon from 'shared/components/CardLoaderMapIcon'
 import classnames from 'classnames'
 
 import './style.scss'
@@ -16,11 +16,11 @@ const SummaryResultCard = props => {
       onClick={props.handleClick}
     >
       <Card.Body className="d-flex flex-row p-0">
-        <p className="d-flex align-content-center text-left m-0 pr-1 summary-result-card__label">
+        <p className="d-flex flex-column align-content-center justify-content-center text-left m-0 pr-1 summary-result-card__label">
           {props.request.label}
         </p>
         <div className="align-self-center summary-result-card__result">
-          {props.loading ? <CardLoader /> : <h2 className="m-0">{props.results.length}</h2>}
+          {props.loading ? <CardLoaderMapIcon /> : <h2 className="m-0">{props.results.length}</h2>}
         </div>
       </Card.Body>
     </Card>
@@ -40,5 +40,6 @@ SummaryResultCard.propTypes = {
   resultsComponent: PropTypes.func,
   request: PropTypes.object,
   selected: PropTypes.bool,
+  results: PropTypes.array,
 }
 export default SummaryResultCard
