@@ -4,7 +4,8 @@ import { setSearchTimeout, queryAddress } from 'Store/Search/actions'
 import { requestWithAuth } from 'shared/utilities/authUtils'
 import { Form } from 'react-bootstrap'
 import { StandardizedInput } from 'shared/classes/StandardizedInput'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTimesCircle } from '@fortawesome/free-regular-svg-icons'
 import classnames from 'classnames'
 import SpinnerLoader from 'shared/components/Loaders/SpinnerLoader'
 import './style.scss'
@@ -62,6 +63,11 @@ export default class SearchBar extends React.PureComponent {
           type="text"
           value={this.props.searchValue}
         />
+        {this.props.show && (
+          <div className="search-bar__close" onClick={e => this.props.hideSearch(e, true)}>
+            <FontAwesomeIcon className="text-warning" size="lg" icon={faTimesCircle} />
+          </div>
+        )}
         <div className="search-bar__loading">{this.props.loading && <SpinnerLoader size="40px" />}</div>
       </div>
     )

@@ -8,11 +8,21 @@
     border-bottom-right-radius: 0;
   }
 
+  .search-bar__close,
   .search-bar__loading {
     position: absolute;
     right: 5px;
     top: 0;
     height: 100%;
     width: 50px;
+    z-index: 999;
+  }
+
+  .search-bar__close {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
   }
 }

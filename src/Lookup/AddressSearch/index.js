@@ -43,8 +43,9 @@ class AddressSearch extends React.Component {
     window.removeEventListener('click', this.hideSearch)
   }
 
-  hideSearch(e) {
-    if (e.target.closest('.address-search')) return
+  hideSearch(e, override = false) {
+    e.preventDefault()
+    if (!override && !!e.target.closest('.address-search')) return
     this.setState({
       show: false,
     })
@@ -97,12 +98,15 @@ class AddressSearch extends React.Component {
           selectedResult={this.state.selectedResult}
           searchValue={this.state.searchValue || this.props.search.searchQuery}
           setSearchValue={this.setSearchValue}
+          hideSearch={this.hideSearch}
+          show={!!this.props.search.results.length && this.state.show}
         />
         <SearchResults
           dispatch={this.props.dispatch}
           error={this.props.error}
           searchResultsRef={this.searchResultsRef}
           show={this.state.show}
+          hideSearch={this.hideSearch}
           results={this.props.search.results}
         />
       </div>
