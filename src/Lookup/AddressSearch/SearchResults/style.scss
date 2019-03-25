@@ -1,7 +1,7 @@
 @import './src/shared/styles/bootstrap/index.scss';
 
 .search-results {
-  background-color: $gray-300;
+  background-color: $white;
   position: absolute;
   width: 100%;
   z-index: 502;
@@ -9,9 +9,9 @@
   .search-results__wrapper {
     outline-color: $input-btn-focus-color;
     outline-width: $input-btn-focus-width;
-    background-color: $gray-300;
-    margin: 0;
+    background-color: $white;
     position: absolute;
+    margin: 0;
     width: 100%;
   }
 }

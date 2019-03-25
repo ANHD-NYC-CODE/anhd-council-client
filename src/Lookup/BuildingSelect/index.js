@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { getCurrentBuilding } from 'Lookup/utilities'
 import { addressResultToPath } from 'shared/utilities/routeUtils'
 import { StandardizedInput } from 'shared/classes/StandardizedInput'
+import SpinnerLoader from 'shared/components/Loaders/SpinnerLoader'
 import { Form, InputGroup, Row, Col, Button } from 'react-bootstrap'
 import CustomSelect from 'shared/components/CustomSelect'
 import BaseLink from 'shared/components/BaseLink'
@@ -64,7 +65,11 @@ class BuildingSelect extends React.Component {
           </Col>
         </Row>
       </Form>
-    ) : null
+    ) : (
+      <div className="my-4">
+        <SpinnerLoader size="" />
+      </div>
+    )
   }
 }
 
