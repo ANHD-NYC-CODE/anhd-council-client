@@ -100,9 +100,9 @@ class AlertMapShow extends React.PureComponent {
                   />
                 </Col>
               </Row>
-              <Row className="py-2">
-                <Col xs={12} sm={6} md={4}>
-                  <Row className="mb-2">
+              <Row className="py-2 mb-4 mb-lg-0">
+                <Col xs={12} lg={4}>
+                  <Row className="mt-2 mb-4 mt-lg-0 mb-lg-2">
                     <Col>
                       <ToggleButtonGroup
                         name="dateRange"
@@ -128,21 +128,22 @@ class AlertMapShow extends React.PureComponent {
                       </ToggleButtonGroup>
                     </Col>
                   </Row>
-                  <Row>
-                    <Col>
-                      {this.props.selectedRequest.type === 'ADVANCED_SEARCH' && (
+                  {this.props.selectedRequest.type === 'ADVANCED_SEARCH' && (
+                    <Row className="py-2 mb-4 mb-lg-0">
+                      <Col>
+                        <h5>Custom Search:</h5>
                         <AdvancedSearchSentence advancedSearch={this.props.advancedSearch} />
-                      )}
-                    </Col>
-                  </Row>
+                      </Col>
+                    </Row>
+                  )}
                 </Col>
-                <Col xs={12} sm={6} md={8}>
+                <Col xs={12} lg={8}>
                   <Row>
                     {this.props.geographyRequests.map((request, index) => {
                       return (
                         <Col
                           xs={12}
-                          md={6}
+                          sm={6}
                           xl={4}
                           key={`rs-col-${index}`}
                           className="geography-request-summary__container"
@@ -158,7 +159,7 @@ class AlertMapShow extends React.PureComponent {
                       )
                     })}
                     {!this.props.geographyRequests.some(r => r.type === 'ADVANCED_SEARCH') && (
-                      <Col className="geography-request-summary__container" xs={12} md={6} xl={4}>
+                      <Col className="geography-request-summary__container" xs={12} sm={6} xl={4}>
                         <Col className="pr-0" xs={11}>
                           <Card className="border-0">
                             <Card.Body>
@@ -174,7 +175,7 @@ class AlertMapShow extends React.PureComponent {
               </Row>
               <Row>
                 <Col xs={12} lg={3}>
-                  <Row>
+                  <Row className="py-2 mb-4 mb-lg-0">
                     {this.props.housingTypeRequests.map((request, index) => {
                       return (
                         <Col
@@ -200,52 +201,60 @@ class AlertMapShow extends React.PureComponent {
                   </Row>
                 </Col>
                 <Col xs={12} lg={6}>
-                  <ToggleButtonGroup
-                    name="view"
-                    type="radio"
-                    className="view-toggle"
-                    value={this.state.view}
-                    onChange={this.toggleView}
-                  >
-                    <ToggleButton value={1}>Map View</ToggleButton>
-                    <ToggleButton value={2}>Table View</ToggleButton>
-                  </ToggleButtonGroup>
+                  <Row className="py-2 mb-4 mb-lg-0">
+                    <Col>
+                      <ToggleButtonGroup
+                        name="view"
+                        type="radio"
+                        className="view-toggle"
+                        value={this.state.view}
+                        onChange={this.toggleView}
+                      >
+                        <ToggleButton value={1}>Map View</ToggleButton>
+                        <ToggleButton value={2}>Table View</ToggleButton>
+                      </ToggleButtonGroup>
 
-                  {this.state.view === 1 ? (
-                    <ConfigContext.Consumer>
-                      {config => {
-                        return (
-                          <LeafletMap
-                            appState={this.props.appState}
-                            councilDistricts={config.councilDistricts}
-                            communityDistricts={config.communityDistricts}
-                            currentGeographyType={this.props.appState.currentGeographyType}
-                            handleChangeGeography={this.props.handleChangeGeography}
-                            handleChangeGeographyId={this.props.handleChangeGeographyId}
-                            iconConfig="MULTIPLE"
-                            selectedRequest={this.props.selectedRequest}
-                            selectGeographyData={config.selectGeographyData}
-                          />
-                        )
-                      }}
-                    </ConfigContext.Consumer>
-                  ) : (
-                    this.props.geographyRequests.concat(this.props.housingTypeRequests).map((request, index) => {
-                      return (
-                        <RequestWrapper
-                          key={`request-wrapper-${this.props.appState.requests.indexOf(request)}`}
-                          visible={this.props.selectedRequest === request}
-                          request={request}
-                        />
-                      )
-                    })
-                  )}
+                      {this.state.view === 1 ? (
+                        <ConfigContext.Consumer>
+                          {config => {
+                            return (
+                              <LeafletMap
+                                appState={this.props.appState}
+                                councilDistricts={config.councilDistricts}
+                                communityDistricts={config.communityDistricts}
+                                currentGeographyType={this.props.appState.currentGeographyType}
+                                handleChangeGeography={this.props.handleChangeGeography}
+                                handleChangeGeographyId={this.props.handleChangeGeographyId}
+                                iconConfig="MULTIPLE"
+                                selectedRequest={this.props.selectedRequest}
+                                selectGeographyData={config.selectGeographyData}
+                              />
+                            )
+                          }}
+                        </ConfigContext.Consumer>
+                      ) : (
+                        this.props.geographyRequests.concat(this.props.housingTypeRequests).map((request, index) => {
+                          return (
+                            <RequestWrapper
+                              key={`request-wrapper-${this.props.appState.requests.indexOf(request)}`}
+                              visible={this.props.selectedRequest === request}
+                              request={request}
+                            />
+                          )
+                        })
+                      )}
+                    </Col>
+                  </Row>
                 </Col>
                 <Col sm={12} lg={3}>
-                  <GeographyProfile
-                    currentGeographyType={this.props.appState.currentGeographyType}
-                    currentGeographyId={this.props.appState.currentGeographyId}
-                  />
+                  <Row className="py-2 mb-4 mb-lg-0">
+                    <Col>
+                      <GeographyProfile
+                        currentGeographyType={this.props.appState.currentGeographyType}
+                        currentGeographyId={this.props.appState.currentGeographyId}
+                      />
+                    </Col>
+                  </Row>
                 </Col>
               </Row>
             </div>
