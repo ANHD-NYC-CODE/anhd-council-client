@@ -29,8 +29,8 @@ const LookupProfileSummary = props => {
           return layout.print ? (
             <PrintLookupProfileSummary profile={profile} />
           ) : (
-            <Card className="lookup-profile-summary">
-              <Card.Body className="lookup-profile-summary__body">
+            <Card className="lookup-profile-summary p-0 m-0">
+              <Card.Body className="lookup-profile-summary__body p-0">
                 <PropertySummaryBody profile={profile} />
                 <Row>
                   <Col>
