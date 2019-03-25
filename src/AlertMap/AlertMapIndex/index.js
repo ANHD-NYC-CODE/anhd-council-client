@@ -9,10 +9,10 @@ const AlertMapIndex = props => {
   return (
     <div className="alert-map-index">
       <Row>
-        <Col className="touch-left padding-xs-sm-0" xs={12} md={6} lg={5}>
+        <Col className="touch-left padding-xs-sm-0" xs={12} lg={5}>
           <IntroductionBlock />
         </Col>
-        <Col className="px-md-4 py-md-6" xs={12} md={6} lg={7}>
+        <Col className="px-md-4 py-3 py-lg-6" xs={12} lg={7}>
           <Row className="mb-4">
             <Col>
               <p className="text-muted font-weight-bold">Select a district to begin.</p>
