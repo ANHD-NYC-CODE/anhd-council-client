@@ -17,14 +17,22 @@ const HousingTypeSummaryResultCard = props => {
       onClick={props.handleClick}
     >
       <div className="housingtype-summary-result-card__wrapper">
-        <p className="housingtype-summary-result-card__title font-weight-bold">{props.request.label}</p>
+        <h5 className="housingtype-summary-result-card__title font-weight-bold">{props.request.label}</h5>
         {props.loading ? (
           <SpinnerLoader />
         ) : (
           <div className="housingtype-summary-result-card__inner-wrapper d-flex flex-row justify-content-between w-100">
             <div className="d-flex flex-column align-items-flex-start h-100 text-left">
-              <p>{props.results.length} properties</p>
-              <p>{props.results.reduce((total, result) => parseInt(total) + parseInt(result['unitsres']), 0)} units</p>
+              <p>
+                <span className="font-weight-bold">{props.results.length}</span>{' '}
+                <span className="text-dark-gray">properties</span>
+              </p>
+              <p>
+                <span className="font-weight-bold">
+                  {props.results.reduce((total, result) => parseInt(total) + parseInt(result['unitsres']), 0)}
+                </span>{' '}
+                <span className="text-dark-gray">units</span>
+              </p>
             </div>
             <div className="d-flex flex-column align-items-flex-end h-100 text-right">
               {props.totalResults && !!props.totalResults.length && (
