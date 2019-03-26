@@ -1,27 +1,13 @@
 @import 'shared/styles/bootstrap/_variables.scss';
 
 .condition {
-  width: 900px;
-
-  @include media-breakpoint-up(xl) {
-    width: 1100px;
-  }
-
-  .condition {
-    border-left: 1px dotted black;
-    margin-left: 40px;
-    @include media-breakpoint-up(sm) {
-      margin-left: 120px;
-    }
+  .new-filter-row {
+    font-weight: bold;
+    justify-content: flex-start;
   }
 
   .condition-control-column {
     align-items: flex-start;
-  }
-
-  .new-filter-row {
-    font-weight: bold;
-    justify-content: flex-start;
   }
 
   .control-button {

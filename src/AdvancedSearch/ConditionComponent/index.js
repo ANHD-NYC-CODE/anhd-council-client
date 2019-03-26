@@ -126,7 +126,13 @@ export class ConditionComponent extends React.Component {
 
     return (
       <Form.Row className="condition">
-        <Col xs={2} className="condition-control flex-column align-self-center">
+        {!isCondition0() && (
+          <div className="form-row__connection-container condition-connection d-flex flex-column">
+            <div className="form-row__connection" />
+            <div className="form-row__connection" />
+          </div>
+        )}
+        <Col xs={4} sm={2} className="condition-control flex-column align-self-center">
           <div className="condition-control-column d-flex flex-column">
             {isCondition0() && !this.props.condition.hasCondition() ? (
               <DropdownButton
@@ -171,19 +177,22 @@ export class ConditionComponent extends React.Component {
             )}
           </div>
         </Col>
-        <Col xs={10}>
+        <Col xs={8} sm={10}>
           <FormError
             show={!!this.props.condition.errors.length}
             message={(this.props.condition.errors[0] || {}).message}
           />
 
-          {this.standardFilters().map(filter => {
-            return renderFilterOrCondition(filter, this.props.condition.filters.indexOf(filter))
-          })}
-
-          {this.newFilterFilter().map(filter => {
-            return renderFilterOrCondition(filter, this.props.condition.filters.indexOf(filter))
-          })}
+          <div className="form-row__container">
+            {this.standardFilters().map(filter => {
+              return renderFilterOrCondition(filter, this.props.condition.filters.indexOf(filter))
+            })}
+          </div>
+          <div className="form-row__container">
+            {this.newFilterFilter().map(filter => {
+              return renderFilterOrCondition(filter, this.props.condition.filters.indexOf(filter))
+            })}
+          </div>
 
           <div className="new-filter-row d-flex my-2">
             {this.props.condition.filters.some(filter => filter.id === 'NEW_FILTER') ? (
@@ -213,10 +222,11 @@ export class ConditionComponent extends React.Component {
               </Button>
             )}
           </div>
-
-          {this.conditionGroupFilters().map(filter => {
-            return renderFilterOrCondition(filter, this.props.condition.filters.indexOf(filter))
-          })}
+          <div className="form-row__container">
+            {this.conditionGroupFilters().map(filter => {
+              return renderFilterOrCondition(filter, this.props.condition.filters.indexOf(filter))
+            })}
+          </div>
         </Col>
       </Form.Row>
     )
