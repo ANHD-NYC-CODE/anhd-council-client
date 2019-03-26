@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { createLoadingSelector } from 'Store/Loading/selectors'
+import { createErrorSelector } from 'Store/Error/selectors'
 import { getCurrentBuilding } from 'Lookup/utilities'
 import { addressResultToPath } from 'shared/utilities/routeUtils'
 import { StandardizedInput } from 'shared/classes/StandardizedInput'
@@ -26,7 +28,7 @@ class BuildingSelect extends React.Component {
 
   render() {
     const selectedBuilding = getCurrentBuilding(this.props.buildings, this.props.bin)
-    return this.props.buildings.length ? (
+    return !this.props.loading ? (
       <Form className="building-select">
         <Row className="mb-2">
           <Col className="text-muted font-weight-bold">List of buildings</Col>
@@ -85,7 +87,12 @@ BuildingSelect.propTypes = {
 }
 
 const mapStateToProps = (state, ownProps) => {
+  const loadingSelector = createLoadingSelector([ownProps.request.requestConstant])
+  const errorSelector = createErrorSelector([ownProps.request.requestConstant])
+
   return {
+    loading: loadingSelector(state),
+    error: errorSelector(state),
     buildings: (state.requests[ownProps.request.requestConstant] || {}).buildings,
   }
 }

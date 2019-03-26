@@ -58,10 +58,9 @@ export default class SearchBar extends React.PureComponent {
           ref={this.props.searchBarRef}
           onChange={this.onInputChange}
           size="lg"
-          placeholder={this.props.placeholder || 'Type an address to search'}
+          placeholder={this.props.searchValue || this.props.placeholder || 'Type an address to search'}
           tabIndex={0}
           type="text"
-          value={this.props.searchValue}
         />
         {this.props.show && (
           <div className="search-bar__close" onClick={e => this.props.hideSearch(e, true)}>

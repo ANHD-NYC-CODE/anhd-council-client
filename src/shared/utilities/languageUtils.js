@@ -120,7 +120,7 @@ export const boroCodeToName = code => {
 export const constructAddressString = ({ number, street, borough, zip } = {}) => {
   return `${number ? `${number} ` : ''}${street ? `${borough ? `${street}, ` : `${street}`}` : ''}${
     borough ? `${borough} ` : ''
-  }${zip ? `${zip} ` : zip}`
+  }${zip ? `${zip} ` : ''}`
 }
 
 export const councilIdToString = id => {
