@@ -23,14 +23,13 @@
   }
 
   .form-row__connection-container {
-    flex: 0 1 20px;
-    margin-right: 10px;
+    flex: 0 1 40px;
   }
 
   .form-row__connection {
     display: inline-block;
     flex: 1 1 100%;
-    width: 20px;
+    width: 40px;
     border-right: 5px double $gray-400;
     margin-right: 40px;
     @include media-breakpoint-up(md) {
@@ -45,6 +44,7 @@
   .condition-connection {
     .form-row__connection {
       border-right: 5px double $primary;
+      margin-right: 0px;
     }
 
     .form-row__connection:first-child {

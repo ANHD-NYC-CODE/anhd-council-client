@@ -1,13 +1,10 @@
 @import 'shared/styles/bootstrap/_variables.scss';
 
 .condition {
+  min-height: 200px;
   .new-filter-row {
     font-weight: bold;
     justify-content: flex-start;
-  }
-
-  .condition-control-column {
-    align-items: flex-start;
   }
 
   .control-button {

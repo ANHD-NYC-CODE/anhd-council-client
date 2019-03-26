@@ -12,6 +12,7 @@ import AdvancedSearchForm from 'AdvancedSearch/AdvancedSearchForm'
 import ConfigContext from 'Config/ConfigContext'
 import { setAppState } from 'Store/AppState/actions'
 import classnames from 'classnames'
+import { PinchView } from 'react-pinch-zoom-pan'
 
 import './style.scss'
 export class AdvancedSearch extends React.Component {
@@ -80,18 +81,20 @@ export class AdvancedSearch extends React.Component {
             </Row>
           </Col>
           <Col className="advanced-search-form--container px-lg-5" xs={12} lg={8}>
-            <ConfigContext.Consumer>
-              {config => (
-                <AdvancedSearchForm
-                  advancedSearch={this.props.advancedSearch}
-                  appState={this.props.appState}
-                  config={config}
-                  dispatch={this.props.dispatch}
-                  error={this.props.error}
-                  loading={this.props.loading}
-                />
-              )}
-            </ConfigContext.Consumer>
+            <PinchView debug backgroundColor="white" initialScale={1} minScale={0.1} maxScale={4}>
+              <ConfigContext.Consumer>
+                {config => (
+                  <AdvancedSearchForm
+                    advancedSearch={this.props.advancedSearch}
+                    appState={this.props.appState}
+                    config={config}
+                    dispatch={this.props.dispatch}
+                    error={this.props.error}
+                    loading={this.props.loading}
+                  />
+                )}
+              </ConfigContext.Consumer>
+            </PinchView>
           </Col>
         </Row>
       </div>
