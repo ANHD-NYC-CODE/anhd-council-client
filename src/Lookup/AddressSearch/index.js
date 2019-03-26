@@ -16,7 +16,6 @@ class AddressSearch extends React.Component {
   constructor(props) {
     super(props)
 
-    this.dispatchSelectedBuildingResult = this.dispatchSelectedBuildingResult.bind(this)
     this.clearSelectedSearch = this.clearSelectedSearch.bind(this)
     this.setSearchValue = this.setSearchValue.bind(this)
     this.showSearch = this.showSearch.bind(this)
@@ -44,7 +43,6 @@ class AddressSearch extends React.Component {
   }
 
   hideSearch(e, override = false) {
-    e.preventDefault()
     if (!override && !!e.target.closest('.address-search')) return
     this.setState({
       show: false,
@@ -73,16 +71,6 @@ class AddressSearch extends React.Component {
     this.props.dispatch(clearSearch())
   }
 
-  dispatchSelectedBuildingResult(result = null) {
-    const selectedResult = result || this.state.selectedResult || this.props.search.results[0]
-    this.setState({
-      show: false,
-    })
-    if (!selectedResult) return
-    this.setState({ selectedResult: selectedResult })
-    this.props.dispatch(clearSearch())
-  }
-
   render() {
     return (
       <div className="address-search mb-2" ref={this.addressRef}>
@@ -92,7 +80,6 @@ class AddressSearch extends React.Component {
           inputClass={this.props.inputClass}
           clearSelectedSearch={this.clearSelectedSearch}
           dispatch={this.props.dispatch}
-          dispatchSelectedBuildingResult={this.dispatchSelectedBuildingResult}
           placeholder={this.props.placeholder}
           searchTimeout={this.props.search.searchTimeout}
           selectedResult={this.state.selectedResult}

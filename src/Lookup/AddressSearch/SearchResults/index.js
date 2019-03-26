@@ -16,6 +16,7 @@ const SearchResults = props => {
           result.propertyaddress}, ${result.borough}`
       )
     )
+    props.hideSearch(e)
     props.dispatch(setLookupAndRequestsAndRedirect({ bbl: result.bbl, bin: result.bin }))
   }
 
