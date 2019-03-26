@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { Card, Button } from 'react-bootstrap'
 import SpinnerLoader from 'shared/components/Loaders/SpinnerLoader'
 import classnames from 'classnames'
-import { Row, Col } from 'react-bootstrap'
 import './style.scss'
 const HousingTypeSummaryResultCard = props => {
   return (
@@ -25,13 +24,13 @@ const HousingTypeSummaryResultCard = props => {
             <div className="d-flex flex-column align-items-flex-start h-100 text-left">
               <p>
                 <span className="font-weight-bold">{props.results.length}</span>{' '}
-                <span className="text-dark-gray">properties</span>
+                <span className="summary-units">properties</span>
               </p>
               <p>
                 <span className="font-weight-bold">
                   {props.results.reduce((total, result) => parseInt(total) + parseInt(result['unitsres']), 0)}
                 </span>{' '}
-                <span className="text-dark-gray">units</span>
+                <span className="summary-units">units</span>
               </p>
             </div>
             <div className="d-flex flex-column align-items-flex-end h-100 text-right">
