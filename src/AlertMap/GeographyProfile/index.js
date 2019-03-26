@@ -1,19 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Card, Row, Col, Button } from 'react-bootstrap'
+import { Card, Row, Col } from 'react-bootstrap'
 import { geographySelectionToString } from 'shared/utilities/languageUtils'
 import { communityToCommunityProfileLink } from 'shared/utilities/routeUtils'
 import BaseLink from 'shared/components/BaseLink'
+
+import './style.scss'
+
 const GeographyProfile = props => {
   return (
-    <Card className="geography-links">
+    <div className="geography-links">
       <Card.Body>
-        <Card.Title>
-          {geographySelectionToString({ type: props.currentGeographyType, id: props.currentGeographyId })}
-        </Card.Title>
+        <h4>{geographySelectionToString({ type: props.currentGeographyType, id: props.currentGeographyId })}</h4>
+        <h6>External Links:</h6>
         {renderLinks(props)}
       </Card.Body>
-    </Card>
+    </div>
   )
 }
 
@@ -23,14 +25,21 @@ const renderLinks = props => {
       return (
         <Col>
           <Row>
-            <Button
+            <BaseLink
+              as={BaseLink}
+              href={`https://council.nyc.gov/district-${props.currentGeographyId}/`}
+              text="City Council Website"
+            />
+          </Row>
+          <Row>
+            <BaseLink
               as={BaseLink}
               href={'https://www1.nyc.gov/site/planning/data-maps/nyc-population/census-2010.page'}
               text="Census & Demographic Data"
             />
           </Row>
           <Row>
-            <Button
+            <BaseLink
               as={BaseLink}
               href="https://popfactfinder.planning.nyc.gov/#12.25/40.724/-73.9868"
               text="Population Fact Finder Map"
@@ -42,7 +51,7 @@ const renderLinks = props => {
       return (
         <Col>
           <Row>
-            <Button
+            <BaseLink
               as={BaseLink}
               href={`https://communityprofiles.planning.nyc.gov${communityToCommunityProfileLink(
                 props.currentGeographyId
@@ -51,14 +60,14 @@ const renderLinks = props => {
             />
           </Row>
           <Row>
-            <Button
+            <BaseLink
               as={BaseLink}
               href={'https://www1.nyc.gov/site/planning/data-maps/nyc-population/census-2010.page'}
               text="Census & Demographic Data"
             />
           </Row>
           <Row>
-            <Button
+            <BaseLink
               as={BaseLink}
               href="https://popfactfinder.planning.nyc.gov/#12.25/40.724/-73.9868"
               text="Population Fact Finder Map"

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import GeographySelect from 'shared/components/GeographySelect'
-import { Card, Row, Col, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
+import { Card, Row, Col, Button, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
 import AdvancedSearchSentence from 'AdvancedSearch/Sentence'
 import LayoutContext from 'Layout/LayoutContext'
 
@@ -112,16 +112,16 @@ class AlertMapShow extends React.PureComponent {
                       >
                         <ToggleButton
                           variant="outline-primary"
-                          className="p-1"
+                          className="p-1 toggle-link"
                           value={alertMapFilterdates()[2]}
                         >{`Last 3 Years (${moment(alertMapFilterdates()[2]).format('YYYY')})`}</ToggleButton>
                         <ToggleButton
-                          className="p-1"
+                          className="p-1 toggle-link"
                           variant="outline-primary"
                           value={alertMapFilterdates()[1]}
                         >{`Last Year (${moment(alertMapFilterdates()[1]).format('YYYY')})`}</ToggleButton>
                         <ToggleButton
-                          className="p-1"
+                          className="p-1 toggle-link"
                           variant="outline-primary"
                           value={alertMapFilterdates()[0]}
                         >{`Last Month (${moment(alertMapFilterdates()[0]).format('MM/YYYY')})`}</ToggleButton>
@@ -129,12 +129,12 @@ class AlertMapShow extends React.PureComponent {
                     </Col>
                   </Row>
                   {this.props.selectedRequest.type === 'ADVANCED_SEARCH' && (
-                    <Row className="py-2 mb-4 mb-lg-0">
+                    <div className="py-2 mb-4 mb-lg-0">
                       <Col>
                         <h5>Custom Search:</h5>
                         <AdvancedSearchSentence advancedSearch={this.props.advancedSearch} />
                       </Col>
-                    </Row>
+                    </div>
                   )}
                 </Col>
                 <Col xs={12} lg={8}>
@@ -159,13 +159,13 @@ class AlertMapShow extends React.PureComponent {
                       )
                     })}
                     {!this.props.geographyRequests.some(r => r.type === 'ADVANCED_SEARCH') && (
-                      <Col className="geography-request-summary__container" xs={12} sm={6} xl={4}>
-                        <Col className="pr-0" xs={11}>
-                          <Card className="border-0">
-                            <Card.Body>
-                              <BaseLink href="/search" text="+ Add Custom Filter" />
-                            </Card.Body>
-                          </Card>
+                      <Col className="geography-request-summary__container d-flex" xs={12} sm={6} xl={4}>
+                        <Col className="align-self-center pr-0" xs={11}>
+                          <BaseLink href="/search">
+                            <Card className="">
+                              <Card.Body>+ Add Custom Filter</Card.Body>
+                            </Card>
+                          </BaseLink>
                         </Col>
                         <Col xs={1} className="pl-0 pr-1" />
                       </Col>
@@ -201,8 +201,8 @@ class AlertMapShow extends React.PureComponent {
                   </Row>
                 </Col>
                 <Col xs={12} lg={6}>
-                  <Row className="py-2 mb-4 mb-lg-0">
-                    <Col>
+                  <Row className="mb-2 mb-lg-0">
+                    <Col className="d-flex justify-content-end">
                       <ToggleButtonGroup
                         name="view"
                         type="radio"
@@ -210,10 +210,17 @@ class AlertMapShow extends React.PureComponent {
                         value={this.state.view}
                         onChange={this.toggleView}
                       >
-                        <ToggleButton value={1}>Map View</ToggleButton>
-                        <ToggleButton value={2}>Table View</ToggleButton>
+                        <ToggleButton className="toggle-link" value={1}>
+                          Map View
+                        </ToggleButton>
+                        <ToggleButton className="toggle-link" value={2}>
+                          Table View
+                        </ToggleButton>
                       </ToggleButtonGroup>
-
+                    </Col>
+                  </Row>
+                  <Row className="py-2 mb-4 mb-lg-0">
+                    <Col>
                       {this.state.view === 1 ? (
                         <ConfigContext.Consumer>
                           {config => {

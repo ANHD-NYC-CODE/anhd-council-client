@@ -8,7 +8,7 @@ const GeographyGeoJson = props => {
     if (props.currentGeographyId == geography.properties.id) return '#f7f8c6' // yellow
     if (props.changingGeographyId == geography.properties.id) return '#dfcdd3'
     // crimson
-    else return displayGeographyType === 'COUNCIL' ? '#4c8ad8' : '#e74c2d' // blue | orange
+    else return displayGeographyType === 'COUNCIL' ? '#4c8ad8' : '#f5862c' // blue | orange
   }
 
   const getFillOpacity = geography => {

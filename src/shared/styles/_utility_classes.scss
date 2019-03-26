@@ -5,3 +5,47 @@
 .text-dark-gray {
   color: $gray-700;
 }
+
+label.toggle-link.btn,
+label.toggle-link.btn:active,
+label.btn-primary:not(:disabled):not(.disabled):active {
+  background: transparent;
+  color: $primary;
+  border: 2px solid transparent;
+  border-radius: 10px !important;
+  outline: 0;
+  cursor: pointer;
+  margin-right: 2px;
+  margin-bottom: 2px;
+  box-shadow: none;
+  text-decoration: underline;
+}
+
+@media (hover: hover) {
+  label.toggle-link.btn:hover:not(.active) {
+    background: transparent;
+    border: 2px dashed transparent;
+    border-bottom: 4px double $primary;
+    border-radius: 0px !important;
+    outline: 0;
+    cursor: pointer;
+    margin-right: 2px;
+    margin-bottom: 2px;
+    box-shadow: none;
+    text-decoration: none;
+  }
+}
+
+label.toggle-link.active.btn,
+label.toggle-link.focus.active.btn-outline-primary:not(:disabled),
+label.toggle-link.active.btn-outline-primary:not(:disabled),
+label.toggle-link.focus.active.btn-primary:not(:disabled),
+label.toggle-link.active.btn-primary:not(:disabled) {
+  background-color: transparent;
+  color: $gray-600;
+  border: 3px dashed $gray-600;
+  box-sizing: border-box;
+  outline: 0;
+  cursor: pointer;
+  text-decoration: none;
+}
