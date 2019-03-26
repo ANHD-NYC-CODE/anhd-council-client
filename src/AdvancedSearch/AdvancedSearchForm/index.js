@@ -34,6 +34,7 @@ class AdvancedSearchForm extends React.Component {
 
     this.state = {
       validated: false,
+      hasErrors: false,
     }
 
     this.submitForm = this.submitForm.bind(this)
@@ -151,8 +152,10 @@ class AdvancedSearchForm extends React.Component {
         allFilters.some(filter => !!filter.errors.length) ||
         allParamMaps.some(paramMap => !!paramMap.errors.length)
       ) {
+        this.setState({ hasErrors: true })
         return
       } else {
+        this.setState({ hasErrors: false })
         this.props.dispatch(setAdvancedSearchRequestAndRedirect({ redirect: true }))
       }
     })
@@ -212,7 +215,11 @@ class AdvancedSearchForm extends React.Component {
               validateForm={this.validateForm}
             />
 
-            <div className="w-100 d-flex justify-content-end my-4">
+            <div className="w-100 d-flex flex-column align-items-end my-4">
+              <FormError
+                show={!!this.state.hasErrors || !!Object.keys(errors).length}
+                message="Please correct errors before proceeding."
+              />
               <Button disabled={this.props.loading} size="lg" type="submit" variant="primary">
                 Submit
               </Button>

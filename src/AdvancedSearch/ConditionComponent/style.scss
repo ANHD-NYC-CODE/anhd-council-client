@@ -1,24 +1,18 @@
 @import 'shared/styles/bootstrap/_variables.scss';
 
 .condition {
-  width: 350px;
+  width: 900px;
 
-  @include media-breakpoint-up(sm) {
-    width: 700px;
-  }
-  @include media-breakpoint-up(md) {
-    width: 800px;
-  }
-  @include media-breakpoint-up(lg) {
-    width: 620px;
-  }
   @include media-breakpoint-up(xl) {
-    width: 800px;
+    width: 1000px;
   }
 
   .condition {
-    margin-left: 120px;
     border-left: 1px dotted black;
+    margin-left: 40px;
+    @include media-breakpoint-up(sm) {
+      margin-left: 120px;
+    }
   }
 
   .condition-control-column {
@@ -26,6 +20,7 @@
   }
 
   .new-filter-row {
+    font-weight: bold;
     justify-content: flex-start;
   }
 
@@ -35,7 +30,7 @@
 
   .control-button.dropdown.btn-group {
     margin: 0;
-    padding: 0;
+    padding: inherit 0;
   }
 
   .control-button.add-filter,
@@ -49,11 +44,11 @@
     font-weight: bold;
     min-width: 80px;
     max-width: 80px;
-    padding: 5px;
-    font-size: 22px;
+    margin: 0;
+    padding-left: 5px;
+    padding-right: 5px;
 
     @include media-breakpoint-up(sm) {
-      font-size: inherit;
       min-width: 100px;
       max-width: 120px;
     }
@@ -61,6 +56,8 @@
   .control-button .dropdown-menu {
     background-color: lighten($success, 20%);
     margin: 0;
+    padding-left: 0;
+    padding-right: 0;
     a {
       font-weight: bold;
     }

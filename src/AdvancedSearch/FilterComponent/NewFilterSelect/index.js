@@ -28,6 +28,7 @@ const NewFilterSelect = props => {
             as="select"
             className="new-filter-select"
             name="newFilter"
+            size=""
             onChange={e => props.onChange(props.filterIndex, e)}
             value={props.value || -1}
           >

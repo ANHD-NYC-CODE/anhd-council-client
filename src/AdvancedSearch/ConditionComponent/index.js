@@ -25,7 +25,9 @@ export class ConditionComponent extends React.Component {
     this.replaceFilter = this.replaceFilter.bind(this)
     this.createNewFilter = this.createNewFilter.bind(this)
     this.switchCondition = this.switchCondition.bind(this)
-
+    this.standardFilters = this.standardFilters.bind(this)
+    this.newFilterFilter = this.newFilterFilter.bind(this)
+    this.conditionGroupFilters = this.conditionGroupFilters.bind(this)
     this.state = {
       creatingFilter: false,
     }
@@ -66,6 +68,18 @@ export class ConditionComponent extends React.Component {
     this.dispatchAction()
   }
 
+  standardFilters() {
+    return this.props.condition.filters.filter(filter => !filter.conditionGroup && filter.id !== 'NEW_FILTER')
+  }
+
+  newFilterFilter() {
+    return this.props.condition.filters.filter(filter => filter.id == 'NEW_FILTER')
+  }
+
+  conditionGroupFilters() {
+    return this.props.condition.filters.filter(filter => !!filter.conditionGroup)
+  }
+
   render() {
     const isCondition0 = () => {
       return this.props.condition.key === '0'
@@ -89,7 +103,7 @@ export class ConditionComponent extends React.Component {
             filter={filter}
             filterIndex={filterIndex}
             onChange={this.replaceFilter}
-            key={`new-filter-${this.props.condition.key}-${filter.id}`}
+            key={`new-filter-${this.props.condition.key}-${filter.id}-${filterIndex}`}
           />
         )
       } else {
@@ -103,7 +117,7 @@ export class ConditionComponent extends React.Component {
             dispatchAction={this.dispatchAction}
             filter={filter}
             filterIndex={filterIndex}
-            key={`filter-${this.props.condition.key}-${filter.id}`}
+            key={`filter-${this.props.condition.key}-${filter.id}-${filterIndex}`}
             replaceFilter={this.replaceFilter}
           />
         )
@@ -112,7 +126,7 @@ export class ConditionComponent extends React.Component {
 
     return (
       <Form.Row className="condition">
-        <Col xs={4} sm={2} className="condition-control flex-column align-self-center">
+        <Col xs={2} className="condition-control flex-column align-self-center">
           <div className="condition-control-column d-flex flex-column">
             {isCondition0() && !this.props.condition.hasCondition() ? (
               <DropdownButton
@@ -123,10 +137,20 @@ export class ConditionComponent extends React.Component {
                 variant="success"
                 id="bg-vertical-dropdown-1"
               >
-                <Dropdown.Item className="control-button" eventKey="1" onClick={() => this.switchCondition('AND')}>
+                <Dropdown.Item
+                  className="control-button"
+                  eventKey="1"
+                  size="lg"
+                  onClick={() => this.switchCondition('AND')}
+                >
                   And
                 </Dropdown.Item>
-                <Dropdown.Item className="control-button" eventKey="2" onClick={() => this.switchCondition('OR')}>
+                <Dropdown.Item
+                  className="control-button"
+                  eventKey="2"
+                  size="lg"
+                  onClick={() => this.switchCondition('OR')}
+                >
                   Or
                 </Dropdown.Item>
               </DropdownButton>
@@ -147,19 +171,24 @@ export class ConditionComponent extends React.Component {
             )}
           </div>
         </Col>
-        <Col xs={8} sm={10}>
+        <Col xs={10}>
           <FormError
             show={!!this.props.condition.errors.length}
             message={(this.props.condition.errors[0] || {}).message}
           />
 
-          {this.props.condition.filters.map((filter, conditionKey) => {
-            return renderFilterOrCondition(filter, conditionKey)
+          {this.standardFilters().map(filter => {
+            return renderFilterOrCondition(filter, this.props.condition.filters.indexOf(filter))
           })}
-          <div className="new-filter-row d-flex">
+
+          {this.newFilterFilter().map(filter => {
+            return renderFilterOrCondition(filter, this.props.condition.filters.indexOf(filter))
+          })}
+
+          <div className="new-filter-row d-flex my-2">
             {this.props.condition.filters.some(filter => filter.id === 'NEW_FILTER') ? (
               <Button
-                className="control-button remove-add-filter"
+                className="remove-add-filter"
                 size="lg"
                 onClick={() =>
                   this.props.condition.removeNewFilters({
@@ -168,19 +197,26 @@ export class ConditionComponent extends React.Component {
                 }
                 variant="warning"
               >
-                <FontAwesomeIcon icon={faTimes} />
+                <FontAwesomeIcon icon={faTimes} /> Cancel
               </Button>
             ) : (
               <Button
-                className="control-button add-filter"
+                className="add-filter"
                 size="lg"
-                onClick={() => this.createNewFilter()}
+                onClick={e => {
+                  e.preventDefault()
+                  this.createNewFilter()
+                }}
                 variant="success"
               >
-                <FontAwesomeIcon icon={faPlus} />
+                <FontAwesomeIcon icon={faPlus} /> New filter
               </Button>
             )}
           </div>
+
+          {this.conditionGroupFilters().map(filter => {
+            return renderFilterOrCondition(filter, this.props.condition.filters.indexOf(filter))
+          })}
         </Col>
       </Form.Row>
     )
