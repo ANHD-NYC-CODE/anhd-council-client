@@ -1,6 +1,68 @@
+@import 'shared/styles/bootstrap/index.scss';
+
 .condition {
+  width: 350px;
+
+  @include media-breakpoint-up(sm) {
+    width: 700px;
+  }
+  @include media-breakpoint-up(md) {
+    width: 800px;
+  }
+  @include media-breakpoint-up(lg) {
+    width: 620px;
+  }
+  @include media-breakpoint-up(xl) {
+    width: 700px;
+  }
+
   .condition {
     margin-left: 120px;
     border-left: 1px dotted black;
+  }
+
+  .condition-control-column {
+    align-items: flex-start;
+  }
+
+  .new-filter-row {
+    justify-content: flex-start;
+  }
+
+  .control-button {
+    margin: 0.25rem;
+  }
+
+  .control-button.dropdown.btn-group {
+    margin: 0;
+    padding: 0;
+  }
+
+  .control-button.add-filter,
+  .control-button.remove-add-filter {
+    margin-left: 0;
+  }
+  .control-button,
+  .control-button.btn,
+  .control-button .dropdown-toggle,
+  .control-button .dropdown-menu {
+    font-weight: bold;
+    min-width: 80px;
+    max-width: 80px;
+    padding: 5px;
+    font-size: 22px;
+
+    @include media-breakpoint-up(sm) {
+      font-size: inherit;
+      min-width: 100px;
+      max-width: 120px;
+    }
+  }
+  .control-button .dropdown-menu {
+    background-color: lighten($success, 20%);
+    margin: 0;
+    a {
+      font-weight: bold;
+    }
   }
 }
