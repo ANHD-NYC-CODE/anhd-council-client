@@ -141,7 +141,7 @@ class BaseTable extends React.Component {
         pagination={paginationFactory(this.props.tableConfig.paginationOptions(this.state, this.setPage))}
       >
         {({ paginationProps, paginationTableProps }) => (
-          <div className="base-table">
+          <div className={`base-table ${this.props.wrapperClasses}`}>
             {!this.props.nested && (
               <Row>
                 <Col xs={8}>

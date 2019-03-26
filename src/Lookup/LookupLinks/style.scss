@@ -1,0 +1,11 @@
+@import 'shared/styles/bootstrap/index.scss';
+
+.lookup-links {
+  background-color: $gray-400;
+
+  a {
+    color: $primary;
+    font-weight: bold;
+    text-decoration: underline;
+  }
+}
