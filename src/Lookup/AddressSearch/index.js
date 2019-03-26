@@ -34,12 +34,14 @@ class AddressSearch extends React.Component {
     this.addressRef.current.addEventListener('focus', this.showSearch)
     this.searchBarRef.current.addEventListener('focus', this.showSearch)
     window.addEventListener('click', this.hideSearch)
+    window.addEventListener('touchstart', this.hideSearch)
   }
 
   componentWillUnmount() {
     this.addressRef.current.removeEventListener('focus', this.showSearch)
     this.searchBarRef.current.removeEventListener('focus', this.showSearch)
     window.removeEventListener('click', this.hideSearch)
+    window.removeEventListener('touchstart', this.hideSearch)
   }
 
   hideSearch(e, override = false) {
