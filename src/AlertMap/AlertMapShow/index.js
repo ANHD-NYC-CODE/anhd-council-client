@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import GeographySelect from 'shared/components/GeographySelect'
-import { Card, Row, Col, Button, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
+import { Card, Row, Col, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
 import AdvancedSearchSentence from 'AdvancedSearch/Sentence'
 import LayoutContext from 'Layout/LayoutContext'
 
@@ -53,6 +53,7 @@ class AlertMapShow extends React.PureComponent {
 
   switchTable(request) {
     this.props.switchSelectedRequest(request)
+    this.props.cancelChangeGeography()
   }
 
   render() {
