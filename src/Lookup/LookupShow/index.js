@@ -90,7 +90,7 @@ class LookupShow extends React.Component {
                     <RequestWrapper request={this.props.profileRequest} visible={true} />
                   </Col>
                 </Row>
-                <Row>
+                <Row className="mb-4">
                   <Col>
                     <LeafletMap
                       appState={this.props.appState}
@@ -106,7 +106,7 @@ class LookupShow extends React.Component {
                     />
                   </Col>
                 </Row>
-                <Row>
+                <Row className="mb-4">
                   <Col>
                     <LookupLinks request={this.props.profileRequest} />
                   </Col>
@@ -124,7 +124,7 @@ class LookupShow extends React.Component {
                             </h3>
                           </Col>
                           <Col xs={3}>
-                            <PrintButton textClass="text-muted" title={this.getPrintTitle()} />
+                            <PrintButton textClass="text-muted d-none d-md-block" title={this.getPrintTitle()} />
                           </Col>
                         </Row>
                         <BuildingSelect

@@ -32,41 +32,37 @@ const LookupProfileSummary = props => {
             <Card className="lookup-profile-summary p-0 m-0">
               <Card.Body className="lookup-profile-summary__body p-0">
                 <PropertySummaryBody profile={profile} />
-                <Row>
-                  <Col>
-                    {profile.hpdregistrations.length ? (
-                      <div>
-                        <BaseTable
-                          caption="HPD Registrations"
-                          classes="fluid-table"
-                          columns={getTableColumns('HPD_REGISTRATION')}
-                          dispatch={props.dispatch}
-                          records={profile.hpdregistrations}
-                          request={props.request}
-                          tableConfig={new TableConfig({ resourceConstant: 'HPD_REGISTRATION' })}
-                        />
-                      </div>
-                    ) : (
-                      <Card.Text>No HPD Registrations Found</Card.Text>
-                    )}
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <Card.Text className="lookup-profile-summary__group">
-                      <BaseLink
-                        href={geographyToLink('COUNCIL', profile.council)}
-                        text={councilIdToString(profile.council)}
-                      />
+
+                <div className="lookup-profile-summary__bottom-info py-4">
+                  {profile.hpdregistrations.length ? (
+                    <BaseTable
+                      caption="HPD Registrations"
+                      classes="fluid-table"
+                      wrapperClasses="text-light-gray"
+                      columns={getTableColumns('HPD_REGISTRATION')}
+                      dispatch={props.dispatch}
+                      records={profile.hpdregistrations}
+                      request={props.request}
+                      tableConfig={new TableConfig({ resourceConstant: 'HPD_REGISTRATION' })}
+                    />
+                  ) : (
+                    <Card.Text className="text-light-gray text-center font-weight-bold my-4">
+                      No HPD Registrations Found
                     </Card.Text>
-                    <Card.Text className="lookup-profile-summary__group">
-                      <BaseLink
-                        href={geographyToLink('COMMUNITY', profile.cd)}
-                        text={`Community District  ${communityIdToString(profile.cd)}`}
-                      />
-                    </Card.Text>
-                  </Col>
-                </Row>
+                  )}
+                  <h5 className="lookup-profile-summary__group lookup-profile-summary__geography-link">
+                    <BaseLink
+                      href={geographyToLink('COUNCIL', profile.council)}
+                      text={councilIdToString(profile.council)}
+                    />
+                  </h5>
+                  <p className="lookup-profile-summary__group lookup-profile-summary__geography-link">
+                    <BaseLink
+                      href={geographyToLink('COMMUNITY', profile.cd)}
+                      text={`Community District  ${communityIdToString(profile.cd)}`}
+                    />
+                  </p>
+                </div>
               </Card.Body>
             </Card>
           )

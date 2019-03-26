@@ -70,7 +70,7 @@ class Main extends React.Component {
             <p className="text-muted font-weight-bold">Select a district or enter a building address to begin.</p>
             <div className="mb-4">
               <div>
-                <AddressSearch inputClass="xl-form-control" placeholder="Building Lookup Tool" />
+                <AddressSearch inputClass="xl-form-control" placeholder="Enter an address" />
               </div>
               <div className="mt-5">
                 <GeographySelect

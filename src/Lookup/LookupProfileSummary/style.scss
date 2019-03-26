@@ -1,3 +1,5 @@
+@import 'shared/styles/bootstrap/index.scss';
+
 .lookup-profile-summary.card {
   border: 0;
   background-color: transparent;
@@ -7,7 +9,18 @@
   .lookup-profile-summary__body {
     margin: 0 15px;
   }
-  .lookup-profile-summary__group {
-    font-size: 18px;
+
+  .lookup-profile-summary__bottom-info {
+    margin: 0 -15px;
+  }
+
+  .lookup-profile-summary__geography-link {
+    a {
+      color: $tab-blue;
+      text-decoration: underline;
+    }
+  }
+
+  .lookup-profile-summary__geography-link:first-child {
   }
 }
