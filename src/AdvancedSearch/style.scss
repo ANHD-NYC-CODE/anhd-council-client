@@ -1,10 +1,57 @@
 @import 'shared/styles/bootstrap/_variables.scss';
 
-
 .advanced-search {
   .advanced-search-form--container {
-    overflow-x: auto;
+    overflow: auto;
+    max-height: 100vh;
   }
+
+  .form-row__container {
+    width: 900px;
+
+    @include media-breakpoint-up(xl) {
+      width: 1100px;
+    }
+  }
+
+  div.condition-control {
+    padding: 0;
+  }
+
+  .condition.form-row {
+    flex-wrap: nowrap;
+  }
+
+  .form-row__connection-container {
+    flex: 0 1 20px;
+    margin-right: 10px;
+  }
+
+  .form-row__connection {
+    display: inline-block;
+    flex: 1 1 100%;
+    width: 20px;
+    border-right: 5px double $gray-400;
+    margin-right: 40px;
+    @include media-breakpoint-up(md) {
+      margin-right: 80px;
+    }
+  }
+
+  .form-row__connection:first-child {
+    border-bottom: 5px double $gray-400;
+  }
+
+  .condition-connection {
+    .form-row__connection {
+      border-right: 5px double $primary;
+    }
+
+    .form-row__connection:first-child {
+      border-bottom: 5px double $primary;
+    }
+  }
+
   .advanced-search__row {
     align-items: center;
     background-color: $gray-700;

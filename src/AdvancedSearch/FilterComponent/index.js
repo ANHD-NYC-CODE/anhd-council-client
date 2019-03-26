@@ -21,7 +21,12 @@ export class FilterComponent extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="filter-component  d-flex">
+        <div className="form-row__connection-container filter-connection d-flex flex-column">
+          <div className="form-row__connection" />
+          <div className="form-row__connection" />
+        </div>
+
         <Form.Row className="filter align-content-center">
           <Form.Group as={Col} xs={9}>
             {this.props.filter &&
