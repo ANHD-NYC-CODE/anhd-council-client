@@ -12,7 +12,7 @@ const HousingTypeSelect = props => {
           name="housingTypeSelect"
           onChange={e => props.onChange(e, props.housingTypeIndex)}
           placeholder="Search housing type"
-          size="sm"
+          size="lg"
           value={props.value}
         >
           {config.housingTypeModels.map((housingType, index) => {

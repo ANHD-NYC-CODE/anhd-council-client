@@ -27,4 +27,12 @@
   p {
     margin: 0;
   }
+
+  .summary-units {
+    color: $gray-700;
+  }
+
+  &.active .summary-units {
+    color: inherit;
+  }
 }

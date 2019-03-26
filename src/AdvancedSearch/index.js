@@ -82,7 +82,7 @@ export class AdvancedSearch extends React.Component {
               </Col>
             </Row>
           </Col>
-          <Col className="advanced-search-form--container py-2" xs={12} lg={8}>
+          <Col className="advanced-search-form--container py-2 px-lg-5" xs={12} lg={8}>
             <ConfigContext.Consumer>
               {config => (
                 <AdvancedSearchForm
