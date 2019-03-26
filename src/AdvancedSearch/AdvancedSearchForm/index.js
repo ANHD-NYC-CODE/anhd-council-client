@@ -172,7 +172,7 @@ class AdvancedSearchForm extends React.Component {
         {({ handleSubmit, handleChange, handleBlur, touched, errors, submitCount }) => (
           <Form noValidate className="advanced-search-form" onSubmit={handleSubmit} validated={this.state.validated}>
             <FormError show={!!this.props.error} message={(this.props.error || {}).message} />
-            <h4 className="text-dark-gray mt-4 mb-4">1) Select a geography</h4>
+            <h4 className="text-muted font-weight-bold text-uppercase mt-4 mb-4">1) Select a geography</h4>
             <GeographySelect
               cancelChangeGeography={this.cancelChangeGeography}
               changing={this.props.appState.changingGeography}
@@ -189,7 +189,7 @@ class AdvancedSearchForm extends React.Component {
               errors={errors}
               handleChangeGeographyType={this.handleChangeGeographyType}
             />
-            <h4 className="text-dark-gray mt-5 mb-4">2) Select a housing type</h4>
+            <h4 className="text-muted font-weight-bold text-uppercase mt-5 mb-4">2) Select a housing type</h4>
             <HousingTypeQuery
               addHousingType={this.addHousingType}
               changeHousingType={this.changeHousingType}
@@ -201,7 +201,7 @@ class AdvancedSearchForm extends React.Component {
               errors={errors}
               submitCount={submitCount}
             />
-            <h4 className="text-dark-gray mt-5 mb-4">3) Add filters</h4>
+            <h4 className="text-muted font-weight-bold text-uppercase mt-5 mb-4">3) Add filters</h4>
             <ConditionComponent
               conditions={this.props.advancedSearch.conditions}
               condition={this.props.advancedSearch.conditions[0]}
@@ -212,9 +212,11 @@ class AdvancedSearchForm extends React.Component {
               validateForm={this.validateForm}
             />
 
-            <Button disabled={this.props.loading} type="submit" variant="primary">
-              Submit
-            </Button>
+            <div className="w-100 d-flex justify-content-end my-4">
+              <Button disabled={this.props.loading} size="lg" type="submit" variant="primary">
+                Submit
+              </Button>
+            </div>
           </Form>
         )}
       </Formik>

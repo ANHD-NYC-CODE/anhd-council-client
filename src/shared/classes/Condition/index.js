@@ -18,6 +18,7 @@ export class Condition {
   }
 
   set type(type) {
+    if (type !== 'AND' && type !== 'OR') throw 'Please pass type AND or OR'
     this._type = type
   }
 

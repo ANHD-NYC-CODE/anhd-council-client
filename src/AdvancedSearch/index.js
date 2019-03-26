@@ -7,9 +7,6 @@ import { createErrorSelector } from 'Store/Error/selectors'
 import { connect } from 'react-redux'
 
 import AdvancedSearchSentence from 'AdvancedSearch/Sentence'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faAtlas } from '@fortawesome/free-solid-svg-icons'
-
 import { Row, Col, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
 import AdvancedSearchForm from 'AdvancedSearch/AdvancedSearchForm'
 import ConfigContext from 'Config/ConfigContext'
@@ -82,7 +79,7 @@ export class AdvancedSearch extends React.Component {
               </Col>
             </Row>
           </Col>
-          <Col className="advanced-search-form--container py-2 px-lg-5" xs={12} lg={8}>
+          <Col className="advanced-search-form--container px-lg-5" xs={12} lg={8}>
             <ConfigContext.Consumer>
               {config => (
                 <AdvancedSearchForm

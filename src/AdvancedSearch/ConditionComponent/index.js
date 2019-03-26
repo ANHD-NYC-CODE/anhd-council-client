@@ -5,9 +5,13 @@ import { StandardizedInput } from 'shared/classes/StandardizedInput'
 import NewFilterSelect from 'AdvancedSearch/FilterComponent/NewFilterSelect'
 import uuidv4 from 'uuid/v4'
 import { addNewCondition, updateCondition, removeCondition } from 'Store/AdvancedSearch/actions'
-import { Form, Button, Col, ButtonGroup } from 'react-bootstrap'
+import { Form, Button, Col, ButtonGroup, DropdownButton, Dropdown } from 'react-bootstrap'
 import FormError from 'shared/components/FormError'
 import FilterComponent from 'AdvancedSearch/FilterComponent'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faMinus } from '@fortawesome/free-solid-svg-icons'
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
 import './style.scss'
 
@@ -57,9 +61,8 @@ export class ConditionComponent extends React.Component {
     this.dispatchAction()
   }
 
-  switchCondition() {
-    const e = new StandardizedInput({ value: this.props.condition.type })
-    this.props.condition.toggleAndOrConditionType(e)
+  switchCondition(value) {
+    this.props.condition.type = value
     this.dispatchAction()
   }
 
@@ -109,48 +112,42 @@ export class ConditionComponent extends React.Component {
 
     return (
       <Form.Row className="condition">
-        <Col xs={2} className="condition-control flex-column align-self-center">
-          <ButtonGroup vertical>
+        <Col xs={4} sm={2} className="condition-control flex-column align-self-center">
+          <div className="condition-control-column d-flex flex-column">
             {isCondition0() && !this.props.condition.hasCondition() ? (
-              <Button className="switch-condition" size="sm" onClick={() => this.switchCondition()}>
-                {this.props.condition.type}
-              </Button>
+              <DropdownButton
+                className="control-button"
+                as={ButtonGroup}
+                title={this.props.condition.type}
+                size="lg"
+                variant="success"
+                id="bg-vertical-dropdown-1"
+              >
+                <Dropdown.Item className="control-button" eventKey="1" onClick={() => this.switchCondition('AND')}>
+                  And
+                </Dropdown.Item>
+                <Dropdown.Item className="control-button" eventKey="2" onClick={() => this.switchCondition('OR')}>
+                  Or
+                </Dropdown.Item>
+              </DropdownButton>
             ) : (
-              <Button size="sm" disabled>
+              <Button className="control-button" size="lg" variant="success" disabled>
                 {this.props.condition.type}
               </Button>
             )}
             {!isCondition0() && (
               <Button
-                className="remove-condition"
-                size="sm"
+                className="control-button remove-condition"
+                size="lg"
                 onClick={() => this.removeCondition(this.props.condition.key)}
                 variant="outline-danger"
               >
-                - {this.props.condition.type.toUpperCase()}
+                <FontAwesomeIcon icon={faMinus} />
               </Button>
             )}
-            {this.props.condition.filters.some(filter => filter.id === 'NEW_FILTER') ? (
-              <Button
-                className="remove-add-filter"
-                size="sm"
-                onClick={() =>
-                  this.props.condition.removeNewFilters({
-                    dispatchAction: this.dispatchAction,
-                  })
-                }
-                variant="warning"
-              >
-                X
-              </Button>
-            ) : (
-              <Button className="add-filter" size="sm" onClick={() => this.createNewFilter()} variant="success">
-                +
-              </Button>
-            )}
-          </ButtonGroup>
+          </div>
         </Col>
-        <Col xs={10}>
+        <Col xs={8} sm={10}>
           <FormError
             show={!!this.props.condition.errors.length}
             message={(this.props.condition.errors[0] || {}).message}
@@ -159,6 +156,31 @@ export class ConditionComponent extends React.Component {
           {this.props.condition.filters.map((filter, conditionKey) => {
             return renderFilterOrCondition(filter, conditionKey)
           })}
+          <div className="new-filter-row d-flex">
+            {this.props.condition.filters.some(filter => filter.id === 'NEW_FILTER') ? (
+              <Button
+                className="control-button remove-add-filter"
+                size="lg"
+                onClick={() =>
+                  this.props.condition.removeNewFilters({
+                    dispatchAction: this.dispatchAction,
+                  })
+                }
+                variant="warning"
+              >
+                <FontAwesomeIcon icon={faTimes} />
+              </Button>
+            ) : (
+              <Button
+                className="control-button add-filter"
+                size="lg"
+                onClick={() => this.createNewFilter()}
+                variant="success"
+              >
+                <FontAwesomeIcon icon={faPlus} />
+              </Button>
+            )}
+          </div>
         </Col>
       </Form.Row>
     )
