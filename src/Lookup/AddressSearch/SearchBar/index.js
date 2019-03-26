@@ -58,7 +58,7 @@ export default class SearchBar extends React.PureComponent {
           ref={this.props.searchBarRef}
           onChange={this.onInputChange}
           size="lg"
-          placeholder={this.props.searchValue || this.props.placeholder || 'Type an address to search'}
+          placeholder={this.props.searchValue || this.props.placeholder || 'Enter an address'}
           tabIndex={0}
           type="text"
         />

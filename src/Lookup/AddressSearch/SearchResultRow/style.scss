@@ -1,11 +1,12 @@
 @import './src/shared/styles/bootstrap/index.scss';
 
 .search-result-row {
-  background-color: $gray-100;
+  background-color: $white;
   cursor: pointer;
   font-size: $font-size-base;
   padding: 10px;
   z-index: 501;
+  border-bottom: 1px dashed $gray-600;
 
   svg {
     width: 40px;
@@ -19,7 +20,7 @@
 
 @media (hover: hover) {
   .search-result-row:hover {
-    box-shadow: inset 1px -2px 2px 0 map-get($theme-colors, primary);
+    box-shadow: inset 0px -1px 1px 0 $secondary;
   }
   .search-result-row.no-result {
     box-shadow: none;

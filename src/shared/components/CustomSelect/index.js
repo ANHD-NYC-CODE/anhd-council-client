@@ -124,7 +124,6 @@ const CustomSelect = props => {
       autosize={true}
       {...props}
       components={{
-        DropdownIndicator: () => null,
         IndicatorSeparator: () => null,
       }}
       className={props.className}
