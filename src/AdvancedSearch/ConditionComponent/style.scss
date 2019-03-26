@@ -1,4 +1,4 @@
-@import 'shared/styles/bootstrap/index.scss';
+@import 'shared/styles/bootstrap/_variables.scss';
 
 .condition {
   width: 350px;
@@ -13,7 +13,7 @@
     width: 620px;
   }
   @include media-breakpoint-up(xl) {
-    width: 700px;
+    width: 800px;
   }
 
   .condition {
