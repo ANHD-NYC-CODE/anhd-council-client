@@ -16,11 +16,7 @@ const HousingTypeParamSet = props => {
       </Form.Group>
       <Col xs={2} className="flex-column">
         <ButtonGroup className="align-self-center">
-          <Button
-            size="sm"
-            onClick={() => props.paramSet.deleteAll({ dispatchAction: props.dispatchAction })}
-            variant="danger"
-          >
+          <Button onClick={() => props.paramSet.deleteAll({ dispatchAction: props.dispatchAction })} variant="danger">
             -
           </Button>
         </ButtonGroup>

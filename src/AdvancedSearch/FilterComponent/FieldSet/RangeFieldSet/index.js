@@ -31,7 +31,7 @@ const hasPropertyAdjective = props => {
 const RangeFieldSet = props => {
   return (
     <Form.Row>
-      <InputGroup as={Col} xs={12} sm={12} md={hasPropertyAdjective(props) ? 12 : 2} size="sm">
+      <InputGroup as={Col} xs={12} sm={12} md={hasPropertyAdjective(props) ? 12 : 2}>
         <InputGroup.Prepend>
           {hasPropertyAdjective(props) && (
             <InputGroup.Text>{props.paramMapRangeGroup[0].languageModule.propertyAdjective}</InputGroup.Text>
@@ -66,7 +66,6 @@ const RangeFieldSet = props => {
           return (
             <InputGroup
               as={Col}
-              size="sm"
               xs={12}
               sm={12}
               md={hasPropertyAdjective(props) ? 6 : 5}

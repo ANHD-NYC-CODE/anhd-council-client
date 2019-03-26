@@ -10,6 +10,9 @@ const customStyle = size => {
           ...base,
           minHeight: '1px',
           height: '38px',
+          border: '0 !important',
+          boxShadow: 'none',
+          outline: 'none',
         }),
         dropdownIndicator: base => ({
           ...base,
@@ -49,6 +52,8 @@ const customStyle = size => {
           ...base,
           minHeight: '1px',
           border: 'none',
+          boxShadow: 'none',
+          outline: 'none',
         }),
         dropdownIndicator: base => ({
           ...base,
@@ -82,6 +87,9 @@ const customStyle = size => {
           ...base,
           minHeight: '1px',
           height: '60px',
+          border: '0 !important',
+          boxShadow: 'none',
+          outline: 'none',
         }),
         dropdownIndicator: base => ({
           ...base,
@@ -113,6 +121,45 @@ const customStyle = size => {
           marginTop: '0px',
           minHeight: '1px',
           height: '60px',
+        }),
+      }
+    default:
+      return {
+        control: base => ({
+          ...base,
+          minHeight: '1px',
+          border: '0 !important',
+          boxShadow: 'none',
+          outline: 'none',
+        }),
+        dropdownIndicator: base => ({
+          ...base,
+          paddingTop: 0,
+          paddingBottom: 0,
+        }),
+        clearIndicator: base => ({
+          ...base,
+          paddingTop: 0,
+          paddingBottom: 0,
+        }),
+        container: base => ({
+          ...base,
+          marginTop: '0px',
+          minHeight: '1px',
+        }),
+        menu: base => ({
+          ...base,
+          marginTop: '0px',
+          zIndex: '10',
+        }),
+        menuList: base => ({
+          ...base,
+          marginTop: '0px',
+        }),
+        valueContainer: base => ({
+          ...base,
+          marginTop: '0px',
+          minHeight: '1px',
         }),
       }
   }

@@ -12,7 +12,6 @@ const DateField = props => {
       max={props.paramMap.validations.max}
       name="value"
       onChange={props.onChange}
-      size="sm"
       type={props.type || 'date'}
       value={props.paramMap.value}
     />
