@@ -16,7 +16,7 @@ import ConfigContext from 'Config/ConfigContext'
 import PrintButton from 'shared/components/PrintButton'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
-
+import classnames from 'classnames'
 import { geographySelectionToString } from 'shared/utilities/languageUtils'
 
 import GeographyProfile from 'AlertMap/GeographyProfile'
@@ -222,7 +222,7 @@ class AlertMapShow extends React.PureComponent {
                   </Row>
                   <Row className="py-2 mb-4 mb-lg-0">
                     <Col>
-                      {this.state.view === 1 ? (
+                      <div className={classnames({ 'd-none': this.state.view !== 1 })}>
                         <ConfigContext.Consumer>
                           {config => {
                             return (
@@ -240,8 +240,9 @@ class AlertMapShow extends React.PureComponent {
                             )
                           }}
                         </ConfigContext.Consumer>
-                      ) : (
-                        this.props.geographyRequests.concat(this.props.housingTypeRequests).map((request, index) => {
+                      </div>
+                      <div className={classnames({ 'd-none': this.state.view === 1 })}>
+                        {this.props.geographyRequests.concat(this.props.housingTypeRequests).map((request, index) => {
                           return (
                             <RequestWrapper
                               key={`request-wrapper-${this.props.appState.requests.indexOf(request)}`}
@@ -249,8 +250,8 @@ class AlertMapShow extends React.PureComponent {
                               request={request}
                             />
                           )
-                        })
-                      )}
+                        })}
+                      </div>
                     </Col>
                   </Row>
                 </Col>

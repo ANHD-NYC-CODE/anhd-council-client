@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { constructSentence } from 'AdvancedSearch/utilities/sentenceUtils'
 
 export const AdvancedSearchSentence = props => {
-  return <div className="advanced-search-sentence">{constructSentence(props.advancedSearch)}</div>
+  return <div className="advanced-search__sentence">{constructSentence(props.advancedSearch)}</div>
 }
 
 AdvancedSearchSentence.propTypes = {

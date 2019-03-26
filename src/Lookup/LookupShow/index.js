@@ -113,7 +113,7 @@ class LookupShow extends React.Component {
                 </Row>
               </Col>
               <Col xs={12} lg={8}>
-                <Row className="mt-2 mb-4 mt-lg-4 mb-lg-2">
+                <Row className="mt-2 mb-4 mt-lg-4 mb-lg-2 px-xl-5">
                   <Col>
                     <Row>
                       <Col>

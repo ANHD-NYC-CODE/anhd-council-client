@@ -21,6 +21,12 @@ label.btn-primary:not(:disabled):not(.disabled):active {
   text-decoration: underline;
 }
 
+label.toggle-link.btn.light,
+label.toggle-link.btn.light:active,
+label.btn-primary:not(:disabled):not(.disabled).light:active {
+  color: $property-blue;
+}
+
 @media (hover: hover) {
   label.toggle-link.btn:hover:not(.active) {
     background: transparent;
@@ -33,6 +39,10 @@ label.btn-primary:not(:disabled):not(.disabled):active {
     margin-bottom: 2px;
     box-shadow: none;
     text-decoration: none;
+  }
+
+  label.toggle-link.btn:hover:not(.active).light {
+    border-bottom: 4px double $property-blue;
   }
 }
 
@@ -48,4 +58,13 @@ label.toggle-link.active.btn-primary:not(:disabled) {
   outline: 0;
   cursor: pointer;
   text-decoration: none;
+}
+
+label.toggle-link.active.btn.light.active,
+label.toggle-link.focus.active.btn-outline-primary:not(:disabled).light.active,
+label.toggle-link.active.btn-outline-primary:not(:disabled).light.active,
+label.toggle-link.focus.active.btn-primary:not(:disabled).light.active,
+label.toggle-link.active.btn-primary:not(:disabled).light.active {
+  color: $white;
+  border: 3px dashed $white;
 }

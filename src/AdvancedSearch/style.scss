@@ -1,3 +1,30 @@
-.advanced-search-form--container {
-  overflow-x: auto;
+@import 'shared/styles/bootstrap/index.scss';
+
+.advanced-search {
+  .advanced-search-form--container {
+    overflow-x: auto;
+  }
+  .advanced-search__row {
+    align-items: center;
+    background-color: $gray-700;
+    display: flex;
+    max-height: 80px;
+  }
+
+  .advanced-search__row-icon {
+    margin-left: -10px;
+    @include media-breakpoint-up(lg) {
+      margin-left: -40px;
+    }
+    text-align: right;
+  }
+
+  .advanced-search__left-column {
+    background-color: $gray-700;
+  }
+
+  .advanced-search__sentence,
+  .advanced-search__instructions {
+    color: $white;
+  }
 }
