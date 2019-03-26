@@ -95,12 +95,12 @@
   @media (hover: hover) {
     .sub-header__nav-tab:hover {
       background-color: lighten($tab-blue, 20%);
-      color: lighten($secondary, 20%);
+      color: $secondary;
     }
   }
   .sub-header__nav-tab.active {
     background-color: $tab-blue;
-    color: $secondary;
+    color: $nyc-orange;
   }
 
   .sub-header__nav-tab--inner {
@@ -122,6 +122,6 @@
   }
 
   .sub-header__nav-tab.active .nav-item {
-    border-left: 3px solid $secondary;
+    border-left: 3px solid $nyc-orange;
   }
 }
