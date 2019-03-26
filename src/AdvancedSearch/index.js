@@ -45,7 +45,7 @@ export class AdvancedSearch extends React.Component {
           <Col className="advanced-search__left-column px-lg-2 px-xl-5" xs={12} lg={4}>
             <Row className="advanced-search__row my-4">
               <Col xs={12} xl={11}>
-                <h3 className="text-light-gray font-weight-bold m-0">Advanced Search</h3>
+                <h3 className="text-light-gray text-uppercase font-weight-bold m-0">Advanced Search</h3>
               </Col>
             </Row>
             <Row className="mb-4">
@@ -82,7 +82,7 @@ export class AdvancedSearch extends React.Component {
               </Col>
             </Row>
           </Col>
-          <Col className="advanced-search-form--container py-5" xs={12} lg={8}>
+          <Col className="advanced-search-form--container py-2" xs={12} lg={8}>
             <ConfigContext.Consumer>
               {config => (
                 <AdvancedSearchForm
