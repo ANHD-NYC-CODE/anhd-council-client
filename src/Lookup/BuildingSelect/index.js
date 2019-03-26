@@ -57,7 +57,7 @@ class BuildingSelect extends React.Component {
                     href={`${addressResultToPath({ bbl: this.props.bbl })}`}
                     onClick={() => this.props.changeLookup(this.props.bbl)}
                   >
-                    <Button variant="secondary" size="lg">
+                    <Button variant="outline-secondary" size="lg">
                       Back to Property
                     </Button>
                   </BaseLink>
