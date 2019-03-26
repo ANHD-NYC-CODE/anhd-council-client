@@ -28,10 +28,12 @@ const SearchResultRow = props => {
         onClick={e => props.onClick(e, props.result)}
         to={addressResultToPath({ bbl: props.result.bbl, bin: props.result.bin })}
       >
-        <span>
-          <BuildingIcon />
-        </span>
-        <span>{`${props.result.propertyaddress.trim()}, ${props.result.borough}`}</span>
+        <div className="d-flex">
+          <span>
+            <BuildingIcon />
+          </span>
+          <span>{`${props.result.propertyaddress.trim()}, ${props.result.borough}`}</span>
+        </div>
       </div>
     )
   } else if (props.result.alternateaddress) {
@@ -41,10 +43,12 @@ const SearchResultRow = props => {
         onClick={e => props.onClick(e, props.result)}
         to={addressResultToPath({ bbl: props.result.bbl, bin: props.result.bin })}
       >
-        <span>
-          <BuildingIcon />
-        </span>
-        <span>{`${props.result.propertyaddress.trim()}, ${props.result.borough}`}</span>
+        <div className="d-flex">
+          <span>
+            <BuildingIcon />
+          </span>
+          <span>{`${props.result.propertyaddress.trim()}, ${props.result.borough}`}</span>
+        </div>
       </div>
     )
   } else {
