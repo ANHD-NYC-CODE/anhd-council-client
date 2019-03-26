@@ -132,8 +132,8 @@ export class ConditionComponent extends React.Component {
             <div className="form-row__connection" />
           </div>
         )}
-        <Col xs={4} sm={2} className="condition-control flex-column align-self-center">
-          <div className="condition-control-column d-flex flex-column">
+        <Col xs={3} sm={2} className="condition-control flex-column align-self-center">
+          <div className="condition-control-column d-flex align-items-center flex-column">
             {isCondition0() && !this.props.condition.hasCondition() ? (
               <DropdownButton
                 className="control-button"
@@ -177,7 +177,7 @@ export class ConditionComponent extends React.Component {
             )}
           </div>
         </Col>
-        <Col xs={8} sm={10}>
+        <Col xs={9} sm={10} className="d-flex flex-column justify-content-center">
           <FormError
             show={!!this.props.condition.errors.length}
             message={(this.props.condition.errors[0] || {}).message}
@@ -194,7 +194,7 @@ export class ConditionComponent extends React.Component {
             })}
           </div>
 
-          <div className="new-filter-row d-flex my-2">
+          <div className="new-filter-row d-flex my-4">
             {this.props.condition.filters.some(filter => filter.id === 'NEW_FILTER') ? (
               <Button
                 className="remove-add-filter"
