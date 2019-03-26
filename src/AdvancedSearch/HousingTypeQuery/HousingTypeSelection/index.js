@@ -30,7 +30,6 @@ const HousingTypeSelection = props => {
               <Button
                 className="housingtype-paramset--new-button"
                 variant="outline-primary"
-                size="sm"
                 onClick={() => paramSet.create({ dispatchAction: dispatchAction })}
               >
                 {paramSet.props.newButtonLabel}

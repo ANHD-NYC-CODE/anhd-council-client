@@ -6,7 +6,7 @@ import './style.scss'
 import CustomSelect from 'shared/components/CustomSelect'
 const MultiSelectField = props => {
   return (
-    <InputGroup size="sm">
+    <InputGroup>
       <InputGroup.Prepend>
         <InputGroup.Text>{props.paramMap.languageModule.noun}</InputGroup.Text>
       </InputGroup.Prepend>

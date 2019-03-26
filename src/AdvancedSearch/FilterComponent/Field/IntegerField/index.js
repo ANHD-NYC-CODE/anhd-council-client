@@ -13,7 +13,6 @@ const IntegerField = props => {
       max={props.paramMap.validations.max}
       name="value"
       onChange={e => props.paramMap.update({ dispatchAction: props.dispatchAction, e: new StandardizedInput(e) })}
-      size="sm"
       type={props.type || 'number'}
       value={props.paramMap.value}
     />
