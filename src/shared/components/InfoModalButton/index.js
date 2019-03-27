@@ -22,6 +22,7 @@ const InfoModalButton = props => {
                       modalProps: {
                         title: config.infoModals[props.modalConstant].title,
                         body: config.infoModals[props.modalConstant].body,
+                        sources: config.infoModals[props.modalConstant].sources,
                       },
                     })
                   }
