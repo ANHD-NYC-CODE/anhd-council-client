@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { StandardizedInput } from 'shared/classes/StandardizedInput'
 import { Form, InputGroup, Col } from 'react-bootstrap'
 import NewFilterSelect from 'AdvancedSearch/FilterComponent/NewFilterSelect'
-
+import classnames from 'classnames'
 const ComparisonFieldSet = props => {
   return (
     <Form.Row className="comparison-fieldset" key={props.key}>
@@ -16,6 +16,7 @@ const ComparisonFieldSet = props => {
         <Form.Control
           name="comparison"
           as="select"
+          className={classnames({ valued: !!props.paramMap.comparison })}
           data-range-key={props.paramMap.rangeKey}
           onChange={e =>
             props.paramMap.rangeKey

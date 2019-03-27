@@ -1,8 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Form, Button, Col, ButtonGroup } from 'react-bootstrap'
+import { Form, Button, Col } from 'react-bootstrap'
 import FormError from 'shared/components/FormError'
+import AddConditionButton from 'AdvancedSearch/FilterComponent/AddConditionButton'
+import RemoveFilterButton from 'AdvancedSearch/FilterComponent/RemoveFilterButton'
 
 import './style.scss'
 export class FilterComponent extends React.Component {
@@ -44,18 +46,13 @@ export class FilterComponent extends React.Component {
           </Form.Group>
           <Col xs={3} className="d-flex">
             <div className="align-self-center">
-              <Button size="" className="filter-control remove-filter" onClick={this.removeFilter} variant="danger">
-                -
-              </Button>
+              <RemoveFilterButton showPopups={this.props.showPopups} removeFilter={this.removeFilter} />
               {this.props.allowNewCondition && (
-                <Button
-                  size=""
-                  className="filter-control add-condition"
-                  onClick={() => this.props.addCondition(this.props.filterIndex)}
-                  variant="success"
-                >
-                  {'<'}
-                </Button>
+                <AddConditionButton
+                  addCondition={this.props.addCondition}
+                  filterIndex={this.props.filterIndex}
+                  showPopups={this.props.showPopups}
+                />
               )}
             </div>
           </Col>

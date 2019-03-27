@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { StandardizedInput } from 'shared/classes/StandardizedInput'
 import { Form, Col, InputGroup } from 'react-bootstrap'
+import classnames from 'classnames'
+
 const comparisonReconfigure = (props, e) => {
   e = new StandardizedInput(e)
   if (e.value.toUpperCase().match(/(LTE|END)/)) {
@@ -40,6 +42,7 @@ const RangeFieldSet = props => {
         <Form.Control
           name="comparison"
           as="select"
+          className={classnames({ valued: true })}
           data-range-key={props.paramMapRangeGroup[0].rangeKey}
           onChange={e => comparisonReconfigure(props, e)}
           value={

@@ -212,6 +212,7 @@ class AdvancedSearchForm extends React.Component {
               dispatch={this.props.dispatch}
               key={'condition-0'}
               conditionKey={'0'}
+              showPopups={this.props.showPopups}
               validateForm={this.validateForm}
             />
 
