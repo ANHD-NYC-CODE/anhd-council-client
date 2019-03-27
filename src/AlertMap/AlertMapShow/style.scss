@@ -1,13 +1,18 @@
 @import 'shared/styles/bootstrap/_variables.scss';
 
-
 .alert-map-show {
   .geography-select-row {
     align-items: center;
     background-color: $gray-700;
     display: flex;
-    @include media-breakpoint-up(lg) {
-      max-height: 80px;
+
+    div:first-child {
+      margin-bottom: 10px;
+    }
+    @include media-breakpoint-up(md) {
+      div:first-child {
+        margin-bottom: 0px;
+      }
     }
   }
 

@@ -51,9 +51,11 @@
 
   .advanced-search__left-column {
     background-color: $gray-700;
-    min-height: 100vh;
-  }
 
+    @include media-breakpoint-up(lg) {
+      min-height: 100vh;
+    }
+  }
   .advanced-search__sentence,
   .advanced-search__instructions {
     color: $white;

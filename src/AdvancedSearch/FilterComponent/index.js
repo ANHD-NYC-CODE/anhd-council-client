@@ -7,7 +7,7 @@ import AddConditionButton from 'AdvancedSearch/FilterComponent/AddConditionButto
 import RemoveFilterButton from 'AdvancedSearch/FilterComponent/RemoveFilterButton'
 
 import './style.scss'
-export class FilterComponent extends React.Component {
+export class FilterComponent extends React.PureComponent {
   constructor(props) {
     super(props)
 

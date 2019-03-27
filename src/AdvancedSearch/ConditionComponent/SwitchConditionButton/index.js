@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { ButtonGroup, Overlay, Tooltip, DropdownButton, Dropdown } from 'react-bootstrap'
-class SwitchConditionButton extends React.Component {
+class SwitchConditionButton extends React.PureComponent {
   constructor(props) {
     super(props)
 
@@ -17,7 +17,7 @@ class SwitchConditionButton extends React.Component {
   render() {
     return (
       <div>
-        <Overlay position={'left``'} show={this.props.showPopups} target={this.ref.current}>
+        <Overlay position={'left'} show={this.props.showPopups} target={this.ref.current}>
           {props => {
             return <Tooltip {...props}>Switch the logical condition type (and | or)</Tooltip>
           }}

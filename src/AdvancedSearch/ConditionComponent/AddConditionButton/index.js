@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Button, Overlay, Tooltip } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
-class AddConditionButton extends React.Component {
+class AddConditionButton extends React.PureComponent {
   constructor(props) {
     super(props)
 
@@ -19,7 +19,7 @@ class AddConditionButton extends React.Component {
   render() {
     return (
       <div className="ml-2">
-        <Overlay placement="right" show={this.props.showPopups} target={this.ref.current}>
+        <Overlay placement="top" show={this.props.showPopups} target={this.ref.current}>
           {props => {
             return <Tooltip {...props}>Add a new logical condition within the current one.</Tooltip>
           }}

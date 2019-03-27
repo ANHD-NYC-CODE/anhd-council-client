@@ -28,7 +28,7 @@ const schema = yup.object({
   geographyId: yup.string().required('Please make a selection'),
 })
 
-class AdvancedSearchForm extends React.Component {
+class AdvancedSearchForm extends React.PureComponent {
   constructor(props) {
     super(props)
 
@@ -173,7 +173,12 @@ class AdvancedSearchForm extends React.Component {
         validationSchema={schema}
       >
         {({ handleSubmit, handleChange, handleBlur, touched, errors, submitCount }) => (
-          <Form noValidate className="advanced-search-form" onSubmit={handleSubmit} validated={this.state.validated}>
+          <Form
+            noValidate
+            className="advanced-search-form my-5"
+            onSubmit={handleSubmit}
+            validated={this.state.validated}
+          >
             <FormError show={!!this.props.error} message={(this.props.error || {}).message} />
             <h4 className="text-muted font-weight-bold text-uppercase mt-4 mb-4">1) Select a geography</h4>
             <GeographySelect

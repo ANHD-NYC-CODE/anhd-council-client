@@ -12,7 +12,7 @@ import { handleClearErrors } from 'Store/Error/actions'
 
 import './style.scss'
 
-class AddressSearch extends React.Component {
+class AddressSearch extends React.PureComponent {
   constructor(props) {
     super(props)
 
