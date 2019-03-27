@@ -1,6 +1,5 @@
 @import 'shared/styles/bootstrap/_variables.scss';
 
-
 .result-card.card {
   border: 1px solid $black;
   border-radius: 20px;
@@ -24,7 +23,10 @@
   .summary-result-card__result {
     flex-shrink: 0;
     flex-grow: 1;
-    min-width: 80px;
     text-align: right;
+
+    @include media-breakpoint-up(xl) {
+      min-width: 20px;
+    }
   }
 }

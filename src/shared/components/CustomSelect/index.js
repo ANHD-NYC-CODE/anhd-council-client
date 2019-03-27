@@ -10,7 +10,6 @@ const customStyle = size => {
           ...base,
           minHeight: '1px',
           height: '38px',
-          border: '0 !important',
           boxShadow: 'none',
           outline: 'none',
         }),
@@ -87,7 +86,6 @@ const customStyle = size => {
           ...base,
           minHeight: '1px',
           height: '60px',
-          border: '0 !important',
           boxShadow: 'none',
           outline: 'none',
         }),
@@ -128,7 +126,6 @@ const customStyle = size => {
         control: base => ({
           ...base,
           minHeight: '1px',
-          border: '0 !important',
           boxShadow: 'none',
           outline: 'none',
         }),

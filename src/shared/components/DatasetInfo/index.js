@@ -2,6 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import ConfigContext from 'Config/ConfigContext'
 import moment from 'moment'
+
+import './style.scss'
+
 const DatasetInfo = props => {
   return (
     <div className="dataset-info">

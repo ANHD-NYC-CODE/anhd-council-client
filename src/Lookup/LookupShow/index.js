@@ -152,7 +152,7 @@ class LookupShow extends React.Component {
                       </Col>
                     </Row>
                     <Row>
-                      <Col xs={12} lg={3}>
+                      <Col xs={12} lg={4}>
                         <Row>
                           {this.props.lookupRequests.map((request, index) => {
                             return (
@@ -169,7 +169,7 @@ class LookupShow extends React.Component {
                           })}
                         </Row>
                       </Col>
-                      <Col xs={12} lg={9}>
+                      <Col xs={12} lg={8}>
                         <Row>
                           {this.props.lookupRequests.map((request, index) => {
                             return (

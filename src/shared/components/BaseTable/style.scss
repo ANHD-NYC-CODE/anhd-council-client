@@ -1,6 +1,5 @@
 @import 'shared/styles/bootstrap/_variables.scss';
 
-
 .base-table,
 .nested-table {
   table {
@@ -10,11 +9,15 @@
     cursor: pointer;
   }
 
-  tr:not(.expanding-row) td:not(.table-column--active):not(.react-bs-table-no-data):hover {
-    background-color: deepskyblue;
+  .table-sm td {
+    padding: 5px;
   }
-  tr:not(.expanding-row) td:not(.table-column--active):not(.react-bs-table-no-data):hover:before {
+
+  td:not(.table-column--active):not(.react-bs-table-no-data):before {
     content: '(+) ';
+  }
+  tr:not(.expanding-row) td:not(.table-column--active):not(.react-bs-table-no-data):hover {
+    background-color: $primary;
   }
 
   .filter {
@@ -53,10 +56,28 @@
   }
 
   .table-column--active {
-    background-color: deepskyblue;
+    background-color: $primary;
   }
 
   .table-column--active:before {
     content: '(-) ';
+  }
+
+  .table-header__share-column {
+    cursor: pointer;
+    color: $gray-400;
+  }
+
+  .table-header__share-column:hover {
+    text-decoration: underline;
+  }
+
+  .page-link {
+    padding: 5px 10px;
+  }
+
+  .dropdown-toggle {
+    background-color: white;
+    padding: 5px 10px;
   }
 }

@@ -11,6 +11,11 @@ import filterFactory from 'react-bootstrap-table2-filter'
 import TableHeader from 'shared/components/BaseTable/TableHeader'
 import { Row, Col } from 'react-bootstrap'
 import TableAlert from 'shared/components/BaseTable/TableAlert'
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFileCsv } from '@fortawesome/free-solid-svg-icons'
+import { makeCsvRequest } from 'Store/Request/actions'
+
 import './style.scss'
 
 class BaseTable extends React.Component {
@@ -144,7 +149,7 @@ class BaseTable extends React.Component {
           <div className={`base-table ${this.props.wrapperClasses}`}>
             {!this.props.nested && (
               <Row>
-                <Col xs={8}>
+                <Col xs={12}>
                   <TableHeader
                     datasetModelName={this.props.datasetModelName}
                     dispatch={this.props.dispatch}
@@ -152,14 +157,29 @@ class BaseTable extends React.Component {
                     title={this.props.caption}
                   />
                 </Col>
-                <Col>
+
+                <Col xs={4} className="text-right d-flex justify-content-start align-items-center">
                   Total:
                   {paginationProps.dataSize === paginationProps.totalSize
                     ? paginationProps.totalSize
                     : `${paginationProps.dataSize}/${paginationProps.totalSize}`}
                 </Col>
-                <Col>
-                  <SizePerPageDropdownStandalone {...paginationProps} />
+                <Col
+                  xs={4}
+                  className="table-header__share-column d-none d-md-flex justify-content-end align-items-center"
+                >
+                  <a
+                    onClick={e => {
+                      e.preventDefault()
+                      this.props.dispatch(makeCsvRequest(this.props.request))
+                    }}
+                  >
+                    <FontAwesomeIcon icon={faFileCsv} />
+                    <span>Csv</span>
+                  </a>
+                </Col>
+                <Col xs={4} className="d-flex align-items-center justify-content-end">
+                  <SizePerPageDropdownStandalone btnContextual="btn-outline-primary" {...paginationProps} />
                 </Col>
               </Row>
             )}
@@ -179,9 +199,9 @@ class BaseTable extends React.Component {
                 <TableAlert
                   textType="text-dark"
                   variant="warning"
-                  message={"There's nothing here."}
+                  message={'No records found'}
                   buttonText="Clear Filters"
-                  buttonVariant="secondary"
+                  buttonVariant="outline-secondary"
                   action={
                     this.props.records.length
                       ? () => Object.keys(this.filters).forEach(key => this.filters[key](''))
