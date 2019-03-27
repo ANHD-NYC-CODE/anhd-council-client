@@ -1,0 +1,22 @@
+@import 'shared/styles/bootstrap/_variables.scss';
+
+.expanded-row {
+  max-width: 500px;
+  position: sticky;
+  left: 0;
+  display: block;
+  background-color: $gray-700;
+
+  .expanded-row--wrapper {
+    background-color: $gray-200;
+    margin-left: 10px;
+    @include media-breakpoint-up(sm) {
+      margin-left: 20px;
+    }
+  }
+
+  p {
+    padding: 40px;
+    padding-left: 0;
+  }
+}

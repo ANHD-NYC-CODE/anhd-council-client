@@ -117,11 +117,7 @@ class BaseTable extends React.Component {
             </div>
           )
         } else {
-          return (
-            <div className="table-row--nested-bumper">
-              {this.state.expandedRowComponent(this.state.expandedRowProps)}
-            </div>
-          )
+          return this.state.expandedRowComponent(this.state.expandedRowProps)
         }
       },
 
@@ -194,6 +190,8 @@ class BaseTable extends React.Component {
               defaultSorted={this.state.defaultSorted}
               expandRow={this.expandRow()}
               filter={filterFactory()}
+              height="200px"
+              scrollTop="top"
               keyField={`${this.props.tableConfig.keyField}`}
               noDataIndication={() => (
                 <TableAlert

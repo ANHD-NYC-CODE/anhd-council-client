@@ -12,12 +12,31 @@
   .table-sm td {
     padding: 5px;
   }
+  tbody tr.expanding-row td:not(.table-column--active) {
+    background-color: $gray-200;
+    margin: 0;
+    padding: 0;
+  }
+  tbody tr.expanding-row {
+    margin: 0;
+    padding: 0;
+  }
 
-  td:not(.table-column--active):not(.react-bs-table-no-data):before {
+  tr:not(.expanding-row) td:not(.table-column--active):not(.react-bs-table-no-data):not(.nested-table-column):before {
     content: '(+) ';
   }
   tr:not(.expanding-row) td:not(.table-column--active):not(.react-bs-table-no-data):hover {
     background-color: $primary;
+    color: white;
+  }
+
+  .table-column--active {
+    background-color: $primary;
+    color: white;
+  }
+
+  .table-column--active:before {
+    content: '(-) ';
   }
 
   .filter {
@@ -35,10 +54,11 @@
   }
 
   .table-row--nested-bumper {
-    margin-left: 10px;
+    padding-left: 10px;
+    background-color: $gray-700;
 
     @include media-breakpoint-up(sm) {
-      margin-left: 20px;
+      padding-left: 20px;
     }
   }
 
@@ -53,14 +73,6 @@
     display: block;
     content: '(below)';
     font-weight: bold;
-  }
-
-  .table-column--active {
-    background-color: $primary;
-  }
-
-  .table-column--active:before {
-    content: '(-) ';
   }
 
   .table-header__share-column {
@@ -79,5 +91,11 @@
   .dropdown-toggle {
     background-color: white;
     padding: 5px 10px;
+  }
+}
+
+.base-table .base-table {
+  .expanded-row {
+    background-color: $primary;
   }
 }
