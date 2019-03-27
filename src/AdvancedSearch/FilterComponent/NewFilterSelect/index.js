@@ -23,7 +23,7 @@ const NewFilterSelect = props => {
   return (
     <ConfigContext.Consumer>
       {config => (
-        <div className="my-2">
+        <div className="w-100">
           <Form.Control
             as="select"
             className="new-filter-select valued"

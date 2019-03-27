@@ -2,11 +2,11 @@
 
 .advanced-search {
   .advanced-search-form--container {
-    overflow: auto;
-    max-height: 100vh;
+    overflow-x: auto;
   }
 
   .form-row__container {
+    margin-bottom: 20px;
     width: 900px;
 
     @include media-breakpoint-up(xl) {
@@ -32,9 +32,6 @@
     width: 40px;
     border-right: 5px double $gray-400;
     margin-right: 40px;
-    @include media-breakpoint-up(md) {
-      margin-right: 80px;
-    }
   }
 
   .form-row__connection:first-child {

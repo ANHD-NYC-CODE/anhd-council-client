@@ -9,6 +9,8 @@ import { connect } from 'react-redux'
 import AdvancedSearchSentence from 'AdvancedSearch/Sentence'
 import { Row, Col, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
 import AdvancedSearchForm from 'AdvancedSearch/AdvancedSearchForm'
+import AdvancedSearchInstructions from 'AdvancedSearch/AdvancedSearchInstructions'
+
 import ConfigContext from 'Config/ConfigContext'
 import { setAppState } from 'Store/AppState/actions'
 import classnames from 'classnames'
@@ -58,7 +60,7 @@ export class AdvancedSearch extends React.Component {
                     Sentence
                   </ToggleButton>
                   <ToggleButton className="toggle-link light" value={2}>
-                    Instructions
+                    Search Guide
                   </ToggleButton>
                 </ToggleButtonGroup>
               </Col>
@@ -66,12 +68,7 @@ export class AdvancedSearch extends React.Component {
             <Row className="mb-5">
               <Col>
                 <div className={classnames({ 'd-none': this.state.view === 1 })}>
-                  <div className="advanced-search__instructions">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras id lobortis diam. Praesent neque
-                    purus, mattis eu interdum eget, maximus a purus. Quisque interdum auctor ligula vel commodo. Aliquam
-                    est arcu, gravida at ultrices vitae, mattis non massa. Curabitur posuere, ex nec rhoncus lobortis,
-                    est mi luctus massa, in tempor dui est vel erat.
-                  </div>
+                  <AdvancedSearchInstructions />
                 </div>
                 <div className={classnames('advanced-search__sentence-container', { 'd-none': this.state.view !== 1 })}>
                   <AdvancedSearchSentence advancedSearch={this.props.advancedSearch} />

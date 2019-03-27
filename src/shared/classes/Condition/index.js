@@ -116,8 +116,9 @@ export class Condition {
     const filterCount = this.filters.filter(f => !f.conditionGroup).length
     const conditionFilterCount = this.filters.filter(f => f.conditionGroup).length
     if (this.key === '0') {
-      if (!!conditionFilterCount && !filterCount) {
-        this.addError(new ParamError({ message: 'Please add a filter' }))
+      // If has 1 condition filters, but no other filters
+      if (conditionFilterCount === 1 && !filterCount) {
+        this.addError(new ParamError({ message: 'Please add a filter or another condition' }))
       }
 
       if (this.type === 'OR' && filterCount === 1) {

@@ -47,11 +47,11 @@ const ComparisonFieldSet = props => {
           '8': props.filter && props.paramMap.rangeKey,
         }}
       >
-        <InputGroup.Prepend>
-          {props.paramMap.languageModule.valuePrefix && (
+        {props.paramMap.languageModule.valuePrefix && (
+          <InputGroup.Prepend>
             <InputGroup.Text>{props.paramMap.languageModule.valuePrefix}</InputGroup.Text>
-          )}
-        </InputGroup.Prepend>
+          </InputGroup.Prepend>
+        )}
         {props.paramMap.baseComponent({
           dispatchAction: props.dispatchAction,
           paramMap: props.paramMap,
