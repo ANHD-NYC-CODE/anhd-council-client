@@ -1,15 +1,16 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "DAP Portal",
+  "name": "Displacement Alert Project Portal",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "portalmapicon.png",
       "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "type": "image/png"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
+  "background_color": "#4c8ad8",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "scope": "/",
+  "theme_color": "#4c8ad8"
 }
