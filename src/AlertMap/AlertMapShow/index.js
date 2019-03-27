@@ -68,7 +68,7 @@ class AlertMapShow extends React.PureComponent {
             />
           ) : (
             <div className="alert-map-show">
-              <Row className="geography-select-row py-2">
+              <Row className="geography-select-row py-4 py-md-2">
                 <Col md={1} className="geography-select-row__icon d-none d-md-block">
                   <FontAwesomeIcon className="text-white" icon={faMapMarkerAlt} size="2x" />
                 </Col>

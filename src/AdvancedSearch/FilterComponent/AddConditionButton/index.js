@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Button, Overlay, Tooltip } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faProjectDiagram } from '@fortawesome/free-solid-svg-icons'
-class AddConditionButton extends React.Component {
+class AddConditionButton extends React.PureComponent {
   constructor(props) {
     super(props)
 

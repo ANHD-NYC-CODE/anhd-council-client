@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Button, Overlay, Tooltip } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
-class AddFilterButton extends React.Component {
+class AddFilterButton extends React.PureComponent {
   constructor(props) {
     super(props)
 
