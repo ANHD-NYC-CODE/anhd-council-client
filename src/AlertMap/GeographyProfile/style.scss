@@ -1,11 +1,13 @@
 @import 'shared/styles/bootstrap/_variables.scss';
 
-
 .geography-links {
   background-color: $gray-200;
 
   h4 {
     color: $secondary;
-    text-align: center;
+    text-align: left;
+    @include media-breakpoint-up(lg) {
+      text-align: center;
+    }
   }
 }

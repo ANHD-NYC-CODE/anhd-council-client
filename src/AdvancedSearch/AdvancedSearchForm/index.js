@@ -192,39 +192,43 @@ class AdvancedSearchForm extends React.Component {
               errors={errors}
               handleChangeGeographyType={this.handleChangeGeographyType}
             />
-            <h4 className="text-muted font-weight-bold text-uppercase mt-5 mb-4">2) Select a housing type</h4>
-            <HousingTypeQuery
-              addHousingType={this.addHousingType}
-              changeHousingType={this.changeHousingType}
-              housingTypes={this.props.advancedSearch.housingTypes}
-              dispatch={this.props.dispatch}
-              handleChange={handleChange}
-              handleBlur={handleBlur}
-              touched={touched}
-              errors={errors}
-              submitCount={submitCount}
-            />
-            <h4 className="text-muted font-weight-bold text-uppercase mt-5 mb-4">3) Add filters</h4>
-            <ConditionComponent
-              conditions={this.props.advancedSearch.conditions}
-              condition={this.props.advancedSearch.conditions[0]}
-              config={this.props.config}
-              dispatch={this.props.dispatch}
-              key={'condition-0'}
-              conditionKey={'0'}
-              showPopups={this.props.showPopups}
-              validateForm={this.validateForm}
-            />
+            {this.props.appState.currentGeographyType && this.props.appState.currentGeographyId && (
+              <div>
+                <h4 className="text-muted font-weight-bold text-uppercase mt-5 mb-4">2) Select a housing type</h4>
+                <HousingTypeQuery
+                  addHousingType={this.addHousingType}
+                  changeHousingType={this.changeHousingType}
+                  housingTypes={this.props.advancedSearch.housingTypes}
+                  dispatch={this.props.dispatch}
+                  handleChange={handleChange}
+                  handleBlur={handleBlur}
+                  touched={touched}
+                  errors={errors}
+                  submitCount={submitCount}
+                />
 
-            <div className="w-100 d-flex flex-column align-items-end my-4">
-              <FormError
-                show={!!this.state.hasErrors || !!Object.keys(errors).length}
-                message="Please correct errors before proceeding."
-              />
-              <Button disabled={this.props.loading} size="lg" type="submit" variant="primary">
-                Submit
-              </Button>
-            </div>
+                <h4 className="text-muted font-weight-bold text-uppercase mt-5 mb-4">3) Add filters</h4>
+                <ConditionComponent
+                  conditions={this.props.advancedSearch.conditions}
+                  condition={this.props.advancedSearch.conditions[0]}
+                  config={this.props.config}
+                  dispatch={this.props.dispatch}
+                  key={'condition-0'}
+                  conditionKey={'0'}
+                  showPopups={this.props.showPopups}
+                  validateForm={this.validateForm}
+                />
+                <div className="w-100 d-flex flex-column align-items-end my-4">
+                  <FormError
+                    show={!!this.state.hasErrors || !!Object.keys(errors).length}
+                    message="Please correct errors before proceeding."
+                  />
+                  <Button disabled={this.props.loading} size="lg" type="submit" variant="primary">
+                    Submit
+                  </Button>
+                </div>
+              </div>
+            )}
           </Form>
         )}
       </Formik>

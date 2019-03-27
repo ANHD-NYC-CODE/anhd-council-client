@@ -30,7 +30,7 @@ export class FilterComponent extends React.Component {
         </div>
 
         <Form.Row className="filter align-content-center">
-          <Form.Group as={Col} xs={9}>
+          <Form.Group as={Col} xs={9} lg={10}>
             {this.props.filter &&
               Object.keys(this.props.filter.paramSets).map((paramsSetKey, paramSetIndex) =>
                 this.props.filter.paramSets[paramsSetKey].component({
@@ -44,17 +44,15 @@ export class FilterComponent extends React.Component {
                 })
               )}
           </Form.Group>
-          <Col xs={3} className="d-flex">
-            <div className="align-self-center">
-              <RemoveFilterButton showPopups={this.props.showPopups} removeFilter={this.removeFilter} />
-              {this.props.allowNewCondition && (
-                <AddConditionButton
-                  addCondition={this.props.addCondition}
-                  filterIndex={this.props.filterIndex}
-                  showPopups={this.props.showPopups}
-                />
-              )}
-            </div>
+          <Col xs={3} lg={2} className="d-flex align-items-center">
+            <RemoveFilterButton showPopups={this.props.showPopups} removeFilter={this.removeFilter} />
+            {this.props.allowNewCondition && (
+              <AddConditionButton
+                addCondition={this.props.addCondition}
+                filterIndex={this.props.filterIndex}
+                showPopups={this.props.showPopups}
+              />
+            )}
           </Col>
         </Form.Row>
         <FormError show={!!this.props.filter.errors.length} message={(this.props.filter.errors[0] || {}).message} />
