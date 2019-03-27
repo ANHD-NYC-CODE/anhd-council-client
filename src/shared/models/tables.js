@@ -180,9 +180,10 @@ export const getTableColumns = (constant, columnExpandFunction, getLinkProps = (
         onClick: (e, column, columnIndex, row, rowIndex) => {
           handleColumnEvent({ e, column, columnIndex, row, rowIndex, component })
         },
-        onTouchStart: (e, column, columnIndex, row, rowIndex) => {
-          handleColumnEvent({ e, column, columnIndex, row, rowIndex, component })
-        },
+        // onTouchStart: (e, column, columnIndex, row, rowIndex) => {
+        //   // row = column due to table bug
+        //   handleColumnEvent({ e, column, columnIndex, row: column, rowIndex, component })
+        // },
       },
     }
   }
@@ -211,9 +212,9 @@ export const getTableColumns = (constant, columnExpandFunction, getLinkProps = (
         onClick: (e, column, columnIndex, row, rowIndex) => {
           handleColumnEvent({ e, column, columnIndex, row, rowIndex, component, dataKey, tableConfig })
         },
-        onTouchStart: (e, column, columnIndex, row, rowIndex) => {
-          handleColumnEvent({ e, column, columnIndex, row, rowIndex, component, dataKey, tableConfig })
-        },
+        // onTouchStart: (e, column, columnIndex, row, rowIndex) => {
+        //   handleColumnEvent({ e, column, columnIndex, row: column, rowIndex, component, dataKey, tableConfig })
+        // },
       },
     }
   }
