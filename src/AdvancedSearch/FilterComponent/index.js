@@ -1,13 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Form, Button, Col } from 'react-bootstrap'
+import { Form, Col } from 'react-bootstrap'
 import FormError from 'shared/components/FormError'
 import AddConditionButton from 'AdvancedSearch/FilterComponent/AddConditionButton'
 import RemoveFilterButton from 'AdvancedSearch/FilterComponent/RemoveFilterButton'
 
 import './style.scss'
-export class FilterComponent extends React.PureComponent {
+export class FilterComponent extends React.Component {
   constructor(props) {
     super(props)
 

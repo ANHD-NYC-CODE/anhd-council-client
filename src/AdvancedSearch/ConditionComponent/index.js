@@ -183,7 +183,7 @@ export class ConditionComponent extends React.Component {
             return renderFilterOrCondition(filter, this.props.condition.filters.indexOf(filter))
           })}
 
-          <div className="new-filter-row d-flex my-4">
+          <div className="new-filter-row d-flex">
             {this.props.condition.filters.some(filter => filter.id === 'NEW_FILTER') ? (
               <Button
                 className="remove-add-filter"
