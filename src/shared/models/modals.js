@@ -59,7 +59,7 @@ export const infoModals = {
       'HPD violations are notices of substandard living conditions as defined in the Housing Maintenance Code for which the landlord is responsible, placed by the Department of Housing Preservation and Development (HPD). A high number of Class A, B, and C violations may indicate that a landlord is neglecting or actively harassing tenants, Class C being the most severe.',
     sources: [
       {
-        text: 'Public Data Corporation',
+        text: 'NYC Open Data',
         url: 'https://data.cityofnewyork.us/Housing-Development/Housing-Maintenance-Code-Violations/wvxf-dwi5/data',
       },
     ],
@@ -70,7 +70,7 @@ export const infoModals = {
       'Complaints that tenants make about conditions in their apartment or building get sent to Housing Preservation and Development for inspection. Complaints can be an early signal that landlords are neglecting to make repairs.',
     sources: [
       {
-        text: 'Public Data Corporation',
+        text: 'NYC Open Data',
         url: 'https://data.cityofnewyork.us/Housing-Development/Housing-Maintenance-Code-Complaints/uwyv-629c/data',
       },
     ],
@@ -81,7 +81,7 @@ export const infoModals = {
       'DOB violations are notices of City building code or zoning code violations for which the landlord is responsible, placed by the Department of Buildings (DOB). These violations are sometimes part of a pattern of harassment against tenants.',
     sources: [
       {
-        text: 'Public Data Corporation',
+        text: 'NYC Open Data',
         url: 'https://data.cityofnewyork.us/Housing-Development/DOB-Violations/3h2n-5cm9',
       },
     ],
@@ -92,7 +92,7 @@ export const infoModals = {
       'Complaints that tenants make about issues related to construction, renovation, or certain building-wide issues are directed to the Department of Buildings. Aggressive or improper construction can be a signal of tenant harassment and displacement pressure.',
     sources: [
       {
-        text: 'Public Data Corporation',
+        text: 'NYC Open Data',
         url: 'https://data.cityofnewyork.us/Housing-Development/DOB-Complaints-Received/eabe-havv',
       },
     ],
@@ -126,7 +126,7 @@ export const infoModals = {
       'ECB violations are notices of City building code or zoning code violations that are subject to review by the Environmental Control Board.  These violations are sometimes part of a pattern of harassment against tenants.',
     sources: [
       {
-        text: 'Public Data Corporation',
+        text: 'NYC Open Data',
         url: 'https://data.cityofnewyork.us/Housing-Development/DOB-ECB-Violations/6bgk-3dad',
       },
     ],
