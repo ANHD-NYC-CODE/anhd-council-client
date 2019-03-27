@@ -9,6 +9,7 @@ const HousingTypeSelect = props => {
       {config => (
         <Form.Control
           as="select"
+          className="valued"
           name="housingTypeSelect"
           onChange={e => props.onChange(e, props.housingTypeIndex)}
           placeholder="Search housing type"

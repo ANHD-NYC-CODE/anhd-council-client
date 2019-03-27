@@ -52,24 +52,6 @@
     }
   }
 
-  .advanced-search__row {
-    align-items: center;
-    background-color: $gray-700;
-    display: flex;
-
-    @include media-breakpoint-up(lg) {
-      max-height: 80px;
-    }
-  }
-
-  .advanced-search__row-icon {
-    margin-left: -10px;
-    @include media-breakpoint-up(lg) {
-      margin-left: -40px;
-    }
-    text-align: right;
-  }
-
   .advanced-search__left-column {
     background-color: $gray-700;
   }

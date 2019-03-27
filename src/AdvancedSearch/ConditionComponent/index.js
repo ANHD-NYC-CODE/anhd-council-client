@@ -5,13 +5,14 @@ import { StandardizedInput } from 'shared/classes/StandardizedInput'
 import NewFilterSelect from 'AdvancedSearch/FilterComponent/NewFilterSelect'
 import uuidv4 from 'uuid/v4'
 import { addNewCondition, updateCondition, removeCondition } from 'Store/AdvancedSearch/actions'
-import { Form, Button, Col, ButtonGroup, DropdownButton, Dropdown } from 'react-bootstrap'
+import { Form, Button, Col } from 'react-bootstrap'
 import FormError from 'shared/components/FormError'
 import FilterComponent from 'AdvancedSearch/FilterComponent'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
-import { faMinus } from '@fortawesome/free-solid-svg-icons'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
+import AddFilterButton from 'AdvancedSearch/ConditionComponent/AddFilterButton'
+import RemoveConditionButton from 'AdvancedSearch/ConditionComponent/RemoveConditionButton'
+import SwitchConditionButton from 'AdvancedSearch/ConditionComponent/SwitchConditionButton'
 
 import './style.scss'
 
@@ -28,6 +29,7 @@ export class ConditionComponent extends React.Component {
     this.standardFilters = this.standardFilters.bind(this)
     this.newFilterFilter = this.newFilterFilter.bind(this)
     this.conditionGroupFilters = this.conditionGroupFilters.bind(this)
+
     this.state = {
       creatingFilter: false,
     }
@@ -95,6 +97,7 @@ export class ConditionComponent extends React.Component {
             conditionKey={filter.conditionGroup}
             config={this.props.config}
             dispatch={this.props.dispatch}
+            showPopups={this.props.showPopups}
           />
         )
       } else if (filter.id === 'NEW_FILTER') {
@@ -118,6 +121,7 @@ export class ConditionComponent extends React.Component {
             filter={filter}
             filterIndex={filterIndex}
             key={`filter-${this.props.condition.key}-${filter.id}-${filterIndex}`}
+            showPopups={this.props.showPopups}
             replaceFilter={this.replaceFilter}
           />
         )
@@ -132,48 +136,26 @@ export class ConditionComponent extends React.Component {
             <div className="form-row__connection" />
           </div>
         )}
+
         <Col xs={3} sm={2} className="condition-control flex-column align-self-center">
           <div className="condition-control-column d-flex align-items-center flex-column">
             {isCondition0() && !this.props.condition.hasCondition() ? (
-              <DropdownButton
-                className="control-button"
-                as={ButtonGroup}
-                title={this.props.condition.type}
-                size="lg"
-                variant="success"
-                id="bg-vertical-dropdown-1"
-              >
-                <Dropdown.Item
-                  className="control-button"
-                  eventKey="1"
-                  size="lg"
-                  onClick={() => this.switchCondition('AND')}
-                >
-                  And
-                </Dropdown.Item>
-                <Dropdown.Item
-                  className="control-button"
-                  eventKey="2"
-                  size="lg"
-                  onClick={() => this.switchCondition('OR')}
-                >
-                  Or
-                </Dropdown.Item>
-              </DropdownButton>
+              <SwitchConditionButton
+                showPopups={this.props.showPopups}
+                condition={this.props.condition}
+                switchCondition={this.switchCondition}
+              />
             ) : (
               <Button className="control-button" size="lg" variant="success" disabled>
                 {this.props.condition.type}
               </Button>
             )}
             {!isCondition0() && (
-              <Button
-                className="control-button remove-condition"
-                size="lg"
-                onClick={() => this.removeCondition(this.props.condition.key)}
-                variant="outline-danger"
-              >
-                <FontAwesomeIcon icon={faMinus} />
-              </Button>
+              <RemoveConditionButton
+                condition={this.props.condition}
+                removeCondition={this.removeCondition}
+                showPopups={this.props.showPopups}
+              />
             )}
           </div>
         </Col>
@@ -209,17 +191,7 @@ export class ConditionComponent extends React.Component {
                 <FontAwesomeIcon icon={faTimes} /> Cancel
               </Button>
             ) : (
-              <Button
-                className="add-filter"
-                size="lg"
-                onClick={e => {
-                  e.preventDefault()
-                  this.createNewFilter()
-                }}
-                variant="success"
-              >
-                <FontAwesomeIcon icon={faPlus} /> New filter
-              </Button>
+              <AddFilterButton createNewFilter={this.createNewFilter} showPopups={this.props.showPopups} />
             )}
           </div>
           <div className="form-row__container">
