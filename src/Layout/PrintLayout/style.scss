@@ -1,0 +1,10 @@
+@import 'shared/styles/bootstrap/_variables.scss';
+
+.print-layout {
+  button.bg-light:focus,
+  button.bg-light:hover {
+    border: 1px solid black;
+    cursor: initial;
+    background-color: $gray-100 !important;
+  }
+}

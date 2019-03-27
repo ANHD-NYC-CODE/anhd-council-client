@@ -13,7 +13,7 @@ class RequestSummary extends React.Component {
   }
 
   handleClick() {
-    this.props.onClick(this.props.request)
+    if (this.props.onClick) this.props.onClick(this.props.request)
   }
 
   getInfoKey() {

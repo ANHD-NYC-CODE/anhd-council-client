@@ -3,6 +3,9 @@ import PropTypes from 'prop-types'
 import { Container } from 'react-bootstrap'
 import PrintHeader from 'Layout/PrintHeader'
 import LayoutContext from 'Layout/LayoutContext'
+
+import './style.scss'
+
 const PrintLayout = props => {
   return (
     <Container className="print-layout">
