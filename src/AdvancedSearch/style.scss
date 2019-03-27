@@ -60,4 +60,11 @@
   .advanced-search__instructions {
     color: $white;
   }
+
+  .btn-lg {
+    @include media-breakpoint-down(xs) {
+      line-height: 38px;
+      padding: 0.5rem 0.25rem;
+    }
+  }
 }
