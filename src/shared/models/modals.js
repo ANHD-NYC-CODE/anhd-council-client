@@ -35,68 +35,85 @@ export const infoModals = {
   },
   HPD_VIOLATION: {
     title: 'HPD Violations',
-    body: 'Lorem ipsum...',
-    sourceText: '',
-    sourceUrl: '',
+    body:
+      'HPD violations are notices of substandard living conditions as defined in the Housing Maintenance Code for which the landlord is responsible, placed by the Department of Housing Preservation and Development (HPD). A high number of Class A, B, and C violations may indicate that a landlord is neglecting or actively harassing tenants, Class C being the most severe.',
+    sourceText: 'NYC Open Data',
+    sourceUrl: 'https://data.cityofnewyork.us/Housing-Development/Housing-Maintenance-Code-Violations/wvxf-dwi5/data',
   },
   HPD_COMPLAINT: {
     title: 'HPD Complaints',
-    body: 'Lorem ipsum...',
-    sourceText: '',
-    sourceUrl: '',
+    body:
+      'Complaints that tenants make about conditions in their apartment or building get sent to Housing Preservation and Development for inspection. Complaints can be an early signal that landlords are neglecting to make repairs.',
+    sourceText: 'NYC Open Data',
+    sourceUrl: 'https://data.cityofnewyork.us/Housing-Development/Housing-Maintenance-Code-Complaints/uwyv-629c/data',
   },
   DOB_VIOLATION: {
     title: 'DOB Violations',
-    body: 'Lorem ipsum...',
-    sourceText: '',
-    sourceUrl: '',
+    body:
+      'DOB violations are notices of City building code or zoning code violations for which the landlord is responsible, placed by the Department of Buildings (DOB). These violations are sometimes part of a pattern of harassment against tenants.',
+    sourceText: 'NYC Open Data',
+    sourceUrl: 'https://data.cityofnewyork.us/Housing-Development/DOB-Violations/3h2n-5cm9',
   },
   DOB_COMPLAINT: {
     title: 'DOB Complaints',
-    body: 'Lorem ipsum...',
-    sourceText: '',
-    sourceUrl: '',
+    body:
+      'Complaints that tenants make about issues related to construction, renovation, or certain building-wide issues are directed to the Department of Buildings. Aggressive or improper construction can be a signal of tenant harassment and displacement pressure.',
+    sourceText: 'NYC Open Data',
+    sourceUrl: 'https://data.cityofnewyork.us/Housing-Development/DOB-Complaints-Received/eabe-havv',
   },
   DOB_ISSUED_PERMIT: {
     title: 'DOB Issued Permits',
-    body: 'Lorem ipsum...',
-    sourceText: '',
-    sourceUrl: '',
+    body:
+      'Issued construction permits show that a landlord has permission to do construction and renovations, which often indicates harassment and displacement. For example, building-wide work can be used to increase rents via a Major Capital Improvement (MCI) and individual apartment renovations may show that a landlord is actively vacating apartments to dramatically raise rents via  Individual Apartment Improvements.',
+    sources: [
+      { text: 'NYC Open Data', url: 'https://data.cityofnewyork.us/Housing-Development/DOB-Permit-Issuance/ipu4-2q9a' },
+      {
+        text: 'NYC Open Data - DOB NOW',
+        url: 'https://data.cityofnewyork.us/Housing-Development/DOB-NOW-Build-Approved-Permits/rbx6-tga4',
+      },
+    ],
   },
   DOB_LEGACY_FILED_PERMIT: {
     title: 'DOB Filed Permits',
-    body: 'Lorem ipsum...',
-    sourceText: '',
-    sourceUrl: '',
+    body:
+      "Construction permit applications show a landlord's intention to do construction and renovations, which can be used to destabilize apartments. For example, building-wide work can be used to increase rents via a Major Capital Improvement (MCI) and individual apartment renovations may show that a landlord is actively vacating apartments to dramatically raise rents via Individual Apartment ImprovementsSource",
+    sources: [
+      {
+        text: 'NYC Open Data',
+        url: 'https://data.cityofnewyork.us/Housing-Development/DOB-NOW-Build-Job-Application-Filings/w9ak-ipjd',
+      },
+    ],
   },
   ECB_VIOLATION: {
     title: 'ECB Violations',
-    body: 'Lorem ipsum...',
-    sourceText: '',
-    sourceUrl: '',
+    body:
+      'ECB violations are notices of City building code or zoning code violations that are subject to review by the Environmental Control Board.  These violations are sometimes part of a pattern of harassment against tenants.',
+    sourceText: 'NYC Open Data',
+    sourceUrl: 'https://data.cityofnewyork.us/Housing-Development/DOB-ECB-Violations/6bgk-3dad',
   },
   ACRIS_REAL_MASTER: {
     title: 'ACRIS Sales',
     body: 'Lorem ipsum...',
-    sourceText: '',
+    sourceText: 'NYC Open Data',
     sourceUrl: '',
   },
   LISPENDEN: {
     title: 'Foreclosures',
     body: 'Lorem ipsum...',
-    sourceText: '',
+    sourceText: 'Public Data Corporation',
     sourceUrl: '',
   },
   EVICTION: {
     title: 'Evictions',
-    body: 'Lorem ipsum...',
-    sourceText: '',
-    sourceUrl: '',
+    body:
+      'These properties recorded evictions executed by marshals. Evictions in affordable rent-regulated apartments usually indicate an immediate loss of affordable housing because landlords take advantage of the vacancy to dramatically raise the rent. A high rate of evictions may also be an indicator of tenant harassment and displacement by a landlord aggressively driving vacancies.',
+    sourceText: 'NYC Open Data',
+    sourceUrl: 'https://data.cityofnewyork.us/City-Government/Evictions/6z8x-wfk4',
   },
   HOUSING_LITIGATION: {
     title: 'Housing Litigations',
     body: 'Lorem ipsum...',
-    sourceText: '',
+    sourceText: 'NYC Open Data',
     sourceUrl: '',
   },
 }
