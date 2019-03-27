@@ -21,6 +21,7 @@ class Lookup extends React.Component {
   }
 
   changeLookup(bbl, bin) {
+    if (bbl === this.props.appState.currentProperty && bin === this.props.appState.currentBuilding) return
     this.props.dispatch(
       setLookupAndRequestsAndRedirect({
         bbl,
