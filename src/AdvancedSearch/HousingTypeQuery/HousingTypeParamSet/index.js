@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMinus } from '@fortawesome/free-solid-svg-icons'
 import { Form, Col, ButtonGroup, Button } from 'react-bootstrap'
 
 const HousingTypeParamSet = props => {
@@ -17,7 +18,7 @@ const HousingTypeParamSet = props => {
       <Col xs={2} className="flex-column">
         <ButtonGroup className="align-self-center">
           <Button onClick={() => props.paramSet.deleteAll({ dispatchAction: props.dispatchAction })} variant="danger">
-            -
+            <FontAwesomeIcon icon={faMinus} />
           </Button>
         </ButtonGroup>
       </Col>
