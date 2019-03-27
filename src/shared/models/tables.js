@@ -290,6 +290,7 @@ export const getTableColumns = (constant, columnExpandFunction, getLinkProps = (
           text: 'View Contacts',
           formatter: expandTableFormatter,
           dataKey: 'contacts',
+          classes: 'nested-table-column',
           tableConfig: new TableConfig({ resourceConstant: 'HPD_CONTACT' }),
         }),
       ]
@@ -413,6 +414,7 @@ export const getTableColumns = (constant, columnExpandFunction, getLinkProps = (
           text: 'View Problems',
           formatter: expandTableFormatter,
           dataKey: 'hpdproblems',
+          classes: 'nested-table-column',
           tableConfig: new TableConfig({ resourceConstant: 'HPD_PROBLEM' }),
         }),
       ]
@@ -711,6 +713,7 @@ export const getTableColumns = (constant, columnExpandFunction, getLinkProps = (
           text: 'View Parties',
           formatter: expandTableFormatter,
           dataKey: 'acrisrealparties',
+          classes: 'nested-table-column',
           tableConfig: new TableConfig({ resourceConstant: 'ACRIS_REAL_PARTY' }),
         }),
       ]
