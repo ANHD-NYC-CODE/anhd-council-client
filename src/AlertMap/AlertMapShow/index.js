@@ -161,9 +161,9 @@ class AlertMapShow extends React.PureComponent {
                     })}
                     {!this.props.geographyRequests.some(r => r.type === 'ADVANCED_SEARCH') && (
                       <Col className="geography-request-summary__container d-flex" xs={12} sm={6} xl={4}>
-                        <Col className="align-self-center pr-0" xs={11}>
+                        <Col className="align-self-center pl-0 pl-lg-2 pr-0" xs={11}>
                           <BaseLink href="/search">
-                            <Card className="">
+                            <Card className="border-0">
                               <Card.Body>+ Add Custom Filter</Card.Body>
                             </Card>
                           </BaseLink>
