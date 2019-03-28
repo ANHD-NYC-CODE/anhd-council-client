@@ -25,6 +25,11 @@ class LookupShow extends React.Component {
     this.state = {
       selectedRequest: props.lookupRequests.length ? props.lookupRequests[0] : undefined,
     }
+
+    if (this.props.propertyError && this.props.propertyError.status === 404) {
+      this.props.trigger404Error(`Property with bbl: ${this.props.bbl} not found.`)
+    }
+
     this.switchTable = this.switchTable.bind(this)
   }
 

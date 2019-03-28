@@ -26,7 +26,6 @@ const renderLinks = props => {
         <Col>
           <Row>
             <BaseLink
-              as={BaseLink}
               href={`https://council.nyc.gov/district-${props.currentGeographyId}/`}
               text="City Council Website"
             />

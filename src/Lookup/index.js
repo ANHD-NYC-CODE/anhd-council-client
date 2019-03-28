@@ -28,6 +28,7 @@ class Lookup extends React.Component {
 
   trigger404Error(error404Message) {
     this.setState({ error404: true, error404Message })
+    this.changeLookup(undefined, undefined)
   }
 
   changeLookup(bbl, bin) {
