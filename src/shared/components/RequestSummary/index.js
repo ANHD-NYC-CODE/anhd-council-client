@@ -4,12 +4,16 @@ import { connect } from 'react-redux'
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
 import InfoModalButton from 'shared/components/InfoModalButton'
+import { requestWithAuth } from 'shared/utilities/authUtils'
+import { makeRequest } from 'Store/Request/actions'
+
 import { Col, Row } from 'react-bootstrap'
 class RequestSummary extends React.Component {
   constructor(props) {
     super(props)
 
     this.handleClick = this.handleClick.bind(this)
+    this.retryRequest = this.retryRequest.bind(this)
   }
 
   handleClick() {
@@ -27,6 +31,11 @@ class RequestSummary extends React.Component {
     }
   }
 
+  retryRequest() {
+    this.props.request.called = false
+    this.props.dispatch(requestWithAuth(makeRequest(this.props.request)))
+  }
+
   render() {
     return (
       <Row className="request-summary">
@@ -38,6 +47,7 @@ class RequestSummary extends React.Component {
             totalResults: this.props.totalResults,
             loading: this.props.loading,
             error: this.props.error,
+            errorAction: this.retryRequest,
             handleClick: this.handleClick,
           })}
         </Col>

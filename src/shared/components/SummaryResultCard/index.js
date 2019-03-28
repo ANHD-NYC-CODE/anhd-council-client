@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Card, Button } from 'react-bootstrap'
+import { Card, Button, Alert, Badge } from 'react-bootstrap'
 import SpinnerLoader from 'shared/components/Loaders/SpinnerLoader'
 import classnames from 'classnames'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faRedo } from '@fortawesome/free-solid-svg-icons'
 import './style.scss'
 
 const SummaryResultCard = props => {
@@ -22,7 +23,25 @@ const SummaryResultCard = props => {
           {props.request.label}
         </p>
         <div className="align-self-center summary-result-card__result">
-          {props.loading ? <SpinnerLoader /> : <h2 className="m-0">{props.results.length}</h2>}
+          {props.errors ? (
+            <Alert
+              onClick={e => {
+                e.stopPropagation()
+                props.errorAction(e)
+              }}
+              variant="warning"
+            >
+              <p>Error</p>
+              <Badge variant="success">
+                <FontAwesomeIcon icon={faRedo} />
+                <span> Refresh</span>
+              </Badge>
+            </Alert>
+          ) : props.loading ? (
+            <SpinnerLoader />
+          ) : (
+            <h2 className="m-0">{props.results.length}</h2>
+          )}
         </div>
       </Card.Body>
     </Card>
