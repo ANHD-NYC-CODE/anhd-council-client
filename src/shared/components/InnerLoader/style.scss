@@ -1,6 +1,8 @@
+@import 'shared/styles/bootstrap/_variables.scss';
+
 .inner-loader {
   text-align: center;
-  background-color: deepskyblue;
+  background-color: $primary;
   height: 200px;
   display: flex;
   flex-direction: column;

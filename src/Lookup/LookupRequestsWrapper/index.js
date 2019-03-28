@@ -33,6 +33,7 @@ class LookupRequestsWrapper extends React.Component {
         profileRequest={getRequestType(this.props.appState.requests, 'LOOKUP_PROFILE')[0]}
         propertyResult={this.props.propertyResult}
         {...this.props}
+        propertyError={this.props.propertyError}
       />
     ) : (
       <InnerLoader />

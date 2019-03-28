@@ -25,8 +25,22 @@ class LookupShow extends React.Component {
     this.state = {
       selectedRequest: props.lookupRequests.length ? props.lookupRequests[0] : undefined,
     }
-
     this.switchTable = this.switchTable.bind(this)
+  }
+
+  componentDidUpdate() {
+    if (
+      this.props.bin &&
+      Object.keys(this.props.propertyResult).length &&
+      !this.props.propertyResult.buildings.some(b => b.bin === this.props.bin)
+    ) {
+      this.props.trigger404Error(
+        `Building with bin: ${this.props.bin} not found at property with bbl: ${this.props.bbl}.`
+      )
+    }
+    if (this.props.propertyError && this.props.propertyError.status === 404) {
+      this.props.trigger404Error(`Property with bbl: ${this.props.bbl} not found.`)
+    }
   }
 
   switchTable(request) {
