@@ -2,16 +2,20 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Navbar, Nav } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
 import './style.scss'
 const NavigationBar = props => {
   return (
     <div className="navigation-bar">
       <Navbar bg="dark" variant="dark" expand="lg">
         <Nav.Link as="li">
-          <Link className="text-muted" to="/">
+          <a
+            className="text-muted"
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://portal.displacementalert.org"
+          >
             Home
-          </Link>
+          </a>
         </Nav.Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -46,9 +50,14 @@ const NavigationBar = props => {
             </a>
           </Nav.Link>
           <Nav.Link as="li">
-            <Link className="text-portal-orange" to="/">
+            <a
+              className="text-portal-orange"
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://portal.displacementalert.org"
+            >
               Portal
-            </Link>
+            </a>
           </Nav.Link>
           <Nav.Link as="li">
             <a
