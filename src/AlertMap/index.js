@@ -8,17 +8,30 @@ import AlertMapRequestsWrapper from 'AlertMap/AlertMapRequestsWrapper'
 import { StandardizedInput } from 'shared/classes/StandardizedInput'
 import { setAppState } from 'Store/AppState/actions'
 import { makeSelectRequests } from 'Store/AppState/selectors'
+import { isValidGeography } from 'shared/utilities/routeUtils'
+import PageError from 'shared/components/PageError'
+import { faMapSigns } from '@fortawesome/free-solid-svg-icons'
 
 class AlertMap extends React.PureComponent {
   constructor(props) {
     super(props)
+
+    this.state = {
+      error404: props.geographyType && !isValidGeography(props.geographyType, props.geographyId),
+      error404Message: props.geographyType
+        ? `Geography "${props.geographyType.toLowerCase()}" with id "${props.geographyId}" does not exist.`
+        : '',
+    }
 
     this.submitGeography = this.submitGeography.bind(this)
     this.handleChangeGeographyType = this.handleChangeGeographyType.bind(this)
     this.cancelChangeGeography = this.cancelChangeGeography.bind(this)
     this.handleChangeGeographyId = this.handleChangeGeographyId.bind(this)
     this.cancelChangeGeography = this.cancelChangeGeography.bind(this)
-    if (!(props.geographyType && props.geographyId)) {
+
+    if (props.geographyType && !isValidGeography(props.geographyType, props.geographyId)) {
+      return
+    } else if (!(props.geographyType && props.geographyId)) {
       props.dispatch(push('/map'))
     } else if (
       !(props.geographyType === props.appState.currentGeographyType) &&
@@ -27,11 +40,33 @@ class AlertMap extends React.PureComponent {
       this.submitGeography({ geographyType: props.geographyType, geographyId: props.geographyId })
     }
 
+    // Disable changing on mount
     if (this.props.appState.changingGeography) {
       this.props.dispatch(
         setAppState({ changingGeography: false, changingGeographyType: undefined, changingGeographyId: undefined })
       )
     }
+  }
+
+  componentDidUpdate() {
+    if (
+      this.props.geographyType &&
+      !this.state.error404 &&
+      !isValidGeography(this.props.geographyType, this.props.geographyId)
+    ) {
+      this.trigger404Error(
+        `Geography "${this.props.geographyType.toLowerCase()}" with id "${this.props.geographyId}" does not exist.`
+      )
+    } else if (this.state.error404) {
+      this.setState({
+        error404: false,
+      })
+    }
+  }
+
+  trigger404Error(error404Message) {
+    this.setState({ error404: true, error404Message })
+    this.submitGeography({ geographyType: undefined, geographyId: undefined })
   }
 
   submitGeography({ e, geographyType, geographyId } = {}) {
@@ -85,6 +120,8 @@ class AlertMap extends React.PureComponent {
   }
 
   render() {
+    if (this.state.error404)
+      return <PageError title="Oops! 404 Page Not Found." message={this.state.error404Message} icon={faMapSigns} />
     return !(this.props.appState.currentGeographyType && this.props.appState.currentGeographyId) ? (
       <AlertMapIndex
         appState={this.props.appState}
@@ -104,6 +141,7 @@ class AlertMap extends React.PureComponent {
         handleChangeGeographyType={this.handleChangeGeographyType}
         handleChangeGeographyId={this.handleChangeGeographyId}
         requests={this.props.requests}
+        trigger404Error={this.trigger404Error}
       />
     )
   }
