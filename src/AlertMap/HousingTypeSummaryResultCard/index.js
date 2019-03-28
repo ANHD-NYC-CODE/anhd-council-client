@@ -18,7 +18,7 @@ const HousingTypeSummaryResultCard = props => {
     >
       <div className="housingtype-summary-result-card__wrapper">
         <h5 className="housingtype-summary-result-card__title font-weight-bold">{props.request.label}</h5>
-        {!props.loading ? (
+        {props.loading ? (
           <SpinnerLoader />
         ) : (
           <div className="housingtype-summary-result-card__inner-wrapper d-flex flex-row justify-content-between w-100">
