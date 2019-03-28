@@ -1,5 +1,5 @@
 import React from 'react'
-import { Col, Jumbotron } from 'react-bootstrap'
+import { Col, Jumbotron, Button } from 'react-bootstrap'
 
 import './style.scss'
 
@@ -13,6 +13,13 @@ const IntroductionBlock = props => {
         facing harassment and displacement, for communities being destabilized, and for the community groups and policy
         makers trying to address the crisis.
       </p>
+      {props.scrollToControls && (
+        <div className="d-block d-lg-none my-5">
+          <Button variant="primary" onClick={props.scrollToControls}>
+            Get Started
+          </Button>
+        </div>
+      )}
       <p>
         We use data and information visualization tools to proactively identify buildings that are facing a rising risk
         of displacement. With this information, community groups, decision makers, and local residents themselves can

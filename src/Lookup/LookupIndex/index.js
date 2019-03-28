@@ -4,15 +4,18 @@ import PropTypes from 'prop-types'
 import { Row, Col } from 'react-bootstrap'
 import AddressSearch from 'Lookup/AddressSearch'
 import LeafletMap from 'LeafletMap'
+import { Element } from 'react-scroll'
+
 import IntroductionBlock from 'shared/components/IntroductionBlock'
 
 const LookupIndex = props => {
   return (
     <Row>
       <Col className="touch-left padding-xs-sm-0" xs={12} lg={5}>
-        <IntroductionBlock />
+        <IntroductionBlock scrollToControls={props.scrollToControls} />
       </Col>
       <Col className="px-md-4 py-3 py-lg-6" xs={12} lg={7}>
+        <Element name="main-controls" />
         <Row className="mb-4">
           <Col>
             <p className="text-muted font-weight-bold">Enter a building address to begin.</p>
