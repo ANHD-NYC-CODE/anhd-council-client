@@ -86,9 +86,11 @@ class Config extends React.Component {
         }}
       >
         {this.props.loading ||
-        (!!this.props.datasets.length &&
+        !(
+          !!this.props.datasets.length &&
           !!this.props.councilDistricts.length &&
-          !!this.props.communityDistricts.length) ? (
+          !!this.props.communityDistricts.length
+        ) ? (
           <Loading monitoredRequests={[GET_DATASETS, GET_COUNCILS, GET_COMMUNITIES]} />
         ) : (
           this.props.children
