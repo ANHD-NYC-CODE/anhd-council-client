@@ -42,6 +42,10 @@ $cyan: #17a2b8 !default;
 $transluscent: rgba(222, 222, 222, 0.8);
 
 $nyc-blue: #4c8ad8 !default;
+$nyc-blue-lighten-10: lighten($nyc-blue, 10%);
+$nyc-blue-lighten-15: lighten($nyc-blue, 15%);
+$nyc-blue-lighten-20: lighten($nyc-blue, 20%);
+
 $nyc-orange: #e74c2d !default;
 $nyc-crimson: #dfcdd3 !default;
 $tab-blue: #a0b9d1 !default;

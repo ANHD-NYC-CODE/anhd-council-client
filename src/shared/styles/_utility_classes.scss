@@ -6,6 +6,30 @@
   color: $gray-700;
 }
 
+.bg-nyc-blue-lighten-10 {
+  background-color: $nyc-blue-lighten-10;
+}
+
+.bg-nyc-blue-lighten-15 {
+  background-color: $nyc-blue-lighten-15;
+}
+
+.bg-nyc-blue-lighten-20 {
+  background-color: $nyc-blue-lighten-20;
+}
+
+.scale-3 {
+  transform: scale(3);
+}
+
+.scale-5 {
+  transform: scale(5);
+}
+
+.scale-10 {
+  transform: scale(10);
+}
+
 label.toggle-link.btn,
 label.toggle-link.btn:active,
 label.btn-primary:not(:disabled):not(.disabled):active {

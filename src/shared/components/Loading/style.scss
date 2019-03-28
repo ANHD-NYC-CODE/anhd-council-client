@@ -1,3 +1,28 @@
 .loading {
-  background-color: lightblue;
+  position: relative;
+  transition: 'transform 5000 ease-in-out';
+
+  .loading__logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  img {
+    height: auto;
+    width: 100%;
+    max-width: 200px;
+  }
+  .loading__background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+  }
+  .loading__wrapper {
+    position: relative;
+  }
+  .loading__requests {
+    min-width: 300px;
+    z-index: 2;
+  }
 }
