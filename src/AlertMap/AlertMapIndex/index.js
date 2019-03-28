@@ -5,14 +5,17 @@ import GeographySelect from 'shared/components/GeographySelect'
 import LeafletMap from 'LeafletMap'
 import ConfigContext from 'Config/ConfigContext'
 import IntroductionBlock from 'shared/components/IntroductionBlock'
+import { Element } from 'react-scroll'
+
 const AlertMapIndex = props => {
   return (
     <div className="alert-map-index">
       <Row>
         <Col className="touch-left padding-xs-sm-0" xs={12} lg={5}>
-          <IntroductionBlock />
+          <IntroductionBlock scrollToControls={props.scrollToControls} />
         </Col>
         <Col className="px-md-4 py-3 py-lg-6" xs={12} lg={7}>
+          <Element name="main-controls" />
           <Row className="mb-4">
             <Col>
               <p className="text-muted font-weight-bold">Select a district to begin.</p>

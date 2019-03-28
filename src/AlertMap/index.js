@@ -11,6 +11,7 @@ import { makeSelectRequests } from 'Store/AppState/selectors'
 import { isValidGeography } from 'shared/utilities/routeUtils'
 import PageError from 'shared/components/PageError'
 import { faMapSigns } from '@fortawesome/free-solid-svg-icons'
+import { Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
 class AlertMap extends React.PureComponent {
   constructor(props) {
@@ -28,7 +29,7 @@ class AlertMap extends React.PureComponent {
     this.cancelChangeGeography = this.cancelChangeGeography.bind(this)
     this.handleChangeGeographyId = this.handleChangeGeographyId.bind(this)
     this.cancelChangeGeography = this.cancelChangeGeography.bind(this)
-
+    this.scrollToControls = this.scrollToControls.bind(this)
     if (props.geographyType && !isValidGeography(props.geographyType, props.geographyId)) {
       return
     } else if (!(props.geographyType && props.geographyId)) {
@@ -48,6 +49,16 @@ class AlertMap extends React.PureComponent {
     }
   }
 
+  componentDidMount() {
+    scrollSpy.update()
+    this.scrollToControls()
+  }
+
+  componentWillUnmount() {
+    Events.scrollEvent.remove('begin')
+    Events.scrollEvent.remove('end')
+  }
+
   componentDidUpdate() {
     if (
       this.props.geographyType &&
@@ -62,6 +73,15 @@ class AlertMap extends React.PureComponent {
         error404: false,
       })
     }
+  }
+
+  scrollToControls() {
+    scroller.scrollTo('main-controls', {
+      duration: 800,
+      delay: 0,
+      smooth: 'easeInOutQuart',
+      offset: -200,
+    })
   }
 
   trigger404Error(error404Message) {
@@ -125,11 +145,12 @@ class AlertMap extends React.PureComponent {
     return !(this.props.appState.currentGeographyType && this.props.appState.currentGeographyId) ? (
       <AlertMapIndex
         appState={this.props.appState}
+        cancelChangeGeography={this.cancelChangeGeography}
         dispatch={this.props.dispatch}
         handleChangeGeography={this.submitGeography}
         handleChangeGeographyType={this.handleChangeGeographyType}
         handleChangeGeographyId={this.handleChangeGeographyId}
-        cancelChangeGeography={this.cancelChangeGeography}
+        scrollToControls={this.scrollToControls}
       />
     ) : (
       <AlertMapRequestsWrapper

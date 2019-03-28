@@ -5,6 +5,8 @@ import { push, createMatchSelector } from 'connected-react-router'
 import { setLookupAndRequestsAndRedirect } from 'Store/AppState/actions'
 import { getRequestType } from 'Store/AppState/selectors'
 import PageError from 'shared/components/PageError'
+import { Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
+
 import { faMapSigns } from '@fortawesome/free-solid-svg-icons'
 
 import LookupIndex from 'Lookup/LookupIndex'
@@ -24,6 +26,25 @@ class Lookup extends React.Component {
     } else if (!(props.bbl === props.appState.currentProperty) || !(props.bin === props.appState.currentBuilding)) {
       this.changeLookup(props.bbl, props.bin)
     }
+  }
+
+  componentDidMount() {
+    scrollSpy.update()
+    this.scrollToControls()
+  }
+
+  componentWillUnmount() {
+    Events.scrollEvent.remove('begin')
+    Events.scrollEvent.remove('end')
+  }
+
+  scrollToControls() {
+    scroller.scrollTo('main-controls', {
+      duration: 800,
+      delay: 0,
+      smooth: 'easeInOutQuart',
+      offset: -200,
+    })
   }
 
   trigger404Error(error404Message) {
@@ -58,7 +79,7 @@ class Lookup extends React.Component {
         trigger404Error={this.trigger404Error}
       />
     ) : (
-      <LookupIndex appState={this.props.appState} />
+      <LookupIndex appState={this.props.appState} scrollToControls={this.scrollToControls} />
     )
   }
 }

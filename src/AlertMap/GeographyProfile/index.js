@@ -24,20 +24,20 @@ const renderLinks = props => {
     case 'COUNCIL':
       return (
         <Col>
-          <Row>
+          <Row className="mb-2">
             <BaseLink
               href={`https://council.nyc.gov/district-${props.currentGeographyId}/`}
               text="City Council Website"
             />
           </Row>
-          <Row>
+          <Row className="mb-2">
             <BaseLink
               as={BaseLink}
               href={'https://www1.nyc.gov/site/planning/data-maps/nyc-population/census-2010.page'}
               text="Census & Demographic Data"
             />
           </Row>
-          <Row>
+          <Row className="mb-2">
             <BaseLink
               as={BaseLink}
               href="https://popfactfinder.planning.nyc.gov/#12.25/40.724/-73.9868"
@@ -49,7 +49,7 @@ const renderLinks = props => {
     case 'COMMUNITY':
       return (
         <Col>
-          <Row>
+          <Row className="mb-2">
             <BaseLink
               as={BaseLink}
               href={`https://communityprofiles.planning.nyc.gov${communityToCommunityProfileLink(
@@ -58,14 +58,14 @@ const renderLinks = props => {
               text="NYC Planning Community Profile"
             />
           </Row>
-          <Row>
+          <Row className="mb-2">
             <BaseLink
               as={BaseLink}
               href={'https://www1.nyc.gov/site/planning/data-maps/nyc-population/census-2010.page'}
               text="Census & Demographic Data"
             />
           </Row>
-          <Row>
+          <Row className="mb-2">
             <BaseLink
               as={BaseLink}
               href="https://popfactfinder.planning.nyc.gov/#12.25/40.724/-73.9868"
