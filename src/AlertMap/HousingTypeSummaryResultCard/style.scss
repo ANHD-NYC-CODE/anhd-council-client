@@ -1,13 +1,11 @@
 @import 'shared/styles/bootstrap/_variables.scss';
 
-
 .housingtype-summary-result-card.btn {
   border-radius: 1px;
   background-color: $housing-purple;
 }
 
 .housingtype-summary-result-card {
-  min-height: 120px;
   max-width: 400px;
   width: 100%;
 

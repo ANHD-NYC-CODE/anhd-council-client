@@ -33,7 +33,7 @@ class PropertyIcons extends React.Component {
   }
 
   render() {
-    if (!(this.props.visible && this.props.selectedRequest)) return null
+    if (!(this.props.visible && this.props.selectedRequest && this.props.results)) return null
     if (this.props.iconConfig === 'MULTIPLE') {
       if (this.props.results.length > this.iconLimit) return null
       return this.props.results
