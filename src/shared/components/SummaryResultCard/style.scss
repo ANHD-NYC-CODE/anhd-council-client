@@ -29,28 +29,4 @@
       min-width: 20px;
     }
   }
-
-  .alert {
-    border-radius: 20px;
-    margin: 0;
-    pointer-events: all;
-    padding: 4px 10px;
-    p {
-      margin: 0;
-      text-align: left;
-    }
-
-    @media (hover: hover) {
-      &:hover {
-        box-shadow: 1px 2px 6px $gray-700;
-        transform: scale(1.01);
-        svg {
-          transform: scale(1.1);
-        }
-        span.badge {
-          text-decoration: underline;
-        }
-      }
-    }
-  }
 }
