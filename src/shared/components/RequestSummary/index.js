@@ -6,6 +6,7 @@ import { createErrorSelector } from 'Store/Error/selectors'
 import InfoModalButton from 'shared/components/InfoModalButton'
 import { requestWithAuth } from 'shared/utilities/authUtils'
 import { makeRequest } from 'Store/Request/actions'
+import RequestErrorCard from 'shared/components/RequestErrorCard'
 
 import { Col, Row } from 'react-bootstrap'
 class RequestSummary extends React.Component {
@@ -40,16 +41,24 @@ class RequestSummary extends React.Component {
     return (
       <Row className="request-summary">
         <Col className="pr-md-0" xs={10} md={11}>
-          {this.props.resultsComponent({
-            selected: this.props.selected,
-            request: this.props.request,
-            results: this.props.results,
-            totalResults: this.props.totalResults,
-            loading: this.props.loading,
-            error: this.props.error,
-            errorAction: this.retryRequest,
-            handleClick: this.handleClick,
-          })}
+          {this.props.error ? (
+            <RequestErrorCard
+              error={this.props.error}
+              errorAction={this.retryRequest}
+              requestLabel={this.props.request.label}
+            />
+          ) : (
+            this.props.resultsComponent({
+              selected: this.props.selected,
+              request: this.props.request,
+              results: this.props.results,
+              totalResults: this.props.totalResults,
+              loading: this.props.loading,
+              error: this.props.error,
+              errorAction: this.retryRequest,
+              handleClick: this.handleClick,
+            })
+          )}
         </Col>
         {!this.props.print && (
           <Col xs={2} md={1} className="px-1">
