@@ -9,6 +9,7 @@ import Main from 'Main'
 import Lookup from 'Lookup'
 import AlertMap from 'AlertMap'
 import AdvancedSearch from 'AdvancedSearch'
+import { faMapSigns } from '@fortawesome/free-solid-svg-icons'
 
 import PageError from 'shared/components/PageError'
 import Layout from 'Layout'
@@ -30,8 +31,9 @@ class Router extends React.Component {
             <Route
               render={() => (
                 <PageError
-                  title="Oops! 404 Not Found."
-                  message="Sorry, an error has occured, Requested page not found!"
+                  title="Oops! 404 Page Not Found."
+                  message="Sorry, an error has occured. Page not found!"
+                  icon={faMapSigns}
                 />
               )}
             />
