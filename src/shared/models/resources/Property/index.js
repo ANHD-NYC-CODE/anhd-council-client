@@ -19,8 +19,8 @@ const Property = databaseObject => {
         label: 'Rent Stabilized',
         paramMaps: [
           new ParameterMapping({ field: 'rentstabilizationrecord', comparison: 'bool', value: true }),
-          new ParameterMapping({ field: 'unitsres', comparison: 'gte', value: 1 }),
-          new ParameterMapping({ field: 'unitsres', comparison: 'lte', value: 6 }),
+          new ParameterMapping({ field: 'unitsrentstabilized', comparison: 'bool', value: true }),
+          new ParameterMapping({ field: 'unitsres', comparison: 'gte', value: 6 }),
           new ParameterMapping({ field: 'yearbuilt', comparison: 'lte', value: 1974 }),
           new ParameterMapping({ field: 'yearbuilt', comparison: 'gte', value: 1 }),
         ],
@@ -47,6 +47,7 @@ const Property = databaseObject => {
         paramMaps: [
           new ParameterMapping({ field: 'unitsres', comparison: 'gte', value: 1 }),
           new ParameterMapping({ field: 'unitsres', comparison: 'lte', value: 4 }),
+          new ParameterMapping({ field: 'unitsrentstabilized', comparison: 'bool', value: false }),
         ],
         internalFilter: (results, paramMaps) =>
           results.filter(result => paramMaps.every(paramMap => paramMap.evaluate(result))),
@@ -58,13 +59,14 @@ const Property = databaseObject => {
         paramMaps: [
           new ParameterMapping({ field: 'unitsres', comparison: 'gte', value: 1 }),
           new ParameterMapping({ field: 'nycha', comparison: 'bool', value: false }),
-          new ParameterMapping({ field: 'rentstabilizationrecord', comparison: 'bool', value: false }),
+          new ParameterMapping({ field: 'unitsrentstabilized', comparison: 'bool', value: false }),
           new ParameterMapping({ field: 'subsidyrecords', comparison: 'bool', value: false }),
           new ParameterMapping({ field: 'subsidyj51records', comparison: 'bool', value: false }),
           new ParameterMapping({ field: 'subsidy421arecords', comparison: 'bool', value: false }),
         ],
-        internalFilter: (results, paramMaps) =>
-          results.filter(result => paramMaps.every(paramMap => paramMap.evaluate(result))),
+        internalFilter: (results, paramMaps) => {
+          return results.filter(result => paramMaps.every(paramMap => paramMap.evaluate(result)))
+        },
       },
 
       {

@@ -54,7 +54,6 @@ class PropertyIcons extends React.Component {
         })
         .filter(i => i)
     } else {
-      console.log(this.props.results)
       return (
         !!this.props.results.length ||
         (!!Object.keys(this.props.results).length && this.getLatLng(this.props.results) ? (
