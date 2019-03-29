@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { setMapFilterDate } from 'Store/AppState/actions'
 
-import { getRequestType, getManyRequestTypes } from 'Store/AppState/selectors'
+import { getRequestType, getManyRequestTypes, getRequestByConstant } from 'Store/AppState/selectors'
 
 import { requestWithAuth } from 'shared/utilities/authUtils'
 import { makeRequest } from 'Store/Request/actions'
@@ -18,7 +18,7 @@ class AlertMapRequestsWrapper extends React.PureComponent {
     this.loadRequests = this.loadRequests.bind(this)
     this.switchSelectedRequest = this.switchSelectedRequest.bind(this)
     this.state = {
-      selectedRequest: this.getInitialRequest(),
+      selectedRequestIndex: this.props.requests.indexOf(this.getInitialRequest()),
     }
   }
 
@@ -47,7 +47,7 @@ class AlertMapRequestsWrapper extends React.PureComponent {
     })
 
     this.setState({
-      selectedRequest: this.getInitialRequest(),
+      selectedRequestIndex: this.props.requests.indexOf(this.getInitialRequest()),
     })
   }
 
@@ -67,20 +67,20 @@ class AlertMapRequestsWrapper extends React.PureComponent {
     this.loadRequests(mapRequests)
   }
 
-  switchSelectedRequest(request) {
+  switchSelectedRequest(index) {
     this.setState({
-      selectedRequest: request,
+      selectedRequestIndex: index,
     })
   }
 
   render() {
     return this.props.requests.length ? (
       <AlertMapShow
-        advancedSearch={this.props.advancedSearch}
         geographyRequests={getManyRequestTypes(this.props.requests, ['MAP_FILTER', 'ADVANCED_SEARCH'])}
         housingTypeRequests={getRequestType(this.props.requests, 'GEOGRAPHY_HOUSING_TYPE')}
+        propertySummaryRequest={getRequestByConstant(this.props.requests, 'GEOGRAPHY_HOUSING_TYPE_ALL')[0]}
         toggleDateRange={this.toggleDateRange}
-        selectedRequest={this.state.selectedRequest}
+        selectedRequestIndex={this.state.selectedRequestIndex}
         switchSelectedRequest={this.switchSelectedRequest}
         {...this.props}
       />

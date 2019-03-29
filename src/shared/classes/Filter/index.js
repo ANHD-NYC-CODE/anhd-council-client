@@ -1,4 +1,4 @@
-import * as d from 'shared/models/datasets'
+import * as resources from 'shared/models/resources'
 import * as ht from 'shared/models/housingTypes'
 import { ParamError } from 'shared/classes/ParamError'
 import { getApiMap } from 'shared/utilities/classUtils'
@@ -16,8 +16,8 @@ export class Filter {
     if (!this.model && !!this.modelConstant) {
       const model = this.findDataset(this.modelConstant) || this.findHousingType(this.modelConstant) || this._model
       if (!model && this.modelConstant !== 'NEW_FILTER' && this.modelConstant !== 'ALL_TYPES') {
-        throw `Pass either '${Object.keys(d)
-          .map(key => d[key].id)
+        throw `Pass either '${Object.keys(resources)
+          .map(key => resources[key].id)
           .join("' or '")}' as the first argument. ${this.modelConstant} does not have a match.`
       }
 
@@ -42,8 +42,8 @@ export class Filter {
   }
 
   findDataset(modelConstant) {
-    return d[Object.keys(d).find(key => d[key]().id === modelConstant)]
-      ? d[Object.keys(d).find(key => d[key]().id === modelConstant)]()
+    return resources[Object.keys(resources).find(key => resources[key]().id === modelConstant)]
+      ? resources[Object.keys(resources).find(key => resources[key]().id === modelConstant)]()
       : null
   }
 

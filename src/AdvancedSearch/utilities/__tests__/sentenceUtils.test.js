@@ -1,5 +1,4 @@
 import * as a from 'AdvancedSearch/utilities/sentenceUtils'
-import * as d from 'shared/constants/datasets'
 import { Geography } from 'shared/classes/Geography'
 import { Filter } from 'shared/classes/Filter'
 import { Condition } from 'shared/classes/Condition'
@@ -21,7 +20,7 @@ describe('convertFilterToSentence', () => {
     it('converts the object into a field string', () => {
       const object = filterMocks('HPD_VIOLATION')
 
-      const result = ` have at least 5 ${d.HPDVIOLATIONS.name} between ${todayminus1year} and ${todayplus1year}`
+      const result = ` have at least 5 HPD Violations between ${todayminus1year} and ${todayplus1year}`
       expect(a.convertFilterToSentence(object)).toEqual(result)
     })
   })
@@ -343,7 +342,7 @@ describe('convertConditionMappingToSentence', () => {
         '0': new Condition({
           key: '0',
           type: 'AND',
-          filters: [filterMocks('FORECLOSURE')],
+          filters: [filterMocks('LISPENDEN')],
         }),
       }
 

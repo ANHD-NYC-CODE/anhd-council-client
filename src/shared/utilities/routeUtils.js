@@ -57,7 +57,6 @@ export const addressResultToPath = ({ bbl, bin } = {}) => {
 }
 
 export const isValidGeography = (type, id) => {
-  console.log(type, id)
   switch (type) {
     case 'map':
       return true

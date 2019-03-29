@@ -20,7 +20,7 @@ export const getApiMap = resourceConstant => {
       return new ApiMap({ name: 'Public Housing', queryName: 'ph' })
     case 'DOB_FILED_PERMIT':
       return new ApiMap({ constant: 'DOB_LEGACY_FILED_PERMIT' })
-    case 'FORECLOSURE':
+    case 'LISPENDEN':
       return new ApiMap({ constant: 'LISPENDEN' })
     case 'PROPERTY_SALE_BY_AMOUNT':
       return new ApiMap({ constant: 'ACRIS_REAL_LEGAL' })

@@ -261,7 +261,7 @@ export const getDatasetDateField = datasetConstant => {
       return 'documentid__docdate'
     case 'PROPERTY_SALE_BY_COUNT':
       return 'documentid__docdate'
-    case 'FORECLOSURE':
+    case 'LISPENDEN':
       return 'fileddate'
     case 'DOB_ISSUED_PERMIT':
       return 'issuedate'

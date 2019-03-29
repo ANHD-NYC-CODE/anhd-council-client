@@ -166,7 +166,7 @@ describe('convertConditionMappingToQ', () => {
 
   describe('foreclosure dataset', () => {
     it('converts the object into a field string', () => {
-      const mock = filterMocks('FORECLOSURE')
+      const mock = filterMocks('LISPENDEN')
       let condition0Filters = [mock]
 
       const conditions = {

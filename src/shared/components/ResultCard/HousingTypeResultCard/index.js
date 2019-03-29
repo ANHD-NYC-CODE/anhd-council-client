@@ -6,6 +6,7 @@ import SpinnerLoader from 'shared/components/Loaders/SpinnerLoader'
 import classnames from 'classnames'
 import './style.scss'
 const HousingTypeResultCard = props => {
+  const results = props.filter(props.results)
   return (
     <Card
       as={Button}
@@ -17,19 +18,21 @@ const HousingTypeResultCard = props => {
       onClick={props.handleClick}
     >
       <div className="housingtype-summary-result-card__wrapper">
-        <h5 className="housingtype-summary-result-card__title font-weight-bold">{props.request.label}</h5>
+        <h5 className="housingtype-summary-result-card__title font-weight-bold">
+          {props.label || props.request.label}
+        </h5>
         {props.loading ? (
           <SpinnerLoader />
         ) : (
           <div className="housingtype-summary-result-card__inner-wrapper d-flex flex-row justify-content-between w-100">
             <div className="d-flex flex-column align-items-flex-start h-100 text-left">
               <p>
-                <span className="font-weight-bold">{props.results.length}</span>{' '}
+                <span className="font-weight-bold">{results.length}</span>{' '}
                 <span className="summary-units">properties</span>
               </p>
               <p>
                 <span className="font-weight-bold">
-                  {props.results.reduce((total, result) => parseInt(total) + parseInt(result['unitsres']), 0)}
+                  {results.reduce((total, result) => parseInt(total) + parseInt(result['unitsres']), 0)}
                 </span>{' '}
                 <span className="summary-units">units</span>
               </p>
@@ -37,7 +40,7 @@ const HousingTypeResultCard = props => {
             <div className="d-flex flex-column align-items-flex-end h-100 text-right">
               {props.totalResults && !!props.totalResults.length && (
                 <h5 className="text-right font-weight-bold ">{`${(
-                  (props.results.length / props.totalResults.length) *
+                  (results.length / props.totalResults.length) *
                   100
                 ).toFixed(2)}%`}</h5>
               )}
@@ -52,6 +55,7 @@ const HousingTypeResultCard = props => {
 HousingTypeResultCard.defaultProps = {
   loading: false,
   error: undefined,
+  filter: results => results,
   results: [],
   totalResults: [],
   selected: false,

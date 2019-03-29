@@ -3,23 +3,27 @@ import PropTypes from 'prop-types'
 import BaseModal from 'shared/components/BaseModal'
 import LoginForm from 'Auth/LoginForm'
 import { connect } from 'react-redux'
-
+import UserContext from 'Auth/UserContext'
 const LoginModal = props => {
-  if (Object.keys(props.user).length) {
-    props.onHide()
-  }
   return (
-    <BaseModal
-      centered={true}
-      className="auth-login-modal"
-      labelId={props.labelId}
-      modalFooter={props.modalFooter}
-      onHide={props.onHide}
-      show={props.show}
-      title="Login"
-    >
-      <LoginForm dispatch={props.dispatch} error={props.error} loading={props.loading} />
-    </BaseModal>
+    <UserContext.Consumer>
+      {auth => {
+        if (auth.user) props.onHide()
+        return (
+          <BaseModal
+            centered={true}
+            className="auth-login-modal"
+            labelId={props.labelId}
+            modalFooter={props.modalFooter}
+            onHide={props.onHide}
+            show={props.show}
+            title="Login"
+          >
+            <LoginForm dispatch={props.dispatch} error={auth.loginError} loading={props.loading} user={auth.user} />
+          </BaseModal>
+        )
+      }}
+    </UserContext.Consumer>
   )
 }
 
@@ -42,10 +46,4 @@ LoginModal.propTypes = {
   title: PropTypes.string,
 }
 
-const mapStateToProps = state => {
-  return {
-    user: state.auth.user,
-  }
-}
-
-export default connect(mapStateToProps)(LoginModal)
+export default connect()(LoginModal)
