@@ -18,7 +18,7 @@ class RequestSummaryWrapper extends React.Component {
   }
 
   handleClick() {
-    if (this.props.onClick) this.props.onClick(this.props.request)
+    if (this.props.onClick) this.props.onClick(this.props.request, this.props.resultsFilter)
   }
 
   getInfoKey() {
@@ -38,6 +38,13 @@ class RequestSummaryWrapper extends React.Component {
   }
 
   render() {
+    const results = this.props.resultsFilter.internalFilter(this.props.results, this.props.resultsFilter.paramMaps)
+
+    const totalResults = this.props.totalResultsFilter.internalFilter(
+      this.props.results,
+      this.props.totalResultsFilter.paramMaps
+    )
+
     return (
       <Row className="request-summary">
         <Col className="pr-md-0" xs={10} md={11}>
@@ -51,15 +58,13 @@ class RequestSummaryWrapper extends React.Component {
             this.props.resultsComponent({
               error: this.props.error,
               errorAction: this.retryRequest,
-              filter: this.props.filter,
               label: this.props.label,
               handleClick: this.handleClick,
               selected: this.props.selected,
               unitsLabel: this.props.unitsLabel,
               request: this.props.request,
-              results: this.props.results,
-              totalResults: this.props.totalResults,
-              totalResultsFilter: this.props.totalResultsFilter,
+              results: results,
+              totalResults: totalResults,
               loading: this.props.loading,
             })
           )}
@@ -79,14 +84,22 @@ RequestSummaryWrapper.defaultProps = {
   error: undefined,
   results: [],
   print: false,
-  filter: results => results,
-  totalResultsFilter: results => results,
+  resultsFilter: {
+    internalFilter: results => results,
+    paramMaps: [],
+  },
+  totalResultsFilter: {
+    internalFilter: results => results,
+    paramMaps: [],
+  },
 }
 
 RequestSummaryWrapper.propTypes = {
   filter: PropTypes.func,
   onClick: PropTypes.func,
   resultsComponent: PropTypes.func,
+  resultsFilter: PropTypes.object,
+  totalResultsFilter: PropTypes.object,
   request: PropTypes.object,
   print: PropTypes.bool,
 }

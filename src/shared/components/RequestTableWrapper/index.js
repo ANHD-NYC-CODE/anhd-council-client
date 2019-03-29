@@ -31,13 +31,17 @@ class RequestTableWrapper extends React.Component {
     return this.props.visible ? (
       <div className="request-wrapper">
         <TableComponent
-          caption={this.props.request.label}
+          caption={this.props.tableRecordsFilter.label || this.props.request.label}
           datasetModelName={this.props.request.tableConfig.datasetModelName}
           dispatch={this.props.dispatch}
           error={this.processError(this.props.error)}
           errorAction={(this.props.error || {}).status === 504 ? this.retryRequest : null}
           loading={this.props.loading}
-          records={this.props.results || []}
+          records={
+            this.props.tableRecordsFilter.internalFilter(this.props.results, this.props.tableRecordsFilter.paramMaps) ||
+            this.props.results ||
+            []
+          }
           request={this.props.request}
           tableConfig={this.props.request.tableConfig}
         />
@@ -47,6 +51,11 @@ class RequestTableWrapper extends React.Component {
 }
 
 RequestTableWrapper.defaultProps = {
+  results: [],
+  tableRecordsFilter: {
+    internalFilter: results => results,
+    paramMaps: [],
+  },
   visible: false,
 }
 

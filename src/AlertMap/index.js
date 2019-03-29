@@ -11,7 +11,7 @@ import { makeSelectRequests } from 'Store/AppState/selectors'
 import { isValidGeography } from 'shared/utilities/routeUtils'
 import PageError from 'shared/components/PageError'
 import { faMapSigns } from '@fortawesome/free-solid-svg-icons'
-
+import ConfigContext from 'Config/ConfigContext'
 import { Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
 class AlertMap extends React.PureComponent {
@@ -141,30 +141,39 @@ class AlertMap extends React.PureComponent {
   }
 
   render() {
-    if (this.state.error404)
-      return <PageError title="Oops! 404 Page Not Found." message={this.state.error404Message} icon={faMapSigns} />
-    return !(this.props.appState.currentGeographyType && this.props.appState.currentGeographyId) ? (
-      <AlertMapIndex
-        appState={this.props.appState}
-        cancelChangeGeography={this.cancelChangeGeography}
-        dispatch={this.props.dispatch}
-        handleChangeGeography={this.submitGeography}
-        handleChangeGeographyType={this.handleChangeGeographyType}
-        handleChangeGeographyId={this.handleChangeGeographyId}
-        scrollToControls={this.scrollToControls}
-      />
-    ) : (
-      <AlertMapRequestsWrapper
-        advancedSearch={this.props.advancedSearch}
-        appState={this.props.appState}
-        dispatch={this.props.dispatch}
-        cancelChangeGeography={this.cancelChangeGeography}
-        handleChangeGeography={this.submitGeography}
-        handleChangeGeographyType={this.handleChangeGeographyType}
-        handleChangeGeographyId={this.handleChangeGeographyId}
-        requests={this.props.requests}
-        trigger404Error={this.trigger404Error}
-      />
+    return (
+      <ConfigContext.Consumer>
+        {config => {
+          if (this.state.error404)
+            return (
+              <PageError title="Oops! 404 Page Not Found." message={this.state.error404Message} icon={faMapSigns} />
+            )
+          return !(this.props.appState.currentGeographyType && this.props.appState.currentGeographyId) ? (
+            <AlertMapIndex
+              appState={this.props.appState}
+              cancelChangeGeography={this.cancelChangeGeography}
+              dispatch={this.props.dispatch}
+              handleChangeGeography={this.submitGeography}
+              handleChangeGeographyType={this.handleChangeGeographyType}
+              handleChangeGeographyId={this.handleChangeGeographyId}
+              scrollToControls={this.scrollToControls}
+            />
+          ) : (
+            <AlertMapRequestsWrapper
+              advancedSearch={this.props.advancedSearch}
+              appState={this.props.appState}
+              dispatch={this.props.dispatch}
+              config={config}
+              cancelChangeGeography={this.cancelChangeGeography}
+              handleChangeGeography={this.submitGeography}
+              handleChangeGeographyType={this.handleChangeGeographyType}
+              handleChangeGeographyId={this.handleChangeGeographyId}
+              requests={this.props.requests}
+              trigger404Error={this.trigger404Error}
+            />
+          )
+        }}
+      </ConfigContext.Consumer>
     )
   }
 }

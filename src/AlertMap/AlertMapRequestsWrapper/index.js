@@ -16,9 +16,12 @@ class AlertMapRequestsWrapper extends React.PureComponent {
     this.toggleDateRange = this.toggleDateRange.bind(this)
 
     this.loadRequests = this.loadRequests.bind(this)
+    this.getInitialRequest = this.getInitialRequest.bind(this)
+    this.getInitialTableFilter = this.getInitialTableFilter.bind(this)
     this.switchSelectedRequest = this.switchSelectedRequest.bind(this)
     this.state = {
       selectedRequestIndex: this.props.requests.indexOf(this.getInitialRequest()),
+      tableRecordsFilter: this.getInitialTableFilter(),
     }
   }
 
@@ -38,7 +41,15 @@ class AlertMapRequestsWrapper extends React.PureComponent {
   getInitialRequest() {
     return getRequestType(this.props.requests, 'ADVANCED_SEARCH').length
       ? getRequestType(this.props.requests, 'ADVANCED_SEARCH')[0]
-      : getRequestType(this.props.requests, 'MAP_FILTER')[0]
+      : getRequestType(this.props.requests, 'GEOGRAPHY_HOUSING_TYPE')[0]
+  }
+
+  getInitialTableFilter() {
+    return getRequestType(this.props.requests, 'ADVANCED_SEARCH').length
+      ? undefined
+      : this.props.config.datasetModels
+          .find(model => model.resourceConstant === 'PROPERTY')
+          .ownResultFilters.find(orf => orf.id === 'HOUSING_TYPE_RENT_STABILIZED')
   }
 
   loadRequests(requests = []) {
@@ -48,6 +59,7 @@ class AlertMapRequestsWrapper extends React.PureComponent {
 
     this.setState({
       selectedRequestIndex: this.props.requests.indexOf(this.getInitialRequest()),
+      tableRecordsFilter: this.getInitialTableFilter(),
     })
   }
 
@@ -67,9 +79,10 @@ class AlertMapRequestsWrapper extends React.PureComponent {
     this.loadRequests(mapRequests)
   }
 
-  switchSelectedRequest(index) {
+  switchSelectedRequest(index, filter) {
     this.setState({
       selectedRequestIndex: index,
+      tableRecordsFilter: filter,
     })
   }
 
@@ -82,6 +95,7 @@ class AlertMapRequestsWrapper extends React.PureComponent {
         toggleDateRange={this.toggleDateRange}
         selectedRequestIndex={this.state.selectedRequestIndex}
         switchSelectedRequest={this.switchSelectedRequest}
+        tableRecordsFilter={this.state.tableRecordsFilter}
         {...this.props}
       />
     ) : (

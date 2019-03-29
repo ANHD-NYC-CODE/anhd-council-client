@@ -46,7 +46,7 @@ const Property = databaseObject => {
         label: 'Small Homes',
         paramMaps: [
           new ParameterMapping({ field: 'unitsres', comparison: 'gte', value: 1 }),
-          new ParameterMapping({ field: 'unitsres', comparison: 'lte', value: 6 }),
+          new ParameterMapping({ field: 'unitsres', comparison: 'lte', value: 4 }),
         ],
         internalFilter: (results, paramMaps) =>
           results.filter(result => paramMaps.every(paramMap => paramMap.evaluate(result))),

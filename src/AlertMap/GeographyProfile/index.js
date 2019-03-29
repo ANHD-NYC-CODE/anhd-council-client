@@ -32,14 +32,12 @@ const renderLinks = props => {
           </Row>
           <Row className="mb-2">
             <BaseLink
-              as={BaseLink}
               href={'https://www1.nyc.gov/site/planning/data-maps/nyc-population/census-2010.page'}
               text="Census & Demographic Data"
             />
           </Row>
           <Row className="mb-2">
             <BaseLink
-              as={BaseLink}
               href="https://popfactfinder.planning.nyc.gov/#12.25/40.724/-73.9868"
               text="Population Fact Finder Map"
             />
@@ -51,7 +49,6 @@ const renderLinks = props => {
         <Col>
           <Row className="mb-2">
             <BaseLink
-              as={BaseLink}
               href={`https://communityprofiles.planning.nyc.gov${communityToCommunityProfileLink(
                 props.currentGeographyId
               )}`}
@@ -60,14 +57,12 @@ const renderLinks = props => {
           </Row>
           <Row className="mb-2">
             <BaseLink
-              as={BaseLink}
               href={'https://www1.nyc.gov/site/planning/data-maps/nyc-population/census-2010.page'}
               text="Census & Demographic Data"
             />
           </Row>
           <Row className="mb-2">
             <BaseLink
-              as={BaseLink}
               href="https://popfactfinder.planning.nyc.gov/#12.25/40.724/-73.9868"
               text="Population Fact Finder Map"
             />

@@ -51,8 +51,8 @@ class AlertMapShow extends React.PureComponent {
     })
   }
 
-  switchTable(request) {
-    this.props.switchSelectedRequest(this.props.appState.requests.indexOf(request))
+  switchTable(request, filter) {
+    this.props.switchSelectedRequest(this.props.appState.requests.indexOf(request), filter)
     this.props.cancelChangeGeography()
   }
 
@@ -152,7 +152,7 @@ class AlertMapShow extends React.PureComponent {
                           <RequestSummaryWrapper
                             key={`request-summary-${this.props.appState.requests.indexOf(request)}`}
                             request={request}
-                            onClick={r => this.switchTable(r)}
+                            onClick={this.switchTable}
                             resultsComponent={SummaryResultCard}
                             selected={this.props.selectedRequestIndex === this.props.appState.requests.indexOf(request)}
                           />
@@ -182,6 +182,7 @@ class AlertMapShow extends React.PureComponent {
                     propertySummaryRequest={this.props.propertySummaryRequest}
                     selectedRequestIndex={this.props.selectedRequestIndex}
                     switchTable={this.switchTable}
+                    tableRecordsFilter={this.props.tableRecordsFilter}
                   />
                 </Col>
                 <Col xs={12} lg={6}>
@@ -233,6 +234,7 @@ class AlertMapShow extends React.PureComponent {
                                 this.props.selectedRequestIndex === this.props.appState.requests.indexOf(request)
                               }
                               request={request}
+                              tableRecordsFilter={this.props.tableRecordsFilter}
                             />
                           )
                         })}
