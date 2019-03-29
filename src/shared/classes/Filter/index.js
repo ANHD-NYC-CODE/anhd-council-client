@@ -8,7 +8,7 @@ import { cloneInstance } from 'shared/utilities/classUtils'
 export class Filter {
   constructor({ modelConstant = null, model = null, paramSets = {}, errors = [] } = {}) {
     this._paramSets = paramSets
-    this.id = modelConstant || model.id
+    this.id = modelConstant || model.resourceConstant
     this.modelConstant = modelConstant
     this._model = model
     this._errors = errors

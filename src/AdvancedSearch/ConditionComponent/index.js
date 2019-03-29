@@ -61,7 +61,7 @@ export class ConditionComponent extends React.Component {
 
   replaceFilter(filterIndex, e) {
     e = new StandardizedInput(e)
-    const model = this.props.config.datasetModels.find(ds => ds.id === e.value)
+    const model = this.props.config.datasetModels.find(model => model.resourceConstant === e.value)
     const newFilter = new Filter({ model })
     this.props.condition.replaceFilter({ filterIndex, filter: newFilter })
     this.dispatchAction()

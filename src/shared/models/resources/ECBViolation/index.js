@@ -2,7 +2,7 @@ import { constructDefaultSchema, constantToName } from 'shared/utilities/filterU
 import { LanguageModule } from 'shared/classes/LanguageModule'
 
 const ECBViolation = databaseObject => ({
-  id: 'ECB_VIOLATION',
+  resourceConstant: 'ECB_VIOLATION',
   schema: constructDefaultSchema({
     databaseObject,
     constant: 'ECB_VIOLATION',

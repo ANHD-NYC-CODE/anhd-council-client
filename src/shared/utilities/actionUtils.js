@@ -112,6 +112,9 @@ export const setupDatasetModels = datasets => {
     .map(constant => {
       let databaseObject
       switch (constant) {
+        case 'DOB_FILED_PERMIT':
+          databaseObject = datasets.find(object => (object.model_name || {}).toUpperCase() === 'DOBLEGACYFILEDPERMIT')
+          break
         case 'PROPERTY_SALE_BY_COUNT':
           databaseObject = datasets.find(object => (object.model_name || {}).toUpperCase() === 'ACRISREALLEGAL')
           break

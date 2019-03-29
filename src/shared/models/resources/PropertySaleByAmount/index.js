@@ -2,7 +2,7 @@ import { constructDefaultSchema, constantToName } from 'shared/utilities/filterU
 import { LanguageModule } from 'shared/classes/LanguageModule'
 
 const PropertySaleByAmount = databaseObject => ({
-  id: 'PROPERTY_SALE_BY_AMOUNT',
+  resourceConstant: 'PROPERTY_SALE_BY_AMOUNT',
   schema: constructDefaultSchema({
     databaseObject,
     constant: 'PROPERTY_SALE_BY_AMOUNT',

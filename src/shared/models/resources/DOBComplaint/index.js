@@ -2,7 +2,7 @@ import { constructDefaultSchema, constantToName } from 'shared/utilities/filterU
 import { LanguageModule } from 'shared/classes/LanguageModule'
 
 const DOBComplaint = databaseObject => ({
-  id: 'DOB_COMPLAINT',
+  resourceConstant: 'DOB_COMPLAINT',
   schema: constructDefaultSchema({
     databaseObject,
     constant: 'DOB_COMPLAINT',
