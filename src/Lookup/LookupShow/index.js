@@ -21,9 +21,10 @@ import './style.scss'
 class LookupShow extends React.Component {
   constructor(props) {
     super(props)
-
     this.state = {
-      selectedRequest: props.lookupRequests.length ? props.lookupRequests[0] : undefined,
+      selectedRequestIndex: props.appState.requests.length
+        ? props.appState.requests.indexOf(props.lookupRequests[0])
+        : undefined,
     }
 
     if (this.props.propertyError && this.props.propertyError.status === 404) {
@@ -50,7 +51,7 @@ class LookupShow extends React.Component {
 
   switchTable(request) {
     this.setState({
-      selectedRequest: request,
+      selectedRequestIndex: this.props.appState.requests.indexOf(request),
     })
   }
 
@@ -119,7 +120,9 @@ class LookupShow extends React.Component {
                           ? [this.props.propertyResult.lat, this.props.propertyResult.lng]
                           : undefined
                       }
-                      selectedRequest={this.props.profileRequest}
+                      selectedRequestIndex={this.props.appState.requests.findIndex(
+                        request => request.type === 'LOOKUP_PROFILE'
+                      )}
                       iconConfig="SINGLE"
                       zoom={15}
                     />
@@ -179,7 +182,9 @@ class LookupShow extends React.Component {
                                 <RequestSummaryWrapper
                                   key={`request-summary-${this.props.appState.requests.indexOf(request)}`}
                                   onClick={r => this.switchTable(r)}
-                                  selected={this.state.selectedRequest === request}
+                                  selected={
+                                    this.state.selectedRequestIndex === this.props.appState.requests.indexOf(request)
+                                  }
                                   request={request}
                                   resultsComponent={SummaryResultCard}
                                 />
@@ -195,7 +200,9 @@ class LookupShow extends React.Component {
                               <Col xs={12} key={`rw-col-${index}`} className="request-wrapper-container">
                                 <RequestTableWrapper
                                   key={`request-wrapper-${this.props.appState.requests.indexOf(request)}`}
-                                  visible={this.state.selectedRequest === request}
+                                  visible={
+                                    this.state.selectedRequestIndex === this.props.appState.requests.indexOf(request)
+                                  }
                                   request={request}
                                 />
                               </Col>
