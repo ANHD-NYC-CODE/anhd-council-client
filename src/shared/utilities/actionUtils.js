@@ -266,6 +266,12 @@ export const newGeographyHousingTypeRequest = ({
     paramMaps: [
       new ParameterMapping({
         type: 'TEXT',
+        field: 'summary',
+        comparison: '',
+        value: true,
+      }),
+      new ParameterMapping({
+        type: 'TEXT',
         field: 'housingtype',
         comparison: '',
         value: paramValue,

@@ -36,8 +36,8 @@ const PropertySummaryBody = props => {
         <Card.Text className="lookup-profile-summary__group">
           <label className="profile-summary-body__label">Rent Programs: </label>
           <span className="profile-summary-body__value">
-            {props.profile.coresubsidyrecords.length
-              ? props.profile.coresubsidyrecords.map(record => record.programname).join(' ')
+            {props.profile.subsidyrecords.length
+              ? props.profile.subsidyrecords.map(record => record.programname).join(' ')
               : ''}
           </span>
         </Card.Text>
