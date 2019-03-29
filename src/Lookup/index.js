@@ -6,6 +6,7 @@ import { setLookupAndRequestsAndRedirect } from 'Store/AppState/actions'
 import { getRequestType } from 'Store/AppState/selectors'
 import PageError from 'shared/components/PageError'
 import { Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
+import { clearSearch } from 'Store/Search/actions'
 
 import { faMapSigns } from '@fortawesome/free-solid-svg-icons'
 
@@ -60,6 +61,8 @@ class Lookup extends React.Component {
         bin,
       })
     )
+
+    this.props.dispatch(clearSearch())
   }
 
   render() {
