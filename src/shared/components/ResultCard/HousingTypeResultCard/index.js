@@ -41,7 +41,7 @@ const HousingTypeResultCard = props => {
                 <h5 className="text-right font-weight-bold mb-0">
                   {`${((props.results.length / props.totalResults.length) * 100).toFixed(2)}%`}{' '}
                 </h5>
-                <small className="small font-weight-bold text-muted">{props.unitsLabel}</small>
+                <small className="summary-units small font-weight-bold">{props.unitsLabel}</small>
               </div>
             )}
           </div>
