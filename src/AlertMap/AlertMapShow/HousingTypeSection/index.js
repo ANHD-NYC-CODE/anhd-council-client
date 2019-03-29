@@ -34,6 +34,7 @@ const HousingTypeSection = props => {
                   label={ownResultFilter.label}
                   filter={results => ownResultFilter.internalFilter(results, ownResultFilter.paramMaps)}
                   resultsComponent={HousingTypeResultCard}
+                  infoKey={ownResultFilter.infoKey}
                   // selected={
                   //   props.selectedRequestIndex === props.appState.requests.indexOf(props.propertySummaryRequest)
                   // }

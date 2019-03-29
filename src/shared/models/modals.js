@@ -1,5 +1,5 @@
 export const infoModals = {
-  GEOGRAPHY_HOUSING_TYPE_RS: {
+  HOUSING_TYPE_RENT_STABILIZED: {
     title: 'Rent Stabilized Housing',
     body:
       'An apartment may be regulated under New York State’s system of Rent Stabilization if it is in a property that was built before 1974 and has six or more units. All properties in this report included at least one rent stabilized unit beginning in 2007, the first year for which we have data. We base stabilized unit numbers on property tax bills from the NYC Department of Finance. Missing or fluctuating numbers may be due to missing/incorrect registration by the owner or inconsistencies in property tax documentation.',
@@ -10,8 +10,8 @@ export const infoModals = {
       },
     ],
   },
-  GEOGRAPHY_HOUSING_TYPE_RR: {
-    title: 'Rent Regulated Housing',
+  HOUSING_TYPE_SUBSIDIZED_HOUSING: {
+    title: 'Subsidized Housing Housing',
     body:
       'These properties are subject to a regulatory agreement at the City, State, or Federal level. This includes tax incentives and financing that determines affordability levels. ',
     sources: [
@@ -21,7 +21,7 @@ export const infoModals = {
       },
     ],
   },
-  GEOGRAPHY_HOUSING_TYPE_SH: {
+  HOUSING_TYPE_SMALL_HOMES: {
     title: 'Small Homes',
     body: 'We consider small homes to be any property with four or fewer dwelling units.',
     sources: [
@@ -31,7 +31,7 @@ export const infoModals = {
       },
     ],
   },
-  GEOGRAPHY_HOUSING_TYPE_MR: {
+  HOUSING_TYPE_MARKET_RATE: {
     title: 'Market Rate',
     body:
       'We consider market rate properties to be buildings that are not covered under either New York State rent stabilization code or any regulatory agreement governing apartment affordability.',
@@ -42,7 +42,7 @@ export const infoModals = {
       },
     ],
   },
-  GEOGRAPHY_HOUSING_TYPE_PH: {
+  HOUSING_TYPE_PUBLIC_HOUSING: {
     title: 'Public Housing',
     body:
       'We consider public housing properties to be any building operated by the New York City Housing Authority (NYCHA)',

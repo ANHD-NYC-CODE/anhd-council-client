@@ -270,12 +270,6 @@ export const newGeographyHousingTypeRequest = ({
         comparison: '',
         value: true,
       }),
-      // new ParameterMapping({
-      //   type: 'TEXT',
-      //   field: 'housingtype',
-      //   comparison: '',
-      //   value: paramValue,
-      // }),
     ],
     tableConfig: new TableConfig({ resourceConstant: 'PROPERTY' }),
   })
@@ -284,11 +278,6 @@ export const newGeographyHousingTypeRequest = ({
 export const newMapRequests = ({ geographyType, geographyId } = {}) => {
   return [
     newGeographyHousingTypeRequest({ type: 'GEOGRAPHY_HOUSING_TYPE', geographyType, geographyId, paramValue: 'all' }),
-    // newGeographyHousingTypeRequest({ type: 'GEOGRAPHY_HOUSING_TYPE', geographyType, geographyId, paramValue: 'rs' }),
-    // newGeographyHousingTypeRequest({ type: 'GEOGRAPHY_HOUSING_TYPE', geographyType, geographyId, paramValue: 'rr' }),
-    // newGeographyHousingTypeRequest({ type: 'GEOGRAPHY_HOUSING_TYPE', geographyType, geographyId, paramValue: 'sh' }),
-    // newGeographyHousingTypeRequest({ type: 'GEOGRAPHY_HOUSING_TYPE', geographyType, geographyId, paramValue: 'mr' }),
-    // newGeographyHousingTypeRequest({ type: 'GEOGRAPHY_HOUSING_TYPE', geographyType, geographyId, paramValue: 'ph' }),
     newGeographyRequest({
       type: 'MAP_FILTER',
       geographyType,
