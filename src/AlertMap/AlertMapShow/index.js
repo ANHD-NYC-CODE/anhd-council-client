@@ -9,9 +9,9 @@ import LayoutContext from 'Layout/LayoutContext'
 import BaseLink from 'shared/components/BaseLink'
 import LeafletMap from 'LeafletMap'
 import RequestWrapper from 'shared/components/RequestWrapper'
-import RequestSummary from 'shared/components/RequestSummary'
-import SummaryResultCard from 'shared/components/SummaryResultCard'
-import HousingTypeSummaryResultCard from 'AlertMap/HousingTypeSummaryResultCard'
+import RequestSummaryWrapper from 'shared/components/RequestSummaryWrapper'
+import SummaryResultCard from 'shared/components/ResultCard/SummaryResultCard'
+import HousingTypeSummaryResultCard from 'shared/components/ResultCard/HousingTypeResultCard'
 import ConfigContext from 'Config/ConfigContext'
 import PrintButton from 'shared/components/PrintButton'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -149,7 +149,7 @@ class AlertMapShow extends React.PureComponent {
                           key={`rs-col-${index}`}
                           className="geography-request-summary__container"
                         >
-                          <RequestSummary
+                          <RequestSummaryWrapper
                             key={`request-summary-${this.props.appState.requests.indexOf(request)}`}
                             request={request}
                             onClick={r => this.switchTable(r)}
@@ -186,7 +186,7 @@ class AlertMapShow extends React.PureComponent {
                           key={`rs-col-${index}`}
                           className="housingtype-request-summary__container"
                         >
-                          <RequestSummary
+                          <RequestSummaryWrapper
                             key={`request-summary-${this.props.appState.requests.indexOf(request)}`}
                             request={request}
                             totalRequest={this.props.housingTypeRequests.find(

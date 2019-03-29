@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import SummaryResultCard from 'shared/components/SummaryResultCard'
+import SummaryResultCard from 'shared/components/ResultCard/SummaryResultCard'
 import { getCurrentBuilding } from 'Lookup/utilities'
 
 import LeafletMap from 'LeafletMap'
@@ -11,7 +11,7 @@ import { Row, Col, InputGroup } from 'react-bootstrap'
 
 import RequestWrapper from 'shared/components/RequestWrapper'
 import BuildingSelect from 'Lookup/BuildingSelect'
-import RequestSummary from 'shared/components/RequestSummary'
+import RequestSummaryWrapper from 'shared/components/RequestSummaryWrapper'
 import LookupLinks from 'Lookup/LookupLinks'
 import PrintLookup from 'Lookup/PrintLookup'
 import PrintButton from 'shared/components/PrintButton'
@@ -176,7 +176,7 @@ class LookupShow extends React.Component {
                           {this.props.lookupRequests.map((request, index) => {
                             return (
                               <Col xs={12} sm={6} md={4} lg={12} key={`rs-col-${index}`}>
-                                <RequestSummary
+                                <RequestSummaryWrapper
                                   key={`request-summary-${this.props.appState.requests.indexOf(request)}`}
                                   onClick={r => this.switchTable(r)}
                                   selected={this.state.selectedRequest === request}

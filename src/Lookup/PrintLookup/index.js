@@ -2,9 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import LeafletMap from 'LeafletMap'
-import RequestSummary from 'shared/components/RequestSummary'
+import RequestSummaryWrapper from 'shared/components/RequestSummaryWrapper'
 import RequestWrapper from 'shared/components/RequestWrapper'
-import SummaryResultCard from 'shared/components/SummaryResultCard'
+import SummaryResultCard from 'shared/components/ResultCard/SummaryResultCard'
 
 import { Row, Col, Card } from 'react-bootstrap'
 import { councilIdToString, communityIdToString } from 'shared/utilities/languageUtils'
@@ -56,7 +56,7 @@ const PrintLookup = props => {
         {props.lookupRequests.map((request, index) => {
           return (
             <Col xs={3} key={`rw-col-${index}`} className="request-wrapper-container">
-              <RequestSummary
+              <RequestSummaryWrapper
                 key={`request-summary-${props.appState.requests.indexOf(request)}`}
                 request={request}
                 print={true}
