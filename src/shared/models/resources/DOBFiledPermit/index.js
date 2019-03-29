@@ -2,7 +2,7 @@ import { constructDefaultSchema, constantToName } from 'shared/utilities/filterU
 import { LanguageModule } from 'shared/classes/LanguageModule'
 
 const DOBFiledPermit = databaseObject => ({
-  id: 'DOB_FILED_PERMIT',
+  resourceConstant: 'DOB_FILED_PERMIT',
   schema: constructDefaultSchema({
     databaseObject,
     constant: 'DOB_FILED_PERMIT',

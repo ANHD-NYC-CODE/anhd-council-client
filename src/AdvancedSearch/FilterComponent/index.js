@@ -34,7 +34,7 @@ export class FilterComponent extends React.Component {
             {this.props.filter &&
               Object.keys(this.props.filter.paramSets).map((paramsSetKey, paramSetIndex) =>
                 this.props.filter.paramSets[paramsSetKey].component({
-                  key: `filter-paramset-${this.props.filter.id}-${paramSetIndex}`,
+                  key: `filter-paramset-${this.props.filter.resourceConstant}-${paramSetIndex}`,
                   dispatchAction: this.props.dispatchAction,
                   replaceFilter: this.props.replaceFilter,
                   filterIndex: this.props.filterIndex,

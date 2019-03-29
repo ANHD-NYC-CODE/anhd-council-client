@@ -2,7 +2,7 @@ import { constructDefaultSchema, constantToName } from 'shared/utilities/filterU
 import { LanguageModule } from 'shared/classes/LanguageModule'
 
 const HPDComplaint = databaseObject => ({
-  id: 'HPD_COMPLAINT',
+  resourceConstant: 'HPD_COMPLAINT',
   schema: constructDefaultSchema({
     databaseObject,
     constant: 'HPD_COMPLAINT',

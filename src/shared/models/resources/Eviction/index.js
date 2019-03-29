@@ -2,7 +2,7 @@ import { constructDefaultSchema, constantToName } from 'shared/utilities/filterU
 import { LanguageModule } from 'shared/classes/LanguageModule'
 
 const Eviction = databaseObject => ({
-  id: 'EVICTION',
+  resourceConstant: 'EVICTION',
   schema: constructDefaultSchema({
     databaseObject,
     constant: 'EVICTION',

@@ -5,7 +5,7 @@ import GenericFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/GenericFiel
 import HiddenField from 'AdvancedSearch/FilterComponent/Field/HiddenField'
 
 const LisPenden = databaseObject => ({
-  id: 'FORECLOSURE',
+  resourceConstant: 'LISPENDEN',
   schema: constructDefaultSchema({
     databaseObject,
     constant: 'LISPENDEN',

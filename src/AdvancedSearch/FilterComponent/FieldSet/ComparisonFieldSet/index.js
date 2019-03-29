@@ -73,7 +73,7 @@ const ComparisonFieldSet = props => {
             filter={props.filter}
             filterIndex={props.filterIndex}
             onChange={props.replaceFilter}
-            value={props.filter.model.id}
+            value={props.filter.model.resourceConstant}
           />
         </InputGroup>
       )}
