@@ -6,7 +6,7 @@ import { createErrorSelector } from 'Store/Error/selectors'
 import { requestWithAuth } from 'shared/utilities/authUtils'
 import { makeRequest } from 'Store/Request/actions'
 
-class RequestWrapper extends React.Component {
+class RequestTableWrapper extends React.Component {
   constructor(props) {
     super(props)
 
@@ -46,11 +46,11 @@ class RequestWrapper extends React.Component {
   }
 }
 
-RequestWrapper.defaultProps = {
+RequestTableWrapper.defaultProps = {
   visible: false,
 }
 
-RequestWrapper.propTypes = {
+RequestTableWrapper.propTypes = {
   dispatch: PropTypes.func,
   request: PropTypes.object,
   visible: PropTypes.bool,
@@ -67,4 +67,4 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps)(RequestWrapper)
+export default connect(mapStateToProps)(RequestTableWrapper)

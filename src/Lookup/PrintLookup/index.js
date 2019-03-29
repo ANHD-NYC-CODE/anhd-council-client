@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import LeafletMap from 'LeafletMap'
 import RequestSummaryWrapper from 'shared/components/RequestSummaryWrapper'
-import RequestWrapper from 'shared/components/RequestWrapper'
+import RequestTableWrapper from 'shared/components/RequestTableWrapper'
 import SummaryResultCard from 'shared/components/ResultCard/SummaryResultCard'
 
 import { Row, Col, Card } from 'react-bootstrap'
@@ -44,7 +44,7 @@ const PrintLookup = props => {
       </Row>
       <Row>
         <Col>
-          <RequestWrapper request={props.profileRequest} visible={true} />
+          <RequestTableWrapper request={props.profileRequest} visible={true} />
         </Col>
       </Row>
       <Row>

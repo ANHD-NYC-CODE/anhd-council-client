@@ -9,7 +9,7 @@ import LayoutContext from 'Layout/LayoutContext'
 
 import { Row, Col, InputGroup } from 'react-bootstrap'
 
-import RequestWrapper from 'shared/components/RequestWrapper'
+import RequestTableWrapper from 'shared/components/RequestTableWrapper'
 import BuildingSelect from 'Lookup/BuildingSelect'
 import RequestSummaryWrapper from 'shared/components/RequestSummaryWrapper'
 import LookupLinks from 'Lookup/LookupLinks'
@@ -106,7 +106,7 @@ class LookupShow extends React.Component {
                 </Row>
                 <Row>
                   <Col>
-                    <RequestWrapper request={this.props.profileRequest} visible={true} />
+                    <RequestTableWrapper request={this.props.profileRequest} visible={true} />
                   </Col>
                 </Row>
                 <Row className="mb-4">
@@ -193,7 +193,7 @@ class LookupShow extends React.Component {
                           {this.props.lookupRequests.map((request, index) => {
                             return (
                               <Col xs={12} key={`rw-col-${index}`} className="request-wrapper-container">
-                                <RequestWrapper
+                                <RequestTableWrapper
                                   key={`request-wrapper-${this.props.appState.requests.indexOf(request)}`}
                                   visible={this.state.selectedRequest === request}
                                   request={request}
