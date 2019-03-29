@@ -64,7 +64,7 @@ class RequestSummaryWrapper extends React.Component {
         </Col>
         {!this.props.print && (
           <Col xs={2} md={1} className="px-1">
-            <InfoModalButton modalConstant={this.getInfoKey()} />
+            <InfoModalButton modalConstant={this.props.infoKey || this.getInfoKey()} />
           </Col>
         )}
       </Row>
