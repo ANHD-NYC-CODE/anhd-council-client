@@ -2,6 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import ModalContext from 'Modal/ModalContext'
 import BaseModal from 'shared/components/BaseModal'
+
+import './style.scss'
+
 class Modal extends React.Component {
   constructor(props) {
     super(props)

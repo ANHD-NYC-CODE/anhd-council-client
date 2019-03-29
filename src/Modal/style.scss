@@ -1,0 +1,6 @@
+body.modal-open {
+  .modal.show {
+    padding-right: 0 !important;
+    z-index: 10000;
+  }
+}
