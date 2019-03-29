@@ -126,7 +126,7 @@ describe('AlertMap', () => {
         expect(wrapper.find('ToggleButtonGroup')).toHaveLength(2)
         expect(wrapper.find('LeafletMap')).toHaveLength(1)
         expect(wrapper.find('RequestSummaryWrapper')).toHaveLength(11)
-        expect(wrapper.find('RequestWrapper')).toHaveLength(0)
+        expect(wrapper.find('RequestTableWrapper')).toHaveLength(0)
       })
     })
 
@@ -144,14 +144,14 @@ describe('AlertMap', () => {
         expect(wrapper.find('ToggleButtonGroup')).toHaveLength(2)
         expect(wrapper.find('GeographySelect')).toHaveLength(1)
         expect(wrapper.find('LeafletMap')).toHaveLength(0)
-        expect(wrapper.find('RequestWrapper')).toHaveLength(11)
+        expect(wrapper.find('RequestTableWrapper')).toHaveLength(11)
         expect(
           wrapper
-            .find('RequestWrapper')
+            .find('RequestTableWrapper')
             .at(0)
             .props().visible
         ).toEqual(true)
-        wrapper.find('RequestWrapper').forEach((w, index) => {
+        wrapper.find('RequestTableWrapper').forEach((w, index) => {
           if (index === 0) return
           expect(w.props().visible).toEqual(false)
         })

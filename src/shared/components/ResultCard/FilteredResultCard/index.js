@@ -6,7 +6,7 @@ import classnames from 'classnames'
 
 import './style.scss'
 
-const SummaryResultCard = props => {
+const FilteredResultCard = props => {
   return (
     <Card
       as={Button}
@@ -19,29 +19,33 @@ const SummaryResultCard = props => {
     >
       <Card.Body className="d-flex flex-row p-0">
         <p className="d-flex flex-column align-content-center justify-content-center text-left m-0 pr-1 summary-result-card__label">
-          {props.request.label}
+          {props.label}
         </p>
         <div className="align-self-center summary-result-card__result">
-          {props.loading ? <SpinnerLoader /> : <h2 className="m-0">{props.results.length}</h2>}
+          {props.loading ? <SpinnerLoader /> : <h2 className="m-0">{props.filter(props.results).length}</h2>}
         </div>
       </Card.Body>
     </Card>
   )
 }
 
-SummaryResultCard.defaultProps = {
+FilteredResultCard.defaultProps = {
   loading: false,
   error: undefined,
   results: [],
   selected: false,
+  label: '',
+  filter: results => results,
 }
 
-SummaryResultCard.propTypes = {
+FilteredResultCard.propTypes = {
   handleClick: PropTypes.func,
+  label: PropTypes.string,
   onClick: PropTypes.func,
   resultsComponent: PropTypes.func,
   request: PropTypes.object,
   selected: PropTypes.bool,
   results: PropTypes.array,
 }
-export default SummaryResultCard
+
+export default FilteredResultCard

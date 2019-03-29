@@ -81,7 +81,7 @@ describe('Lookup', () => {
       })
       await flushAllPromises()
       wrapper.update()
-      expect(wrapper.find('RequestWrapper')).toHaveLength(12)
+      expect(wrapper.find('RequestTableWrapper')).toHaveLength(12)
     })
   })
 
@@ -105,9 +105,9 @@ describe('Lookup', () => {
         router: { location: { pathname: '/property/1/building/2' }, action: 'POP' },
       })
 
-      expect(wrapper.find('RequestWrapper')).toHaveLength(9)
+      expect(wrapper.find('RequestTableWrapper')).toHaveLength(9)
 
-      wrapper.find('RequestWrapper').forEach((w, index) => {
+      wrapper.find('RequestTableWrapper').forEach((w, index) => {
         if (index === 0 || index === 1) {
           expect(w.props().visible).toEqual(true)
         } else {

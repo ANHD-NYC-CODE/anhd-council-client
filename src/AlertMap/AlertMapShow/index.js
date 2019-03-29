@@ -8,9 +8,11 @@ import LayoutContext from 'Layout/LayoutContext'
 
 import BaseLink from 'shared/components/BaseLink'
 import LeafletMap from 'LeafletMap'
-import RequestWrapper from 'shared/components/RequestWrapper'
+import RequestTableWrapper from 'shared/components/RequestTableWrapper'
 import RequestSummaryWrapper from 'shared/components/RequestSummaryWrapper'
 import SummaryResultCard from 'shared/components/ResultCard/SummaryResultCard'
+import FilteredResultCard from 'shared/components/ResultCard/FilteredResultCard'
+
 import HousingTypeSummaryResultCard from 'shared/components/ResultCard/HousingTypeResultCard'
 import ConfigContext from 'Config/ConfigContext'
 import PrintButton from 'shared/components/PrintButton'
@@ -244,7 +246,7 @@ class AlertMapShow extends React.PureComponent {
                       <div className={classnames({ 'd-none': this.state.view === 1 })}>
                         {this.props.geographyRequests.concat(this.props.housingTypeRequests).map((request, index) => {
                           return (
-                            <RequestWrapper
+                            <RequestTableWrapper
                               key={`request-wrapper-${this.props.appState.requests.indexOf(request)}`}
                               visible={this.props.selectedRequest === request}
                               request={request}
