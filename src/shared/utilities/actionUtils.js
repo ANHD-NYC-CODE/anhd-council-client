@@ -1,14 +1,13 @@
-import { toast } from 'react-toastify'
 import * as loadingActions from 'Store/Loading/actions'
 import * as errorActions from 'Store/Error/actions'
-import * as d from 'shared/models/datasets'
+import * as resources from 'shared/models/resources'
 import * as ht from 'shared/models/housingTypes'
 import { DataRequest } from 'shared/classes/DataRequest'
 import { getApiMap } from 'shared/utilities/classUtils'
 import { TableConfig } from 'shared/classes/TableConfig'
 import { ApiMap } from 'shared/classes/ApiMap'
 import { ParameterMapping } from 'shared/classes/ParameterMapping'
-import { Dataset } from 'shared/classes/Dataset'
+import { Resource } from 'shared/classes/Resource'
 import { housingTypeCodeToName } from 'shared/utilities/languageUtils'
 import { constantToModelName, constantToQueryName } from 'shared/utilities/filterUtils'
 import { alertMapFilterdates } from 'shared/utilities/componentUtils'
@@ -103,13 +102,13 @@ export const setupHousingTypeModels = datasets => {
           databaseObject = undefined
           break
       }
-      return new Dataset({ model: ht[constant](databaseObject) })
+      return new Resource({ model: ht[constant](databaseObject) })
     })
     .filter(ht => ht)
 }
 
 export const setupDatasetModels = datasets => {
-  return Object.keys(d)
+  return Object.keys(resources)
     .map(constant => {
       let databaseObject
       switch (constant) {
@@ -119,16 +118,13 @@ export const setupDatasetModels = datasets => {
         case 'PROPERTY_SALE_BY_AMOUNT':
           databaseObject = datasets.find(object => (object.model_name || {}).toUpperCase() === 'ACRISREALLEGAL')
           break
-        case 'FORECLOSURE':
-          databaseObject = datasets.find(object => (object.model_name || {}).toUpperCase() === 'LISPENDEN')
-          break
         default:
           databaseObject = datasets.find(
             object => (object.model_name || {}).toUpperCase() === constantToModelName(constant).toUpperCase()
           )
       }
       if (databaseObject) {
-        return new Dataset({ model: d[constant](databaseObject) })
+        return new Resource({ model: resources[constant](databaseObject) })
       }
     })
     .filter(ds => !!ds)
@@ -177,7 +173,7 @@ export const newLookupRequests = ({ bbl, bin } = {}) => {
       ? newPropertyRequest({
           type: 'LOOKUP_FILTER',
           bbl: bbl,
-          resourceConstant: 'FORECLOSURE',
+          resourceConstant: 'LISPENDEN',
           datasetModelName: constantToModelName('LISPENDEN'),
         })
       : null,

@@ -2,50 +2,71 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Card, Button } from 'react-bootstrap'
 import SpinnerLoader from 'shared/components/Loaders/SpinnerLoader'
+
 import classnames from 'classnames'
-
 import './style.scss'
-
 const FilteredResultCard = props => {
+  const results = props.filter(props.results)
   return (
     <Card
       as={Button}
-      bg={classnames({ primary: props.selected, light: !props.selected })}
+      bg={classnames({ primary: props.selected })}
       text={classnames({ light: props.selected, dark: !props.selected })}
-      className={classnames('summary-result-card', 'result-card flex-row', 'mb-2', {
+      className={classnames('housingtype-summary-result-card', 'result-card flex-row', 'mb-2', {
         active: props.selected,
       })}
       onClick={props.handleClick}
     >
-      <Card.Body className="d-flex flex-row p-0">
-        <p className="d-flex flex-column align-content-center justify-content-center text-left m-0 pr-1 summary-result-card__label">
-          {props.label}
-        </p>
-        <div className="align-self-center summary-result-card__result">
-          {props.loading ? <SpinnerLoader /> : <h2 className="m-0">{props.filter(props.results).length}</h2>}
-        </div>
-      </Card.Body>
+      <div className="housingtype-summary-result-card__wrapper">
+        <h5 className="housingtype-summary-result-card__title font-weight-bold">{props.request.label}</h5>
+        {props.loading ? (
+          <SpinnerLoader />
+        ) : (
+          <div className="housingtype-summary-result-card__inner-wrapper d-flex flex-row justify-content-between w-100">
+            <div className="d-flex flex-column align-items-flex-start h-100 text-left">
+              <p>
+                <span className="font-weight-bold">{results.length}</span>{' '}
+                <span className="summary-units">properties</span>
+              </p>
+              <p>
+                <span className="font-weight-bold">
+                  {results.reduce((total, result) => parseInt(total) + parseInt(result['unitsres']), 0)}
+                </span>{' '}
+                <span className="summary-units">units</span>
+              </p>
+            </div>
+            <div className="d-flex flex-column align-items-flex-end h-100 text-right">
+              {props.totalResults && !!props.totalResults.length && (
+                <h5 className="text-right font-weight-bold ">{`${(
+                  (results.length / props.totalResults.length) *
+                  100
+                ).toFixed(2)}%`}</h5>
+              )}
+            </div>
+          </div>
+        )}
+      </div>
     </Card>
   )
 }
 
 FilteredResultCard.defaultProps = {
   loading: false,
+  filter: results => results,
   error: undefined,
   results: [],
+  totalResults: [],
   selected: false,
-  label: '',
-  filter: results => results,
 }
 
 FilteredResultCard.propTypes = {
   handleClick: PropTypes.func,
-  label: PropTypes.string,
   onClick: PropTypes.func,
   resultsComponent: PropTypes.func,
+  totalRequest: PropTypes.object,
   request: PropTypes.object,
   selected: PropTypes.bool,
   results: PropTypes.array,
+  totalResults: PropTypes.array,
 }
-
 export default FilteredResultCard

@@ -1,5 +1,9 @@
 import { createSelector } from 'reselect'
 
+export const getRequestByConstant = (requests, constant) => {
+  return requests.filter(request => request.requestConstant === constant)
+}
+
 export const getRequestType = (requests, type) => {
   return requests.filter(request => request.type === type)
 }

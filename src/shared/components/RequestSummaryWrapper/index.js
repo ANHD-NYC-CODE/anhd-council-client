@@ -49,14 +49,16 @@ class RequestSummaryWrapper extends React.Component {
             />
           ) : (
             this.props.resultsComponent({
+              error: this.props.error,
+              errorAction: this.retryRequest,
+              filter: this.props.filter,
+              label: this.props.label,
+              handleClick: this.handleClick,
               selected: this.props.selected,
               request: this.props.request,
               results: this.props.results,
               totalResults: this.props.totalResults,
               loading: this.props.loading,
-              error: this.props.error,
-              errorAction: this.retryRequest,
-              handleClick: this.handleClick,
             })
           )}
         </Col>
@@ -75,9 +77,11 @@ RequestSummaryWrapper.defaultProps = {
   error: undefined,
   results: [],
   print: false,
+  filter: results => results,
 }
 
 RequestSummaryWrapper.propTypes = {
+  filter: PropTypes.func,
   onClick: PropTypes.func,
   resultsComponent: PropTypes.func,
   request: PropTypes.object,

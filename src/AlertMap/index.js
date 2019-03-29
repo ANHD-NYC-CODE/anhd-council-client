@@ -11,6 +11,7 @@ import { makeSelectRequests } from 'Store/AppState/selectors'
 import { isValidGeography } from 'shared/utilities/routeUtils'
 import PageError from 'shared/components/PageError'
 import { faMapSigns } from '@fortawesome/free-solid-svg-icons'
+
 import { Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
 class AlertMap extends React.PureComponent {

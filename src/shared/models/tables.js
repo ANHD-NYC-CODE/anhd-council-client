@@ -44,7 +44,7 @@ export const getKeyField = constant => {
       return 'documentid'
     case 'EVICTION':
       return 'courtindexnumber'
-    case 'FORECLOSURE':
+    case 'LISPENDEN':
       return 'key'
     default:
       return 'id'
@@ -799,7 +799,7 @@ export const getTableColumns = (constant, columnExpandFunction, getLinkProps = (
         }),
       ]
       break
-    case 'FORECLOSURE':
+    case 'LISPENDEN':
       columns = [
         constructStandardColumn({
           dataField: 'key',

@@ -5,11 +5,9 @@ import { refreshTokens } from 'Store/Auth/actions'
 import { createErrorSelector } from 'Store/Error/selectors'
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { GET_TOKEN, GET_USER_PROFILE } from 'shared/constants/actions'
-import { push } from 'connected-react-router'
 import { logoutUser } from 'Store/Auth/actions'
 
 import UserContext from 'Auth/UserContext'
-import LoginModal from 'Auth/LoginModal'
 
 class Auth extends React.Component {
   constructor(props) {
@@ -23,7 +21,13 @@ class Auth extends React.Component {
 
   render() {
     return (
-      <UserContext.Provider value={{ user: this.props.auth.user, logoutUser: () => this.props.dispatch(logoutUser()) }}>
+      <UserContext.Provider
+        value={{
+          loginError: this.props.loginError,
+          user: this.props.auth.user,
+          logoutUser: () => this.props.dispatch(logoutUser()),
+        }}
+      >
         {this.props.children}
       </UserContext.Provider>
     )

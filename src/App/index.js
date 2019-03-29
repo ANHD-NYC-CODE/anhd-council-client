@@ -18,14 +18,14 @@ export class App extends React.Component {
   render() {
     return (
       <ErrorBoundary>
-        <Modal>
-          <Auth>
+        <Auth>
+          <Modal>
             <Config>
               <ToastContainer />
               <Router />
             </Config>
-          </Auth>
-        </Modal>
+          </Modal>
+        </Auth>
       </ErrorBoundary>
     )
   }

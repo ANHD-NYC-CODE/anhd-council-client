@@ -43,9 +43,9 @@ export const filterMocks = constant => {
       return createFilterMock({
         constant: 'EVICTION',
       })
-    case 'FORECLOSURE':
+    case 'LISPENDEN':
       return createFilterMock({
-        constant: 'FORECLOSURE',
+        constant: 'LISPENDEN',
       })
     case 'DOB_ISSUED_PERMIT':
       return createFilterMock({
