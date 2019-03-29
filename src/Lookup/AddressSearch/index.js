@@ -121,6 +121,8 @@ const loadingSelector = createLoadingSelector([GET_BUILDING_SEARCH])
 const errorSelector = createErrorSelector([GET_BUILDING_SEARCH])
 const mapStateToProps = state => {
   return {
+    currentProperty: state.appState.currentProperty,
+    currentBuilding: state.appState.currentBuilding,
     search: state.search,
     loading: loadingSelector(state),
     error: errorSelector(state),
