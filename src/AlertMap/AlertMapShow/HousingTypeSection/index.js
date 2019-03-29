@@ -32,7 +32,7 @@ const HousingTypeSection = props => {
                   totalRequest={props.housingTypeRequests.find(r => r.requestConstant === 'GEOGRAPHY_HOUSING_TYPE_ALL')}
                   onClick={r => props.switchTable(r)}
                   label={ownResultFilter.label}
-                  filter={results => propertyResource.internalFilter(results, ownResultFilter.paramMaps)}
+                  filter={results => ownResultFilter.internalFilter(results, ownResultFilter.paramMaps)}
                   resultsComponent={HousingTypeResultCard}
                   // selected={
                   //   props.selectedRequestIndex === props.appState.requests.indexOf(props.propertySummaryRequest)
