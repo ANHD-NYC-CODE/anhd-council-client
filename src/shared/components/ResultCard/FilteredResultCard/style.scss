@@ -1,0 +1,33 @@
+@import 'shared/styles/bootstrap/_variables.scss';
+
+.result-card.card {
+  border: 1px solid $black;
+  border-radius: 20px;
+  min-height: 120px;
+  padding: 0 10px;
+}
+
+.result-card.card.btn-primary:not(:disabled).active {
+  border: 4px dotted $white;
+  padding: 0 7px;
+}
+
+.summary-result-card {
+  height: 100px;
+  width: 100%;
+
+  .summary-result-card__label {
+    flex: 0 1 100%;
+    text-align: left;
+  }
+
+  .summary-result-card__result {
+    flex-shrink: 0;
+    flex-grow: 1;
+    text-align: right;
+
+    @include media-breakpoint-up(xl) {
+      min-width: 20px;
+    }
+  }
+}
