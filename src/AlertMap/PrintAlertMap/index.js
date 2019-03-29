@@ -4,10 +4,10 @@ import { Col, Row } from 'react-bootstrap'
 
 import ConfigContext from 'Config/ConfigContext'
 import { getRequestType, getManyRequestTypes } from 'Store/AppState/selectors'
-import HousingTypeSummaryResultCard from 'AlertMap/HousingTypeSummaryResultCard'
+import HousingTypeSummaryResultCard from 'shared/components/ResultCard/HousingTypeResultCard'
 
-import RequestSummary from 'shared/components/RequestSummary'
-import SummaryResultCard from 'shared/components/SummaryResultCard'
+import RequestSummaryWrapper from 'shared/components/RequestSummaryWrapper'
+import SummaryResultCard from 'shared/components/ResultCard/SummaryResultCard'
 
 import moment from 'moment'
 import LeafletMap from 'LeafletMap'
@@ -53,7 +53,7 @@ const PrintAlertMap = props => {
         {housingTypeRequests.map((request, index) => {
           return (
             <Col xs={4} key={`rs-col-${index}`} className="housingtype-request-summary__container">
-              <RequestSummary
+              <RequestSummaryWrapper
                 key={`request-summary-${props.appState.requests.indexOf(request)}`}
                 request={request}
                 print={true}
@@ -70,7 +70,7 @@ const PrintAlertMap = props => {
         {geographyRequests.map((request, index) => {
           return (
             <Col xs={4} key={`rs-col-${index}`} className="geography-request-summary__container">
-              <RequestSummary
+              <RequestSummaryWrapper
                 key={`request-summary-${props.appState.requests.indexOf(request)}`}
                 request={request}
                 print={true}

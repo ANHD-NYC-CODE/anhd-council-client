@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { createLoadingReducerSelector } from 'Store/Loading/selectors'
 import { ProgressBar } from 'react-bootstrap'
 import NavigationBar from 'Layout/NavigationBar'
-import InnerLoader from 'shared/components/InnerLoader'
+import InnerLoader from 'shared/components/Loaders/InnerLoader'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
@@ -12,7 +12,7 @@ import logo from 'shared/images/portallogo.png'
 
 import classnames from 'classnames'
 import './style.scss'
-class Loading extends React.Component {
+class ConfigLoader extends React.Component {
   constructor(props) {
     super(props)
 
@@ -106,7 +106,7 @@ class Loading extends React.Component {
   }
 }
 
-Loading.propTypes = {
+ConfigLoader.propTypes = {
   dispatch: PropTypes.func,
   monitoredRequests: PropTypes.array,
 }
@@ -117,4 +117,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(Loading)
+export default connect(mapStateToProps)(ConfigLoader)

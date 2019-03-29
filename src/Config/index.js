@@ -11,7 +11,7 @@ import { getDatasets } from 'Store/Dataset/actions'
 import { getCouncils } from 'Store/Council/actions'
 import { getCommunities } from 'Store/Community/actions'
 import { infoModals } from 'shared/models/modals'
-import Loading from 'shared/components/Loading'
+import ConfigLoader from 'shared/components/Loaders/ConfigLoader'
 import PageError from 'shared/components/PageError'
 
 class Config extends React.Component {
@@ -91,7 +91,7 @@ class Config extends React.Component {
           !!this.props.councilDistricts.length &&
           !!this.props.communityDistricts.length
         ) ? (
-          <Loading monitoredRequests={[GET_DATASETS, GET_COUNCILS, GET_COMMUNITIES]} />
+          <ConfigLoader monitoredRequests={[GET_DATASETS, GET_COUNCILS, GET_COMMUNITIES]} />
         ) : (
           this.props.children
         )}

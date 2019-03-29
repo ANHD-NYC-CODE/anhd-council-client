@@ -121,7 +121,7 @@ describe('Lookup', () => {
         router: { location: { pathname: '/property/1/building/2' }, action: 'POP' },
       })
 
-      expect(wrapper.find('RequestSummary')).toHaveLength(8)
+      expect(wrapper.find('RequestSummaryWrapper')).toHaveLength(8)
     })
 
     it('Switches the visible request wrapper', () => {
@@ -156,7 +156,7 @@ describe('Lookup', () => {
       await flushAllPromises()
       wrapper.update()
 
-      wrapper.find('RequestSummary').forEach(rs => {
+      wrapper.find('RequestSummaryWrapper').forEach(rs => {
         expect(rs.text()).toMatch(new RegExp(results.length))
       })
     })

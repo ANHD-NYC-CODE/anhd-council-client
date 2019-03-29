@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import BootstrapTable from 'react-bootstrap-table-next'
-import InnerLoader from 'shared/components/InnerLoader'
+import InnerLoader from 'shared/components/Loaders/InnerLoader'
 import paginationFactory, {
   PaginationProvider,
   SizePerPageDropdownStandalone,

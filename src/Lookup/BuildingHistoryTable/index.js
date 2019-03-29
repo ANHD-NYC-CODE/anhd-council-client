@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import InnerLoader from 'shared/components/InnerLoader'
+import InnerLoader from 'shared/components/Loaders/InnerLoader'
 
 import { Jumbotron } from 'react-bootstrap'
 

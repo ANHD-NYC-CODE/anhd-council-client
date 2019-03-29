@@ -6,7 +6,7 @@ import { makeRequest } from 'Store/Request/actions'
 import { getRequestType } from 'Store/AppState/selectors'
 
 import LookupShow from 'Lookup/LookupShow'
-import InnerLoader from 'shared/components/InnerLoader'
+import InnerLoader from 'shared/components/Loaders/InnerLoader'
 
 class LookupRequestsWrapper extends React.Component {
   constructor(props) {

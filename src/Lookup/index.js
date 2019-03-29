@@ -11,7 +11,7 @@ import { faMapSigns } from '@fortawesome/free-solid-svg-icons'
 
 import LookupIndex from 'Lookup/LookupIndex'
 import LookupRequestsWrapper from 'Lookup/LookupRequestsWrapper'
-import InnerLoader from 'shared/components/InnerLoader'
+import InnerLoader from 'shared/components/Loaders/InnerLoader'
 class Lookup extends React.Component {
   constructor(props) {
     super(props)

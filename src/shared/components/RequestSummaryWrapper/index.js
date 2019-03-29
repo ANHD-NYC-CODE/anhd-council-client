@@ -9,7 +9,7 @@ import { makeRequest } from 'Store/Request/actions'
 import RequestErrorCard from 'shared/components/RequestErrorCard'
 
 import { Col, Row } from 'react-bootstrap'
-class RequestSummary extends React.Component {
+class RequestSummaryWrapper extends React.Component {
   constructor(props) {
     super(props)
 
@@ -70,14 +70,14 @@ class RequestSummary extends React.Component {
   }
 }
 
-RequestSummary.defaultProps = {
+RequestSummaryWrapper.defaultProps = {
   loading: false,
   error: undefined,
   results: [],
   print: false,
 }
 
-RequestSummary.propTypes = {
+RequestSummaryWrapper.propTypes = {
   onClick: PropTypes.func,
   resultsComponent: PropTypes.func,
   request: PropTypes.object,
@@ -96,4 +96,4 @@ export const mapStateToProps = (state, ownProps) => {
   }
 }
 
-export default connect(mapStateToProps)(RequestSummary)
+export default connect(mapStateToProps)(RequestSummaryWrapper)

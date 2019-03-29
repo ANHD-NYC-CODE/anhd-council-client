@@ -125,7 +125,7 @@ describe('AlertMap', () => {
         })
         expect(wrapper.find('ToggleButtonGroup')).toHaveLength(2)
         expect(wrapper.find('LeafletMap')).toHaveLength(1)
-        expect(wrapper.find('RequestSummary')).toHaveLength(11)
+        expect(wrapper.find('RequestSummaryWrapper')).toHaveLength(11)
         expect(wrapper.find('RequestWrapper')).toHaveLength(0)
       })
     })
@@ -166,7 +166,7 @@ describe('AlertMap', () => {
 
         await flushAllPromises()
         wrapper.update()
-        wrapper.find('RequestSummary').forEach(rs => {
+        wrapper.find('RequestSummaryWrapper').forEach(rs => {
           expect(rs.text()).toMatch(new RegExp(results.length))
         })
       })

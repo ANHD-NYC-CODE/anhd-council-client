@@ -5,7 +5,7 @@ import SpinnerLoader from 'shared/components/Loaders/SpinnerLoader'
 
 import classnames from 'classnames'
 import './style.scss'
-const HousingTypeSummaryResultCard = props => {
+const HousingTypeResultCard = props => {
   return (
     <Card
       as={Button}
@@ -49,7 +49,7 @@ const HousingTypeSummaryResultCard = props => {
   )
 }
 
-HousingTypeSummaryResultCard.defaultProps = {
+HousingTypeResultCard.defaultProps = {
   loading: false,
   error: undefined,
   results: [],
@@ -57,7 +57,7 @@ HousingTypeSummaryResultCard.defaultProps = {
   selected: false,
 }
 
-HousingTypeSummaryResultCard.propTypes = {
+HousingTypeResultCard.propTypes = {
   handleClick: PropTypes.func,
   onClick: PropTypes.func,
   resultsComponent: PropTypes.func,
@@ -67,4 +67,4 @@ HousingTypeSummaryResultCard.propTypes = {
   results: PropTypes.array,
   totalResults: PropTypes.array,
 }
-export default HousingTypeSummaryResultCard
+export default HousingTypeResultCard

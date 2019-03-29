@@ -8,7 +8,7 @@ import { requestWithAuth } from 'shared/utilities/authUtils'
 import { makeRequest } from 'Store/Request/actions'
 
 import AlertMapShow from 'AlertMap/AlertMapShow'
-import InnerLoader from 'shared/components/InnerLoader'
+import InnerLoader from 'shared/components/Loaders/InnerLoader'
 
 class AlertMapRequestsWrapper extends React.PureComponent {
   constructor(props) {
