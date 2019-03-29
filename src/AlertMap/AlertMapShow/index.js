@@ -219,6 +219,7 @@ class AlertMapShow extends React.PureComponent {
                                 handleChangeGeographyId={this.props.handleChangeGeographyId}
                                 iconConfig="MULTIPLE"
                                 selectedRequestIndex={this.props.selectedRequestIndex}
+                                tableRecordsFilter={this.props.tableRecordsFilter}
                                 selectGeographyData={config.selectGeographyData}
                               />
                             )

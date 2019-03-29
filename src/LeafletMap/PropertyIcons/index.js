@@ -73,12 +73,14 @@ PropertyIcons.propTypes = {
   dispatch: PropTypes.func,
   results: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   selectedRequest: PropTypes.object,
+  tableRecordsFilter: PropTypes.object,
   visible: PropTypes.bool,
 }
 
 const mapStateToProps = (state, ownProps) => {
+  const results = state.requests[(ownProps.selectedRequest || {}).requestConstant] || []
   return {
-    results: state.requests[(ownProps.selectedRequest || {}).requestConstant],
+    results: ownProps.tableRecordsFilter.internalFilter(results, ownProps.tableRecordsFilter.paramMaps),
   }
 }
 
