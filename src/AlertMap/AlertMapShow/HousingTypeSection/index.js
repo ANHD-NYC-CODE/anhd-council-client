@@ -15,10 +15,10 @@ const HousingTypeSection = props => {
           totalRequest={props.housingTypeRequests.find(r => r.requestConstant === 'GEOGRAPHY_HOUSING_TYPE_ALL')}
           onClick={r => props.switchTable(r)}
           resultsComponent={HousingTypeResultCard}
-          selected={
-            props.selectedRequestIndex ===
-            props.appState.requests.indexOf(props.appState.requests.indexOf(props.propertySummaryRequest))
-          }
+          // selected={
+          //   props.selectedRequestIndex ===
+          //   props.appState.requests.indexOf(props.appState.requests.indexOf(props.propertySummaryRequest))
+          // }
         />
 
         <ConfigContext.Consumer>
@@ -34,9 +34,9 @@ const HousingTypeSection = props => {
                   label={ownResultFilter.label}
                   filter={results => propertyResource.internalFilter(results, ownResultFilter.paramMaps)}
                   resultsComponent={HousingTypeResultCard}
-                  selected={
-                    props.selectedRequestIndex === props.appState.requests.indexOf(props.propertySummaryRequest)
-                  }
+                  // selected={
+                  //   props.selectedRequestIndex === props.appState.requests.indexOf(props.propertySummaryRequest)
+                  // }
                 />
               )
             })
