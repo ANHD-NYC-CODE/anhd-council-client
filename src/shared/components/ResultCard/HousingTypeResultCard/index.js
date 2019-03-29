@@ -7,6 +7,7 @@ import classnames from 'classnames'
 import './style.scss'
 const HousingTypeResultCard = props => {
   const results = props.filter(props.results)
+  const totalResults = props.totalResultsFilter(props.results)
   return (
     <Card
       as={Button}
@@ -37,14 +38,14 @@ const HousingTypeResultCard = props => {
                 <span className="summary-units">units</span>
               </p>
             </div>
-            <div className="d-flex flex-column align-items-flex-end h-100 text-right">
-              {props.totalResults && !!props.totalResults.length && (
-                <h5 className="text-right font-weight-bold ">{`${(
-                  (results.length / props.totalResults.length) *
-                  100
-                ).toFixed(2)}%`}</h5>
-              )}
-            </div>
+            {totalResults && !!totalResults.length && (
+              <div className="d-flex flex-column align-items-flex-end h-100 text-right">
+                <h5 className="text-right font-weight-bold mb-0">
+                  {`${((results.length / totalResults.length) * 100).toFixed(2)}%`}{' '}
+                </h5>
+                <small className="small font-weight-bold text-muted">{props.unitsLabel}</small>
+              </div>
+            )}
           </div>
         )}
       </div>

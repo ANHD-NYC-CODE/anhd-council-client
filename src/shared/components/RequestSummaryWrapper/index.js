@@ -55,9 +55,11 @@ class RequestSummaryWrapper extends React.Component {
               label: this.props.label,
               handleClick: this.handleClick,
               selected: this.props.selected,
+              unitsLabel: this.props.unitsLabel,
               request: this.props.request,
               results: this.props.results,
               totalResults: this.props.totalResults,
+              totalResultsFilter: this.props.totalResultsFilter,
               loading: this.props.loading,
             })
           )}
@@ -78,6 +80,7 @@ RequestSummaryWrapper.defaultProps = {
   results: [],
   print: false,
   filter: results => results,
+  totalResultsFilter: results => results,
 }
 
 RequestSummaryWrapper.propTypes = {
