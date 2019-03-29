@@ -22,26 +22,20 @@ const HousingTypeSection = props => {
                   label={'Total properties:'}
                   resultsComponent={BasicResultsHeader}
                 />
-                {propertyResource.ownResultFilters.map(ownResultFilter => {
+                {propertyResource.ownResultFilters.map((ownResultFilter, index) => {
                   return (
                     <RequestSummaryWrapper
-                      key={`request-summary-${props.appState.requests.indexOf(props.propertySummaryRequest)}`}
+                      key={`housingtype-summary-${index}`}
                       request={props.propertySummaryRequest}
                       totalRequest={props.propertySummaryRequest}
-                      onClick={r => props.switchTable(r)}
+                      onClick={props.switchTable}
                       label={ownResultFilter.label}
-                      filter={results => ownResultFilter.internalFilter(results, ownResultFilter.paramMaps)}
+                      resultsFilter={ownResultFilter}
                       resultsComponent={HousingTypeResultCard}
                       infoKey={ownResultFilter.id}
                       unitsLabel={ownResultFilter === residentialFilter ? 'of all properties' : 'of residential'}
-                      totalResultsFilter={
-                        ownResultFilter === residentialFilter
-                          ? undefined
-                          : results => residentialFilter.internalFilter(results, residentialFilter.paramMaps)
-                      }
-                      // selected={
-                      //   props.selectedRequestIndex === props.appState.requests.indexOf(props.propertySummaryRequest)
-                      // }
+                      totalResultsFilter={ownResultFilter === residentialFilter ? undefined : residentialFilter}
+                      selected={props.tableRecordsFilter === ownResultFilter}
                     />
                   )
                 })}
