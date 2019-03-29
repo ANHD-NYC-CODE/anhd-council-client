@@ -20,8 +20,7 @@ const HousingTypeSection = props => {
             props.appState.requests.indexOf(props.appState.requests.indexOf(props.propertySummaryRequest))
           }
         />
-      </Col>
-      <Col xs={12} sm={6} lg={12} className="housingtype-request-summary__container">
+
         <ConfigContext.Consumer>
           {config => {
             const propertyResource = config.datasetModels.find(model => model.resourceConstant === 'PROPERTY')
