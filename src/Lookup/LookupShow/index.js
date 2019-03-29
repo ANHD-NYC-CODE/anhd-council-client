@@ -8,7 +8,7 @@ import AddressSearch from 'Lookup/AddressSearch'
 import LayoutContext from 'Layout/LayoutContext'
 
 import { Row, Col, InputGroup } from 'react-bootstrap'
-
+import { setAppState } from 'Store/AppState/actions'
 import RequestTableWrapper from 'shared/components/RequestTableWrapper'
 import BuildingSelect from 'Lookup/BuildingSelect'
 import RequestSummaryWrapper from 'shared/components/RequestSummaryWrapper'
@@ -21,17 +21,20 @@ import './style.scss'
 class LookupShow extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      selectedRequestIndex: props.appState.requests.length
-        ? props.appState.requests.indexOf(props.lookupRequests[0])
-        : undefined,
-    }
 
     if (this.props.propertyError && this.props.propertyError.status === 404) {
       this.props.trigger404Error(`Property with bbl: ${this.props.bbl} not found.`)
     }
 
     this.switchTable = this.switchTable.bind(this)
+  }
+
+  componentDidMount() {
+    this.props.dispatch(
+      setAppState({
+        selectedRequest: this.props.lookupRequests[0],
+      })
+    )
   }
 
   componentDidUpdate() {
@@ -50,9 +53,11 @@ class LookupShow extends React.Component {
   }
 
   switchTable(request) {
-    this.setState({
-      selectedRequestIndex: this.props.appState.requests.indexOf(request),
-    })
+    this.props.dispatch(
+      setAppState({
+        selectedRequest: request,
+      })
+    )
   }
 
   isBuildingView() {
@@ -120,9 +125,7 @@ class LookupShow extends React.Component {
                           ? [this.props.propertyResult.lat, this.props.propertyResult.lng]
                           : undefined
                       }
-                      selectedRequestIndex={this.props.appState.requests.findIndex(
-                        request => request.type === 'LOOKUP_PROFILE'
-                      )}
+                      displayedRequest={this.props.appState.requests.find(request => request.type === 'LOOKUP_PROFILE')}
                       iconConfig="SINGLE"
                       zoom={15}
                     />
@@ -182,9 +185,7 @@ class LookupShow extends React.Component {
                                 <RequestSummaryWrapper
                                   key={`request-summary-${this.props.appState.requests.indexOf(request)}`}
                                   onClick={r => this.switchTable(r)}
-                                  selected={
-                                    this.state.selectedRequestIndex === this.props.appState.requests.indexOf(request)
-                                  }
+                                  selected={this.props.appState.selectedRequest === request}
                                   request={request}
                                   resultsComponent={SummaryResultCard}
                                 />
@@ -200,9 +201,7 @@ class LookupShow extends React.Component {
                               <Col xs={12} key={`rw-col-${index}`} className="request-wrapper-container">
                                 <RequestTableWrapper
                                   key={`request-wrapper-${this.props.appState.requests.indexOf(request)}`}
-                                  visible={
-                                    this.state.selectedRequestIndex === this.props.appState.requests.indexOf(request)
-                                  }
+                                  visible={this.props.appState.selectedRequest === request}
                                   request={request}
                                 />
                               </Col>

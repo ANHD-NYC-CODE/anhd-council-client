@@ -12,7 +12,6 @@ import RequestTableWrapper from 'shared/components/RequestTableWrapper'
 import RequestSummaryWrapper from 'shared/components/RequestSummaryWrapper'
 import SummaryResultCard from 'shared/components/ResultCard/SummaryResultCard'
 
-import ConfigContext from 'Config/ConfigContext'
 import PrintButton from 'shared/components/PrintButton'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
@@ -52,7 +51,7 @@ class AlertMapShow extends React.PureComponent {
   }
 
   switchTable(request, filter) {
-    this.props.switchSelectedRequest(this.props.appState.requests.indexOf(request), filter)
+    this.props.switchSelectedRequest(request, filter)
     this.props.cancelChangeGeography()
   }
 
@@ -64,7 +63,8 @@ class AlertMapShow extends React.PureComponent {
             <PrintAlertMap
               appState={this.props.appState}
               layout={layout}
-              selectedRequestIndex={this.props.selectedRequestIndex}
+              config={this.props.config}
+              propertySummaryRequest={this.props.propertySummaryRequest}
             />
           ) : (
             <div className="alert-map-show">
@@ -129,7 +129,7 @@ class AlertMapShow extends React.PureComponent {
                       </ToggleButtonGroup>
                     </Col>
                   </Row>
-                  {this.props.appState.requests[this.props.selectedRequestIndex].type === 'ADVANCED_SEARCH' && (
+                  {(this.props.selectedRequest || {}).type === 'ADVANCED_SEARCH' && (
                     <div className="py-2 mb-4 mb-lg-0">
                       <Col>
                         <h5>Custom Search:</h5>
@@ -154,7 +154,7 @@ class AlertMapShow extends React.PureComponent {
                             request={request}
                             onClick={this.switchTable}
                             resultsComponent={SummaryResultCard}
-                            selected={this.props.selectedRequestIndex === this.props.appState.requests.indexOf(request)}
+                            selected={this.props.selectedRequest === request}
                           />
                         </Col>
                       )
@@ -176,14 +176,16 @@ class AlertMapShow extends React.PureComponent {
               </Row>
               <Row>
                 <Col xs={12} lg={3}>
-                  <HousingTypeSection
-                    appState={this.props.appState}
-                    housingTypeRequests={this.props.housingTypeRequests}
-                    propertySummaryRequest={this.props.propertySummaryRequest}
-                    selectedRequestIndex={this.props.selectedRequestIndex}
-                    switchTable={this.switchTable}
-                    tableRecordsFilter={this.props.tableRecordsFilter}
-                  />
+                  <Row className="housingtype-section py-2 mb-4 mb-lg-0">
+                    <HousingTypeSection
+                      appState={this.props.appState}
+                      housingTypeRequests={this.props.housingTypeRequests}
+                      propertySummaryRequest={this.props.propertySummaryRequest}
+                      selectedRequest={this.props.selectedRequest}
+                      switchTable={this.switchTable}
+                      selectedResultsFilter={this.props.selectedResultsFilter}
+                    />
+                  </Row>
                 </Col>
                 <Col xs={12} lg={6}>
                   <Row className="mb-2 mb-lg-0">
@@ -207,35 +209,28 @@ class AlertMapShow extends React.PureComponent {
                   <Row className="py-2 mb-4 mb-lg-0">
                     <Col>
                       <div className={classnames({ 'd-none': this.state.view !== 1 })}>
-                        <ConfigContext.Consumer>
-                          {config => {
-                            return (
-                              <LeafletMap
-                                appState={this.props.appState}
-                                councilDistricts={config.councilDistricts}
-                                communityDistricts={config.communityDistricts}
-                                currentGeographyType={this.props.appState.currentGeographyType}
-                                handleChangeGeography={this.props.handleChangeGeography}
-                                handleChangeGeographyId={this.props.handleChangeGeographyId}
-                                iconConfig="MULTIPLE"
-                                selectedRequestIndex={this.props.selectedRequestIndex}
-                                tableRecordsFilter={this.props.tableRecordsFilter}
-                                selectGeographyData={config.selectGeographyData}
-                              />
-                            )
-                          }}
-                        </ConfigContext.Consumer>
+                        <LeafletMap
+                          appState={this.props.appState}
+                          councilDistricts={this.props.config.councilDistricts}
+                          communityDistricts={this.props.config.communityDistricts}
+                          currentGeographyType={this.props.appState.currentGeographyType}
+                          handleChangeGeography={this.props.handleChangeGeography}
+                          handleChangeGeographyId={this.props.handleChangeGeographyId}
+                          iconConfig="MULTIPLE"
+                          displayedRequest={this.props.selectedRequest}
+                          displayedResultsFilter={this.props.selectedResultsFilter}
+                          selectGeographyData={this.props.config.selectGeographyData}
+                        />
+                        ) }}
                       </div>
                       <div className={classnames({ 'd-none': this.state.view === 1 })}>
                         {this.props.geographyRequests.concat(this.props.housingTypeRequests).map((request, index) => {
                           return (
                             <RequestTableWrapper
                               key={`request-wrapper-${this.props.appState.requests.indexOf(request)}`}
-                              visible={
-                                this.props.selectedRequestIndex === this.props.appState.requests.indexOf(request)
-                              }
+                              visible={this.props.selectedRequest === request}
                               request={request}
-                              tableRecordsFilter={this.props.tableRecordsFilter}
+                              selectedResultsFilter={this.props.selectedResultsFilter}
                             />
                           )
                         })}
@@ -264,6 +259,7 @@ class AlertMapShow extends React.PureComponent {
 
 AlertMapShow.propTypes = {
   appState: PropTypes.object,
+  config: PropTypes.object,
   dispatch: PropTypes.func,
   requests: PropTypes.array,
   toggleDateRange: PropTypes.func,

@@ -2,9 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Col, Row } from 'react-bootstrap'
 
-import ConfigContext from 'Config/ConfigContext'
-import { getRequestType, getManyRequestTypes } from 'Store/AppState/selectors'
-import HousingTypeSummaryResultCard from 'shared/components/ResultCard/HousingTypeResultCard'
+import { getManyRequestTypes } from 'Store/AppState/selectors'
+import HousingTypeResultCard from 'shared/components/ResultCard/HousingTypeResultCard'
+import BasicResultsHeader from 'shared/components/ResultCard/BasicResultsHeader'
 
 import RequestSummaryWrapper from 'shared/components/RequestSummaryWrapper'
 import SummaryResultCard from 'shared/components/ResultCard/SummaryResultCard'
@@ -15,49 +15,56 @@ import LeafletMap from 'LeafletMap'
 const PrintAlertMap = props => {
   const geographyRequests = getManyRequestTypes(props.appState.requests, ['MAP_FILTER'])
 
-  const housingTypeRequests = getRequestType(props.appState.requests, 'GEOGRAPHY_HOUSING_TYPE')
+  const propertyResource = props.config.datasetModels.find(model => model.resourceConstant === 'PROPERTY')
+  const residentialFilter = propertyResource.ownResultFilters.find(f => f.id === 'HOUSING_TYPE_RESIDENTIAL')
 
   return (
     <div className="print-alert-map">
-      <Row>
+      <Row className="pb-4">
         <Col xs={4}>
-          <h5>
+          <h6>
             From {`${moment(props.appState.mapFilterDate).format('MM/DD/YYYY')}`} to {moment().format('MM/DD/YYYY')}
-          </h5>
+          </h6>
         </Col>
 
         <Col xs={8}>
-          <ConfigContext.Consumer>
-            {config => {
-              return (
-                <LeafletMap
-                  appState={props.appState}
-                  currentGeographyType={props.appState.currentGeographyType}
-                  councilDistricts={config.councilDistricts}
-                  communityDistricts={config.communityDistricts}
-                  height="300px"
-                  width="300px"
-                  iconConfig="MULTIPLE"
-                  interactive={false}
-                  selectGeographyData={config.selectGeographyData}
-                />
-              )
-            }}
-          </ConfigContext.Consumer>
+          <LeafletMap
+            appState={props.appState}
+            currentGeographyType={props.appState.currentGeographyType}
+            councilDistricts={props.config.councilDistricts}
+            communityDistricts={props.config.communityDistricts}
+            height="300px"
+            width="300px"
+            iconConfig="MULTIPLE"
+            interactive={false}
+            selectGeographyData={props.config.selectGeographyData}
+          />
         </Col>
       </Row>
       <Row>
         <h4>Housing Types</h4>
       </Row>
       <Row>
-        {housingTypeRequests.map((request, index) => {
+        <RequestSummaryWrapper
+          print={true}
+          request={props.propertySummaryRequest}
+          label={'Total properties:'}
+          resultsComponent={BasicResultsHeader}
+        />
+      </Row>
+      <Row className="py-4">
+        {propertyResource.ownResultFilters.map((ownResultFilter, index) => {
           return (
-            <Col xs={4} key={`rs-col-${index}`} className="housingtype-request-summary__container">
+            <Col xs={4} key={`housingtype-summary-${index}`}>
               <RequestSummaryWrapper
-                key={`request-summary-${props.appState.requests.indexOf(request)}`}
-                request={request}
                 print={true}
-                resultsComponent={HousingTypeSummaryResultCard}
+                request={props.propertySummaryRequest}
+                totalRequest={props.propertySummaryRequest}
+                label={ownResultFilter.label}
+                resultsFilter={ownResultFilter}
+                resultsComponent={HousingTypeResultCard}
+                unitsLabel={ownResultFilter === residentialFilter ? 'of all properties' : 'of residential'}
+                totalResultsFilter={ownResultFilter === residentialFilter ? undefined : residentialFilter}
               />
             </Col>
           )
@@ -66,7 +73,7 @@ const PrintAlertMap = props => {
       <Row>
         <h4>Reports</h4>
       </Row>
-      <Row>
+      <Row className="pt-4">
         {geographyRequests.map((request, index) => {
           return (
             <Col xs={4} key={`rs-col-${index}`} className="geography-request-summary__container">
@@ -86,6 +93,7 @@ const PrintAlertMap = props => {
 
 PrintAlertMap.propTypes = {
   appState: PropTypes.object,
+  propertySummaryRequest: PropTypes.object,
   layout: PropTypes.object,
 }
 

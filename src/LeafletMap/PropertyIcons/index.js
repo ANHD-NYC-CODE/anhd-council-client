@@ -33,7 +33,7 @@ class PropertyIcons extends React.Component {
   }
 
   render() {
-    if (!(this.props.visible && this.props.selectedRequest && this.props.results)) return null
+    if (!(this.props.visible && this.props.displayedRequest && this.props.results)) return null
     if (this.props.iconConfig === 'MULTIPLE') {
       if (this.props.results.length > this.iconLimit) return null
       return this.props.results
@@ -72,15 +72,15 @@ PropertyIcons.propTypes = {
   handlePropertyAction: PropTypes.func,
   dispatch: PropTypes.func,
   results: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
-  selectedRequest: PropTypes.object,
-  tableRecordsFilter: PropTypes.object,
+  displayedRequest: PropTypes.object,
+  displayedResultsFilter: PropTypes.object,
   visible: PropTypes.bool,
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const results = state.requests[(ownProps.selectedRequest || {}).requestConstant] || []
+  const results = state.requests[(ownProps.displayedRequest || {}).requestConstant] || []
   return {
-    results: ownProps.tableRecordsFilter.internalFilter(results, ownProps.tableRecordsFilter.paramMaps),
+    results: ownProps.displayedResultsFilter.internalFilter(results, ownProps.displayedResultsFilter.paramMaps),
   }
 }
 

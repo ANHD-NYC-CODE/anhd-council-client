@@ -47,7 +47,7 @@ class RequestSummaryWrapper extends React.Component {
 
     return (
       <Row className="request-summary">
-        <Col className="pr-md-0" xs={10} md={11}>
+        <Col className="pr-md-0" xs={this.props.print ? 12 : 10} md={this.props.print ? 12 : 11}>
           {this.props.error ? (
             <RequestErrorCard
               error={this.props.error}

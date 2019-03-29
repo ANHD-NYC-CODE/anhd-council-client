@@ -7,7 +7,7 @@ import { faPrint } from '@fortawesome/free-solid-svg-icons'
 const PrintHeader = props => {
   return (
     <div className="print-header">
-      <Row>
+      <Row className="py-4">
         <img src={logo} className="print-header__logo d-inline-block align-top" alt="Displacement Alert Portal Logo" />
         <Col>
           <Button className="no-print" onClick={() => props.layout.togglePrint()}>

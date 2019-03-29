@@ -6,7 +6,7 @@ import { getRequestType, getManyRequestTypes, getRequestByConstant } from 'Store
 
 import { requestWithAuth } from 'shared/utilities/authUtils'
 import { makeRequest } from 'Store/Request/actions'
-
+import { setAppState } from 'Store/AppState/actions'
 import AlertMapShow from 'AlertMap/AlertMapShow'
 import InnerLoader from 'shared/components/Loaders/InnerLoader'
 
@@ -56,17 +56,19 @@ class AlertMapRequestsWrapper extends React.PureComponent {
     requests.forEach(request => {
       this.props.dispatch(requestWithAuth(makeRequest(request)))
     })
-
-    this.setState({
-      selectedRequestIndex: this.props.requests.indexOf(this.getInitialRequest()),
-      tableRecordsFilter: this.getInitialTableFilter(),
-    })
+    this.props.dispatch(
+      setAppState({
+        selectedRequest: this.getInitialRequest(),
+        selectedResultsFilter: this.getInitialTableFilter(),
+      })
+    )
   }
 
   toggleDateRange(value) {
     this.props.dispatch(setMapFilterDate(value))
 
     const mapRequests = getRequestType(this.props.requests, 'MAP_FILTER')
+    if (!mapRequests.length) return
     mapRequests.forEach(request => {
       request.called = false
       request.paramMaps
@@ -79,11 +81,13 @@ class AlertMapRequestsWrapper extends React.PureComponent {
     this.loadRequests(mapRequests)
   }
 
-  switchSelectedRequest(index, filter) {
-    this.setState({
-      selectedRequestIndex: index,
-      tableRecordsFilter: filter,
-    })
+  switchSelectedRequest(request, filter) {
+    this.props.dispatch(
+      setAppState({
+        selectedRequest: request,
+        selectedResultsFilter: filter,
+      })
+    )
   }
 
   render() {
@@ -93,9 +97,9 @@ class AlertMapRequestsWrapper extends React.PureComponent {
         housingTypeRequests={getRequestType(this.props.requests, 'GEOGRAPHY_HOUSING_TYPE')}
         propertySummaryRequest={getRequestByConstant(this.props.requests, 'GEOGRAPHY_HOUSING_TYPE_ALL')[0]}
         toggleDateRange={this.toggleDateRange}
-        selectedRequestIndex={this.state.selectedRequestIndex}
+        selectedRequest={this.props.appState.selectedRequest}
         switchSelectedRequest={this.switchSelectedRequest}
-        tableRecordsFilter={this.state.tableRecordsFilter}
+        selectedResultsFilter={this.props.appState.selectedResultsFilter}
         {...this.props}
       />
     ) : (
