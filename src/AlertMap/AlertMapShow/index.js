@@ -5,15 +5,13 @@ import GeographySelect from 'shared/components/GeographySelect'
 import { Card, Row, Col, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
 import AdvancedSearchSentence from 'AdvancedSearch/Sentence'
 import LayoutContext from 'Layout/LayoutContext'
-
+import HousingTypeSection from 'AlertMap/AlertMapShow/HousingTypeSection'
 import BaseLink from 'shared/components/BaseLink'
 import LeafletMap from 'LeafletMap'
 import RequestTableWrapper from 'shared/components/RequestTableWrapper'
 import RequestSummaryWrapper from 'shared/components/RequestSummaryWrapper'
 import SummaryResultCard from 'shared/components/ResultCard/SummaryResultCard'
-import FilteredResultCard from 'shared/components/ResultCard/FilteredResultCard'
 
-import HousingTypeResultCard from 'shared/components/ResultCard/HousingTypeResultCard'
 import ConfigContext from 'Config/ConfigContext'
 import PrintButton from 'shared/components/PrintButton'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -178,49 +176,13 @@ class AlertMapShow extends React.PureComponent {
               </Row>
               <Row>
                 <Col xs={12} lg={3}>
-                  <Row className="py-2 mb-4 mb-lg-0">
-                    <Col xs={12} sm={6} lg={12} className="housingtype-request-summary__container">
-                      <RequestSummaryWrapper
-                        key={`request-summary2-${this.props.appState.requests.indexOf(
-                          this.props.propertySummaryRequest
-                        )}`}
-                        request={this.props.propertySummaryRequest}
-                        totalRequest={this.props.housingTypeRequests.find(
-                          r => r.requestConstant === 'GEOGRAPHY_HOUSING_TYPE_ALL'
-                        )}
-                        onClick={r => this.switchTable(r)}
-                        label="Small Homes"
-                        filter={results => results.filter(result => result.unitsres > 0 && result.unitsres <= 6)}
-                        resultsComponent={HousingTypeResultCard}
-                        selected={
-                          this.props.selectedRequestIndex ===
-                          this.props.appState.requests.indexOf(this.props.propertySummaryRequest)
-                        }
-                      />
-                    </Col>
-                    {this.props.housingTypeRequests.map((request, index) => {
-                      return (
-                        <Col
-                          xs={12}
-                          sm={6}
-                          lg={12}
-                          key={`rs-col-${index}`}
-                          className="housingtype-request-summary__container"
-                        >
-                          <RequestSummaryWrapper
-                            key={`request-summary-${this.props.appState.requests.indexOf(request)}`}
-                            request={request}
-                            totalRequest={this.props.housingTypeRequests.find(
-                              r => r.requestConstant === 'GEOGRAPHY_HOUSING_TYPE_ALL'
-                            )}
-                            onClick={r => this.switchTable(r)}
-                            resultsComponent={HousingTypeResultCard}
-                            selected={this.props.selectedRequestIndex === this.props.appState.requests.indexOf(request)}
-                          />
-                        </Col>
-                      )
-                    })}
-                  </Row>
+                  <HousingTypeSection
+                    appState={this.props.appState}
+                    housingTypeRequests={this.props.housingTypeRequests}
+                    propertySummaryRequest={this.props.propertySummaryRequest}
+                    selectedRequestIndex={this.props.selectedRequestIndex}
+                    switchTable={this.switchTable}
+                  />
                 </Col>
                 <Col xs={12} lg={6}>
                   <Row className="mb-2 mb-lg-0">
