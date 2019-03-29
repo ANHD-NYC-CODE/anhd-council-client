@@ -207,8 +207,8 @@ export default class LeafletMap extends React.PureComponent {
           <PropertyIcons
             iconConfig={this.props.iconConfig}
             setAlertMessage={this.setAlertMessage}
-            selectedRequest={this.props.appState.requests[this.props.selectedRequestIndex]}
-            tableRecordsFilter={this.props.tableRecordsFilter}
+            displayedRequest={this.props.displayedRequest}
+            displayedResultsFilter={this.props.displayedResultsFilter}
             visible={!(this.props.appState.changingGeographyType && this.props.appState.changingGeographyId)}
           />
         </Map>
@@ -221,10 +221,11 @@ LeafletMap.defaultProps = {
   center: [40.71, -73.98],
   councilDistricts: [],
   communityDistricts: [],
+  displayedRequest: undefined,
   iconConfig: 'MULTIPLE',
   interactive: true,
   height: 0,
-  tableRecordsFilter: {
+  displayedResultsFilter: {
     internalFilter: results => results,
     paramMaps: [],
   },
@@ -235,8 +236,8 @@ LeafletMap.propTypes = {
   appState: PropTypes.object,
   communityDistricts: PropTypes.array,
   councilDistricts: PropTypes.array,
+  displayedRequest: PropTypes.object,
   iconConfig: PropTypes.string,
-  selectedRequestIndex: PropTypes.number,
-  tableRecordsFilter: PropTypes.object,
+  displayedResultsFilter: PropTypes.object,
   interactive: PropTypes.bool,
 }

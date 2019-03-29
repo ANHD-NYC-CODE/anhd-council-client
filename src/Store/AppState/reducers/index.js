@@ -10,6 +10,8 @@ export const initialState = {
   changingGeographyType: undefined,
   changingGeographyId: undefined,
   mapFilterDate: alertMapFilterdates()[0],
+  selectedRequest: undefined,
+  selectedResultsFilter: undefined,
   requests: [],
 }
 

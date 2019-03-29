@@ -12,13 +12,13 @@ import { councilIdToString, communityIdToString } from 'shared/utilities/languag
 const PrintLookup = props => {
   return (
     <div className="print-lookup">
-      <Row>
+      <Row className="py-4">
         <Col>
           <LeafletMap
             appState={props.appState}
             currentGeographyType={props.appState.currentGeographyType}
             center={props.propertyResult.lat ? [props.propertyResult.lat, props.propertyResult.lng] : undefined}
-            selectedRequest={props.profileRequest}
+            displayedRequest={props.profileRequest}
             iconConfig="SINGLE"
             interactive={false}
             height="300px"
@@ -42,7 +42,7 @@ const PrintLookup = props => {
           <h4>Property Information</h4>
         </Col>
       </Row>
-      <Row>
+      <Row className="py-4">
         <Col>
           <RequestTableWrapper request={props.profileRequest} visible={true} />
         </Col>
@@ -52,7 +52,7 @@ const PrintLookup = props => {
           <h4>{props.bin ? 'Building' : 'Property'} Data</h4>
         </Col>
       </Row>
-      <Row>
+      <Row className="py-4">
         {props.lookupRequests.map((request, index) => {
           return (
             <Col xs={3} key={`rw-col-${index}`} className="request-wrapper-container">

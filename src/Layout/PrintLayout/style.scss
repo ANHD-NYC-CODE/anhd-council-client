@@ -1,6 +1,8 @@
 @import 'shared/styles/bootstrap/_variables.scss';
 
 .print-layout {
+  button.result-card,
+  button.btn-primary:hover,
   button.bg-light:focus,
   button.bg-light:hover {
     border: 1px solid black;
