@@ -308,6 +308,13 @@ export const newGeographyHousingTypeRequest = ({
         comparison: '',
         value: true,
       }),
+      new ParameterMapping({
+        resourceModel,
+        type: 'TEXT',
+        field: 'summary-type',
+        comparison: '',
+        value: 'short',
+      }),
     ],
     tableConfig: new TableConfig({ resourceConstant: 'PROPERTY' }),
   })
