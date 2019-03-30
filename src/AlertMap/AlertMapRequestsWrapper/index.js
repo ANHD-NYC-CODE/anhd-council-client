@@ -47,7 +47,7 @@ class AlertMapRequestsWrapper extends React.PureComponent {
   getInitialTableFilter() {
     return getRequestType(this.props.requests, 'ADVANCED_SEARCH').length
       ? undefined
-      : this.props.config.datasetModels
+      : this.props.config.resourceModels
           .find(model => model.resourceConstant === 'PROPERTY')
           .ownResultFilters.find(orf => orf.id === 'HOUSING_TYPE_RENT_STABILIZED')
   }

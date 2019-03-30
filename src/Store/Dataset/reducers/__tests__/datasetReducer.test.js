@@ -1,6 +1,6 @@
 import * as r from '../'
 import * as a from '../../actions'
-import * as datasetModels from 'shared/models/datasets'
+import * as resourceModels from 'shared/models/datasets'
 
 describe('Dataset reducer', () => {
   it('should return the initial state', () => {
@@ -15,7 +15,7 @@ describe('Dataset reducer', () => {
 
       expect(reducer.datasets).toEqual(datasets)
       expect(reducer.housingTypeModels.length).toEqual(6)
-      expect(reducer.datasetModels.length).toEqual(1)
+      expect(reducer.resourceModels.length).toEqual(1)
     })
   })
 })
