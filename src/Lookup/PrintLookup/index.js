@@ -58,6 +58,7 @@ const PrintLookup = props => {
             <Col xs={3} key={`rw-col-${index}`} className="request-wrapper-container">
               <RequestSummaryWrapper
                 key={`request-summary-${props.appState.requests.indexOf(request)}`}
+                label={request.resourceModel.label}
                 request={request}
                 print={true}
                 resultsComponent={SummaryResultCard}

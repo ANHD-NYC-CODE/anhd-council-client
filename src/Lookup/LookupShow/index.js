@@ -187,6 +187,7 @@ class LookupShow extends React.Component {
                                   onClick={r => this.switchTable(r)}
                                   selected={this.props.appState.selectedRequest === request}
                                   request={request}
+                                  label={request.resourceModel.label}
                                   resultsComponent={SummaryResultCard}
                                 />
                               </Col>

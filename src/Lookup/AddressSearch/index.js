@@ -6,7 +6,7 @@ import SearchResults from './SearchResults'
 import { clearSearch } from 'Store/Search/actions'
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
-
+import ConfigContext from 'Config/ConfigContext'
 import { GET_BUILDING_SEARCH } from 'shared/constants/actions'
 import { handleClearErrors } from 'Store/Error/actions'
 
@@ -90,14 +90,21 @@ class AddressSearch extends React.PureComponent {
           hideSearch={this.hideSearch}
           show={!!this.props.search.results.length && this.state.show}
         />
-        <SearchResults
-          dispatch={this.props.dispatch}
-          error={this.props.error}
-          searchResultsRef={this.searchResultsRef}
-          show={this.state.show}
-          hideSearch={this.hideSearch}
-          results={this.props.search.results}
-        />
+        <ConfigContext.Consumer>
+          {config => {
+            return (
+              <SearchResults
+                config={config}
+                dispatch={this.props.dispatch}
+                error={this.props.error}
+                searchResultsRef={this.searchResultsRef}
+                show={this.state.show}
+                hideSearch={this.hideSearch}
+                results={this.props.search.results}
+              />
+            )
+          }}
+        </ConfigContext.Consumer>
       </div>
     )
   }

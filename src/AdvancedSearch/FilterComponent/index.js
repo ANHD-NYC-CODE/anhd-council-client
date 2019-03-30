@@ -65,7 +65,6 @@ FilterComponent.propTypes = {
   addCondition: PropTypes.func,
   allowNewCondition: PropTypes.bool,
   condition: PropTypes.object,
-  resourceModels: PropTypes.array,
   dispatchAction: PropTypes.func,
   filter: PropTypes.object,
   filterIndex: PropTypes.number,

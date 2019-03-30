@@ -9,17 +9,19 @@ const datasetOptions = resourceModels => {
     <option disabled key={'new-filter-option-disabled'} value={-1}>
       New Filter
     </option>,
-    resourceModels
+    Object.values(resourceModels)
       .find(model => model.resourceConstant === 'PROPERTY')
       .relatedResources.map((resourceConstant, index) => {
-        const resource = resourceModels.find(model => model.resourceConstant === resourceConstant)
-        console.log(resourceConstant, resource)
-        return (
-          <option key={`new-filter-option-${index}`} value={resource.resourceConstant}>
-            {resource.languageModule ? resource.languageModule.noun : resource.resourceConstant}
-          </option>
-        )
-      }),
+        const resource = Object.values(resourceModels).find(model => model.resourceConstant === resourceConstant)
+        if (resource) {
+          return (
+            <option key={`new-filter-option-${index}`} value={resource.resourceConstant}>
+              {resource.languageModule ? resource.languageModule.noun : resource.resourceConstant}
+            </option>
+          )
+        }
+      })
+      .filter(o => o),
   ]
 }
 

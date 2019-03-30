@@ -32,6 +32,8 @@ class Config extends React.Component {
 
     this.selectGeographyData = this.selectGeographyData.bind(this)
     this.createMapRequests = this.createMapRequests.bind(this)
+    this.createLookupRequests = this.createLookupRequests.bind(this)
+    this.createAdvancedSearchRequest = this.createAdvancedSearchRequest.bind(this)
     this.state = {
       geographyType: undefined,
       geographyId: undefined,
@@ -76,6 +78,19 @@ class Config extends React.Component {
     return newMapRequests({ geographyType, geographyId, resourceModels: this.props.resourceModels })
   }
 
+  createLookupRequests(bbl, bin) {
+    return newLookupRequests({ bbl, bin, resourceModels: this.props.resourceModels })
+  }
+
+  createAdvancedSearchRequest(geographyType, geographyId, advancedSearch) {
+    return newAdvancedSearchRequest({
+      geographyType,
+      geographyId,
+      advancedSearch,
+      resourceModels: this.props.resourceModels,
+    })
+  }
+
   render() {
     return this.props.error ? (
       <PageError title="Oops, an error occured" message="Sorry, we couldn't load the page." />
@@ -83,6 +98,8 @@ class Config extends React.Component {
       <ConfigContext.Provider
         value={{
           createMapRequests: this.createMapRequests,
+          createLookupRequests: this.createLookupRequests,
+          createAdvancedSearchRequest: this.createAdvancedSearchRequest,
           datasets: this.props.datasets,
           resourceModels: this.props.resourceModels,
           housingTypeModels: this.props.housingTypeModels,

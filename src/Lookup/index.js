@@ -59,6 +59,7 @@ class Lookup extends React.Component {
       setLookupAndRequestsAndRedirect({
         bbl,
         bin,
+        requests: this.props.config.createLookupRequests(bbl, bin),
       })
     )
 
