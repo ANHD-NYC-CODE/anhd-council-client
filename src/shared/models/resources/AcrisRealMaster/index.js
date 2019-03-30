@@ -1,7 +1,7 @@
 const AcrisRealMaster = databaseObject => ({
-  resourceConstant: 'DOB_COMPLAINT',
-  urlPath: 'dobcomplaints',
-  label: 'DOB Complaints',
+  resourceConstant: 'ACRIS_REAL_MASTER',
+  urlPath: 'acrisrealmasters',
+  label: 'Property Sales (Acris)',
 })
 
 export default AcrisRealMaster

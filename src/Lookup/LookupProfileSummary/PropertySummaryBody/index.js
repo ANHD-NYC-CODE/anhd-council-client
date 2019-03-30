@@ -65,7 +65,9 @@ const PropertySummaryBody = props => {
         </Card.Text>
         <Card.Text className="lookup-profile-summary__group">
           <label className="profile-summary-body__label">Tax Lien? </label>
-          <span className="profile-summary-body__value">{props.profile.taxliens || 'No'}</span>
+          <span className="profile-summary-body__value">
+            {props.profile.taxliens.length ? `${props.profile.taxliens.sort((a, b) => a.year < b.year)[0].year}` : 'No'}
+          </span>
         </Card.Text>
       </Col>
     </Row>
