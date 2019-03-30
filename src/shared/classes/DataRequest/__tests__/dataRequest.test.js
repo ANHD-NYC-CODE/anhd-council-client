@@ -112,7 +112,7 @@ describe('DataRequest', () => {
         ],
       })
 
-      expect(dataRequest.label).toEqual('Properties with 10+ HPD Violations')
+      expect(dataRequest.summaryCardLabel).toEqual('Properties with 10+ HPD Violations')
     })
 
     it('label without param maps', () => {
@@ -123,7 +123,7 @@ describe('DataRequest', () => {
         ],
       })
 
-      expect(dataRequest.label).toEqual('HPD Violations')
+      expect(dataRequest.summaryCardLabel).toEqual('HPD Violations')
     })
   })
 })

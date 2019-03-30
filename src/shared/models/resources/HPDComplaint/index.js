@@ -3,6 +3,8 @@ import { LanguageModule } from 'shared/classes/LanguageModule'
 
 const HPDComplaint = databaseObject => ({
   resourceConstant: 'HPD_COMPLAINT',
+  urlPath: 'hpdcomplaints',
+  label: 'HPD Complaints',
   schema: constructDefaultSchema({
     databaseObject,
     constant: 'HPD_COMPLAINT',

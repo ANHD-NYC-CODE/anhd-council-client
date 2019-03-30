@@ -3,6 +3,8 @@ import { LanguageModule } from 'shared/classes/LanguageModule'
 
 const DOBFiledPermit = databaseObject => ({
   resourceConstant: 'DOB_FILED_PERMIT',
+  urlPath: 'doblegacyfiledpermits',
+  label: 'DOB Permit Applications',
   schema: constructDefaultSchema({
     databaseObject,
     constant: 'DOB_FILED_PERMIT',

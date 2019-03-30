@@ -52,13 +52,13 @@ class RequestSummaryWrapper extends React.Component {
             <RequestErrorCard
               error={this.props.error}
               errorAction={this.retryRequest}
-              requestLabel={this.props.request.label}
+              requestLabel={this.props.request.resourceModel.label}
             />
           ) : (
             this.props.resultsComponent({
               error: this.props.error,
               errorAction: this.retryRequest,
-              label: this.props.label,
+              label: this.props.label || this.props.request.summaryCardLabel,
               handleClick: this.handleClick,
               selected: this.props.selected,
               unitsLabel: this.props.unitsLabel,

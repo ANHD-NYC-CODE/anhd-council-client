@@ -32,29 +32,29 @@ export const setupHousingTypeModels = datasets => {
 }
 
 export const setupResourceModels = datasets => {
-  return Object.keys(resources)
-    .map(constant => {
-      let databaseObject
-      switch (constant) {
-        case 'DOB_FILED_PERMIT':
-          databaseObject = datasets.find(object => (object.model_name || {}).toUpperCase() === 'DOBLEGACYFILEDPERMIT')
-          break
-        case 'PROPERTY_SALE_BY_COUNT':
-          databaseObject = datasets.find(object => (object.model_name || {}).toUpperCase() === 'ACRISREALLEGAL')
-          break
-        case 'PROPERTY_SALE_BY_AMOUNT':
-          databaseObject = datasets.find(object => (object.model_name || {}).toUpperCase() === 'ACRISREALLEGAL')
-          break
-        default:
-          databaseObject = datasets.find(
-            object => (object.model_name || {}).toUpperCase() === constantToModelName(constant).toUpperCase()
-          )
-      }
-      if (databaseObject) {
-        return new Resource({ model: resources[constant](databaseObject) })
-      }
-    })
-    .filter(ds => !!ds)
+  let loadedResources = {}
+  Object.keys(resources).forEach(constant => {
+    let databaseObject
+    switch (constant) {
+      case 'DOB_FILED_PERMIT':
+        databaseObject = datasets.find(object => (object.model_name || {}).toUpperCase() === 'DOBLEGACYFILEDPERMIT')
+        break
+      case 'PROPERTY_SALE_BY_COUNT':
+        databaseObject = datasets.find(object => (object.model_name || {}).toUpperCase() === 'ACRISREALLEGAL')
+        break
+      case 'PROPERTY_SALE_BY_AMOUNT':
+        databaseObject = datasets.find(object => (object.model_name || {}).toUpperCase() === 'ACRISREALLEGAL')
+        break
+      default:
+        databaseObject = datasets.find(
+          object => (object.model_name || {}).toUpperCase() === constantToModelName(constant).toUpperCase()
+        )
+    }
+    if (databaseObject) {
+      loadedResources[constant] = new Resource({ model: resources[constant](databaseObject) })
+    }
+  })
+  return loadedResources
 }
 
 export const newBuildingRequest = ({
@@ -145,11 +145,13 @@ export const newGeographyRequest = ({
   type = undefined,
   geographyType = undefined,
   geographyId,
+  resourceModel,
   resourceConstant = undefined,
   defaultValue = 10,
 } = {}) => {
   return new DataRequest({
     type: type,
+    resourceModel,
     apiMaps: [
       new ApiMap({ constant: geographyType, resourceId: geographyId }),
       new ApiMap({ constant: 'PROPERTY', name: 'Properties' }),
@@ -157,15 +159,17 @@ export const newGeographyRequest = ({
     paramMaps: [
       new ParameterMapping({
         resourceConstant,
+        resourceModel,
         type: 'AMOUNT',
-        field: constantToQueryName(resourceConstant),
+        field: resourceModel.urlPath,
         comparison: 'gte',
         value: defaultValue,
       }),
       new ParameterMapping({
         resourceConstant,
+        resourceModel,
         type: 'DATE',
-        field: `${constantToQueryName(resourceConstant)}__start`,
+        field: `${resourceModel.urlPath}__start`,
         comparison: '',
         value: alertMapFilterdates()[0],
       }),
@@ -178,10 +182,12 @@ export const newGeographyHousingTypeRequest = ({
   type = undefined,
   geographyType = undefined,
   geographyId,
+  resourceModel,
   paramValue = undefined,
 } = {}) => {
   return new DataRequest({
     type: type,
+    resourceModel,
     requestConstant: `${type}_${paramValue.toUpperCase()}`,
     apiMaps: [
       new ApiMap({ constant: geographyType, resourceId: geographyId }),
@@ -189,6 +195,7 @@ export const newGeographyHousingTypeRequest = ({
     ],
     paramMaps: [
       new ParameterMapping({
+        resourceModel,
         type: 'TEXT',
         field: 'summary',
         comparison: '',
@@ -201,40 +208,46 @@ export const newGeographyHousingTypeRequest = ({
 
 export const newMapRequests = ({ geographyType, geographyId, resourceModels } = {}) => {
   return [
-    newGeographyHousingTypeRequest({ type: 'GEOGRAPHY_HOUSING_TYPE', geographyType, geographyId, paramValue: 'all' }),
+    newGeographyHousingTypeRequest({
+      type: 'GEOGRAPHY_HOUSING_TYPE',
+      geographyType,
+      geographyId,
+      resourceModel: resourceModels['PROPERTY'],
+      paramValue: 'all',
+    }),
     newGeographyRequest({
       type: 'MAP_FILTER',
       geographyType,
       geographyId,
-      resourceConstant: 'HPD_VIOLATION',
+      resourceModel: resourceModels['HPD_VIOLATION'],
       defaultValue: 10,
     }),
     newGeographyRequest({
       type: 'MAP_FILTER',
       geographyType,
       geographyId,
-      resourceConstant: 'DOB_COMPLAINT',
+      resourceModel: resourceModels['DOB_COMPLAINT'],
       defaultValue: 2,
     }),
     newGeographyRequest({
       type: 'MAP_FILTER',
       geographyType,
       geographyId,
-      resourceConstant: 'HPD_COMPLAINT',
+      resourceModel: resourceModels['HPD_COMPLAINT'],
       defaultValue: 5,
     }),
     newGeographyRequest({
       type: 'MAP_FILTER',
       geographyType,
       geographyId,
-      resourceConstant: 'EVICTION',
+      resourceModel: resourceModels['EVICTION'],
       defaultValue: 1,
     }),
     newGeographyRequest({
       type: 'MAP_FILTER',
       geographyType,
       geographyId,
-      resourceConstant: 'DOB_ISSUED_PERMIT',
+      resourceModel: resourceModels['DOB_ISSUED_PERMIT'],
       defaultValue: 1,
     }),
   ]

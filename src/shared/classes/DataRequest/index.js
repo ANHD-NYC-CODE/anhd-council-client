@@ -4,11 +4,13 @@ export class DataRequest {
   constructor({
     type = undefined,
     requestConstant = undefined,
+    resourceModel = undefined,
     paramMaps = [],
     apiMaps = [],
     tableConfig = undefined,
   } = {}) {
     this._type = type
+    this._resourceModel = resourceModel
     this._requestConstant = requestConstant
     this._paramMaps = paramMaps
     this._apiMaps = apiMaps
@@ -22,6 +24,14 @@ export class DataRequest {
 
   set type(type) {
     this._type = type
+  }
+
+  get resourceModel() {
+    return this._resourceModel
+  }
+
+  set resourceModel(resourceModel) {
+    this._resourceModel = resourceModel
   }
 
   get paramMaps() {
@@ -126,10 +136,10 @@ export class DataRequest {
     this._requestConstant = requestConstant
   }
 
-  get label() {
+  get summaryCardLabel() {
     const amountPm = this._paramMaps.find(pm => pm.type === 'AMOUNT')
     return `${this._apiMaps[this._apiMaps.length - 1].name}${
-      amountPm ? ` with ${amountPm.summaryString} ${constantToName({ constant: amountPm.resourceConstant })}` : ''
+      amountPm ? ` with ${amountPm.summaryString} ${amountPm.resourceModel.label}` : ''
     }`
   }
 }

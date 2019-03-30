@@ -19,7 +19,7 @@ const SummaryResultCard = props => {
     >
       <Card.Body className="d-flex flex-row p-0">
         <p className="d-flex flex-column align-content-center justify-content-center text-left m-0 pr-1 summary-result-card__label">
-          {props.request.label}
+          {props.label}
         </p>
         <div className="align-self-center summary-result-card__result">
           {props.loading ? <SpinnerLoader /> : <h2 className="m-0">{props.results.length}</h2>}
@@ -40,7 +40,6 @@ SummaryResultCard.propTypes = {
   handleClick: PropTypes.func,
   onClick: PropTypes.func,
   resultsComponent: PropTypes.func,
-  request: PropTypes.object,
   selected: PropTypes.bool,
   results: PropTypes.array,
 }

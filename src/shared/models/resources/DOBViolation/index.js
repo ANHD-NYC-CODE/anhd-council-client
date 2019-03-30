@@ -3,6 +3,8 @@ import { LanguageModule } from 'shared/classes/LanguageModule'
 
 const DOBViolation = databaseObject => ({
   resourceConstant: 'DOB_VIOLATION',
+  urlPath: 'dobviolations',
+  label: 'DOB Violations',
   schema: constructDefaultSchema({
     databaseObject,
     constant: 'DOB_VIOLATION',

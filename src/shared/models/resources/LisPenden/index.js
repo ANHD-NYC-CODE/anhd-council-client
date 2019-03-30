@@ -6,6 +6,8 @@ import HiddenField from 'AdvancedSearch/FilterComponent/Field/HiddenField'
 
 const LisPenden = databaseObject => ({
   resourceConstant: 'LISPENDEN',
+  urlPath: 'lispendens',
+  label: 'Foreclosures',
   schema: constructDefaultSchema({
     databaseObject,
     constant: 'LISPENDEN',
