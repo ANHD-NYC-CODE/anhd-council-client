@@ -94,6 +94,7 @@ Lookup.defaultProps = {
 }
 
 Lookup.propTypes = {
+  config: PropTypes.object,
   dispatch: PropTypes.func,
 }
 
