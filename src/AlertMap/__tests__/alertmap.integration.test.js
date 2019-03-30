@@ -33,7 +33,7 @@ const setupWrapper = state => {
         <ConfigContext.Provider
           value={{
             datasets: state.dataset.datasets,
-            datasetModels: state.dataset.datasetModels,
+            resourceModels: state.dataset.resourceModels,
             housingTypeModels: state.dataset.housingTypeModels,
             communityDistricts: state.community.boards,
             councilDistricts: state.council.districts,

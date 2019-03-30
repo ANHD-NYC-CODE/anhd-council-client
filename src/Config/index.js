@@ -14,7 +14,7 @@ import { infoModals } from 'shared/models/modals'
 import ConfigLoader from 'shared/components/Loaders/ConfigLoader'
 import PageError from 'shared/components/PageError'
 import { newMapRequests, newLookupRequests, newAdvancedSearchRequest } from 'shared/utilities/actionUtils'
-import { setupDatasetModels, setupHousingTypeModels } from 'shared/utilities/actionUtils'
+import { setupresourceModels, setupHousingTypeModels } from 'shared/utilities/actionUtils'
 
 class Config extends React.Component {
   constructor(props) {
@@ -73,7 +73,7 @@ class Config extends React.Component {
   }
 
   createMapRequests(geographyType, geographyId) {
-    return newMapRequests({ geographyType, geographyId, resourceModels: this.props.datasetModels })
+    return newMapRequests({ geographyType, geographyId, resourceModels: this.props.resourceModels })
   }
 
   render() {
@@ -83,7 +83,7 @@ class Config extends React.Component {
       <ConfigContext.Provider
         value={{
           datasets: this.props.datasets,
-          datasetModels: this.props.datasetModels,
+          resourceModels: this.props.resourceModels,
           housingTypeModels: this.props.housingTypeModels,
           communityDistricts: this.props.communityDistricts,
           councilDistricts: this.props.councilDistricts,
@@ -119,7 +119,7 @@ const loadingSelector = createLoadingSelector([GET_DATASETS, GET_COUNCILS, GET_C
 const mapStateToProps = state => {
   return {
     datasets: state.dataset.datasets,
-    datasetModels: setupDatasetModels(state.dataset.datasets),
+    resourceModels: setupresourceModels(state.dataset.datasets),
     housingTypeModels: setupHousingTypeModels(state.dataset.datasets),
     councilDistricts: state.council.districts,
     communityDistricts: state.community.boards,

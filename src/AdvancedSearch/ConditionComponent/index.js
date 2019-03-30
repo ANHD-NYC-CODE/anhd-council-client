@@ -61,7 +61,7 @@ export class ConditionComponent extends React.Component {
 
   replaceFilter(filterIndex, e) {
     e = new StandardizedInput(e)
-    const model = this.props.config.datasetModels.find(model => model.resourceConstant === e.value)
+    const model = this.props.config.resourceModels.find(model => model.resourceConstant === e.value)
     const newFilter = new Filter({ model })
     this.props.condition.replaceFilter({ filterIndex, filter: newFilter })
     this.dispatchAction()
@@ -124,7 +124,7 @@ export class ConditionComponent extends React.Component {
               addCondition={this.addCondition}
               allowNewCondition={isCondition0() || (!isCondition0() && !this.props.condition.hasCondition())}
               condition={this.props.condition}
-              datasetModels={this.props.datasetModels}
+              resourceModels={this.props.resourceModels}
               dispatch={this.props.dispatch}
               dispatchAction={this.dispatchAction}
               filter={filter}
@@ -221,7 +221,7 @@ ConditionComponent.propTypes = {
   condition: PropTypes.object,
   conditions: PropTypes.object,
   dispatch: PropTypes.func,
-  datasetModels: PropTypes.array,
+  resourceModels: PropTypes.array,
   validateForm: PropTypes.func,
 }
 

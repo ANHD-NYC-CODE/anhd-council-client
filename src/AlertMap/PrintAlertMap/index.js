@@ -15,7 +15,7 @@ import LeafletMap from 'LeafletMap'
 const PrintAlertMap = props => {
   const geographyRequests = getManyRequestTypes(props.appState.requests, ['MAP_FILTER'])
 
-  const propertyResource = props.config.datasetModels.find(model => model.resourceConstant === 'PROPERTY')
+  const propertyResource = props.config.resourceModels.find(model => model.resourceConstant === 'PROPERTY')
   const residentialFilter = propertyResource.ownResultFilters.find(f => f.id === 'HOUSING_TYPE_RESIDENTIAL')
 
   return (

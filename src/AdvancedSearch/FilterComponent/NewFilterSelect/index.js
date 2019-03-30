@@ -4,15 +4,15 @@ import { Form } from 'react-bootstrap'
 import ConfigContext from 'Config/ConfigContext'
 import FormError from 'shared/components/FormError'
 
-const datasetOptions = datasetModels => {
+const datasetOptions = resourceModels => {
   return [
     <option disabled key={'new-filter-option-disabled'} value={-1}>
       New Filter
     </option>,
-    datasetModels
+    resourceModels
       .find(model => model.resourceConstant === 'PROPERTY')
       .relatedResources.map((resourceConstant, index) => {
-        const resource = datasetModels.find(model => model.resourceConstant === resourceConstant)
+        const resource = resourceModels.find(model => model.resourceConstant === resourceConstant)
         console.log(resourceConstant, resource)
         return (
           <option key={`new-filter-option-${index}`} value={resource.resourceConstant}>
@@ -36,7 +36,7 @@ const NewFilterSelect = props => {
             onChange={e => props.onChange(props.filterIndex, e)}
             value={props.value || -1}
           >
-            {datasetOptions(config.datasetModels)}
+            {datasetOptions(config.resourceModels)}
           </Form.Control>
           <FormError show={!!props.filter.errors.length} message={(props.filter.errors[0] || {}).message} />
         </div>

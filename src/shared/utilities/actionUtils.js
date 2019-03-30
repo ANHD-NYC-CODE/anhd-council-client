@@ -107,7 +107,7 @@ export const setupHousingTypeModels = datasets => {
     .filter(ht => ht)
 }
 
-export const setupDatasetModels = datasets => {
+export const setupresourceModels = datasets => {
   return Object.keys(resources)
     .map(constant => {
       let databaseObject
