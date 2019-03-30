@@ -13,6 +13,8 @@ import { getCommunities } from 'Store/Community/actions'
 import { infoModals } from 'shared/models/modals'
 import ConfigLoader from 'shared/components/Loaders/ConfigLoader'
 import PageError from 'shared/components/PageError'
+import { newMapRequests, newLookupRequests, newAdvancedSearchRequest } from 'shared/utilities/actionUtils'
+import { setupDatasetModels, setupHousingTypeModels } from 'shared/utilities/actionUtils'
 
 class Config extends React.Component {
   constructor(props) {
@@ -29,7 +31,7 @@ class Config extends React.Component {
     }
 
     this.selectGeographyData = this.selectGeographyData.bind(this)
-
+    this.createMapRequests = this.createMapRequests.bind(this)
     this.state = {
       geographyType: undefined,
       geographyId: undefined,
@@ -68,6 +70,10 @@ class Config extends React.Component {
       case 'COMMUNITY':
         return this.props.communityDistricts
     }
+  }
+
+  createMapRequests(geographyType, geographyId) {
+    return newMapRequests({ geographyType, geographyId, resourceModels: this.props.datasetModels })
   }
 
   render() {
@@ -113,8 +119,8 @@ const loadingSelector = createLoadingSelector([GET_DATASETS, GET_COUNCILS, GET_C
 const mapStateToProps = state => {
   return {
     datasets: state.dataset.datasets,
-    datasetModels: state.dataset.datasetModels,
-    housingTypeModels: state.dataset.housingTypeModels,
+    datasetModels: setupDatasetModels(state.dataset.datasets),
+    housingTypeModels: setupHousingTypeModels(state.dataset.datasets),
     councilDistricts: state.council.districts,
     communityDistricts: state.community.boards,
     error: errorSelector(state),

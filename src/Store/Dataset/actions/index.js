@@ -2,14 +2,11 @@ import { constructAxiosGet } from 'shared/utilities/Axios'
 import * as u from 'shared/constants/urls'
 
 import * as c from '../constants'
-import { setupDatasetModels, setupHousingTypeModels } from 'shared/utilities/actionUtils'
 
 export const handleGetDatasets = (response, key = null) => {
-  const datasetModels = setupDatasetModels(response.data)
-  const housingTypeModels = setupHousingTypeModels(response.data)
   return {
     type: c.HANDLE_GET_DATASETS,
-    data: { datasets: response.data, datasetModels, housingTypeModels },
+    data: { datasets: response.data },
   }
 }
 
