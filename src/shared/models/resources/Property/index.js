@@ -3,6 +3,8 @@ import { ParameterMapping } from 'shared/classes/ParameterMapping'
 const Property = databaseObject => {
   return {
     resourceConstant: 'PROPERTY',
+    urlPath: 'properties',
+    label: 'Properties',
     ownResultFilters: [
       {
         id: 'HOUSING_TYPE_RESIDENTIAL',

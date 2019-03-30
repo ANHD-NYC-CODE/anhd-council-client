@@ -3,6 +3,8 @@ import { LanguageModule } from 'shared/classes/LanguageModule'
 
 const Eviction = databaseObject => ({
   resourceConstant: 'EVICTION',
+  urlPath: 'evictions',
+  label: 'Evictions',
   schema: constructDefaultSchema({
     databaseObject,
     constant: 'EVICTION',

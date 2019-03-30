@@ -12,7 +12,9 @@ const HousingTypeSection = props => {
     <Col xs={12} sm={6} lg={12} className="housingtype-request-summary__container">
       <ConfigContext.Consumer>
         {config => {
-          const propertyResource = config.resourceModels.find(model => model.resourceConstant === 'PROPERTY')
+          const propertyResource = Object.values(config.resourceModels).find(
+            model => model.resourceConstant === 'PROPERTY'
+          )
           const residentialFilter = propertyResource.ownResultFilters.find(f => f.id === 'HOUSING_TYPE_RESIDENTIAL')
           return (
             <div className="housing-type-section__wrapper">

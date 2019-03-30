@@ -25,6 +25,7 @@ export class ParameterMapping {
     rangeKey = undefined,
     rangePosition = undefined,
     resourceConstant = '',
+    resourceModel = undefined,
   } = {}) {
     this._component = component
     this._baseComponent = baseComponent
@@ -40,6 +41,7 @@ export class ParameterMapping {
     this._rangePosition = rangePosition
     this._errors = []
     this._resourceConstant = resourceConstant
+    this._resourceModel = resourceModel
   }
 
   get field() {
@@ -136,6 +138,14 @@ export class ParameterMapping {
 
   set resourceConstant(resourceConstant) {
     this._resourceConstant = resourceConstant
+  }
+
+  get resourceModel() {
+    return this._resourceModel
+  }
+
+  set resourceModel(resourceModel) {
+    this._resourceModel = resourceModel
   }
 
   get summaryString() {

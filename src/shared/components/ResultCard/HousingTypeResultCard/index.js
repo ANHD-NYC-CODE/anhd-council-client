@@ -18,7 +18,7 @@ const HousingTypeResultCard = props => {
     >
       <div className="housingtype-summary-result-card__wrapper">
         <h5 className="housingtype-summary-result-card__title font-weight-bold">
-          {props.label || props.request.label}
+          {props.label || props.request.summaryCardLabel}
         </h5>
         {props.loading ? (
           <SpinnerLoader />

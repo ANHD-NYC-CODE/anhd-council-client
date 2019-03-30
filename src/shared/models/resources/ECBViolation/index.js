@@ -3,6 +3,8 @@ import { LanguageModule } from 'shared/classes/LanguageModule'
 
 const ECBViolation = databaseObject => ({
   resourceConstant: 'ECB_VIOLATION',
+  urlPath: 'ecbviolations',
+  label: 'ECB Violations',
   schema: constructDefaultSchema({
     databaseObject,
     constant: 'ECB_VIOLATION',

@@ -3,6 +3,8 @@ import { LanguageModule } from 'shared/classes/LanguageModule'
 
 const PropertySaleByCount = databaseObject => ({
   resourceConstant: 'PROPERTY_SALE_BY_COUNT',
+  urlPath: 'acrisreallegals',
+  label: 'Property Sales',
   schema: constructDefaultSchema({
     databaseObject,
     constant: 'PROPERTY_SALE_BY_COUNT',
