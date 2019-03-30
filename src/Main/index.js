@@ -52,6 +52,7 @@ class Main extends React.Component {
         geographyType: type,
         geographyId: id,
         redirect: true,
+        requests: this.props.config.createMapRequests(type, id),
       })
     )
 
