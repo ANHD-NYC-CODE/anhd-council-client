@@ -7,7 +7,7 @@ import { ApiMap } from 'shared/classes/ApiMap'
 import { ParameterMapping } from 'shared/classes/ParameterMapping'
 import { Resource } from 'shared/classes/Resource'
 import { housingTypeCodeToName } from 'shared/utilities/languageUtils'
-import { constantToModelName, constantToQueryName } from 'shared/utilities/filterUtils'
+import { constantToModelName } from 'shared/utilities/filterUtils'
 import { alertMapFilterdates } from 'shared/utilities/componentUtils'
 
 import { getUrlFormattedParamMaps } from 'Store/AdvancedSearch/utilities/advancedSearchStoreUtils'
@@ -61,10 +61,12 @@ export const newBuildingRequest = ({
   type = undefined,
   bin = undefined,
   resourceConstant = undefined,
+  resourceModel,
   datasetModelName = undefined,
 }) => {
   return new DataRequest({
     type: type,
+    resourceModel,
     apiMaps: [
       new ApiMap({ constant: 'BUILDING', resourceId: bin }),
       resourceConstant ? getApiMap(resourceConstant) : undefined,
@@ -78,10 +80,12 @@ export const newPropertyRequest = ({
   bbl = undefined,
   resourceConstant = undefined,
   datasetModelName = undefined,
+  resourceModel,
   tableComponent = undefined,
 } = {}) => {
   return new DataRequest({
     type: type,
+    resourceModel,
     apiMaps: [
       new ApiMap({ constant: 'PROPERTY', resourceId: bbl, name: 'Properties' }),
       resourceConstant ? getApiMap(resourceConstant) : undefined,
@@ -91,53 +95,145 @@ export const newPropertyRequest = ({
   })
 }
 
-export const newLookupRequests = ({ bbl, bin } = {}) => {
+export const newLookupRequests = ({ bbl, bin, resourceModels } = {}) => {
   return [
-    newPropertyRequest({ type: 'LOOKUP_PROFILE', bbl: bbl, tableComponent: LookupProfileSummary }),
-    !bin ? newPropertyRequest({ type: 'LOOKUP_FILTER', bbl: bbl, resourceConstant: 'ACRIS_REAL_MASTER' }) : null,
-    !bin ? newPropertyRequest({ type: 'LOOKUP_FILTER', bbl: bbl, resourceConstant: 'EVICTION' }) : null,
+    newPropertyRequest({
+      type: 'LOOKUP_PROFILE',
+      bbl: bbl,
+      tableComponent: LookupProfileSummary,
+      resourceModel: resourceModels['PROPERTY'],
+    }),
+    !bin
+      ? newPropertyRequest({
+          type: 'LOOKUP_FILTER',
+          bbl: bbl,
+          resourceConstant: 'ACRIS_REAL_MASTER',
+          resourceModel: resourceModels['ACRIS_REAL_MASTER'],
+        })
+      : null,
+    !bin
+      ? newPropertyRequest({
+          type: 'LOOKUP_FILTER',
+          bbl: bbl,
+          resourceConstant: 'EVICTION',
+          resourceModel: resourceModels['EVICTION'],
+        })
+      : null,
     !bin
       ? newPropertyRequest({
           type: 'LOOKUP_FILTER',
           bbl: bbl,
           resourceConstant: 'LISPENDEN',
+          resourceModel: resourceModels['LISPENDEN'],
           datasetModelName: constantToModelName('LISPENDEN'),
         })
       : null,
     bin
-      ? newBuildingRequest({ type: 'LOOKUP_FILTER', bin: bin, resourceConstant: 'HPD_VIOLATION' })
-      : newPropertyRequest({ type: 'LOOKUP_FILTER', bbl: bbl, resourceConstant: 'HPD_VIOLATION' }),
+      ? newBuildingRequest({
+          type: 'LOOKUP_FILTER',
+          bin: bin,
+          resourceConstant: 'HPD_VIOLATION',
+          resourceModel: resourceModels['HPD_VIOLATION'],
+        })
+      : newPropertyRequest({
+          type: 'LOOKUP_FILTER',
+          bbl: bbl,
+          resourceConstant: 'HPD_VIOLATION',
+          resourceModel: resourceModels['HPD_VIOLATION'],
+        }),
     bin
-      ? newBuildingRequest({ type: 'LOOKUP_FILTER', bin: bin, resourceConstant: 'HPD_COMPLAINT' })
-      : newPropertyRequest({ type: 'LOOKUP_FILTER', bbl: bbl, resourceConstant: 'HPD_COMPLAINT' }),
+      ? newBuildingRequest({
+          type: 'LOOKUP_FILTER',
+          bin: bin,
+          resourceConstant: 'HPD_COMPLAINT',
+          resourceModel: resourceModels['HPD_COMPLAINT'],
+        })
+      : newPropertyRequest({
+          type: 'LOOKUP_FILTER',
+          bbl: bbl,
+          resourceConstant: 'HPD_COMPLAINT',
+          resourceModel: resourceModels['HPD_COMPLAINT'],
+        }),
     bin
-      ? newBuildingRequest({ type: 'LOOKUP_FILTER', bin: bin, resourceConstant: 'DOB_VIOLATION' })
-      : newPropertyRequest({ type: 'LOOKUP_FILTER', bbl: bbl, resourceConstant: 'DOB_VIOLATION' }),
+      ? newBuildingRequest({
+          type: 'LOOKUP_FILTER',
+          bin: bin,
+          resourceConstant: 'DOB_VIOLATION',
+          resourceModel: resourceModels['DOB_VIOLATION'],
+        })
+      : newPropertyRequest({
+          type: 'LOOKUP_FILTER',
+          bbl: bbl,
+          resourceConstant: 'DOB_VIOLATION',
+          resourceModel: resourceModels['DOB_VIOLATION'],
+        }),
     bin
-      ? newBuildingRequest({ type: 'LOOKUP_FILTER', bin: bin, resourceConstant: 'DOB_COMPLAINT' })
-      : newPropertyRequest({ type: 'LOOKUP_FILTER', bbl: bbl, resourceConstant: 'DOB_COMPLAINT' }),
+      ? newBuildingRequest({
+          type: 'LOOKUP_FILTER',
+          bin: bin,
+          resourceConstant: 'DOB_COMPLAINT',
+          resourceModel: resourceModels['DOB_COMPLAINT'],
+        })
+      : newPropertyRequest({
+          type: 'LOOKUP_FILTER',
+          bbl: bbl,
+          resourceConstant: 'DOB_COMPLAINT',
+          resourceModel: resourceModels['DOB_COMPLAINT'],
+        }),
     bin
-      ? newBuildingRequest({ type: 'LOOKUP_FILTER', bin: bin, resourceConstant: 'ECB_VIOLATION' })
-      : newPropertyRequest({ type: 'LOOKUP_FILTER', bbl: bbl, resourceConstant: 'ECB_VIOLATION' }),
+      ? newBuildingRequest({
+          type: 'LOOKUP_FILTER',
+          bin: bin,
+          resourceConstant: 'ECB_VIOLATION',
+          resourceModel: resourceModels['ECB_VIOLATION'],
+        })
+      : newPropertyRequest({
+          type: 'LOOKUP_FILTER',
+          bbl: bbl,
+          resourceConstant: 'ECB_VIOLATION',
+          resourceModel: resourceModels['ECB_VIOLATION'],
+        }),
     bin
-      ? newBuildingRequest({ type: 'LOOKUP_FILTER', bin: bin, resourceConstant: 'DOB_ISSUED_PERMIT' })
-      : newPropertyRequest({ type: 'LOOKUP_FILTER', bbl: bbl, resourceConstant: 'DOB_ISSUED_PERMIT' }),
+      ? newBuildingRequest({
+          type: 'LOOKUP_FILTER',
+          bin: bin,
+          resourceConstant: 'DOB_ISSUED_PERMIT',
+          resourceModel: resourceModels['DOB_ISSUED_PERMIT'],
+        })
+      : newPropertyRequest({
+          type: 'LOOKUP_FILTER',
+          bbl: bbl,
+          resourceConstant: 'DOB_ISSUED_PERMIT',
+          resourceModel: resourceModels['DOB_ISSUED_PERMIT'],
+        }),
     bin
       ? newBuildingRequest({
           type: 'LOOKUP_FILTER',
           bin: bin,
           resourceConstant: 'DOB_FILED_PERMIT',
+          resourceModel: resourceModels['DOB_FILED_PERMIT'],
           datasetModelName: constantToModelName('DOB_LEGACY_FILED_PERMIT'),
         })
       : newPropertyRequest({
           type: 'LOOKUP_FILTER',
           bbl: bbl,
           resourceConstant: 'DOB_FILED_PERMIT',
+          resourceModel: resourceModels['DOB_FILED_PERMIT'],
           datasetModelName: constantToModelName('DOB_LEGACY_FILED_PERMIT'),
         }),
     bin
-      ? newBuildingRequest({ type: 'LOOKUP_FILTER', bin: bin, resourceConstant: 'HOUSING_LITIGATION' })
-      : newPropertyRequest({ type: 'LOOKUP_FILTER', bbl: bbl, resourceConstant: 'HOUSING_LITIGATION' }),
+      ? newBuildingRequest({
+          type: 'LOOKUP_FILTER',
+          bin: bin,
+          resourceConstant: 'HOUSING_LITIGATION',
+          resourceModel: resourceModels['HOUSING_LITIGATION'],
+        })
+      : newPropertyRequest({
+          type: 'LOOKUP_FILTER',
+          bbl: bbl,
+          resourceConstant: 'HOUSING_LITIGATION',
+          resourceModel: resourceModels['HOUSING_LITIGATION'],
+        }),
   ].filter(r => !!r)
 }
 
@@ -253,10 +349,11 @@ export const newMapRequests = ({ geographyType, geographyId, resourceModels } = 
   ]
 }
 
-export const newAdvancedSearchRequest = ({ geographyType, geographyId, advancedSearch } = {}) => {
+export const newAdvancedSearchRequest = ({ geographyType, geographyId, advancedSearch, resourceModels } = {}) => {
   const paramMaps = getUrlFormattedParamMaps(advancedSearch)
   return new DataRequest({
     type: 'ADVANCED_SEARCH',
+    resourceModel: resourceModels['PROPERTY'],
     resourceConstant: 'PROPERTY_ADVANCED_SEARCH',
     apiMaps: [
       new ApiMap({ constant: geographyType, resourceId: geographyId }),

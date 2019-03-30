@@ -157,7 +157,16 @@ class AdvancedSearchForm extends React.PureComponent {
         return
       } else {
         this.setState({ hasErrors: false })
-        this.props.dispatch(setAdvancedSearchRequestAndRedirect({ redirect: true }))
+        this.props.dispatch(
+          setAdvancedSearchRequestAndRedirect({
+            redirect: true,
+            advancedSearchRequest: this.props.config.createAdvancedSearchRequest(
+              this.props.appState.currentGeographyType,
+              this.props.appState.currentGeographyId,
+              this.props.advancedSearch
+            ),
+          })
+        )
       }
     })
   }

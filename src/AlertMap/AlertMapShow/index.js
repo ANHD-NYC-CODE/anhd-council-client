@@ -152,6 +152,7 @@ class AlertMapShow extends React.PureComponent {
                           <RequestSummaryWrapper
                             key={`request-summary-${this.props.appState.requests.indexOf(request)}`}
                             request={request}
+                            label={request.summaryCardLabel}
                             onClick={this.switchTable}
                             resultsComponent={SummaryResultCard}
                             selected={this.props.selectedRequest === request}

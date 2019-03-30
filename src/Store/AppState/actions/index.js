@@ -2,7 +2,6 @@ import * as c from '../constants'
 import { push, replace } from 'connected-react-router'
 import { getGeographyPath, addressResultToPath } from 'shared/utilities/routeUtils'
 import { removeRequest, removeManyRequests } from 'Store/Request/actions'
-import { newLookupRequests, newAdvancedSearchRequest } from 'shared/utilities/configUtils'
 
 export const setAppState = state => ({
   type: c.SET_APP_STATE,
@@ -62,8 +61,7 @@ export const setGeographyAndRequestsAndRedirect = ({
   }
 }
 
-export const setLookupAndRequestsAndRedirect = ({ bbl, bin, replaceHistory = false } = {}) => dispatch => {
-  const requests = newLookupRequests({ bbl, bin })
+export const setLookupAndRequestsAndRedirect = ({ bbl, bin, replaceHistory = false, requests } = {}) => dispatch => {
   dispatch(removeRequestType('LOOKUP_FILTER'))
   dispatch(removeRequestType('LOOKUP_PROFILE'))
   dispatch(removeManyRequests(requests.map(r => r.requestConstant)))
@@ -76,16 +74,13 @@ export const setLookupAndRequestsAndRedirect = ({ bbl, bin, replaceHistory = fal
   }
 }
 
-export const setAdvancedSearchRequestAndRedirect = ({ redirect = true, replaceHistory = false } = {}) => (
-  dispatch,
-  getState
-) => {
+export const setAdvancedSearchRequestAndRedirect = ({
+  redirect = true,
+  replaceHistory = false,
+  advancedSearchRequest,
+} = {}) => (dispatch, getState) => {
   const appState = getState().appState
-  const advancedSearchRequest = newAdvancedSearchRequest({
-    geographyType: appState.currentGeographyType,
-    geographyId: appState.currentGeographyId,
-    advancedSearch: getState().advancedSearch,
-  })
+
   dispatch(removeRequestType('ADVANCED_SEARCH'))
   dispatch(removeRequest(advancedSearchRequest.requestConstant))
   dispatch(handleSetAdvancedSearchRequest(advancedSearchRequest))

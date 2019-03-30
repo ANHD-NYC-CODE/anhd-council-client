@@ -80,6 +80,7 @@ const PrintAlertMap = props => {
               <RequestSummaryWrapper
                 key={`request-summary-${props.appState.requests.indexOf(request)}`}
                 request={request}
+                label={request.summaryCardLabel}
                 print={true}
                 resultsComponent={SummaryResultCard}
               />

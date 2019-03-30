@@ -61,7 +61,7 @@ export class ConditionComponent extends React.Component {
 
   replaceFilter(filterIndex, e) {
     e = new StandardizedInput(e)
-    const model = this.props.config.resourceModels.find(model => model.resourceConstant === e.value)
+    const model = Object.values(this.props.config.resourceModels).find(model => model.resourceConstant === e.value)
     const newFilter = new Filter({ model })
     this.props.condition.replaceFilter({ filterIndex, filter: newFilter })
     this.dispatchAction()
@@ -106,7 +106,7 @@ export class ConditionComponent extends React.Component {
         )
       } else if (filter.id === 'NEW_FILTER') {
         return (
-          <div className="form-row__container">
+          <div className="form-row__container" key={`new-filter-select-${filterIndex}`}>
             <div className="w-50">
               <NewFilterSelect
                 filter={filter}
@@ -124,7 +124,6 @@ export class ConditionComponent extends React.Component {
               addCondition={this.addCondition}
               allowNewCondition={isCondition0() || (!isCondition0() && !this.props.condition.hasCondition())}
               condition={this.props.condition}
-              resourceModels={this.props.resourceModels}
               dispatch={this.props.dispatch}
               dispatchAction={this.dispatchAction}
               filter={filter}
@@ -218,10 +217,10 @@ export class ConditionComponent extends React.Component {
 }
 
 ConditionComponent.propTypes = {
+  config: PropTypes.object,
   condition: PropTypes.object,
   conditions: PropTypes.object,
   dispatch: PropTypes.func,
-  resourceModels: PropTypes.array,
   validateForm: PropTypes.func,
 }
 

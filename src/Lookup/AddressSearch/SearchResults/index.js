@@ -17,7 +17,13 @@ const SearchResults = props => {
       )
     )
     props.hideSearch(e)
-    props.dispatch(setLookupAndRequestsAndRedirect({ bbl: result.bbl, bin: result.bin }))
+    props.dispatch(
+      setLookupAndRequestsAndRedirect({
+        bbl: result.bbl,
+        bin: result.bin,
+        requests: props.config.createLookupRequests(result.bbl, result.bin),
+      })
+    )
   }
 
   return (
