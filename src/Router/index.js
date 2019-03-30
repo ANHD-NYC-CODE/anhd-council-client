@@ -22,7 +22,7 @@ class Router extends React.Component {
             return (
               <Layout>
                 <Switch>
-                  <Route exact path="/" render={() => <Main />} />
+                  <Route exact path="/" render={() => <Main config={config} />} />
                   <Route
                     exact
                     path="/lookup"

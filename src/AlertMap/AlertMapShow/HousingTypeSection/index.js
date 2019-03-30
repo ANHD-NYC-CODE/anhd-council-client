@@ -38,7 +38,7 @@ const HousingTypeSection = props => {
                     totalResultsFilter={ownResultFilter === residentialFilter ? undefined : residentialFilter}
                     selected={
                       props.selectedRequest === props.propertySummaryRequest &&
-                      props.selectedResultsFilter === ownResultFilter
+                      props.selectedResultsFilter.id === ownResultFilter.id
                     }
                   />
                 )

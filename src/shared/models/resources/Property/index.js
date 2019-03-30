@@ -12,6 +12,7 @@ const Property = databaseObject => {
         label: 'Residential Properties',
         paramMaps: [new ParameterMapping({ field: 'unitsres', comparison: 'gte', value: 1 })],
         internalFilter: (results, paramMaps) => {
+          if (!results) return []
           return results.filter(result => paramMaps.some(paramMap => paramMap.evaluate(result)))
         },
       },
@@ -26,8 +27,10 @@ const Property = databaseObject => {
           new ParameterMapping({ field: 'yearbuilt', comparison: 'lte', value: 1974 }),
           new ParameterMapping({ field: 'yearbuilt', comparison: 'gte', value: 1 }),
         ],
-        internalFilter: (results, paramMaps) =>
-          results.filter(result => paramMaps.every(paramMap => paramMap.evaluate(result))),
+        internalFilter: (results, paramMaps) => {
+          if (!results) return []
+          return results.filter(result => paramMaps.every(paramMap => paramMap.evaluate(result)))
+        },
       },
       {
         id: 'HOUSING_TYPE_SUBSIDIZED_HOUSING',
@@ -39,6 +42,7 @@ const Property = databaseObject => {
           new ParameterMapping({ field: 'subsidy421arecords', comparison: 'bool', value: true }),
         ],
         internalFilter: (results, paramMaps) => {
+          if (!results) return []
           return results.filter(result => paramMaps.some(paramMap => paramMap.evaluate(result)))
         },
       },
@@ -67,6 +71,7 @@ const Property = databaseObject => {
           new ParameterMapping({ field: 'subsidy421arecords', comparison: 'bool', value: false }),
         ],
         internalFilter: (results, paramMaps) => {
+          if (!results) return []
           return results.filter(result => paramMaps.every(paramMap => paramMap.evaluate(result)))
         },
       },
