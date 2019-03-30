@@ -91,6 +91,17 @@ export const newPropertyRequest = ({
       resourceConstant ? getApiMap(resourceConstant) : undefined,
       type === 'LOOKUP_PROFILE' ? new ApiMap({ queryName: 'summary' }) : undefined,
     ].filter(a => !!a),
+    paramMaps: [
+      type === 'LOOKUP_PROFILE'
+        ? new ParameterMapping({
+            resourceModel,
+            type: 'TEXT',
+            field: 'summary',
+            comparison: '',
+            value: true,
+          })
+        : undefined,
+    ].filter(p => p),
     tableConfig: new TableConfig({ resourceConstant: resourceConstant, component: tableComponent, datasetModelName }),
   })
 }
