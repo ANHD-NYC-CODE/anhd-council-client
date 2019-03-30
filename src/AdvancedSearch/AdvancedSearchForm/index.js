@@ -88,6 +88,7 @@ class AdvancedSearchForm extends React.PureComponent {
         geographyType: type,
         geographyId: id,
         redirect: false,
+        requests: this.props.config.createMapRequests(type, id),
       })
     )
     this.cancelChangeGeography()
