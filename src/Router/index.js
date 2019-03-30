@@ -28,7 +28,7 @@ class Router extends React.Component {
                     path="/lookup"
                     render={router => <Lookup key={router.location.pathname} config={config} />}
                   />
-                  <Route exact path="/property/:bbl/building/:bin" render={() => <Lookup />} />
+                  <Route exact path="/property/:bbl/building/:bin" render={() => <Lookup config={config} />} />
                   <Route exact path="/property/:bbl" render={() => <Lookup config={config} />} />
                   <Route exact path="/building/:bin" render={() => <Lookup config={config} />} />
                   <Route exact path="/map" render={() => <AlertMap config={config} />} />
