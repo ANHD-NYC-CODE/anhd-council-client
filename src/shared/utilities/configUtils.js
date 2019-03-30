@@ -83,13 +83,17 @@ export const newPropertyRequest = ({
   resourceModel,
   tableComponent = undefined,
 } = {}) => {
+  // WARNING: Do not change the summary request path or params without
+  // simultaneously updating the backend app's core/utils/cache.py
+  // caching script. The script caches based on URL, and if it's not updated,
+  // These summary payloads can take up to a minute to deliver
+  // in geographies with +10000 properties.
   return new DataRequest({
     type: type,
     resourceModel,
     apiMaps: [
       new ApiMap({ constant: 'PROPERTY', resourceId: bbl, name: 'Properties' }),
       resourceConstant ? getApiMap(resourceConstant) : undefined,
-      type === 'LOOKUP_PROFILE' ? new ApiMap({ queryName: 'summary' }) : undefined,
     ].filter(a => !!a),
     paramMaps: [
       type === 'LOOKUP_PROFILE'
