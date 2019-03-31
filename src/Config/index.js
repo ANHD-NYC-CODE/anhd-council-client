@@ -15,6 +15,7 @@ import ConfigLoader from 'shared/components/Loaders/ConfigLoader'
 import PageError from 'shared/components/PageError'
 import { newMapRequests, newLookupRequests, newAdvancedSearchRequest } from 'shared/utilities/configUtils'
 import { setupResourceModels, setupHousingTypeModels } from 'shared/utilities/configUtils'
+import { createAdvancedSearchFilters } from 'shared/utilities/filterUtils'
 
 class Config extends React.Component {
   constructor(props) {
@@ -107,6 +108,7 @@ class Config extends React.Component {
           councilDistricts: this.props.councilDistricts,
           selectGeographyData: this.selectGeographyData,
           infoModals: infoModals,
+          advancedSearchFilters: createAdvancedSearchFilters({ resourceModels: this.props.resourceModels }),
         }}
       >
         {this.props.loading ||

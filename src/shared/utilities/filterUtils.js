@@ -7,6 +7,8 @@ import ComparisonFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/Comparis
 
 import DateField from 'AdvancedSearch/FilterComponent/Field/DateField'
 import IntegerField from 'AdvancedSearch/FilterComponent/Field/IntegerField'
+import GenericFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/GenericFieldSet'
+import HiddenField from 'AdvancedSearch/FilterComponent/Field/HiddenField'
 
 import { capitalizeWords } from 'shared/utilities/languageUtils'
 
@@ -42,7 +44,179 @@ export const constantToName = ({ constant = '', plural = true, capitalizeDepartm
   }
 }
 
+export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
+  return [
+    {
+      resourceModel: resourceModels['HPD_VIOLATION'],
+      schema: constructDefaultSchema({
+        resourceModel: resourceModels['HPD_VIOLATION'],
+        constant: 'HPD_VIOLATION',
+        amountFieldQuery: 'count',
+        capitalizeDepartment: true,
+      }),
+      languageModule: new LanguageModule({
+        noun: constantToName({ constant: 'HPD_VIOLATION', capitalizeDepartment: true, plural: true }),
+      }),
+    },
+    {
+      resourceModel: resourceModels['DOB_VIOLATION'],
+      schema: constructDefaultSchema({
+        resourceModel: resourceModels['DOB_VIOLATION'],
+        constant: 'DOB_VIOLATION',
+        amountFieldQuery: 'count',
+        capitalizeDepartment: true,
+      }),
+      languageModule: new LanguageModule({
+        noun: constantToName({ constant: 'DOB_VIOLATION', capitalizeDepartment: true, plural: true }),
+      }),
+    },
+    {
+      resourceModel: resourceModels['ECB_VIOLATION'],
+      schema: constructDefaultSchema({
+        constant: 'ECB_VIOLATION',
+        resourceModel: resourceModels['ECB_VIOLATION'],
+        amountFieldQuery: 'count',
+        capitalizeDepartment: true,
+      }),
+      languageModule: new LanguageModule({
+        noun: constantToName({ constant: 'ECB_VIOLATION', capitalizeDepartment: true, plural: true }),
+      }),
+    },
+    {
+      resourceModel: resourceModels['HPD_COMPLAINT'],
+      schema: constructDefaultSchema({
+        resourceModel: resourceModels['HPD_COMPLAINT'],
+        constant: 'HPD_COMPLAINT',
+        amountFieldQuery: 'count',
+        capitalizeDepartment: true,
+      }),
+      languageModule: new LanguageModule({
+        noun: constantToName({ constant: 'HPD_COMPLAINT', capitalizeDepartment: true, plural: true }),
+      }),
+    },
+    {
+      resourceModel: resourceModels['DOB_COMPLAINT'],
+      schema: constructDefaultSchema({
+        resourceModel: resourceModels['DOB_COMPLAINT'],
+        constant: 'DOB_COMPLAINT',
+        amountFieldQuery: 'count',
+        capitalizeDepartment: true,
+      }),
+      languageModule: new LanguageModule({
+        noun: constantToName({ constant: 'DOB_COMPLAINT', capitalizeDepartment: true, plural: true }),
+      }),
+    },
+    {
+      resourceModel: resourceModels['DOB_FILED_PERMIT'],
+      schema: constructDefaultSchema({
+        resourceModel: resourceModels['DOB_FILED_PERMIT'],
+        constant: 'DOB_FILED_PERMIT',
+        apiField: 'doblegacyfiledpermits',
+        amountFieldQuery: 'count',
+        capitalizeDepartment: true,
+        defaultAmount: 5,
+      }),
+      languageModule: new LanguageModule({
+        noun: constantToName({ constant: 'DOB_FILED_PERMIT', capitalizeDepartment: true, plural: true }),
+      }),
+    },
+    {
+      resourceModel: resourceModels['DOB_ISSUED_PERMIT'],
+      schema: constructDefaultSchema({
+        resourceModel: resourceModels['DOB_ISSUED_PERMIT'],
+        constant: 'DOB_ISSUED_PERMIT',
+        amountFieldQuery: 'count',
+        capitalizeDepartment: true,
+        defaultAmount: 5,
+      }),
+      languageModule: new LanguageModule({
+        noun: constantToName({ constant: 'DOB_ISSUED_PERMIT', capitalizeDepartment: true, plural: true }),
+      }),
+    },
+    {
+      resourceModel: resourceModels['EVICTION'],
+      schema: constructDefaultSchema({
+        resourceModel: resourceModels['EVICTION'],
+        constant: 'EVICTION',
+        amountFieldQuery: 'count',
+        capitalizeDepartment: false,
+        defaultAmount: 1,
+      }),
+      languageModule: new LanguageModule({
+        noun: constantToName({ constant: 'EVICTION', capitalizeDepartment: false, plural: true }),
+      }),
+    },
+    {
+      resourceModel: resourceModels['HOUSING_LITIGATION'],
+      schema: constructDefaultSchema({
+        resourceModel: resourceModels['HOUSING_LITIGATION'],
+        constant: 'HOUSING_LITIGATION',
+        amountFieldQuery: 'count',
+        capitalizeDepartment: false,
+        defaultAmount: 1,
+      }),
+      languageModule: new LanguageModule({
+        noun: constantToName({ constant: 'HOUSING_LITIGATION', capitalizeDepartment: false, plural: true }),
+      }),
+    },
+    {
+      resourceModel: resourceModels['LISPENDEN'],
+      schema: constructDefaultSchema({
+        resourceModel: resourceModels['LISPENDEN'],
+        constant: 'LISPENDEN',
+        apiField: 'lispendens',
+        amountFieldQuery: 'count',
+        defaultAmount: '1',
+        capitalizeDepartment: false,
+        hiddenParamMap: new ParameterMapping({
+          component: GenericFieldSet,
+          baseComponent: HiddenField,
+          field: 'lispendens__type',
+          comparison: '',
+          value: 'foreclosure',
+        }),
+      }),
+      languageModule: new LanguageModule({
+        noun: constantToName({ constant: 'FORECLOSURE', capitalizeDepartment: false, plural: true }),
+      }),
+    },
+    {
+      resourceModel: resourceModels['PROPERTY_SALE_BY_AMOUNT'],
+      schema: constructDefaultSchema({
+        resourceModel: resourceModels['PROPERTY_SALE_BY_AMOUNT'],
+        constant: 'PROPERTY_SALE_BY_AMOUNT',
+        apiField: 'acrisreallegals',
+        amountFieldQuery: 'documentid__docamount',
+        amountNoun: '',
+        amountValuePrefix: '$',
+        defaultAmount: '1000000',
+        amountPropertyAdjective: 'sold for',
+      }),
+      languageModule: new LanguageModule({
+        noun: constantToName({ constant: 'PROPERTY_SALE_BY_AMOUNT', capitalizeDepartment: false, plural: false }),
+      }),
+    },
+    {
+      resourceModel: resourceModels['PROPERTY_SALE_BY_COUNT'],
+      schema: constructDefaultSchema({
+        resourceModel: resourceModels['PROPERTY_SALE_BY_COUNT'],
+        constant: 'PROPERTY_SALE_BY_COUNT',
+        apiField: 'acrisreallegals',
+        amountFieldQuery: 'documentid__count',
+        amountPropertyAdjective: 'were sold',
+        defaultAmount: 2,
+        amountNoun: 'times',
+        amountShortNoun: 'times',
+      }),
+      languageModule: new LanguageModule({
+        noun: constantToName({ constant: 'PROPERTY_SALE_BY_COUNT', capitalizeDepartment: false, plural: false }),
+      }),
+    },
+  ]
+}
+
 export const constructDefaultSchema = ({
+  resourceModel,
   constant = '',
   apiField = undefined,
   defaultDate = '',
@@ -70,6 +244,7 @@ export const constructDefaultSchema = ({
       createType: 'ALL_RANGE_ONE',
       defaults: [
         new ParameterMapping({
+          resourceModel,
           component: ComparisonFieldSet,
           baseComponent: IntegerField,
           type: 'AMOUNT',
@@ -91,6 +266,7 @@ export const constructDefaultSchema = ({
           value: defaultAmount || '5',
         }),
         new ParameterMapping({
+          resourceModel,
           component: ComparisonFieldSet,
           baseComponent: DateField,
           type: 'DATE',
@@ -121,6 +297,7 @@ export const constructDefaultSchema = ({
               .format('YYYY-MM-DD'),
         }),
         new ParameterMapping({
+          resourceModel,
           component: ComparisonFieldSet,
           baseComponent: DateField,
           type: 'DATE',

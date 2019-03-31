@@ -5,15 +5,6 @@ const HPDViolation = databaseObject => ({
   resourceConstant: 'HPD_VIOLATION',
   urlPath: 'hpdviolations',
   label: 'HPD Violations',
-  schema: constructDefaultSchema({
-    databaseObject,
-    constant: 'HPD_VIOLATION',
-    amountFieldQuery: 'count',
-    capitalizeDepartment: true,
-  }),
-  languageModule: new LanguageModule({
-    noun: constantToName({ constant: 'HPD_VIOLATION', capitalizeDepartment: true, plural: true }),
-  }),
 })
 
 export default HPDViolation

@@ -5,15 +5,6 @@ const DOBViolation = databaseObject => ({
   resourceConstant: 'DOB_VIOLATION',
   urlPath: 'dobviolations',
   label: 'DOB Violations',
-  schema: constructDefaultSchema({
-    databaseObject,
-    constant: 'DOB_VIOLATION',
-    amountFieldQuery: 'count',
-    capitalizeDepartment: true,
-  }),
-  languageModule: new LanguageModule({
-    noun: constantToName({ constant: 'DOB_VIOLATION', capitalizeDepartment: true, plural: true }),
-  }),
 })
 
 export default DOBViolation

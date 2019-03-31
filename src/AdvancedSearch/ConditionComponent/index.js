@@ -54,15 +54,21 @@ export class ConditionComponent extends React.Component {
   }
 
   createNewFilter() {
-    const newFilter = new Filter({ modelConstant: 'NEW_FILTER', model: { schema: {} } })
+    const newFilter = new Filter({ modelConstant: 'NEW_FILTER', resourceModel: { schema: {} } })
     this.props.condition.addFilter({ filter: newFilter })
     this.dispatchAction()
   }
 
   replaceFilter(filterIndex, e) {
     e = new StandardizedInput(e)
-    const model = Object.values(this.props.config.resourceModels).find(model => model.resourceConstant === e.value)
-    const newFilter = new Filter({ model })
+    const advancedSearchFilter = Object.values(this.props.config.advancedSearchFilters).find(
+      aFilter => aFilter.resourceModel.resourceConstant === e.value
+    )
+
+    const newFilter = new Filter({
+      resourceModel: advancedSearchFilter.resourceModel,
+      schema: advancedSearchFilter.schema,
+    })
     this.props.condition.replaceFilter({ filterIndex, filter: newFilter })
     this.dispatchAction()
   }
@@ -119,7 +125,7 @@ export class ConditionComponent extends React.Component {
         )
       } else {
         return (
-          <div className="form-row__container">
+          <div className="form-row__container" key={`filter-${this.props.condition.key}-${filter.id}-${filterIndex}`}>
             <FilterComponent
               addCondition={this.addCondition}
               allowNewCondition={isCondition0() || (!isCondition0() && !this.props.condition.hasCondition())}
@@ -128,7 +134,6 @@ export class ConditionComponent extends React.Component {
               dispatchAction={this.dispatchAction}
               filter={filter}
               filterIndex={filterIndex}
-              key={`filter-${this.props.condition.key}-${filter.id}-${filterIndex}`}
               showPopups={this.props.showPopups}
               replaceFilter={this.replaceFilter}
             />
