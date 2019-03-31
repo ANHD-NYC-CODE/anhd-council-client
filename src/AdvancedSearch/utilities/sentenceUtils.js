@@ -21,11 +21,11 @@ const parseParamMapComparison = (paramMap, nounOverride = undefined) => {
     case 'AMOUNT':
       return `${longAmountComparisonString(paramMap.comparison)} ${paramMap.valuePrefix}${paramMap.value}${
         paramMap.valueSuffix
-      }${grammaticalNoun(nounOverride || paramMap.paramNoun, paramMap.value)}`
+      }${grammaticalNoun(nounOverride || paramMap.paramNoun, paramMap.value)}`.trim()
     case 'PERCENT':
       return `${longAmountComparisonString(paramMap.comparison)} ${paramMap.valuePrefix}${paramMap.value}${
         paramMap.valueSuffix
-      }${grammaticalNoun(nounOverride || paramMap.paramNoun, paramMap.value)}`
+      }${grammaticalNoun(nounOverride || paramMap.paramNoun, paramMap.value)}`.trim()
     case 'DATE':
       return `${paramMap.valuePrefix} ${constructDateComparisonString(paramMap.comparison)} ${moment(
         paramMap.value
@@ -37,7 +37,7 @@ const parseParamMapComparison = (paramMap, nounOverride = undefined) => {
         .filter(p => p)
         .join(' ')
     case 'MULTI-TEXT':
-      return `${grammaticalList(paramMap.value.split(','), 'or')}`
+      return `${grammaticalList(paramMap.value.split(','), 'or')}`.trim()
   }
 }
 
@@ -85,7 +85,7 @@ export const convertFilterToSentence = filter => {
       ? `have ${parseParamMapComparison(primaryParamMap, filter.resourceModel.sentenceNoun)}`
       : undefined
 
-    const modifyingSegment = parsedModifyingParamMaps.length ? `(${[...parsedModifyingParamMaps]})` : undefined
+    const modifyingSegment = parsedModifyingParamMaps.length ? `(${parsedModifyingParamMaps.join(', ')})` : undefined
 
     const limiterSegment = limiterParamMaps.length ? `${parseRoleGroup(limiterParamMaps)}` : undefined
 
