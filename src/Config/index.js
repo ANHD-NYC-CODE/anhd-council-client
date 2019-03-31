@@ -13,9 +13,12 @@ import { getCommunities } from 'Store/Community/actions'
 import { infoModals } from 'shared/models/modals'
 import ConfigLoader from 'shared/components/Loaders/ConfigLoader'
 import PageError from 'shared/components/PageError'
+import Filter from 'shared/classes/Filter'
+
 import { newMapRequests, newLookupRequests, newAdvancedSearchRequest } from 'shared/utilities/configUtils'
 import { setupResourceModels, setupHousingTypeModels } from 'shared/utilities/configUtils'
 import { createAdvancedSearchFilters } from 'shared/utilities/filterUtils'
+import { replacePropertyFilter } from 'Store/AdvancedSearch/actions'
 
 class Config extends React.Component {
   constructor(props) {
@@ -66,6 +69,20 @@ class Config extends React.Component {
       })
     }
   }
+
+  componentDidUpdate() {
+    if (!this.props.advancedSearch.propertyFilter && !!Object.keys(this.props.resourceModels).length) {
+      this.props.dispatch(
+        replacePropertyFilter(
+          new Filter({
+            resourceModel: this.props.resourceModels['PROPERTY'],
+            schema: this.props.resourceModels['PROPERTY'].ownResourceFilters,
+          })
+        )
+      )
+    }
+  }
+
   selectGeographyData(type) {
     switch (type) {
       case 'COUNCIL':
@@ -140,6 +157,7 @@ const loadingSelector = createLoadingSelector([GET_DATASETS, GET_COUNCILS, GET_C
 
 const mapStateToProps = state => {
   return {
+    advancedSearch: state.advancedSearch,
     datasets: state.dataset.datasets,
     resourceModels: setupResourceModels(state.dataset.datasets),
     housingTypeModels: setupHousingTypeModels(state.dataset.datasets),

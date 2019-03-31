@@ -28,7 +28,12 @@ export class FilterComponent extends React.Component {
     return (
       <div className="filter-component">
         <div className="filter-component__primary-row d-flex">
-          <div className="form-row__connection-container filter-connection d-flex flex-column">
+          <div
+            className={classnames('form-row__connection-container', 'filter-connection', 'flex-column', {
+              'd-flex': !this.props.blockWidth,
+              'd-none': this.props.blockWidth,
+            })}
+          >
             <div className="form-row__connection" />
             <div className="form-row__connection" />
           </div>
@@ -56,7 +61,7 @@ export class FilterComponent extends React.Component {
                       // Buttons
                     }
                     <Col xs={4} lg={3} className="d-flex align-items-center">
-                      {paramSet.paramMaps.length ? (
+                      {this.props.condition && paramSet.paramMaps.length ? (
                         paramsSetKey === 'initial' ? (
                           <div className="d-flex align-items-center">
                             <RemoveFilterButton showPopups={this.props.showPopups} removeFilter={this.removeFilter} />
@@ -121,9 +126,14 @@ export class FilterComponent extends React.Component {
   }
 }
 
+FilterComponent.defaultProps = {
+  blockWidth: false,
+}
+
 FilterComponent.propTypes = {
   addCondition: PropTypes.func,
   allowNewCondition: PropTypes.bool,
+  blockWidth: PropTypes.string,
   condition: PropTypes.object,
   dispatchAction: PropTypes.func,
   filter: PropTypes.object,

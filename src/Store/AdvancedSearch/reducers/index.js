@@ -9,6 +9,7 @@ export const initialState = () => ({
     '0': new Condition({ key: '0', type: 'AND', filters: [] }),
   },
   geographies: [],
+  propertyFilter: undefined, // initialize in Config/index.js
   housingTypes: [new Filter({ modelConstant: 'ALL_TYPES' })],
   results: undefined,
 })
@@ -109,6 +110,12 @@ export const advancedSearchReducer = (state = Object.freeze(initialState()), act
           ...state.geographies.slice(0, action.geographyIndex),
           ...state.geographies.slice(action.geographyIndex + 1),
         ],
+      }
+    }
+    case c.REPLACE_PROPERTY_FILTER: {
+      return {
+        ...state,
+        propertyFilter: action.propertyFilter,
       }
     }
     case c.ADD_HOUSING_TYPE: {
