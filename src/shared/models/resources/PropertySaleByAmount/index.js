@@ -3,7 +3,7 @@ const PropertySaleByAmount = databaseObject => ({
   urlPath: 'acrisreallegals',
   label: 'Sale by $ Amount',
   sentenceNoun: 'sales',
-  ownResourceFilters: [],
+  ownResourceFilters: {},
 })
 
 export default PropertySaleByAmount

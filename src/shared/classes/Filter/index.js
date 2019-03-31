@@ -6,11 +6,19 @@ import { getApiMap } from 'shared/utilities/classUtils'
 import { cloneInstance } from 'shared/utilities/classUtils'
 
 export default class Filter {
-  constructor({ modelConstant = null, resourceModel = null, schema = null, paramSets = {}, errors = [] } = {}) {
+  constructor({
+    modelConstant = null,
+    resourceModel = null,
+    primaryResourceModel = null,
+    schema = null,
+    paramSets = {},
+    errors = [],
+  } = {}) {
     this._paramSets = paramSets
     this.id = modelConstant || resourceModel.resourceConstant
     this.modelConstant = modelConstant
     this._resourceModel = resourceModel
+    this.primaryResourceModel = primaryResourceModel
     this._schema = schema
     this._errors = errors
 
@@ -106,6 +114,14 @@ export default class Filter {
 
   set schema(schema) {
     this.setSchema(schema)
+  }
+
+  get primaryResourceModel() {
+    return this._primaryResourceModel
+  }
+
+  set primaryResourceModel(primaryResourceModel) {
+    this._primaryResourceModel = primaryResourceModel
   }
 
   get params() {

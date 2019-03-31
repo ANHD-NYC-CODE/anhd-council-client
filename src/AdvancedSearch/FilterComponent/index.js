@@ -44,11 +44,11 @@ export class FilterComponent extends React.Component {
                   paramSetIndex: paramSetIndex,
                 })
               )}
-              {this.props.config.resourceModels[
+              {/* {this.props.config.resourceModels[
                 this.props.filter.resourceModel.resourceConstant
               ].ownResourceFilters.map((ownResourceFilter, index) => {
                 return <div key={`own-resource-filter-${this.props.filter.resourceConstant}-${index}`}>hi</div>
-              })}
+              })} */}
             </Form.Group>
             <Col xs={3} lg={2} className="d-flex align-items-center">
               <RemoveFilterButton showPopups={this.props.showPopups} removeFilter={this.removeFilter} />
