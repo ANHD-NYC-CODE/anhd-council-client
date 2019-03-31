@@ -17,7 +17,7 @@ const HousingTypeSelection = props => {
         <Col xs={12}>
           <HousingTypeSelect
             onChange={e => props.changeHousingType(props.housingTypeIndex, e)}
-            value={props.housingType.id}
+            value={props.housingType.id || props.housingType.resourceModel.id}
           />
         </Col>
       </Form.Group>
