@@ -28,7 +28,6 @@ export const RENTSTABILIZED = databaseObject => ({
     rsunitslost: new ParamSet({
       component: MultiTypeFieldGroup,
       label: 'Units Lost',
-      allowActions: true,
       createType: 'ALL_RANGE_ONE',
       defaults: [
         new ParamMap({
@@ -98,7 +97,6 @@ export const RENTREGULATED = databaseObject => ({
     coresubsidyrecord__programname: new ParamSet({
       component: MultiTypeFieldGroup,
       label: 'Program',
-      allowActions: true,
       createType: 'ONE',
       defaults: [
         new ParamMap({
@@ -118,7 +116,6 @@ export const RENTREGULATED = databaseObject => ({
     coresubsidyrecord__enddate: new ParamSet({
       component: MultiTypeFieldGroup,
       label: 'Expiration',
-      allowActions: true,
       createType: 'ONE',
       defaults: [
         new ParamMap({
@@ -177,7 +174,6 @@ export const SMALLHOMES = databaseObject => ({
     unitsres: new ParamSet({
       component: MultiTypeFieldGroup,
       label: 'Residential Units',
-      allowActions: true,
       createType: 'ONE',
       defaults: [
         new ParamMap({

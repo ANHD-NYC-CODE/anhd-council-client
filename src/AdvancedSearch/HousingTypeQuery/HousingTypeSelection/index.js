@@ -25,7 +25,7 @@ const HousingTypeSelection = props => {
       {Object.keys(props.housingType.paramSets).map((paramsSetKey, paramSetIndex) => {
         const paramSet = props.housingType.paramSets[paramsSetKey]
 
-        return !!paramSet.allowActions && !paramSet.paramMaps.length ? (
+        return !paramSet.paramMaps.length ? (
           <Form.Row key={`housingtype-${paramSetIndex}`}>
             <Form.Group as={Col} className="housingtype-paramset--group">
               <Button

@@ -35,13 +35,9 @@ export default class Filter {
     if (modelConstant === 'NEW_FILTER' || modelConstant === 'ALL_TYPES') return
 
     // Post initialize actions
-    if (!Object.keys(paramSets).length) {
-      Object.keys(this.paramSets).forEach(key => {
-        const paramSet = this.paramSets[key]
-        if (!paramSet.allowActions) {
-          paramSet.create()
-        }
-      })
+    // Create only paramSets with the "initial" tag.
+    if (this.paramSets['initial']) {
+      this.paramSets['initial'].create()
     }
   }
 
