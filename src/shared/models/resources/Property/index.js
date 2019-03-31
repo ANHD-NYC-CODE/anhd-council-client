@@ -76,7 +76,6 @@ const Property = databaseObject => {
           return results.filter(result => paramMaps.every(paramMap => paramMap.evaluate(result)))
         },
       },
-
       {
         id: 'HOUSING_TYPE_PUBLIC_HOUSING',
         category: 'HOUSING_TYPE',
@@ -88,7 +87,21 @@ const Property = databaseObject => {
     ],
 
     ownResourceFilters: [],
-    relatedResources: Object.keys(resources).filter(key => key !== 'PROPERTY' && key !== 'ACRIS_REAL_MASTER'),
+    relatedResourceMappings: {
+      ACRIS_REAL_MASTER: 'acrisreallegals__documentid',
+      PROPERTY_SALE_BY_AMOUNT: 'acrisreallegals__documentid',
+      PROPERTY_SALE_BY_COUNT: 'acrisreallegals__documentid',
+      DOB_COMPLAINT: 'dobcomplaints',
+      DOB_FILED_PERMIT: 'doblegacyfiledpermits',
+      DOB_ISSUED_PERMIT: 'dobissuedpermits',
+      DOB_VIOLATION: 'dobviolations',
+      ECB_VIOLATION: 'ecbviolations',
+      EVICTION: 'evictions',
+      HOUSING_LITIGATION: 'housinglitigations',
+      HPD_COMPLAINT: 'hpdcomplaints',
+      HPD_VIOLATION: 'hpdviolations',
+      LISPENDEN: 'lispendens',
+    },
   }
 }
 

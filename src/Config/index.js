@@ -108,7 +108,10 @@ class Config extends React.Component {
           councilDistricts: this.props.councilDistricts,
           selectGeographyData: this.selectGeographyData,
           infoModals: infoModals,
-          advancedSearchFilters: createAdvancedSearchFilters({ resourceModels: this.props.resourceModels }),
+          advancedSearchFilters: createAdvancedSearchFilters({
+            resourceModels: this.props.resourceModels,
+            primaryResource: this.props.resourceModels['PROPERTY'],
+          }),
         }}
       >
         {this.props.loading ||

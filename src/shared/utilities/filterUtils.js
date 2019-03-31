@@ -1,5 +1,5 @@
 import moment from 'moment'
-import { LanguageModule } from 'shared/classes/LanguageModule'
+
 import { ParameterMapSet } from 'shared/classes/ParameterMapSet'
 import { ParameterMapping } from 'shared/classes/ParameterMapping'
 import MultiTypeFieldGroup from 'AdvancedSearch/FilterComponent/Group/MultiTypeFieldGroup'
@@ -44,11 +44,13 @@ export const constantToName = ({ constant = '', plural = true, capitalizeDepartm
   }
 }
 
-export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
+export const createAdvancedSearchFilters = ({ resourceModels, primaryResource } = {}) => {
+  if (!resourceModels || !primaryResource) return
   return [
     {
       resourceModel: resourceModels['HPD_VIOLATION'],
       schema: constructCountSchema({
+        primaryResource,
         resourceModel: resourceModels['HPD_VIOLATION'],
         constant: 'HPD_VIOLATION',
         amountFieldQuery: 'count',
@@ -57,6 +59,7 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
     {
       resourceModel: resourceModels['DOB_VIOLATION'],
       schema: constructCountSchema({
+        primaryResource,
         resourceModel: resourceModels['DOB_VIOLATION'],
         constant: 'DOB_VIOLATION',
         amountFieldQuery: 'count',
@@ -66,6 +69,7 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
     {
       resourceModel: resourceModels['ECB_VIOLATION'],
       schema: constructCountSchema({
+        primaryResource,
         constant: 'ECB_VIOLATION',
         resourceModel: resourceModels['ECB_VIOLATION'],
         amountFieldQuery: 'count',
@@ -75,6 +79,7 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
     {
       resourceModel: resourceModels['HPD_COMPLAINT'],
       schema: constructCountSchema({
+        primaryResource,
         resourceModel: resourceModels['HPD_COMPLAINT'],
         constant: 'HPD_COMPLAINT',
         amountFieldQuery: 'count',
@@ -84,6 +89,7 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
     {
       resourceModel: resourceModels['DOB_COMPLAINT'],
       schema: constructCountSchema({
+        primaryResource,
         resourceModel: resourceModels['DOB_COMPLAINT'],
         constant: 'DOB_COMPLAINT',
         amountFieldQuery: 'count',
@@ -93,9 +99,9 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
     {
       resourceModel: resourceModels['DOB_FILED_PERMIT'],
       schema: constructCountSchema({
+        primaryResource,
         resourceModel: resourceModels['DOB_FILED_PERMIT'],
         constant: 'DOB_FILED_PERMIT',
-        apiField: 'doblegacyfiledpermits',
         amountFieldQuery: 'count',
         capitalizeDepartment: true,
         defaultAmount: 5,
@@ -104,6 +110,7 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
     {
       resourceModel: resourceModels['DOB_ISSUED_PERMIT'],
       schema: constructCountSchema({
+        primaryResource,
         resourceModel: resourceModels['DOB_ISSUED_PERMIT'],
         constant: 'DOB_ISSUED_PERMIT',
         amountFieldQuery: 'count',
@@ -114,6 +121,7 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
     {
       resourceModel: resourceModels['EVICTION'],
       schema: constructCountSchema({
+        primaryResource,
         resourceModel: resourceModels['EVICTION'],
         constant: 'EVICTION',
         amountFieldQuery: 'count',
@@ -124,6 +132,7 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
     {
       resourceModel: resourceModels['HOUSING_LITIGATION'],
       schema: constructCountSchema({
+        primaryResource,
         resourceModel: resourceModels['HOUSING_LITIGATION'],
         constant: 'HOUSING_LITIGATION',
         amountFieldQuery: 'count',
@@ -134,9 +143,9 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
     {
       resourceModel: resourceModels['LISPENDEN'],
       schema: constructCountSchema({
+        primaryResource,
         resourceModel: resourceModels['LISPENDEN'],
         constant: 'LISPENDEN',
-        apiField: 'lispendens',
         amountFieldQuery: 'count',
         defaultAmount: '1',
         capitalizeDepartment: false,
@@ -153,10 +162,10 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
     {
       resourceModel: resourceModels['PROPERTY_SALE_BY_AMOUNT'],
       schema: constructCountSchema({
+        primaryResource,
         resourceModel: resourceModels['PROPERTY_SALE_BY_AMOUNT'],
         constant: 'PROPERTY_SALE_BY_AMOUNT',
-        apiField: 'acrisreallegals',
-        amountFieldQuery: 'documentid__docamount',
+        amountFieldQuery: 'docamount',
         amountNoun: '',
         amountValuePrefix: '$',
         defaultAmount: '1000000',
@@ -165,10 +174,10 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
     {
       resourceModel: resourceModels['PROPERTY_SALE_BY_COUNT'],
       schema: constructCountSchema({
+        primaryResource,
         resourceModel: resourceModels['PROPERTY_SALE_BY_COUNT'],
         constant: 'PROPERTY_SALE_BY_COUNT',
-        apiField: 'acrisreallegals',
-        amountFieldQuery: 'documentid__count',
+        amountFieldQuery: 'count',
         defaultAmount: 2,
         amountNoun: 'times',
       }),
@@ -177,9 +186,9 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
 }
 
 export const constructCountSchema = ({
+  primaryResource,
   resourceModel,
   constant = '',
-  apiField = undefined,
   defaultDate = '',
   amountFieldQuery = '',
   defaultAmount = '',
@@ -208,7 +217,7 @@ export const constructCountSchema = ({
           role: 'PRIMARY',
           valuePrefix: amountValuePrefix,
           valueSuffix: amountValueSuffix,
-          field: `${apiField ? apiField : constantToQueryName(constant)}${
+          field: `${primaryResource.relatedResourceMappings[constant]}${
             amountFieldQuery ? '__' + amountFieldQuery : ''
           }`,
           comparison: 'gte',
@@ -237,7 +246,7 @@ export const constructCountSchema = ({
             'DATE',
             `${constantToQueryName(constant)}Range`
           ),
-          field: `${apiField ? apiField : constantToQueryName(constant)}__${getDatasetDateField(constant)}`,
+          field: `${primaryResource.relatedResourceMappings[constant]}__${getDatasetDateField(constant)}`,
           comparison: 'gte',
           value:
             defaultDate ||
@@ -265,7 +274,7 @@ export const constructCountSchema = ({
             'DATE',
             `${constantToQueryName(constant)}Range`
           ),
-          field: `${apiField ? apiField : constantToQueryName(constant)}__${getDatasetDateField(constant)}`,
+          field: `${primaryResource.relatedResourceMappings[constant]}__${getDatasetDateField(constant)}`,
           comparison: 'lte',
           value:
             defaultDate ||
@@ -380,11 +389,11 @@ export const getDatasetDateField = datasetConstant => {
     case 'ACRIS_REAL_MASTER':
       return 'docdate'
     case 'ACRIS_REAL_PARTY':
-      return 'documentid'
+      return 'docdate'
     case 'PROPERTY_SALE_BY_AMOUNT':
-      return 'documentid__docdate'
+      return 'docdate'
     case 'PROPERTY_SALE_BY_COUNT':
-      return 'documentid__docdate'
+      return 'docdate'
     case 'LISPENDEN':
       return 'fileddate'
     case 'DOB_ISSUED_PERMIT':

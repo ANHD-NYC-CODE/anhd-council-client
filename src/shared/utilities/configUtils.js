@@ -20,7 +20,9 @@ export const setupHousingTypeModels = datasets => {
       let databaseObject
       switch (constant) {
         case 'RENTSTABILIZED':
-          databaseObject = datasets.find(object => (object.model_name || {}).toUpperCase() === 'CORESUBSIDYRECORD')
+          databaseObject = datasets.find(
+            object => (object.model_name || {}).toUpperCase() === 'RENTSTABILIZATIONRECORD'
+          )
           break
         default:
           databaseObject = undefined
@@ -29,14 +31,6 @@ export const setupHousingTypeModels = datasets => {
       return new Resource({ model: ht[constant](databaseObject) })
     })
     .filter(ht => ht)
-}
-
-export const mockSetupResourceModels = () => {
-  let loadedResources = {}
-  Object.keys(resources).forEach(constant => {
-    loadedResources[constant] = new Resource({ model: resources[constant]() })
-  })
-  return loadedResources
 }
 
 export const setupResourceModels = datasets => {
