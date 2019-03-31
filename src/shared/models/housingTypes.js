@@ -6,7 +6,7 @@ import ParamMap from 'shared/classes/ParamMap'
 
 import MultiTypeFieldGroup from 'AdvancedSearch/FilterComponent/Group/MultiTypeFieldGroup'
 import GenericFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/GenericFieldSet'
-import ComparisonFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/ComparisonFieldSet'
+import PrimaryComparisonFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/PrimaryComparisonFieldSet'
 
 import DateField from 'AdvancedSearch/FilterComponent/Field/DateField'
 import IntegerField from 'AdvancedSearch/FilterComponent/Field/IntegerField'
@@ -31,7 +31,7 @@ export const RENTSTABILIZED = databaseObject => ({
       createType: 'ALL_RANGE_ONE',
       defaults: [
         new ParamMap({
-          component: ComparisonFieldSet,
+          component: PrimaryComparisonFieldSet,
           baseComponent: IntegerField,
           type: 'PERCENT',
           role: 'PRIMARY',
@@ -46,7 +46,7 @@ export const RENTSTABILIZED = databaseObject => ({
           value: '25',
         }),
         new ParamMap({
-          component: ComparisonFieldSet,
+          component: PrimaryComparisonFieldSet,
           baseComponent: DateField,
           type: 'YEAR',
           role: 'LIMITER',
@@ -65,7 +65,7 @@ export const RENTSTABILIZED = databaseObject => ({
           value: '2010',
         }),
         new ParamMap({
-          component: ComparisonFieldSet,
+          component: PrimaryComparisonFieldSet,
           baseComponent: DateField,
           type: 'YEAR',
           role: 'LIMITER',
@@ -119,7 +119,7 @@ export const RENTREGULATED = databaseObject => ({
       createType: 'ONE',
       defaults: [
         new ParamMap({
-          component: ComparisonFieldSet,
+          component: PrimaryComparisonFieldSet,
           baseComponent: DateField,
           type: 'DATE',
           role: '',
@@ -142,7 +142,7 @@ export const RENTREGULATED = databaseObject => ({
             .format('YYYY-MM-DD'),
         }),
         new ParamMap({
-          component: ComparisonFieldSet,
+          component: PrimaryComparisonFieldSet,
           baseComponent: DateField,
           type: 'DATE',
           role: '',
@@ -177,7 +177,7 @@ export const SMALLHOMES = databaseObject => ({
       createType: 'ONE',
       defaults: [
         new ParamMap({
-          component: ComparisonFieldSet,
+          component: PrimaryComparisonFieldSet,
           baseComponent: IntegerField,
           type: 'AMOUNT',
           role: '',
