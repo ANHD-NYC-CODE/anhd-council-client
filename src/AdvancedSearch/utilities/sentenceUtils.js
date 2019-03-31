@@ -15,22 +15,24 @@ export const constructAmountSentence = (dataset, comparison, value) => {
   return dataset.amountSentenceParser(dataset, comparison, value)
 }
 
-const parseParamMapComparison = paramMap => {
+const parseParamMapComparison = (paramMap, nounOverride = undefined) => {
   switch (paramMap.type) {
     case 'AMOUNT':
       return `have ${longAmountComparisonString(paramMap.comparison)} ${paramMap.valuePrefix}${paramMap.value}${
         paramMap.valueSuffix
-      }${grammaticalNoun(paramMap.sentenceNoun, paramMap.value)}`
+      }${grammaticalNoun(nounOverride || paramMap.paramNoun, paramMap.value)}`
     case 'PERCENT':
       return `have ${longAmountComparisonString(paramMap.comparison)} ${paramMap.valuePrefix}${paramMap.value}${
         paramMap.languageModule.valueSuffix
-      }${grammaticalNoun(paramMap.sentenceNoun, paramMap.value)}`
+      }${grammaticalNoun(nounOverride || paramMap.paramNoun, paramMap.value)}`
     case 'DATE':
       return `${constructDateComparisonString(paramMap.comparison)} ${moment(paramMap.value).format('MM/DD/YYYY')}`
     case 'YEAR':
       return `${constructDateComparisonString(paramMap.comparison)} ${paramMap.value}`
     case 'TEXT':
-      return [paramMap.valuePrefix, paramMap.value, paramMap.valueSuffix, paramMap.paramNoun].filter(p => p).join(' ')
+      return [paramMap.valuePrefix, paramMap.value, paramMap.valueSuffix, nounOverride || paramMap.paramNoun]
+        .filter(p => p)
+        .join(' ')
     case 'MULTI-TEXT':
       return `${grammaticalList(paramMap.value.split(','), 'or')}`
   }
@@ -70,7 +72,7 @@ export const convertFilterToSentence = filter => {
       .map(key => {
         const paramSet = filter.paramSets[key]
         // Get Primary
-        const primaryParamMaps = paramSet.paramMaps.filter(pm => pm.role === 'PRIMARY')
+        const primaryParamMap = paramSet.paramMaps.find(pm => pm.role === 'PRIMARY')
 
         // Get Limiter
         const limiterParamMaps = paramSet.paramMaps.filter(pm => pm.role === 'LIMITER')
@@ -84,7 +86,7 @@ export const convertFilterToSentence = filter => {
         const modifyingSegment = parsedModifyingParamMaps.length ? `(${[...parsedModifyingParamMaps]})` : undefined
 
         return [
-          `${parseRoleGroup(primaryParamMaps)} ${filter.resourceModel.sentenceNoun}`,
+          `${parseParamMapComparison(primaryParamMap, filter.resourceModel.sentenceNoun)}`,
           modifyingSegment,
           parseRoleGroup(limiterParamMaps),
         ]
