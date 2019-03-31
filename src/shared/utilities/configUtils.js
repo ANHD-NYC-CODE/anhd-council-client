@@ -31,6 +31,14 @@ export const setupHousingTypeModels = datasets => {
     .filter(ht => ht)
 }
 
+export const mockSetupResourceModels = () => {
+  let loadedResources = {}
+  Object.keys(resources).forEach(constant => {
+    loadedResources[constant] = new Resource({ model: resources[constant]() })
+  })
+  return loadedResources
+}
+
 export const setupResourceModels = datasets => {
   let loadedResources = {}
   Object.keys(resources).forEach(constant => {

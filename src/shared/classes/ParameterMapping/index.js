@@ -21,11 +21,15 @@ export class ParameterMapping {
     field = '',
     comparison = '',
     value = '',
-    type = '',
     rangeKey = undefined,
     rangePosition = undefined,
     resourceConstant = '',
     resourceModel = undefined,
+    type = '',
+    role = 'PRIMARY',
+    paramNoun = '',
+    valuePrefix = '',
+    valueSuffix = '',
   } = {}) {
     this._component = component
     this._baseComponent = baseComponent
@@ -35,13 +39,16 @@ export class ParameterMapping {
     this._field = field
     this._comparison = comparison
     this._value = value
-    this._type = type
     this._defaultOptions = defaultOptions
     this._rangeKey = rangeKey
     this._rangePosition = rangePosition
     this._errors = []
     this._resourceConstant = resourceConstant
     this._resourceModel = resourceModel
+    this._type = type
+    this._role = role
+    this._paramNoun = paramNoun
+    ;(this._valuePrefix = valuePrefix), (this._valueSuffix = valueSuffix)
   }
 
   get field() {
@@ -126,6 +133,38 @@ export class ParameterMapping {
 
   get rangePosition() {
     return this._rangePosition
+  }
+
+  get paramNoun() {
+    return this._paramNoun
+  }
+
+  set paramNoun(paramNoun) {
+    this._paramNoun = paramNoun
+  }
+
+  get role() {
+    return this._role
+  }
+
+  set role(role) {
+    this._role = role
+  }
+
+  get valuePrefix() {
+    return this._valuePrefix
+  }
+
+  set valuePrefix(valuePrefix) {
+    this._valuePrefix = valuePrefix
+  }
+
+  get valueSuffix() {
+    return this._valueSuffix
+  }
+
+  set valueSuffix(valueSuffix) {
+    this._valueSuffix = valueSuffix
   }
 
   get options() {

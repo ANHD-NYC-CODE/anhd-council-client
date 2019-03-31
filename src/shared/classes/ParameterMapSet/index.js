@@ -96,6 +96,7 @@ export class ParameterMapSet {
     return created
   }
 
+  // Adds both parameters in a range set
   createOppositeRangeMap({ dispatchAction = undefined, rangePosition = 1 } = {}) {
     let created = this.addParameterMap(
       this.defaults.find(mapping => mapping.rangePosition && mapping.rangePosition !== rangePosition)

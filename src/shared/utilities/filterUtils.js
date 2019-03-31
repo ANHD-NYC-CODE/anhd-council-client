@@ -48,11 +48,10 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
   return [
     {
       resourceModel: resourceModels['HPD_VIOLATION'],
-      schema: constructDefaultSchema({
+      schema: constructCountSchema({
         resourceModel: resourceModels['HPD_VIOLATION'],
         constant: 'HPD_VIOLATION',
         amountFieldQuery: 'count',
-        capitalizeDepartment: true,
       }),
       languageModule: new LanguageModule({
         noun: constantToName({ constant: 'HPD_VIOLATION', capitalizeDepartment: true, plural: true }),
@@ -60,7 +59,7 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
     },
     {
       resourceModel: resourceModels['DOB_VIOLATION'],
-      schema: constructDefaultSchema({
+      schema: constructCountSchema({
         resourceModel: resourceModels['DOB_VIOLATION'],
         constant: 'DOB_VIOLATION',
         amountFieldQuery: 'count',
@@ -72,7 +71,7 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
     },
     {
       resourceModel: resourceModels['ECB_VIOLATION'],
-      schema: constructDefaultSchema({
+      schema: constructCountSchema({
         constant: 'ECB_VIOLATION',
         resourceModel: resourceModels['ECB_VIOLATION'],
         amountFieldQuery: 'count',
@@ -84,7 +83,7 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
     },
     {
       resourceModel: resourceModels['HPD_COMPLAINT'],
-      schema: constructDefaultSchema({
+      schema: constructCountSchema({
         resourceModel: resourceModels['HPD_COMPLAINT'],
         constant: 'HPD_COMPLAINT',
         amountFieldQuery: 'count',
@@ -96,7 +95,7 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
     },
     {
       resourceModel: resourceModels['DOB_COMPLAINT'],
-      schema: constructDefaultSchema({
+      schema: constructCountSchema({
         resourceModel: resourceModels['DOB_COMPLAINT'],
         constant: 'DOB_COMPLAINT',
         amountFieldQuery: 'count',
@@ -108,7 +107,7 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
     },
     {
       resourceModel: resourceModels['DOB_FILED_PERMIT'],
-      schema: constructDefaultSchema({
+      schema: constructCountSchema({
         resourceModel: resourceModels['DOB_FILED_PERMIT'],
         constant: 'DOB_FILED_PERMIT',
         apiField: 'doblegacyfiledpermits',
@@ -122,7 +121,7 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
     },
     {
       resourceModel: resourceModels['DOB_ISSUED_PERMIT'],
-      schema: constructDefaultSchema({
+      schema: constructCountSchema({
         resourceModel: resourceModels['DOB_ISSUED_PERMIT'],
         constant: 'DOB_ISSUED_PERMIT',
         amountFieldQuery: 'count',
@@ -135,7 +134,7 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
     },
     {
       resourceModel: resourceModels['EVICTION'],
-      schema: constructDefaultSchema({
+      schema: constructCountSchema({
         resourceModel: resourceModels['EVICTION'],
         constant: 'EVICTION',
         amountFieldQuery: 'count',
@@ -148,7 +147,7 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
     },
     {
       resourceModel: resourceModels['HOUSING_LITIGATION'],
-      schema: constructDefaultSchema({
+      schema: constructCountSchema({
         resourceModel: resourceModels['HOUSING_LITIGATION'],
         constant: 'HOUSING_LITIGATION',
         amountFieldQuery: 'count',
@@ -161,7 +160,7 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
     },
     {
       resourceModel: resourceModels['LISPENDEN'],
-      schema: constructDefaultSchema({
+      schema: constructCountSchema({
         resourceModel: resourceModels['LISPENDEN'],
         constant: 'LISPENDEN',
         apiField: 'lispendens',
@@ -171,6 +170,7 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
         hiddenParamMap: new ParameterMapping({
           component: GenericFieldSet,
           baseComponent: HiddenField,
+          resourceModel: resourceModels['PROPERTY_SALE_BY_AMOUNT'],
           field: 'lispendens__type',
           comparison: '',
           value: 'foreclosure',
@@ -182,15 +182,24 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
     },
     {
       resourceModel: resourceModels['PROPERTY_SALE_BY_AMOUNT'],
-      schema: constructDefaultSchema({
+      schema: constructCountSchema({
         resourceModel: resourceModels['PROPERTY_SALE_BY_AMOUNT'],
         constant: 'PROPERTY_SALE_BY_AMOUNT',
         apiField: 'acrisreallegals',
-        amountFieldQuery: 'documentid__docamount',
+        amountFieldQuery: 'documentid__count',
         amountNoun: '',
-        amountValuePrefix: '$',
-        defaultAmount: '1000000',
-        amountPropertyAdjective: 'sold for',
+        // amountValuePrefix: '$',
+        defaultAmount: '1',
+        extraParamMap: new ParameterMapping({
+          component: ComparisonFieldSet,
+          baseComponent: IntegerField,
+          resourceModel: resourceModels['PROPERTY_SALE_BY_AMOUNT'],
+          type: 'AMOUNT',
+          valuePrefix: '$',
+          field: 'documentid__docamount',
+          comparison: 'gte',
+          value: '1000000',
+        }),
       }),
       languageModule: new LanguageModule({
         noun: constantToName({ constant: 'PROPERTY_SALE_BY_AMOUNT', capitalizeDepartment: false, plural: false }),
@@ -198,15 +207,13 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
     },
     {
       resourceModel: resourceModels['PROPERTY_SALE_BY_COUNT'],
-      schema: constructDefaultSchema({
+      schema: constructCountSchema({
         resourceModel: resourceModels['PROPERTY_SALE_BY_COUNT'],
         constant: 'PROPERTY_SALE_BY_COUNT',
         apiField: 'acrisreallegals',
         amountFieldQuery: 'documentid__count',
-        amountPropertyAdjective: 'were sold',
         defaultAmount: 2,
         amountNoun: 'times',
-        amountShortNoun: 'times',
       }),
       languageModule: new LanguageModule({
         noun: constantToName({ constant: 'PROPERTY_SALE_BY_COUNT', capitalizeDepartment: false, plural: false }),
@@ -215,7 +222,7 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
   ]
 }
 
-export const constructDefaultSchema = ({
+export const constructCountSchema = ({
   resourceModel,
   constant = '',
   apiField = undefined,
@@ -223,15 +230,11 @@ export const constructDefaultSchema = ({
   amountFieldQuery = '',
   defaultAmount = '',
   capitalizeDepartment = true,
-  noun = undefined,
-  amountNoun = undefined,
-  amountShortNoun = undefined,
   amountValuePrefix = undefined,
   amountValueSuffix = undefined,
-  amountPropertyAdjective = undefined,
-  datePropertyAdjective = undefined,
   dateMax = undefined,
   hiddenParamMap = undefined,
+  extraParamMap = undefined,
 } = {}) => {
   return {
     [constantToQueryName(constant)]: new ParameterMapSet({
@@ -248,14 +251,9 @@ export const constructDefaultSchema = ({
           component: ComparisonFieldSet,
           baseComponent: IntegerField,
           type: 'AMOUNT',
-          languageModule: new LanguageModule({
-            noun:
-              amountNoun !== undefined ? amountNoun : constantToName({ constant, plural: false, capitalizeDepartment }),
-            shortNoun: amountShortNoun,
-            propertyAdjective: amountPropertyAdjective || 'have',
-            valuePrefix: amountValuePrefix,
-            valueSuffix: amountValueSuffix,
-          }),
+          role: 'PRIMARY',
+          valuePrefix: amountValuePrefix,
+          valueSuffix: amountValueSuffix,
           field: `${apiField ? apiField : constantToQueryName(constant)}${
             amountFieldQuery ? '__' + amountFieldQuery : ''
           }`,
@@ -267,13 +265,10 @@ export const constructDefaultSchema = ({
         }),
         new ParameterMapping({
           resourceModel,
+          type: 'DATE',
+          role: 'LIMITER',
           component: ComparisonFieldSet,
           baseComponent: DateField,
-          type: 'DATE',
-          languageModule: new LanguageModule({
-            noun: noun !== undefined ? noun : constantToName({ constant, plural: false, capitalizeDepartment }),
-            propertyAdjective: datePropertyAdjective,
-          }),
           props: {
             type: 'date',
           },
@@ -298,13 +293,10 @@ export const constructDefaultSchema = ({
         }),
         new ParameterMapping({
           resourceModel,
+          type: 'DATE',
+          role: 'LIMITER',
           component: ComparisonFieldSet,
           baseComponent: DateField,
-          type: 'DATE',
-          languageModule: new LanguageModule({
-            noun: noun !== undefined ? noun : constantToName({ constant, plural: false, capitalizeDepartment }),
-            propertyAdjective: datePropertyAdjective,
-          }),
           props: {
             type: 'date',
           },
@@ -327,6 +319,7 @@ export const constructDefaultSchema = ({
               .add(1, 'Y')
               .format('YYYY-MM-DD'),
         }),
+        extraParamMap,
         hiddenParamMap,
       ].filter(m => m),
     }),

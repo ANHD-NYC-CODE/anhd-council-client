@@ -104,10 +104,6 @@ export class Filter {
     return this._queryName
   }
 
-  get constant() {
-    return this._constant
-  }
-
   get schema() {
     return this._schema
   }
