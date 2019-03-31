@@ -16,6 +16,8 @@ export const constructAmountSentence = (dataset, comparison, value) => {
 }
 
 const parseParamMapComparison = (paramMap, nounOverride = undefined) => {
+  if (!paramMap) return
+
   switch (paramMap.type) {
     case 'AMOUNT':
       return `have ${longAmountComparisonString(paramMap.comparison)} ${paramMap.valuePrefix}${paramMap.value}${
@@ -26,9 +28,11 @@ const parseParamMapComparison = (paramMap, nounOverride = undefined) => {
         paramMap.languageModule.valueSuffix
       }${grammaticalNoun(nounOverride || paramMap.paramNoun, paramMap.value)}`
     case 'DATE':
-      return `${constructDateComparisonString(paramMap.comparison)} ${moment(paramMap.value).format('MM/DD/YYYY')}`
+      return `${paramMap.valuePrefix} ${constructDateComparisonString(paramMap.comparison)} ${moment(
+        paramMap.value
+      ).format('MM/DD/YYYY')}`.trim()
     case 'YEAR':
-      return `${constructDateComparisonString(paramMap.comparison)} ${paramMap.value}`
+      return `${paramMap.valuePrefix} ${constructDateComparisonString(paramMap.comparison)} ${paramMap.value}`.trim()
     case 'TEXT':
       return [paramMap.valuePrefix, paramMap.value, paramMap.valueSuffix, nounOverride || paramMap.paramNoun]
         .filter(p => p)
@@ -83,15 +87,15 @@ export const convertFilterToSentence = filter => {
         // Parse them
         const parsedModifyingParamMaps = modifyingParamMaps.map(pm => parseParamMapComparison(pm))
 
+        const primarySegment = primaryParamMap
+          ? `${parseParamMapComparison(primaryParamMap, filter.resourceModel.sentenceNoun)}`
+          : undefined
+
         const modifyingSegment = parsedModifyingParamMaps.length ? `(${[...parsedModifyingParamMaps]})` : undefined
 
-        return [
-          `${parseParamMapComparison(primaryParamMap, filter.resourceModel.sentenceNoun)}`,
-          modifyingSegment,
-          parseRoleGroup(limiterParamMaps),
-        ]
-          .filter(p => p)
-          .join(' ')
+        const limiterSegment = limiterParamMaps.length ? `${parseRoleGroup(limiterParamMaps)}` : undefined
+
+        return [primarySegment, modifyingSegment, limiterSegment].filter(p => p).join(' ')
       })
       .filter(p => p)
       .join(' and ')}`

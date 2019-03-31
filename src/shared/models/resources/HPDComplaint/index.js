@@ -3,6 +3,7 @@ const HPDComplaint = databaseObject => ({
   urlPath: 'hpdcomplaints',
   label: 'HPD Complaints',
   sentenceNoun: 'HPD complaints',
+  ownResourceFilters: [],
 })
 
 export default HPDComplaint

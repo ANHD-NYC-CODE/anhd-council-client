@@ -3,6 +3,7 @@ const HousingLitigation = databaseObject => ({
   urlPath: 'housinglitigations',
   label: 'Repair Litigations',
   sentenceNoun: 'repair litigations',
+  ownResourceFilters: [],
 })
 
 export default HousingLitigation

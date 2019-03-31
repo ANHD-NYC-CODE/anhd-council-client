@@ -22,17 +22,18 @@ export class FilterComponent extends React.Component {
   }
 
   render() {
+    console.log(Object.keys(this.props.filter.paramSets))
     return (
-      <div className="filter-component  d-flex">
-        <div className="form-row__connection-container filter-connection d-flex flex-column">
-          <div className="form-row__connection" />
-          <div className="form-row__connection" />
-        </div>
+      <div className="filter-component">
+        <div className="filter-component__primary-row d-flex">
+          <div className="form-row__connection-container filter-connection d-flex flex-column">
+            <div className="form-row__connection" />
+            <div className="form-row__connection" />
+          </div>
 
-        <Form.Row className="filter align-content-center">
-          <Form.Group as={Col} xs={9} lg={10}>
-            {this.props.filter &&
-              Object.keys(this.props.filter.paramSets).map((paramsSetKey, paramSetIndex) =>
+          <Form.Row className="filter align-content-center">
+            <Form.Group as={Col} xs={9} lg={10}>
+              {Object.keys(this.props.filter.paramSets).map((paramsSetKey, paramSetIndex) =>
                 this.props.filter.paramSets[paramsSetKey].component({
                   key: `filter-paramset-${this.props.filter.resourceConstant}-${paramSetIndex}`,
                   dispatchAction: this.props.dispatchAction,
@@ -43,18 +44,25 @@ export class FilterComponent extends React.Component {
                   paramSetIndex: paramSetIndex,
                 })
               )}
-          </Form.Group>
-          <Col xs={3} lg={2} className="d-flex align-items-center">
-            <RemoveFilterButton showPopups={this.props.showPopups} removeFilter={this.removeFilter} />
-            {this.props.allowNewCondition && (
-              <AddConditionButton
-                addCondition={this.props.addCondition}
-                filterIndex={this.props.filterIndex}
-                showPopups={this.props.showPopups}
-              />
-            )}
-          </Col>
-        </Form.Row>
+              {this.props.config.resourceModels[
+                this.props.filter.resourceModel.resourceConstant
+              ].ownResourceFilters.map((ownResourceFilter, index) => {
+                return <div key={`own-resource-filter-${this.props.filter.resourceConstant}-${index}`}>hi</div>
+              })}
+            </Form.Group>
+            <Col xs={3} lg={2} className="d-flex align-items-center">
+              <RemoveFilterButton showPopups={this.props.showPopups} removeFilter={this.removeFilter} />
+              {this.props.allowNewCondition && (
+                <AddConditionButton
+                  addCondition={this.props.addCondition}
+                  filterIndex={this.props.filterIndex}
+                  showPopups={this.props.showPopups}
+                />
+              )}
+            </Col>
+          </Form.Row>
+        </div>
+        <Form.Row />
         <FormError show={!!this.props.filter.errors.length} message={(this.props.filter.errors[0] || {}).message} />
       </div>
     )

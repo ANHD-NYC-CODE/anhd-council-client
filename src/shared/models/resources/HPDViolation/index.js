@@ -3,6 +3,7 @@ const HPDViolation = databaseObject => ({
   urlPath: 'hpdviolations',
   label: 'HPD Violations',
   sentenceNoun: 'HPD violations',
+  ownResourceFilters: [],
 })
 
 export default HPDViolation

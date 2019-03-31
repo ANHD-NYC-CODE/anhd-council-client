@@ -3,6 +3,7 @@ const DOBComplaint = databaseObject => ({
   urlPath: 'dobcomplaints',
   label: 'DOB Complaints',
   sentenceNoun: 'DOB complaints',
+  ownResourceFilters: [],
 })
 
 export default DOBComplaint

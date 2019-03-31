@@ -3,6 +3,7 @@ const PropertySaleByCount = databaseObject => ({
   urlPath: 'acrisreallegals',
   label: 'Property Sales',
   sentenceNoun: 'sales',
+  ownResourceFilters: [],
 })
 
 export default PropertySaleByCount
