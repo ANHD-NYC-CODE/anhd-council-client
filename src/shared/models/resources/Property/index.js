@@ -87,7 +87,7 @@ const Property = databaseObject => {
     ],
 
     ownResourceFilters: [],
-    relatedResources: Object.keys(resources).filter(key => key !== 'PROPERTY'),
+    relatedResources: Object.keys(resources).filter(key => key !== 'PROPERTY' && key !== 'ACRIS_REAL_MASTER'),
   }
 }
 

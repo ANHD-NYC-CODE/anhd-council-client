@@ -119,14 +119,14 @@ class AdvancedSearchForm extends React.PureComponent {
   addHousingType(e) {
     e = new StandardizedInput(e)
     const housingType = this.props.config.housingTypeModels.find(housingType => housingType.id === e.value)
-    const newHousingType = new Filter({ model: housingType })
+    const newHousingType = new Filter({ resourceModel: housingType, schema: housingType.schema })
     this.props.dispatch(addHousingType(newHousingType))
   }
 
   changeHousingType(housingTypeIndex, e) {
     e = new StandardizedInput(e)
     const housingType = this.props.config.housingTypeModels.find(housingType => housingType.id === e.value)
-    const newHousingType = new Filter({ model: housingType })
+    const newHousingType = new Filter({ resourceModel: housingType, schema: housingType.schema })
     this.props.dispatch(updateHousingType(housingTypeIndex, newHousingType))
   }
 

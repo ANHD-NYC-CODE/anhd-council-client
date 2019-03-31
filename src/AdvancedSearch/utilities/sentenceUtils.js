@@ -18,14 +18,14 @@ const parseParamMapComparison = paramMap => {
       return `${longAmountComparisonString(paramMap.comparison)} ${paramMap.languageModule.valuePrefix}${
         paramMap.value
       }${paramMap.languageModule.valueSuffix}${paramMap.languageModule.grammaticalNoun(
-        paramMap.languageModule.noun,
+        paramMap.resourceModel.label,
         paramMap.value
       )}`
     case 'PERCENT':
       return `${longAmountComparisonString(paramMap.comparison)} ${paramMap.languageModule.valuePrefix}${
         paramMap.value
       }${paramMap.languageModule.valueSuffix}${paramMap.languageModule.grammaticalNoun(
-        paramMap.languageModule.noun,
+        paramMap.resourceModel.label,
         paramMap.value
       )}`
     case 'DATE':

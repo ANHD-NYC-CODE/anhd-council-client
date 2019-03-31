@@ -3,23 +3,18 @@ import PropTypes from 'prop-types'
 import { Form } from 'react-bootstrap'
 import ConfigContext from 'Config/ConfigContext'
 import FormError from 'shared/components/FormError'
-
-const datasetOptions = resourceModels => {
+const datasetOptions = advancedSearchFilters => {
   return [
     <option disabled key={'new-filter-option-disabled'} value={-1}>
       New Filter
     </option>,
-    Object.values(resourceModels)
-      .find(model => model.resourceConstant === 'PROPERTY')
-      .relatedResources.map((resourceConstant, index) => {
-        const resource = Object.values(resourceModels).find(model => model.resourceConstant === resourceConstant)
-        if (resource) {
-          return (
-            <option key={`new-filter-option-${index}`} value={resource.resourceConstant}>
-              {resource.languageModule ? resource.languageModule.noun : resource.resourceConstant}
-            </option>
-          )
-        }
+    advancedSearchFilters
+      .map((filter, index) => {
+        return (
+          <option key={`new-filter-option-${index}`} value={filter.resourceModel.resourceConstant}>
+            {filter.resourceModel.label}
+          </option>
+        )
       })
       .filter(o => o),
   ]
@@ -38,7 +33,7 @@ const NewFilterSelect = props => {
             onChange={e => props.onChange(props.filterIndex, e)}
             value={props.value || -1}
           >
-            {datasetOptions(config.resourceModels)}
+            {datasetOptions(config.advancedSearchFilters)}
           </Form.Control>
           <FormError show={!!props.filter.errors.length} message={(props.filter.errors[0] || {}).message} />
         </div>

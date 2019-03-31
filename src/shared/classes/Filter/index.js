@@ -6,24 +6,28 @@ import { getApiMap } from 'shared/utilities/classUtils'
 import { cloneInstance } from 'shared/utilities/classUtils'
 
 export class Filter {
-  constructor({ modelConstant = null, model = null, paramSets = {}, errors = [] } = {}) {
+  constructor({ modelConstant = null, resourceModel = null, schema = null, paramSets = {}, errors = [] } = {}) {
     this._paramSets = paramSets
-    this.id = modelConstant || model.resourceConstant
+    this.id = modelConstant || resourceModel.resourceConstant
     this.modelConstant = modelConstant
-    this._model = model
+    this._resourceModel = resourceModel
+    this._schema = schema
     this._errors = errors
 
-    if (!this.model && !!this.modelConstant) {
-      const model = this.findDataset(this.modelConstant) || this.findHousingType(this.modelConstant) || this._model
-      if (!model && this.modelConstant !== 'NEW_FILTER' && this.modelConstant !== 'ALL_TYPES') {
+    if (!this.resourceModel && !!this.modelConstant) {
+      const resourceModel =
+        this.findDataset(this.modelConstant) || this.findHousingType(this.modelConstant) || this.resourceModel
+      if (!resourceModel && this.modelConstant !== 'NEW_FILTER' && this.modelConstant !== 'ALL_TYPES') {
         throw `Pass either '${Object.keys(resources)
           .map(key => resources[key].id)
           .join("' or '")}' as the first argument. ${this.modelConstant} does not have a match.`
       }
 
-      this.setModel(model)
-    } else if (model) {
-      this.setModel(model)
+      this.setModel(resourceModel)
+      this.setSchema(schema)
+    } else if (resourceModel) {
+      this.setModel(resourceModel)
+      this.setSchema(schema)
     } else {
       return
     }
@@ -42,8 +46,8 @@ export class Filter {
   }
 
   findDataset(modelConstant) {
-    return resources[Object.keys(resources).find(key => resources[key]().id === modelConstant)]
-      ? resources[Object.keys(resources).find(key => resources[key]().id === modelConstant)]()
+    return resources[Object.keys(resources).find(key => resources[key]().resourceConstant === modelConstant)]
+      ? resources[Object.keys(resources).find(key => resources[key]().resourceConstant === modelConstant)]()
       : null
   }
 
@@ -53,29 +57,15 @@ export class Filter {
       : null
   }
 
-  setModel(model) {
-    // Sets api map for model
-    if (!model.apiMap) {
-      model.apiMap = getApiMap(this.id)
-    }
-
-    // Sets api map for filter
-    if ((model || {}).apiMap) {
-      Object.keys(model.apiMap).forEach(key => {
-        this[key] = model.apiMap[key]
-      })
-    }
-
-    this._model = model
-    this._schema = this.model.schema
+  setSchema(schema) {
     // Load the schema if no paramSets was directly supplied
-    if (!Object.keys(this.paramSets).length) {
-      Object.keys(this._schema)
+    if (schema && !Object.keys(this.paramSets).length) {
+      Object.keys(schema)
         .reverse()
         .map(key => {
           this._paramSets = {
             ...{
-              [key]: cloneInstance(this.schema[key]),
+              [key]: cloneInstance(schema[key]),
             },
             ...this.paramSets,
           }
@@ -83,8 +73,24 @@ export class Filter {
     }
   }
 
-  get model() {
-    return this._model
+  setModel(resourceModel) {
+    // Sets api map for resourceModel
+    if (!resourceModel.apiMap) {
+      resourceModel.apiMap = getApiMap(this.id)
+    }
+
+    // Sets api map for filter
+    if ((resourceModel || {}).apiMap) {
+      Object.keys(resourceModel.apiMap).forEach(key => {
+        this[key] = resourceModel.apiMap[key]
+      })
+    }
+
+    this._resourceModel = resourceModel
+  }
+
+  get resourceModel() {
+    return this._resourceModel
   }
 
   get name() {
@@ -104,6 +110,10 @@ export class Filter {
 
   get schema() {
     return this._schema
+  }
+
+  set schema(schema) {
+    this.setSchema(schema)
   }
 
   get params() {
@@ -127,8 +137,8 @@ export class Filter {
     return this._paramSets
   }
 
-  set model(model) {
-    this.setModel(model)
+  set resourceModel(resourceModel) {
+    this.setModel(resourceModel)
   }
 
   set paramSets(newparamSets) {

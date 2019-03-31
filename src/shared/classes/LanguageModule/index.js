@@ -64,14 +64,11 @@ export class LanguageModule {
   }
 
   grammaticalNoun(noun, value) {
-    if (noun) {
-      if (value > 1) {
-        return ` ${noun.endsWith('s') ? noun : noun + 's'}`
-      } else {
-        return ` ${noun.endsWith('s') ? noun.substring(0, -1) : noun}`
-      }
+    if (!noun) return ''
+    if (value > 1) {
+      return ` ${noun.endsWith('s') ? noun : noun + 's'}`
     } else {
-      return ''
+      return ` ${noun.endsWith('s') ? noun.substring(0, noun.length - 1) : noun}`
     }
   }
 }
