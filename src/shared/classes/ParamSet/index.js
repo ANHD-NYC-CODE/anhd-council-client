@@ -6,14 +6,14 @@ export default class ParamSet {
     component = null,
     paramMaps = [],
     defaults = [],
-    props = {},
+    label = '',
     allowActions = true,
     createType = 'ALL',
   } = {}) {
     this._component = component
     this._paramMaps = paramMaps
     this._defaults = defaults
-    this._props = props
+    this._label = label
     this._allowActions = allowActions
     this._createType = createType
   }
@@ -33,12 +33,12 @@ export default class ParamSet {
     return this._defaults
   }
 
-  get props() {
-    return this._props
+  get label() {
+    return this._label
   }
 
-  set props(props) {
-    this._props = props
+  set label(label) {
+    this._label = label
   }
 
   get createType() {
