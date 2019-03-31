@@ -192,7 +192,6 @@ export const constructCountSchema = ({
   defaultDate = '',
   amountFieldQuery = '',
   defaultAmount = '',
-  capitalizeDepartment = true,
   amountValuePrefix = undefined,
   amountValueSuffix = undefined,
   dateMax = undefined,
@@ -200,9 +199,8 @@ export const constructCountSchema = ({
   extraParamMap = undefined,
 } = {}) => {
   return {
-    [constantToQueryName(constant)]: new ParamSet({
+    initial: new ParamSet({
       component: MultiTypeFieldGroup,
-      allowActions: false,
       createType: 'ALL_RANGE_ONE',
       defaults: [
         new ParamMap({

@@ -2,19 +2,11 @@ import { cloneInstance } from 'shared/utilities/classUtils'
 import StandardizedInput from 'shared/classes/StandardizedInput'
 
 export default class ParamSet {
-  constructor({
-    component = null,
-    paramMaps = [],
-    defaults = [],
-    label = '',
-    allowActions = true,
-    createType = 'ALL',
-  } = {}) {
+  constructor({ component = null, paramMaps = [], defaults = [], label = '', createType = 'ALL' } = {}) {
     this._component = component
     this._paramMaps = paramMaps
     this._defaults = defaults
     this._label = label
-    this._allowActions = allowActions
     this._createType = createType
   }
 
@@ -43,14 +35,6 @@ export default class ParamSet {
 
   get createType() {
     return this._createType
-  }
-
-  get allowActions() {
-    return this._allowActions
-  }
-
-  set allowActions(allowActions) {
-    this._allowActions = allowActions
   }
 
   create({ dispatchAction = undefined, paramMap = null, unshift = false } = {}) {
