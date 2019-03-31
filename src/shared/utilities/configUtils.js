@@ -28,7 +28,7 @@ export const setupHousingTypeModels = datasets => {
           databaseObject = undefined
           break
       }
-      return new Resource({ model: ht[constant](databaseObject) })
+      return new Resource({ resourceModel: ht[constant](databaseObject) })
     })
     .filter(ht => ht)
 }
@@ -53,7 +53,7 @@ export const setupResourceModels = datasets => {
         )
     }
     if (databaseObject) {
-      loadedResources[constant] = new Resource({ model: resources[constant](databaseObject) })
+      loadedResources[constant] = new Resource({ resourceModel: resources[constant](databaseObject) })
     }
   })
   return loadedResources

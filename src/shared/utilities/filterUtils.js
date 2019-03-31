@@ -44,128 +44,44 @@ export const constantToName = ({ constant = '', plural = true, capitalizeDepartm
   }
 }
 
-export const createAdvancedSearchFilters = ({ resourceModels, primaryResource } = {}) => {
-  if (!resourceModels || !primaryResource) return
+export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
+  if (!Object.keys(resourceModels).length) return
   return [
     {
       resourceModel: resourceModels['HPD_VIOLATION'],
-      schema: constructCountSchema({
-        primaryResource,
-        resourceModel: resourceModels['HPD_VIOLATION'],
-        constant: 'HPD_VIOLATION',
-        amountFieldQuery: 'count',
-      }),
     },
     {
       resourceModel: resourceModels['DOB_VIOLATION'],
-      schema: constructCountSchema({
-        primaryResource,
-        resourceModel: resourceModels['DOB_VIOLATION'],
-        constant: 'DOB_VIOLATION',
-        amountFieldQuery: 'count',
-        capitalizeDepartment: true,
-      }),
     },
     {
       resourceModel: resourceModels['ECB_VIOLATION'],
-      schema: constructCountSchema({
-        primaryResource,
-        constant: 'ECB_VIOLATION',
-        resourceModel: resourceModels['ECB_VIOLATION'],
-        amountFieldQuery: 'count',
-        capitalizeDepartment: true,
-      }),
     },
     {
       resourceModel: resourceModels['HPD_COMPLAINT'],
-      schema: constructCountSchema({
-        primaryResource,
-        resourceModel: resourceModels['HPD_COMPLAINT'],
-        constant: 'HPD_COMPLAINT',
-        amountFieldQuery: 'count',
-        capitalizeDepartment: true,
-      }),
     },
     {
       resourceModel: resourceModels['DOB_COMPLAINT'],
-      schema: constructCountSchema({
-        primaryResource,
-        resourceModel: resourceModels['DOB_COMPLAINT'],
-        constant: 'DOB_COMPLAINT',
-        amountFieldQuery: 'count',
-        capitalizeDepartment: true,
-      }),
     },
     {
       resourceModel: resourceModels['DOB_FILED_PERMIT'],
-      schema: constructCountSchema({
-        primaryResource,
-        resourceModel: resourceModels['DOB_FILED_PERMIT'],
-        constant: 'DOB_FILED_PERMIT',
-        amountFieldQuery: 'count',
-        capitalizeDepartment: true,
-        defaultAmount: 5,
-      }),
     },
     {
       resourceModel: resourceModels['DOB_ISSUED_PERMIT'],
-      schema: constructCountSchema({
-        primaryResource,
-        resourceModel: resourceModels['DOB_ISSUED_PERMIT'],
-        constant: 'DOB_ISSUED_PERMIT',
-        amountFieldQuery: 'count',
-        capitalizeDepartment: true,
-        defaultAmount: 5,
-      }),
     },
     {
       resourceModel: resourceModels['EVICTION'],
-      schema: constructCountSchema({
-        primaryResource,
-        resourceModel: resourceModels['EVICTION'],
-        constant: 'EVICTION',
-        amountFieldQuery: 'count',
-        capitalizeDepartment: false,
-        defaultAmount: 1,
-      }),
     },
     {
       resourceModel: resourceModels['HOUSING_LITIGATION'],
-      schema: constructCountSchema({
-        primaryResource,
-        resourceModel: resourceModels['HOUSING_LITIGATION'],
-        constant: 'HOUSING_LITIGATION',
-        amountFieldQuery: 'count',
-        capitalizeDepartment: false,
-        defaultAmount: 1,
-      }),
     },
     {
       resourceModel: resourceModels['LISPENDEN'],
-      schema: constructCountSchema({
-        primaryResource,
-        resourceModel: resourceModels['LISPENDEN'],
-        constant: 'LISPENDEN',
-        amountFieldQuery: 'count',
-        defaultAmount: '1',
-        capitalizeDepartment: false,
-        hiddenParamMap: new ParamMap({
-          component: GenericFieldSet,
-          baseComponent: HiddenField,
-          resourceModel: resourceModels['LISPENDEN'],
-          field: 'lispendens__type',
-          comparison: '',
-          value: 'foreclosure',
-        }),
-      }),
     },
     // {
     //   resourceModel: resourceModels['ACRIS_REAL_MASTER'],
-    //   schema: constructCountSchema({
-    //     primaryResource,
+    //   schema: constructCountParamSet({
     //     resourceModel: resourceModels['ACRIS_REAL_MASTER'],
     //     constant: 'ACRIS_REAL_MASTER',
-    //     amountFieldQuery: 'docamount',
     //     amountNoun: '',
     //     amountValuePrefix: '$',
     //     defaultAmount: '1000000',
@@ -173,114 +89,99 @@ export const createAdvancedSearchFilters = ({ resourceModels, primaryResource } 
     // },
     {
       resourceModel: resourceModels['ACRIS_REAL_MASTER'],
-      schema: constructCountSchema({
-        primaryResource,
-        resourceModel: resourceModels['ACRIS_REAL_MASTER'],
-        constant: 'ACRIS_REAL_MASTER',
-        amountFieldQuery: 'count',
-        defaultAmount: 2,
-        amountNoun: 'times',
-      }),
     },
   ]
 }
 
-export const constructCountSchema = ({
-  primaryResource,
+export const constructCountParamSet = ({
   resourceModel,
-  constant = '',
   defaultDate = '',
-  amountFieldQuery = '',
-  defaultAmount = '',
+  defaultAmount = 5,
   amountValuePrefix = undefined,
   amountValueSuffix = undefined,
   dateMax = undefined,
   hiddenParamMap = undefined,
   extraParamMap = undefined,
 } = {}) => {
-  return {
-    initial: new ParamSet({
-      component: MultiTypeFieldGroup,
-      createType: 'ALL_RANGE_ONE',
-      defaults: [
-        new ParamMap({
-          resourceModel,
-          component: ComparisonFieldSet,
-          baseComponent: IntegerField,
-          type: 'AMOUNT',
-          role: 'PRIMARY',
-          valuePrefix: amountValuePrefix,
-          valueSuffix: amountValueSuffix,
-          field: `${primaryResource.relatedResourceMappings[constant]}${
-            amountFieldQuery ? '__' + amountFieldQuery : ''
-          }`,
-          comparison: 'gte',
-          validations: {
-            min: 0,
-          },
-          value: defaultAmount || '5',
-        }),
-        new ParamMap({
-          resourceModel,
-          type: 'DATE',
-          role: 'LIMITER',
-          component: ComparisonFieldSet,
-          baseComponent: DateField,
-          props: {
-            type: 'date',
-          },
-          validations: {
-            max: dateMax,
-          },
-          rangeKey: `${constantToQueryName(constant)}Range`,
-          rangePosition: 1,
-          defaultOptions: comparisonOptions(
-            ['gte', 'between', 'lte'],
-            ['After', 'Range', 'Before'],
-            'DATE',
-            `${constantToQueryName(constant)}Range`
-          ),
-          field: `${primaryResource.relatedResourceMappings[constant]}__${getDatasetDateField(constant)}`,
-          comparison: 'gte',
-          value:
-            defaultDate ||
-            moment(moment.now())
-              .subtract(1, 'Y')
-              .format('YYYY-MM-DD'),
-        }),
-        new ParamMap({
-          resourceModel,
-          type: 'DATE',
-          role: 'LIMITER',
-          component: ComparisonFieldSet,
-          baseComponent: DateField,
-          props: {
-            type: 'date',
-          },
-          validations: {
-            max: dateMax,
-          },
-          rangeKey: `${constantToQueryName(constant)}Range`,
-          rangePosition: 2,
-          defaultOptions: comparisonOptions(
-            ['gte', 'between', 'lte'],
-            ['After', 'Range', 'Before'],
-            'DATE',
-            `${constantToQueryName(constant)}Range`
-          ),
-          field: `${primaryResource.relatedResourceMappings[constant]}__${getDatasetDateField(constant)}`,
-          comparison: 'lte',
-          value:
-            defaultDate ||
-            moment(moment.now())
-              .add(1, 'Y')
-              .format('YYYY-MM-DD'),
-        }),
-        extraParamMap,
-        hiddenParamMap,
-      ].filter(m => m),
-    }),
-  }
+  return new ParamSet({
+    component: MultiTypeFieldGroup,
+    createType: 'ALL_RANGE_ONE',
+    defaults: [
+      new ParamMap({
+        resourceModel,
+        component: ComparisonFieldSet,
+        baseComponent: IntegerField,
+        type: 'AMOUNT',
+        role: 'PRIMARY',
+        valuePrefix: amountValuePrefix,
+        valueSuffix: amountValueSuffix,
+        field: 'count',
+        comparison: 'gte',
+        validations: {
+          min: 0,
+        },
+        value: defaultAmount,
+      }),
+      new ParamMap({
+        resourceModel,
+        type: 'DATE',
+        role: 'LIMITER',
+        component: ComparisonFieldSet,
+        baseComponent: DateField,
+        props: {
+          type: 'date',
+        },
+        validations: {
+          max: dateMax,
+        },
+        rangeKey: `${resourceModel.urlPath}Range`,
+        rangePosition: 1,
+        defaultOptions: comparisonOptions(
+          ['gte', 'between', 'lte'],
+          ['After', 'Range', 'Before'],
+          'DATE',
+          `${resourceModel.urlPath}Range`
+        ),
+        field: `${getDatasetDateField(resourceModel.resourceConstant)}`,
+        comparison: 'gte',
+        value:
+          defaultDate ||
+          moment(moment.now())
+            .subtract(1, 'Y')
+            .format('YYYY-MM-DD'),
+      }),
+      new ParamMap({
+        resourceModel,
+        type: 'DATE',
+        role: 'LIMITER',
+        component: ComparisonFieldSet,
+        baseComponent: DateField,
+        props: {
+          type: 'date',
+        },
+        validations: {
+          max: dateMax,
+        },
+        rangeKey: `${resourceModel.urlPath}Range`,
+        rangePosition: 2,
+        defaultOptions: comparisonOptions(
+          ['gte', 'between', 'lte'],
+          ['After', 'Range', 'Before'],
+          'DATE',
+          `${resourceModel.urlPath}Range`
+        ),
+        field: `${getDatasetDateField(resourceModel.resourceConstant)}`,
+        comparison: 'lte',
+        value:
+          defaultDate ||
+          moment(moment.now())
+            .add(1, 'Y')
+            .format('YYYY-MM-DD'),
+      }),
+      extraParamMap,
+      hiddenParamMap,
+    ].filter(m => m),
+  })
 }
 
 export const rentRegulatedProgramOptions = () => {

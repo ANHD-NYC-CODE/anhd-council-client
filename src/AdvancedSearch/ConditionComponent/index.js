@@ -66,8 +66,9 @@ export class ConditionComponent extends React.Component {
     )
 
     const newFilter = new Filter({
+      primaryResourceModel: this.props.config.resourceModels['PROPERTY'],
       resourceModel: advancedSearchFilter.resourceModel,
-      schema: advancedSearchFilter.schema,
+      schema: advancedSearchFilter.resourceModel.ownResourceFilters,
     })
     this.props.condition.replaceFilter({ filterIndex, filter: newFilter })
     this.dispatchAction()

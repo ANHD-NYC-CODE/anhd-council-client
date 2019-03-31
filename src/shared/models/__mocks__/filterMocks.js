@@ -7,13 +7,12 @@ import { createAdvancedSearchFilters } from 'shared/utilities/filterUtils'
 const resourceModels = mockSetupResourceModels()
 const ADVANCED_FILTERS = createAdvancedSearchFilters({
   resourceModels: resourceModels,
-  primaryResource: resourceModels['PROPERTY'],
 })
 
 export const mockSetupResourceModels = () => {
   let loadedResources = {}
   Object.keys(resources).forEach(constant => {
-    loadedResources[constant] = new Resource({ model: resources[constant]() })
+    loadedResources[constant] = new Resource({ resourceModel: resources[constant]() })
   })
   return loadedResources
 }

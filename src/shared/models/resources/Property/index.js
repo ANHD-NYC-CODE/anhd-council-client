@@ -85,7 +85,7 @@ const Property = databaseObject => {
       },
     ],
 
-    ownResourceFilters: [],
+    ownResourceFilters: {},
     relatedResourceMappings: {
       ACRIS_REAL_MASTER: 'acrisreallegals__documentid',
       PROPERTY_SALE_BY_AMOUNT: 'acrisreallegals__documentid',

@@ -7,7 +7,9 @@ export const convertDatasetFilterToParams = filter => {
     .map(key => {
       return filter.paramSets[key].paramMaps
         .map(paramMap => {
-          return `${paramMap.field}${paramMap.comparison ? '__' + paramMap.comparison : ''}=${
+          const primaryModelFieldPath =
+            filter.primaryResourceModel.relatedResourceMappings[filter.resourceModel.resourceConstant] + '__'
+          return `${primaryModelFieldPath}${paramMap.field}${paramMap.comparison ? '__' + paramMap.comparison : ''}=${
             paramMap.type === 'PERCENT' ? paramMap.value / 100 : paramMap.value
           }`
         })

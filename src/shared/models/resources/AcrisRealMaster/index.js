@@ -1,20 +1,22 @@
 import ParamMap from 'shared/classes/ParamMap'
+import { constructCountParamSet } from 'shared/utilities/filterUtils'
 
 const AcrisRealMaster = databaseObject => ({
   resourceConstant: 'ACRIS_REAL_MASTER',
   urlPath: 'acrisrealmasters',
   label: 'Property Sales',
   sentenceNoun: 'sales',
-  ownResourceFilters: [
-    new ParamMap({
-      type: 'AMOUNT',
-      field: 'docamount',
-      comparison: 'gte',
-      value: '1000000',
-      valuePrefix: '$',
-      paramNoun: 'sale price',
-    }),
-  ],
+  ownResourceFilters: {
+    initial: {
+      generatorFunction: resourceModel => {
+        return constructCountParamSet({
+          resourceModel,
+          defaultAmount: 2,
+          amountNoun: 'times',
+        })
+      },
+    },
+  },
 })
 
 export default AcrisRealMaster

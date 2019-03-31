@@ -110,7 +110,6 @@ class Config extends React.Component {
           infoModals: infoModals,
           advancedSearchFilters: createAdvancedSearchFilters({
             resourceModels: this.props.resourceModels,
-            primaryResource: this.props.resourceModels['PROPERTY'],
           }),
         }}
       >

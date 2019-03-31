@@ -23,21 +23,23 @@ const datasetOptions = advancedSearchFilters => {
 const NewFilterSelect = props => {
   return (
     <ConfigContext.Consumer>
-      {config => (
-        <div className="w-100">
-          <Form.Control
-            as="select"
-            className="new-filter-select valued"
-            name="newFilter"
-            size=""
-            onChange={e => props.onChange(props.filterIndex, e)}
-            value={props.value || -1}
-          >
-            {datasetOptions(config.advancedSearchFilters)}
-          </Form.Control>
-          <FormError show={!!props.filter.errors.length} message={(props.filter.errors[0] || {}).message} />
-        </div>
-      )}
+      {config => {
+        return (
+          <div className="w-100">
+            <Form.Control
+              as="select"
+              className="new-filter-select valued"
+              name="newFilter"
+              size=""
+              onChange={e => props.onChange(props.filterIndex, e)}
+              value={props.value || -1}
+            >
+              {datasetOptions(config.advancedSearchFilters)}
+            </Form.Control>
+            <FormError show={!!props.filter.errors.length} message={(props.filter.errors[0] || {}).message} />
+          </div>
+        )
+      }}
     </ConfigContext.Consumer>
   )
 }
