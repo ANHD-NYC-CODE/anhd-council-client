@@ -153,7 +153,7 @@ describe('AdvancedSearch', () => {
       const wrapper = selectedHousingTypeWrapper({ selectValue: 'RENT_STABILIZED' })
 
       expect(wrapper.find('select[name="housingTypeSelect"]').props().value).toEqual('RENT_STABILIZED')
-      expect(wrapper.find('div.housingtype-paramset--group')).toHaveLength(1)
+      expect(wrapper.find('div.paramset-wrapper--group')).toHaveLength(1)
 
       wrapper.find('button.housingtype-paramset--new-button').simulate('click')
       wrapper.update()
@@ -168,7 +168,7 @@ describe('AdvancedSearch', () => {
       const wrapper = selectedHousingTypeWrapper({ selectValue: 'RENT_REGULATED' })
 
       expect(wrapper.find('select[name="housingTypeSelect"]').props().value).toEqual('RENT_REGULATED')
-      expect(wrapper.find('div.housingtype-paramset--group')).toHaveLength(2)
+      expect(wrapper.find('div.paramset-wrapper--group')).toHaveLength(2)
 
       wrapper
         .find('button.housingtype-paramset--new-button')
@@ -191,7 +191,7 @@ describe('AdvancedSearch', () => {
       const wrapper = selectedHousingTypeWrapper({ selectValue: 'SMALL_HOMES' })
 
       expect(wrapper.find('select[name="housingTypeSelect"]').props().value).toEqual('SMALL_HOMES')
-      expect(wrapper.find('div.housingtype-paramset--group')).toHaveLength(1)
+      expect(wrapper.find('div.paramset-wrapper--group')).toHaveLength(1)
 
       wrapper.find('button.housingtype-paramset--new-button').simulate('click')
       wrapper.update()
@@ -205,7 +205,7 @@ describe('AdvancedSearch', () => {
       const wrapper = selectedHousingTypeWrapper({ selectValue: 'MARKET_RATE' })
 
       expect(wrapper.find('select[name="housingTypeSelect"]').props().value).toEqual('MARKET_RATE')
-      expect(wrapper.find('div.housingtype-paramset--group')).toHaveLength(0)
+      expect(wrapper.find('div.paramset-wrapper--group')).toHaveLength(0)
       expect(wrapper.find('AdvancedSearchSentence').text()).toMatch(/Show me market rate properties/)
     })
 
@@ -213,7 +213,7 @@ describe('AdvancedSearch', () => {
       const wrapper = selectedHousingTypeWrapper({ selectValue: 'PUBLIC_HOUSING' })
 
       expect(wrapper.find('select[name="housingTypeSelect"]').props().value).toEqual('PUBLIC_HOUSING')
-      expect(wrapper.find('div.housingtype-paramset--group')).toHaveLength(0)
+      expect(wrapper.find('div.paramset-wrapper--group')).toHaveLength(0)
       expect(wrapper.find('AdvancedSearchSentence').text()).toMatch(/Show me public housing properties/)
     })
   })

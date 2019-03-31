@@ -17,14 +17,13 @@ export const constructAmountSentence = (dataset, comparison, value) => {
 
 const parseParamMapComparison = (paramMap, nounOverride = undefined) => {
   if (!paramMap) return
-
   switch (paramMap.type) {
     case 'AMOUNT':
-      return `have ${longAmountComparisonString(paramMap.comparison)} ${paramMap.valuePrefix}${paramMap.value}${
+      return `${longAmountComparisonString(paramMap.comparison)} ${paramMap.valuePrefix}${paramMap.value}${
         paramMap.valueSuffix
       }${grammaticalNoun(nounOverride || paramMap.paramNoun, paramMap.value)}`
     case 'PERCENT':
-      return `have ${longAmountComparisonString(paramMap.comparison)} ${paramMap.valuePrefix}${paramMap.value}${
+      return `${longAmountComparisonString(paramMap.comparison)} ${paramMap.valuePrefix}${paramMap.value}${
         paramMap.valueSuffix
       }${grammaticalNoun(nounOverride || paramMap.paramNoun, paramMap.value)}`
     case 'DATE':
@@ -71,34 +70,26 @@ const parseRoleGroup = paramMaps => {
 }
 
 export const convertFilterToSentence = filter => {
-  if (Object.keys(filter.params).length) {
-    return ` ${Object.keys(filter.paramSets)
-      .map(key => {
-        const paramSet = filter.paramSets[key]
-        // Get Primary
-        const primaryParamMap = paramSet.paramMaps.find(pm => pm.role === 'PRIMARY')
+  if (Object.keys(filter.paramMaps).length) {
+    // Get Primary
+    const primaryParamMap = filter.paramMaps.find(pm => pm.role === 'PRIMARY')
 
-        // Get Limiter
-        const limiterParamMaps = paramSet.paramMaps.filter(pm => pm.role === 'LIMITER')
+    // Get Limiter
+    const limiterParamMaps = filter.paramMaps.filter(pm => pm.role === 'LIMITER')
 
-        // Get modifying param maps
-        const modifyingParamMaps = paramSet.paramMaps.filter(pm => pm.role !== 'PRIMARY' && pm.role !== 'LIMITER')
+    const modifyingParamMaps = filter.paramMaps.filter(pm => pm.role !== 'PRIMARY' && pm.role !== 'LIMITER')
 
-        // Parse them
-        const parsedModifyingParamMaps = modifyingParamMaps.map(pm => parseParamMapComparison(pm))
+    const parsedModifyingParamMaps = modifyingParamMaps.map(pm => parseParamMapComparison(pm))
 
-        const primarySegment = primaryParamMap
-          ? `${parseParamMapComparison(primaryParamMap, filter.resourceModel.sentenceNoun)}`
-          : undefined
+    const primarySegment = primaryParamMap
+      ? `have ${parseParamMapComparison(primaryParamMap, filter.resourceModel.sentenceNoun)}`
+      : undefined
 
-        const modifyingSegment = parsedModifyingParamMaps.length ? `(${[...parsedModifyingParamMaps]})` : undefined
+    const modifyingSegment = parsedModifyingParamMaps.length ? `(${[...parsedModifyingParamMaps]})` : undefined
 
-        const limiterSegment = limiterParamMaps.length ? `${parseRoleGroup(limiterParamMaps)}` : undefined
+    const limiterSegment = limiterParamMaps.length ? `${parseRoleGroup(limiterParamMaps)}` : undefined
 
-        return [primarySegment, modifyingSegment, limiterSegment].filter(p => p).join(' ')
-      })
-      .filter(p => p)
-      .join(' and ')}`
+    return ' ' + [primarySegment, modifyingSegment, limiterSegment].filter(p => p).join(' ')
   } else {
     return ''
   }

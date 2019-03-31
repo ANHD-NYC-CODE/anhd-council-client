@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { updateHousingType } from 'Store/AdvancedSearch/actions'
 
 import { Form, Col, Row, Button } from 'react-bootstrap'
-import HousingTypeParamSet from 'AdvancedSearch/HousingTypeQuery/HousingTypeParamSet'
+import ParamSetWrapper from 'shared/components/ParamSetWrapper'
 import HousingTypeSelect from 'AdvancedSearch/HousingTypeQuery/HousingTypeSelect'
 
 const HousingTypeSelection = props => {
@@ -27,7 +27,7 @@ const HousingTypeSelection = props => {
 
         return !paramSet.paramMaps.length ? (
           <Form.Row key={`housingtype-${paramSetIndex}`}>
-            <Form.Group as={Col} className="housingtype-paramset--group">
+            <Form.Group as={Col} className="paramset-wrapper--group">
               <Button
                 className="housingtype-paramset--new-button"
                 variant="outline-primary"
@@ -38,7 +38,7 @@ const HousingTypeSelection = props => {
             </Form.Group>
           </Form.Row>
         ) : (
-          <HousingTypeParamSet
+          <ParamSetWrapper
             key={`housingtype-paramset-${paramSetIndex}`}
             dispatchAction={dispatchAction}
             paramSet={props.housingType.paramSets[paramsSetKey]}

@@ -2,8 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import StandardizedInput from 'shared/classes/StandardizedInput'
 import { Form, InputGroup, Col } from 'react-bootstrap'
+import NewFilterSelect from 'AdvancedSearch/FilterComponent/NewFilterSelect'
 import classnames from 'classnames'
-const ComparisonFieldSet = props => {
+const PrimaryComparisonFieldSet = props => {
   return (
     <Form.Row className="comparison-fieldset" key={props.key}>
       <InputGroup as={Col} xs={props.filter ? 4 : 6}>
@@ -59,11 +60,20 @@ const ComparisonFieldSet = props => {
           {props.paramMap.paramNoun && <InputGroup.Text>{props.paramMap.paramNoun}</InputGroup.Text>}
         </InputGroup.Append>
       </InputGroup>
+
+      <InputGroup as={Col} xs={5}>
+        <NewFilterSelect
+          filter={props.filter}
+          filterIndex={props.filterIndex}
+          onChange={props.replaceFilter}
+          value={props.filter.resourceModel.resourceConstant}
+        />
+      </InputGroup>
     </Form.Row>
   )
 }
 
-ComparisonFieldSet.propTypes = {
+PrimaryComparisonFieldSet.propTypes = {
   replaceFilter: PropTypes.func,
   dispatchAction: PropTypes.func,
   filterIndex: PropTypes.number,
@@ -75,4 +85,4 @@ ComparisonFieldSet.propTypes = {
   rangeChange: PropTypes.func,
 }
 
-export default ComparisonFieldSet
+export default PrimaryComparisonFieldSet

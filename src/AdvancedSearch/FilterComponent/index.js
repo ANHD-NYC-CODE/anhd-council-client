@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { Form, Col } from 'react-bootstrap'
+import { Form, Col, Button } from 'react-bootstrap'
 import FormError from 'shared/components/FormError'
 import AddConditionButton from 'AdvancedSearch/FilterComponent/AddConditionButton'
 import RemoveFilterButton from 'AdvancedSearch/FilterComponent/RemoveFilterButton'
@@ -22,7 +22,6 @@ export class FilterComponent extends React.Component {
   }
 
   render() {
-    console.log(Object.keys(this.props.filter.paramSets))
     return (
       <div className="filter-component">
         <div className="filter-component__primary-row d-flex">
@@ -44,11 +43,24 @@ export class FilterComponent extends React.Component {
                   paramSetIndex: paramSetIndex,
                 })
               )}
-              {/* {this.props.config.resourceModels[
-                this.props.filter.resourceModel.resourceConstant
-              ].ownResourceFilters.map((ownResourceFilter, index) => {
-                return <div key={`own-resource-filter-${this.props.filter.resourceConstant}-${index}`}>hi</div>
-              })} */}
+              {Object.keys(this.props.filter.paramSets)
+                .filter(key => key !== 'initial')
+                .map((key, index) => {
+                  const paramSet = this.props.filter.paramSets[key]
+                  return !paramSet.paramMaps.length ? (
+                    <Form.Row key={`paramSet-${this.props.filter.resourceConstant}-${index}`}>
+                      <Form.Group as={Col} className="paramset--group">
+                        <Button
+                          className="paramset--new-button"
+                          variant="outline-primary"
+                          onClick={() => paramSet.create({ dispatchAction: this.props.dispatchAction })}
+                        >
+                          {`Add ${paramSet.label} +`}
+                        </Button>
+                      </Form.Group>
+                    </Form.Row>
+                  ) : null
+                })}
             </Form.Group>
             <Col xs={3} lg={2} className="d-flex align-items-center">
               <RemoveFilterButton showPopups={this.props.showPopups} removeFilter={this.removeFilter} />

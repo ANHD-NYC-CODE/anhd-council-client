@@ -1,5 +1,5 @@
 import ParamMap from 'shared/classes/ParamMap'
-import { constructCountParamSet } from 'shared/utilities/filterUtils'
+import { constructCountParamSet, constructSingleMapParamSet } from 'shared/utilities/filterUtils'
 
 const AcrisRealMaster = databaseObject => ({
   resourceConstant: 'ACRIS_REAL_MASTER',
@@ -11,8 +11,19 @@ const AcrisRealMaster = databaseObject => ({
       generatorFunction: resourceModel => {
         return constructCountParamSet({
           resourceModel,
-          defaultAmount: 2,
+          defaultAmount: 1,
           amountNoun: 'times',
+        })
+      },
+    },
+    docamount: {
+      generatorFunction: resourceModel => {
+        return constructSingleMapParamSet({
+          resourceModel,
+          defaultAmount: 1000000,
+          paramSetLabel: 'Sale Price',
+          paramMapField: 'docamount',
+          valuePrefix: '$',
         })
       },
     },

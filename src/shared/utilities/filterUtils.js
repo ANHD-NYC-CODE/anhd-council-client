@@ -3,12 +3,12 @@ import moment from 'moment'
 import ParamSet from 'shared/classes/ParamSet'
 import ParamMap from 'shared/classes/ParamMap'
 import MultiTypeFieldGroup from 'AdvancedSearch/FilterComponent/Group/MultiTypeFieldGroup'
+import PrimaryComparisonFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/PrimaryComparisonFieldSet'
+
 import ComparisonFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/ComparisonFieldSet'
 
 import DateField from 'AdvancedSearch/FilterComponent/Field/DateField'
 import IntegerField from 'AdvancedSearch/FilterComponent/Field/IntegerField'
-import GenericFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/GenericFieldSet'
-import HiddenField from 'AdvancedSearch/FilterComponent/Field/HiddenField'
 
 import { capitalizeWords } from 'shared/utilities/languageUtils'
 
@@ -77,16 +77,6 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
     {
       resourceModel: resourceModels['LISPENDEN'],
     },
-    // {
-    //   resourceModel: resourceModels['ACRIS_REAL_MASTER'],
-    //   schema: constructCountParamSet({
-    //     resourceModel: resourceModels['ACRIS_REAL_MASTER'],
-    //     constant: 'ACRIS_REAL_MASTER',
-    //     amountNoun: '',
-    //     amountValuePrefix: '$',
-    //     defaultAmount: '1000000',
-    //   }),
-    // },
     {
       resourceModel: resourceModels['ACRIS_REAL_MASTER'],
     },
@@ -109,7 +99,7 @@ export const constructCountParamSet = ({
     defaults: [
       new ParamMap({
         resourceModel,
-        component: ComparisonFieldSet,
+        component: PrimaryComparisonFieldSet,
         baseComponent: IntegerField,
         type: 'AMOUNT',
         role: 'PRIMARY',
@@ -181,6 +171,42 @@ export const constructCountParamSet = ({
       extraParamMap,
       hiddenParamMap,
     ].filter(m => m),
+  })
+}
+
+export const constructSingleMapParamSet = ({
+  resourceModel,
+  baseComponent = IntegerField,
+  defaultAmount = 5,
+  valuePrefix = undefined,
+  valueSuffix = undefined,
+  paramNoun,
+  paramMapType = 'AMOUNT',
+  paramMapField = '',
+  paramSetLabel = '',
+} = {}) => {
+  return new ParamSet({
+    component: MultiTypeFieldGroup,
+    createType: 'ALL_RANGE_ONE',
+    label: paramSetLabel,
+    defaults: [
+      new ParamMap({
+        resourceModel,
+        component: ComparisonFieldSet,
+        baseComponent,
+        type: paramMapType,
+        role: '',
+        paramNoun,
+        valuePrefix,
+        valueSuffix,
+        field: paramMapField,
+        comparison: 'gte',
+        validations: {
+          min: 0,
+        },
+        value: defaultAmount,
+      }),
+    ],
   })
 }
 

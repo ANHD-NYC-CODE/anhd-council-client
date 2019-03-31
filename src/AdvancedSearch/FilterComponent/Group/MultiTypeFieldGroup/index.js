@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import StandardizedInput from 'shared/classes/StandardizedInput'
 
 import RangeFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/RangeFieldSet'
-import { Form } from 'react-bootstrap'
 import FormError from 'shared/components/FormError'
 
 import './style.scss'

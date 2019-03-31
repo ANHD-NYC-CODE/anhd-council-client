@@ -4,12 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMinus } from '@fortawesome/free-solid-svg-icons'
 import { Form, Col, ButtonGroup, Button } from 'react-bootstrap'
 
-const HousingTypeParamSet = props => {
+const ParamSetWrapper = props => {
   return (
     <Form.Row className="form-row__container housingtype-paramset align-content-center">
-      <Form.Group className="housingtype-paramset--group" as={Col} xs={10}>
+      <Form.Group className="paramset-wrapper--group" as={Col} xs={10}>
         {props.paramSet.component({
-          key: 'housing-type-param-set',
           dispatchAction: props.dispatchAction,
           paramSet: props.paramSet,
           paramSetIndex: props.paramSetIndex,
@@ -26,11 +25,11 @@ const HousingTypeParamSet = props => {
   )
 }
 
-HousingTypeParamSet.propTypes = {
+ParamSetWrapper.propTypes = {
   dispatchAction: PropTypes.func,
   paramSetIndex: PropTypes.number,
   paramSet: PropTypes.object,
   removeFilter: PropTypes.func,
 }
 
-export default HousingTypeParamSet
+export default ParamSetWrapper
