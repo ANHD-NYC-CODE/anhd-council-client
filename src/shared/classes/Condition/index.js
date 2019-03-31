@@ -1,7 +1,7 @@
-import { StandardizedInput } from 'shared/classes/StandardizedInput'
-import { ParamError } from 'shared/classes/ParamError'
+import StandardizedInput from 'shared/classes/StandardizedInput'
+import ParamError from 'shared/classes/ParamError'
 
-export class Condition {
+export default class Condition {
   constructor({ key = undefined, type = undefined, filters = [], errors = [] } = {}) {
     this._key = key
     this._type = type

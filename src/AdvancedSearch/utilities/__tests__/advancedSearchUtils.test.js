@@ -1,7 +1,7 @@
 import * as a from 'AdvancedSearch/utilities/advancedSearchUtils'
 
-import { Condition } from 'shared/classes/Condition'
-import { ConditionFilter } from 'shared/classes/ConditionFilter'
+import Condition from 'shared/classes/Condition'
+import ConditionFilter from 'shared/classes/ConditionFilter'
 
 import { filterMocks } from 'shared/models/__mocks__/filterMocks'
 import moment from 'moment'

@@ -1,8 +1,8 @@
 import * as c from '../constants'
-import { Condition } from 'shared/classes/Condition'
-import { ConditionFilter } from 'shared/classes/ConditionFilter'
+import Condition from 'shared/classes/Condition'
+import ConditionFilter from 'shared/classes/ConditionFilter'
 import { cloneInstance } from 'shared/utilities/classUtils'
-import { Filter } from 'shared/classes/Filter'
+import Filter from 'shared/classes/Filter'
 
 export const initialState = () => ({
   conditions: {

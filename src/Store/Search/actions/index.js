@@ -5,7 +5,7 @@ export const HANDLE_READ_SEARCH_RESPONSE = 'HANDLE_READ_SEARCH_RESPONSE'
 export const SET_SEARCH_VALUE = 'SET_SEARCH_VALUE'
 export const CLEAR_SEARCH = 'CLEAR_SEARCH'
 export const SET_SEARCH_TIMEOUT = 'SET_SEARCH_TIMEOUT'
-import { AddressResult } from 'shared/classes/AddressResult'
+import AddressResult from 'shared/classes/AddressResult'
 export const handleReadSearchResponse = (response, key = null) => {
   let results = response.data.map(result => new AddressResult({ addressObject: result }))
   if (!results.length) {

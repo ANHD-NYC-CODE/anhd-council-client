@@ -1,7 +1,7 @@
 import moment from 'moment'
 
-import { ParameterMapSet } from 'shared/classes/ParameterMapSet'
-import { ParameterMapping } from 'shared/classes/ParameterMapping'
+import ParamSet from 'shared/classes/ParamSet'
+import ParamMap from 'shared/classes/ParamMap'
 import MultiTypeFieldGroup from 'AdvancedSearch/FilterComponent/Group/MultiTypeFieldGroup'
 import ComparisonFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/ComparisonFieldSet'
 
@@ -149,7 +149,7 @@ export const createAdvancedSearchFilters = ({ resourceModels, primaryResource } 
         amountFieldQuery: 'count',
         defaultAmount: '1',
         capitalizeDepartment: false,
-        hiddenParamMap: new ParameterMapping({
+        hiddenParamMap: new ParamMap({
           component: GenericFieldSet,
           baseComponent: HiddenField,
           resourceModel: resourceModels['LISPENDEN'],
@@ -200,7 +200,7 @@ export const constructCountSchema = ({
   extraParamMap = undefined,
 } = {}) => {
   return {
-    [constantToQueryName(constant)]: new ParameterMapSet({
+    [constantToQueryName(constant)]: new ParamSet({
       component: MultiTypeFieldGroup,
       props: {
         label: constantToName({ constant, capitalizeDepartment }),
@@ -209,7 +209,7 @@ export const constructCountSchema = ({
       allowActions: false,
       createType: 'ALL_RANGE_ONE',
       defaults: [
-        new ParameterMapping({
+        new ParamMap({
           resourceModel,
           component: ComparisonFieldSet,
           baseComponent: IntegerField,
@@ -226,7 +226,7 @@ export const constructCountSchema = ({
           },
           value: defaultAmount || '5',
         }),
-        new ParameterMapping({
+        new ParamMap({
           resourceModel,
           type: 'DATE',
           role: 'LIMITER',
@@ -254,7 +254,7 @@ export const constructCountSchema = ({
               .subtract(1, 'Y')
               .format('YYYY-MM-DD'),
         }),
-        new ParameterMapping({
+        new ParamMap({
           resourceModel,
           type: 'DATE',
           role: 'LIMITER',

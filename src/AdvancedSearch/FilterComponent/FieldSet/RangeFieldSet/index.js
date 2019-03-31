@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { StandardizedInput } from 'shared/classes/StandardizedInput'
+import StandardizedInput from 'shared/classes/StandardizedInput'
 import { Form, Col, InputGroup } from 'react-bootstrap'
 import classnames from 'classnames'
 
@@ -26,18 +26,16 @@ const comparisonReconfigure = (props, e) => {
   }
 }
 
-const hasPropertyAdjective = props => {
-  return !!props.paramMapRangeGroup[0].languageModule.propertyAdjective
+const hasValuePrefix = props => {
+  return !!props.paramMapRangeGroup[0].valuePrefix
 }
 
 const RangeFieldSet = props => {
   return (
     <Form.Row>
-      <InputGroup as={Col} xs={12} sm={12} md={hasPropertyAdjective(props) ? 12 : 2}>
+      <InputGroup as={Col} xs={12} sm={12} md={hasValuePrefix(props) ? 12 : 2}>
         <InputGroup.Prepend>
-          {hasPropertyAdjective(props) && (
-            <InputGroup.Text>{props.paramMapRangeGroup[0].languageModule.propertyAdjective}</InputGroup.Text>
-          )}
+          {hasValuePrefix(props) && <InputGroup.Text>{props.paramMapRangeGroup[0].valuePrefix}</InputGroup.Text>}
         </InputGroup.Prepend>
         <Form.Control
           name="comparison"
@@ -71,7 +69,7 @@ const RangeFieldSet = props => {
               as={Col}
               xs={12}
               sm={12}
-              md={hasPropertyAdjective(props) ? 6 : 5}
+              md={hasValuePrefix(props) ? 6 : 5}
               key={`paramMapRangeGroup-col-${paramMapIndex}`}
             >
               <InputGroup.Prepend>

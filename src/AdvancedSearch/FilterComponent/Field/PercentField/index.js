@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { StandardizedInput } from 'shared/classes/StandardizedInput'
+import StandardizedInput from 'shared/classes/StandardizedInput'
 import AutosizeInput from 'react-input-autosize'
 
 import { InputGroup, Form } from 'react-bootstrap'

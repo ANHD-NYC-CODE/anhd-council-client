@@ -1,6 +1,5 @@
-import { constantToName } from 'shared/utilities/filterUtils'
 import { stringifyParamsObject } from 'shared/utilities/routeUtils'
-export class DataRequest {
+export default class DataRequest {
   constructor({
     type = undefined,
     requestConstant = undefined,

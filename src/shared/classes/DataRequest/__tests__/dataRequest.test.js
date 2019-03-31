@@ -1,6 +1,6 @@
-import { DataRequest } from 'shared/classes/DataRequest'
-import { ApiMap } from 'shared/classes/ApiMap'
-import { ParameterMapping } from 'shared/classes/ParameterMapping'
+import DataRequest from 'shared/classes/DataRequest'
+import ApiMap from 'shared/classes/ApiMap'
+import ParamMap from 'shared/classes/ParamMap'
 describe('DataRequest', () => {
   describe('get requestConstant', () => {
     it('returns the derived constant', () => {
@@ -54,7 +54,7 @@ describe('DataRequest', () => {
   describe('get params', () => {
     it('returns the params', () => {
       const dataRequest = new DataRequest({
-        paramMaps: [new ParameterMapping({ field: 'hpdviolations', comparison: 'gte', value: '10' })],
+        paramMaps: [new ParamMap({ field: 'hpdviolations', comparison: 'gte', value: '10' })],
       })
 
       expect(dataRequest.params).toEqual({ hpdviolations__gte: '10' })
@@ -63,8 +63,8 @@ describe('DataRequest', () => {
     it('returns the multiple params', () => {
       const dataRequest = new DataRequest({
         paramMaps: [
-          new ParameterMapping({ field: 'hpdviolations', comparison: 'gte', value: '10' }),
-          new ParameterMapping({ field: 'hpdviolations__approveddate', comparison: 'gte', value: '10' }),
+          new ParamMap({ field: 'hpdviolations', comparison: 'gte', value: '10' }),
+          new ParamMap({ field: 'hpdviolations__approveddate', comparison: 'gte', value: '10' }),
         ],
       })
 
@@ -76,7 +76,7 @@ describe('DataRequest', () => {
     it('returns the csv params', () => {
       const dataRequest = new DataRequest({
         apiMaps: [new ApiMap({ constant: 'PROPERTY', resourceId: '1' }), new ApiMap({ constant: 'HPD_VIOLATION' })],
-        paramMaps: [new ParameterMapping({ field: 'hpdviolations', comparison: 'gte', value: '10' })],
+        paramMaps: [new ParamMap({ field: 'hpdviolations', comparison: 'gte', value: '10' })],
       })
 
       expect(dataRequest.csv_params).toEqual({
@@ -95,14 +95,14 @@ describe('DataRequest', () => {
           new ApiMap({ constant: 'PROPERTY', resourceId: '1', name: 'Properties' }),
         ],
         paramMaps: [
-          new ParameterMapping({
+          new ParamMap({
             resourceConstant: 'HPD_VIOLATION',
             field: 'hpdviolations',
             comparison: 'gte',
             value: '10',
             type: 'AMOUNT',
           }),
-          new ParameterMapping({
+          new ParamMap({
             resourceConstant: 'HPD_VIOLATION',
             field: 'hpdviolations',
             comparison: 'gte',

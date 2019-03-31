@@ -1,5 +1,5 @@
 import { convertConditionMappingToQ } from 'AdvancedSearch/utilities/advancedSearchUtils'
-import { ParameterMapping } from 'shared/classes/ParameterMapping'
+import ParamMap from 'shared/classes/ParamMap'
 export const transformStateIntoParamObject = advancedSearch => {
   return {
     ...Object.assign(
@@ -34,7 +34,7 @@ export const getAdvancedSearchParamMaps = advancedSearch => {
 }
 
 const constructHousingTypeParamMaps = housingTypes => {
-  return housingTypes.map(ht => new ParameterMapping({ type: 'TEXT', field: 'housingtype', value: ht.queryName }))
+  return housingTypes.map(ht => new ParamMap({ type: 'TEXT', field: 'housingtype', value: ht.queryName }))
 }
 
 export const getUrlFormattedParamMaps = advancedSearch => {
@@ -42,7 +42,7 @@ export const getUrlFormattedParamMaps = advancedSearch => {
     [].concat.apply([], Object.keys(advancedSearch.housingTypes).map(key => advancedSearch.housingTypes[key].paramMaps))
   )
 
-  const qParamMap = new ParameterMapping({
+  const qParamMap = new ParamMap({
     type: 'TEXT',
     field: 'q',
     value: convertConditionMappingToQ(advancedSearch.conditions),

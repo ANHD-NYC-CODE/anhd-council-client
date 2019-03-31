@@ -1,20 +1,14 @@
-import { StandardizedInput } from 'shared/classes/StandardizedInput'
+import StandardizedInput from 'shared/classes/StandardizedInput'
 import { comparisonOptions } from 'shared/utilities/filterUtils'
 
 import { shortAmountComparisonString } from 'shared/utilities/languageUtils'
 
-import {
-  minValidate,
-  maxValidate,
-  requiredValidate,
-  typeValidate,
-} from 'shared/classes/ParameterMapping/utilities/validations'
+import { minValidate, maxValidate, requiredValidate, typeValidate } from 'shared/classes/ParamMap/utilities/validations'
 
-export class ParameterMapping {
+export default class ParamMap {
   constructor({
     component = {},
     baseComponent = {},
-    languageModule = {},
     props = {},
     validations = {},
     defaultOptions = undefined,
@@ -33,7 +27,6 @@ export class ParameterMapping {
   } = {}) {
     this._component = component
     this._baseComponent = baseComponent
-    this._languageModule = languageModule
     this._props = props
     this._validations = validations
     this._field = field
@@ -93,14 +86,6 @@ export class ParameterMapping {
 
   set baseComponent(baseComponent) {
     this._baseComponent = baseComponent
-  }
-
-  get languageModule() {
-    return this._languageModule
-  }
-
-  set languageModule(languageModule) {
-    this._languageModule = languageModule
   }
 
   get props() {

@@ -1,6 +1,6 @@
 import { constantToQueryName, constantToName, constantToModelName } from 'shared/utilities/filterUtils'
 
-export class ApiMap {
+export default class ApiMap {
   constructor({ constant = '', name = '', queryName = '', url = '', model = '', resourceId = undefined } = {}) {
     this._constant = constant
     this._name = name

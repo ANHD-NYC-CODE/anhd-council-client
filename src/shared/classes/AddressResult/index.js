@@ -1,4 +1,4 @@
-export class AddressResult {
+export default class AddressResult {
   constructor({ addressObject = undefined } = {}) {
     if (!addressObject) {
       addressObject = { bin: undefined, housenumber: '', street: 'No results', borough: '' }

@@ -5,7 +5,7 @@ import AddressSearch from 'Lookup/AddressSearch'
 import GeographySelect from 'shared/components/GeographySelect'
 import { setGeographyAndRequestsAndRedirect } from 'Store/AppState/actions'
 import { setAppState } from 'Store/AppState/actions'
-import { StandardizedInput } from 'shared/classes/StandardizedInput'
+import StandardizedInput from 'shared/classes/StandardizedInput'
 import IntroductionBlock from 'shared/components/IntroductionBlock'
 import { Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 

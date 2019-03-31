@@ -1,4 +1,4 @@
-export class ParamError {
+export default class ParamError {
   constructor({ message = '' } = {}) {
     this._message = message
   }

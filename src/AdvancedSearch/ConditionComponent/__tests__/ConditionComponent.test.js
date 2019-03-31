@@ -6,9 +6,9 @@ import sinon from 'sinon'
 import { ConditionComponent } from 'AdvancedSearch/ConditionComponent'
 import { FilterComponent } from 'AdvancedSearch/FilterComponent'
 
-import { Condition } from 'shared/classes/Condition'
-import { ConditionFilter } from 'shared/classes/ConditionFilter'
-import { Filter } from 'shared/classes/Filter'
+import Condition from 'shared/classes/Condition'
+import ConditionFilter from 'shared/classes/ConditionFilter'
+import Filter from 'shared/classes/Filter'
 
 configure({ adapter: new Adapter() })
 

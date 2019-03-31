@@ -1,4 +1,4 @@
-export class Resource {
+export default class Resource {
   constructor({ model = undefined } = {}) {
     Object.keys(model).forEach(key => {
       this[key] = model[key]
