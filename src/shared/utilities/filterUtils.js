@@ -126,7 +126,7 @@ export const constructCountParamSet = ({
         },
         rangeKey: `${resourceModel.urlPath}Range`,
         rangePosition: 1,
-        defaultOptions: comparisonOptions(
+        defaultOptions: dateComparisonOptions(
           ['gte', 'between', 'lte'],
           ['After', 'Range', 'Before'],
           'DATE',
@@ -154,7 +154,7 @@ export const constructCountParamSet = ({
         },
         rangeKey: `${resourceModel.urlPath}Range`,
         rangePosition: 2,
-        defaultOptions: comparisonOptions(
+        defaultOptions: dateComparisonOptions(
           ['gte', 'between', 'lte'],
           ['After', 'Range', 'Before'],
           'DATE',
@@ -177,12 +177,15 @@ export const constructCountParamSet = ({
 export const constructSingleMapParamSet = ({
   resourceModel,
   baseComponent = IntegerField,
-  defaultAmount = 5,
   valuePrefix = undefined,
   valueSuffix = undefined,
   paramNoun,
   paramMapType = 'AMOUNT',
+  defaultOptions = undefined,
+  paramMapRole = '',
   paramMapField = '',
+  paramMapValue = 5,
+  paramMapComparison = '',
   paramSetLabel = '',
 } = {}) => {
   return new ParamSet({
@@ -195,16 +198,17 @@ export const constructSingleMapParamSet = ({
         component: ComparisonFieldSet,
         baseComponent,
         type: paramMapType,
-        role: '',
+        role: paramMapRole,
         paramNoun,
         valuePrefix,
         valueSuffix,
+        defaultOptions,
         field: paramMapField,
-        comparison: 'gte',
+        comparison: paramMapComparison,
+        value: paramMapValue,
         validations: {
           min: 0,
         },
-        value: defaultAmount,
       }),
     ],
   })
@@ -246,45 +250,28 @@ export const rentRegulatedProgramOptions = () => {
   return rentRegulatedPrograms.map(program => ({ name: 'value', value: program, label: program }))
 }
 
-export const comparisonOptions = (comparisons, labels, type, rangeKey) => {
-  if (type && !type.toUpperCase().match(/(DATE|INTEGER)/)) {
-    throw 'Pass either DATE or INTEGER into comparison options'
-  }
-
-  if (!(labels && labels.length)) labels = []
-
-  const dateLabels = {
-    gte: 'After',
-    between: 'Range',
-    lte: 'Before',
-  }
-
-  const integerLabels = {
-    lte: 'At most',
-    exact: 'Exactly',
-    gte: 'At least',
-  }
-
-  let defaultLabels
-  if (type && !labels.length) {
-    switch (type.toUpperCase()) {
-      case 'DATE':
-        defaultLabels = dateLabels
-        break
-      case 'INTEGER':
-        defaultLabels = integerLabels
-        break
-      default:
-        defaultLabels = integerLabels
-    }
-  } else {
-    defaultLabels = integerLabels
-  }
-
-  return comparisons.map((comparison, index) => ({
+export const dateComparisonOptions = ({
+  comparisonValues = ['gte', 'between', 'lte'],
+  labels = ['After', 'Between', 'Before'],
+  rangeKey,
+} = {}) => {
+  return comparisonValues.map((value, index) => ({
     name: 'comparison',
-    value: comparison,
-    label: labels[index] || defaultLabels[comparison],
+    value,
+    label: labels[index],
+    rangeKey: rangeKey,
+  }))
+}
+
+export const amountComparisonOptions = ({
+  comparisonValues = ['gte', 'exact', 'lte'],
+  labels = ['At least', 'Exactly', 'At most'],
+  rangeKey,
+} = {}) => {
+  return comparisonValues.map((value, index) => ({
+    name: 'comparison',
+    value,
+    label: labels[index],
     rangeKey: rangeKey,
   }))
 }

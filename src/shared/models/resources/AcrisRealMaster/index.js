@@ -20,7 +20,8 @@ const AcrisRealMaster = databaseObject => ({
       generatorFunction: resourceModel => {
         return constructSingleMapParamSet({
           resourceModel,
-          defaultAmount: 1000000,
+          paramMapValue: 1000000,
+          paramMapComparison: 'gte',
           paramSetLabel: 'Sale Price',
           paramMapField: 'docamount',
           valuePrefix: '$',

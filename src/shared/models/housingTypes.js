@@ -1,6 +1,10 @@
 import moment from 'moment'
 
-import { rentRegulatedProgramOptions, comparisonOptions } from 'shared/utilities/filterUtils'
+import {
+  rentRegulatedProgramOptions,
+  dateComparisonOptions,
+  amountComparisonOptions,
+} from 'shared/utilities/filterUtils'
 import ParamSet from 'shared/classes/ParamSet'
 import ParamMap from 'shared/classes/ParamMap'
 
@@ -59,7 +63,12 @@ export const RENTSTABILIZED = databaseObject => ({
           },
           rangeKey: 'rsUnitsRange',
           rangePosition: 1,
-          defaultOptions: comparisonOptions(['start', 'between'], ['After', 'Range'], 'DATE', 'rsUnitsRange'),
+          defaultOptions: dateComparisonOptions({
+            comparisonValues: ['start', 'between'],
+            labels: ['After', 'Range'],
+            type: 'DATE',
+            rangeKey: 'rsUnitsRange',
+          }),
           field: 'rsunitslost',
           comparison: 'start',
           value: '2010',
@@ -79,7 +88,12 @@ export const RENTSTABILIZED = databaseObject => ({
           },
           rangeKey: 'rsUnitsRange',
           rangePosition: 2,
-          defaultOptions: comparisonOptions(['start', 'between'], ['After', 'Range'], 'DATE', 'rsUnitsRange'),
+          defaultOptions: dateComparisonOptions({
+            comparisonValues: ['start', 'between'],
+            labels: ['After', 'Range'],
+            type: 'DATE',
+            rangeKey: 'rsUnitsRange',
+          }),
           field: 'rsunitslost',
           comparison: 'end',
           value: '2017',
@@ -127,12 +141,12 @@ export const RENTREGULATED = databaseObject => ({
           props: {
             type: 'date',
           },
-          defaultOptions: comparisonOptions(
-            ['lte', 'between', 'gte'],
-            ['Before', 'Range', 'After'],
-            'DATE',
-            'expirationRangeKey'
-          ),
+          defaultOptions: dateComparisonOptions({
+            comparisonValues: ['lte', 'between', 'gte'],
+            labels: ['Before', 'Range', 'After'],
+            type: 'DATE',
+            rangeKey: 'expirationRangeKey',
+          }),
           rangeKey: 'expirationRangeKey',
           rangePosition: 1,
           field: 'coresubsidyrecord__enddate',
@@ -150,12 +164,12 @@ export const RENTREGULATED = databaseObject => ({
           props: {
             type: 'date',
           },
-          defaultOptions: comparisonOptions(
-            ['lte', 'between', 'gte'],
-            ['Before', 'Range', 'After'],
-            'DATE',
-            'expirationRangeKey'
-          ),
+          defaultOptions: dateComparisonOptions({
+            comparisonValues: ['lte', 'between', 'gte'],
+            labels: ['Before', 'Range', 'After'],
+            type: 'DATE',
+            rangeKey: 'expirationRangeKey',
+          }),
           rangeKey: 'expirationRangeKey',
           rangePosition: 2,
           field: 'coresubsidyrecord__enddate',
@@ -182,7 +196,7 @@ export const SMALLHOMES = databaseObject => ({
           type: 'AMOUNT',
           role: '',
           paramNoun: 'units',
-          defaultOptions: comparisonOptions(['lte', 'exact'], null, 'INTEGER'),
+          defaultOptions: amountComparisonOptions({ comparisonValues: ['lte', 'exact'], type: 'INTEGER' }),
           field: 'unitsres',
           comparison: 'lte',
           value: '6',
