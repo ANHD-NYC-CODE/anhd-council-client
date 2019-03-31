@@ -1,5 +1,18 @@
+@import 'shared/styles/bootstrap/_variables.scss';
+
 .filter {
   .filter-control {
     margin: 0px 2px;
+  }
+
+  .filter-component__paramsets {
+    background-color: $gray-200;
+  }
+
+  .filter-component__paramsets-wrapper {
+    background-color: $white;
+    padding-top: 20px;
+    padding-left: 20px;
+    margin-left: 28px;
   }
 }

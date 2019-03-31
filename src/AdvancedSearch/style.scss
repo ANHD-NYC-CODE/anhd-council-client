@@ -67,4 +67,24 @@
       padding: 0.5rem 0.25rem;
     }
   }
+
+  // FORM COMPONENTS
+
+  .form-control,
+  .form-control:focus,
+  .input-group-text {
+    border: none;
+    box-shadow: none;
+    outline: none;
+    border-radius: 0;
+  }
+
+  .input-group-text {
+    border-bottom: 4px solid transparent;
+  }
+  .form-control,
+  .form-control:focus,
+  .input-group > .form-control {
+    border-bottom: 4px dotted $gray-300;
+  }
 }

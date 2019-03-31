@@ -5,7 +5,10 @@ import { Form, Col, Button } from 'react-bootstrap'
 import FormError from 'shared/components/FormError'
 import AddConditionButton from 'AdvancedSearch/FilterComponent/AddConditionButton'
 import RemoveFilterButton from 'AdvancedSearch/FilterComponent/RemoveFilterButton'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faMinus } from '@fortawesome/free-solid-svg-icons'
 
+import classnames from 'classnames'
 import './style.scss'
 export class FilterComponent extends React.Component {
   constructor(props) {
@@ -31,47 +34,84 @@ export class FilterComponent extends React.Component {
           </div>
 
           <Form.Row className="filter align-content-center">
-            <Form.Group as={Col} xs={9} lg={10}>
-              {Object.keys(this.props.filter.paramSets).map((paramsSetKey, paramSetIndex) =>
-                this.props.filter.paramSets[paramsSetKey].component({
-                  key: `filter-paramset-${this.props.filter.resourceConstant}-${paramSetIndex}`,
-                  dispatchAction: this.props.dispatchAction,
-                  replaceFilter: this.props.replaceFilter,
-                  filterIndex: this.props.filterIndex,
-                  filter: this.props.filter,
-                  paramSet: this.props.filter.paramSets[paramsSetKey],
-                  paramSetIndex: paramSetIndex,
-                })
-              )}
+            <Form.Group as={Col} xs={12}>
+              {Object.keys(this.props.filter.paramSets).map((paramsSetKey, paramSetIndex) => {
+                const paramSet = this.props.filter.paramSets[paramsSetKey]
+                return (
+                  <Form.Row
+                    className={classnames('paramset-wrapper', { 'modifying-paramset': paramsSetKey !== 'initial' })}
+                    key={`filter-paramset-${this.props.filter.resourceConstant}-${paramSetIndex}`}
+                  >
+                    <Col xs={8} lg={9}>
+                      {this.props.filter.paramSets[paramsSetKey].component({
+                        dispatchAction: this.props.dispatchAction,
+                        replaceFilter: this.props.replaceFilter,
+                        filterIndex: this.props.filterIndex,
+                        filter: this.props.filter,
+                        paramSet: paramSet,
+                        paramSetIndex: paramSetIndex,
+                      })}
+                    </Col>
+                    {
+                      // Buttons
+                    }
+                    <Col xs={4} lg={3} className="d-flex align-items-center">
+                      {paramSet.paramMaps.length ? (
+                        paramsSetKey === 'initial' ? (
+                          <div className="d-flex align-items-center">
+                            <RemoveFilterButton showPopups={this.props.showPopups} removeFilter={this.removeFilter} />
+                            {this.props.allowNewCondition && (
+                              <AddConditionButton
+                                addCondition={this.props.addCondition}
+                                filterIndex={this.props.filterIndex}
+                                showPopups={this.props.showPopups}
+                              />
+                            )}
+                          </div>
+                        ) : (
+                          <Button
+                            onClick={() =>
+                              paramSet.deleteAll({
+                                dispatchAction: this.props.dispatchAction,
+                              })
+                            }
+                            size="sm"
+                            variant="outline-danger"
+                          >
+                            <FontAwesomeIcon icon={faMinus} />
+                          </Button>
+                        )
+                      ) : null}
+                    </Col>
+                  </Form.Row>
+                )
+              })}
+              {
+                // New Button
+              }
               {Object.keys(this.props.filter.paramSets)
                 .filter(key => key !== 'initial')
                 .map((key, index) => {
                   const paramSet = this.props.filter.paramSets[key]
                   return !paramSet.paramMaps.length ? (
-                    <Form.Row key={`paramSet-${this.props.filter.resourceConstant}-${index}`}>
-                      <Form.Group as={Col} className="paramset--group">
-                        <Button
-                          className="paramset--new-button"
-                          variant="outline-primary"
-                          onClick={() => paramSet.create({ dispatchAction: this.props.dispatchAction })}
-                        >
-                          {`Add ${paramSet.label} +`}
-                        </Button>
-                      </Form.Group>
-                    </Form.Row>
+                    <div className="filter-component__paramsets">
+                      <div className="filter-component__paramsets-wrapper">
+                        <Form.Row key={`paramSet-${this.props.filter.resourceConstant}-${index}`}>
+                          <Form.Group as={Col} className="paramset--group">
+                            <Button
+                              className="paramset--new-button"
+                              variant="outline-primary"
+                              onClick={() => paramSet.create({ dispatchAction: this.props.dispatchAction })}
+                            >
+                              {`Add ${paramSet.label} +`}
+                            </Button>
+                          </Form.Group>
+                        </Form.Row>
+                      </div>
+                    </div>
                   ) : null
                 })}
             </Form.Group>
-            <Col xs={3} lg={2} className="d-flex align-items-center">
-              <RemoveFilterButton showPopups={this.props.showPopups} removeFilter={this.removeFilter} />
-              {this.props.allowNewCondition && (
-                <AddConditionButton
-                  addCondition={this.props.addCondition}
-                  filterIndex={this.props.filterIndex}
-                  showPopups={this.props.showPopups}
-                />
-              )}
-            </Col>
           </Form.Row>
         </div>
         <Form.Row />
