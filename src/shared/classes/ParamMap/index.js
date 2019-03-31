@@ -1,5 +1,5 @@
 import StandardizedInput from 'shared/classes/StandardizedInput'
-import { comparisonOptions } from 'shared/utilities/filterUtils'
+import { amountComparisonOptions } from 'shared/utilities/filterUtils'
 
 import { shortAmountComparisonString } from 'shared/utilities/languageUtils'
 
@@ -11,7 +11,7 @@ export default class ParamMap {
     baseComponent = {},
     props = {},
     validations = {},
-    defaultOptions = undefined,
+    defaultOptions = amountComparisonOptions(),
     field = '',
     comparison = '',
     value = '',
@@ -153,7 +153,7 @@ export default class ParamMap {
   }
 
   get options() {
-    return this._defaultOptions || comparisonOptions(['gte', 'exact', 'lte'])
+    return this._defaultOptions
   }
 
   get resourceConstant() {
@@ -177,7 +177,7 @@ export default class ParamMap {
   }
 
   createOptions(values) {
-    return values || this.defaultOptions || comparisonOptions(['gte', 'exact', 'lte'], [], 'INTEGER')
+    return values || this.defaultOptions
   }
 
   update({ dispatchAction = undefined, e = undefined } = {}) {

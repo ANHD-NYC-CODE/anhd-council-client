@@ -1,4 +1,6 @@
 import ParamMap from 'shared/classes/ParamMap'
+import { constructSingleMapParamSet } from 'shared/utilities/filterUtils'
+
 const Property = databaseObject => {
   return {
     resourceConstant: 'PROPERTY',
@@ -85,7 +87,18 @@ const Property = databaseObject => {
       },
     ],
 
-    ownResourceFilters: {},
+    ownResourceFilters: {
+      initial: {
+        generatorFunction: resourceModel => {
+          return constructSingleMapParamSet({
+            resourceModel,
+            paramMapField: 'housingtype',
+            paramMapValue: 'all',
+            defaultOptions: [],
+          })
+        },
+      },
+    },
     relatedResourceMappings: {
       ACRIS_REAL_MASTER: 'acrisreallegals__documentid',
       PROPERTY_SALE_BY_AMOUNT: 'acrisreallegals__documentid',
