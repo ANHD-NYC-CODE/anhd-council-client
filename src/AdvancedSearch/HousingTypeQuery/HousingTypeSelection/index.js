@@ -24,6 +24,7 @@ const HousingTypeSelection = props => {
 
       {Object.keys(props.housingType.paramSets).map((paramsSetKey, paramSetIndex) => {
         const paramSet = props.housingType.paramSets[paramsSetKey]
+
         return !!paramSet.allowActions && !paramSet.paramMaps.length ? (
           <Form.Row key={`housingtype-${paramSetIndex}`}>
             <Form.Group as={Col} className="housingtype-paramset--group">
@@ -32,7 +33,7 @@ const HousingTypeSelection = props => {
                 variant="outline-primary"
                 onClick={() => paramSet.create({ dispatchAction: dispatchAction })}
               >
-                {paramSet.props.newButtonLabel}
+                {`Add ${paramSet.label} +`}
               </Button>
             </Form.Group>
           </Form.Row>

@@ -27,9 +27,7 @@ export const RENTSTABILIZED = databaseObject => ({
   schema: {
     rsunitslost: new ParamSet({
       component: MultiTypeFieldGroup,
-      props: {
-        newButtonLabel: 'Add Units Lost +',
-      },
+      label: 'Units Lost',
       allowActions: true,
       createType: 'ALL_RANGE_ONE',
       defaults: [
@@ -99,9 +97,7 @@ export const RENTREGULATED = databaseObject => ({
   schema: {
     coresubsidyrecord__programname: new ParamSet({
       component: MultiTypeFieldGroup,
-      props: {
-        newButtonLabel: 'Add Program +',
-      },
+      label: 'Program',
       allowActions: true,
       createType: 'ONE',
       defaults: [
@@ -121,9 +117,7 @@ export const RENTREGULATED = databaseObject => ({
 
     coresubsidyrecord__enddate: new ParamSet({
       component: MultiTypeFieldGroup,
-      props: {
-        newButtonLabel: 'Add Expiration +',
-      },
+      label: 'Expiration',
       allowActions: true,
       createType: 'ONE',
       defaults: [
@@ -182,9 +176,7 @@ export const SMALLHOMES = databaseObject => ({
   schema: {
     unitsres: new ParamSet({
       component: MultiTypeFieldGroup,
-      props: {
-        newButtonLabel: 'Add Residential Units +',
-      },
+      label: 'Residential Units',
       allowActions: true,
       createType: 'ONE',
       defaults: [

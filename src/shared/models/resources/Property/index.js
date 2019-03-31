@@ -1,4 +1,3 @@
-import * as resources from 'shared/models/resources'
 import ParamMap from 'shared/classes/ParamMap'
 const Property = databaseObject => {
   return {

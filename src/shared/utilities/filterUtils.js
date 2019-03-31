@@ -202,10 +202,6 @@ export const constructCountSchema = ({
   return {
     [constantToQueryName(constant)]: new ParamSet({
       component: MultiTypeFieldGroup,
-      props: {
-        label: constantToName({ constant, capitalizeDepartment }),
-        newButtonLabel: '',
-      },
       allowActions: false,
       createType: 'ALL_RANGE_ONE',
       defaults: [
