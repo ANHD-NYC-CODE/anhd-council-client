@@ -53,9 +53,6 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
         constant: 'HPD_VIOLATION',
         amountFieldQuery: 'count',
       }),
-      languageModule: new LanguageModule({
-        noun: constantToName({ constant: 'HPD_VIOLATION', capitalizeDepartment: true, plural: true }),
-      }),
     },
     {
       resourceModel: resourceModels['DOB_VIOLATION'],
@@ -64,9 +61,6 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
         constant: 'DOB_VIOLATION',
         amountFieldQuery: 'count',
         capitalizeDepartment: true,
-      }),
-      languageModule: new LanguageModule({
-        noun: constantToName({ constant: 'DOB_VIOLATION', capitalizeDepartment: true, plural: true }),
       }),
     },
     {
@@ -77,9 +71,6 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
         amountFieldQuery: 'count',
         capitalizeDepartment: true,
       }),
-      languageModule: new LanguageModule({
-        noun: constantToName({ constant: 'ECB_VIOLATION', capitalizeDepartment: true, plural: true }),
-      }),
     },
     {
       resourceModel: resourceModels['HPD_COMPLAINT'],
@@ -89,9 +80,6 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
         amountFieldQuery: 'count',
         capitalizeDepartment: true,
       }),
-      languageModule: new LanguageModule({
-        noun: constantToName({ constant: 'HPD_COMPLAINT', capitalizeDepartment: true, plural: true }),
-      }),
     },
     {
       resourceModel: resourceModels['DOB_COMPLAINT'],
@@ -100,9 +88,6 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
         constant: 'DOB_COMPLAINT',
         amountFieldQuery: 'count',
         capitalizeDepartment: true,
-      }),
-      languageModule: new LanguageModule({
-        noun: constantToName({ constant: 'DOB_COMPLAINT', capitalizeDepartment: true, plural: true }),
       }),
     },
     {
@@ -115,9 +100,6 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
         capitalizeDepartment: true,
         defaultAmount: 5,
       }),
-      languageModule: new LanguageModule({
-        noun: constantToName({ constant: 'DOB_FILED_PERMIT', capitalizeDepartment: true, plural: true }),
-      }),
     },
     {
       resourceModel: resourceModels['DOB_ISSUED_PERMIT'],
@@ -127,9 +109,6 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
         amountFieldQuery: 'count',
         capitalizeDepartment: true,
         defaultAmount: 5,
-      }),
-      languageModule: new LanguageModule({
-        noun: constantToName({ constant: 'DOB_ISSUED_PERMIT', capitalizeDepartment: true, plural: true }),
       }),
     },
     {
@@ -141,9 +120,6 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
         capitalizeDepartment: false,
         defaultAmount: 1,
       }),
-      languageModule: new LanguageModule({
-        noun: constantToName({ constant: 'EVICTION', capitalizeDepartment: false, plural: true }),
-      }),
     },
     {
       resourceModel: resourceModels['HOUSING_LITIGATION'],
@@ -153,9 +129,6 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
         amountFieldQuery: 'count',
         capitalizeDepartment: false,
         defaultAmount: 1,
-      }),
-      languageModule: new LanguageModule({
-        noun: constantToName({ constant: 'HOUSING_LITIGATION', capitalizeDepartment: false, plural: true }),
       }),
     },
     {
@@ -170,14 +143,11 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
         hiddenParamMap: new ParameterMapping({
           component: GenericFieldSet,
           baseComponent: HiddenField,
-          resourceModel: resourceModels['PROPERTY_SALE_BY_AMOUNT'],
+          resourceModel: resourceModels['LISPENDEN'],
           field: 'lispendens__type',
           comparison: '',
           value: 'foreclosure',
         }),
-      }),
-      languageModule: new LanguageModule({
-        noun: constantToName({ constant: 'FORECLOSURE', capitalizeDepartment: false, plural: true }),
       }),
     },
     {
@@ -186,23 +156,10 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
         resourceModel: resourceModels['PROPERTY_SALE_BY_AMOUNT'],
         constant: 'PROPERTY_SALE_BY_AMOUNT',
         apiField: 'acrisreallegals',
-        amountFieldQuery: 'documentid__count',
+        amountFieldQuery: 'documentid__docamount',
         amountNoun: '',
-        // amountValuePrefix: '$',
-        defaultAmount: '1',
-        extraParamMap: new ParameterMapping({
-          component: ComparisonFieldSet,
-          baseComponent: IntegerField,
-          resourceModel: resourceModels['PROPERTY_SALE_BY_AMOUNT'],
-          type: 'AMOUNT',
-          valuePrefix: '$',
-          field: 'documentid__docamount',
-          comparison: 'gte',
-          value: '1000000',
-        }),
-      }),
-      languageModule: new LanguageModule({
-        noun: constantToName({ constant: 'PROPERTY_SALE_BY_AMOUNT', capitalizeDepartment: false, plural: false }),
+        amountValuePrefix: '$',
+        defaultAmount: '1000000',
       }),
     },
     {
@@ -214,9 +171,6 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
         amountFieldQuery: 'documentid__count',
         defaultAmount: 2,
         amountNoun: 'times',
-      }),
-      languageModule: new LanguageModule({
-        noun: constantToName({ constant: 'PROPERTY_SALE_BY_COUNT', capitalizeDepartment: false, plural: false }),
       }),
     },
   ]
