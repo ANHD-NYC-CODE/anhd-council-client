@@ -1,7 +1,11 @@
 import { constructAxiosGet } from 'shared/utilities/Axios'
 import * as c from '../constants'
 import * as u from 'shared/constants/urls'
-import { transformStateIntoParamObject } from 'Store/AdvancedSearch/utilities/advancedSearchStoreUtils'
+
+export const replacePropertyFilter = propertyFilter => ({
+  type: c.REPLACE_PROPERTY_FILTER,
+  propertyFilter,
+})
 
 export const addNewCondition = (parentKey, conditionKey, filterIndex) => {
   return {
@@ -69,17 +73,3 @@ export const handleGetAdvancedSearch = response => ({
   type: c.HANDLE_GET_ADVANCED_SEARCH,
   data: response.data,
 })
-
-export const getAdvancedSearch = () => (dispatch, getState, access_token) => {
-  const requestId = Math.floor(Math.random() * 1000000)
-  return constructAxiosGet(
-    dispatch,
-    getState,
-    requestId,
-    `${u.PROPERTY_URL}`,
-    transformStateIntoParamObject(getState().advancedSearch),
-    access_token,
-    c.GET_ADVANCED_SEARCH,
-    handleGetAdvancedSearch
-  )
-}

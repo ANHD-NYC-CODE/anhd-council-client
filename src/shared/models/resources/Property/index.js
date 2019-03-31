@@ -1,5 +1,7 @@
 import ParamMap from 'shared/classes/ParamMap'
-import { constructSingleMapParamSet } from 'shared/utilities/filterUtils'
+import { comparisonOptions, constructSingleMapParamSet } from 'shared/utilities/filterUtils'
+import GenericFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/GenericFieldSet'
+import TextSelectField from 'AdvancedSearch/FilterComponent/Field/TextSelectField'
 
 const Property = databaseObject => {
   return {
@@ -92,9 +94,17 @@ const Property = databaseObject => {
         generatorFunction: resourceModel => {
           return constructSingleMapParamSet({
             resourceModel,
+            component: GenericFieldSet,
+            baseComponent: TextSelectField,
+            paramSetLabel: 'Housing Type',
             paramMapField: 'housingtype',
             paramMapValue: 'all',
-            defaultOptions: [],
+
+            defaultOptions: comparisonOptions({
+              name: 'value',
+              comparisonValues: ['all', 'rs', 'rr', 'sh', 'mr', 'ph'],
+              labels: ['All', 'Rent Stabilized', 'Subsidized Housing', 'Small Homes', 'Market Rate', 'Public Housing'],
+            }),
           })
         },
       },

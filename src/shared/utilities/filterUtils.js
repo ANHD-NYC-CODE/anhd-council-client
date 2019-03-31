@@ -176,6 +176,7 @@ export const constructCountParamSet = ({
 
 export const constructSingleMapParamSet = ({
   resourceModel,
+  component = ComparisonFieldSet,
   baseComponent = IntegerField,
   valuePrefix = undefined,
   valueSuffix = undefined,
@@ -195,7 +196,7 @@ export const constructSingleMapParamSet = ({
     defaults: [
       new ParamMap({
         resourceModel,
-        component: ComparisonFieldSet,
+        component,
         baseComponent,
         type: paramMapType,
         role: paramMapRole,
@@ -248,6 +249,15 @@ export const rentRegulatedProgramOptions = () => {
   ]
 
   return rentRegulatedPrograms.map(program => ({ name: 'value', value: program, label: program }))
+}
+
+export const comparisonOptions = ({ comparisonValues = [], labels = [], name = 'comparison', rangeKey } = {}) => {
+  return comparisonValues.map((value, index) => ({
+    name,
+    value,
+    label: labels[index],
+    rangeKey: rangeKey,
+  }))
 }
 
 export const dateComparisonOptions = ({

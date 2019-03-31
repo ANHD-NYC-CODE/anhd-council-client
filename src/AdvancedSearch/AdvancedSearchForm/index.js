@@ -7,6 +7,8 @@ import * as yup from 'yup'
 import StandardizedInput from 'shared/classes/StandardizedInput'
 import { getAdvancedSearchParamMaps } from 'Store/AdvancedSearch/utilities/advancedSearchStoreUtils'
 import { setGeographyAndRequestsAndRedirect } from 'Store/AppState/actions'
+import FilterComponent from 'AdvancedSearch/FilterComponent'
+import { replacePropertyFilter } from 'Store/AdvancedSearch/actions'
 
 import { addGeography, updateGeography } from 'Store/AdvancedSearch/actions'
 import { addHousingType, updateHousingType } from 'Store/AdvancedSearch/actions'
@@ -40,6 +42,7 @@ class AdvancedSearchForm extends React.PureComponent {
     this.submitForm = this.submitForm.bind(this)
     this.addHousingType = this.addHousingType.bind(this)
     this.changeHousingType = this.changeHousingType.bind(this)
+    this.updatePropertyFilter = this.updatePropertyFilter.bind(this)
     this.validateForm = this.validateForm.bind(this)
     this.changeGeography = this.changeGeography.bind(this)
     this.handleChangeGeographyType = this.handleChangeGeographyType.bind(this)
@@ -114,6 +117,11 @@ class AdvancedSearchForm extends React.PureComponent {
         changingGeographyId: undefined,
       })
     )
+  }
+
+  updatePropertyFilter() {
+    const propertyFilter = this.props.advancedSearch.propertyFilter
+    this.props.dispatch(replacePropertyFilter(propertyFilter))
   }
 
   addHousingType(e) {
@@ -210,6 +218,16 @@ class AdvancedSearchForm extends React.PureComponent {
             {this.props.appState.currentGeographyType && this.props.appState.currentGeographyId && (
               <div>
                 <h4 className="text-muted font-weight-bold text-uppercase mt-5 mb-4">2) Select a housing type</h4>
+                {
+                  <FilterComponent
+                    blockWidth={true}
+                    config={this.props.config}
+                    dispatch={this.props.dispatch}
+                    dispatchAction={this.updatePropertyFilter}
+                    filter={this.props.advancedSearch.propertyFilter}
+                    showPopups={false}
+                  />
+                }
                 <HousingTypeQuery
                   addHousingType={this.addHousingType}
                   changeHousingType={this.changeHousingType}
