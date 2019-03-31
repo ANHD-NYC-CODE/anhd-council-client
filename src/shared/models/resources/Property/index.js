@@ -5,6 +5,7 @@ const Property = databaseObject => {
     resourceConstant: 'PROPERTY',
     urlPath: 'properties',
     label: 'Properties',
+    sentenceNoun: 'properties',
     ownResultFilters: [
       {
         id: 'HOUSING_TYPE_RESIDENTIAL',

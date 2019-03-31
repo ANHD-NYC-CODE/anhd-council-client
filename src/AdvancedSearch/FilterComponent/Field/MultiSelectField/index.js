@@ -8,7 +8,7 @@ const MultiSelectField = props => {
   return (
     <InputGroup>
       <InputGroup.Prepend>
-        <InputGroup.Text>{props.paramMap.languageModule.noun}</InputGroup.Text>
+        <InputGroup.Text>{props.paramMap.paramNoun}</InputGroup.Text>
       </InputGroup.Prepend>
       <CustomSelect
         className={'textmultiselect-field form-control'}

@@ -7,6 +7,15 @@ export const capitalizeWords = string => {
     .join(' ')
 }
 
+export const grammaticalNoun = (noun, value) => {
+  if (!noun) return ''
+  if (value > 1) {
+    return ` ${noun.endsWith('s') ? noun : noun + 's'}`
+  } else {
+    return ` ${noun.endsWith('s') ? noun.substring(0, noun.length - 1) : noun}`
+  }
+}
+
 export const grammaticalList = (array, conjunction = 'and') => {
   let lastItem
   let sentence

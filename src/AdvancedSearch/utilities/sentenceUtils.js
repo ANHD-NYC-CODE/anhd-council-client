@@ -1,9 +1,12 @@
 import moment from 'moment'
+import _ from 'lodash'
+
 import {
   singular,
   grammaticalList,
   longAmountComparisonString,
   constructDateComparisonString,
+  grammaticalNoun,
 } from 'shared/utilities/languageUtils'
 //////////////////
 // Sentence
@@ -15,24 +18,20 @@ export const constructAmountSentence = (dataset, comparison, value) => {
 const parseParamMapComparison = paramMap => {
   switch (paramMap.type) {
     case 'AMOUNT':
-      return `${longAmountComparisonString(paramMap.comparison)} ${paramMap.languageModule.valuePrefix}${
-        paramMap.value
-      }${paramMap.languageModule.valueSuffix}${paramMap.languageModule.grammaticalNoun(
-        paramMap.resourceModel.label,
-        paramMap.value
-      )}`
+      return `have ${longAmountComparisonString(paramMap.comparison)} ${paramMap.valuePrefix}${paramMap.value}${
+        paramMap.valueSuffix
+      }${grammaticalNoun(paramMap.sentenceNoun, paramMap.value)}`
     case 'PERCENT':
-      return `${longAmountComparisonString(paramMap.comparison)} ${paramMap.languageModule.valuePrefix}${
-        paramMap.value
-      }${paramMap.languageModule.valueSuffix}${paramMap.languageModule.grammaticalNoun(
-        paramMap.resourceModel.label,
-        paramMap.value
-      )}`
+      return `have ${longAmountComparisonString(paramMap.comparison)} ${paramMap.valuePrefix}${paramMap.value}${
+        paramMap.languageModule.valueSuffix
+      }${grammaticalNoun(paramMap.sentenceNoun, paramMap.value)}`
     case 'DATE':
       return `${constructDateComparisonString(paramMap.comparison)} ${moment(paramMap.value).format('MM/DD/YYYY')}`
     case 'YEAR':
       return `${constructDateComparisonString(paramMap.comparison)} ${paramMap.value}`
     case 'TEXT':
+      return [paramMap.valuePrefix, paramMap.value, paramMap.valueSuffix, paramMap.paramNoun].filter(p => p).join(' ')
+    case 'MULTI-TEXT':
       return `${grammaticalList(paramMap.value.split(','), 'or')}`
   }
 }
@@ -40,12 +39,62 @@ const parseParamMapComparison = paramMap => {
 const parseParamMapRangeGroup = paramMapRangeGroup => {
   const gte = paramMapRangeGroup.find(pm => pm.comparison.match(/(gte|start)/))
   const lte = paramMapRangeGroup.find(pm => pm.comparison.match(/(lte|end)/))
-
   switch (paramMapRangeGroup[0].type) {
     case 'DATE':
       return `between ${moment(gte.value).format('MM/DD/YYYY')} and ${moment(lte.value).format('MM/DD/YYYY')}`
     case 'YEAR':
       return `between ${gte.value} and ${lte.value}`
+  }
+}
+
+const parseRoleGroup = paramMaps => {
+  if (paramMaps.some(pm => !!pm.rangeKey)) {
+    const rangeGroups = _.groupBy(paramMaps, pm => pm.rangeKey)
+    return Object.values(rangeGroups)
+      .map(group => {
+        if (group.length === 2) {
+          return parseParamMapRangeGroup(group.sort((a, b) => a.rangePosition < b.rangePosition))
+        } else if (group.length === 1) {
+          return parseParamMapComparison(group[0])
+        }
+      })
+      .join(' ')
+  } else {
+    return paramMaps.map(pm => parseParamMapComparison(pm)).join(' ')
+  }
+}
+
+export const convertFilterToSentence = filter => {
+  if (Object.keys(filter.params).length) {
+    return ` ${Object.keys(filter.paramSets)
+      .map(key => {
+        const paramSet = filter.paramSets[key]
+        // Get Primary
+        const primaryParamMaps = paramSet.paramMaps.filter(pm => pm.role === 'PRIMARY')
+
+        // Get Limiter
+        const limiterParamMaps = paramSet.paramMaps.filter(pm => pm.role === 'LIMITER')
+
+        // Get modifying param maps
+        const modifyingParamMaps = paramSet.paramMaps.filter(pm => pm.role !== 'PRIMARY' && pm.role !== 'LIMITER')
+
+        // Parse them
+        const parsedModifyingParamMaps = modifyingParamMaps.map(pm => parseParamMapComparison(pm))
+
+        const modifyingSegment = parsedModifyingParamMaps.length ? `(${[...parsedModifyingParamMaps]})` : undefined
+
+        return [
+          `${parseRoleGroup(primaryParamMaps)} ${filter.resourceModel.sentenceNoun}`,
+          modifyingSegment,
+          parseRoleGroup(limiterParamMaps),
+        ]
+          .filter(p => p)
+          .join(' ')
+      })
+      .filter(p => p)
+      .join(' and ')}`
+  } else {
+    return ''
   }
 }
 
@@ -90,38 +139,6 @@ export const convertGeographiesToSentence = geographies => {
           .join(' and ')
       : '...'
   }`
-}
-
-export const convertFilterToSentence = filter => {
-  if (Object.keys(filter.params).length) {
-    return ` ${Object.keys(filter.paramSets)
-      .map(key => {
-        const paramSet = filter.paramSets[key]
-        return paramSet.paramMaps
-          .map(paramMap => {
-            // Process range paramMap separately
-            let modifier = paramMap.languageModule.propertyAdjective
-              ? `${paramMap.languageModule.propertyAdjective} `
-              : ''
-            let sentence = ''
-            if (paramMap.rangeKey && paramSet.paramMaps.filter(pm => pm.rangeKey === paramMap.rangeKey).length === 2) {
-              // Only process once with the first object
-              if (paramMap.rangePosition === 1) {
-                sentence = parseParamMapRangeGroup(paramSet.paramMaps.filter(pm => pm.rangeKey === paramMap.rangeKey))
-              }
-            } else {
-              sentence = parseParamMapComparison(paramMap)
-            }
-            return sentence ? modifier + sentence : ''
-          })
-          .filter(p => p)
-          .join(' ')
-      })
-      .filter(p => p)
-      .join(' and ')}`
-  } else {
-    return ''
-  }
 }
 
 export const convertHousingTypesToSentence = housingTypes => {

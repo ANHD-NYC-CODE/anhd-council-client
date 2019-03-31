@@ -1,9 +1,14 @@
 import { Filter } from 'shared/classes/Filter'
 import { constantToQueryName } from 'shared/utilities/filterUtils'
+import * as resourceModels from 'shared/models/resources'
+import { createAdvancedSearchFilters } from 'shared/utilities/filterUtils'
+import { mockSetupResourceModels } from 'shared/utilities/configUtils'
+const ADVANCED_FILTERS = createAdvancedSearchFilters({ resourceModels: mockSetupResourceModels() })
 
 export const createFilterMock = ({ constant = '' } = {}) => {
   const filter = new Filter({
-    modelConstant: constant,
+    resourceModel: ADVANCED_FILTERS.find(f => f.resourceModel.resourceConstant === constant).resourceModel,
+    schema: ADVANCED_FILTERS.find(f => f.resourceModel.resourceConstant === constant).schema,
   })
   filter.paramSets[constantToQueryName(constant)].createOppositeRangeMap()
   return filter

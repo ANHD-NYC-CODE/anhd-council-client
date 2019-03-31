@@ -9,9 +9,7 @@ const ComparisonFieldSet = props => {
     <Form.Row className="comparison-fieldset" key={props.key}>
       <InputGroup as={Col} xs={props.filter ? 4 : 6}>
         <InputGroup.Prepend>
-          {props.paramMap.languageModule.propertyAdjective && (
-            <InputGroup.Text>{props.paramMap.languageModule.propertyAdjective}</InputGroup.Text>
-          )}
+          <InputGroup.Text />
         </InputGroup.Prepend>
         <Form.Control
           name="comparison"
@@ -47,9 +45,9 @@ const ComparisonFieldSet = props => {
           '8': props.filter && props.paramMap.rangeKey,
         }}
       >
-        {props.paramMap.languageModule.valuePrefix && (
+        {props.paramMap.valuePrefix && (
           <InputGroup.Prepend>
-            <InputGroup.Text>{props.paramMap.languageModule.valuePrefix}</InputGroup.Text>
+            <InputGroup.Text>{props.paramMap.valuePrefix}</InputGroup.Text>
           </InputGroup.Prepend>
         )}
         {props.paramMap.baseComponent({
@@ -62,9 +60,7 @@ const ComparisonFieldSet = props => {
           {props.paramMap.languageModule.valueSuffix && (
             <InputGroup.Text>{props.paramMap.languageModule.valueSuffix}</InputGroup.Text>
           )}
-          {props.paramMap.languageModule.shortNoun && (
-            <InputGroup.Text>{props.paramMap.languageModule.shortNoun}</InputGroup.Text>
-          )}
+          {props.paramMap.paramNoun && <InputGroup.Text>{props.paramMap.paramNoun}</InputGroup.Text>}
         </InputGroup.Append>
       </InputGroup>
       {props.filter && props.paramMap.type === 'AMOUNT' && (

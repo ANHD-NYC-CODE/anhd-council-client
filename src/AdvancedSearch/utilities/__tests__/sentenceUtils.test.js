@@ -1,6 +1,7 @@
 import * as a from 'AdvancedSearch/utilities/sentenceUtils'
 import { Geography } from 'shared/classes/Geography'
 import { Filter } from 'shared/classes/Filter'
+import { ParameterMapping } from 'shared/classes/ParameterMapping'
 import { Condition } from 'shared/classes/Condition'
 import { ConditionFilter } from 'shared/classes/ConditionFilter'
 import { filterMocks } from 'shared/models/__mocks__/filterMocks'
@@ -17,10 +18,49 @@ const todayplus1year = moment(moment.now())
 
 describe('convertFilterToSentence', () => {
   describe('from/to', () => {
-    it('converts the object into a field string', () => {
+    it('convertFilterToSentence - converts the object into a field string', () => {
       const object = filterMocks('HPD_VIOLATION')
 
-      const result = ` have at least 5 HPD Violations between ${todayminus1year} and ${todayplus1year}`
+      const result = ` have at least 5 HPD violations between ${todayminus1year} and ${todayplus1year}`
+      expect(a.convertFilterToSentence(object)).toEqual(result)
+    })
+  })
+
+  describe('sentencePosition', () => {
+    it('sentence position - converts the object into a field string', () => {
+      const object = new Filter({
+        modelConstant: 'HPD_VIOLATION',
+        paramSets: {
+          hpdviolations: {
+            paramMaps: [
+              new ParameterMapping({
+                type: 'AMOUNT',
+                role: 'PRIMARY',
+                field: 'hpdviolations__count',
+                comparison: 'gte',
+                value: 5,
+              }),
+              new ParameterMapping({
+                type: 'DATE',
+                role: 'LIMITER',
+                field: 'hpdviolations__approveddate',
+                comparison: 'gte',
+                value: todayminus1year,
+              }),
+              new ParameterMapping({
+                type: 'TEXT',
+                role: '',
+                valuePrefix: 'class',
+                field: 'hpdviolations__class_name',
+                comparison: '',
+                value: 'A',
+              }),
+            ],
+          },
+        },
+      })
+
+      const result = ` have at least 5 HPD violations (class A) after ${todayminus1year}`
       expect(a.convertFilterToSentence(object)).toEqual(result)
     })
   })
