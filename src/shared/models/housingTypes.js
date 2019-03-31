@@ -1,8 +1,8 @@
 import moment from 'moment'
 
 import { rentRegulatedProgramOptions, comparisonOptions } from 'shared/utilities/filterUtils'
-import { ParameterMapSet } from 'shared/classes/ParameterMapSet'
-import { ParameterMapping } from 'shared/classes/ParameterMapping'
+import ParamSet from 'shared/classes/ParamSet'
+import ParamMap from 'shared/classes/ParamMap'
 
 import MultiTypeFieldGroup from 'AdvancedSearch/FilterComponent/Group/MultiTypeFieldGroup'
 import GenericFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/GenericFieldSet'
@@ -12,8 +12,7 @@ import DateField from 'AdvancedSearch/FilterComponent/Field/DateField'
 import IntegerField from 'AdvancedSearch/FilterComponent/Field/IntegerField'
 
 import MultiSelectField from 'AdvancedSearch/FilterComponent/Field/MultiSelectField'
-import { LanguageModule } from 'shared/classes/LanguageModule'
-
+1
 import { getApiMap } from 'shared/utilities/classUtils'
 
 export const ALLTYPES = databaseObject => ({
@@ -26,26 +25,21 @@ export const RENTSTABILIZED = databaseObject => ({
   apiMap: getApiMap('RENT_STABILIZED'),
   id: 'RENT_STABILIZED',
   schema: {
-    rsunitslost: new ParameterMapSet({
+    rsunitslost: new ParamSet({
       component: MultiTypeFieldGroup,
       props: {
-        label: 'Rent Stabilized Units Lost',
         newButtonLabel: 'Add Units Lost +',
       },
       allowActions: true,
       createType: 'ALL_RANGE_ONE',
       defaults: [
-        new ParameterMapping({
+        new ParamMap({
           component: ComparisonFieldSet,
           baseComponent: IntegerField,
           type: 'PERCENT',
           role: 'PRIMARY',
-          paramNoun: 'lost units',
-          languageModule: new LanguageModule({
-            propertyAdjective: 'that lost',
-            valueSuffix: '%',
-          }),
-
+          paramNoun: 'units lost',
+          valueSuffix: '%',
           validations: {
             min: 0,
             max: 100,
@@ -54,7 +48,7 @@ export const RENTSTABILIZED = databaseObject => ({
           comparison: 'gte',
           value: '25',
         }),
-        new ParameterMapping({
+        new ParamMap({
           component: ComparisonFieldSet,
           baseComponent: DateField,
           type: 'YEAR',
@@ -66,7 +60,6 @@ export const RENTSTABILIZED = databaseObject => ({
             min: 2007,
             max: (databaseObject || {}).version,
           },
-          languageModule: new LanguageModule(),
           rangeKey: 'rsUnitsRange',
           rangePosition: 1,
           defaultOptions: comparisonOptions(['start', 'between'], ['After', 'Range'], 'DATE', 'rsUnitsRange'),
@@ -74,13 +67,12 @@ export const RENTSTABILIZED = databaseObject => ({
           comparison: 'start',
           value: '2010',
         }),
-        new ParameterMapping({
+        new ParamMap({
           component: ComparisonFieldSet,
           baseComponent: DateField,
           type: 'YEAR',
           role: 'LIMITER',
           paramNoun: 'units',
-          languageModule: new LanguageModule(),
           props: {
             type: 'number',
           },
@@ -105,23 +97,21 @@ export const RENTREGULATED = databaseObject => ({
   id: 'RENT_REGULATED',
 
   schema: {
-    coresubsidyrecord__programname: new ParameterMapSet({
+    coresubsidyrecord__programname: new ParamSet({
       component: MultiTypeFieldGroup,
       props: {
-        label: 'Program Name',
         newButtonLabel: 'Add Program +',
       },
       allowActions: true,
       createType: 'ONE',
       defaults: [
-        new ParameterMapping({
+        new ParamMap({
           defaultOptions: rentRegulatedProgramOptions(),
           component: GenericFieldSet,
           baseComponent: MultiSelectField,
           type: 'MULTI-TEXT',
           role: '',
           paramNoun: 'program(s)',
-          languageModule: new LanguageModule({ propertyAdjective: 'with' }),
           field: 'coresubsidyrecord__programname',
           comparison: 'any',
           value: '',
@@ -129,16 +119,15 @@ export const RENTREGULATED = databaseObject => ({
       ],
     }),
 
-    coresubsidyrecord__enddate: new ParameterMapSet({
+    coresubsidyrecord__enddate: new ParamSet({
       component: MultiTypeFieldGroup,
       props: {
-        label: 'Expiration Date',
         newButtonLabel: 'Add Expiration +',
       },
       allowActions: true,
       createType: 'ONE',
       defaults: [
-        new ParameterMapping({
+        new ParamMap({
           component: ComparisonFieldSet,
           baseComponent: DateField,
           type: 'DATE',
@@ -153,7 +142,6 @@ export const RENTREGULATED = databaseObject => ({
             'DATE',
             'expirationRangeKey'
           ),
-          languageModule: new LanguageModule({ propertyAdjective: 'expiring' }),
           rangeKey: 'expirationRangeKey',
           rangePosition: 1,
           field: 'coresubsidyrecord__enddate',
@@ -162,7 +150,7 @@ export const RENTREGULATED = databaseObject => ({
             .add(1, 'Y')
             .format('YYYY-MM-DD'),
         }),
-        new ParameterMapping({
+        new ParamMap({
           component: ComparisonFieldSet,
           baseComponent: DateField,
           type: 'DATE',
@@ -177,7 +165,6 @@ export const RENTREGULATED = databaseObject => ({
             'DATE',
             'expirationRangeKey'
           ),
-          languageModule: new LanguageModule({ propertyAdjective: 'expiring' }),
           rangeKey: 'expirationRangeKey',
           rangePosition: 2,
           field: 'coresubsidyrecord__enddate',
@@ -193,20 +180,19 @@ export const SMALLHOMES = databaseObject => ({
   apiMap: getApiMap('SMALL_HOMES'),
   id: 'SMALL_HOMES',
   schema: {
-    unitsres: new ParameterMapSet({
+    unitsres: new ParamSet({
       component: MultiTypeFieldGroup,
       props: {
-        label: 'Number of residential units',
         newButtonLabel: 'Add Residential Units +',
       },
       allowActions: true,
       createType: 'ONE',
       defaults: [
-        new ParameterMapping({
+        new ParamMap({
           component: ComparisonFieldSet,
           baseComponent: IntegerField,
           type: 'AMOUNT',
-          role: 'PRIMARY',
+          role: '',
           paramNoun: 'units',
           defaultOptions: comparisonOptions(['lte', 'exact'], null, 'INTEGER'),
           field: 'unitsres',
@@ -216,7 +202,6 @@ export const SMALLHOMES = databaseObject => ({
             min: 1,
             max: 6,
           },
-          languageModule: new LanguageModule({ propertyAdjective: 'with' }),
         }),
       ],
     }),

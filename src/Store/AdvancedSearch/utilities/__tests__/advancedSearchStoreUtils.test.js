@@ -1,8 +1,8 @@
 import * as u from 'Store/AdvancedSearch/utilities/advancedSearchStoreUtils'
-import { Geography } from 'shared/classes/Geography'
-import { Filter } from 'shared/classes/Filter'
+import Geography from 'shared/classes/Geography'
+import Filter from 'shared/classes/Filter'
 import { filterMocks } from 'shared/models/__mocks__/filterMocks'
-import { Condition } from 'shared/classes/Condition'
+import Condition from 'shared/classes/Condition'
 import moment from 'moment'
 
 const todayminus1year = moment(moment.now())

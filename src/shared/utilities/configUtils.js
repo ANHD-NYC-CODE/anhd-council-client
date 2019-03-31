@@ -1,11 +1,11 @@
 import * as resources from 'shared/models/resources'
 import * as ht from 'shared/models/housingTypes'
-import { DataRequest } from 'shared/classes/DataRequest'
+import DataRequest from 'shared/classes/DataRequest'
 import { getApiMap } from 'shared/utilities/classUtils'
-import { TableConfig } from 'shared/classes/TableConfig'
-import { ApiMap } from 'shared/classes/ApiMap'
-import { ParameterMapping } from 'shared/classes/ParameterMapping'
-import { Resource } from 'shared/classes/Resource'
+import TableConfig from 'shared/classes/TableConfig'
+import ApiMap from 'shared/classes/ApiMap'
+import ParamMap from 'shared/classes/ParamMap'
+import Resource from 'shared/classes/Resource'
 import { housingTypeCodeToName } from 'shared/utilities/languageUtils'
 import { constantToModelName } from 'shared/utilities/filterUtils'
 import { alertMapFilterdates } from 'shared/utilities/componentUtils'
@@ -99,7 +99,7 @@ export const newPropertyRequest = ({
     ].filter(a => !!a),
     paramMaps: [
       type === 'LOOKUP_PROFILE'
-        ? new ParameterMapping({
+        ? new ParamMap({
             resourceModel,
             type: 'TEXT',
             field: 'summary',
@@ -270,7 +270,7 @@ export const newGeographyRequest = ({
       new ApiMap({ constant: 'PROPERTY', name: 'Properties' }),
     ],
     paramMaps: [
-      new ParameterMapping({
+      new ParamMap({
         resourceConstant,
         resourceModel,
         type: 'AMOUNT',
@@ -278,7 +278,7 @@ export const newGeographyRequest = ({
         comparison: 'gte',
         value: defaultValue,
       }),
-      new ParameterMapping({
+      new ParamMap({
         resourceConstant,
         resourceModel,
         type: 'DATE',
@@ -307,14 +307,14 @@ export const newGeographyHousingTypeRequest = ({
       new ApiMap({ constant: 'PROPERTY', name: `${housingTypeCodeToName(paramValue)}` }),
     ],
     paramMaps: [
-      new ParameterMapping({
+      new ParamMap({
         resourceModel,
         type: 'TEXT',
         field: 'summary',
         comparison: '',
         value: true,
       }),
-      new ParameterMapping({
+      new ParamMap({
         resourceModel,
         type: 'TEXT',
         field: 'summary-type',

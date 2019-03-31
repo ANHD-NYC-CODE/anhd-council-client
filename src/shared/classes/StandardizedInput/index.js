@@ -1,4 +1,4 @@
-export class StandardizedInput {
+export default class StandardizedInput {
   constructor(e) {
     if (!e) return
     this.cleanEvent(e)

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { StandardizedInput } from 'shared/classes/StandardizedInput'
+import StandardizedInput from 'shared/classes/StandardizedInput'
 import { Form, InputGroup, Col } from 'react-bootstrap'
 import NewFilterSelect from 'AdvancedSearch/FilterComponent/NewFilterSelect'
 import classnames from 'classnames'
@@ -57,9 +57,7 @@ const ComparisonFieldSet = props => {
           type: props.paramMap.props.type,
         })}
         <InputGroup.Append>
-          {props.paramMap.languageModule.valueSuffix && (
-            <InputGroup.Text>{props.paramMap.languageModule.valueSuffix}</InputGroup.Text>
-          )}
+          {props.paramMap.valueSuffix && <InputGroup.Text>{props.paramMap.valueSuffix}</InputGroup.Text>}
           {props.paramMap.paramNoun && <InputGroup.Text>{props.paramMap.paramNoun}</InputGroup.Text>}
         </InputGroup.Append>
       </InputGroup>

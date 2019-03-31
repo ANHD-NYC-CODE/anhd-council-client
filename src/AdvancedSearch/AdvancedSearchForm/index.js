@@ -1,10 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Filter } from 'shared/classes/Filter'
-import { Geography } from 'shared/classes/Geography'
+import Filter from 'shared/classes/Filter'
+import Geography from 'shared/classes/Geography'
 import * as yup from 'yup'
 
-import { StandardizedInput } from 'shared/classes/StandardizedInput'
+import StandardizedInput from 'shared/classes/StandardizedInput'
 import { getAdvancedSearchParamMaps } from 'Store/AdvancedSearch/utilities/advancedSearchStoreUtils'
 import { setGeographyAndRequestsAndRedirect } from 'Store/AppState/actions'
 

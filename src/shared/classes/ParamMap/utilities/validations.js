@@ -1,4 +1,4 @@
-import { ParamError } from 'shared/classes/ParamError'
+import ParamError from 'shared/classes/ParamError'
 import moment from 'moment'
 
 export const minValidate = paramMap => {

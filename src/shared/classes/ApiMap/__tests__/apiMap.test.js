@@ -1,4 +1,4 @@
-import { ApiMap } from 'shared/classes/ApiMap'
+import ApiMap from 'shared/classes/ApiMap'
 
 describe('ApiMap', () => {
   describe('get name', () => {

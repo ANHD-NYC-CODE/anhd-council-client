@@ -1,6 +1,6 @@
-import { Filter } from 'shared/classes/Filter'
+import Filter from 'shared/classes/Filter'
 import { constantToQueryName } from 'shared/utilities/filterUtils'
-import { Resource } from 'shared/classes/Resource'
+import Resource from 'shared/classes/Resource'
 
 import * as resources from 'shared/models/resources'
 import { createAdvancedSearchFilters } from 'shared/utilities/filterUtils'

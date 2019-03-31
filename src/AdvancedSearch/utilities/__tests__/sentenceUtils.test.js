@@ -1,11 +1,11 @@
 import * as a from 'AdvancedSearch/utilities/sentenceUtils'
-import { Geography } from 'shared/classes/Geography'
-import { Filter } from 'shared/classes/Filter'
-import { ParameterMapping } from 'shared/classes/ParameterMapping'
-import { Condition } from 'shared/classes/Condition'
-import { ConditionFilter } from 'shared/classes/ConditionFilter'
+import Geography from 'shared/classes/Geography'
+import Filter from 'shared/classes/Filter'
+import ParamMap from 'shared/classes/ParamMap'
+import Condition from 'shared/classes/Condition'
+import ConditionFilter from 'shared/classes/ConditionFilter'
 import { filterMocks } from 'shared/models/__mocks__/filterMocks'
-import { StandardizedInput } from 'shared/classes/StandardizedInput'
+import StandardizedInput from 'shared/classes/StandardizedInput'
 import moment from 'moment'
 
 const todayminus1year = moment(moment.now())
@@ -33,21 +33,21 @@ describe('convertFilterToSentence', () => {
         paramSets: {
           hpdviolations: {
             paramMaps: [
-              new ParameterMapping({
+              new ParamMap({
                 type: 'AMOUNT',
                 role: 'PRIMARY',
                 field: 'hpdviolations__count',
                 comparison: 'gte',
                 value: 5,
               }),
-              new ParameterMapping({
+              new ParamMap({
                 type: 'DATE',
                 role: 'LIMITER',
                 field: 'hpdviolations__approveddate',
                 comparison: 'gte',
                 value: todayminus1year,
               }),
-              new ParameterMapping({
+              new ParamMap({
                 type: 'TEXT',
                 role: '',
                 valuePrefix: 'class',

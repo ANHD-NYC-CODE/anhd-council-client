@@ -1,4 +1,4 @@
-export class ConditionFilter {
+export default class ConditionFilter {
   constructor({ conditionGroup = undefined } = {}) {
     this._conditionGroup = conditionGroup
   }

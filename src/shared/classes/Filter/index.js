@@ -1,11 +1,11 @@
 import * as resources from 'shared/models/resources'
 import * as ht from 'shared/models/housingTypes'
-import { ParamError } from 'shared/classes/ParamError'
+import ParamError from 'shared/classes/ParamError'
 import { getApiMap } from 'shared/utilities/classUtils'
 
 import { cloneInstance } from 'shared/utilities/classUtils'
 
-export class Filter {
+export default class Filter {
   constructor({ modelConstant = null, resourceModel = null, schema = null, paramSets = {}, errors = [] } = {}) {
     this._paramSets = paramSets
     this.id = modelConstant || resourceModel.resourceConstant

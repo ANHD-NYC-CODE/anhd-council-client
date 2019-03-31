@@ -1,4 +1,4 @@
-import { ParameterMapping } from 'shared/classes/ParameterMapping'
+import ParamMap from 'shared/classes/ParamMap'
 
 const AcrisRealMaster = databaseObject => ({
   resourceConstant: 'ACRIS_REAL_MASTER',
@@ -6,7 +6,7 @@ const AcrisRealMaster = databaseObject => ({
   label: 'Property Sales',
   sentenceNoun: 'sales',
   ownResourceFilters: [
-    new ParameterMapping({
+    new ParamMap({
       type: 'AMOUNT',
       field: 'docamount',
       comparison: 'gte',

@@ -1,6 +1,6 @@
 import * as b from 'shared/constants/geographies'
 
-export class Geography {
+export default class Geography {
   constructor(GeographyConstant, id) {
     this._id = id
     this._errors = []

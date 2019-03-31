@@ -1,5 +1,5 @@
 import { textFilter } from 'react-bootstrap-table2-filter'
-import { TableConfig } from 'shared/classes/TableConfig'
+import TableConfig from 'shared/classes/TableConfig'
 import ExpandedLinkRow from 'shared/components/BaseTable/ExpandedLinkRow'
 import BaseTable from 'shared/components/BaseTable'
 import {

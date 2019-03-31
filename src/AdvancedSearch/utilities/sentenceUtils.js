@@ -25,7 +25,7 @@ const parseParamMapComparison = (paramMap, nounOverride = undefined) => {
       }${grammaticalNoun(nounOverride || paramMap.paramNoun, paramMap.value)}`
     case 'PERCENT':
       return `have ${longAmountComparisonString(paramMap.comparison)} ${paramMap.valuePrefix}${paramMap.value}${
-        paramMap.languageModule.valueSuffix
+        paramMap.valueSuffix
       }${grammaticalNoun(nounOverride || paramMap.paramNoun, paramMap.value)}`
     case 'DATE':
       return `${paramMap.valuePrefix} ${constructDateComparisonString(paramMap.comparison)} ${moment(
