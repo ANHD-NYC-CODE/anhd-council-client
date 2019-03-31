@@ -159,24 +159,24 @@ export const createAdvancedSearchFilters = ({ resourceModels, primaryResource } 
         }),
       }),
     },
+    // {
+    //   resourceModel: resourceModels['ACRIS_REAL_MASTER'],
+    //   schema: constructCountSchema({
+    //     primaryResource,
+    //     resourceModel: resourceModels['ACRIS_REAL_MASTER'],
+    //     constant: 'ACRIS_REAL_MASTER',
+    //     amountFieldQuery: 'docamount',
+    //     amountNoun: '',
+    //     amountValuePrefix: '$',
+    //     defaultAmount: '1000000',
+    //   }),
+    // },
     {
-      resourceModel: resourceModels['PROPERTY_SALE_BY_AMOUNT'],
+      resourceModel: resourceModels['ACRIS_REAL_MASTER'],
       schema: constructCountSchema({
         primaryResource,
-        resourceModel: resourceModels['PROPERTY_SALE_BY_AMOUNT'],
-        constant: 'PROPERTY_SALE_BY_AMOUNT',
-        amountFieldQuery: 'docamount',
-        amountNoun: '',
-        amountValuePrefix: '$',
-        defaultAmount: '1000000',
-      }),
-    },
-    {
-      resourceModel: resourceModels['PROPERTY_SALE_BY_COUNT'],
-      schema: constructCountSchema({
-        primaryResource,
-        resourceModel: resourceModels['PROPERTY_SALE_BY_COUNT'],
-        constant: 'PROPERTY_SALE_BY_COUNT',
+        resourceModel: resourceModels['ACRIS_REAL_MASTER'],
+        constant: 'ACRIS_REAL_MASTER',
         amountFieldQuery: 'count',
         defaultAmount: 2,
         amountNoun: 'times',
@@ -242,7 +242,7 @@ export const constructCountSchema = ({
           rangePosition: 1,
           defaultOptions: comparisonOptions(
             ['gte', 'between', 'lte'],
-            ['Since', 'Range', 'Before'],
+            ['After', 'Range', 'Before'],
             'DATE',
             `${constantToQueryName(constant)}Range`
           ),
@@ -270,7 +270,7 @@ export const constructCountSchema = ({
           rangePosition: 2,
           defaultOptions: comparisonOptions(
             ['gte', 'between', 'lte'],
-            ['Since', 'Range', 'Before'],
+            ['After', 'Range', 'Before'],
             'DATE',
             `${constantToQueryName(constant)}Range`
           ),
@@ -333,7 +333,7 @@ export const comparisonOptions = (comparisons, labels, type, rangeKey) => {
   if (!(labels && labels.length)) labels = []
 
   const dateLabels = {
-    gte: 'Since',
+    gte: 'After',
     between: 'Range',
     lte: 'Before',
   }

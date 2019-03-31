@@ -3,6 +3,7 @@ const DOBViolation = databaseObject => ({
   urlPath: 'dobviolations',
   label: 'DOB Violations',
   sentenceNoun: 'DOB violations',
+  ownResourceFilters: [],
 })
 
 export default DOBViolation

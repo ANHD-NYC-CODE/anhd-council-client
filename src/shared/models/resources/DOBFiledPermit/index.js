@@ -3,6 +3,7 @@ const DOBFiledPermit = databaseObject => ({
   urlPath: 'doblegacyfiledpermits',
   label: 'DOB Permit Applications',
   sentenceNoun: 'DOB permit applications',
+  ownResourceFilters: [],
 })
 
 export default DOBFiledPermit

@@ -3,6 +3,7 @@ const ECBViolation = databaseObject => ({
   urlPath: 'ecbviolations',
   label: 'ECB Violations',
   sentenceNoun: 'ECB violations',
+  ownResourceFilters: [],
 })
 
 export default ECBViolation

@@ -3,6 +3,7 @@ const Eviction = databaseObject => ({
   urlPath: 'evictions',
   label: 'Evictions',
   sentenceNoun: 'evictions',
+  ownResourceFilters: [],
 })
 
 export default Eviction

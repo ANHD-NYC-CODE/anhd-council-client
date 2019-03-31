@@ -130,6 +130,7 @@ export class ConditionComponent extends React.Component {
               addCondition={this.addCondition}
               allowNewCondition={isCondition0() || (!isCondition0() && !this.props.condition.hasCondition())}
               condition={this.props.condition}
+              config={this.props.config}
               dispatch={this.props.dispatch}
               dispatchAction={this.dispatchAction}
               filter={filter}
