@@ -1,4 +1,4 @@
-import { constructCountParamSet } from 'shared/utilities/filterUtils'
+import { constructCountDateParamSet } from 'shared/utilities/filterUtils'
 import ParamMap from 'shared/classes/ParamMap'
 
 import GenericFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/GenericFieldSet'
@@ -12,9 +12,9 @@ const LisPenden = databaseObject => ({
   ownResourceFilters: {
     initial: {
       generatorFunction: resourceModel => {
-        return constructCountParamSet({
+        return constructCountDateParamSet({
           resourceModel,
-          defaultAmount: '1',
+          amountValue: '1',
           hiddenParamMap: new ParamMap({
             component: GenericFieldSet,
             baseComponent: HiddenField,

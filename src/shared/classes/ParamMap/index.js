@@ -22,6 +22,7 @@ export default class ParamMap {
     type = '',
     role = 'PRIMARY',
     paramNoun = '',
+    comparisonPrefix = '',
     valuePrefix = '',
     valueSuffix = '',
   } = {}) {
@@ -41,7 +42,9 @@ export default class ParamMap {
     this._type = type
     this._role = role
     this._paramNoun = paramNoun
-    ;(this._valuePrefix = valuePrefix), (this._valueSuffix = valueSuffix)
+    this._comparisonPrefix = comparisonPrefix
+    this._valuePrefix = valuePrefix
+    this._valueSuffix = valueSuffix
   }
 
   get field() {
@@ -150,6 +153,14 @@ export default class ParamMap {
 
   set valueSuffix(valueSuffix) {
     this._valueSuffix = valueSuffix
+  }
+
+  get comparisonPrefix() {
+    return this._comparisonPrefix
+  }
+
+  set comparisonPrefix(comparisonPrefix) {
+    this._comparisonPrefix = comparisonPrefix
   }
 
   get options() {

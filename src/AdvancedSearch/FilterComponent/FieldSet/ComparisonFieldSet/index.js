@@ -8,7 +8,7 @@ const ComparisonFieldSet = props => {
     <Form.Row className="comparison-fieldset" key={props.key}>
       <InputGroup as={Col} xs={props.filter ? 4 : 6}>
         <InputGroup.Prepend>
-          <InputGroup.Text />
+          <InputGroup.Text>{props.paramMap.comparisonPrefix}</InputGroup.Text>
         </InputGroup.Prepend>
         <Form.Control
           name="comparison"
@@ -52,7 +52,6 @@ const ComparisonFieldSet = props => {
           dispatchAction: props.dispatchAction,
           paramMap: props.paramMap,
           onChange: e => props.paramMap.update({ dispatchAction: props.dispatchAction, e: new StandardizedInput(e) }),
-          type: props.paramMap.props.type,
         })}
         <InputGroup.Append>
           {props.paramMap.valueSuffix && <InputGroup.Text>{props.paramMap.valueSuffix}</InputGroup.Text>}

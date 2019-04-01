@@ -24,6 +24,39 @@ export class FilterComponent extends React.Component {
     })
   }
 
+  renderButtons(paramSet, paramsSetKey) {
+    if (this.props.condition && paramSet.paramMaps.length && paramsSetKey === 'initial') {
+      return (
+        <div className="d-flex align-items-center">
+          <RemoveFilterButton showPopups={this.props.showPopups} removeFilter={this.removeFilter} />
+          {this.props.allowNewCondition && (
+            <AddConditionButton
+              addCondition={this.props.addCondition}
+              filterIndex={this.props.filterIndex}
+              showPopups={this.props.showPopups}
+            />
+          )}
+        </div>
+      )
+    } else if (paramSet.paramMaps.length && paramsSetKey !== 'initial') {
+      return (
+        <Button
+          onClick={() =>
+            paramSet.deleteAll({
+              dispatchAction: this.props.dispatchAction,
+            })
+          }
+          size="sm"
+          variant="outline-danger"
+        >
+          <FontAwesomeIcon icon={faMinus} />
+        </Button>
+      )
+    } else {
+      return null
+    }
+  }
+
   render() {
     return (
       <div className="filter-component">
@@ -47,46 +80,25 @@ export class FilterComponent extends React.Component {
                     className={classnames('paramset-wrapper', { 'modifying-paramset': paramsSetKey !== 'initial' })}
                     key={`filter-paramset-${this.props.filter.resourceConstant}-${paramSetIndex}`}
                   >
-                    <Col xs={8} lg={9}>
-                      {this.props.filter.paramSets[paramsSetKey].component({
-                        dispatchAction: this.props.dispatchAction,
-                        replaceFilter: this.props.replaceFilter,
-                        filterIndex: this.props.filterIndex,
-                        filter: this.props.filter,
-                        paramSet: paramSet,
-                        paramSetIndex: paramSetIndex,
-                      })}
-                    </Col>
-                    {
-                      // Buttons
-                    }
-                    <Col xs={4} lg={3} className="d-flex align-items-center">
-                      {this.props.condition && paramSet.paramMaps.length ? (
-                        paramsSetKey === 'initial' ? (
-                          <div className="d-flex align-items-center">
-                            <RemoveFilterButton showPopups={this.props.showPopups} removeFilter={this.removeFilter} />
-                            {this.props.allowNewCondition && (
-                              <AddConditionButton
-                                addCondition={this.props.addCondition}
-                                filterIndex={this.props.filterIndex}
-                                showPopups={this.props.showPopups}
-                              />
-                            )}
-                          </div>
-                        ) : (
-                          <Button
-                            onClick={() =>
-                              paramSet.deleteAll({
-                                dispatchAction: this.props.dispatchAction,
-                              })
-                            }
-                            size="sm"
-                            variant="outline-danger"
-                          >
-                            <FontAwesomeIcon icon={faMinus} />
-                          </Button>
-                        )
-                      ) : null}
+                    <Col className="filter-component__wrapper d-flex">
+                      <Form.Row>
+                        <Col className="input-column" xs={10} xl={11}>
+                          {this.props.filter.paramSets[paramsSetKey].component({
+                            dispatchAction: this.props.dispatchAction,
+                            replaceFilter: this.props.replaceFilter,
+                            filterIndex: this.props.filterIndex,
+                            filter: this.props.filter,
+                            paramSet: paramSet,
+                            paramSetIndex: paramSetIndex,
+                          })}
+                        </Col>
+                        {
+                          // Buttons
+                        }
+                        <Col xs={2} xl={1} className="d-flex align-items-center">
+                          {this.renderButtons(paramSet, paramsSetKey)}
+                        </Col>
+                      </Form.Row>
                     </Col>
                   </Form.Row>
                 )

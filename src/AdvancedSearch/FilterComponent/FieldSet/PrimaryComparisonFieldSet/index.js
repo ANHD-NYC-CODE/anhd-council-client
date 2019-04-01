@@ -53,7 +53,6 @@ const PrimaryComparisonFieldSet = props => {
           dispatchAction: props.dispatchAction,
           paramMap: props.paramMap,
           onChange: e => props.paramMap.update({ dispatchAction: props.dispatchAction, e: new StandardizedInput(e) }),
-          type: props.paramMap.props.type,
         })}
         <InputGroup.Append>
           {props.paramMap.valueSuffix && <InputGroup.Text>{props.paramMap.valueSuffix}</InputGroup.Text>}

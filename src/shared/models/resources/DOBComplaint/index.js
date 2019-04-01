@@ -1,4 +1,4 @@
-import { constructCountParamSet } from 'shared/utilities/filterUtils'
+import { constructCountDateParamSet } from 'shared/utilities/filterUtils'
 
 const DOBComplaint = databaseObject => ({
   resourceConstant: 'DOB_COMPLAINT',
@@ -8,7 +8,7 @@ const DOBComplaint = databaseObject => ({
   ownResourceFilters: {
     initial: {
       generatorFunction: resourceModel => {
-        return constructCountParamSet({
+        return constructCountDateParamSet({
           resourceModel,
         })
       },
