@@ -51,7 +51,7 @@ const LookupProfileSummary = props => {
                       No HPD Registrations Found
                     </Card.Text>
                   )}
-                  {Object.keys(profile.rentstabilizationrecord).length ? (
+                  {profile.rentstabilizationrecord ? (
                     <div>
                       <TableHeader
                         showUpdate={false}
