@@ -31,7 +31,7 @@ class RequestTableWrapper extends React.Component {
     return this.props.visible ? (
       <div className="request-wrapper">
         <TableComponent
-          caption={this.props.selectedResultsFilter.label || this.props.request.label}
+          caption={this.props.selectedResultsFilter.label || this.props.request.resourceModel.label}
           datasetModelName={this.props.request.tableConfig.datasetModelName}
           dispatch={this.props.dispatch}
           error={this.processError(this.props.error)}

@@ -15,7 +15,7 @@ import TableAlert from 'shared/components/BaseTable/TableAlert'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFileCsv } from '@fortawesome/free-solid-svg-icons'
 import { makeCsvRequest } from 'Store/Request/actions'
-
+import classnames from 'classnames'
 import './style.scss'
 
 class BaseTable extends React.Component {
@@ -101,6 +101,7 @@ class BaseTable extends React.Component {
 
   expandRow() {
     const isNestedTable = component => {
+      if (!component) return false
       return (
         component.name === 'NestedTable' ||
         (typeof component === 'function' && component.prototype && component.prototype.isReactComponent)
@@ -184,11 +185,11 @@ class BaseTable extends React.Component {
               bootstrap4
               columns={this.state.columns}
               condensed
-              classes={this.props.classes}
+              classes={classnames(this.props.classes, { 'no-expand': !this.props.expandable })}
               data={this.props.records}
               {...paginationTableProps}
               defaultSorted={this.state.defaultSorted}
-              expandRow={this.expandRow()}
+              expandRow={this.props.expandable ? this.expandRow() : undefined}
               filter={filterFactory()}
               height="200px"
               scrollTop="top"
@@ -234,10 +235,12 @@ class BaseTable extends React.Component {
 }
 
 BaseTable.defaultProps = {
+  expandable: true,
   nested: false,
 }
 
 BaseTable.propTypes = {
+  expandable: PropTypes.string,
   caption: PropTypes.string,
   classes: PropTypes.string,
   dispatch: PropTypes.func,

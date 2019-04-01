@@ -14,15 +14,20 @@ const TableHeader = props => {
       </Row>
       <Row>
         <Col>
-          <DatasetInfo datasetModelName={props.datasetModelName} />
+          <DatasetInfo datasetModelName={props.datasetModelName} showUpdate={props.showUpdate} />
         </Col>
       </Row>
     </div>
   )
 }
 
+TableHeader.defaultProps = {
+  showUpdate: true,
+}
+
 TableHeader.propTypes = {
   datasetModelName: PropTypes.string,
+  showUpdate: PropTypes.bool,
   title: PropTypes.string,
 }
 

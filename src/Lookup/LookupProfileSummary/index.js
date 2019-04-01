@@ -3,14 +3,15 @@ import PropTypes from 'prop-types'
 import InnerLoader from 'shared/components/Loaders/InnerLoader'
 
 import TableAlert from 'shared/components/BaseTable/TableAlert'
-
+import { constantToModelName } from 'shared/utilities/filterUtils'
+import TableHeader from 'shared/components/BaseTable/TableHeader'
 import { councilIdToString, communityIdToString } from 'shared/utilities/languageUtils'
 import { geographyToLink } from 'shared/utilities/routeUtils'
 import BaseLink from 'shared/components/BaseLink'
 import BaseTable from 'shared/components/BaseTable'
 import { getTableColumns } from 'shared/models/tables'
 import TableConfig from 'shared/classes/TableConfig'
-import { Card, Row, Col } from 'react-bootstrap'
+import { Card } from 'react-bootstrap'
 import PropertySummaryBody from 'Lookup/LookupProfileSummary/PropertySummaryBody'
 import PrintLookupProfileSummary from 'Lookup/PrintLookupProfileSummary'
 import LayoutContext from 'Layout/LayoutContext'
@@ -48,6 +49,28 @@ const LookupProfileSummary = props => {
                   ) : (
                     <Card.Text className="text-light-gray text-center font-weight-bold my-4">
                       No HPD Registrations Found
+                    </Card.Text>
+                  )}
+                  {Object.keys(profile.rentstabilizationrecord).length ? (
+                    <div>
+                      <TableHeader
+                        showUpdate={false}
+                        title="Rent Stabilized Units"
+                        datasetModelName={constantToModelName('RENT_STABILIZATION_RECORD')}
+                      />
+                      <BaseTable
+                        expandable={false}
+                        wrapperClasses="text-light-gray"
+                        columns={getTableColumns('RENT_STABILIZATION_RECORD')}
+                        dispatch={props.dispatch}
+                        records={[profile.rentstabilizationrecord]}
+                        request={props.request}
+                        tableConfig={new TableConfig({ resourceConstant: 'RENT_STABILIZATION_RECORD' })}
+                      />
+                    </div>
+                  ) : (
+                    <Card.Text className="text-light-gray text-center font-weight-bold my-4">
+                      No Rent Stabilization History
                     </Card.Text>
                   )}
                   <h5 className="lookup-profile-summary__group lookup-profile-summary__geography-link">
