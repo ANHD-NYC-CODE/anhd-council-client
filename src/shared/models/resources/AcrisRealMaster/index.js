@@ -4,6 +4,8 @@ import { constructCountDateParamSet, constructSingleMapParamSet } from 'shared/u
 const AcrisRealMaster = databaseObject => ({
   resourceConstant: 'ACRIS_REAL_MASTER',
   urlPath: 'acrisrealmasters',
+  summaryBackgroundColorClass: 'acris-yellow',
+  summaryTextColorClass: 'acris-yellow-dark',
   label: 'Property Sales',
   sentenceNoun: 'sales',
   ownResourceFilters: {

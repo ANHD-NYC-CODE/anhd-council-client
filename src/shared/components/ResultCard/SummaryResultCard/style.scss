@@ -6,12 +6,29 @@
   padding: 0 10px;
 }
 
+@media (hover: hover) {
+  .result-card.card.btn-primary:not(:disabled):hover {
+    box-shadow: 1px 12px 20px $gray-400;
+    transition: transform 0.2s ease-in-out;
+    transform: translateY(-6px);
+  }
+}
+
+.result-card.card.btn-primary:not(:disabled):hover,
+.result-card.card.btn-primary:not(:disabled):focus,
 .result-card.card.btn-primary:not(:disabled).active {
   border: 4px dotted $white;
+  color: white;
   padding: 0 7px;
+
+  p,
+  h2 {
+    color: white;
+  }
 }
 
 .summary-result-card {
+  box-shadow: 1px 3px 6px $gray-600;
   height: 100px;
   min-height: 120px;
   width: 100%;

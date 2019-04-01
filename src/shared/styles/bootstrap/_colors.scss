@@ -54,6 +54,10 @@ $property-blue: #a3bec8 !default;
 $housing-purple: #96a6d8 !default;
 $light-gray: #a39e9e !default;
 
+// Summary Card Colors
+$acris-yellow: #f6f7c6;
+$acris-yellow-dark: #f89a09;
+
 $colors: () !default;
 // stylelint-disable-next-line scss/dollar-variable-default
 $colors: map-merge(

@@ -222,7 +222,6 @@ class DistrictDashboardShow extends React.PureComponent {
                           displayedResultsFilter={this.props.selectedResultsFilter}
                           selectGeographyData={this.props.config.selectGeographyData}
                         />
-                        ) }}
                       </div>
                       <div className={classnames({ 'd-none': this.state.view === 1 })}>
                         {this.props.geographyRequests.concat(this.props.housingTypeRequests).map((request, index) => {
