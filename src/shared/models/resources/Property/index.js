@@ -107,10 +107,12 @@ const Property = databaseObject => {
             resourceModel,
             component: GenericFieldSet,
             baseComponent: TextSelectField,
+            paramMapType: 'TEXT',
+            paramMapRole: 'PRIMARY',
             paramSetLabel: 'Housing Type',
             paramMapField: 'housingtype',
             paramMapValue: 'all',
-
+            paramNoun: 'properties',
             defaultOptions: comparisonOptions({
               name: 'value',
               comparisonValues: ['all', 'rs', 'rr', 'sh', 'mr', 'ph'],

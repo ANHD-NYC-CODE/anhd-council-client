@@ -16,28 +16,37 @@ export const constructAmountSentence = (dataset, comparison, value) => {
 }
 
 const parseParamMapComparison = (paramMap, nounOverride = undefined) => {
-  if (!paramMap) return
+  if (!paramMap || !paramMap.value) return
+  console.log(paramMap.value)
   switch (paramMap.type) {
     case 'AMOUNT':
-      return `${longAmountComparisonString(paramMap.comparison)} ${paramMap.valuePrefix}${paramMap.value}${
-        paramMap.valueSuffix
-      }${grammaticalNoun(nounOverride || paramMap.paramNoun, paramMap.value)}`.trim()
-    case 'PERCENT':
-      return `${longAmountComparisonString(paramMap.comparison)} ${paramMap.valuePrefix}${paramMap.value}${
-        paramMap.valueSuffix
-      }${grammaticalNoun(nounOverride || paramMap.paramNoun, paramMap.value)}`.trim()
-    case 'DATE':
-      return `${paramMap.valuePrefix} ${constructDateComparisonString(paramMap.comparison)} ${moment(
+      return `${paramMap.comparisonPrefix} ${longAmountComparisonString(paramMap.comparison)} ${paramMap.valuePrefix}${
         paramMap.value
-      ).format('MM/DD/YYYY')}`.trim()
+      }${paramMap.valueSuffix}${grammaticalNoun(nounOverride || paramMap.paramNoun, paramMap.value)}`.trim()
+    case 'PERCENT':
+      return `${paramMap.comparisonPrefix} ${longAmountComparisonString(paramMap.comparison)} ${paramMap.valuePrefix}${
+        paramMap.value
+      }${paramMap.valueSuffix}${grammaticalNoun(nounOverride || paramMap.paramNoun, paramMap.value)}`.trim()
+    case 'DATE':
+      return `${paramMap.comparisonPrefix} ${paramMap.valuePrefix} ${constructDateComparisonString(
+        paramMap.comparison
+      )} ${moment(paramMap.value).format('MM/DD/YYYY')}`.trim()
     case 'YEAR':
-      return `${paramMap.valuePrefix} ${constructDateComparisonString(paramMap.comparison)} ${paramMap.value}`.trim()
+      return `${paramMap.comparisonPrefix} ${paramMap.valuePrefix} ${constructDateComparisonString(
+        paramMap.comparison
+      )} ${paramMap.value}`.trim()
     case 'TEXT':
-      return [paramMap.valuePrefix, paramMap.value, paramMap.valueSuffix, nounOverride || paramMap.paramNoun]
+      return [
+        paramMap.comparisonPrefix,
+        paramMap.valuePrefix,
+        paramMap.options.find(option => option.value === paramMap.value).label.toLowerCase(),
+        paramMap.valueSuffix,
+        nounOverride || paramMap.paramNoun,
+      ]
         .filter(p => p)
         .join(' ')
     case 'MULTI-TEXT':
-      return `${grammaticalList(paramMap.value.split(','), 'or')}`.trim()
+      return `${paramMap.comparisonPrefix} ${grammaticalList(paramMap.value.split(','), 'or')}`.trim()
   }
 }
 
@@ -81,14 +90,14 @@ export const convertFilterToSentence = filter => {
 
     const parsedModifyingParamMaps = modifyingParamMaps.map(pm => parseParamMapComparison(pm))
 
+    const primaryLeadingWord = primaryParamMap.resourceModel.resourceConstant === 'PROPERTY' ? '' : 'have'
     const primarySegment = primaryParamMap
-      ? `have ${parseParamMapComparison(primaryParamMap, filter.resourceModel.sentenceNoun)}`
+      ? `${primaryLeadingWord} ${parseParamMapComparison(primaryParamMap, filter.resourceModel.sentenceNoun)}`
       : undefined
 
     const modifyingSegment = parsedModifyingParamMaps.length ? `(${parsedModifyingParamMaps.join(', ')})` : undefined
 
     const limiterSegment = limiterParamMaps.length ? `${parseRoleGroup(limiterParamMaps)}` : undefined
-
     return ' ' + [primarySegment, modifyingSegment, limiterSegment].filter(p => p).join(' ')
   } else {
     return ''
@@ -149,7 +158,8 @@ export const convertHousingTypesToSentence = housingTypes => {
 
 export const constructSentence = advancedSearch => {
   return `Show me ${[
-    convertHousingTypesToSentence(advancedSearch.housingTypes),
+    convertFilterToSentence(advancedSearch.propertyFilter),
+    // convertHousingTypesToSentence(advancedSearch.housingTypes),
     convertGeographiesToSentence(advancedSearch.geographies),
   ].join(' ')} ${convertConditionMappingToSentence(advancedSearch.conditions)}`
 }
