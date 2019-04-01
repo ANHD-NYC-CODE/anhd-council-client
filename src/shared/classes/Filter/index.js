@@ -21,7 +21,6 @@ export default class Filter {
     this.primaryResourceModel = primaryResourceModel
     this._schema = schema
     this._errors = errors
-
     if (!this.resourceModel && !!this.modelConstant) {
       const resourceModel =
         this.findDataset(this.modelConstant) || this.findHousingType(this.modelConstant) || this.resourceModel
@@ -93,10 +92,6 @@ export default class Filter {
     this._resourceModel = resourceModel
   }
 
-  get resourceModel() {
-    return this._resourceModel
-  }
-
   get name() {
     return this._name
   }
@@ -142,7 +137,12 @@ export default class Filter {
   }
 
   get paramSets() {
-    return this._paramSets
+    if (this.resourceModel.filterParamSets) return this.resourceModel.filterParamSets(this._paramSets)
+    else return this._paramSets
+  }
+
+  get resourceModel() {
+    return this._resourceModel
   }
 
   set resourceModel(resourceModel) {
@@ -154,7 +154,11 @@ export default class Filter {
   }
 
   get paramMaps() {
-    return [].concat.apply([], Object.keys(this._paramSets).map(key => this._paramSets[key].paramMaps))
+    const paramSets = this.resourceModel.filterParamSets
+      ? this.resourceModel.filterParamSets(this._paramSets)
+      : this._paramSets
+
+    return [].concat.apply([], Object.keys(paramSets).map(key => paramSets[key].paramMaps))
   }
 
   get errors() {

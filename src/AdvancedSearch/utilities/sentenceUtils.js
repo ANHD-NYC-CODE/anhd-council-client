@@ -17,7 +17,6 @@ export const constructAmountSentence = (dataset, comparison, value) => {
 
 const parseParamMapComparison = (paramMap, nounOverride = undefined) => {
   if (!paramMap || !paramMap.value) return
-  console.log(paramMap.value)
   switch (paramMap.type) {
     case 'AMOUNT':
       return `${paramMap.comparisonPrefix} ${longAmountComparisonString(paramMap.comparison)} ${paramMap.valuePrefix}${

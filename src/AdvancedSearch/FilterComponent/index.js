@@ -74,6 +74,7 @@ export class FilterComponent extends React.Component {
           <Form.Row className="filter align-content-center">
             <Form.Group as={Col} xs={12}>
               {Object.keys(this.props.filter.paramSets).map((paramsSetKey, paramSetIndex) => {
+                // Render all param sets in the filter
                 const paramSet = this.props.filter.paramSets[paramsSetKey]
                 return (
                   <Form.Row
@@ -111,9 +112,12 @@ export class FilterComponent extends React.Component {
                 .map((key, index) => {
                   const paramSet = this.props.filter.paramSets[key]
                   return !paramSet.paramMaps.length ? (
-                    <div className="filter-component__paramsets">
+                    <div
+                      className="filter-component__paramsets"
+                      key={`paramSet-${this.props.filter.resourceConstant}-${index}`}
+                    >
                       <div className="filter-component__paramsets-wrapper">
-                        <Form.Row key={`paramSet-${this.props.filter.resourceConstant}-${index}`}>
+                        <Form.Row>
                           <Form.Group as={Col} className="paramset--group">
                             <Button
                               className="paramset--new-button"
@@ -145,7 +149,7 @@ FilterComponent.defaultProps = {
 FilterComponent.propTypes = {
   addCondition: PropTypes.func,
   allowNewCondition: PropTypes.bool,
-  blockWidth: PropTypes.string,
+  blockWidth: PropTypes.bool,
   condition: PropTypes.object,
   dispatchAction: PropTypes.func,
   filter: PropTypes.object,

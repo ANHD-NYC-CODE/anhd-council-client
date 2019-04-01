@@ -20,6 +20,34 @@ const Property = databaseObject => {
     urlPath: 'properties',
     label: 'Properties',
     sentenceNoun: 'properties',
+    filterParamSets: paramSets => {
+      if (!paramSets['initial'] || !paramSets['initial'].paramMaps.length) return paramSets
+      let blah
+      switch (paramSets['initial'].paramMaps[0].value) {
+        case 'rs':
+          return Object.keys(paramSets)
+            .filter(key => !key.match(/(housingType)/))
+            .concat('housingType_rs')
+            .filter(p => p)
+            .map(key => paramSets[key])
+        case 'rr':
+          return Object.keys(paramSets)
+            .filter(key => !key.match(/(housingType)/))
+            .concat('housingType_rr_1', 'housingType_rr_2')
+            .filter(p => p)
+            .map(key => paramSets[key])
+        case 'sh':
+          return Object.keys(paramSets)
+            .filter(key => !key.match(/(housingType)/))
+            .concat('housingType_sh')
+            .filter(p => p)
+            .map(key => paramSets[key])
+        default:
+          return Object.keys(paramSets)
+            .filter(key => !key.match(/(housingType)/))
+            .map(key => paramSets[key])
+      }
+    },
     ownResultFilters: [
       {
         id: 'HOUSING_TYPE_RESIDENTIAL',
@@ -121,7 +149,7 @@ const Property = databaseObject => {
           })
         },
       },
-      rs: {
+      housingType_rs: {
         generatorFunction: (resourceModel, relatedResourceModel = undefined) => {
           return constructCountDateParamSet({
             resourceModel,
@@ -157,7 +185,7 @@ const Property = databaseObject => {
           })
         },
       },
-      rr_1: {
+      housingType_rr_1: {
         generatorFunction: resourceModel => {
           return constructSingleMapParamSet({
             resourceModel,
@@ -173,7 +201,7 @@ const Property = databaseObject => {
           })
         },
       },
-      rr_2: {
+      housingType_rr_2: {
         generatorFunction: resourceModel => {
           return constructDateRangeParamSet({
             resourceModel,
@@ -185,7 +213,7 @@ const Property = databaseObject => {
           })
         },
       },
-      sh: {
+      housingType_sh: {
         generatorFunction: resourceModel => {
           return constructSingleMapParamSet({
             resourceModel,
@@ -205,58 +233,6 @@ const Property = databaseObject => {
           })
         },
       },
-
-      // coresubsidyrecord__enddate: new ParamSet({
-      //   component: MultiTypeFieldGroup,
-      //   label: 'Expiration',
-      //   createType: 'ONE',
-      //   defaults: [
-      //     new ParamMap({
-      //       component: ComparisonFieldSet,
-      //       baseComponent: DateField,
-      //       type: 'DATE',
-      //       role: '',
-      //       valuePrefix: 'expiring',
-      //       props: {
-      //         type: 'date',
-      //       },
-      //       defaultOptions: dateComparisonOptions({
-      //         comparisonValues: ['lte', 'between', 'gte'],
-      //         labels: ['Before', 'Range', 'After'],
-      //         type: 'DATE',
-      //         rangeKey: 'expirationRangeKey',
-      //       }),
-      //       rangeKey: 'expirationRangeKey',
-      //       rangePosition: 1,
-      //       field: 'coresubsidyrecord__enddate',
-      //       comparison: 'lte',
-      //       value: moment(moment.now())
-      //         .add(1, 'Y')
-      //         .format('YYYY-MM-DD'),
-      //     }),
-      //     new ParamMap({
-      //       component: ComparisonFieldSet,
-      //       baseComponent: DateField,
-      //       type: 'DATE',
-      //       role: '',
-      //       valuePrefix: 'expiring',
-      //       props: {
-      //         type: 'date',
-      //       },
-      //       defaultOptions: dateComparisonOptions({
-      //         comparisonValues: ['lte', 'between', 'gte'],
-      //         labels: ['Before', 'Range', 'After'],
-      //         type: 'DATE',
-      //         rangeKey: 'expirationRangeKey',
-      //       }),
-      //       rangeKey: 'expirationRangeKey',
-      //       rangePosition: 2,
-      //       field: 'coresubsidyrecord__enddate',
-      //       comparison: 'gte',
-      //       value: moment(moment.now()).format('YYYY-MM-DD'),
-      //     }),
-      //   ],
-      // }),
     },
 
     relatedResourceMappings: {
