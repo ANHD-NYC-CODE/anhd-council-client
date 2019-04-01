@@ -10,14 +10,18 @@ const DatasetInfo = props => {
     <div className="dataset-info">
       <ConfigContext.Consumer>
         {config => {
+          const c = config
           const dataset = config.datasets.find(ds => ds.model_name.toLowerCase() === props.datasetModelName)
           if (dataset) {
             return (
               <div>
-                <div>
-                  <span>Last Updated: </span>
-                  {moment(dataset.last_update).format('MM/DD/YYYY')}
-                </div>
+                {props.showUpdate && dataset.last_update && (
+                  <div>
+                    <span>Last Updated: </span>
+                    {moment(dataset.last_update).format('MM/DD/YYYY')}
+                  </div>
+                )}
+
                 {dataset.version && (
                   <div>
                     <span>Version:</span>
@@ -33,8 +37,13 @@ const DatasetInfo = props => {
   )
 }
 
+DatasetInfo.defaultProps = {
+  showUpdate: true,
+}
+
 DatasetInfo.propTypes = {
   datasetModelName: PropTypes.string,
+  showUpdate: PropTypes.bool,
 }
 
 export default DatasetInfo

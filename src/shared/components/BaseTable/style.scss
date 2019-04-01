@@ -22,8 +22,10 @@
     padding: 0;
   }
 
-  tr:not(.expanding-row) td:not(.table-column--active):not(.react-bs-table-no-data):not(.nested-table-column):before {
-    content: '(+) ';
+  table:not(.no-expand) {
+    tr:not(.expanding-row) td:not(.table-column--active):not(.react-bs-table-no-data):not(.nested-table-column):before {
+      content: '(+) ';
+    }
   }
   tr:not(.expanding-row) td:not(.table-column--active):not(.react-bs-table-no-data):hover {
     background-color: $primary;

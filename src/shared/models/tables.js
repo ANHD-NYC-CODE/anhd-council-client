@@ -18,6 +18,8 @@ export const getKeyField = constant => {
       return 'bbl'
     case 'BUILDING':
       return 'bin'
+    case 'RENT_STABILIZATION_RECORD':
+      return 'ucbbl'
     case 'HPD_REGISTRATION':
       return 'registrationid'
     case 'HPD_CONTACT':
@@ -178,6 +180,7 @@ export const getTableColumns = (constant, columnExpandFunction, getLinkProps = (
       hidden,
       events: {
         onClick: (e, column, columnIndex, row, rowIndex) => {
+          if (e.target.closest('table').classList.contains('no-expand')) return e
           handleColumnEvent({ e, column, columnIndex, row, rowIndex, component })
         },
         // onTouchStart: (e, column, columnIndex, row, rowIndex) => {
@@ -210,6 +213,7 @@ export const getTableColumns = (constant, columnExpandFunction, getLinkProps = (
       hidden,
       events: {
         onClick: (e, column, columnIndex, row, rowIndex) => {
+          if (e.target.closest('table').classList.contains('no-expand')) return e
           handleColumnEvent({ e, column, columnIndex, row, rowIndex, component, dataKey, tableConfig })
         },
         // onTouchStart: (e, column, columnIndex, row, rowIndex) => {
@@ -293,6 +297,79 @@ export const getTableColumns = (constant, columnExpandFunction, getLinkProps = (
           dataKey: 'contacts',
           classes: 'nested-table-column',
           tableConfig: new TableConfig({ resourceConstant: 'HPD_CONTACT' }),
+        }),
+      ]
+      break
+    case 'RENT_STABILIZATION_RECORD':
+      columns = [
+        constructStandardColumn({
+          dataField: 'ucbbl',
+          text: 'ID',
+          hidden: true,
+        }),
+        constructStandardColumn({
+          dataField: 'uc2007',
+          text: '2007',
+        }),
+        constructStandardColumn({
+          dataField: 'uc2008',
+          text: '2008',
+        }),
+        constructStandardColumn({
+          dataField: 'uc2009',
+          text: '2009',
+        }),
+        constructStandardColumn({
+          dataField: 'uc2010',
+          text: '2010',
+        }),
+        constructStandardColumn({
+          dataField: 'uc2011',
+          text: '2011',
+        }),
+        constructStandardColumn({
+          dataField: 'uc2012',
+          text: '2012',
+        }),
+        constructStandardColumn({
+          dataField: 'uc2013',
+          text: '2013',
+        }),
+        constructStandardColumn({
+          dataField: 'uc2014',
+          text: '2014',
+        }),
+        constructStandardColumn({
+          dataField: 'uc2015',
+          text: '2015',
+        }),
+        constructStandardColumn({
+          dataField: 'uc2016',
+          text: '2016',
+        }),
+        constructStandardColumn({
+          dataField: 'uc2017',
+          text: '2017',
+        }),
+        constructStandardColumn({
+          dataField: 'uc2018',
+          text: '2018',
+        }),
+        constructStandardColumn({
+          dataField: 'uc2019',
+          text: '2019',
+        }),
+        constructStandardColumn({
+          dataField: 'uc2020',
+          text: '2020',
+        }),
+        constructStandardColumn({
+          dataField: 'uc2021',
+          text: '2021',
+        }),
+        constructStandardColumn({
+          dataField: 'uc2022',
+          text: '2022',
         }),
       ]
       break
