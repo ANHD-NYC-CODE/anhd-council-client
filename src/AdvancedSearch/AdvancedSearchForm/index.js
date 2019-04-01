@@ -144,7 +144,8 @@ class AdvancedSearchForm extends React.PureComponent {
       ...Object.keys(this.props.advancedSearch.conditions).map(key => this.props.advancedSearch.conditions[key]),
     ]
     const allFilters = [].concat(
-      ...allConditions.map(condition => condition.filters.filter(filter => !filter.conditionGroup))
+      ...allConditions.map(condition => condition.filters.filter(filter => !filter.conditionGroup)),
+      this.props.advancedSearch.propertyFilter
     )
 
     allConditions.forEach(condition => condition.validate())
