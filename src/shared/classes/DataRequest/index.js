@@ -136,6 +136,7 @@ export default class DataRequest {
   }
 
   get summaryCardLabel() {
+    if (this.type === 'ADVANCED_SEARCH') return 'Custom Search'
     const amountPm = this._paramMaps.find(pm => pm.type === 'AMOUNT')
     return `${this._apiMaps[this._apiMaps.length - 1].name}${
       amountPm ? ` with ${amountPm.summaryString} ${amountPm.resourceModel.label}` : ''
