@@ -38,7 +38,7 @@ const IntroductionBlock = props => {
         Council or Community District.
       </p>
       <p>
-        Our Advanced Search tool allows you to analyze and download data points on local housing issues by flexibly
+        Our Custom Search tool allows you to analyze and download data points on local housing issues by flexibly
         creating custom searches that query many housing- and displacement-related datasets.
       </p>
     </Jumbotron>

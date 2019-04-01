@@ -12,7 +12,7 @@ import SummaryResultCard from 'shared/components/ResultCard/SummaryResultCard'
 import moment from 'moment'
 import LeafletMap from 'LeafletMap'
 
-const PrintAlertMap = props => {
+const PrintDistrictDashboard = props => {
   const geographyRequests = getManyRequestTypes(props.appState.requests, ['MAP_FILTER'])
 
   const propertyResource = props.config.resourceModels.find(model => model.resourceConstant === 'PROPERTY')
@@ -92,10 +92,10 @@ const PrintAlertMap = props => {
   )
 }
 
-PrintAlertMap.propTypes = {
+PrintDistrictDashboard.propTypes = {
   appState: PropTypes.object,
   propertySummaryRequest: PropTypes.object,
   layout: PropTypes.object,
 }
 
-export default PrintAlertMap
+export default PrintDistrictDashboard

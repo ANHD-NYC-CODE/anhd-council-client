@@ -5,7 +5,7 @@ import GeographySelect from 'shared/components/GeographySelect'
 import { Card, Row, Col, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
 import AdvancedSearchSentence from 'AdvancedSearch/Sentence'
 import LayoutContext from 'Layout/LayoutContext'
-import HousingTypeSection from 'AlertMap/AlertMapShow/HousingTypeSection'
+import HousingTypeSection from 'DistrictDashboard/DistrictDashboardShow/HousingTypeSection'
 import BaseLink from 'shared/components/BaseLink'
 import LeafletMap from 'LeafletMap'
 import RequestTableWrapper from 'shared/components/RequestTableWrapper'
@@ -18,13 +18,13 @@ import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
 import classnames from 'classnames'
 import { geographySelectionToString } from 'shared/utilities/languageUtils'
 
-import GeographyProfile from 'AlertMap/GeographyProfile'
-import { alertMapFilterdates } from 'shared/utilities/componentUtils'
-import PrintAlertMap from 'AlertMap/PrintAlertMap'
+import GeographyProfile from 'DistrictDashboard/GeographyProfile'
+import { districtDashboardFilterdates } from 'shared/utilities/componentUtils'
+import PrintDistrictDashboard from 'DistrictDashboard/PrintDistrictDashboard'
 
 import './style.scss'
 
-class AlertMapShow extends React.PureComponent {
+class DistrictDashboardShow extends React.PureComponent {
   constructor(props) {
     super(props)
     this.switchTable = this.switchTable.bind(this)
@@ -60,7 +60,7 @@ class AlertMapShow extends React.PureComponent {
       <LayoutContext.Consumer>
         {layout =>
           layout.print ? (
-            <PrintAlertMap
+            <PrintDistrictDashboard
               appState={this.props.appState}
               layout={layout}
               config={this.props.config}
@@ -114,18 +114,18 @@ class AlertMapShow extends React.PureComponent {
                         <ToggleButton
                           variant="outline-primary"
                           className="p-1 toggle-link"
-                          value={alertMapFilterdates()[2]}
-                        >{`Last 3 Years (${moment(alertMapFilterdates()[2]).format('YYYY')})`}</ToggleButton>
+                          value={districtDashboardFilterdates()[2]}
+                        >{`Last 3 Years (${moment(districtDashboardFilterdates()[2]).format('YYYY')})`}</ToggleButton>
                         <ToggleButton
                           className="p-1 toggle-link"
                           variant="outline-primary"
-                          value={alertMapFilterdates()[1]}
-                        >{`Last Year (${moment(alertMapFilterdates()[1]).format('YYYY')})`}</ToggleButton>
+                          value={districtDashboardFilterdates()[1]}
+                        >{`Last Year (${moment(districtDashboardFilterdates()[1]).format('YYYY')})`}</ToggleButton>
                         <ToggleButton
                           className="p-1 toggle-link"
                           variant="outline-primary"
-                          value={alertMapFilterdates()[0]}
-                        >{`Last Month (${moment(alertMapFilterdates()[0]).format('MM/YYYY')})`}</ToggleButton>
+                          value={districtDashboardFilterdates()[0]}
+                        >{`Last Month (${moment(districtDashboardFilterdates()[0]).format('MM/YYYY')})`}</ToggleButton>
                       </ToggleButtonGroup>
                     </Col>
                   </Row>
@@ -165,7 +165,7 @@ class AlertMapShow extends React.PureComponent {
                         <Col className="align-self-center pl-0 pl-lg-2 pr-0" xs={11}>
                           <BaseLink href="/search">
                             <Card className="border-0">
-                              <Card.Body>+ Add Custom Filter</Card.Body>
+                              <Card.Body>+ Add Custom Search</Card.Body>
                             </Card>
                           </BaseLink>
                         </Col>
@@ -258,7 +258,7 @@ class AlertMapShow extends React.PureComponent {
   }
 }
 
-AlertMapShow.propTypes = {
+DistrictDashboardShow.propTypes = {
   appState: PropTypes.object,
   config: PropTypes.object,
   dispatch: PropTypes.func,
@@ -267,4 +267,4 @@ AlertMapShow.propTypes = {
   propertySummaryRequest: PropTypes.object,
 }
 
-export default AlertMapShow
+export default DistrictDashboardShow

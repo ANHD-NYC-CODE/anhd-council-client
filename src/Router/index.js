@@ -7,7 +7,7 @@ import { ConnectedRouter } from 'connected-react-router'
 import { Route, Switch } from 'react-router'
 import Main from 'Main'
 import Lookup from 'Lookup'
-import AlertMap from 'AlertMap'
+import DistrictDashboard from 'DistrictDashboard'
 import AdvancedSearch from 'AdvancedSearch'
 import { faMapSigns } from '@fortawesome/free-solid-svg-icons'
 import ConfigContext from 'Config/ConfigContext'
@@ -31,9 +31,9 @@ class Router extends React.Component {
                   <Route exact path="/property/:bbl/building/:bin" render={() => <Lookup config={config} />} />
                   <Route exact path="/property/:bbl" render={() => <Lookup config={config} />} />
                   <Route exact path="/building/:bin" render={() => <Lookup config={config} />} />
-                  <Route exact path="/map" render={() => <AlertMap config={config} />} />
-                  <Route exact path="/council/:id" render={() => <AlertMap config={config} />} />
-                  <Route exact path="/community/:id" render={() => <AlertMap config={config} />} />
+                  <Route exact path="/map" render={() => <DistrictDashboard config={config} />} />
+                  <Route exact path="/council/:id" render={() => <DistrictDashboard config={config} />} />
+                  <Route exact path="/community/:id" render={() => <DistrictDashboard config={config} />} />
                   <Route exact path="/search" render={() => <AdvancedSearch />} />
                   <Route
                     render={() => (

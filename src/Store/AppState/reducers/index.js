@@ -1,5 +1,5 @@
 import * as c from '../constants'
-import { alertMapFilterdates } from 'shared/utilities/componentUtils'
+import { districtDashboardFilterdates } from 'shared/utilities/componentUtils'
 
 export const initialState = {
   currentGeographyType: undefined,
@@ -9,7 +9,7 @@ export const initialState = {
   changingGeography: false,
   changingGeographyType: undefined,
   changingGeographyId: undefined,
-  mapFilterDate: alertMapFilterdates()[0],
+  mapFilterDate: districtDashboardFilterdates()[0],
   selectedRequest: undefined,
   selectedResultsFilter: undefined,
   requests: [],

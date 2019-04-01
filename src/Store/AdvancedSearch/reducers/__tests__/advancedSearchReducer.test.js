@@ -6,7 +6,7 @@ import Condition from 'shared/classes/Condition'
 import ConditionFilter from 'shared/classes/ConditionFilter'
 import Filter from 'shared/classes/Filter'
 
-describe('Advanced Search reducer', () => {
+describe('Custom Search reducer', () => {
   it('should return the initial state', () => {
     expect(r.advancedSearchReducer(undefined, {})).toEqual(r.initialState())
     expect(r.advancedSearchReducer(undefined, {}).housingTypes.length).toEqual(1)

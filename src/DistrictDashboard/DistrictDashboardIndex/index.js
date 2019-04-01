@@ -7,7 +7,7 @@ import ConfigContext from 'Config/ConfigContext'
 import IntroductionBlock from 'shared/components/IntroductionBlock'
 import { Element } from 'react-scroll'
 
-const AlertMapIndex = props => {
+const DistrictDashboardIndex = props => {
   return (
     <div className="alert-map-index">
       <Row>
@@ -62,9 +62,9 @@ const AlertMapIndex = props => {
   )
 }
 
-AlertMapIndex.propTypes = {
+DistrictDashboardIndex.propTypes = {
   changeGeographyAndId: PropTypes.func,
   dispatch: PropTypes.func,
 }
 
-export default AlertMapIndex
+export default DistrictDashboardIndex

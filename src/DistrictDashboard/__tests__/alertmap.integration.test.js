@@ -14,7 +14,7 @@ import { Provider } from 'react-redux'
 
 const mock = new MockAdapter(Axios)
 
-import AlertMap from 'AlertMap'
+import DistrictDashboard from 'DistrictDashboard'
 
 configure({ adapter: new Adapter() })
 beforeEach(() => {
@@ -41,7 +41,7 @@ const setupWrapper = state => {
           }}
         >
           <ConnectedRouter history={history}>
-            <AlertMap />
+            <DistrictDashboard />
           </ConnectedRouter>
         </ConfigContext.Provider>
       </LayoutContext.Provider>
@@ -50,14 +50,14 @@ const setupWrapper = state => {
   return [wrapper, store]
 }
 
-describe('AlertMap', () => {
+describe('DistrictDashboard', () => {
   it('has initial state', () => {
     const [wrapper, store] = setupWrapper()
-    expect(wrapper.find('AlertMap')).toBeDefined()
+    expect(wrapper.find('DistrictDashboard')).toBeDefined()
     expect(store.getState().router.location.pathname).toEqual('/map')
-    expect(wrapper.find('AlertMapIndex')).toHaveLength(1)
-    expect(wrapper.find('AlertMapRequestsWrapper')).toHaveLength(0)
-    expect(wrapper.find('AlertMapShow')).toHaveLength(0)
+    expect(wrapper.find('DistrictDashboardIndex')).toHaveLength(1)
+    expect(wrapper.find('DistrictDashboardRequestsWrapper')).toHaveLength(0)
+    expect(wrapper.find('DistrictDashboardShow')).toHaveLength(0)
     expect(wrapper.find('GeographySelect select[name="geographyType"]').props().value).toEqual(-1)
   })
 
@@ -67,12 +67,12 @@ describe('AlertMap', () => {
         router: { location: { pathname: '/council/1' }, action: 'POP' },
       })
 
-      expect(wrapper.find('AlertMap')).toBeDefined()
+      expect(wrapper.find('DistrictDashboard')).toBeDefined()
       expect(store.getState().router.location.pathname).toEqual('/council/1')
       expect(store.getState().appState.currentGeographyType).toEqual('COUNCIL')
       expect(store.getState().appState.currentGeographyId).toEqual('1')
-      expect(wrapper.find('AlertMapIndex')).toHaveLength(0)
-      expect(wrapper.find('AlertMapRequestsWrapper')).toHaveLength(1)
+      expect(wrapper.find('DistrictDashboardIndex')).toHaveLength(0)
+      expect(wrapper.find('DistrictDashboardRequestsWrapper')).toHaveLength(1)
       expect(wrapper.find('GeographySelect')).toHaveLength(1)
       expect(wrapper.find('ToggleButtonGroup')).toHaveLength(2)
       expect(wrapper.find('GeographyProfile')).toHaveLength(1)

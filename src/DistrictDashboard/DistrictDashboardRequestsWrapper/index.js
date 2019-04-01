@@ -7,10 +7,10 @@ import { getRequestType, getManyRequestTypes, getRequestByConstant } from 'Store
 import { requestWithAuth } from 'shared/utilities/authUtils'
 import { makeRequest } from 'Store/Request/actions'
 import { setAppState } from 'Store/AppState/actions'
-import AlertMapShow from 'AlertMap/AlertMapShow'
+import DistrictDashboardShow from 'DistrictDashboard/DistrictDashboardShow'
 import InnerLoader from 'shared/components/Loaders/InnerLoader'
 
-class AlertMapRequestsWrapper extends React.PureComponent {
+class DistrictDashboardRequestsWrapper extends React.PureComponent {
   constructor(props) {
     super(props)
     this.toggleDateRange = this.toggleDateRange.bind(this)
@@ -92,7 +92,7 @@ class AlertMapRequestsWrapper extends React.PureComponent {
 
   render() {
     return this.props.requests.length ? (
-      <AlertMapShow
+      <DistrictDashboardShow
         geographyRequests={getManyRequestTypes(this.props.requests, ['MAP_FILTER', 'ADVANCED_SEARCH'])}
         housingTypeRequests={getRequestType(this.props.requests, 'GEOGRAPHY_HOUSING_TYPE')}
         propertySummaryRequest={getRequestByConstant(this.props.requests, 'GEOGRAPHY_HOUSING_TYPE_ALL')[0]}
@@ -108,10 +108,10 @@ class AlertMapRequestsWrapper extends React.PureComponent {
   }
 }
 
-AlertMapRequestsWrapper.propTypes = {
+DistrictDashboardRequestsWrapper.propTypes = {
   appState: PropTypes.object,
   mapFilterDate: PropTypes.string,
   requests: PropTypes.array,
 }
 
-export default AlertMapRequestsWrapper
+export default DistrictDashboardRequestsWrapper
