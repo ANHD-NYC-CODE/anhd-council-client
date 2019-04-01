@@ -3,6 +3,11 @@
 .filter {
   width: 100%;
 
+  .form-row,
+  .filter-component__wrapper {
+    width: 100%;
+  }
+
   .filter-control {
     margin: 0px 2px;
   }
@@ -16,5 +21,17 @@
     padding-top: 20px;
     padding-left: 20px;
     margin-left: 28px;
+  }
+
+  .modifying-paramset {
+    background-color: $primary;
+    margin-left: 0;
+    .input-column {
+      padding-left: 0;
+    }
+    .filter-component__wrapper {
+      background: $white;
+      margin-left: 15px;
+    }
   }
 }

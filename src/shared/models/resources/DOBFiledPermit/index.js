@@ -1,4 +1,4 @@
-import { constructCountParamSet } from 'shared/utilities/filterUtils'
+import { constructCountDateParamSet } from 'shared/utilities/filterUtils'
 
 const DOBFiledPermit = databaseObject => ({
   resourceConstant: 'DOB_FILED_PERMIT',
@@ -8,7 +8,7 @@ const DOBFiledPermit = databaseObject => ({
   ownResourceFilters: {
     initial: {
       generatorFunction: resourceModel => {
-        return constructCountParamSet({
+        return constructCountDateParamSet({
           resourceModel,
         })
       },

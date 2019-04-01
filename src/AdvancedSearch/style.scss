@@ -5,8 +5,8 @@
     overflow-x: auto;
   }
 
+  .paramset-wrapper,
   .form-row__container {
-    margin-bottom: 20px;
     width: 900px;
 
     @include media-breakpoint-up(xl) {

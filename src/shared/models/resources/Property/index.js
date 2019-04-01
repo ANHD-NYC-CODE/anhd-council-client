@@ -1,7 +1,18 @@
 import ParamMap from 'shared/classes/ParamMap'
-import { comparisonOptions, constructSingleMapParamSet } from 'shared/utilities/filterUtils'
+import {
+  comparisonOptions,
+  dateComparisonOptions,
+  constructCountDateParamSet,
+  constructSingleMapParamSet,
+  constructDateRangeParamSet,
+  amountComparisonOptions,
+  rentRegulatedProgramOptions,
+} from 'shared/utilities/filterUtils'
 import GenericFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/GenericFieldSet'
 import TextSelectField from 'AdvancedSearch/FilterComponent/Field/TextSelectField'
+import MultiSelectField from 'AdvancedSearch/FilterComponent/Field/MultiSelectField'
+
+import ComparisonFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/ComparisonFieldSet'
 
 const Property = databaseObject => {
   return {
@@ -108,7 +119,144 @@ const Property = databaseObject => {
           })
         },
       },
+      rs: {
+        generatorFunction: (resourceModel, relatedResourceModel = undefined) => {
+          return constructCountDateParamSet({
+            resourceModel,
+            paramSetLabel: 'Units lost',
+            amountComponent: ComparisonFieldSet,
+            amountType: 'PERCENT',
+            amountRole: 'MODIFIER',
+            amountParamNoun: 'units lost',
+            amountValueSuffix: '%',
+            amountField: 'rsunitslost',
+            amountValue: '25',
+            amountValidations: {
+              min: 0,
+              max: 100,
+            },
+            dateType: 'YEAR',
+            dateRole: 'MODIFIER',
+            dateField: 'rsunitslost',
+            dateLowComparison: 'start',
+            dateHighComparison: 'end',
+            dateLowValue: 2010,
+            dateHighValue: 2017,
+            dateComparisonOptions: dateComparisonOptions({
+              comparisonValues: ['start', 'between'],
+              labels: ['After', 'Range'],
+              type: 'DATE',
+              rangeKey: 'rsUnitsRange',
+            }),
+            dateValidations: {
+              min: 2007,
+              max: (relatedResourceModel || {}).version,
+            },
+          })
+        },
+      },
+      rr_1: {
+        generatorFunction: resourceModel => {
+          return constructSingleMapParamSet({
+            resourceModel,
+            paramSetLabel: 'Program',
+            component: GenericFieldSet,
+            baseComponent: MultiSelectField,
+            defaultOptions: rentRegulatedProgramOptions(),
+            paramMapType: 'MULTI-TEXT',
+            paramNoun: 'programs(s)',
+            paramMapField: 'coresubsidyrecord__programname',
+            paramMapComparison: 'any',
+            paramMapValue: '',
+          })
+        },
+      },
+      rr_2: {
+        generatorFunction: resourceModel => {
+          return constructDateRangeParamSet({
+            resourceModel,
+            paramSetLabel: 'Expiration',
+            dateType: 'DATE',
+            dateRole: 'MODIFIER',
+            comparisonPrefix: 'expiring',
+            dateField: 'coresubsidyrecord__enddate',
+          })
+        },
+      },
+      sh: {
+        generatorFunction: resourceModel => {
+          return constructSingleMapParamSet({
+            resourceModel,
+            paramSetLabel: 'Residential Units',
+            paramMapField: 'unitsres',
+            paramMapValue: '4',
+            paramMapComparison: 'lte',
+            paramNoun: 'units',
+            defaultOptions: amountComparisonOptions({
+              comparisonValues: ['lte', 'exact'],
+              labels: ['At most', 'Exactly'],
+            }),
+            validations: {
+              min: 1,
+              max: 6,
+            },
+          })
+        },
+      },
+
+      // coresubsidyrecord__enddate: new ParamSet({
+      //   component: MultiTypeFieldGroup,
+      //   label: 'Expiration',
+      //   createType: 'ONE',
+      //   defaults: [
+      //     new ParamMap({
+      //       component: ComparisonFieldSet,
+      //       baseComponent: DateField,
+      //       type: 'DATE',
+      //       role: '',
+      //       valuePrefix: 'expiring',
+      //       props: {
+      //         type: 'date',
+      //       },
+      //       defaultOptions: dateComparisonOptions({
+      //         comparisonValues: ['lte', 'between', 'gte'],
+      //         labels: ['Before', 'Range', 'After'],
+      //         type: 'DATE',
+      //         rangeKey: 'expirationRangeKey',
+      //       }),
+      //       rangeKey: 'expirationRangeKey',
+      //       rangePosition: 1,
+      //       field: 'coresubsidyrecord__enddate',
+      //       comparison: 'lte',
+      //       value: moment(moment.now())
+      //         .add(1, 'Y')
+      //         .format('YYYY-MM-DD'),
+      //     }),
+      //     new ParamMap({
+      //       component: ComparisonFieldSet,
+      //       baseComponent: DateField,
+      //       type: 'DATE',
+      //       role: '',
+      //       valuePrefix: 'expiring',
+      //       props: {
+      //         type: 'date',
+      //       },
+      //       defaultOptions: dateComparisonOptions({
+      //         comparisonValues: ['lte', 'between', 'gte'],
+      //         labels: ['Before', 'Range', 'After'],
+      //         type: 'DATE',
+      //         rangeKey: 'expirationRangeKey',
+      //       }),
+      //       rangeKey: 'expirationRangeKey',
+      //       rangePosition: 2,
+      //       field: 'coresubsidyrecord__enddate',
+      //       comparison: 'gte',
+      //       value: moment(moment.now()).format('YYYY-MM-DD'),
+      //     }),
+      //   ],
+      // }),
     },
+
     relatedResourceMappings: {
       ACRIS_REAL_MASTER: 'acrisreallegals__documentid',
       PROPERTY_SALE_BY_AMOUNT: 'acrisreallegals__documentid',

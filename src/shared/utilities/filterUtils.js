@@ -83,90 +83,87 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
   ]
 }
 
-export const constructCountParamSet = ({
+export const constructCountDateParamSet = ({
   resourceModel,
-  defaultDate = '',
-  defaultAmount = 5,
+  paramSetLabel = '',
+  amountComponent = PrimaryComparisonFieldSet,
+  amountParamNoun = '',
+  amountType = 'AMOUNT',
+  amountRole = 'PRIMARY',
   amountValuePrefix = undefined,
   amountValueSuffix = undefined,
-  dateMax = undefined,
+  amountField = 'count',
+  amountValue = 5,
+  amountValidations = {
+    min: 1,
+  },
+  dateType = 'DATE',
+  dateRole = 'LIMITER',
+  dateField = undefined,
+  dateLowComparison = 'gte',
+  dateHighComparison = 'lte',
+  dateLowValue = moment(moment.now())
+    .subtract(1, 'Y')
+    .format('YYYY-MM-DD'),
+  dateHighValue = moment(moment.now())
+    .add(1, 'Y')
+    .format('YYYY-MM-DD'),
+  dateOptions = dateComparisonOptions(
+    ['gte', 'between', 'lte'],
+    ['After', 'Range', 'Before'],
+    'DATE',
+    `${resourceModel.urlPath}Range`
+  ),
+  dateValidations = {},
   hiddenParamMap = undefined,
   extraParamMap = undefined,
 } = {}) => {
   return new ParamSet({
     component: MultiTypeFieldGroup,
     createType: 'ALL_RANGE_ONE',
+    label: paramSetLabel,
     defaults: [
       new ParamMap({
         resourceModel,
-        component: PrimaryComparisonFieldSet,
+        component: amountComponent,
         baseComponent: IntegerField,
-        type: 'AMOUNT',
-        role: 'PRIMARY',
+        type: amountType,
+        role: amountRole,
+        paramNoun: amountParamNoun,
         valuePrefix: amountValuePrefix,
         valueSuffix: amountValueSuffix,
-        field: 'count',
+        field: amountField,
         comparison: 'gte',
-        validations: {
-          min: 0,
-        },
-        value: defaultAmount,
+        validations: amountValidations,
+        value: amountValue,
       }),
       new ParamMap({
         resourceModel,
-        type: 'DATE',
-        role: 'LIMITER',
+        type: dateType,
+        role: dateRole,
         component: ComparisonFieldSet,
         baseComponent: DateField,
-        props: {
-          type: 'date',
-        },
-        validations: {
-          max: dateMax,
-        },
-        rangeKey: `${resourceModel.urlPath}Range`,
+        validations: dateValidations,
+        rangeKey: `${paramSetLabel}-${resourceModel.urlPath}-Range`,
         rangePosition: 1,
-        defaultOptions: dateComparisonOptions(
-          ['gte', 'between', 'lte'],
-          ['After', 'Range', 'Before'],
-          'DATE',
-          `${resourceModel.urlPath}Range`
-        ),
-        field: `${getDatasetDateField(resourceModel.resourceConstant)}`,
-        comparison: 'gte',
-        value:
-          defaultDate ||
-          moment(moment.now())
-            .subtract(1, 'Y')
-            .format('YYYY-MM-DD'),
+        defaultOptions: dateOptions,
+        field: dateField || `${getDatasetDateField(resourceModel.resourceConstant)}`,
+        comparison: dateLowComparison,
+        value: dateLowValue,
       }),
       new ParamMap({
         resourceModel,
-        type: 'DATE',
-        role: 'LIMITER',
+        type: dateType,
+        role: dateRole,
         component: ComparisonFieldSet,
         baseComponent: DateField,
-        props: {
-          type: 'date',
-        },
-        validations: {
-          max: dateMax,
-        },
-        rangeKey: `${resourceModel.urlPath}Range`,
+        validations: dateValidations,
+        rangeKey: `${paramSetLabel}-${resourceModel.urlPath}-Range`,
         rangePosition: 2,
-        defaultOptions: dateComparisonOptions(
-          ['gte', 'between', 'lte'],
-          ['After', 'Range', 'Before'],
-          'DATE',
-          `${resourceModel.urlPath}Range`
-        ),
-        field: `${getDatasetDateField(resourceModel.resourceConstant)}`,
-        comparison: 'lte',
-        value:
-          defaultDate ||
-          moment(moment.now())
-            .add(1, 'Y')
-            .format('YYYY-MM-DD'),
+        defaultOptions: dateOptions,
+        field: dateField || `${getDatasetDateField(resourceModel.resourceConstant)}`,
+        comparison: dateHighComparison,
+        value: dateHighValue,
       }),
       extraParamMap,
       hiddenParamMap,
@@ -183,11 +180,13 @@ export const constructSingleMapParamSet = ({
   paramNoun,
   paramMapType = 'AMOUNT',
   defaultOptions = undefined,
-  paramMapRole = '',
+  paramMapRole = 'MODIFIER',
   paramMapField = '',
   paramMapValue = 5,
   paramMapComparison = '',
+  comparisonPrefix = '',
   paramSetLabel = '',
+  validations,
 } = {}) => {
   return new ParamSet({
     component: MultiTypeFieldGroup,
@@ -201,17 +200,81 @@ export const constructSingleMapParamSet = ({
         type: paramMapType,
         role: paramMapRole,
         paramNoun,
+        comparisonPrefix,
         valuePrefix,
         valueSuffix,
         defaultOptions,
         field: paramMapField,
         comparison: paramMapComparison,
         value: paramMapValue,
-        validations: {
-          min: 0,
-        },
+        validations,
       }),
     ],
+  })
+}
+
+export const constructDateRangeParamSet = ({
+  resourceModel,
+  paramSetLabel = '',
+  dateType = 'DATE',
+  dateRole = 'LIMITER',
+  dateField = undefined,
+  dateLowComparison = 'gte',
+  dateHighComparison = 'lte',
+  dateLowValue = moment(moment.now())
+    .subtract(1, 'Y')
+    .format('YYYY-MM-DD'),
+  dateHighValue = moment(moment.now())
+    .add(1, 'Y')
+    .format('YYYY-MM-DD'),
+  dateOptions = dateComparisonOptions(
+    ['gte', 'between', 'lte'],
+    ['After', 'Range', 'Before'],
+    'DATE',
+    `${resourceModel.urlPath}Range`
+  ),
+  dateValidations = {},
+  comparisonPrefix = '',
+  dateValuePrefix = '',
+} = {}) => {
+  return new ParamSet({
+    component: MultiTypeFieldGroup,
+    createType: 'ALL_RANGE_ONE',
+    label: paramSetLabel,
+    defaults: [
+      new ParamMap({
+        resourceModel,
+        type: dateType,
+        role: dateRole,
+        component: ComparisonFieldSet,
+        baseComponent: DateField,
+        validations: dateValidations,
+        rangeKey: `${paramSetLabel}-${resourceModel.urlPath}-Range`,
+        rangePosition: 1,
+        defaultOptions: dateOptions,
+        field: dateField || `${getDatasetDateField(resourceModel.resourceConstant)}`,
+        comparison: dateLowComparison,
+        comparisonPrefix,
+        value: dateLowValue,
+        valuePrefix: dateValuePrefix,
+      }),
+      new ParamMap({
+        resourceModel,
+        type: dateType,
+        role: dateRole,
+        component: ComparisonFieldSet,
+        baseComponent: DateField,
+        validations: dateValidations,
+        rangeKey: `${paramSetLabel}-${resourceModel.urlPath}-Range`,
+        rangePosition: 2,
+        defaultOptions: dateOptions,
+        field: dateField || `${getDatasetDateField(resourceModel.resourceConstant)}`,
+        comparison: dateHighComparison,
+        comparisonPrefix,
+        value: dateHighValue,
+        valuePrefix: dateValuePrefix,
+      }),
+    ].filter(m => m),
   })
 }
 

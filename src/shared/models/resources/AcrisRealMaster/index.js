@@ -1,5 +1,5 @@
 import ParamMap from 'shared/classes/ParamMap'
-import { constructCountParamSet, constructSingleMapParamSet } from 'shared/utilities/filterUtils'
+import { constructCountDateParamSet, constructSingleMapParamSet } from 'shared/utilities/filterUtils'
 
 const AcrisRealMaster = databaseObject => ({
   resourceConstant: 'ACRIS_REAL_MASTER',
@@ -9,9 +9,9 @@ const AcrisRealMaster = databaseObject => ({
   ownResourceFilters: {
     initial: {
       generatorFunction: resourceModel => {
-        return constructCountParamSet({
+        return constructCountDateParamSet({
           resourceModel,
-          defaultAmount: 1,
+          amountValue: 1,
           amountNoun: 'times',
         })
       },

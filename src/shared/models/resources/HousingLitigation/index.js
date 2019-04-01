@@ -1,4 +1,4 @@
-import { constructCountParamSet } from 'shared/utilities/filterUtils'
+import { constructCountDateParamSet } from 'shared/utilities/filterUtils'
 
 const HousingLitigation = databaseObject => ({
   resourceConstant: 'HOUSING_LITIGATION',
@@ -8,9 +8,9 @@ const HousingLitigation = databaseObject => ({
   ownResourceFilters: {
     initial: {
       generatorFunction: resourceModel => {
-        return constructCountParamSet({
+        return constructCountDateParamSet({
           resourceModel,
-          defaultAmount: 1,
+          amountValue: 1,
         })
       },
     },

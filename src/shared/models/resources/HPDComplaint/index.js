@@ -1,4 +1,4 @@
-import { constructCountParamSet } from 'shared/utilities/filterUtils'
+import { constructCountDateParamSet } from 'shared/utilities/filterUtils'
 
 const HPDComplaint = databaseObject => ({
   resourceConstant: 'HPD_COMPLAINT',
@@ -8,7 +8,7 @@ const HPDComplaint = databaseObject => ({
   ownResourceFilters: {
     initial: {
       generatorFunction: resourceModel => {
-        return constructCountParamSet({
+        return constructCountDateParamSet({
           resourceModel,
         })
       },

@@ -26,16 +26,16 @@ const comparisonReconfigure = (props, e) => {
   }
 }
 
-const hasValuePrefix = props => {
-  return !!props.paramMapRangeGroup[0].valuePrefix
+const hasPrefix = props => {
+  return !!props.paramMapRangeGroup[0].valuePrefix || !!props.paramMapRangeGroup[0].comparisonPrefix
 }
 
 const RangeFieldSet = props => {
   return (
     <Form.Row>
-      <InputGroup as={Col} xs={12} sm={12} md={hasValuePrefix(props) ? 12 : 2}>
+      <InputGroup as={Col} xs={12} sm={12} md={hasPrefix(props) ? 12 : 2}>
         <InputGroup.Prepend>
-          {hasValuePrefix(props) && <InputGroup.Text>{props.paramMapRangeGroup[0].valuePrefix}</InputGroup.Text>}
+          {!!hasPrefix(props) && <InputGroup.Text>{props.paramMapRangeGroup[0].comparisonPrefix}</InputGroup.Text>}
         </InputGroup.Prepend>
         <Form.Control
           name="comparison"
@@ -69,7 +69,7 @@ const RangeFieldSet = props => {
               as={Col}
               xs={12}
               sm={12}
-              md={hasValuePrefix(props) ? 6 : 5}
+              md={hasPrefix(props) ? 6 : 5}
               key={`paramMapRangeGroup-col-${paramMapIndex}`}
             >
               <InputGroup.Prepend>
@@ -79,7 +79,6 @@ const RangeFieldSet = props => {
                 key: `rangeGroup-paramMap-${paramMapIndex}`,
                 onChange: e => paramMap.update({ dispatchAction: props.dispatchAction, e: new StandardizedInput(e) }),
                 paramMap: paramMap,
-                type: paramMap.props.type,
               })}
             </InputGroup>
           )
