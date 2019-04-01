@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { push, createMatchSelector } from 'connected-react-router'
 import { setGeographyAndRequestsAndRedirect } from 'Store/AppState/actions'
-import AlertMapIndex from 'AlertMap/AlertMapIndex'
-import AlertMapRequestsWrapper from 'AlertMap/AlertMapRequestsWrapper'
+import DistrictDashboardIndex from 'DistrictDashboard/DistrictDashboardIndex'
+import DistrictDashboardRequestsWrapper from 'DistrictDashboard/DistrictDashboardRequestsWrapper'
 import StandardizedInput from 'shared/classes/StandardizedInput'
 import { setAppState } from 'Store/AppState/actions'
 import { makeSelectRequests } from 'Store/AppState/selectors'
@@ -13,7 +13,7 @@ import PageError from 'shared/components/PageError'
 import { faMapSigns } from '@fortawesome/free-solid-svg-icons'
 import { Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
-class AlertMap extends React.PureComponent {
+class DistrictDashboard extends React.PureComponent {
   constructor(props) {
     super(props)
 
@@ -139,7 +139,7 @@ class AlertMap extends React.PureComponent {
     if (this.state.error404)
       return <PageError title="Oops! 404 Page Not Found." message={this.state.error404Message} icon={faMapSigns} />
     return !(this.props.appState.currentGeographyType && this.props.appState.currentGeographyId) ? (
-      <AlertMapIndex
+      <DistrictDashboardIndex
         appState={this.props.appState}
         cancelChangeGeography={this.cancelChangeGeography}
         dispatch={this.props.dispatch}
@@ -149,7 +149,7 @@ class AlertMap extends React.PureComponent {
         scrollToControls={this.scrollToControls}
       />
     ) : (
-      <AlertMapRequestsWrapper
+      <DistrictDashboardRequestsWrapper
         advancedSearch={this.props.advancedSearch}
         appState={this.props.appState}
         dispatch={this.props.dispatch}
@@ -165,12 +165,12 @@ class AlertMap extends React.PureComponent {
   }
 }
 
-AlertMap.defaultProps = {
+DistrictDashboard.defaultProps = {
   geographyType: undefined,
   geographyId: undefined,
 }
 
-AlertMap.propTypes = {
+DistrictDashboard.propTypes = {
   dispatch: PropTypes.func,
 }
 
@@ -194,4 +194,4 @@ const makeMapStateToProps = () => {
   return mapStateToProps
 }
 
-export default connect(makeMapStateToProps)(AlertMap)
+export default connect(makeMapStateToProps)(DistrictDashboard)

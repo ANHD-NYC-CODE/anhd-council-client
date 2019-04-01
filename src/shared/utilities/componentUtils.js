@@ -40,7 +40,7 @@ export const getGeographyIdOptions = (districts, boards, type) => {
   }
 }
 
-export const alertMapFilterdates = () => {
+export const districtDashboardFilterdates = () => {
   return [
     moment()
       .subtract(1, 'months')

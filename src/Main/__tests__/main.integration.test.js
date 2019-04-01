@@ -33,7 +33,7 @@ describe('Landing page', () => {
     expect(wrapper.find('NavigationBar').text()).toMatch(/HomeDAP MapDistrict ReportsWatch ListPortalAboutContactLogin/)
     expect(wrapper.find('SubHeader')).toHaveLength(1)
     expect(wrapper.find('SubHeader li')).toHaveLength(4)
-    expect(wrapper.find('SubHeader').text()).toMatch(/Building LookupAlert MapAdvanced Search/)
+    expect(wrapper.find('SubHeader').text()).toMatch(/Property LookupDistrict DashboardCustom Search/)
     expect(
       wrapper
         .find('SubHeader a')
@@ -111,7 +111,7 @@ describe('Landing page', () => {
 
       wrapper.update()
       expect(wrapper.find('Main')).toHaveLength(0)
-      expect(wrapper.find('AlertMap')).toHaveLength(1)
+      expect(wrapper.find('DistrictDashboard')).toHaveLength(1)
       expect(
         wrapper
           .find('SubHeader a')
