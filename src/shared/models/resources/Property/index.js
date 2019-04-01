@@ -22,30 +22,29 @@ const Property = databaseObject => {
     sentenceNoun: 'properties',
     filterParamSets: paramSets => {
       if (!paramSets['initial'] || !paramSets['initial'].paramMaps.length) return paramSets
-      let blah
       switch (paramSets['initial'].paramMaps[0].value) {
         case 'rs':
           return Object.keys(paramSets)
             .filter(key => !key.match(/(housingType)/))
             .concat('housingType_rs')
             .filter(p => p)
-            .map(key => paramSets[key])
+            .reduce((ps, key) => ((ps[key] = paramSets[key]), ps), {})
         case 'rr':
           return Object.keys(paramSets)
             .filter(key => !key.match(/(housingType)/))
             .concat('housingType_rr_1', 'housingType_rr_2')
             .filter(p => p)
-            .map(key => paramSets[key])
+            .reduce((ps, key) => ((ps[key] = paramSets[key]), ps), {})
         case 'sh':
           return Object.keys(paramSets)
             .filter(key => !key.match(/(housingType)/))
             .concat('housingType_sh')
             .filter(p => p)
-            .map(key => paramSets[key])
+            .reduce((ps, key) => ((ps[key] = paramSets[key]), ps), {})
         default:
           return Object.keys(paramSets)
             .filter(key => !key.match(/(housingType)/))
-            .map(key => paramSets[key])
+            .reduce((ps, key) => ((ps[key] = paramSets[key]), ps), {})
       }
     },
     ownResultFilters: [
