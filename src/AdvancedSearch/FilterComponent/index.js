@@ -24,8 +24,8 @@ export class FilterComponent extends React.Component {
     })
   }
 
-  renderButtons(paramSet, paramsSetKey) {
-    if (this.props.condition && paramSet.paramMaps.length && paramsSetKey === 'initial') {
+  renderButtons(paramSet, key) {
+    if (this.props.condition && !!paramSet.paramMaps.length && key === 'initial') {
       return (
         <div className="d-flex align-items-center">
           <RemoveFilterButton showPopups={this.props.showPopups} removeFilter={this.removeFilter} />
@@ -38,7 +38,7 @@ export class FilterComponent extends React.Component {
           )}
         </div>
       )
-    } else if (paramSet.paramMaps.length && paramsSetKey !== 'initial') {
+    } else if (!!paramSet.paramMaps.length && key !== 'initial') {
       return (
         <Button
           onClick={() =>
@@ -73,31 +73,31 @@ export class FilterComponent extends React.Component {
 
           <Form.Row className="filter align-content-center">
             <Form.Group as={Col} xs={12}>
-              {Object.keys(this.props.filter.paramSets).map((paramsSetKey, paramSetIndex) => {
+              {Object.keys(this.props.filter.paramSets).map((key, index) => {
                 // Render all param sets in the filter
-                const paramSet = this.props.filter.paramSets[paramsSetKey]
+                const paramSet = this.props.filter.paramSets[key]
                 return (
                   <Form.Row
-                    className={classnames('paramset-wrapper', { 'modifying-paramset': paramsSetKey !== 'initial' })}
-                    key={`filter-paramset-${this.props.filter.resourceConstant}-${paramSetIndex}`}
+                    className={classnames('paramset-wrapper', { 'modifying-paramset': key !== 'initial' })}
+                    key={`filter-paramset-${this.props.filter.resourceConstant}-${index}`}
                   >
                     <Col className="filter-component__wrapper d-flex">
                       <Form.Row>
                         <Col className="input-column" xs={10} xl={11}>
-                          {this.props.filter.paramSets[paramsSetKey].component({
+                          {this.props.filter.paramSets[key].component({
                             dispatchAction: this.props.dispatchAction,
                             replaceFilter: this.props.replaceFilter,
                             filterIndex: this.props.filterIndex,
                             filter: this.props.filter,
                             paramSet: paramSet,
-                            paramSetIndex: paramSetIndex,
+                            paramSetIndex: index,
                           })}
                         </Col>
                         {
                           // Buttons
                         }
                         <Col xs={2} xl={1} className="d-flex align-items-center">
-                          {this.renderButtons(paramSet, paramsSetKey)}
+                          {this.renderButtons(paramSet, key)}
                         </Col>
                       </Form.Row>
                     </Col>
