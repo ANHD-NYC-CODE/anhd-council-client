@@ -43,7 +43,7 @@ const PropertySummaryBody = props => {
         </Card.Text>
         <Card.Text className="lookup-profile-summary__group">
           <label className="profile-summary-body__label">NYCHA? </label>
-          <span className="profile-summary-body__value">{props.profile.nycha ? 'Yes' : 'No'}</span>
+          <span className="profile-summary-body__value">{props.profile.nycha.length ? 'Yes' : 'No'}</span>
         </Card.Text>
       </Col>
       <Col xs={6}>
