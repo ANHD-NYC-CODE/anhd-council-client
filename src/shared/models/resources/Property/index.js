@@ -65,9 +65,6 @@ const Property = databaseObject => {
         paramMaps: [
           new ParamMap({ field: 'rentstabilizationrecord', comparison: 'bool', value: true }),
           new ParamMap({ field: 'unitsrentstabilized', comparison: 'bool', value: true }),
-          new ParamMap({ field: 'unitsres', comparison: 'gte', value: 6 }),
-          new ParamMap({ field: 'yearbuilt', comparison: 'lte', value: 1974 }),
-          new ParamMap({ field: 'yearbuilt', comparison: 'gte', value: 1 }),
         ],
         internalFilter: (results, paramMaps) => {
           if (!results) return []

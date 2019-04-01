@@ -360,14 +360,14 @@ export const newMapRequests = ({ geographyType, geographyId, resourceModels } = 
       type: 'MAP_FILTER',
       geographyType,
       geographyId,
-      resourceModel: resourceModels['EVICTION'],
+      resourceModel: resourceModels['ACRIS_REAL_MASTER'],
       defaultValue: 1,
     }),
     newGeographyRequest({
       type: 'MAP_FILTER',
       geographyType,
       geographyId,
-      resourceModel: resourceModels['DOB_ISSUED_PERMIT'],
+      resourceModel: resourceModels['DOB_FILED_PERMIT'],
       defaultValue: 1,
     }),
   ]
@@ -375,7 +375,6 @@ export const newMapRequests = ({ geographyType, geographyId, resourceModels } = 
 
 export const newAdvancedSearchRequest = ({ geographyType, geographyId, advancedSearch, resourceModels } = {}) => {
   const paramMaps = getUrlFormattedParamMaps(advancedSearch)
-
   return new DataRequest({
     type: 'ADVANCED_SEARCH',
     resourceModel: resourceModels['PROPERTY'],

@@ -1,6 +1,5 @@
 @import 'shared/styles/bootstrap/_variables.scss';
 
-
 .sub-header {
   background-color: $logo-gray;
 
@@ -70,7 +69,7 @@
     background-color: $gray-300;
     color: $gray-500;
     font-weight: bold;
-    padding: 20px;
+    padding: 15px;
     text-decoration: none;
 
     @include media-breakpoint-up(sm) {
