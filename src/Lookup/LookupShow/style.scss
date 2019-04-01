@@ -4,4 +4,9 @@
   .lookup-show__property-column {
     background-color: $gray-700;
   }
+
+  .summary-result-card {
+    min-height: 80px;
+    height: 80px;
+  }
 }
