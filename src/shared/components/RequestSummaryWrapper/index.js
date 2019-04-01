@@ -56,6 +56,8 @@ class RequestSummaryWrapper extends React.Component {
             />
           ) : (
             this.props.resultsComponent({
+              summaryBackgroundColorClass: this.props.request.resourceModel.summaryBackgroundColorClass,
+              summaryTextColorClass: this.props.request.resourceModel.summaryTextColorClass,
               error: this.props.error,
               errorAction: this.retryRequest,
               label: this.props.label,

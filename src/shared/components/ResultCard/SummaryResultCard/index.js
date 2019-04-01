@@ -10,9 +10,9 @@ const SummaryResultCard = props => {
   return (
     <Card
       as={Button}
-      bg={classnames({ primary: props.selected, light: !props.selected })}
+      bg={classnames({ primary: props.selected })}
       text={classnames({ light: props.selected, dark: !props.selected })}
-      className={classnames('summary-result-card', 'result-card flex-row', 'mb-2', {
+      className={classnames('summary-result-card', 'result-card flex-row', props.summaryBackgroundColorClass, 'mb-2', {
         active: props.selected,
       })}
       onClick={props.handleClick}
@@ -22,7 +22,11 @@ const SummaryResultCard = props => {
           {props.label}
         </p>
         <div className="align-self-center summary-result-card__result">
-          {props.loading ? <SpinnerLoader /> : <h2 className="m-0">{props.results.length}</h2>}
+          {props.loading ? (
+            <SpinnerLoader />
+          ) : (
+            <h2 className={classnames('m-0', props.summaryTextColorClass)}>{props.results.length}</h2>
+          )}
         </div>
       </Card.Body>
     </Card>
@@ -41,6 +45,8 @@ SummaryResultCard.propTypes = {
   onClick: PropTypes.func,
   resultsComponent: PropTypes.func,
   selected: PropTypes.bool,
+  summaryTextColorClass: PropTypes.string,
+  summaryBackgroundColorClass: PropTypes.string,
   results: PropTypes.array,
 }
 export default SummaryResultCard

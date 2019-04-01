@@ -19,7 +19,7 @@ const ResultCardError = props => {
       <p className="result-card-error__message text-left">{props.error.message}</p>
       <Badge variant="danger">
         <FontAwesomeIcon icon={faRedo} />
-        <span> Refresh</span>
+        <span> Retry</span>
       </Badge>
     </Card>
   )
