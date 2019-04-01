@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Filter from 'shared/classes/Filter'
 import Geography from 'shared/classes/Geography'
 import * as yup from 'yup'
-
+import { cloneInstance } from 'shared/utilities/classUtils'
 import StandardizedInput from 'shared/classes/StandardizedInput'
 import { getAdvancedSearchParamMaps } from 'Store/AdvancedSearch/utilities/advancedSearchStoreUtils'
 import { setGeographyAndRequestsAndRedirect } from 'Store/AppState/actions'
@@ -15,7 +15,6 @@ import { addHousingType, updateHousingType } from 'Store/AdvancedSearch/actions'
 import { setAppState, setAdvancedSearchRequestAndRedirect } from 'Store/AppState/actions'
 import ConditionComponent from 'AdvancedSearch/ConditionComponent'
 import GeographySelect from 'shared/components/GeographySelect'
-import HousingTypeQuery from 'AdvancedSearch/HousingTypeQuery'
 import FormError from 'shared/components/FormError'
 import { Form, Button } from 'react-bootstrap'
 import { Formik } from 'formik'
@@ -121,6 +120,7 @@ class AdvancedSearchForm extends React.PureComponent {
 
   updatePropertyFilter() {
     const propertyFilter = this.props.advancedSearch.propertyFilter
+
     this.props.dispatch(replacePropertyFilter(propertyFilter))
   }
 
@@ -229,17 +229,6 @@ class AdvancedSearchForm extends React.PureComponent {
                     showPopups={false}
                   />
                 }
-                <HousingTypeQuery
-                  addHousingType={this.addHousingType}
-                  changeHousingType={this.changeHousingType}
-                  housingTypes={this.props.advancedSearch.housingTypes}
-                  dispatch={this.props.dispatch}
-                  handleChange={handleChange}
-                  handleBlur={handleBlur}
-                  touched={touched}
-                  errors={errors}
-                  submitCount={submitCount}
-                />
 
                 <h4 className="text-muted font-weight-bold text-uppercase mt-5 mb-4">3) Add filters</h4>
                 <ConditionComponent
