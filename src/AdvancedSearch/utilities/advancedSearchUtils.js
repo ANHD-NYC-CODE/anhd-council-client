@@ -13,8 +13,10 @@ export const convertDatasetFilterToParams = filter => {
             paramMap.type === 'PERCENT' ? paramMap.value / 100 : paramMap.value
           }`
         })
+        .filter(p => p)
         .join(',')
     })
+    .filter(p => p)
     .join(',')
 }
 
