@@ -41,12 +41,6 @@ export const setupResourceModels = datasets => {
       case 'DOB_FILED_PERMIT':
         databaseObject = datasets.find(object => (object.model_name || {}).toUpperCase() === 'DOBLEGACYFILEDPERMIT')
         break
-      case 'PROPERTY_SALE_BY_COUNT':
-        databaseObject = datasets.find(object => (object.model_name || {}).toUpperCase() === 'ACRISREALLEGAL')
-        break
-      case 'PROPERTY_SALE_BY_AMOUNT':
-        databaseObject = datasets.find(object => (object.model_name || {}).toUpperCase() === 'ACRISREALLEGAL')
-        break
       default:
         databaseObject = datasets.find(
           object => (object.model_name || {}).toUpperCase() === constantToModelName(constant).toUpperCase()
@@ -372,18 +366,19 @@ export const newMapRequests = ({ geographyType, geographyId, resourceModels } = 
       resourceModel: resourceModels['HPD_COMPLAINT'],
       defaultValue: 5,
     }),
+
     newGeographyRequest({
       type: 'MAP_FILTER',
       geographyType,
       geographyId,
-      resourceModel: resourceModels['ACRIS_REAL_MASTER'],
+      resourceModel: resourceModels['DOB_FILED_PERMIT'],
       defaultValue: 1,
     }),
     newGeographyRequest({
       type: 'MAP_FILTER',
       geographyType,
       geographyId,
-      resourceModel: resourceModels['DOB_FILED_PERMIT'],
+      resourceModel: resourceModels['ACRIS_REAL_MASTER'],
       defaultValue: 1,
     }),
   ]

@@ -32,7 +32,20 @@ const mockGeography = id => {
 }
 
 export const configuredState = state => {
-  const datasetsResponse = [{ model_name: 'hpdviolation' }]
+  const datasetsResponse = [
+    { model_name: 'property' },
+    { model_name: 'hpdviolation' },
+    { model_name: 'dobviolation' },
+    { model_name: 'hpdcomplaint' },
+    { model_name: 'dobcomplaint' },
+    { model_name: 'ecbviolation' },
+    { model_name: 'acrisrealmaster' },
+    { model_name: 'eviction' },
+    { model_name: 'lispenden' },
+    { model_name: 'housinglitigation' },
+    { model_name: 'doblegacyfiledpermit' },
+    { model_name: 'dobissuedpermit' },
+  ]
   const dataset = {
     datasets: datasetsResponse,
     housingTypeModels: setupHousingTypeModels(datasetsResponse),

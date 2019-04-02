@@ -43,9 +43,9 @@ const SummaryResultCard = props => {
       onClick={props.handleClick}
     >
       <Card.Body className="d-flex flex-row p-0">
-        <p className="d-flex flex-column align-content-center justify-content-center text-left m-0 pr-1 summary-result-card__label">
+        <div className="d-flex flex-column align-content-center justify-content-center text-left m-0 pr-1 summary-result-card__label">
           {getLabel(props)}
-        </p>
+        </div>
         <div className="align-self-center summary-result-card__result">
           {props.loading ? (
             <SpinnerLoader />

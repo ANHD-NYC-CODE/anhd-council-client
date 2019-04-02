@@ -240,7 +240,7 @@ BaseTable.defaultProps = {
 }
 
 BaseTable.propTypes = {
-  expandable: PropTypes.string,
+  expandable: PropTypes.bool,
   caption: PropTypes.string,
   classes: PropTypes.string,
   dispatch: PropTypes.func,
