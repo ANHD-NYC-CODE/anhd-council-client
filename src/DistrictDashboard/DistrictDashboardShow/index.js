@@ -143,7 +143,7 @@ class DistrictDashboardShow extends React.PureComponent {
                 <Col xs={12} lg={8}>
                   <Row className="mb-1">
                     <Col xs={3}>
-                      <h5 className="text-light-gray font-weight-bold">Select one</h5>
+                      <h5 className="text-light-gray font-weight-bold">Filter by dataset</h5>
                     </Col>
                     <Col xs={9}>
                       {this.props.appState.selectedRequest !== this.props.propertySummaryRequest && (
@@ -154,7 +154,7 @@ class DistrictDashboardShow extends React.PureComponent {
                           size="sm"
                           variant="outline-secondary"
                         >
-                          Clear
+                          Clear filters
                         </Button>
                       )}
                     </Col>
@@ -190,9 +190,9 @@ class DistrictDashboardShow extends React.PureComponent {
                   <Row>
                     <Col>
                       {(this.props.selectedRequest || {}).type === 'ADVANCED_SEARCH' ? (
-                        <h5 className="text-dark-gray font-weight-bold">Custom Search</h5>
+                        <h5 className="text-light-gray font-weight-bold">Custom Search</h5>
                       ) : (
-                        <h5 className="text-dark-gray font-weight-bold">
+                        <h5 className="text-light-gray font-weight-bold">
                           {constructSummaryFilterSentence(
                             this.props.selectedRequest !== this.props.propertySummaryRequest
                               ? this.props.selectedRequest
@@ -233,7 +233,11 @@ class DistrictDashboardShow extends React.PureComponent {
                           handleChangeGeographyId={this.props.handleChangeGeographyId}
                           iconConfig="MULTIPLE"
                           displayedRequest={this.props.selectedRequest}
-                          displayedResultsFilter={this.props.selectedResultsFilter}
+                          displayedResultsFilter={
+                            (this.props.selectedRequest || {}).type === 'ADVANCED_SEARCH'
+                              ? undefined
+                              : this.props.selectedResultsFilter
+                          }
                           selectGeographyData={this.props.config.selectGeographyData}
                         />
                       </div>
@@ -244,7 +248,11 @@ class DistrictDashboardShow extends React.PureComponent {
                               key={`request-wrapper-${this.props.appState.requests.indexOf(request)}`}
                               visible={this.props.selectedRequest === request}
                               request={request}
-                              selectedResultsFilter={this.props.selectedResultsFilter}
+                              selectedResultsFilter={
+                                (this.props.selectedRequest || {}).type === 'ADVANCED_SEARCH'
+                                  ? undefined
+                                  : this.props.selectedResultsFilter
+                              }
                             />
                           )
                         })}
