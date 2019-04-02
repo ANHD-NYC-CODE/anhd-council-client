@@ -13,8 +13,8 @@ import {
 // Summary Sentence
 
 export const constructSummaryFilterSentence = (request, resultsFilter) => {
-  const string = `${(resultsFilter || {}).label} Properties w/ ${
-    !!request && Object.keys(request).length ? ' ' + request.summaryCardLabel : ' Properties'
+  const string = `${(resultsFilter || {}).label} Properties ${
+    !!request && Object.keys(request).length ? ' w/ ' + request.summaryCardLabel : ''
   }`
 
   return string
