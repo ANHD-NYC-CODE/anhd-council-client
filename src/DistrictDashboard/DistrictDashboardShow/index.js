@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import GeographySelect from 'shared/components/GeographySelect'
-import { Button, Row, Col, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
+import { Form, Button, Row, Col, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
 import AdvancedSearchSentence from 'AdvancedSearch/Sentence'
 import LayoutContext from 'Layout/LayoutContext'
 import HousingTypeSection from 'DistrictDashboard/DistrictDashboardShow/HousingTypeSection'
@@ -26,6 +26,7 @@ import './style.scss'
 class DistrictDashboardShow extends React.PureComponent {
   constructor(props) {
     super(props)
+    this.setViewTable = this.setViewTable.bind(this)
     this.switchTable = this.switchTable.bind(this)
     this.toggleView = this.toggleView.bind(this)
 
@@ -46,6 +47,12 @@ class DistrictDashboardShow extends React.PureComponent {
   toggleView(value) {
     this.setState({
       view: value,
+    })
+  }
+
+  setViewTable() {
+    this.setState({
+      view: 2,
     })
   }
 
@@ -142,21 +149,8 @@ class DistrictDashboardShow extends React.PureComponent {
                 </Col>
                 <Col xs={12} lg={8}>
                   <Row className="mb-1">
-                    <Col xs={3}>
+                    <Col xs={12}>
                       <h5 className="text-light-gray font-weight-bold">Filter by dataset</h5>
-                    </Col>
-                    <Col xs={9}>
-                      {this.props.appState.selectedRequest !== this.props.propertySummaryRequest && (
-                        <Button
-                          onClick={() => {
-                            this.switchTable(this.props.propertySummaryRequest, undefined)
-                          }}
-                          size="sm"
-                          variant="outline-secondary"
-                        >
-                          Clear filters
-                        </Button>
-                      )}
                     </Col>
                   </Row>
                   <DistrictSummarySection
@@ -173,6 +167,23 @@ class DistrictDashboardShow extends React.PureComponent {
                   <Row>
                     <Col xs={12}>
                       <h5 className="text-light-gray font-weight-bold">Filter by housing type</h5>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col xs={12}>
+                      <Form.Check
+                        type={'checkbox'}
+                        id={'housingTypeOnly'}
+                        label={'Filter by housing type only'}
+                        checked={this.props.selectedRequest === this.props.propertySummaryRequest}
+                        onChange={e => {
+                          if (e.target.checked) {
+                            this.switchTable(this.props.propertySummaryRequest, undefined)
+                          } else {
+                            this.switchTable(this.props.geographyRequests[0], undefined)
+                          }
+                        }}
+                      />
                     </Col>
                   </Row>
                   <Row className="housingtype-section py-2 mb-4 mb-lg-0">
@@ -239,6 +250,7 @@ class DistrictDashboardShow extends React.PureComponent {
                               : this.props.selectedResultsFilter
                           }
                           selectGeographyData={this.props.config.selectGeographyData}
+                          switchView={this.setViewTable}
                         />
                       </div>
                       <div className={classnames({ 'd-none': this.state.view === 1 })}>

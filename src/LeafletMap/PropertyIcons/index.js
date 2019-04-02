@@ -20,6 +20,7 @@ class PropertyIcons extends React.Component {
 
   handleAlert() {
     if (this.props.results.length > this.iconLimit) {
+      this.props.switchView()
       this.props.setAlertMessage(`Will not render more than ${this.iconLimit} map icons due to device limitations.`)
     } else {
       this.props.setAlertMessage('')

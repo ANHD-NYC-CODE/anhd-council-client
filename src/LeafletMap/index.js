@@ -207,6 +207,7 @@ export default class LeafletMap extends React.PureComponent {
           <PropertyIcons
             iconConfig={this.props.iconConfig}
             setAlertMessage={this.setAlertMessage}
+            switchView={this.props.switchView}
             displayedRequest={this.props.displayedRequest}
             displayedResultsFilter={this.props.displayedResultsFilter}
             visible={!(this.props.appState.changingGeographyType && this.props.appState.changingGeographyId)}

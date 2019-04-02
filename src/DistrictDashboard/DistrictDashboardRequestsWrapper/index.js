@@ -43,7 +43,7 @@ class DistrictDashboardRequestsWrapper extends React.PureComponent {
   getInitialResultsFilter() {
     return Object.values(this.props.config.resourceModels)
       .find(model => model.resourceConstant === 'PROPERTY')
-      .ownResultFilters.find(orf => orf.id === 'HOUSING_TYPE_RENT_STABILIZED')
+      .ownResultFilters.find(orf => orf.id === 'HOUSING_TYPE_RESIDENTIAL')
   }
 
   loadRequests(requests = []) {
