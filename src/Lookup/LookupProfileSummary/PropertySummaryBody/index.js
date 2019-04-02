@@ -3,6 +3,18 @@ import PropTypes from 'prop-types'
 import { boroCodeToName, constructAddressString } from 'shared/utilities/languageUtils'
 import './style.scss'
 import { Card, Row, Col } from 'react-bootstrap'
+
+const getSubsidiesText = props => {
+  if (props.profile.subsidyrecords.length) {
+    return props.profile.subsidyrecords.map(record => record.programname).join(' ')
+  } else {
+    return [
+      props.profile.subsidyj51records.length ? 'J-51 Tax Incentive' : undefined,
+      props.profile.subsidy421arecords.length ? '421a Tax Incentive Program' : '',
+    ].filter(sp => sp)
+  }
+}
+
 const PropertySummaryBody = props => {
   return (
     <Row className="property-summary-body p-2">
@@ -35,11 +47,7 @@ const PropertySummaryBody = props => {
         </Card.Text>
         <Card.Text className="lookup-profile-summary__group">
           <label className="profile-summary-body__label">Rent Programs: </label>
-          <span className="profile-summary-body__value">
-            {props.profile.subsidyrecords.length
-              ? props.profile.subsidyrecords.map(record => record.programname).join(' ')
-              : ''}
-          </span>
+          <span className="profile-summary-body__value">{getSubsidiesText(props)}</span>
         </Card.Text>
         <Card.Text className="lookup-profile-summary__group">
           <label className="profile-summary-body__label">NYCHA? </label>
