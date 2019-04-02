@@ -16,11 +16,7 @@ const DistrictSummarySection = props => {
               key={`request-summary-${props.appState.requests.indexOf(request)}`}
               request={request}
               resultsFilter={request.type === 'ADVANCED_SEARCH' ? undefined : props.appState.selectedResultsFilter}
-              label={
-                request.type === 'ADVANCED_SEARCH'
-                  ? 'Custom Search'
-                  : constructSummaryFilterSentence(request, props.appState.selectedResultsFilter)
-              }
+              label={request.type === 'ADVANCED_SEARCH' ? 'Custom Search' : undefined}
               onClick={() => props.switchTable(request)}
               resultsComponent={SummaryResultCard}
               selected={props.selectedRequest === request}

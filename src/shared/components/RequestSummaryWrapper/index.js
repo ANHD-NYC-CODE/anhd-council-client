@@ -65,6 +65,7 @@ class RequestSummaryWrapper extends React.Component {
               selected: this.props.selected,
               unitsLabel: this.props.unitsLabel,
               request: this.props.request,
+              resultsFilter: this.props.resultsFilter,
               results: results,
               totalResults: totalResults,
               loading: this.props.loading,
@@ -82,7 +83,6 @@ class RequestSummaryWrapper extends React.Component {
 }
 
 RequestSummaryWrapper.defaultProps = {
-  label: 'Summary',
   loading: false,
   error: undefined,
   results: [],

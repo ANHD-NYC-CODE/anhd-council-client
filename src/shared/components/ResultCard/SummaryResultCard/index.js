@@ -3,8 +3,33 @@ import PropTypes from 'prop-types'
 import { Card, Button } from 'react-bootstrap'
 import SpinnerLoader from 'shared/components/Loaders/SpinnerLoader'
 import classnames from 'classnames'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHome } from '@fortawesome/free-solid-svg-icons'
+import { faChartBar } from '@fortawesome/free-solid-svg-icons'
 
 import './style.scss'
+import { Row, Col } from 'react-bootstrap'
+const getLabel = props => {
+  if (props.label) return props.label
+  else {
+    return (
+      <Row>
+        {props.resultsFilter && (
+          <Col xs={2}>
+            <FontAwesomeIcon icon={faHome} />
+          </Col>
+        )}
+        {props.resultsFilter && <Col xs={10}>{props.resultsFilter.label}</Col>}
+        {props.request && (
+          <Col xs={2}>
+            <FontAwesomeIcon icon={faChartBar} />
+          </Col>
+        )}
+        {props.request && <Col xs={10}>{props.request.summaryCardLabel}</Col>}
+      </Row>
+    )
+  }
+}
 
 const SummaryResultCard = props => {
   return (
@@ -19,7 +44,7 @@ const SummaryResultCard = props => {
     >
       <Card.Body className="d-flex flex-row p-0">
         <p className="d-flex flex-column align-content-center justify-content-center text-left m-0 pr-1 summary-result-card__label">
-          {props.label}
+          {getLabel(props)}
         </p>
         <div className="align-self-center summary-result-card__result">
           {props.loading ? (
