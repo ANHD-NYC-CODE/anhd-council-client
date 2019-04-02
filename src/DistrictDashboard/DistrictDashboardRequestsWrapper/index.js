@@ -17,12 +17,8 @@ class DistrictDashboardRequestsWrapper extends React.PureComponent {
 
     this.loadRequests = this.loadRequests.bind(this)
     this.getInitialRequest = this.getInitialRequest.bind(this)
-    this.getInitialTableFilter = this.getInitialTableFilter.bind(this)
+    this.getInitialResultsFilter = this.getInitialResultsFilter.bind(this)
     this.switchSelectedRequest = this.switchSelectedRequest.bind(this)
-    this.state = {
-      selectedRequestIndex: this.props.requests.indexOf(this.getInitialRequest()),
-      tableRecordsFilter: this.getInitialTableFilter(),
-    }
   }
 
   componentDidMount() {
@@ -44,22 +40,21 @@ class DistrictDashboardRequestsWrapper extends React.PureComponent {
       : getRequestType(this.props.requests, 'MAP_FILTER')[0]
   }
 
-  getInitialTableFilter() {
-    return getRequestType(this.props.requests, 'ADVANCED_SEARCH').length
-      ? undefined
-      : Object.values(this.props.config.resourceModels)
-          .find(model => model.resourceConstant === 'PROPERTY')
-          .ownResultFilters.find(orf => orf.id === 'HOUSING_TYPE_RENT_STABILIZED')
+  getInitialResultsFilter() {
+    return Object.values(this.props.config.resourceModels)
+      .find(model => model.resourceConstant === 'PROPERTY')
+      .ownResultFilters.find(orf => orf.id === 'HOUSING_TYPE_RENT_STABILIZED')
   }
 
   loadRequests(requests = []) {
     requests.forEach(request => {
       this.props.dispatch(requestWithAuth(makeRequest(request)))
     })
+
     this.props.dispatch(
       setAppState({
-        selectedRequest: this.getInitialRequest(),
-        selectedResultsFilter: this.getInitialTableFilter(),
+        selectedRequest: this.props.appState.selectedRequest || this.getInitialRequest(),
+        selectedResultsFilter: this.props.appState.selectedResultsFilter || this.getInitialResultsFilter(),
       })
     )
   }

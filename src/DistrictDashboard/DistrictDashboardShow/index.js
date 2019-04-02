@@ -131,27 +131,13 @@ class DistrictDashboardShow extends React.PureComponent {
                       </ToggleButtonGroup>
                     </Col>
                   </Row>
-                  <Row>
+                  <Row className="py-2 mb-4 mb-lg-0">
                     {(this.props.selectedRequest || {}).type === 'ADVANCED_SEARCH' ? (
-                      <div className="py-2 mb-4 mb-lg-0">
-                        <Col>
-                          <h5 className="text-primary font-weight-bold">Custom Search:</h5>
-                          <AdvancedSearchSentence advancedSearch={this.props.advancedSearch} />
-                        </Col>
-                      </div>
-                    ) : (
                       <Col>
-                        <h5 className="text-secondary font-weight-bold">Showing:</h5>
-                        <p>
-                          {constructSummaryFilterSentence(
-                            this.props.selectedRequest !== this.props.propertySummaryRequest
-                              ? this.props.selectedRequest
-                              : undefined,
-                            this.props.selectedResultsFilter
-                          )}
-                        </p>
+                        <h5 className="text-primary font-weight-bold">Custom Search:</h5>
+                        <AdvancedSearchSentence advancedSearch={this.props.advancedSearch} />
                       </Col>
-                    )}
+                    ) : null}
                   </Row>
                 </Col>
                 <Col xs={12} lg={8}>
@@ -201,6 +187,22 @@ class DistrictDashboardShow extends React.PureComponent {
                   </Row>
                 </Col>
                 <Col xs={12} lg={5} xl={6}>
+                  <Row>
+                    <Col>
+                      {(this.props.selectedRequest || {}).type === 'ADVANCED_SEARCH' ? (
+                        <h5 className="text-dark-gray font-weight-bold">Custom Search</h5>
+                      ) : (
+                        <h5 className="text-dark-gray font-weight-bold">
+                          {constructSummaryFilterSentence(
+                            this.props.selectedRequest !== this.props.propertySummaryRequest
+                              ? this.props.selectedRequest
+                              : undefined,
+                            this.props.selectedResultsFilter
+                          )}
+                        </h5>
+                      )}
+                    </Col>
+                  </Row>
                   <Row className="mb-2 mb-lg-0">
                     <Col className="d-flex justify-content-end">
                       <ToggleButtonGroup

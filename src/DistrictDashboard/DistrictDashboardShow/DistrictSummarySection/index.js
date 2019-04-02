@@ -15,8 +15,12 @@ const DistrictSummarySection = props => {
             <RequestSummaryWrapper
               key={`request-summary-${props.appState.requests.indexOf(request)}`}
               request={request}
-              resultsFilter={props.appState.selectedResultsFilter}
-              label={constructSummaryFilterSentence(request, props.appState.selectedResultsFilter)}
+              resultsFilter={request.type === 'ADVANCED_SEARCH' ? undefined : props.appState.selectedResultsFilter}
+              label={
+                request.type === 'ADVANCED_SEARCH'
+                  ? 'Custom Search'
+                  : constructSummaryFilterSentence(request, props.appState.selectedResultsFilter)
+              }
               onClick={() => props.switchTable(request)}
               resultsComponent={SummaryResultCard}
               selected={props.selectedRequest === request}
