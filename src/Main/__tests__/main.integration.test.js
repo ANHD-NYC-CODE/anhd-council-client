@@ -30,9 +30,9 @@ describe('Landing page', () => {
     const [wrapper, store] = setupWrapper()
     expect(wrapper.find('NavigationBar')).toHaveLength(1)
     expect(wrapper.find('NavigationBar li')).toHaveLength(7)
-    expect(wrapper.find('NavigationBar').text()).toMatch(/HomeDAP MapDistrict ReportsWatch ListPortalAboutContactLogin/)
+    expect(wrapper.find('NavigationBar').text()).toMatch(/HomeDAP MapDistrict ReportsWatch ListPortalAboutContact/)
     expect(wrapper.find('SubHeader')).toHaveLength(1)
-    expect(wrapper.find('SubHeader li')).toHaveLength(4)
+    expect(wrapper.find('SubHeader Link')).toHaveLength(4)
     expect(wrapper.find('SubHeader').text()).toMatch(/Property LookupDistrict DashboardCustom Search/)
     expect(
       wrapper
@@ -45,17 +45,23 @@ describe('Landing page', () => {
         .find('SubHeader a')
         .at(1)
         .props().href
-    ).toEqual('/lookup')
+    ).toEqual('#')
     expect(
       wrapper
         .find('SubHeader a')
         .at(2)
         .props().href
-    ).toEqual('/map')
+    ).toEqual('/lookup')
     expect(
       wrapper
         .find('SubHeader a')
         .at(3)
+        .props().href
+    ).toEqual('/map')
+    expect(
+      wrapper
+        .find('SubHeader a')
+        .at(4)
         .props().href
     ).toEqual('/search')
   })
@@ -87,11 +93,11 @@ describe('Landing page', () => {
       wrapper
         .find('GeographySelect select[name="geographyType"]')
         .simulate('change', { target: { value: 'COMMUNITY' } })
-      wrapper.find('GeographySelect select[name="geographyId"]').simulate('change', { target: { value: '2' } })
+      wrapper.find('GeographySelect select[name="geographyId"]').simulate('change', { target: { value: '101' } })
       wrapper.update()
-      expect(store.getState().router.location.pathname).toEqual('/community/2')
+      expect(store.getState().router.location.pathname).toEqual('/community/101')
       expect(wrapper.find('GeographySelect select[name="geographyType"]').props().value).toEqual('COMMUNITY')
-      expect(wrapper.find('GeographySelect select[name="geographyId"]').props().value).toEqual('2')
+      expect(wrapper.find('GeographySelect select[name="geographyId"]').props().value).toEqual('101')
       expect(wrapper.find('button.cancel-geography-change')).toHaveLength(0)
       expect(wrapper.find('button.submit-geography-change')).toHaveLength(0)
     })
@@ -107,7 +113,7 @@ describe('Landing page', () => {
       wrapper
         .find('GeographySelect select')
         .at(1)
-        .simulate('change', { target: { value: '7' } })
+        .simulate('change', { target: { value: '102' } })
 
       wrapper.update()
       expect(wrapper.find('Main')).toHaveLength(0)
@@ -115,9 +121,9 @@ describe('Landing page', () => {
       expect(
         wrapper
           .find('SubHeader a')
-          .at(2)
+          .at(3)
           .props().href
-      ).toEqual('/community/7')
+      ).toEqual('/community/102')
     })
   })
 })
