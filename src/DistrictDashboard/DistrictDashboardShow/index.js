@@ -176,7 +176,7 @@ class DistrictDashboardShow extends React.PureComponent {
                 </Col>
               </Row>
               <Row>
-                <Col xs={12} lg={3}>
+                <Col xs={12} lg={4} xl={3}>
                   <Row className="housingtype-section py-2 mb-4 mb-lg-0">
                     <HousingTypeSection
                       appState={this.props.appState}
@@ -188,7 +188,7 @@ class DistrictDashboardShow extends React.PureComponent {
                     />
                   </Row>
                 </Col>
-                <Col xs={12} lg={6}>
+                <Col xs={12} lg={5} xl={6}>
                   <Row className="mb-2 mb-lg-0">
                     <Col className="d-flex justify-content-end">
                       <ToggleButtonGroup

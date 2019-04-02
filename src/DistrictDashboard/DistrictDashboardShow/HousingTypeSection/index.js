@@ -6,48 +6,51 @@ import RequestSummaryWrapper from 'shared/components/RequestSummaryWrapper'
 import BasicResultsHeader from 'shared/components/ResultCard/BasicResultsHeader'
 import ConfigContext from 'Config/ConfigContext'
 
-import { Col } from 'react-bootstrap'
+import { Row, Col } from 'react-bootstrap'
 const HousingTypeSection = props => {
   return (
-    <Col xs={12} sm={6} lg={12} className="housingtype-request-summary__container">
-      <ConfigContext.Consumer>
-        {config => {
-          const propertyResource = Object.values(config.resourceModels).find(
-            model => model.resourceConstant === 'PROPERTY'
-          )
-          const residentialFilter = propertyResource.ownResultFilters.find(f => f.id === 'HOUSING_TYPE_RESIDENTIAL')
-          return (
+    <ConfigContext.Consumer>
+      {config => {
+        const propertyResource = Object.values(config.resourceModels).find(
+          model => model.resourceConstant === 'PROPERTY'
+        )
+        const residentialFilter = propertyResource.ownResultFilters.find(f => f.id === 'HOUSING_TYPE_RESIDENTIAL')
+        return (
+          <Col xs={12} className="housingtype-request-summary__container">
             <div className="housing-type-section__wrapper">
               <RequestSummaryWrapper
                 request={props.propertySummaryRequest}
                 label={'Total properties:'}
                 resultsComponent={BasicResultsHeader}
               />
-              {propertyResource.ownResultFilters.map((ownResultFilter, index) => {
-                return (
-                  <RequestSummaryWrapper
-                    key={`housingtype-summary-${index}`}
-                    request={props.propertySummaryRequest}
-                    totalRequest={props.propertySummaryRequest}
-                    onClick={props.switchTable}
-                    label={ownResultFilter.label}
-                    resultsFilter={ownResultFilter}
-                    resultsComponent={HousingTypeResultCard}
-                    infoKey={ownResultFilter.id}
-                    unitsLabel={ownResultFilter === residentialFilter ? 'of all properties' : 'of residential'}
-                    totalResultsFilter={ownResultFilter === residentialFilter ? undefined : residentialFilter}
-                    selected={
-                      props.selectedRequest === props.propertySummaryRequest &&
-                      props.selectedResultsFilter.id === ownResultFilter.id
-                    }
-                  />
-                )
-              })}
+              <Row>
+                {propertyResource.ownResultFilters.map((ownResultFilter, index) => {
+                  return (
+                    <Col xs={12} sm={6} lg={12} key={`housingtype-summary-${index}`}>
+                      <RequestSummaryWrapper
+                        request={props.propertySummaryRequest}
+                        totalRequest={props.propertySummaryRequest}
+                        onClick={props.switchTable}
+                        label={ownResultFilter.label}
+                        resultsFilter={ownResultFilter}
+                        resultsComponent={HousingTypeResultCard}
+                        infoKey={ownResultFilter.id}
+                        unitsLabel={ownResultFilter === residentialFilter ? 'of all properties' : 'of residential'}
+                        totalResultsFilter={ownResultFilter === residentialFilter ? undefined : residentialFilter}
+                        selected={
+                          props.selectedRequest === props.propertySummaryRequest &&
+                          props.selectedResultsFilter.id === ownResultFilter.id
+                        }
+                      />
+                    </Col>
+                  )
+                })}
+              </Row>
             </div>
-          )
-        }}
-      </ConfigContext.Consumer>
-    </Col>
+          </Col>
+        )
+      }}
+    </ConfigContext.Consumer>
   )
 }
 
