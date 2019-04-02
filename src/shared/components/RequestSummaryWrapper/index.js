@@ -18,7 +18,7 @@ class RequestSummaryWrapper extends React.Component {
   }
 
   handleClick() {
-    if (this.props.onClick) this.props.onClick(this.props.request, this.props.resultsFilter)
+    if (this.props.onClick) this.props.onClick()
   }
 
   getInfoKey() {

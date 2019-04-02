@@ -286,6 +286,20 @@ export const newGeographyRequest = ({
         comparison: '',
         value: districtDashboardFilterdates()[0],
       }),
+      new ParamMap({
+        resourceModel,
+        type: 'TEXT',
+        field: 'summary',
+        comparison: '',
+        value: true,
+      }),
+      new ParamMap({
+        resourceModel,
+        type: 'TEXT',
+        field: 'summary-type',
+        comparison: '',
+        value: 'short',
+      }),
     ],
     tableConfig: new TableConfig({ resourceConstant: 'PROPERTY' }),
   })

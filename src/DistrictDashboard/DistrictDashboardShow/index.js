@@ -2,16 +2,15 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import GeographySelect from 'shared/components/GeographySelect'
-import { Card, Row, Col, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
+import { Button, Row, Col, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
 import AdvancedSearchSentence from 'AdvancedSearch/Sentence'
 import LayoutContext from 'Layout/LayoutContext'
 import HousingTypeSection from 'DistrictDashboard/DistrictDashboardShow/HousingTypeSection'
-import BaseLink from 'shared/components/BaseLink'
+
 import LeafletMap from 'LeafletMap'
 import RequestTableWrapper from 'shared/components/RequestTableWrapper'
-import RequestSummaryWrapper from 'shared/components/RequestSummaryWrapper'
-import SummaryResultCard from 'shared/components/ResultCard/SummaryResultCard'
 
+import DistrictSummarySection from 'DistrictDashboard/DistrictDashboardShow/DistrictSummarySection'
 import PrintButton from 'shared/components/PrintButton'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
@@ -51,7 +50,10 @@ class DistrictDashboardShow extends React.PureComponent {
   }
 
   switchTable(request, filter) {
-    this.props.switchSelectedRequest(request, filter)
+    this.props.switchSelectedRequest(
+      request || this.props.appState.selectedRequest,
+      filter || this.props.appState.selectedResultsFilter
+    )
     this.props.cancelChangeGeography()
   }
 
@@ -139,40 +141,36 @@ class DistrictDashboardShow extends React.PureComponent {
                   )}
                 </Col>
                 <Col xs={12} lg={8}>
-                  <Row>
-                    {this.props.geographyRequests.map((request, index) => {
-                      return (
-                        <Col
-                          xs={12}
-                          sm={6}
-                          xl={4}
-                          key={`rs-col-${index}`}
-                          className="geography-request-summary__container"
+                  <Row className="mb-1">
+                    <Col xs={3}>
+                      <h5 className="text-light-gray font-weight-bold">Select one</h5>
+                    </Col>
+                    <Col xs={9}>
+                      {this.props.appState.selectedRequest !== this.props.propertySummaryRequest && (
+                        <Button
+                          onClick={() => {
+                            this.switchTable(this.props.propertySummaryRequest, undefined)
+                          }}
+                          size="sm"
+                          variant="outline-primary"
                         >
-                          <RequestSummaryWrapper
-                            key={`request-summary-${this.props.appState.requests.indexOf(request)}`}
-                            request={request}
-                            label={request.summaryCardLabel}
-                            onClick={this.switchTable}
-                            resultsComponent={SummaryResultCard}
-                            selected={this.props.selectedRequest === request}
-                          />
-                        </Col>
-                      )
-                    })}
-                    {!this.props.geographyRequests.some(r => r.type === 'ADVANCED_SEARCH') && (
-                      <Col className="geography-request-summary__container d-flex" xs={12} sm={6} xl={4}>
-                        <Col className="align-self-center pl-0 pl-lg-2 pr-0" xs={11}>
-                          <BaseLink href="/search">
-                            <Card className="border-0">
-                              <Card.Body>+ Add Custom Search</Card.Body>
-                            </Card>
-                          </BaseLink>
-                        </Col>
-                        <Col xs={1} className="pl-0 pr-1" />
-                      </Col>
-                    )}
+                          Clear
+                        </Button>
+                      )}
+                    </Col>
                   </Row>
+                  <DistrictSummarySection
+                    appState={this.props.appState}
+                    switchTable={this.switchTable}
+                    selectedRequest={this.props.selectedRequest}
+                    geographyRequests={this.props.geographyRequests}
+                    selectedResultsFilter={this.props.selectedResultsFilter}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col xs={12}>
+                  <h5 className="text-light-gray font-weight-bold">Filter by housing type</h5>
                 </Col>
               </Row>
               <Row>
