@@ -10,8 +10,16 @@
   background-color: $acris-yellow;
 }
 
-.acris-yellow-dark {
-  color: $acris-yellow-dark;
+.hpd-orange {
+  background-color: $hpd-orange;
+}
+
+.dob-red {
+  background-color: $dob-red;
+}
+
+.summary-blue {
+  background-color: $summary-blue;
 }
 
 .bg-nyc-blue-lighten-10 {
@@ -84,8 +92,8 @@ label.toggle-link.active.btn-outline-primary:not(:disabled),
 label.toggle-link.focus.active.btn-primary:not(:disabled),
 label.toggle-link.active.btn-primary:not(:disabled) {
   background-color: transparent;
-  color: $gray-600;
-  border: 3px dashed $gray-600;
+  color: $gray-500;
+  border: 2px dashed $gray-500;
   box-sizing: border-box;
   outline: 0;
   cursor: pointer;
@@ -98,5 +106,5 @@ label.toggle-link.active.btn-outline-primary:not(:disabled).light.active,
 label.toggle-link.focus.active.btn-primary:not(:disabled).light.active,
 label.toggle-link.active.btn-primary:not(:disabled).light.active {
   color: $white;
-  border: 3px dashed $white;
+  border: 2px dashed $white;
 }

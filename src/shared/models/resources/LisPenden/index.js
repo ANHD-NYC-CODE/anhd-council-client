@@ -5,6 +5,8 @@ import GenericFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/GenericFiel
 import HiddenField from 'AdvancedSearch/FilterComponent/Field/HiddenField'
 
 const LisPenden = databaseObject => ({
+  summaryBackgroundColorClass: 'summary-blue',
+
   resourceConstant: 'LISPENDEN',
   urlPath: 'lispendens',
   label: 'Foreclosures',

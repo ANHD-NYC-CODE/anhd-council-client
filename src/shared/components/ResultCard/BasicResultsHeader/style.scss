@@ -1,0 +1,7 @@
+@import 'shared/styles/bootstrap/_variables.scss';
+
+.basic-results-header {
+  color: $gray-500;
+  border-bottom: 1px $gray-600 solid;
+  padding: 20px 0;
+}

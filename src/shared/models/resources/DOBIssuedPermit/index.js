@@ -1,6 +1,8 @@
 import { constructCountDateParamSet } from 'shared/utilities/filterUtils'
 
 const DOBIssuedPermit = databaseObject => ({
+  summaryBackgroundColorClass: 'dob-red',
+
   resourceConstant: 'DOB_ISSUED_PERMIT',
   urlPath: 'dobissuedpermits',
   label: 'DOB Permits Issued',

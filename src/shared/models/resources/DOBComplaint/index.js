@@ -1,6 +1,7 @@
 import { constructCountDateParamSet } from 'shared/utilities/filterUtils'
 
 const DOBComplaint = databaseObject => ({
+  summaryBackgroundColorClass: 'dob-red',
   resourceConstant: 'DOB_COMPLAINT',
   urlPath: 'dobcomplaints',
   label: 'DOB Complaints',
