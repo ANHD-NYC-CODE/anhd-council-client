@@ -50,14 +50,15 @@ label.toggle-link.btn,
 label.toggle-link.btn:active,
 label.btn-primary:not(:disabled):not(.disabled):active {
   background: transparent;
+  box-shadow: none;
   color: $primary;
   border: 2px solid transparent;
   border-radius: 10px !important;
-  outline: 0;
   cursor: pointer;
+  font-size: 0.9rem;
   margin-right: 2px;
   margin-bottom: 2px;
-  box-shadow: none;
+  outline: 0;
   text-decoration: underline;
 }
 
