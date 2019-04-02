@@ -1,21 +1,13 @@
 import Filter from 'shared/classes/Filter'
 import { constantToQueryName } from 'shared/utilities/filterUtils'
-import Resource from 'shared/classes/Resource'
 
-import * as resources from 'shared/models/resources'
+import { mockSetupResourceModels } from 'shared/testUtilities/index.js'
+
 import { createAdvancedSearchFilters } from 'shared/utilities/filterUtils'
 const resourceModels = mockSetupResourceModels()
 const ADVANCED_FILTERS = createAdvancedSearchFilters({
   resourceModels: resourceModels,
 })
-
-export const mockSetupResourceModels = () => {
-  let loadedResources = {}
-  Object.keys(resources).forEach(constant => {
-    loadedResources[constant] = new Resource({ resourceModel: resources[constant]() })
-  })
-  return loadedResources
-}
 
 export const createFilterMock = ({ constant = '' } = {}) => {
   const filter = new Filter({

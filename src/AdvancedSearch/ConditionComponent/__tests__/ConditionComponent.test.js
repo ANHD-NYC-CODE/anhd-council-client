@@ -30,7 +30,7 @@ describe('ConditionComponent', () => {
 
     it('renders the component', () => {
       expect(wrapper.find('.condition')).toBeDefined()
-      expect(wrapper.find('.remove-condition')).toHaveLength(0)
+      expect(wrapper.find('RemoveConditionButton')).toHaveLength(0)
     })
 
     describe('With a nested condition', () => {
@@ -48,7 +48,7 @@ describe('ConditionComponent', () => {
       })
 
       it('does not render a remove condition button', () => {
-        const button = wrapper.find('.remove-condition')
+        const button = wrapper.find('RemoveConditionButton')
         expect(button).toHaveLength(0)
       })
     })
@@ -67,7 +67,7 @@ describe('ConditionComponent', () => {
 
     it('renders the component', () => {
       expect(wrapper.find('.condition')).toBeDefined()
-      expect(wrapper.find('.remove-condition')).toHaveLength(1)
+      expect(wrapper.find('RemoveConditionButton')).toHaveLength(1)
     })
 
     describe('With a nested condition', () => {
@@ -92,7 +92,7 @@ describe('ConditionComponent', () => {
       })
 
       it('renders a remove condition button', () => {
-        const button = wrapper.find('.remove-condition')
+        const button = wrapper.find('RemoveConditionButton')
         expect(button).toHaveLength(1)
       })
     })

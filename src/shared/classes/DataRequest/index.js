@@ -142,7 +142,7 @@ export default class DataRequest {
     const amountPm = this._paramMaps.find(pm => pm.type === 'AMOUNT')
 
     return `${
-      amountPm ? `${amountPm.summaryString} ${grammaticalNoun(amountPm.resourceModel.label, amountPm.value)}` : ''
+      amountPm ? `${amountPm.summaryString}${grammaticalNoun(amountPm.resourceModel.label, amountPm.value)}` : ''
     }`
   }
 }

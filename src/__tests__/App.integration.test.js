@@ -46,7 +46,7 @@ describe('initial startup', () => {
         </Provider>
       )
 
-      expect(wrapper.find('Loading')).toHaveLength(1)
+      expect(wrapper.find('ConfigLoader')).toHaveLength(1)
     })
   })
 
@@ -67,7 +67,7 @@ describe('initial startup', () => {
       request.addEventListener('success', async () => {
         await flushAllPromises()
         wrapper.update()
-        expect(wrapper.find('Loading')).toHaveLength(0)
+        expect(wrapper.find('ConfigLoader')).toHaveLength(0)
       })
     })
   })
@@ -88,7 +88,7 @@ describe('initial startup', () => {
         await flushAllPromises()
         wrapper.update()
         expect(wrapper.find('PageError')).toHaveLength(1)
-        expect(wrapper.find('Loading')).toHaveLength(0)
+        expect(wrapper.find('ConfigLoader')).toHaveLength(0)
       })
     })
   })
