@@ -1,6 +1,7 @@
 import { constructCountDateParamSet } from 'shared/utilities/filterUtils'
 
 const ECBViolation = databaseObject => ({
+  summaryBackgroundColorClass: 'dob-red',
   resourceConstant: 'ECB_VIOLATION',
   urlPath: 'ecbviolations',
   label: 'ECB Violations',

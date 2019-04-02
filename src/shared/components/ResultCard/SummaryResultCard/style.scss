@@ -1,8 +1,9 @@
 @import 'shared/styles/bootstrap/_variables.scss';
 
 .result-card.card {
-  border: 1px solid $black;
+  border: 1px dashed $gray-600;
   border-radius: 20px;
+  box-shadow: 1px 1px 6px $gray-400;
   padding: 0 10px;
   font-size: 0.9rem;
 }
@@ -19,8 +20,7 @@
 // .result-card.card.btn-primary:not(:disabled):focus,
 .result-card.card.btn-primary:not(:disabled).active {
   box-shadow: 1px 3px 6px $gray-600;
-  box-shadow: 1px 3px 6px $gray-600;
-  border: 4px dotted $white;
+  border: 2px dashed $white;
   color: white;
   padding: 0 7px;
 

@@ -1,6 +1,7 @@
 import { constructCountDateParamSet } from 'shared/utilities/filterUtils'
 
 const HPDComplaint = databaseObject => ({
+  summaryBackgroundColorClass: 'hpd-orange',
   resourceConstant: 'HPD_COMPLAINT',
   urlPath: 'hpdcomplaints',
   label: 'HPD Complaints',
