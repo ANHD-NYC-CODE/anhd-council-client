@@ -1,6 +1,9 @@
 import DataRequest from 'shared/classes/DataRequest'
 import ApiMap from 'shared/classes/ApiMap'
 import ParamMap from 'shared/classes/ParamMap'
+
+import { mockSetupResourceModels } from 'shared/testUtilities/index.js'
+
 describe('DataRequest', () => {
   describe('get requestConstant', () => {
     it('returns the derived constant', () => {
@@ -96,14 +99,14 @@ describe('DataRequest', () => {
         ],
         paramMaps: [
           new ParamMap({
-            resourceConstant: 'HPD_VIOLATION',
+            resourceModel: mockSetupResourceModels()['HPD_VIOLATION'],
             field: 'hpdviolations',
             comparison: 'gte',
             value: '10',
             type: 'AMOUNT',
           }),
           new ParamMap({
-            resourceConstant: 'HPD_VIOLATION',
+            resourceModel: mockSetupResourceModels()['HPD_VIOLATION'],
             field: 'hpdviolations',
             comparison: 'gte',
             value: '2018-01-01',
@@ -112,18 +115,16 @@ describe('DataRequest', () => {
         ],
       })
 
-      expect(dataRequest.summaryCardLabel).toEqual('Properties with 10+ HPD Violations')
+      expect(dataRequest.summaryCardLabel).toEqual('10+ HPD Violations')
     })
 
-    it('label without param maps', () => {
+    it('label custom search', () => {
       const dataRequest = new DataRequest({
-        apiMaps: [
-          new ApiMap({ constant: 'PROPERTY', resourceId: '1', name: 'Properties' }),
-          new ApiMap({ constant: 'HPD_VIOLATION' }),
-        ],
+        type: 'ADVANCED_SEARCH',
+        apiMaps: [],
       })
 
-      expect(dataRequest.summaryCardLabel).toEqual('HPD Violations')
+      expect(dataRequest.summaryCardLabel).toEqual('Custom Search')
     })
   })
 })

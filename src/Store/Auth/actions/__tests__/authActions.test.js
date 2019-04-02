@@ -69,7 +69,7 @@ describe('loginUser', () => {
 describe('logoutUser', () => {
   it('on SUCCESS - dispatches HANDLE_USER_LOGOUT', async () => {
     store.dispatch(logoutUser())
-    const expectedActions = [handleUserLogout(), push('/')]
+    const expectedActions = [handleUserLogout()]
     expect(store.getActions()).toEqual(expectedActions)
   })
 })
@@ -105,7 +105,6 @@ describe('refreshTokens', () => {
         errorActions.handleFailure(GET_TOKEN_REFRESH, errorResponse.status, 'Please login for access.'),
         loadingActions.handleCompletedRequest(GET_TOKEN_REFRESH),
         handleUserLogout(),
-        push('/'),
       ]
 
       expect(store.getActions()).toEqual(expectedActions)

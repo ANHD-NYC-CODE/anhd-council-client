@@ -68,9 +68,9 @@ export const setLookupAndRequestsAndRedirect = ({ bbl, bin, replaceHistory = fal
 
   dispatch(handleSetPropertyBuildingLookupRequests(bbl, bin, requests))
   if (replaceHistory) {
-    dispatch(replace(addressResultToPath({ bbl: bbl, bin: bin })))
+    dispatch(replace(addressResultToPath({ bbl, bin })))
   } else {
-    dispatch(push(addressResultToPath({ bbl: bbl, bin: bin })))
+    dispatch(push(addressResultToPath({ bbl, bin })))
   }
 }
 

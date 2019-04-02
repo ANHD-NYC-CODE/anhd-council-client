@@ -1,5 +1,15 @@
 import configureStore from 'Store/configureStore'
 import { setupResourceModels, setupHousingTypeModels } from 'shared/utilities/configUtils'
+import * as resources from 'shared/models/resources'
+import Resource from 'shared/classes/Resource'
+
+export const mockSetupResourceModels = () => {
+  let loadedResources = {}
+  Object.keys(resources).forEach(constant => {
+    loadedResources[constant] = new Resource({ resourceModel: resources[constant]() })
+  })
+  return loadedResources
+}
 
 export const setupStore = initialState => {
   return configureStore({ ...initialState })

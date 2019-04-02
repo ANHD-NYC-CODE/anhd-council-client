@@ -5,6 +5,7 @@ import { Axios } from 'shared/utilities/Axios'
 import MockAdapter from 'axios-mock-adapter'
 import { setupStore, configuredState, flushAllPromises } from 'shared/testUtilities'
 import { history } from 'Store/configureStore'
+import Config from 'Config'
 import ConfigContext from 'Config/ConfigContext'
 import LayoutContext from 'Layout/LayoutContext'
 
@@ -30,20 +31,15 @@ const setupWrapper = state => {
   const wrapper = mount(
     <Provider store={store}>
       <LayoutContext.Provider value={{ print: false }}>
-        <ConfigContext.Provider
-          value={{
-            datasets: state.dataset.datasets,
-            resourceModels: state.dataset.resourceModels,
-            housingTypeModels: state.dataset.housingTypeModels,
-            communityDistricts: state.community.boards,
-            councilDistricts: state.council.districts,
-            selectGeographyData: () => state.council.districts,
-          }}
-        >
+        <Config>
           <ConnectedRouter history={history}>
-            <DistrictDashboard />
+            <ConfigContext.Consumer>
+              {config => {
+                ;<DistrictDashboard config={config} />
+              }}
+            </ConfigContext.Consumer>
           </ConnectedRouter>
-        </ConfigContext.Provider>
+        </Config>
       </LayoutContext.Provider>
     </Provider>
   )

@@ -5,11 +5,12 @@ import { Axios } from 'shared/utilities/Axios'
 import MockAdapter from 'axios-mock-adapter'
 import { setupStore, configuredState, flushAllPromises } from 'shared/testUtilities'
 import { history } from 'Store/configureStore'
-
+import sinon from 'sinon'
 import { ConnectedRouter } from 'connected-react-router'
 
 import { Provider } from 'react-redux'
-
+import ConfigContext from 'Config/ConfigContext'
+import Config from 'Config'
 const mock = new MockAdapter(Axios)
 
 import AddressSearch from 'Lookup/AddressSearch'
@@ -29,7 +30,13 @@ const setupWrapper = state => {
   const wrapper = mount(
     <Provider store={store}>
       <ConnectedRouter history={history}>
-        <AddressSearch />
+        <Config>
+          <ConfigContext.Consumer>
+            {config => {
+              return <AddressSearch config={config} dispatch={store.dispatch} />
+            }}
+          </ConfigContext.Consumer>
+        </Config>
       </ConnectedRouter>
     </Provider>
   )
@@ -40,13 +47,7 @@ const searchResultWrapper = async ({ state = undefined, searchValue = '', result
   state = configuredState(state)
 
   const store = setupStore({ ...state })
-  const wrapper = mount(
-    <Provider store={store}>
-      <ConnectedRouter history={history}>
-        <AddressSearch />
-      </ConnectedRouter>
-    </Provider>
-  )
+  const wrapper = setupWrapper(state)
 
   mock.onGet('/search/buildings/').reply(200, results)
 
@@ -94,7 +95,7 @@ describe('Address Search Module', () => {
     it('updates the reducer state and shows results', async () => {
       const [wrapper] = await searchResultWrapper({ searchValue, results })
 
-      expect(wrapper.find('SearchBar input[name="address-search"]').props().value).toEqual(searchValue)
+      expect(wrapper.find('SearchBar input[name="address-search"]').props().placeholder).toEqual(searchValue)
       expect(wrapper.find('SearchResultRow')).toHaveLength(2)
       expect(wrapper.find('SearchResults').text()).toMatch(/100 awesome street, brooklyn100a awesome street, brooklyn/)
     })
@@ -103,12 +104,12 @@ describe('Address Search Module', () => {
       const [wrapper, store] = await searchResultWrapper({ searchValue, results })
 
       wrapper
-        .find('SearchResultRow LinkContainer')
+        .find('SearchResultRow')
         .at(0)
         .simulate('click')
-      wrapper.update()
 
-      expect(store.getState().router.location.pathname).toEqual('/property/1/building/1')
+      wrapper.update()
+      expect(wrapper.find('ConnectedRouter').props().history.location.pathname).toEqual('/property/1/building/1')
     })
   })
 
@@ -118,7 +119,7 @@ describe('Address Search Module', () => {
       const results = []
       const [wrapper] = await searchResultWrapper({ searchValue, results })
 
-      expect(wrapper.find('SearchBar input[name="address-search"]').props().value).toEqual(searchValue)
+      expect(wrapper.find('SearchBar input[name="address-search"]').props().placeholder).toEqual(searchValue)
       expect(wrapper.find('SearchResultRow')).toHaveLength(1)
       expect(wrapper.find('SearchResults').text()).toMatch(/No results/)
     })
