@@ -1,5 +1,5 @@
 import configureStore from 'Store/configureStore'
-import { setupResourceModels, setupHousingTypeModels } from 'shared/utilities/configUtils'
+import { setupResourceModels } from 'shared/utilities/configUtils'
 import * as resources from 'shared/models/resources'
 import Resource from 'shared/classes/Resource'
 
@@ -58,7 +58,6 @@ export const configuredState = state => {
   ]
   const dataset = {
     datasets: datasetsResponse,
-    housingTypeModels: setupHousingTypeModels(datasetsResponse),
     resourceModels: setupResourceModels(datasetsResponse),
   }
   const council = { districts: [mockGeography(1), mockGeography(2), mockGeography(3)] }

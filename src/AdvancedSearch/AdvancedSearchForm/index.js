@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Filter from 'shared/classes/Filter'
 import Geography from 'shared/classes/Geography'
 import * as yup from 'yup'
 import StandardizedInput from 'shared/classes/StandardizedInput'
@@ -10,7 +9,6 @@ import FilterComponent from 'AdvancedSearch/FilterComponent'
 import { replacePropertyFilter } from 'Store/AdvancedSearch/actions'
 
 import { addGeography, updateGeography } from 'Store/AdvancedSearch/actions'
-import { addHousingType, updateHousingType } from 'Store/AdvancedSearch/actions'
 import { setAppState, setAdvancedSearchRequestAndRedirect } from 'Store/AppState/actions'
 import ConditionComponent from 'AdvancedSearch/ConditionComponent'
 import GeographySelect from 'shared/components/GeographySelect'
@@ -38,8 +36,7 @@ class AdvancedSearchForm extends React.PureComponent {
     }
 
     this.submitForm = this.submitForm.bind(this)
-    this.addHousingType = this.addHousingType.bind(this)
-    this.changeHousingType = this.changeHousingType.bind(this)
+
     this.updatePropertyFilter = this.updatePropertyFilter.bind(this)
     this.validateForm = this.validateForm.bind(this)
     this.changeGeography = this.changeGeography.bind(this)
@@ -121,20 +118,6 @@ class AdvancedSearchForm extends React.PureComponent {
     const propertyFilter = this.props.advancedSearch.propertyFilter
 
     this.props.dispatch(replacePropertyFilter(propertyFilter))
-  }
-
-  addHousingType(e) {
-    e = new StandardizedInput(e)
-    const housingType = this.props.config.housingTypeModels.find(housingType => housingType.id === e.value)
-    const newHousingType = new Filter({ resourceModel: housingType, schema: housingType.schema })
-    this.props.dispatch(addHousingType(newHousingType))
-  }
-
-  changeHousingType(housingTypeIndex, e) {
-    e = new StandardizedInput(e)
-    const housingType = this.props.config.housingTypeModels.find(housingType => housingType.id === e.value)
-    const newHousingType = new Filter({ resourceModel: housingType, schema: housingType.schema })
-    this.props.dispatch(updateHousingType(housingTypeIndex, newHousingType))
   }
 
   validateForm() {

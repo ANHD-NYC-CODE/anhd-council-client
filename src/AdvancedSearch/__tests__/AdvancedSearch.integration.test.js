@@ -28,7 +28,6 @@ const setupWrapper = state => {
         value={{
           datasets: state.dataset.datasets,
           resourceModels: state.dataset.resourceModels,
-          housingTypeModels: state.dataset.housingTypeModels,
           councilDistricts: state.council.districts,
           communityDistricts: state.community.boards,
         }}
@@ -129,7 +128,7 @@ describe('AdvancedSearch', () => {
   describe('Housing Type selection', () => {
     it('has initial state', () => {
       const wrapper = setupWrapper()
-      expect(wrapper.find('HousingTypeQuery')).toHaveLength(1)
+
       expect(wrapper.find('select[name="housingTypeSelect"]')).toHaveLength(1)
       expect(wrapper.find('select[name="housingTypeSelect"]').props().value).toEqual('ALL_TYPES')
       expect(wrapper.find('div.housingtype-paramset')).toHaveLength(0)
@@ -141,12 +140,8 @@ describe('AdvancedSearch', () => {
       let wrapper = selectedHousingTypeWrapper({ selectValue: 'RENT_STABILIZED' })
       expect(wrapper.find('select[name="housingTypeSelect"]').props().value).toEqual('RENT_STABILIZED')
 
-      expect(wrapper.find('HousingTypeQuery')).toHaveLength(1)
-
       wrapper = selectedHousingTypeWrapper({ wrapper: wrapper, selectValue: 'SMALL_HOMES' })
       expect(wrapper.find('select[name="housingTypeSelect"]').props().value).toEqual('SMALL_HOMES')
-
-      expect(wrapper.find('HousingTypeQuery')).toHaveLength(1)
     })
 
     it('adds Rent Stabilized param sets when selection is made', () => {

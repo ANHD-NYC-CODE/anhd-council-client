@@ -53,22 +53,6 @@ export const removeGeography = geographyIndex => ({
   geographyIndex,
 })
 
-export const addHousingType = housingType => ({
-  type: c.ADD_HOUSING_TYPE,
-  housingType,
-})
-
-export const updateHousingType = (housingTypeIndex, housingType) => ({
-  type: c.UPDATE_HOUSING_TYPE,
-  housingTypeIndex,
-  housingType,
-})
-
-export const removeHousingType = housingTypeIndex => ({
-  type: c.REMOVE_HOUSING_TYPE,
-  housingTypeIndex,
-})
-
 export const handleGetAdvancedSearch = response => ({
   type: c.HANDLE_GET_ADVANCED_SEARCH,
   data: response.data,
