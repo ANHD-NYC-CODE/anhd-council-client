@@ -1,5 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { constructSummaryFilterSentence } from 'shared/utilities/sentenceUtils'
+
 import RequestSummaryWrapper from 'shared/components/RequestSummaryWrapper'
 import SummaryResultCard from 'shared/components/ResultCard/SummaryResultCard'
 import { Card, Row, Col } from 'react-bootstrap'
@@ -14,7 +16,7 @@ const DistrictSummarySection = props => {
               key={`request-summary-${props.appState.requests.indexOf(request)}`}
               request={request}
               resultsFilter={props.appState.selectedResultsFilter}
-              label={request.summaryCardLabel}
+              label={constructSummaryFilterSentence(request, props.appState.selectedResultsFilter)}
               onClick={() => props.switchTable(request)}
               resultsComponent={SummaryResultCard}
               selected={props.selectedRequest === request}

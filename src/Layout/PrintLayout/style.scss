@@ -1,11 +1,12 @@
 @import 'shared/styles/bootstrap/_variables.scss';
 
 .print-layout {
-  button.result-card,
-  button.btn-primary:hover,
-  button.bg-light:focus,
-  button.bg-light:hover,
-  .result-card.card.btn-primary:not(:disabled):hover {
+  button:not(.no-print),
+  button.result-card:not(.no-print),
+  button.btn-primary:not(.no-print):hover,
+  button.bg-light:not(.no-print):focus,
+  button.bg-light:not(.no-print):hover,
+  .result-card.card.btn-primary:not(:disabled):not(.no-print):hover {
     box-shadow: none;
     transition: none;
     transform: initial;
@@ -18,6 +19,8 @@
     p,
     h4,
     h2,
+    h5,
+    small,
     span {
       color: initial;
     }

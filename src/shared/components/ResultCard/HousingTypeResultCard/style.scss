@@ -1,14 +1,20 @@
 @import 'shared/styles/bootstrap/_variables.scss';
 
 .housingtype-summary-result-card.btn {
-  border-radius: 1px;
-  background-color: $housing-purple;
+  // border-radius: 1px;
+  // background-color: $housing-purple;
+}
+
+.housingtype-summary-result-card.result-card.card.btn-primary:not(:disabled):hover,
+.housingtype-summary-result-card.result-card.card.btn-primary:not(:disabled):focus,
+.housingtype-summary-result-card.result-card.card.btn-primary:not(:disabled).active {
+  background-color: $secondary;
 }
 
 .housingtype-summary-result-card {
   max-width: 400px;
   width: 100%;
-  height: 160px;
+  height: 120px;
 
   align-items: center;
   display: flex;
