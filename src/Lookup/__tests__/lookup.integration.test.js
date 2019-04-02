@@ -6,8 +6,9 @@ import MockAdapter from 'axios-mock-adapter'
 import { setupStore, configuredState, flushAllPromises } from 'shared/testUtilities'
 import { history } from 'Store/configureStore'
 import ConfigContext from 'Config/ConfigContext'
+import Config from 'Config'
 import LayoutContext from 'Layout/LayoutContext'
-
+import { createPropertyRequestMock } from 'shared/testUtilities/mocks'
 import { ConnectedRouter } from 'connected-react-router'
 
 import { Provider } from 'react-redux'
@@ -30,20 +31,15 @@ const setupWrapper = state => {
   const wrapper = mount(
     <Provider store={store}>
       <ConnectedRouter history={history}>
-        <LayoutContext.Provider value={{ print: false }}>
-          <ConfigContext.Provider
-            value={{
-              datasets: state.dataset.datasets,
-              resourceModels: state.dataset.resourceModels,
-              housingTypeModels: state.dataset.housingTypeModels,
-              communityDistricts: state.community.boards,
-              councilDistricts: state.council.districts,
-              selectGeographyData: () => state.council.districts,
-            }}
-          >
-            <Lookup />
-          </ConfigContext.Provider>
-        </LayoutContext.Provider>
+        <Config>
+          <LayoutContext.Provider value={{ print: false }}>
+            <ConfigContext.Consumer>
+              {config => {
+                return <Lookup config={config} />
+              }}
+            </ConfigContext.Consumer>
+          </LayoutContext.Provider>
+        </Config>
       </ConnectedRouter>
     </Provider>
   )
@@ -76,6 +72,8 @@ describe('Lookup', () => {
     })
 
     it('renders the request wrappers', async () => {
+      mock.onGet('/properties/1/').reply(200, createPropertyRequestMock({ bbl: '1' }))
+
       const [wrapper, store] = setupWrapper({
         router: { location: { pathname: '/property/1' }, action: 'POP' },
       })
@@ -128,13 +126,32 @@ describe('Lookup', () => {
       const [wrapper] = setupWrapper({
         router: { location: { pathname: '/property/1/building/2' }, action: 'POP' },
       })
-      expect(wrapper.findWhere(node => node.key() === 'request-wrapper-1').props().visible).toEqual(true)
 
-      wrapper.findWhere(node => node.key() === 'request-summary-2').simulate('click')
+      expect(
+        wrapper
+          .findWhere(node => node.key() === 'rw-col-0')
+          .find('RequestTableWrapper')
+          .props().visible
+      ).toEqual(true)
+
+      wrapper
+        .findWhere(node => node.key() === 'rs-col-1')
+        .find('button.summary-result-card')
+        .simulate('click')
 
       wrapper.update()
-      expect(wrapper.findWhere(node => node.key() === 'request-wrapper-1').props().visible).toEqual(false)
-      expect(wrapper.findWhere(node => node.key() === 'request-wrapper-2').props().visible).toEqual(true)
+      expect(
+        wrapper
+          .findWhere(node => node.key() === 'rw-col-0')
+          .find('RequestTableWrapper')
+          .props().visible
+      ).toEqual(false)
+      expect(
+        wrapper
+          .findWhere(node => node.key() === 'rw-col-1')
+          .find('RequestTableWrapper')
+          .props().visible
+      ).toEqual(true)
     })
 
     it('updates the request card summaries when data is received', async () => {
