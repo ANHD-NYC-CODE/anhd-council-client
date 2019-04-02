@@ -1,4 +1,4 @@
-import * as a from 'AdvancedSearch/utilities/sentenceUtils'
+import * as a from 'shared/utilities/sentenceUtils'
 import Geography from 'shared/classes/Geography'
 import Filter from 'shared/classes/Filter'
 import ParamMap from 'shared/classes/ParamMap'

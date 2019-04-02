@@ -46,7 +46,7 @@ $nyc-blue-lighten-10: lighten($nyc-blue, 10%);
 $nyc-blue-lighten-15: lighten($nyc-blue, 15%);
 $nyc-blue-lighten-20: lighten($nyc-blue, 20%);
 
-$nyc-orange: #e74c2d !default;
+$nyc-orange: #f69445 !default;
 $nyc-crimson: #dfcdd3 !default;
 $tab-blue: #a0b9d1 !default;
 $logo-gray: #f2f2f2 !default;
@@ -81,10 +81,10 @@ $colors: map-merge(
 );
 
 $primary: $nyc-blue !default;
-$secondary: $orange !default;
+$secondary: $nyc-orange !default;
 $success: $green !default;
 $info: $housing-purple !default;
-$warning: lighten($secondary, 20%) !default;
+$warning: $yellow !default;
 $danger: $red !default;
 $light: $gray-100 !default;
 $dark: $black !default;

@@ -16,7 +16,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
 import classnames from 'classnames'
 import { geographySelectionToString } from 'shared/utilities/languageUtils'
-
+import { constructSummaryFilterSentence } from 'shared/utilities/sentenceUtils'
 import GeographyProfile from 'DistrictDashboard/GeographyProfile'
 import { districtDashboardFilterdates } from 'shared/utilities/componentUtils'
 import PrintDistrictDashboard from 'DistrictDashboard/PrintDistrictDashboard'
@@ -131,14 +131,28 @@ class DistrictDashboardShow extends React.PureComponent {
                       </ToggleButtonGroup>
                     </Col>
                   </Row>
-                  {(this.props.selectedRequest || {}).type === 'ADVANCED_SEARCH' && (
-                    <div className="py-2 mb-4 mb-lg-0">
+                  <Row>
+                    {(this.props.selectedRequest || {}).type === 'ADVANCED_SEARCH' ? (
+                      <div className="py-2 mb-4 mb-lg-0">
+                        <Col>
+                          <h5 className="text-primary font-weight-bold">Custom Search:</h5>
+                          <AdvancedSearchSentence advancedSearch={this.props.advancedSearch} />
+                        </Col>
+                      </div>
+                    ) : (
                       <Col>
-                        <h5>Custom Search:</h5>
-                        <AdvancedSearchSentence advancedSearch={this.props.advancedSearch} />
+                        <h5 className="text-secondary font-weight-bold">Showing:</h5>
+                        <p>
+                          {constructSummaryFilterSentence(
+                            this.props.selectedRequest !== this.props.propertySummaryRequest
+                              ? this.props.selectedRequest
+                              : undefined,
+                            this.props.selectedResultsFilter
+                          )}
+                        </p>
                       </Col>
-                    </div>
-                  )}
+                    )}
+                  </Row>
                 </Col>
                 <Col xs={12} lg={8}>
                   <Row className="mb-1">
@@ -152,7 +166,7 @@ class DistrictDashboardShow extends React.PureComponent {
                             this.switchTable(this.props.propertySummaryRequest, undefined)
                           }}
                           size="sm"
-                          variant="outline-primary"
+                          variant="outline-secondary"
                         >
                           Clear
                         </Button>
@@ -169,12 +183,12 @@ class DistrictDashboardShow extends React.PureComponent {
                 </Col>
               </Row>
               <Row>
-                <Col xs={12}>
-                  <h5 className="text-light-gray font-weight-bold">Filter by housing type</h5>
-                </Col>
-              </Row>
-              <Row>
                 <Col xs={12} lg={4} xl={3}>
+                  <Row>
+                    <Col xs={12}>
+                      <h5 className="text-light-gray font-weight-bold">Filter by housing type</h5>
+                    </Col>
+                  </Row>
                   <Row className="housingtype-section py-2 mb-4 mb-lg-0">
                     <HousingTypeSection
                       appState={this.props.appState}

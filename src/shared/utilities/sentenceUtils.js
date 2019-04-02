@@ -8,8 +8,20 @@ import {
   constructDateComparisonString,
   grammaticalNoun,
 } from 'shared/utilities/languageUtils'
+
+///////////////////
+// Summary Sentence
+
+export const constructSummaryFilterSentence = (request, resultsFilter) => {
+  const string = `${(resultsFilter || {}).label}${
+    !!request && Object.keys(request).length ? ' ' + request.summaryCardLabel : ' Properties'
+  }`
+
+  return string
+}
+
 //////////////////
-// Sentence
+// Advanced Sentence
 
 export const constructAmountSentence = (dataset, comparison, value) => {
   return dataset.amountSentenceParser(dataset, comparison, value)
