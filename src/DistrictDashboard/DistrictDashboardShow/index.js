@@ -200,8 +200,8 @@ class DistrictDashboardShow extends React.PureComponent {
                   </Row>
                 </Col>
                 <Col xs={12} lg={5} xl={6}>
-                  <Row>
-                    <Col>
+                  <Row className="mb-2 mb-lg-0">
+                    <Col xs={12} xl={7}>
                       {(this.props.selectedRequest || {}).type === 'ADVANCED_SEARCH' ? (
                         <h5 className="text-light-gray font-weight-bold">Custom Search</h5>
                       ) : (
@@ -215,9 +215,7 @@ class DistrictDashboardShow extends React.PureComponent {
                         </h5>
                       )}
                     </Col>
-                  </Row>
-                  <Row className="mb-2 mb-lg-0">
-                    <Col className="d-flex justify-content-end">
+                    <Col className="d-flex view-toggle__container" xs={12} xl={5}>
                       <ToggleButtonGroup
                         name="view"
                         type="radio"
