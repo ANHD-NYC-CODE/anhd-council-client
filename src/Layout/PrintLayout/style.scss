@@ -4,9 +4,22 @@
   button.result-card,
   button.btn-primary:hover,
   button.bg-light:focus,
-  button.bg-light:hover {
+  button.bg-light:hover,
+  .result-card.card.btn-primary:not(:disabled):hover {
+    box-shadow: none;
+    transition: none;
+    transform: initial;
     border: 1px solid black;
     cursor: initial;
+    color: initial;
     background-color: $gray-100 !important;
+    padding: 0 7px;
+
+    p,
+    h4,
+    h2,
+    span {
+      color: initial;
+    }
   }
 }

@@ -112,7 +112,11 @@ class LookupShow extends React.Component {
                 </Row>
                 <Row>
                   <Col>
-                    <RequestTableWrapper request={this.props.profileRequest} visible={true} />
+                    <RequestTableWrapper
+                      caption={this.props.profileRequest.resourceModel.label}
+                      request={this.props.profileRequest}
+                      visible={true}
+                    />
                   </Col>
                 </Row>
                 <Row className="mb-4">
@@ -184,7 +188,7 @@ class LookupShow extends React.Component {
                               <Col xs={12} sm={6} md={4} lg={12} key={`rs-col-${index}`}>
                                 <RequestSummaryWrapper
                                   key={`request-summary-${this.props.appState.requests.indexOf(request)}`}
-                                  onClick={r => this.switchTable(r)}
+                                  onClick={() => this.switchTable(request)}
                                   selected={this.props.appState.selectedRequest === request}
                                   request={request}
                                   label={request.resourceModel.label}
@@ -201,6 +205,7 @@ class LookupShow extends React.Component {
                             return (
                               <Col xs={12} key={`rw-col-${index}`} className="request-wrapper-container">
                                 <RequestTableWrapper
+                                  caption={request.resourceModel.label}
                                   key={`request-wrapper-${this.props.appState.requests.indexOf(request)}`}
                                   visible={this.props.appState.selectedRequest === request}
                                   request={request}

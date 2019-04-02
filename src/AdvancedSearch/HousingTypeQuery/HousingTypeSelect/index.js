@@ -29,6 +29,10 @@ const HousingTypeSelect = props => {
   )
 }
 
+HousingTypeSelect.defaultProps = {
+  selectedResultsFilter: {},
+}
+
 HousingTypeSelect.propTypes = {
   housingTypeIndex: PropTypes.number,
   onChange: PropTypes.func,

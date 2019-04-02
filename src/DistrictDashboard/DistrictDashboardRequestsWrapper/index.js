@@ -41,7 +41,7 @@ class DistrictDashboardRequestsWrapper extends React.PureComponent {
   getInitialRequest() {
     return getRequestType(this.props.requests, 'ADVANCED_SEARCH').length
       ? getRequestType(this.props.requests, 'ADVANCED_SEARCH')[0]
-      : getRequestType(this.props.requests, 'GEOGRAPHY_HOUSING_TYPE')[0]
+      : getRequestType(this.props.requests, 'MAP_FILTER')[0]
   }
 
   getInitialTableFilter() {

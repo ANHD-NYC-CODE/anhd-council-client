@@ -44,7 +44,11 @@ const PrintLookup = props => {
       </Row>
       <Row className="py-4">
         <Col>
-          <RequestTableWrapper request={props.profileRequest} visible={true} />
+          <RequestTableWrapper
+            caption={props.profileRequest.resourceModel.label}
+            request={props.profileRequest}
+            visible={true}
+          />
         </Col>
       </Row>
       <Row>

@@ -30,17 +30,14 @@ const HousingTypeSection = props => {
                       <RequestSummaryWrapper
                         request={props.propertySummaryRequest}
                         totalRequest={props.propertySummaryRequest}
-                        onClick={props.switchTable}
+                        onClick={() => props.switchTable(undefined, ownResultFilter)}
                         label={ownResultFilter.label}
                         resultsFilter={ownResultFilter}
                         resultsComponent={HousingTypeResultCard}
                         infoKey={ownResultFilter.id}
                         unitsLabel={ownResultFilter === residentialFilter ? 'of all properties' : 'of residential'}
                         totalResultsFilter={ownResultFilter === residentialFilter ? undefined : residentialFilter}
-                        selected={
-                          props.selectedRequest === props.propertySummaryRequest &&
-                          props.selectedResultsFilter.id === ownResultFilter.id
-                        }
+                        selected={(props.selectedResultsFilter || {}).id === ownResultFilter.id}
                       />
                     </Col>
                   )
