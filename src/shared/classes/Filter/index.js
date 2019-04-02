@@ -1,5 +1,4 @@
 import * as resources from 'shared/models/resources'
-import * as ht from 'shared/models/housingTypes'
 import ParamError from 'shared/classes/ParamError'
 import { getApiMap } from 'shared/utilities/classUtils'
 
@@ -22,8 +21,7 @@ export default class Filter {
     this._schema = schema
     this._errors = errors
     if (!this.resourceModel && !!this.modelConstant) {
-      const resourceModel =
-        this.findDataset(this.modelConstant) || this.findHousingType(this.modelConstant) || this.resourceModel
+      const resourceModel = this.findDataset(this.modelConstant) || this.resourceModel
       if (!resourceModel && this.modelConstant !== 'NEW_FILTER' && this.modelConstant !== 'ALL_TYPES') {
         throw `Pass either '${Object.keys(resources)
           .map(key => resources[key].id)
@@ -31,10 +29,10 @@ export default class Filter {
       }
 
       this.setModel(resourceModel)
-      this.setSchema(schema)
+      this.setParamSets(schema)
     } else if (resourceModel) {
       this.setModel(resourceModel)
-      this.setSchema(schema)
+      this.setParamSets(schema)
     } else {
       return
     }
@@ -54,13 +52,7 @@ export default class Filter {
       : null
   }
 
-  findHousingType(modelConstant) {
-    return ht[Object.keys(ht).find(key => ht[key]().id === modelConstant)]
-      ? ht[Object.keys(ht).find(key => ht[key]().id === modelConstant)]()
-      : null
-  }
-
-  setSchema(schema) {
+  setParamSets(schema) {
     // Load the schema if no paramSets was directly supplied
     if (schema && !Object.keys(this.paramSets).length) {
       Object.keys(schema)
@@ -108,7 +100,7 @@ export default class Filter {
   }
 
   set schema(schema) {
-    this.setSchema(schema)
+    this.setParamSets(schema)
   }
 
   get primaryResourceModel() {
@@ -158,7 +150,7 @@ export default class Filter {
       ? this.resourceModel.filterParamSets(this._paramSets)
       : this._paramSets
 
-    return [].concat.apply([], Object.keys(paramSets).map(key => paramSets[key].paramMaps))
+    return [].concat.apply([], Object.keys(paramSets).map(key => paramSets[key].paramMaps)).filter(pm => pm)
   }
 
   get errors() {

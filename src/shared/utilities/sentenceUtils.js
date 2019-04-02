@@ -50,6 +50,16 @@ const parseParamMapComparison = (paramMap, nounOverride = undefined) => {
       return [
         paramMap.comparisonPrefix,
         paramMap.valuePrefix,
+        paramMap.value,
+        paramMap.valueSuffix,
+        nounOverride || paramMap.paramNoun,
+      ]
+        .filter(p => p)
+        .join(' ')
+    case 'SINGLE-TEXT':
+      return [
+        paramMap.comparisonPrefix,
+        paramMap.valuePrefix,
         paramMap.options.find(option => option.value === paramMap.value).label.toLowerCase(),
         paramMap.valueSuffix,
         nounOverride || paramMap.paramNoun,
@@ -90,7 +100,7 @@ const parseRoleGroup = paramMaps => {
 }
 
 export const convertFilterToSentence = filter => {
-  if (Object.keys(filter.paramMaps).length) {
+  if (filter.paramMaps.length) {
     // Get Primary
     const primaryParamMap = filter.paramMaps.find(pm => pm.role === 'PRIMARY')
 
@@ -103,13 +113,21 @@ export const convertFilterToSentence = filter => {
 
     const primaryLeadingWord = primaryParamMap.resourceModel.resourceConstant === 'PROPERTY' ? '' : 'have'
     const primarySegment = primaryParamMap
-      ? `${primaryLeadingWord} ${parseParamMapComparison(primaryParamMap, filter.resourceModel.sentenceNoun)}`
+      ? `${primaryLeadingWord} ${parseParamMapComparison(primaryParamMap, filter.resourceModel.sentenceNoun)}`.trim()
       : undefined
 
-    const modifyingSegment = parsedModifyingParamMaps.length ? `(${parsedModifyingParamMaps.join(', ')})` : undefined
+    const modifyingSegment = parsedModifyingParamMaps.length
+      ? `(${parsedModifyingParamMaps.join(', ')})`.trim()
+      : undefined
 
-    const limiterSegment = limiterParamMaps.length ? `${parseRoleGroup(limiterParamMaps)}` : undefined
-    return ' ' + [primarySegment, modifyingSegment, limiterSegment].filter(p => p).join(' ')
+    const limiterSegment = limiterParamMaps.length ? `${parseRoleGroup(limiterParamMaps)}`.trim() : undefined
+    return (
+      ' ' +
+      [primarySegment, modifyingSegment, limiterSegment]
+        .filter(p => p)
+        .join(' ')
+        .trim()
+    )
   } else {
     return ''
   }
@@ -170,7 +188,6 @@ export const convertHousingTypesToSentence = housingTypes => {
 export const constructSentence = advancedSearch => {
   return `Show me ${[
     convertFilterToSentence(advancedSearch.propertyFilter),
-    // convertHousingTypesToSentence(advancedSearch.housingTypes),
     convertGeographiesToSentence(advancedSearch.geographies),
   ].join(' ')} ${convertConditionMappingToSentence(advancedSearch.conditions)}`
 }

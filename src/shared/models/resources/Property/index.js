@@ -131,7 +131,7 @@ const Property = databaseObject => {
             resourceModel,
             component: GenericFieldSet,
             baseComponent: TextSelectField,
-            paramMapType: 'TEXT',
+            paramMapType: 'SINGLE-TEXT',
             paramMapRole: 'PRIMARY',
             paramSetLabel: 'Housing Type',
             paramMapField: 'housingtype',

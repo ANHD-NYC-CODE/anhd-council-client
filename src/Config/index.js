@@ -16,7 +16,7 @@ import PageError from 'shared/components/PageError'
 import Filter from 'shared/classes/Filter'
 
 import { newMapRequests, newLookupRequests, newAdvancedSearchRequest } from 'shared/utilities/configUtils'
-import { setupResourceModels, setupHousingTypeModels } from 'shared/utilities/configUtils'
+import { setupResourceModels } from 'shared/utilities/configUtils'
 import { createAdvancedSearchFilters } from 'shared/utilities/filterUtils'
 import { replacePropertyFilter } from 'Store/AdvancedSearch/actions'
 
@@ -120,7 +120,6 @@ class Config extends React.Component {
           createAdvancedSearchRequest: this.createAdvancedSearchRequest,
           datasets: this.props.datasets,
           resourceModels: this.props.resourceModels,
-          housingTypeModels: this.props.housingTypeModels,
           communityDistricts: this.props.communityDistricts,
           councilDistricts: this.props.councilDistricts,
           selectGeographyData: this.selectGeographyData,
@@ -160,7 +159,6 @@ const mapStateToProps = state => {
     advancedSearch: state.advancedSearch,
     datasets: state.dataset.datasets,
     resourceModels: setupResourceModels(state.dataset.datasets),
-    housingTypeModels: setupHousingTypeModels(state.dataset.datasets),
     councilDistricts: state.council.districts,
     communityDistricts: state.community.boards,
     error: errorSelector(state),

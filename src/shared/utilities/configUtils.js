@@ -1,5 +1,4 @@
 import * as resources from 'shared/models/resources'
-import * as ht from 'shared/models/housingTypes'
 import DataRequest from 'shared/classes/DataRequest'
 import { getApiMap } from 'shared/utilities/classUtils'
 import TableConfig from 'shared/classes/TableConfig'
@@ -13,25 +12,6 @@ import { districtDashboardFilterdates } from 'shared/utilities/componentUtils'
 import { getUrlFormattedParamMaps } from 'Store/AdvancedSearch/utilities/advancedSearchStoreUtils'
 
 import LookupProfileSummary from 'Lookup/LookupProfileSummary'
-
-export const setupHousingTypeModels = datasets => {
-  return Object.keys(ht)
-    .map(constant => {
-      let databaseObject
-      switch (constant) {
-        case 'RENTSTABILIZED':
-          databaseObject = datasets.find(
-            object => (object.model_name || {}).toUpperCase() === 'RENTSTABILIZATIONRECORD'
-          )
-          break
-        default:
-          databaseObject = undefined
-          break
-      }
-      return new Resource({ resourceModel: ht[constant](databaseObject) })
-    })
-    .filter(ht => ht)
-}
 
 export const setupResourceModels = datasets => {
   let loadedResources = {}

@@ -2,7 +2,6 @@ import * as c from '../constants'
 import Condition from 'shared/classes/Condition'
 import ConditionFilter from 'shared/classes/ConditionFilter'
 import { cloneInstance } from 'shared/utilities/classUtils'
-import Filter from 'shared/classes/Filter'
 
 export const initialState = () => ({
   conditions: {
@@ -10,7 +9,6 @@ export const initialState = () => ({
   },
   geographies: [],
   propertyFilter: undefined, // initialize in Config/index.js
-  housingTypes: [new Filter({ modelConstant: 'ALL_TYPES' })],
   results: undefined,
 })
 
@@ -118,31 +116,7 @@ export const advancedSearchReducer = (state = Object.freeze(initialState()), act
         propertyFilter: action.propertyFilter,
       }
     }
-    case c.ADD_HOUSING_TYPE: {
-      return {
-        ...state,
-        housingTypes: [...state.housingTypes, action.housingType],
-      }
-    }
-    case c.UPDATE_HOUSING_TYPE: {
-      return {
-        ...state,
-        housingTypes: [
-          ...state.housingTypes.slice(0, action.housingTypeIndex),
-          action.housingType,
-          ...state.housingTypes.slice(action.housingTypeIndex + 1),
-        ],
-      }
-    }
-    case c.REMOVE_HOUSING_TYPE: {
-      return {
-        ...state,
-        housingTypes: [
-          ...state.housingTypes.slice(0, action.housingTypeIndex),
-          ...state.housingTypes.slice(action.housingTypeIndex + 1),
-        ],
-      }
-    }
+
     case c.HANDLE_GET_ADVANCED_SEARCH: {
       return {
         ...state,

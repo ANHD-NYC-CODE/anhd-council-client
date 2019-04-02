@@ -20,7 +20,6 @@ describe('convertFilterToSentence', () => {
   describe('from/to', () => {
     it('convertFilterToSentence - converts the object into a field string', () => {
       const object = filterMocks('HPD_VIOLATION')
-
       const result = ` have at least 5 HPD violations between ${todayminus1year} and ${todayplus1year}`
       expect(a.convertFilterToSentence(object)).toEqual(result)
     })
@@ -34,6 +33,7 @@ describe('convertFilterToSentence', () => {
           hpdviolations: {
             paramMaps: [
               new ParamMap({
+                resourceModel: filterMocks('HPD_VIOLATION'),
                 type: 'AMOUNT',
                 role: 'PRIMARY',
                 field: 'hpdviolations__count',
@@ -41,6 +41,7 @@ describe('convertFilterToSentence', () => {
                 value: 5,
               }),
               new ParamMap({
+                resourceModel: filterMocks('HPD_VIOLATION'),
                 type: 'DATE',
                 role: 'LIMITER',
                 field: 'hpdviolations__approveddate',
@@ -48,6 +49,7 @@ describe('convertFilterToSentence', () => {
                 value: todayminus1year,
               }),
               new ParamMap({
+                resourceModel: filterMocks('HPD_VIOLATION'),
                 type: 'TEXT',
                 role: '',
                 valuePrefix: 'class',
@@ -88,31 +90,16 @@ describe('convertGeographiesToSentence', () => {
   })
 })
 
-describe('convertHousingTypesToSentence', () => {
+describe('process property housing type filter', () => {
   describe('1 ht', () => {
     it('converts the object into a sentence', () => {
-      const housingType1 = new Filter({
-        modelConstant: 'SMALL_HOMES',
-      })
-      housingType1.paramSets['unitsres'].create()
-      const housingTypes = [housingType1]
+      const object = filterMocks('PROPERTY')
+      const result = 'all properties'
 
-      const result = 'small home properties with at most 6 units'
-
-      expect(a.convertHousingTypesToSentence(housingTypes)).toEqual(result)
+      expect(a.convertFilterToSentence(object)).toEqual(result)
     })
   })
 
-  describe('2 hts', () => {
-    it('converts the object into a sentence', () => {
-      const housingType1 = new Filter({ modelConstant: 'SMALL_HOMES' })
-      const housingType2 = new Filter({ modelConstant: 'RENT_REGULATED' })
-      const housingTypes = [housingType1, housingType2]
-      const result = 'small home properties and rent regulated properties'
-
-      expect(a.convertHousingTypesToSentence(housingTypes)).toEqual(result)
-    })
-  })
   describe('Rent Regulated', () => {
     it('converts the object into a sentence', () => {
       const housingType1 = new Filter({
