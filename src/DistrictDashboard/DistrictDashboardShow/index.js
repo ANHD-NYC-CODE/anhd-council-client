@@ -76,7 +76,7 @@ class DistrictDashboardShow extends React.PureComponent {
               propertySummaryRequest={this.props.propertySummaryRequest}
             />
           ) : (
-            <div className="alert-map-show">
+            <div className="district-dashboard-show">
               <Row className="geography-select-row py-4 py-md-2">
                 <Col md={1} className="geography-select-row__icon d-none d-md-block">
                   <FontAwesomeIcon className="text-white" icon={faMapMarkerAlt} size="2x" />
@@ -172,6 +172,8 @@ class DistrictDashboardShow extends React.PureComponent {
                   <Row>
                     <Col xs={12}>
                       <Form.Check
+                        className="housingTypeOnly__checkbox"
+                        custom
                         type={'checkbox'}
                         id={'housingTypeOnly'}
                         label={'Filter by housing type only'}

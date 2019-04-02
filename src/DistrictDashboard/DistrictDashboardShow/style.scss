@@ -1,6 +1,6 @@
 @import 'shared/styles/bootstrap/_variables.scss';
 
-.alert-map-show {
+.district-dashboard-show {
   .geography-select-row {
     align-items: center;
     background-color: $gray-700;
@@ -27,5 +27,16 @@
   .advanced-search-placeholder {
     border: 1px solid $black;
     border-radius: 20px;
+  }
+
+  .housingTypeOnly__checkbox {
+    label {
+      color: $gray-400;
+    }
+
+    label:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
   }
 }
