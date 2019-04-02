@@ -113,7 +113,7 @@ class BaseTable extends React.Component {
           const NestedTable = this.state.expandedRowComponent
 
           return (
-            <div className="table-row--nested-bumper">
+            <div className="table-row--nested-bumper" key={`expanded-row-${row.id}`}>
               <NestedTable nested={true} {...this.state.expandedRowProps} />
             </div>
           )
@@ -143,7 +143,7 @@ class BaseTable extends React.Component {
         pagination={paginationFactory(this.props.tableConfig.paginationOptions(this.state, this.setPage))}
       >
         {({ paginationProps, paginationTableProps }) => (
-          <div className={`base-table ${this.props.wrapperClasses}`}>
+          <div className={`base-table ${this.props.wrapperClasses}`} key={`table-${this.props.tableConfig.keyField}`}>
             {!this.props.nested && (
               <Row>
                 <Col xs={12}>
