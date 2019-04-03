@@ -61,18 +61,18 @@ label.btn-primary:not(:disabled):not(.disabled):active {
   outline: 0;
   text-decoration: underline;
 }
-
+// Light toggles
 label.toggle-link.btn.light,
 label.toggle-link.btn.light:active,
 label.btn-primary:not(:disabled):not(.disabled).light:active {
-  color: $property-blue;
+  color: $info;
 }
 
 @media (hover: hover) {
   label.toggle-link.btn:hover:not(.active) {
     background: transparent;
     border: 2px dashed transparent;
-    border-bottom: 4px double $primary;
+    border-bottom: 4px double $info;
     border-radius: 0px !important;
     outline: 0;
     cursor: pointer;
@@ -82,8 +82,9 @@ label.btn-primary:not(:disabled):not(.disabled).light:active {
     text-decoration: none;
   }
 
+  // light hover
   label.toggle-link.btn:hover:not(.active).light {
-    border-bottom: 4px double $property-blue;
+    border-bottom: 4px double darken($info, 10%);
   }
 }
 

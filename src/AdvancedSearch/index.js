@@ -5,9 +5,10 @@ import * as c from 'Store/AdvancedSearch/constants'
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
 import { connect } from 'react-redux'
+import { Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
 import AdvancedSearchSentence from 'AdvancedSearch/Sentence'
-import { Row, Col, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
+import { Jumbotron, Row, Col, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
 import AdvancedSearchForm from 'AdvancedSearch/AdvancedSearchForm'
 import AdvancedSearchInstructions from 'AdvancedSearch/AdvancedSearchInstructions'
 
@@ -31,6 +32,20 @@ export class AdvancedSearch extends React.Component {
     }
   }
 
+  componentDidMount() {
+    scrollSpy.update()
+    scroll.scrollToTop({
+      duration: 500,
+      delay: 0,
+      smooth: 'easeInOutQuart',
+    })
+  }
+
+  componentWillUnmount() {
+    Events.scrollEvent.remove('begin')
+    Events.scrollEvent.remove('end')
+  }
+
   toggleView(value) {
     this.setState({
       view: value,
@@ -41,42 +56,47 @@ export class AdvancedSearch extends React.Component {
     return (
       <div className="advanced-search">
         <Row>
-          <Col className="advanced-search__left-column px-lg-2 px-xl-5" xs={12} lg={4}>
-            <Row className="advanced-search__row my-4">
-              <Col xs={12} xl={11}>
-                <h3 className="text-light-gray text-uppercase font-weight-bold m-0">Custom Search</h3>
-              </Col>
-            </Row>
-            <Row className="mb-4">
-              <Col>
-                <ToggleButtonGroup
-                  name="view"
-                  type="radio"
-                  className="view-toggle"
-                  value={this.state.view}
-                  onChange={this.toggleView}
-                >
-                  <ToggleButton className="toggle-link light" value={1}>
-                    Sentence
-                  </ToggleButton>
-                  <ToggleButton className="toggle-link light" value={2}>
-                    Search Guide
-                  </ToggleButton>
-                </ToggleButtonGroup>
-              </Col>
-            </Row>
-            <Row className="mb-5">
-              <Col>
-                <div className={classnames({ 'd-none': this.state.view === 1 })}>
-                  <AdvancedSearchInstructions />
-                </div>
-                <div className={classnames('advanced-search__sentence-container', { 'd-none': this.state.view !== 1 })}>
-                  <AdvancedSearchSentence advancedSearch={this.props.advancedSearch} />
-                </div>
-              </Col>
-            </Row>
+          <Col className="touch-left padding-xs-sm-0" xs={12} lg={5}>
+            <Jumbotron className="advanced-search__left-column">
+              <Row className="advanced-search__row mb-4">
+                <Col xs={12} xl={11}>
+                  <h3 className="text-uppercase font-weight-bold m-0">Custom Search</h3>
+                </Col>
+              </Row>
+              <Row className="mb-4">
+                <Col>
+                  <ToggleButtonGroup
+                    name="view"
+                    type="radio"
+                    className="view-toggle"
+                    value={this.state.view}
+                    variant="info"
+                    onChange={this.toggleView}
+                  >
+                    <ToggleButton className="toggle-link light" value={1}>
+                      Sentence
+                    </ToggleButton>
+                    <ToggleButton className="toggle-link light" value={2}>
+                      Search Guide
+                    </ToggleButton>
+                  </ToggleButtonGroup>
+                </Col>
+              </Row>
+              <Row className="mb-5">
+                <Col>
+                  <div className={classnames({ 'd-none': this.state.view === 1 })}>
+                    <AdvancedSearchInstructions />
+                  </div>
+                  <div
+                    className={classnames('advanced-search__sentence-container', { 'd-none': this.state.view !== 1 })}
+                  >
+                    <AdvancedSearchSentence advancedSearch={this.props.advancedSearch} />
+                  </div>
+                </Col>
+              </Row>
+            </Jumbotron>
           </Col>
-          <Col className="advanced-search-form--container px-lg-5 pb-6" xs={12} lg={8}>
+          <Col className="advanced-search-form--container px-lg-5 pt-6" xs={12} lg={7}>
             <ConfigContext.Consumer>
               {config => (
                 <AdvancedSearchForm
