@@ -198,6 +198,43 @@ describe('DistrictDashboard', () => {
         expect(wrapper.findWhere(node => node.key() === 'request-wrapper-1').props().visible).toEqual(false)
         expect(wrapper.findWhere(node => node.key() === 'request-wrapper-2').props().visible).toEqual(true)
       })
+
+      it('Switches the results filter', async () => {
+        const results = [
+          createPropertyRequestMock({ bbl: 1, unitsres: 1 }),
+          createPropertyRequestMock({ bbl: 2, unitsres: 1 }),
+          createPropertyRequestMock({ bbl: 3, unitsres: 0 }),
+          createPropertyRequestMock({ bbl: 4, unitsres: 10 }),
+        ]
+        mock.onGet('/councils/1/properties/').reply(200, results)
+        const [wrapper, store] = setupWrapper({
+          router: { location: { pathname: '/council/1' }, action: 'POP' },
+        })
+
+        await flushAllPromises()
+        wrapper.update()
+
+        wrapper
+          .find('input[name="view"]')
+          .at(1)
+          .simulate('change', { target: { checked: true } })
+
+        // Test using housing type only
+        wrapper.find('input#housingTypeOnly').simulate('change', { target: { checked: true } })
+
+        wrapper.update()
+        // 3 residential out of 4
+        expect(wrapper.findWhere(node => node.key() === 'request-wrapper-0').find('tbody tr')).toHaveLength(3)
+
+        wrapper
+          .findWhere(node => node.key() === 'housingtype-summary-3')
+          .find('button')
+          .simulate('click')
+
+        wrapper.update()
+        // 2 Small homes
+        expect(wrapper.findWhere(node => node.key() === 'request-wrapper-0').find('tbody tr')).toHaveLength(2)
+      })
     })
   })
 })
