@@ -39,13 +39,27 @@ const parseParamMapComparison = (paramMap, nounOverride = undefined) => {
         paramMap.value
       }${paramMap.valueSuffix}${grammaticalNoun(nounOverride || paramMap.paramNoun, paramMap.value)}`.trim()
     case 'DATE':
-      return `${paramMap.comparisonPrefix} ${paramMap.valuePrefix} ${constructDateComparisonString(
-        paramMap.comparison
-      )} ${moment(paramMap.value).format('MM/DD/YYYY')}`.trim()
+      return [
+        paramMap.comparisonPrefix.trim(),
+        paramMap.valuePrefix.trim(),
+        constructDateComparisonString(paramMap.comparison).trim(),
+        moment(paramMap.value)
+          .format('MM/DD/YYYY')
+          .trim(),
+      ]
+        .filter(s => s)
+        .join(' ')
+        .trim()
     case 'YEAR':
-      return `${paramMap.comparisonPrefix} ${paramMap.valuePrefix} ${constructDateComparisonString(
-        paramMap.comparison
-      )} ${paramMap.value}`.trim()
+      return [
+        paramMap.comparisonPrefix.trim(),
+        paramMap.valuePrefix.trim(),
+        constructDateComparisonString(paramMap.comparison).trim(),
+        paramMap.value.trim(),
+      ]
+        .filter(s => s)
+        .join(' ')
+        .trim()
     case 'TEXT':
       return [
         paramMap.comparisonPrefix,
@@ -76,13 +90,15 @@ const parseParamMapRangeGroup = paramMapRangeGroup => {
   const lte = paramMapRangeGroup.find(pm => pm.comparison.match(/(lte|end)/))
   switch (paramMapRangeGroup[0].type) {
     case 'DATE':
-      return `between ${moment(gte.value).format('MM/DD/YYYY')} and ${moment(lte.value).format('MM/DD/YYYY')}`
+      return `${paramMapRangeGroup[0].comparisonPrefix} between ${moment(gte.value).format('MM/DD/YYYY')} and ${moment(
+        lte.value
+      ).format('MM/DD/YYYY')}`
     case 'YEAR':
-      return `between ${gte.value} and ${lte.value}`
+      return `${paramMapRangeGroup[0].comparisonPrefix} between ${gte.value} and ${lte.value}`
   }
 }
 
-const parseRoleGroup = paramMaps => {
+const parseRoleGroup = (paramMaps, joiner = ' ') => {
   if (paramMaps.some(pm => !!pm.rangeKey)) {
     const rangeGroups = _.groupBy(paramMaps, pm => pm.rangeKey)
     return Object.values(rangeGroups)
@@ -93,7 +109,7 @@ const parseRoleGroup = paramMaps => {
           return parseParamMapComparison(group[0])
         }
       })
-      .join(' ')
+      .join(joiner)
   } else {
     return paramMaps.map(pm => parseParamMapComparison(pm)).join(' ')
   }
@@ -109,44 +125,43 @@ export const convertFilterToSentence = filter => {
 
     const modifyingParamMaps = filter.paramMaps.filter(pm => pm.role !== 'PRIMARY' && pm.role !== 'LIMITER')
 
-    const parsedModifyingParamMaps = modifyingParamMaps.map(pm => parseParamMapComparison(pm))
+    const parsedModifyingParamMaps = parseRoleGroup(modifyingParamMaps, ', ').trim()
 
-    const primaryLeadingWord = primaryParamMap.resourceModel.resourceConstant === 'PROPERTY' ? '' : 'have'
+    const primaryLeadingWord = primaryParamMap.resourceModel.resourceConstant !== 'PROPERTY' ? 'have' : undefined
     const primarySegment = primaryParamMap
-      ? `${primaryLeadingWord} ${parseParamMapComparison(primaryParamMap, filter.resourceModel.sentenceNoun)}`.trim()
+      ? `${parseParamMapComparison(primaryParamMap, filter.resourceModel.sentenceNoun)}`.trim()
       : undefined
 
-    const modifyingSegment = parsedModifyingParamMaps.length
-      ? `(${parsedModifyingParamMaps.join(', ')})`.trim()
-      : undefined
+    const modifyingSegment = parsedModifyingParamMaps.length ? `(${parsedModifyingParamMaps})`.trim() : undefined
 
-    const limiterSegment = limiterParamMaps.length ? `${parseRoleGroup(limiterParamMaps)}`.trim() : undefined
-    return (
-      ' ' +
-      [primarySegment, modifyingSegment, limiterSegment]
-        .filter(p => p)
-        .join(' ')
-        .trim()
-    )
+    const limiterSegment = limiterParamMaps.length ? parseRoleGroup(limiterParamMaps).trim() : undefined
+
+    return [primaryLeadingWord, primarySegment, modifyingSegment, limiterSegment]
+      .filter(p => p)
+      .join(' ')
+      .trim()
   } else {
     return ''
   }
 }
 
 export const convertConditionToSentence = (conditions, condition) => {
-  return `${condition.type === 'AND' ? ' that' : ' that either'}${condition.filters
+  const leadingWord = condition.type === 'AND' ? ' that' : ' that either'
+  const conditionFilterSegments = condition.filters
     .map((filter, index) => {
       if (filter.conditionGroup) {
         return `${convertConditionToSentence(conditions, conditions[filter.conditionGroup])}${
           condition.filters[index + 1] ? addNextFilterFill(condition, condition.filters[index + 1]) : ''
-        }`
+        }`.trim()
       } else {
         return `${convertFilterToSentence(filter)}${
           condition.filters[index + 1] ? addNextFilterFill(condition, condition.filters[index + 1]) : ''
-        }`
+        }`.trim()
       }
     })
-    .join('')}`
+    .join(' ')
+
+  return [leadingWord, conditionFilterSegments].join(' ')
 }
 
 const addNextFilterFill = (condition, filter) => {
