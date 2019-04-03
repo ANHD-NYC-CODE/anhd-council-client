@@ -7,7 +7,7 @@ import LeafletMap from 'LeafletMap'
 import AddressSearch from 'Lookup/AddressSearch'
 import LayoutContext from 'Layout/LayoutContext'
 import { addressResultToPath } from 'shared/utilities/routeUtils'
-
+import { boroCodeToName } from 'shared/utilities/languageUtils'
 import BaseLink from 'shared/components/BaseLink'
 
 import { Button, Row, Col, InputGroup } from 'react-bootstrap'
@@ -174,12 +174,14 @@ class LookupShow extends React.Component {
 
                     <Row className="mb-2">
                       <Col>
-                        <h4 className="text-muted font-weight-bold">
+                        <h4 className="lookup-show__data-address font-weight-bold">
                           {this.props.bin && !!Object.keys(this.props.propertyResult).length
                             ? `${
                                 getCurrentBuilding(this.props.propertyResult.buildings, this.props.bin).house_number
                               } ${getCurrentBuilding(this.props.propertyResult.buildings, this.props.bin).stname}`
                             : this.props.propertyResult.address}
+                          {!!Object.keys(this.props.propertyResult).length &&
+                            `, ${boroCodeToName(this.props.propertyResult.borough)}`}
                         </h4>
                       </Col>
                     </Row>
