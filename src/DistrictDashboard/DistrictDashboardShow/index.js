@@ -200,7 +200,7 @@ class DistrictDashboardShow extends React.PureComponent {
                   </Row>
                 </Col>
                 <Col xs={12} lg={5} xl={6}>
-                  <Row className="mb-2 mb-lg-0">
+                  <Row className="mb-2 mb-lg-0 district-dashboard-show__results-container">
                     <Col xs={12} xl={7}>
                       {(this.props.selectedRequest || {}).type === 'ADVANCED_SEARCH' ? (
                         <h5 className="font-weight-bold text-uppercase mb-4">Custom Search</h5>
