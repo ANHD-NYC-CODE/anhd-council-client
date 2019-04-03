@@ -32,7 +32,7 @@ describe('navigation', () => {
     expect(wrapper.find('NavigationBar li')).toHaveLength(7)
     expect(wrapper.find('NavigationBar').text()).toMatch(/HomeDAP MapDistrict ReportsWatch ListPortalAboutContact/)
     expect(wrapper.find('SubHeader')).toHaveLength(1)
-    expect(wrapper.find('SubHeader a')).toHaveLength(4)
+    expect(wrapper.find('SubHeader a')).toHaveLength(5)
     expect(wrapper.find('SubHeader').text()).toMatch(/Property LookupDistrict DashboardCustom Search/)
     expect(
       wrapper
@@ -45,17 +45,23 @@ describe('navigation', () => {
         .find('SubHeader a')
         .at(1)
         .props().href
-    ).toEqual('/lookup')
+    ).toEqual('#')
     expect(
       wrapper
         .find('SubHeader a')
         .at(2)
         .props().href
-    ).toEqual('/map')
+    ).toEqual('/lookup')
     expect(
       wrapper
         .find('SubHeader a')
         .at(3)
+        .props().href
+    ).toEqual('/map')
+    expect(
+      wrapper
+        .find('SubHeader a')
+        .at(4)
         .props().href
     ).toEqual('/search')
   })
@@ -66,7 +72,7 @@ describe('navigation', () => {
       expect(
         wrapper
           .find('SubHeader a')
-          .at(2)
+          .at(3)
           .props().href
       ).toEqual('/council/3')
     })
@@ -78,7 +84,7 @@ describe('navigation', () => {
       expect(
         wrapper
           .find('SubHeader a')
-          .at(1)
+          .at(2)
           .props().href
       ).toEqual('/property/1')
     })
@@ -88,7 +94,7 @@ describe('navigation', () => {
       expect(
         wrapper
           .find('SubHeader a')
-          .at(1)
+          .at(2)
           .props().href
       ).toEqual('/property/1/building/7')
     })

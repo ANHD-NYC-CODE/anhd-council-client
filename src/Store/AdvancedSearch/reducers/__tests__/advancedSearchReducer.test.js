@@ -8,7 +8,6 @@ import ConditionFilter from 'shared/classes/ConditionFilter'
 describe('Custom Search reducer', () => {
   it('should return the initial state', () => {
     expect(r.advancedSearchReducer(undefined, {})).toEqual(r.initialState())
-    expect(r.advancedSearchReducer(undefined, {}).housingTypes.length).toEqual(1)
   })
 
   describe('ADD_NEW_CONDITION', () => {
