@@ -15,7 +15,7 @@
   }
 
   .table-header {
-    color: $gray-400;
+    color: $white;
   }
 
   .lookup-profile-summary__bottom-info {
@@ -31,5 +31,10 @@
   }
 
   .lookup-profile-summary__geography-link:first-child {
+  }
+
+  .base-table {
+    background-color: $white;
+    padding: 20px;
   }
 }

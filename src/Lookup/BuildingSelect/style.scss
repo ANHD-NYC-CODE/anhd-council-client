@@ -1,0 +1,11 @@
+@import 'shared/styles/bootstrap/_variables.scss';
+
+.building-select {
+  .building-select__select {
+    width: 100%;
+
+    @include media-breakpoint-up(xl) {
+      width: 70%;
+    }
+  }
+}

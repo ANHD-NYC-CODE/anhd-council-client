@@ -48,23 +48,29 @@ const LookupProfileSummary = props => {
 
                 <div className="lookup-profile-summary__bottom-info py-4">
                   {profile.hpdregistrations.length ? (
-                    <BaseTable
-                      caption="HPD Registrations"
-                      classes="fluid-table"
-                      wrapperClasses="text-light-gray"
-                      columns={getTableColumns('HPD_REGISTRATION')}
-                      dispatch={props.dispatch}
-                      records={profile.hpdregistrations}
-                      request={props.request}
-                      tableConfig={new TableConfig({ resourceConstant: 'HPD_REGISTRATION' })}
-                    />
+                    <div className="mb-4">
+                      <TableHeader
+                        showUpdate={false}
+                        title="HPD Registrations"
+                        datasetModelName={constantToModelName('HPDHPD_REGISTRATION')}
+                      />
+                      <BaseTable
+                        classes="fluid-table"
+                        wrapperClasses="text-dark"
+                        columns={getTableColumns('HPD_REGISTRATION')}
+                        dispatch={props.dispatch}
+                        records={profile.hpdregistrations}
+                        request={props.request}
+                        tableConfig={new TableConfig({ resourceConstant: 'HPD_REGISTRATION' })}
+                      />
+                    </div>
                   ) : (
                     <Card.Text className="text-info text-center font-weight-bold my-4">
                       No HPD Registrations Found
                     </Card.Text>
                   )}
                   {profile.rentstabilizationrecord ? (
-                    <div>
+                    <div className="mb-4">
                       <TableHeader
                         showUpdate={false}
                         title="Rent Stabilized Units"
@@ -72,7 +78,7 @@ const LookupProfileSummary = props => {
                       />
                       <BaseTable
                         expandable={false}
-                        wrapperClasses="text-light-gray"
+                        wrapperClasses="text-dark"
                         columns={getTableColumns('RENT_STABILIZATION_RECORD')}
                         dispatch={props.dispatch}
                         records={[profile.rentstabilizationrecord]}
