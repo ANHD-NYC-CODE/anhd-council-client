@@ -8,7 +8,7 @@ import { history } from 'Store/configureStore'
 import Config from 'Config'
 import ConfigContext from 'Config/ConfigContext'
 import LayoutContext from 'Layout/LayoutContext'
-
+import { createPropertyRequestMock } from 'shared/testUtilities/mocks'
 import { ConnectedRouter } from 'connected-react-router'
 import sinon from 'sinon'
 import { Provider } from 'react-redux'
@@ -35,7 +35,7 @@ const setupWrapper = state => {
           <ConnectedRouter history={history}>
             <ConfigContext.Consumer>
               {config => {
-                ;<DistrictDashboard config={config} />
+                return <DistrictDashboard config={config} />
               }}
             </ConfigContext.Consumer>
           </ConnectedRouter>
@@ -105,29 +105,27 @@ describe('DistrictDashboard', () => {
         wrapper
           .find('GeographySelect select[name="geographyType"]')
           .simulate('change', { target: { value: 'COMMUNITY' } })
-        wrapper.find('GeographySelect select[name="geographyId"]').simulate('change', { target: { value: '2' } })
+        wrapper.find('GeographySelect select[name="geographyId"]').simulate('change', { target: { value: '102' } })
         wrapper.update()
-        expect(store.getState().router.location.pathname).toEqual('/community/2')
+        expect(store.getState().router.location.pathname).toEqual('/community/102')
         expect(wrapper.find('GeographySelect select[name="geographyType"]').props().value).toEqual('COMMUNITY')
-        expect(wrapper.find('GeographySelect select[name="geographyId"]').props().value).toEqual('2')
+        expect(wrapper.find('GeographySelect select[name="geographyId"]').props().value).toEqual('102')
         expect(wrapper.find('button.cancel-geography-change')).toHaveLength(0)
         expect(wrapper.find('button.submit-geography-change')).toHaveLength(0)
       })
     })
     describe('map view', () => {
-      it('renders the map, not tables', async () => {
+      it('renders the map', async () => {
         const [wrapper, store] = setupWrapper({
           router: { location: { pathname: '/council/1' }, action: 'POP' },
         })
         expect(wrapper.find('ToggleButtonGroup')).toHaveLength(2)
         expect(wrapper.find('LeafletMap')).toHaveLength(1)
-        expect(wrapper.find('RequestSummaryWrapper')).toHaveLength(11)
-        expect(wrapper.find('RequestTableWrapper')).toHaveLength(0)
       })
     })
 
     describe('table view', () => {
-      it('renders the tables, not map', () => {
+      it('renders the tables', () => {
         const [wrapper, store] = setupWrapper({
           router: { location: { pathname: '/council/1' }, action: 'POP' },
         })
@@ -139,22 +137,15 @@ describe('DistrictDashboard', () => {
         wrapper.update()
         expect(wrapper.find('ToggleButtonGroup')).toHaveLength(2)
         expect(wrapper.find('GeographySelect')).toHaveLength(1)
-        expect(wrapper.find('LeafletMap')).toHaveLength(0)
-        expect(wrapper.find('RequestTableWrapper')).toHaveLength(11)
-        expect(
-          wrapper
-            .find('RequestTableWrapper')
-            .at(0)
-            .props().visible
-        ).toEqual(true)
-        wrapper.find('RequestTableWrapper').forEach((w, index) => {
-          if (index === 0) return
-          expect(w.props().visible).toEqual(false)
-        })
+        expect(wrapper.find('RequestTableWrapper')).toHaveLength(6)
       })
 
       it('updates the request card summaries when data is received', async () => {
-        const results = [{ bbl: 1, unitsres: 1 }, { bbl: 2, unitsres: 1 }, { bbl: 3, unitsres: 1 }]
+        const results = [
+          createPropertyRequestMock({ bbl: 1, unitsres: 1 }),
+          createPropertyRequestMock({ bbl: 2, unitsres: 0 }),
+          createPropertyRequestMock({ bbl: 3, unitsres: 10 }),
+        ]
         mock.onGet('/councils/1/properties/').reply(200, results)
         const [wrapper, store] = setupWrapper({
           router: { location: { pathname: '/council/1' }, action: 'POP' },
@@ -162,9 +153,9 @@ describe('DistrictDashboard', () => {
 
         await flushAllPromises()
         wrapper.update()
-        wrapper.find('RequestSummaryWrapper').forEach(rs => {
-          expect(rs.text()).toMatch(new RegExp(results.length))
-        })
+        expect(wrapper.find('.housing-type-section__wrapper').text()).toMatch(
+          'Total properties: 3All Residential2 properties11 units66.67% of all propertiesRent Stabilized0 properties0 units0.00% of residentialSubsidized Housing0 properties0 units0.00% of residentialSmall Homes1 properties1 units50.00% of residentialMarket Rate2 properties11 units100.00% of residentialPublic Housing0 properties0 units0.00% of residential'
+        )
       })
 
       it('updates the tables when data is received', async () => {
@@ -184,25 +175,6 @@ describe('DistrictDashboard', () => {
         wrapper.find('table').forEach(table => {
           expect(table.find('tbody tr')).toHaveLength(results.length)
         })
-      })
-
-      it('Switches the visible request wrapper', () => {
-        const [wrapper, store] = setupWrapper({
-          router: { location: { pathname: '/council/1' }, action: 'POP' },
-        })
-
-        wrapper
-          .find('input[name="view"]')
-          .at(1)
-          .simulate('change', { target: { checked: true } })
-
-        expect(wrapper.findWhere(node => node.key() === 'request-wrapper-0').props().visible).toEqual(true)
-
-        wrapper.findWhere(node => node.key() === 'request-summary-1').simulate('click')
-
-        wrapper.update()
-        expect(wrapper.findWhere(node => node.key() === 'request-wrapper-0').props().visible).toEqual(false)
-        expect(wrapper.findWhere(node => node.key() === 'request-wrapper-1').props().visible).toEqual(true)
       })
     })
   })
