@@ -166,7 +166,7 @@ const Property = databaseObject => {
             dateField: 'rsunitslost',
             dateLowComparison: 'start',
             dateHighComparison: 'end',
-            dateLowValue: 2010,
+            dateLowValue: 2007,
             dateHighValue: 2017,
             dateComparisonOptions: dateComparisonOptions({
               comparisonValues: ['start', 'between'],
