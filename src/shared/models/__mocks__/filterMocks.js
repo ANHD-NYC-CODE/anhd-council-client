@@ -7,6 +7,7 @@ const resourceModels = mockSetupResourceModels()
 export const filterMocks = constant => {
   const resourceModel = resourceModels[constant]
   const filter = new Filter({
+    primaryResourceModel: resourceModels['PROPERTY'],
     resourceModel: resourceModel,
     schema: resourceModel.ownResourceFilters,
   })

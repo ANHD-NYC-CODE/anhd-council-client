@@ -3,7 +3,7 @@ import { configure, mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import { Axios } from 'shared/utilities/Axios'
 import MockAdapter from 'axios-mock-adapter'
-import { setupStore, flushAllPromises } from 'shared/testUtilities'
+import { mockDatasetsResponse, setupStore, flushAllPromises } from 'shared/testUtilities'
 
 import { Provider } from 'react-redux'
 
@@ -52,9 +52,7 @@ describe('initial startup', () => {
 
   describe('after completed requests', () => {
     it('Does not display the loading module', () => {
-      const datasets = [{ model_name: 'hpdviolation' }]
-
-      mock.onGet('/datasets/').reply(200, datasets)
+      mock.onGet('/datasets/').reply(200, mockDatasetsResponse)
       mock.onGet('/councils/').reply(200, [1, 2])
       mock.onGet('/communities/').reply(200, [1, 2])
       const wrapper = mount(

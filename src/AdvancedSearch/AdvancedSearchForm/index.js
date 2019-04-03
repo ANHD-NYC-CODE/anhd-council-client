@@ -199,7 +199,7 @@ class AdvancedSearchForm extends React.PureComponent {
               handleChangeGeographyType={this.handleChangeGeographyType}
             />
             {this.props.appState.currentGeographyType && this.props.appState.currentGeographyId && (
-              <div>
+              <div className="advanced-search-form__housingtype-select">
                 <h4 className="text-muted font-weight-bold text-uppercase mt-5 mb-4">2) Select a housing type</h4>
                 {
                   <FilterComponent

@@ -136,15 +136,14 @@ describe('convertConditionMappingToQ', () => {
 
   describe('sold for amount dataset', () => {
     it('converts the object into a Q', () => {
-      const mock = filterMocks('PROPERTY_SALE_BY_AMOUNT')
-
+      const mock = filterMocks('ACRIS_REAL_MASTER')
+      mock.paramSets['docamount'].create()
       let condition0Filters = [mock]
 
       const conditions = {
         '0': new Condition({ type: 'AND', filters: condition0Filters }),
       }
-
-      const result = `*condition_0=AND filter_0=acrisreallegals__documentid__docamount__gte=1000000,acrisreallegals__documentid__docdate__gte=${todayminus1year},acrisreallegals__documentid__docdate__lte=${todayplus1year}`
+      const result = `*condition_0=AND filter_0=acrisreallegals__documentid__count__gte=1,acrisreallegals__documentid__docdate__gte=${todayminus1year},acrisreallegals__documentid__docdate__lte=${todayplus1year},acrisreallegals__documentid__docamount__gte=1000000`
 
       expect(a.convertConditionMappingToQ(conditions)).toEqual(result)
     })
@@ -152,14 +151,14 @@ describe('convertConditionMappingToQ', () => {
 
   describe('sold times dataset', () => {
     it('converts the object into a field string', () => {
-      const mock = filterMocks('PROPERTY_SALE_BY_COUNT')
+      const mock = filterMocks('ACRIS_REAL_MASTER')
       let condition0Filters = [mock]
 
       const conditions = {
         '0': new Condition({ type: 'AND', filters: condition0Filters }),
       }
 
-      const result = `*condition_0=AND filter_0=acrisreallegals__documentid__count__gte=2,acrisreallegals__documentid__docdate__gte=${todayminus1year},acrisreallegals__documentid__docdate__lte=${todayplus1year}`
+      const result = `*condition_0=AND filter_0=acrisreallegals__documentid__count__gte=1,acrisreallegals__documentid__docdate__gte=${todayminus1year},acrisreallegals__documentid__docdate__lte=${todayplus1year}`
       expect(a.convertConditionMappingToQ(conditions)).toEqual(result)
     })
   })
