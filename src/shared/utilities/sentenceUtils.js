@@ -53,9 +53,9 @@ const parseParamMapComparison = (paramMap, nounOverride = undefined) => {
     case 'YEAR':
       return [
         paramMap.comparisonPrefix.trim(),
-        paramMap.valuePrefix.trim(),
+        paramMap.valuePrefix,
         constructDateComparisonString(paramMap.comparison).trim(),
-        paramMap.value.trim(),
+        paramMap.value,
       ]
         .filter(s => s)
         .join(' ')
@@ -141,6 +141,7 @@ const parseRoleGroup = (paramMaps, joiner = ' ') => {
 }
 
 export const convertFilterToSentence = filter => {
+  if (!filter) return
   if (filter.paramMaps.length) {
     // Get Primary
     const primaryParamMap = filter.paramMaps.find(pm => pm.role === 'PRIMARY')
@@ -211,7 +212,9 @@ export const convertGeographiesToSentence = geographies => {
     geographies.length
       ? geographies
           .map(geography => `${geography.name.toLowerCase()} ${geography.id ? geography.id : '_'}`)
+          .filter(p => p)
           .join(' and ')
+          .trim()
       : '...'
   }`
 }
@@ -226,8 +229,13 @@ export const convertHousingTypesToSentence = housingTypes => {
 }
 
 export const constructSentence = advancedSearch => {
-  return `Show me ${[
+  return [
+    'Show me',
     convertFilterToSentence(advancedSearch.propertyFilter),
     convertGeographiesToSentence(advancedSearch.geographies),
-  ].join(' ')} ${convertConditionMappingToSentence(advancedSearch.conditions)}`
+    convertConditionMappingToSentence(advancedSearch.conditions),
+  ]
+    .filter(p => p)
+    .join(' ')
+    .trim()
 }

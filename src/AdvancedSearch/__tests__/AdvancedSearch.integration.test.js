@@ -6,6 +6,7 @@ import { setupStore, configuredState } from 'shared/testUtilities'
 import { Provider } from 'react-redux'
 import AdvancedSearch from 'AdvancedSearch'
 import ConfigContext from 'Config/ConfigContext'
+import Config from 'Config'
 
 configure({ adapter: new Adapter() })
 
@@ -24,16 +25,13 @@ const setupWrapper = state => {
   const store = setupStore({ ...state })
   const wrapper = mount(
     <Provider store={store}>
-      <ConfigContext.Provider
-        value={{
-          datasets: state.dataset.datasets,
-          resourceModels: state.dataset.resourceModels,
-          councilDistricts: state.council.districts,
-          communityDistricts: state.community.boards,
-        }}
-      >
-        <AdvancedSearch />
-      </ConfigContext.Provider>
+      <Config>
+        <ConfigContext.Consumer>
+          {config => {
+            return <AdvancedSearch config={config} />
+          }}
+        </ConfigContext.Consumer>
+      </Config>
     </Provider>
   )
   return wrapper
@@ -60,18 +58,18 @@ const selectedGeographyWrapper = ({ wrapper = undefined, selectValue = undefined
 
 const selectedHousingTypeWrapper = ({ wrapper = undefined, selectValue = undefined } = {}) => {
   if (!wrapper) {
-    wrapper = setupWrapper()
+    wrapper = selectedGeographyWrapper({ selectValue: 'COUNCIL', idValue: '1' })
   }
   wrapper
-    .find('select[name="housingTypeSelect"]')
-    .simulate('change', { target: { name: 'geographyType', value: selectValue } })
+    .find('.advanced-search-form__housingtype-select select')
+    .simulate('change', { target: { name: 'value', value: selectValue } })
   wrapper.update()
   return wrapper
 }
 
 const selectedFilterWrapper = ({ wrapper = undefined, selectValue = undefined } = {}) => {
   if (!wrapper) {
-    wrapper = setupWrapper()
+    wrapper = selectedGeographyWrapper({ selectValue: 'COUNCIL', idValue: '1' })
   }
   wrapper.find('ConditionComponent button.add-filter').simulate('click')
   wrapper.update()
@@ -86,8 +84,9 @@ describe('AdvancedSearch', () => {
     expect(wrapper.find('AdvancedSearch')).toBeDefined()
     expect(wrapper.find('AdvancedSearchSentence')).toHaveLength(1)
     expect(wrapper.find('AdvancedSearchForm')).toHaveLength(1)
-    expect(wrapper.find('ConditionComponent')).toHaveLength(1)
-    expect(wrapper.find('button[type="submit"]')).toHaveLength(1)
+    expect(wrapper.find('AdvancedSearchInstructions')).toHaveLength(1)
+    expect(wrapper.find('.advanced-search-form__housingtype-select')).toHaveLength(0)
+    expect(wrapper.find('ConditionComponent')).toHaveLength(0)
   })
 
   describe('Geography Query Select', () => {
@@ -100,7 +99,7 @@ describe('AdvancedSearch', () => {
       expect(wrapper.find('select[name="geographyType"]').props().value).toEqual(-1)
       expect(wrapper.find('select[name="geographyType"] option')).toHaveLength(3)
       expect(wrapper.find('select[name="geographyType"]').text()).toEqual(
-        'Select a Geography typeCouncil DistrictCommunity District'
+        'Select a geographyCouncil DistrictCommunity District'
       )
     })
 
@@ -127,87 +126,67 @@ describe('AdvancedSearch', () => {
 
   describe('Housing Type selection', () => {
     it('has initial state', () => {
-      const wrapper = setupWrapper()
-
-      expect(wrapper.find('select[name="housingTypeSelect"]')).toHaveLength(1)
-      expect(wrapper.find('select[name="housingTypeSelect"]').props().value).toEqual('ALL_TYPES')
+      const wrapper = selectedGeographyWrapper({ selectValue: 'COUNCIL', idValue: '1' })
+      expect(wrapper.find('.advanced-search-form__housingtype-select select')).toHaveLength(1)
+      expect(wrapper.find('.advanced-search-form__housingtype-select select').props().value).toEqual('all')
       expect(wrapper.find('div.housingtype-paramset')).toHaveLength(0)
 
-      expect(wrapper.find('select[name="housingTypeSelect"] option')).toHaveLength(6)
+      expect(wrapper.find('.advanced-search-form__housingtype-select select option')).toHaveLength(6)
     })
 
     it('switches between housing types', () => {
-      let wrapper = selectedHousingTypeWrapper({ selectValue: 'RENT_STABILIZED' })
-      expect(wrapper.find('select[name="housingTypeSelect"]').props().value).toEqual('RENT_STABILIZED')
+      let wrapper = selectedHousingTypeWrapper({ selectValue: 'rs' })
+      expect(wrapper.find('.advanced-search-form__housingtype-select select').props().value).toEqual('rs')
 
-      wrapper = selectedHousingTypeWrapper({ wrapper: wrapper, selectValue: 'SMALL_HOMES' })
-      expect(wrapper.find('select[name="housingTypeSelect"]').props().value).toEqual('SMALL_HOMES')
+      wrapper = selectedHousingTypeWrapper({ wrapper: wrapper, selectValue: 'sh' })
+      expect(wrapper.find('.advanced-search-form__housingtype-select select').props().value).toEqual('sh')
     })
 
     it('adds Rent Stabilized param sets when selection is made', () => {
-      const wrapper = selectedHousingTypeWrapper({ selectValue: 'RENT_STABILIZED' })
+      const wrapper = selectedHousingTypeWrapper({ selectValue: 'rs' })
 
-      expect(wrapper.find('select[name="housingTypeSelect"]').props().value).toEqual('RENT_STABILIZED')
-      expect(wrapper.find('div.paramset-wrapper--group')).toHaveLength(1)
+      expect(wrapper.find('.advanced-search-form__housingtype-select select').props().value).toEqual('rs')
+      expect(wrapper.find('div.paramset-wrapper.modifying-paramset')).toHaveLength(1)
 
-      wrapper.find('button.housingtype-paramset--new-button').simulate('click')
+      wrapper.find('button.paramset--new-button').simulate('click')
       wrapper.update()
-      expect(wrapper.find('div.multitype-fieldgroup')).toHaveLength(1)
+      expect(wrapper.find('.modifying-paramset div.multitype-fieldgroup')).toHaveLength(1)
 
       expect(wrapper.find('AdvancedSearchSentence').text()).toMatch(
-        /Show me rent stabilized properties that lost at least 25% rent stabilized units after 2010/
+        'Show me rent stabilized properties (at least 25% units losts, after 2007) in council district 1'
       )
     })
 
-    it('adds Rent Regulated param sets when selection is made', () => {
-      const wrapper = selectedHousingTypeWrapper({ selectValue: 'RENT_REGULATED' })
+    it('adds Subsidized Housing param sets when selection is made', () => {
+      const wrapper = selectedHousingTypeWrapper({ selectValue: 'rr' })
 
-      expect(wrapper.find('select[name="housingTypeSelect"]').props().value).toEqual('RENT_REGULATED')
-      expect(wrapper.find('div.paramset-wrapper--group')).toHaveLength(2)
+      expect(wrapper.find('.advanced-search-form__housingtype-select select').props().value).toEqual('rr')
+      expect(wrapper.find('.advanced-search-form__housingtype-select .filter-component__paramsets')).toHaveLength(2)
 
-      wrapper
-        .find('button.housingtype-paramset--new-button')
-        .at(0)
-        .simulate('click')
-      wrapper.update()
-      expect(wrapper.find('div.multitype-fieldgroup')).toHaveLength(1)
-
-      wrapper
-        .find('button.housingtype-paramset--new-button')
-        .at(0)
-        .simulate('click')
-      wrapper.update()
-      expect(wrapper.find('div.multitype-fieldgroup')).toHaveLength(2)
-
-      expect(wrapper.find('AdvancedSearchSentence').text()).toMatch(/Show me rent regulated properties expiring before/)
+      expect(wrapper.find('AdvancedSearchSentence').text()).toMatch(/Show me subsidized housing properties/)
     })
 
     it('adds Small Homes param sets when selection is made', () => {
-      const wrapper = selectedHousingTypeWrapper({ selectValue: 'SMALL_HOMES' })
+      const wrapper = selectedHousingTypeWrapper({ selectValue: 'sh' })
 
-      expect(wrapper.find('select[name="housingTypeSelect"]').props().value).toEqual('SMALL_HOMES')
-      expect(wrapper.find('div.paramset-wrapper--group')).toHaveLength(1)
+      expect(wrapper.find('.advanced-search-form__housingtype-select select').props().value).toEqual('sh')
+      expect(wrapper.find('.advanced-search-form__housingtype-select .filter-component__paramsets')).toHaveLength(1)
 
-      wrapper.find('button.housingtype-paramset--new-button').simulate('click')
-      wrapper.update()
-      expect(wrapper.find('div.multitype-fieldgroup')).toHaveLength(1)
-      expect(wrapper.find('AdvancedSearchSentence').text()).toMatch(
-        /Show me small home properties with at most 6 units/
-      )
+      expect(wrapper.find('AdvancedSearchSentence').text()).toMatch(/Show me small home properties/)
     })
 
     it('adds Market Rate param sets when selection is made', () => {
-      const wrapper = selectedHousingTypeWrapper({ selectValue: 'MARKET_RATE' })
+      const wrapper = selectedHousingTypeWrapper({ selectValue: 'mr' })
 
-      expect(wrapper.find('select[name="housingTypeSelect"]').props().value).toEqual('MARKET_RATE')
+      expect(wrapper.find('.advanced-search-form__housingtype-select select').props().value).toEqual('mr')
       expect(wrapper.find('div.paramset-wrapper--group')).toHaveLength(0)
       expect(wrapper.find('AdvancedSearchSentence').text()).toMatch(/Show me market rate properties/)
     })
 
     it('adds Public Housing param sets when selection is made', () => {
-      const wrapper = selectedHousingTypeWrapper({ selectValue: 'PUBLIC_HOUSING' })
+      const wrapper = selectedHousingTypeWrapper({ selectValue: 'ph' })
 
-      expect(wrapper.find('select[name="housingTypeSelect"]').props().value).toEqual('PUBLIC_HOUSING')
+      expect(wrapper.find('.advanced-search-form__housingtype-select select').props().value).toEqual('ph')
       expect(wrapper.find('div.paramset-wrapper--group')).toHaveLength(0)
       expect(wrapper.find('AdvancedSearchSentence').text()).toMatch(/Show me public housing properties/)
     })
@@ -215,47 +194,51 @@ describe('AdvancedSearch', () => {
 
   describe('Conditions', () => {
     it('has initial state', () => {
-      const wrapper = setupWrapper()
+      const wrapper = selectedGeographyWrapper({ selectValue: 'COUNCIL', idValue: '1' })
       expect(wrapper.find('ConditionComponent')).toHaveLength(1)
       expect(wrapper.find('ConditionComponent').props().condition.type).toEqual('AND')
       expect(wrapper.find('NewFilterSelect')).toHaveLength(0)
-      expect(wrapper.find('FilterComponent')).toHaveLength(0)
+      expect(wrapper.find('ConditionComponent FilterComponent')).toHaveLength(0)
     })
 
     it('it switches between conditions', () => {
-      const wrapper = setupWrapper()
-      wrapper.find('ConditionComponent button.switch-condition').simulate('click')
+      const wrapper = selectedGeographyWrapper({ selectValue: 'COUNCIL', idValue: '1' })
+      wrapper.find('ConditionComponent button.dropdown-toggle').simulate('click')
+      wrapper
+        .find('ConditionComponent a.dropdown-item')
+        .at(1)
+        .simulate('click')
       wrapper.update()
       expect(wrapper.find('ConditionComponent').props().condition.type).toEqual('OR')
       expect(wrapper.find('NewFilterSelect')).toHaveLength(0)
-      expect(wrapper.find('FilterComponent')).toHaveLength(0)
+      expect(wrapper.find('ConditionComponent FilterComponent')).toHaveLength(0)
     })
 
     it('it shows a new filter select', () => {
-      const wrapper = setupWrapper()
+      const wrapper = selectedGeographyWrapper({ selectValue: 'COUNCIL', idValue: '1' })
       wrapper.find('ConditionComponent button.add-filter').simulate('click')
       wrapper.update()
       expect(wrapper.find('NewFilterSelect')).toHaveLength(1)
-      expect(wrapper.find('FilterComponent')).toHaveLength(0)
+      expect(wrapper.find('ConditionComponent FilterComponent')).toHaveLength(0)
     })
 
     it('it cancels a new filter select', () => {
-      const wrapper = setupWrapper()
+      const wrapper = selectedGeographyWrapper({ selectValue: 'COUNCIL', idValue: '1' })
       wrapper.find('ConditionComponent button.add-filter').simulate('click')
       wrapper.update()
       expect(wrapper.find('NewFilterSelect')).toHaveLength(1)
-      expect(wrapper.find('FilterComponent')).toHaveLength(0)
+      expect(wrapper.find('ConditionComponent FilterComponent')).toHaveLength(0)
       wrapper.find('ConditionComponent button.remove-add-filter').simulate('click')
       wrapper.update()
       expect(wrapper.find('NewFilterSelect')).toHaveLength(0)
-      expect(wrapper.find('FilterComponent')).toHaveLength(0)
+      expect(wrapper.find('ConditionComponent FilterComponent')).toHaveLength(0)
     })
   })
 
   describe('Filters', () => {
     it('has initial state', () => {
       const wrapper = selectedFilterWrapper({ selectValue: 'HPD_VIOLATION' })
-      expect(wrapper.find('FilterComponent')).toHaveLength(1)
+      expect(wrapper.find('ConditionComponent FilterComponent')).toHaveLength(1)
     })
 
     it('updates reducer state on change (comparison value)', () => {
@@ -271,7 +254,7 @@ describe('AdvancedSearch', () => {
           .at(0)
           .props().value
       ).toEqual('100')
-      expect(wrapper.find('AdvancedSearchSentence').text()).toMatch(/that have at least 100 HPD Violations/)
+      expect(wrapper.find('AdvancedSearchSentence').text()).toMatch(/that have at least 100 HPD violations/)
     })
 
     it('updates reducer state on change (date value)', () => {
@@ -287,7 +270,7 @@ describe('AdvancedSearch', () => {
           .at(1)
           .props().value
       ).toEqual('2020-01-01')
-      expect(wrapper.find('AdvancedSearchSentence').text()).toMatch(/HPD Violations after 01\/01\/2020/)
+      expect(wrapper.find('AdvancedSearchSentence').text()).toMatch(/HPD violations after 01\/01\/2020/)
     })
 
     it('updates reducer state on change (date range)', () => {
@@ -306,7 +289,7 @@ describe('AdvancedSearch', () => {
           .props().value
       ).toEqual('between')
       expect(wrapper.find('AdvancedSearchSentence').text()).toContain(
-        `HPD Violations between ${todayminus1year} and ${todayplus1year}`
+        `HPD violations between ${todayminus1year} and ${todayplus1year}`
       )
     })
   })

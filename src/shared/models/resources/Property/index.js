@@ -140,7 +140,7 @@ const Property = databaseObject => {
             defaultOptions: comparisonOptions({
               name: 'value',
               comparisonValues: ['all', 'rs', 'rr', 'sh', 'mr', 'ph'],
-              labels: ['All', 'Rent Stabilized', 'Subsidized Housing', 'Small Homes', 'Market Rate', 'Public Housing'],
+              labels: ['All', 'Rent Stabilized', 'Subsidized Housing', 'Small Home', 'Market Rate', 'Public Housing'],
             }),
           })
         },

@@ -4,7 +4,6 @@ import Geography from 'shared/classes/Geography'
 import Condition from 'shared/classes/Condition'
 
 import ConditionFilter from 'shared/classes/ConditionFilter'
-import Filter from 'shared/classes/Filter'
 
 describe('Custom Search reducer', () => {
   it('should return the initial state', () => {

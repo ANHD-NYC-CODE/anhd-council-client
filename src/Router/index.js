@@ -34,7 +34,7 @@ class Router extends React.Component {
                   <Route exact path="/map" render={() => <DistrictDashboard config={config} />} />
                   <Route exact path="/council/:id" render={() => <DistrictDashboard config={config} />} />
                   <Route exact path="/community/:id" render={() => <DistrictDashboard config={config} />} />
-                  <Route exact path="/search" render={() => <AdvancedSearch />} />
+                  <Route exact path="/search" render={() => <AdvancedSearch config={config} />} />
                   <Route
                     render={() => (
                       <PageError

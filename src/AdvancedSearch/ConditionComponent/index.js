@@ -99,9 +99,8 @@ export class ConditionComponent extends React.Component {
     const renderFilterOrCondition = (filter, filterIndex) => {
       if (filter.conditionGroup) {
         return (
-          <div className="form-row__container">
+          <div className="form-row__container" key={`condition-${this.props.condition.key}-${filterIndex}`}>
             <ConditionComponent
-              key={`condition-${this.props.condition.key}-${filterIndex}`}
               condition={this.props.conditions[filter.conditionGroup]}
               conditions={this.props.conditions}
               conditionKey={filter.conditionGroup}
