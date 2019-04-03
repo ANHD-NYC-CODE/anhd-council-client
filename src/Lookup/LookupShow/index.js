@@ -6,8 +6,11 @@ import { getCurrentBuilding } from 'Lookup/utilities'
 import LeafletMap from 'LeafletMap'
 import AddressSearch from 'Lookup/AddressSearch'
 import LayoutContext from 'Layout/LayoutContext'
+import { addressResultToPath } from 'shared/utilities/routeUtils'
 
-import { Row, Col, InputGroup } from 'react-bootstrap'
+import BaseLink from 'shared/components/BaseLink'
+
+import { Button, Row, Col, InputGroup } from 'react-bootstrap'
 import { setAppState } from 'Store/AppState/actions'
 import RequestTableWrapper from 'shared/components/RequestTableWrapper'
 import BuildingSelect from 'Lookup/BuildingSelect'
@@ -17,6 +20,9 @@ import PrintLookup from 'Lookup/PrintLookup'
 import PrintButton from 'shared/components/PrintButton'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
+import { faBuilding } from '@fortawesome/free-solid-svg-icons'
+import { faLayerGroup } from '@fortawesome/free-solid-svg-icons'
+
 import './style.scss'
 class LookupShow extends React.Component {
   constructor(props) {
@@ -148,7 +154,8 @@ class LookupShow extends React.Component {
                       <Col>
                         <Row>
                           <Col xs={9}>
-                            <h3 className="text-muted font-weight-bold text-uppercase">
+                            <h3 className="lookup-show__data-header text-muted font-weight-bold text-uppercase">
+                              <FontAwesomeIcon icon={this.props.bin ? faBuilding : faLayerGroup} size="xl" />
                               {this.props.bin ? 'Building Data' : 'Property Data'}
                             </h3>
                           </Col>
@@ -164,6 +171,7 @@ class LookupShow extends React.Component {
                         />
                       </Col>
                     </Row>
+
                     <Row className="mb-2">
                       <Col>
                         <h4 className="text-muted font-weight-bold">
@@ -182,6 +190,21 @@ class LookupShow extends React.Component {
                     </Row>
                     <Row>
                       <Col xs={12} lg={4}>
+                        {this.props.bin && (
+                          <Row className="mb-2">
+                            <Col xs={12}>
+                              <BaseLink
+                                className="text-left d-inline-block mb-2"
+                                href={`${addressResultToPath({ bbl: this.props.bbl })}`}
+                                onClick={() => this.props.changeLookup(this.props.bbl)}
+                              >
+                                <Button className="text-left" variant="outline-primary">
+                                  View Sales, Evictions, and Foreclosures.
+                                </Button>
+                              </BaseLink>
+                            </Col>
+                          </Row>
+                        )}
                         <Row>
                           {this.props.lookupRequests.map((request, index) => {
                             return (

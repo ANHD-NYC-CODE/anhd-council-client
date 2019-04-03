@@ -150,7 +150,7 @@ class DistrictDashboardShow extends React.PureComponent {
                 <Col xs={12} lg={8}>
                   <Row className="mb-1">
                     <Col xs={12}>
-                      <h5 className="font-weight-bold text-uppercase">Filter by dataset</h5>
+                      <h5 className="text-muted font-weight-bold text-uppercase">Filter by dataset</h5>
                     </Col>
                   </Row>
                   <DistrictSummarySection
@@ -166,7 +166,7 @@ class DistrictDashboardShow extends React.PureComponent {
                 <Col xs={12} lg={4} xl={3}>
                   <Row>
                     <Col xs={12}>
-                      <h5 className="font-weight-bold text-uppercase">Filter by housing type</h5>
+                      <h5 className="text-muted font-weight-bold text-uppercase">Filter by housing type</h5>
                     </Col>
                   </Row>
                   <Row>

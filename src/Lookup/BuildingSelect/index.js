@@ -10,6 +10,9 @@ import SpinnerLoader from 'shared/components/Loaders/SpinnerLoader'
 import { Form, InputGroup, Row, Col, Button } from 'react-bootstrap'
 import CustomSelect from 'shared/components/CustomSelect'
 import BaseLink from 'shared/components/BaseLink'
+
+import './style.scss'
+
 class BuildingSelect extends React.Component {
   constructor(props) {
     super(props)
@@ -31,13 +34,13 @@ class BuildingSelect extends React.Component {
     return !this.props.loading ? (
       <Form className="building-select">
         <Row className="mb-2">
-          <Col className="text-muted font-weight-bold">List of buildings</Col>
+          <Col className="text-muted font-weight-bold">List of buildings (Total: {this.props.buildings.length})</Col>
         </Row>
         <Row className="mb-2">
           <Col>
             <InputGroup className="mb-2">
               <CustomSelect
-                className="w-75 mb-2"
+                className="building-select__select mb-2"
                 size="lg"
                 onChange={e => this.props.changeLookup(this.props.bbl, new StandardizedInput(e).value)}
                 options={this.getBuildingOptions()}

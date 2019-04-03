@@ -21,6 +21,11 @@ const PropertySummaryBody = props => {
       <Col xs={12}>
         <Row>
           <Col>
+            <Row>
+              <Col>
+                <h6 className="font-weight-bold text-muted">Primary property address</h6>
+              </Col>
+            </Row>
             <h5>
               {constructAddressString({
                 street: props.profile.address,
