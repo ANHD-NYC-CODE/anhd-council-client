@@ -20,7 +20,7 @@ describe('convertFilterToSentence', () => {
   describe('from/to', () => {
     it('convertFilterToSentence - converts the object into a field string', () => {
       const object = filterMocks('HPD_VIOLATION')
-      const result = ` have at least 5 HPD violations between ${todayminus1year} and ${todayplus1year}`
+      const result = `have at least 5 HPD violations between ${todayminus1year} and ${todayplus1year}`
       expect(a.convertFilterToSentence(object)).toEqual(result)
     })
   })
@@ -62,7 +62,7 @@ describe('convertFilterToSentence', () => {
         },
       })
 
-      const result = ` have at least 5 HPD violations (class A) after ${todayminus1year}`
+      const result = `have at least 5 HPD violations (class A) after ${todayminus1year}`
       expect(a.convertFilterToSentence(object)).toEqual(result)
     })
   })
@@ -100,35 +100,32 @@ describe('process property housing type filter', () => {
     })
   })
 
-  describe('Rent Regulated', () => {
+  describe('Subsidized Housing', () => {
     it('converts the object into a sentence', () => {
-      const housingType1 = new Filter({
-        modelConstant: 'RENT_REGULATED',
-      })
-      housingType1.paramSets['coresubsidyrecord__enddate'].create()
-      const housingTypes = [housingType1]
+      const object = filterMocks('PROPERTY')
+      object.paramSets['initial'].paramMaps.find(pm => pm.field === 'housingtype').value = 'rr'
 
-      const result = `rent regulated properties expiring before ${moment(moment.now())
-        .add(1, 'Y')
-        .format('MM/DD/YYYY')}`
+      object.paramSets['housingType_rr_2'].create()
+      const result = `subsidized housing properties (expiring after ${moment(moment.now())
+        .subtract(1, 'Y')
+        .format('MM/DD/YYYY')})`
 
-      expect(a.convertHousingTypesToSentence(housingTypes)).toEqual(result)
+      expect(a.convertFilterToSentence(object)).toEqual(result)
     })
 
     it('converts the object into a sentence', () => {
-      const housingType1 = new Filter({
-        modelConstant: 'RENT_REGULATED',
-      })
-      housingType1.paramSets['coresubsidyrecord__enddate'].createAll()
-      const housingTypes = [housingType1]
+      const object = filterMocks('PROPERTY')
+      object.paramSets['initial'].paramMaps.find(pm => pm.field === 'housingtype').value = 'rr'
 
-      const result = `rent regulated properties expiring between ${moment(moment.now()).format(
-        'MM/DD/YYYY'
-      )} and ${moment(moment.now())
+      object.paramSets['housingType_rr_2'].createAll()
+
+      const result = `subsidized housing properties (expiring between ${moment(
+        moment(moment.now()).subtract(1, 'Y')
+      ).format('MM/DD/YYYY')} and ${moment(moment.now())
         .add(1, 'Y')
-        .format('MM/DD/YYYY')}`
+        .format('MM/DD/YYYY')})`
 
-      expect(a.convertHousingTypesToSentence(housingTypes)).toEqual(result)
+      expect(a.convertFilterToSentence(object)).toEqual(result)
     })
 
     it('converts the object into a sentence', () => {
