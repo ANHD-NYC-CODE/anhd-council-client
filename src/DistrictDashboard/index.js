@@ -54,6 +54,11 @@ class DistrictDashboard extends React.PureComponent {
     this.scrollToControls()
   }
 
+  componentWillUnmount() {
+    Events.scrollEvent.remove('begin')
+    Events.scrollEvent.remove('end')
+  }
+
   componentDidUpdate() {
     if (
       this.props.geographyType &&

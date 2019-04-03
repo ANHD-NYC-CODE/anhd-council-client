@@ -81,9 +81,9 @@ class Main extends React.Component {
 
   render() {
     return (
-      <div id="main" className="main mb-4">
+      <div id="main" className="main">
         <Row>
-          <Col className="touch-left padding-xs-sm-0" xs={12} sm={12} lg={5}>
+          <Col className="touch-left padding-xs-sm-0" xs={12} lg={5}>
             <IntroductionBlock scrollToControls={this.scrollToControls} />
           </Col>
           <Col className="px-md-4 py-3 py-lg-6" xs={12} lg={7}>

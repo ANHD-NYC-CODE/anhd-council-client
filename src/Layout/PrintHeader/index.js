@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Col, Row, Button } from 'react-bootstrap'
-import logo from 'shared/images/portallogo.png'
+import logo from 'shared/images/portallogo-white.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPrint } from '@fortawesome/free-solid-svg-icons'
 const PrintHeader = props => {

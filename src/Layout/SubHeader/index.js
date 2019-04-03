@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { Container, Navbar, Nav, Col, Row } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { getGeographyPath, addressResultToPath } from 'shared/utilities/routeUtils'
-import logo from 'shared/images/portallogo.png'
+import logo from 'shared/images/portallogo-white.png'
 import LoginModal from 'Auth/LoginModal'
 import classnames from 'classnames'
 
