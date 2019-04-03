@@ -12,16 +12,18 @@ input.form-control {
   color: $black;
 }
 input.form-control::placeholder {
-  color: $gray-600;
+  color: $gray-900;
 }
 
 .xl-form-control {
-  background-color: $gray-300;
+  border: 0;
+  border-bottom: 4px dotted $gray-400;
+  background-color: $white;
   height: calc(3.5rem + 2px);
   padding: 0.5rem 1rem;
   font-size: 1.25rem;
   line-height: 1.5;
-  border-radius: 0.3rem;
+  border-radius: 0;
 
   @include media-breakpoint-up(xl) {
     font-size: 2rem;
@@ -30,5 +32,6 @@ input.form-control::placeholder {
 }
 
 .xl-form-control:focus {
-  background-color: $tab-blue;
+  background-color: $info;
+  color: $primary;
 }

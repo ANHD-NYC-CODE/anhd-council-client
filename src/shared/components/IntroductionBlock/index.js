@@ -3,6 +3,7 @@ import { Col, Jumbotron, Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChartBar } from '@fortawesome/free-solid-svg-icons'
 import { faCity } from '@fortawesome/free-solid-svg-icons'
+import { faTools } from '@fortawesome/free-solid-svg-icons'
 
 import BaseLink from 'shared/components/BaseLink'
 import './style.scss'
@@ -39,6 +40,7 @@ const IntroductionBlock = props => {
       </p>
 
       <hr />
+      <FontAwesomeIcon icon={faTools} size="2x" />
       <p>
         Our <BaseLink href="/lookup">Property Lookup</BaseLink> tool allows you to easily find all the relevant
         information about a building across multiple city agency datasets and other unique data sources.
