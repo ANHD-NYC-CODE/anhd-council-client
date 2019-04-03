@@ -176,6 +176,28 @@ describe('DistrictDashboard', () => {
           expect(table.find('tbody tr')).toHaveLength(results.length)
         })
       })
+
+      it('Switches the visible request wrapper', () => {
+        const [wrapper, store] = setupWrapper({
+          router: { location: { pathname: '/council/1' }, action: 'POP' },
+        })
+
+        wrapper
+          .find('input[name="view"]')
+          .at(1)
+          .simulate('change', { target: { checked: true } })
+
+        expect(wrapper.findWhere(node => node.key() === 'request-wrapper-1').props().visible).toEqual(true)
+
+        wrapper
+          .findWhere(node => node.key() === 'request-summary-2')
+          .find('button')
+          .simulate('click')
+
+        wrapper.update()
+        expect(wrapper.findWhere(node => node.key() === 'request-wrapper-1').props().visible).toEqual(false)
+        expect(wrapper.findWhere(node => node.key() === 'request-wrapper-2').props().visible).toEqual(true)
+      })
     })
   })
 })
