@@ -5,8 +5,8 @@ const Eviction = databaseObject => ({
 
   resourceConstant: 'EVICTION',
   urlPath: 'evictions',
-  label: 'Evictions',
-  sentenceNoun: 'evictions',
+  label: 'Marshall Evictions',
+  sentenceNoun: 'marshall evictions',
   ownResourceFilters: {
     initial: {
       generatorFunction: resourceModel => {
