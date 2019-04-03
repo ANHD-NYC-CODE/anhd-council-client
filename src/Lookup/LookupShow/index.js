@@ -9,6 +9,7 @@ import LayoutContext from 'Layout/LayoutContext'
 import { addressResultToPath } from 'shared/utilities/routeUtils'
 import { boroCodeToName } from 'shared/utilities/languageUtils'
 import BaseLink from 'shared/components/BaseLink'
+import { Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
 import { Button, Row, Col, InputGroup } from 'react-bootstrap'
 import { setAppState } from 'Store/AppState/actions'
@@ -36,11 +37,22 @@ class LookupShow extends React.Component {
   }
 
   componentDidMount() {
+    scrollSpy.update()
+    scroll.scrollToTop({
+      duration: 500,
+      delay: 0,
+      smooth: 'easeInOutQuart',
+    })
     this.props.dispatch(
       setAppState({
         selectedRequest: this.props.lookupRequests[0],
       })
     )
+  }
+
+  componentWillUnmount() {
+    Events.scrollEvent.remove('begin')
+    Events.scrollEvent.remove('end')
   }
 
   componentDidUpdate() {

@@ -29,6 +29,12 @@
     border-radius: 20px;
   }
 
+  .district-dashboard-show__results-container {
+    h5 {
+      border-bottom: 2px solid $primary;
+    }
+  }
+
   .housingTypeOnly__checkbox {
     label {
       color: $gray-400;
