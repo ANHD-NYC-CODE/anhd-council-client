@@ -90,11 +90,36 @@ const parseParamMapRangeGroup = paramMapRangeGroup => {
   const lte = paramMapRangeGroup.find(pm => pm.comparison.match(/(lte|end)/))
   switch (paramMapRangeGroup[0].type) {
     case 'DATE':
-      return `${paramMapRangeGroup[0].comparisonPrefix} between ${moment(gte.value).format('MM/DD/YYYY')} and ${moment(
-        lte.value
-      ).format('MM/DD/YYYY')}`
+      return [
+        paramMapRangeGroup[0].comparisonPrefix.trim(),
+        'between',
+        paramMapRangeGroup[0].valuePrefix.trim(),
+        moment(gte.value)
+          .format('MM/DD/YYYY')
+          .trim(),
+        'and',
+        paramMapRangeGroup[0].valuePrefix.trim(),
+        moment(lte.value)
+          .format('MM/DD/YYYY')
+          .trim(),
+      ]
+        .filter(s => s)
+        .join(' ')
+        .trim()
+
     case 'YEAR':
-      return `${paramMapRangeGroup[0].comparisonPrefix} between ${gte.value} and ${lte.value}`
+      return [
+        paramMapRangeGroup[0].comparisonPrefix.trim(),
+        'between',
+        paramMapRangeGroup[0].valuePrefix.trim(),
+        gte.value,
+        'and',
+        paramMapRangeGroup[0].valuePrefix.trim(),
+        lte.value,
+      ]
+        .filter(s => s)
+        .join(' ')
+        .trim()
   }
 }
 
