@@ -5,6 +5,10 @@
   background-color: transparent;
 }
 
+.lookup-profile-summary__geography-link {
+  margin-left: -15px;
+}
+
 .lookup-profile-summary {
   .lookup-profile-summary__body {
     margin: 0 15px;
@@ -20,7 +24,8 @@
 
   .lookup-profile-summary__geography-link {
     a {
-      color: $tab-blue;
+      color: $white;
+      text-transform: uppercase;
       text-decoration: underline;
     }
   }

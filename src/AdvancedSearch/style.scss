@@ -5,6 +5,10 @@
     overflow-x: auto;
   }
 
+  .touch-left {
+    padding-right: 0;
+  }
+
   .paramset-wrapper,
   .form-row__container {
     width: 900px;
@@ -50,18 +54,6 @@
   }
 
   .advanced-search__left-column {
-    background-color: $primary;
-    border-radius: 0;
-    height: 100%;
-    padding-bottom: 0;
-
-    h3 {
-      color: $info;
-    }
-
-    @include media-breakpoint-up(lg) {
-      min-height: 100vh;
-    }
   }
   .advanced-search__sentence,
   .advanced-search__instructions {

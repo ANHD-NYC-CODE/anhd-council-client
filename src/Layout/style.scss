@@ -4,4 +4,40 @@
   .footer-push {
     min-height: calc(100vh);
   }
+
+  .layout__left-column .jumbotron,
+  .layout__left-column {
+    background-color: $primary;
+    border-radius: 0;
+    height: 100%;
+
+    @include media-breakpoint-up(lg) {
+      min-height: 100vh;
+    }
+
+    h3 {
+      color: $info;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+
+    svg {
+      margin: 20px 0;
+    }
+
+    a {
+      color: $white;
+      font-weight: bold;
+      text-decoration: underline;
+    }
+
+    hr {
+      border-color: $white;
+    }
+
+    a:focus,
+    a:hover {
+      text-decoration: double underline;
+    }
+  }
 }

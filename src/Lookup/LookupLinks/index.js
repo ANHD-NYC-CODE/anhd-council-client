@@ -22,6 +22,7 @@ class LookupLinks extends React.Component {
           <Row className="mb-2">
             <Col>
               <BaseLink
+                className="lookup-links__link"
                 href={`https://whoownswhat.justfix.nyc/bbl/${this.props.property.bbl}`}
                 text="Other properties owned by this landlord (via WhoOwnsWhat)"
               />
@@ -33,6 +34,7 @@ class LookupLinks extends React.Component {
               <Row>
                 <Col>
                   <BaseLink
+                    className="lookup-links__link"
                     href={`https://hpdonline.hpdnyc.org/HPDonline/Provide_address.aspx?p1=1&p2=${
                       this.props.property.address.split(' ')[0]
                     }&p3=${this.props.property.address
@@ -46,6 +48,7 @@ class LookupLinks extends React.Component {
               <Row>
                 <Col>
                   <BaseLink
+                    className="lookup-links__link"
                     href={`http://a810-bisweb.nyc.gov/bisweb/PropertyProfileOverviewServlet?boro=${this.props.property.bbl.charAt(
                       0
                     )}&block=${this.props.property.bbl.slice(1, 6)}&lot=${this.props.property.bbl.slice(6, 10)}`}
@@ -56,6 +59,7 @@ class LookupLinks extends React.Component {
               <Row>
                 <Col>
                   <BaseLink
+                    className="lookup-links__link"
                     href={`http://a836-acris.nyc.gov/bblsearch/bblsearch.asp?borough=${this.props.property.bbl.charAt(
                       0
                     )}&block=${this.props.property.bbl.slice(1, 6)}&lot=${this.props.property.bbl.slice(6, 10)}`}
@@ -67,12 +71,13 @@ class LookupLinks extends React.Component {
             <Col>
               <Row>
                 <Col>
-                  <BaseLink href={'http://www.oasisnyc.net/map.aspx'} text="Oasis" />
+                  <BaseLink className="lookup-links__link" href={'http://www.oasisnyc.net/map.aspx'} text="Oasis" />
                 </Col>
               </Row>
               <Row>
                 <Col>
                   <BaseLink
+                    className="lookup-links__link"
                     href={`https://zola.planning.nyc.gov/lot/${this.props.property.bbl.charAt(
                       0
                     )}/${this.props.property.bbl.slice(1, 6)}/${this.props.property.bbl.slice(6, 10)}`}
