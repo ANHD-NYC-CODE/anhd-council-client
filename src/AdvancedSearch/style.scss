@@ -1,4 +1,4 @@
-@import 'shared/styles/bootstrap/_variables.scss';
+@import 'shared/styles/_variables.scss';
 
 .advanced-search {
   .advanced-search-form--container {
@@ -11,7 +11,11 @@
 
   .paramset-wrapper,
   .form-row__container {
-    width: 900px;
+    // margin-bottom: 10px;
+    width: 700px;
+    @include media-breakpoint-up(md) {
+      width: 850px;
+    }
 
     @include media-breakpoint-up(xl) {
       width: 850px;
@@ -69,21 +73,11 @@
 
   // FORM COMPONENTS
 
-  .form-control,
-  .form-control:focus,
-  .input-group-text {
-    border: none;
-    box-shadow: none;
-    outline: none;
-    border-radius: 0;
+  .input-group {
+    margin-top: 10px;
   }
 
   .input-group-text {
     border-bottom: 4px solid transparent;
-  }
-  .form-control,
-  .form-control:focus,
-  .input-group > .form-control {
-    border-bottom: 4px dotted $gray-300;
   }
 }

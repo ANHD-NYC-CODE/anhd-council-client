@@ -1,4 +1,4 @@
-@import 'shared/styles/bootstrap/_variables.scss';
+@import 'shared/styles/_variables.scss';
 
 select.form-control {
   color: $gray-500;
@@ -7,6 +7,21 @@ select.form-control.valued {
   color: $black;
 }
 
+.input-group-text,
+.form-control,
+.input-group > .form-control {
+  box-shadow: none;
+  outline: none;
+  border: none;
+  border-radius: 0;
+  border-bottom: $input-border;
+}
+.form-control:focus,
+.form-control:focus-within {
+  outline: none;
+  box-shadow: none;
+  border-bottom: $input-border-focus;
+}
 input.form-control:focus,
 input.form-control {
   color: $black;
@@ -24,6 +39,8 @@ input.form-control::placeholder {
   font-size: 1.25rem;
   line-height: 1.5;
   border-radius: 0;
+  outline: none;
+  box-shadow: none;
 
   @include media-breakpoint-up(xl) {
     font-size: 2rem;
@@ -31,7 +48,7 @@ input.form-control::placeholder {
   }
 }
 
-.xl-form-control:focus {
-  background-color: $info;
-  color: $primary;
-}
+// .xl-form-control:focus {
+//   background-color: $info;
+//   color: $primary;
+// }
