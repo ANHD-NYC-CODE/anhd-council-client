@@ -57,7 +57,7 @@ export class AdvancedSearch extends React.Component {
       <div className="advanced-search">
         <Row>
           <Col className="touch-left padding-xs-sm-0" xs={12} lg={5}>
-            <Jumbotron className="advanced-search__left-column">
+            <Jumbotron className="layout__left-column advanced-search__left-column">
               <Row className="advanced-search__row mb-4">
                 <Col xs={12} xl={11}>
                   <h3 className="text-uppercase font-weight-bold m-0">Custom Search</h3>
@@ -96,7 +96,7 @@ export class AdvancedSearch extends React.Component {
               </Row>
             </Jumbotron>
           </Col>
-          <Col className="advanced-search-form--container px-lg-5 pt-6" xs={12} lg={7}>
+          <Col className="advanced-search-form--container px-lg-4 pt-6" xs={12} lg={7}>
             <ConfigContext.Consumer>
               {config => (
                 <AdvancedSearchForm

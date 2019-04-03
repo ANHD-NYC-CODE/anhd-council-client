@@ -1,9 +1,20 @@
 @import 'shared/styles/bootstrap/_variables.scss';
 
+table.table,
 .base-table,
 .nested-table {
   table {
     background-color: $white;
+  }
+
+  thead th,
+  tbody td {
+    font-size: 0.8rem;
+
+    input {
+      height: 30px;
+      padding: 0 10px;
+    }
   }
   tbody tr {
     cursor: pointer;

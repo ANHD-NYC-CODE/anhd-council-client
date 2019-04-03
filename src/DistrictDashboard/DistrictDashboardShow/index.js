@@ -102,7 +102,7 @@ class DistrictDashboardShow extends React.PureComponent {
                 </Col>
                 <Col className="d-none d-md-block" xs={12} md={{ span: 2, offset: 1 }} lg={{ span: 2, offset: 2 }}>
                   <PrintButton
-                    textClass="text-muted"
+                    textClass="text-light"
                     title={`${geographySelectionToString({
                       type: this.props.appState.currentGeographyType,
                       id: this.props.appState.currentGeographyId,
@@ -150,7 +150,7 @@ class DistrictDashboardShow extends React.PureComponent {
                 <Col xs={12} lg={8}>
                   <Row className="mb-1">
                     <Col xs={12}>
-                      <h5 className="text-light-gray font-weight-bold text-uppercase">Filter by dataset</h5>
+                      <h5 className="font-weight-bold text-uppercase">Filter by dataset</h5>
                     </Col>
                   </Row>
                   <DistrictSummarySection
@@ -166,7 +166,7 @@ class DistrictDashboardShow extends React.PureComponent {
                 <Col xs={12} lg={4} xl={3}>
                   <Row>
                     <Col xs={12}>
-                      <h5 className="text-light-gray font-weight-bold text-uppercase">Filter by housing type</h5>
+                      <h5 className="font-weight-bold text-uppercase">Filter by housing type</h5>
                     </Col>
                   </Row>
                   <Row>
@@ -203,9 +203,9 @@ class DistrictDashboardShow extends React.PureComponent {
                   <Row className="mb-2 mb-lg-0">
                     <Col xs={12} xl={7}>
                       {(this.props.selectedRequest || {}).type === 'ADVANCED_SEARCH' ? (
-                        <h5 className="text-muted font-weight-bold text-uppercase mb-4">Custom Search</h5>
+                        <h5 className="font-weight-bold text-uppercase mb-4">Custom Search</h5>
                       ) : (
-                        <h5 className="text-muted font-weight-bold text-uppercase mb-4">
+                        <h5 className="font-weight-bold text-uppercase mb-4">
                           {constructSummaryFilterSentence(
                             this.props.selectedRequest !== this.props.propertySummaryRequest
                               ? this.props.selectedRequest

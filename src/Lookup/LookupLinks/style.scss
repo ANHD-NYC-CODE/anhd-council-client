@@ -1,10 +1,11 @@
 @import 'shared/styles/bootstrap/_variables.scss';
 
-
-.lookup-links {
-  background-color: $gray-400;
-
-  a {
+.layout .lookup-links {
+  background-color: $info;
+  p {
+    color: $gray-800;
+  }
+  a.lookup-links__link {
     color: $primary;
     font-weight: bold;
     text-decoration: underline;

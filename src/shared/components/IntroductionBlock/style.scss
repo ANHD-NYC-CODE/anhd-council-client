@@ -1,37 +1,4 @@
 @import 'shared/styles/bootstrap/_variables.scss';
 
 .introduction-block.jumbotron {
-  height: 100%;
-
-  h3 {
-    color: $info;
-    font-weight: bold;
-    text-transform: uppercase;
-  }
-
-  svg {
-    margin: 20px 0;
-  }
-
-  a {
-    color: $white;
-    font-weight: bold;
-    text-decoration: underline;
-  }
-
-  hr {
-    border-color: $white;
-  }
-
-  a:focus,
-  a:hover {
-    text-decoration: double underline;
-  }
-
-  p:nth-child(odd) {
-    background-color: $primary;
-  }
-
-  background-color: $primary;
-  border-radius: 0;
 }

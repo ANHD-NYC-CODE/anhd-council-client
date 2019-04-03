@@ -17,7 +17,7 @@ const getSubsidiesText = props => {
 
 const PropertySummaryBody = props => {
   return (
-    <Row className="property-summary-body p-2">
+    <Row className="property-summary-body">
       <Col xs={12}>
         <Row>
           <Col>
@@ -30,14 +30,15 @@ const PropertySummaryBody = props => {
             </h5>
           </Col>
         </Row>
+        <hr />
       </Col>
       <Col xs={6}>
-        <Card.Text className="lookup-profile-summary__group">
+        <Card.Text className="lookup-profile__geography-link">
           <label className="profile-summary-body__label">Owner Name: </label>
           <span className="profile-summary-body__value">{props.profile.ownername}</span>
         </Card.Text>
 
-        <Card.Text className="lookup-profile-summary__group">
+        <Card.Text className="lookup-profile__geography-link">
           <label className="profile-summary-body__label">Year Built: </label>
           <span className="profile-summary-body__value">{props.profile.yearbuilt}</span>
         </Card.Text>

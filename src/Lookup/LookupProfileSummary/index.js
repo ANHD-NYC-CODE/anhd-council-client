@@ -32,6 +32,18 @@ const LookupProfileSummary = props => {
           ) : (
             <Card className="lookup-profile-summary p-0 m-0">
               <Card.Body className="lookup-profile-summary__body p-0">
+                <h5 className=" lookup-profile-summary__geography-link">
+                  <BaseLink
+                    href={geographyToLink('COUNCIL', profile.council)}
+                    text={councilIdToString(profile.council)}
+                  />
+                </h5>
+                <p className=" lookup-profile-summary__geography-link">
+                  <BaseLink
+                    href={geographyToLink('COMMUNITY', profile.cd)}
+                    text={`Community District  ${communityIdToString(profile.cd)}`}
+                  />
+                </p>
                 <PropertySummaryBody profile={profile} />
 
                 <div className="lookup-profile-summary__bottom-info py-4">
@@ -47,7 +59,7 @@ const LookupProfileSummary = props => {
                       tableConfig={new TableConfig({ resourceConstant: 'HPD_REGISTRATION' })}
                     />
                   ) : (
-                    <Card.Text className="text-light-gray text-center font-weight-bold my-4">
+                    <Card.Text className="text-info text-center font-weight-bold my-4">
                       No HPD Registrations Found
                     </Card.Text>
                   )}
@@ -69,22 +81,10 @@ const LookupProfileSummary = props => {
                       />
                     </div>
                   ) : (
-                    <Card.Text className="text-light-gray text-center font-weight-bold my-4">
+                    <Card.Text className="text-info text-center font-weight-bold my-4">
                       No Rent Stabilization History
                     </Card.Text>
                   )}
-                  <h5 className="lookup-profile-summary__group lookup-profile-summary__geography-link">
-                    <BaseLink
-                      href={geographyToLink('COUNCIL', profile.council)}
-                      text={councilIdToString(profile.council)}
-                    />
-                  </h5>
-                  <p className="lookup-profile-summary__group lookup-profile-summary__geography-link">
-                    <BaseLink
-                      href={geographyToLink('COMMUNITY', profile.cd)}
-                      text={`Community District  ${communityIdToString(profile.cd)}`}
-                    />
-                  </p>
                 </div>
               </Card.Body>
             </Card>

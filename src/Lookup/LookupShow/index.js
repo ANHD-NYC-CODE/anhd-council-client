@@ -94,7 +94,7 @@ class LookupShow extends React.Component {
             />
           ) : (
             <Row className="lookup-show">
-              <Col className="lookup-show__property-column px-lg-2 px-xl-5" xs={12} lg={4}>
+              <Col className="layout__left-column lookup-show__property-column px-lg-2 px-xl-5" xs={12} lg={5}>
                 <Row className="mt-4">
                   <Col xs={12}>
                     <h3 className="text-light-gray font-weight-bold text-uppercase">Property Info</h3>
@@ -141,8 +141,8 @@ class LookupShow extends React.Component {
                   </Col>
                 </Row>
               </Col>
-              <Col xs={12} lg={8}>
-                <Row className="mt-2 mb-4 mt-lg-4 mb-lg-2 px-xl-5">
+              <Col xs={12} lg={7}>
+                <Row className="mt-2 mb-4 mt-lg-4 mb-lg-2 px-xl-3">
                   <Col>
                     <Row>
                       <Col>
@@ -153,7 +153,7 @@ class LookupShow extends React.Component {
                             </h3>
                           </Col>
                           <Col xs={3}>
-                            <PrintButton textClass="text-muted d-none d-md-block" title={this.getPrintTitle()} />
+                            <PrintButton textClass="text-dark d-none d-md-block" title={this.getPrintTitle()} />
                           </Col>
                         </Row>
                         <BuildingSelect
