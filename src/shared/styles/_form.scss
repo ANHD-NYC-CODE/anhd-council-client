@@ -1,7 +1,7 @@
 @import 'shared/styles/bootstrap/_variables.scss';
 
 select.form-control {
-  color: $gray-600;
+  color: $gray-500;
 }
 select.form-control.valued {
   color: $black;
@@ -12,7 +12,7 @@ input.form-control {
   color: $black;
 }
 input.form-control::placeholder {
-  color: $gray-900;
+  color: $gray-500;
 }
 
 .xl-form-control {
