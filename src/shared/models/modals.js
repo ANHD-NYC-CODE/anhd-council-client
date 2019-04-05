@@ -109,7 +109,7 @@ export const infoModals = {
       },
     ],
   },
-  DOB_LEGACY_FILED_PERMIT: {
+  DOB_FILED_PERMIT: {
     title: 'DOB Permit Applications',
     body:
       "Construction permit applications show a landlord's intention to do construction and renovations, which can be used to destabilize apartments. For example, building-wide work can be used to increase rents via a Major Capital Improvement (MCI) and individual apartment renovations may show that a landlord is actively vacating apartments to dramatically raise rents via Individual Apartment ImprovementsSource",
@@ -158,7 +158,7 @@ export const infoModals = {
     ],
   },
   EVICTION: {
-    title: 'Evictions',
+    title: 'Marshall Evictions',
     body:
       'These properties recorded evictions executed by marshals. Evictions in affordable rent-regulated apartments usually indicate an immediate loss of affordable housing because landlords take advantage of the vacancy to dramatically raise the rent. A high rate of evictions may also be an indicator of tenant harassment and displacement by a landlord aggressively driving vacancies.',
     sources: [
@@ -169,7 +169,7 @@ export const infoModals = {
     ],
   },
   HOUSING_LITIGATION: {
-    title: 'Housing Litigations',
+    title: 'Repair Litigations',
     body: 'Lorem ipsum...',
     sourceText: 'NYC Open Data',
     sourceUrl: '',

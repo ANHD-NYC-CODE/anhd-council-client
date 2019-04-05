@@ -167,7 +167,7 @@ class LookupShow extends React.Component {
                         <Row>
                           <Col xs={9}>
                             <h3 className="lookup-show__data-header text-muted font-weight-bold text-uppercase">
-                              <FontAwesomeIcon icon={this.props.bin ? faBuilding : faLayerGroup} size="xl" />
+                              <FontAwesomeIcon icon={this.props.bin ? faBuilding : faLayerGroup} size="1x" />
                               {this.props.bin ? 'Building Data' : 'Property Data'}
                             </h3>
                           </Col>

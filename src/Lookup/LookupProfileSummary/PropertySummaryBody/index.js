@@ -74,8 +74,17 @@ const PropertySummaryBody = props => {
           <span className="profile-summary-body__value">{props.profile.unitsres || 0}</span>
         </Card.Text>
         <Card.Text className="lookup-profile-summary__group">
-          <label className="profile-summary-body__label">Stabilized Units: </label>
+          <label className="profile-summary-body__label">
+            Stabilized Units (
+            {(props.config.datasets.find(ds => ds.model_name === 'RentStabilizationRecord') || {}).version}):{' '}
+          </label>
           <span className="profile-summary-body__value">{props.profile.unitsrentstabilized || 0}</span>
+        </Card.Text>
+        <Card.Text className="lookup-profile-summary__group">
+          <label className="profile-summary-body__label">Lost since 2007: </label>
+          <span className="profile-summary-body__value">
+            {(props.profile.rsunits_percent_lost * 100).toFixed(2) || 0}%
+          </span>
         </Card.Text>
         <Card.Text className="lookup-profile-summary__group">
           <label className="profile-summary-body__label">Tax Lien? </label>
