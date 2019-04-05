@@ -28,7 +28,7 @@ class RequestSummaryWrapper extends React.Component {
       case 'LOOKUP_FILTER':
         return this.props.request.apiMaps[1].constant
       default:
-        return this.props.request.paramMaps[0].resourceConstant
+        return (this.props.request.paramMaps[0] || {}).resourceConstant
     }
   }
 
