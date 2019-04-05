@@ -158,6 +158,12 @@ class AdvancedSearchForm extends React.PureComponent {
             ),
           })
         )
+
+        this.props.dispatch(
+          setAppState({
+            selectedResultsFilter: undefined,
+          })
+        )
       }
     })
   }
