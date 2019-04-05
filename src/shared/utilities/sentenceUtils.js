@@ -17,7 +17,7 @@ export const constructSummaryFilterSentence = (request, resultsFilter) => {
 
   const datasetSegment = !!request && Object.keys(request).length ? ' w/ ' + request.summaryCardLabel : ''
 
-  return [filterSegment, datasetSegment].join(' ')
+  return [filterSegment, datasetSegment].join(' ').trim()
 }
 
 //////////////////

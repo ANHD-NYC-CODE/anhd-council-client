@@ -6,7 +6,7 @@ import { Form, Button, Row, Col, ToggleButtonGroup, ToggleButton } from 'react-b
 import AdvancedSearchSentence from 'AdvancedSearch/Sentence'
 import LayoutContext from 'Layout/LayoutContext'
 import HousingTypeSection from 'DistrictDashboard/DistrictDashboardShow/HousingTypeSection'
-
+import DistrictResultsTitle from 'DistrictDashboard/DistrictDashboardShow/DistrictResultsTitle'
 import LeafletMap from 'LeafletMap'
 import RequestTableWrapper from 'shared/components/RequestTableWrapper'
 
@@ -16,7 +16,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
 import classnames from 'classnames'
 import { geographySelectionToString } from 'shared/utilities/languageUtils'
-import { constructSummaryFilterSentence } from 'shared/utilities/sentenceUtils'
 import GeographyProfile from 'DistrictDashboard/GeographyProfile'
 import { districtDashboardFilterdates } from 'shared/utilities/componentUtils'
 import PrintDistrictDashboard from 'DistrictDashboard/PrintDistrictDashboard'
@@ -225,18 +224,14 @@ class DistrictDashboardShow extends React.PureComponent {
                 <Col xs={12} lg={5} xl={6}>
                   <Row className="mb-2 mb-lg-0 district-dashboard-show__results-container">
                     <Col xs={12} xl={7}>
-                      {(this.props.selectedRequest || {}).type === 'ADVANCED_SEARCH' ? (
-                        <h5 className="font-weight-bold text-uppercase mb-4">Custom Search</h5>
-                      ) : (
-                        <h5 className="font-weight-bold text-uppercase mb-4">
-                          {constructSummaryFilterSentence(
-                            this.props.selectedRequest !== this.props.propertySummaryRequest
-                              ? this.props.selectedRequest
-                              : undefined,
-                            this.props.selectedResultsFilter
-                          )}
-                        </h5>
-                      )}
+                      <DistrictResultsTitle
+                        displayedRequest={
+                          this.props.selectedRequest !== this.props.propertySummaryRequest
+                            ? this.props.selectedRequest
+                            : undefined
+                        }
+                        displayedResultsFilter={this.props.selectedResultsFilter}
+                      />
                     </Col>
                     <Col className="d-flex view-toggle__container" xs={12} xl={5}>
                       <ToggleButtonGroup
