@@ -25,8 +25,10 @@ class RequestSummaryWrapper extends React.Component {
     switch (this.props.request.type) {
       case 'GEOGRAPHY_HOUSING_TYPE':
         return this.props.request.requestConstant
+      case 'MAP_FILTER':
+        return this.props.request.resourceModel.resourceConstant
       case 'LOOKUP_FILTER':
-        return this.props.request.apiMaps[1].constant
+        return this.props.request.resourceModel.resourceConstant
       default:
         return (this.props.request.paramMaps[0] || {}).resourceConstant
     }

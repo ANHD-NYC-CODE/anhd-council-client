@@ -5,7 +5,6 @@ import ParamMap from 'shared/classes/ParamMap'
 import Condition from 'shared/classes/Condition'
 import ConditionFilter from 'shared/classes/ConditionFilter'
 import { filterMocks } from 'shared/models/__mocks__/filterMocks'
-import StandardizedInput from 'shared/classes/StandardizedInput'
 import moment from 'moment'
 
 const todayminus1year = moment(moment.now())

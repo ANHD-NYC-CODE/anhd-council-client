@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import InnerLoader from 'shared/components/Loaders/InnerLoader'
-
+import ConfigContext from 'Config/ConfigContext'
 import TableAlert from 'shared/components/BaseTable/TableAlert'
 import { constantToModelName } from 'shared/utilities/filterUtils'
 import TableHeader from 'shared/components/BaseTable/TableHeader'
@@ -44,7 +44,11 @@ const LookupProfileSummary = props => {
                     text={`Community District  ${communityIdToString(profile.cd)}`}
                   />
                 </p>
-                <PropertySummaryBody profile={profile} />
+                <ConfigContext.Consumer>
+                  {config => {
+                    return <PropertySummaryBody config={config} profile={profile} />
+                  }}
+                </ConfigContext.Consumer>
 
                 <div className="lookup-profile-summary__bottom-info py-4">
                   {profile.hpdregistrations.length ? (
