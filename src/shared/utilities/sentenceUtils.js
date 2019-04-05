@@ -13,11 +13,11 @@ import {
 // Summary Sentence
 
 export const constructSummaryFilterSentence = (request, resultsFilter) => {
-  const string = `${(resultsFilter || {}).label} Properties ${
-    !!request && Object.keys(request).length ? ' w/ ' + request.summaryCardLabel : ''
-  }`
+  const filterSegment = resultsFilter ? resultsFilter.label + ' Properties' : 'All Properties'
 
-  return string
+  const datasetSegment = !!request && Object.keys(request).length ? ' w/ ' + request.summaryCardLabel : ''
+
+  return [filterSegment, datasetSegment].join(' ')
 }
 
 //////////////////
