@@ -7,6 +7,11 @@ import BasicResultsHeader from 'shared/components/ResultCard/BasicResultsHeader'
 import ConfigContext from 'Config/ConfigContext'
 
 import { Row, Col } from 'react-bootstrap'
+
+const isSelected = (props, ownResultFilter) => {
+  return (props.selectedResultsFilter || {}).id === ownResultFilter.id
+}
+
 const HousingTypeSection = props => {
   return (
     <ConfigContext.Consumer>
@@ -30,14 +35,19 @@ const HousingTypeSection = props => {
                       <RequestSummaryWrapper
                         request={props.propertySummaryRequest}
                         totalRequest={props.propertySummaryRequest}
-                        onClick={() => props.switchTable(undefined, ownResultFilter)}
+                        onClick={() =>
+                          props.switchTable(
+                            props.combinedFilters ? undefined : props.propertySummaryRequest,
+                            ownResultFilter
+                          )
+                        }
                         label={ownResultFilter.label}
                         resultsFilter={ownResultFilter}
                         resultsComponent={HousingTypeResultCard}
                         infoKey={ownResultFilter.id}
                         unitsLabel={ownResultFilter === residentialFilter ? 'of all properties' : 'of residential'}
                         totalResultsFilter={ownResultFilter === residentialFilter ? undefined : residentialFilter}
-                        selected={(props.selectedResultsFilter || {}).id === ownResultFilter.id}
+                        selected={isSelected(props, ownResultFilter)}
                       />
                     </Col>
                   )

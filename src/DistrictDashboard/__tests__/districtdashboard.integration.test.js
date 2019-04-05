@@ -220,7 +220,7 @@ describe('DistrictDashboard', () => {
           .simulate('change', { target: { checked: true } })
 
         // Test using housing type only
-        wrapper.find('input#housingTypeOnly').simulate('change', { target: { checked: true } })
+        wrapper.find('input#combineFilters').simulate('change', { target: { checked: true } })
 
         wrapper.update()
         // 3 residential out of 4

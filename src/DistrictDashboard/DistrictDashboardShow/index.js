@@ -29,10 +29,14 @@ class DistrictDashboardShow extends React.PureComponent {
     this.setViewTable = this.setViewTable.bind(this)
     this.switchTable = this.switchTable.bind(this)
     this.toggleView = this.toggleView.bind(this)
-
+    this.applyCombinedFilters = this.applyCombinedFilters.bind(this)
     this.state = {
       view: 1,
+      combinedFilters: false,
     }
+
+    this.getGeographySummaryResultsFilter = this.getGeographySummaryResultsFilter.bind(this)
+    this.getDisplayedResultsFilter = this.getDisplayedResultsFilter.bind(this)
   }
 
   componentDidUpdate() {
@@ -56,12 +60,47 @@ class DistrictDashboardShow extends React.PureComponent {
     })
   }
 
+  applyCombinedFilters(e) {
+    this.setState({
+      combinedFilters: !this.state.combinedFilters,
+    })
+
+    if (e.target.checked) {
+      const defaultRequest =
+        this.props.appState.selectedRequest === this.props.propertySummaryRequest
+          ? this.props.geographyRequests[0]
+          : this.props.appState.selectedRequest
+
+      const defaultFilter =
+        this.props.appState.selectedResultsFilter || this.props.config.resourceModels['PROPERTY'].ownResultFilters[0]
+      this.switchTable(defaultRequest, defaultFilter)
+    } else {
+      this.switchTable(this.props.appState.selectedRequest, undefined)
+    }
+  }
+
   switchTable(request, filter) {
-    this.props.switchSelectedRequest(
-      request || this.props.appState.selectedRequest,
-      filter || this.props.appState.selectedResultsFilter
-    )
+    let appliedRequest
+    if (request) {
+      appliedRequest = request
+    } else {
+      appliedRequest = this.props.appState.selectedRequest
+    }
+    this.props.switchSelectedRequest(appliedRequest, filter)
     this.props.cancelChangeGeography()
+  }
+
+  getGeographySummaryResultsFilter() {
+    return this.state.combinedFilters ? this.props.selectedResultsFilter : undefined
+  }
+
+  getDisplayedResultsFilter() {
+    if ((this.props.selectedRequest || {}).type === 'ADVANCED_SEARCH') return undefined
+    if (this.state.combinedFilters || (this.props.selectedRequest || {}).type === 'GEOGRAPHY_HOUSING_TYPE') {
+      return this.props.selectedResultsFilter
+    } else {
+      return undefined
+    }
   }
 
   render() {
@@ -155,10 +194,11 @@ class DistrictDashboardShow extends React.PureComponent {
                   </Row>
                   <DistrictSummarySection
                     appState={this.props.appState}
+                    combinedFilters={this.state.combinedFilters}
                     switchTable={this.switchTable}
                     selectedRequest={this.props.selectedRequest}
                     geographyRequests={this.props.geographyRequests}
-                    selectedResultsFilter={this.props.selectedResultsFilter}
+                    selectedResultsFilter={this.getGeographySummaryResultsFilter()}
                   />
                 </Col>
               </Row>
@@ -169,28 +209,11 @@ class DistrictDashboardShow extends React.PureComponent {
                       <h5 className="text-muted font-weight-bold text-uppercase">Filter by housing type</h5>
                     </Col>
                   </Row>
-                  <Row>
-                    <Col xs={12}>
-                      <Form.Check
-                        className="housingTypeOnly__checkbox"
-                        custom
-                        type={'checkbox'}
-                        id={'housingTypeOnly'}
-                        label={'Filter by housing type only'}
-                        checked={this.props.selectedRequest === this.props.propertySummaryRequest}
-                        onChange={e => {
-                          if (e.target.checked) {
-                            this.switchTable(this.props.propertySummaryRequest, undefined)
-                          } else {
-                            this.switchTable(this.props.geographyRequests[0], undefined)
-                          }
-                        }}
-                      />
-                    </Col>
-                  </Row>
+
                   <Row className="housingtype-section py-2 mb-4 mb-lg-0">
                     <HousingTypeSection
                       appState={this.props.appState}
+                      combinedFilters={this.state.combinedFilters}
                       housingTypeRequests={this.props.housingTypeRequests}
                       propertySummaryRequest={this.props.propertySummaryRequest}
                       selectedRequest={this.props.selectedRequest}
@@ -232,6 +255,21 @@ class DistrictDashboardShow extends React.PureComponent {
                       </ToggleButtonGroup>
                     </Col>
                   </Row>
+                  <Row>
+                    <Col xs={12}>
+                      <Form.Check
+                        className="combineFilters__checkbox"
+                        custom
+                        type={'checkbox'}
+                        id={'combineFilters'}
+                        label={'Combine Dataset Filters with Housing Type Filters'}
+                        checked={this.state.combinedFilters}
+                        onChange={e => {
+                          this.applyCombinedFilters(e)
+                        }}
+                      />
+                    </Col>
+                  </Row>
                   <Row className="py-2 mb-4 mb-lg-0">
                     <Col>
                       <div className={classnames({ 'd-none': this.state.view !== 1 })}>
@@ -244,11 +282,7 @@ class DistrictDashboardShow extends React.PureComponent {
                           handleChangeGeographyId={this.props.handleChangeGeographyId}
                           iconConfig="MULTIPLE"
                           displayedRequest={this.props.selectedRequest}
-                          displayedResultsFilter={
-                            (this.props.selectedRequest || {}).type === 'ADVANCED_SEARCH'
-                              ? undefined
-                              : this.props.selectedResultsFilter
-                          }
+                          displayedResultsFilter={this.getDisplayedResultsFilter()}
                           selectGeographyData={this.props.config.selectGeographyData}
                           switchView={this.setViewTable}
                         />
@@ -260,11 +294,7 @@ class DistrictDashboardShow extends React.PureComponent {
                               key={`request-wrapper-${this.props.appState.requests.indexOf(request)}`}
                               visible={this.props.selectedRequest === request}
                               request={request}
-                              selectedResultsFilter={
-                                (this.props.selectedRequest || {}).type === 'ADVANCED_SEARCH'
-                                  ? undefined
-                                  : this.props.selectedResultsFilter
-                              }
+                              selectedResultsFilter={this.getDisplayedResultsFilter()}
                             />
                           )
                         })}

@@ -19,7 +19,7 @@ const getLabel = props => {
             <FontAwesomeIcon icon={faHome} />
           </Col>
         )}
-        {props.resultsFilter && <Col xs={10}>{props.resultsFilter.label}</Col>}
+        <Col xs={10}>{props.resultsFilter.label ? props.resultsFilter.label : 'All Properties'}</Col>
         {props.request && (
           <Col xs={2}>
             <FontAwesomeIcon icon={faChartBar} />
@@ -63,6 +63,7 @@ SummaryResultCard.defaultProps = {
   error: undefined,
   results: [],
   selected: false,
+  resultsFilter: undefined,
 }
 
 SummaryResultCard.propTypes = {
