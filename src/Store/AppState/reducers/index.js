@@ -1,6 +1,6 @@
 import * as c from '../constants'
 import { districtDashboardFilterdates } from 'shared/utilities/componentUtils'
-
+import { getDefaultRequest, getDefaultResultsFilter } from 'Store/AppState/selectors'
 export const initialState = {
   currentGeographyType: undefined,
   currentGeographyId: undefined,
@@ -57,6 +57,14 @@ export const appStateReducer = (state = Object.freeze(initialState), action = { 
       return {
         ...state,
         mapFilterDate: action.date,
+      }
+    }
+
+    case c.SET_DEFAULT_SELECTED_REQUEST: {
+      return {
+        ...state,
+        selectedRequest: getDefaultRequest(state.requests),
+        selectedResultsFilter: getDefaultResultsFilter(action.model),
       }
     }
     default:

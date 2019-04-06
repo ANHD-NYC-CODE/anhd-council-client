@@ -1,6 +1,4 @@
-import { constructAxiosGet } from 'shared/utilities/Axios'
 import * as c from '../constants'
-import * as u from 'shared/constants/urls'
 
 export const replacePropertyFilter = propertyFilter => ({
   type: c.REPLACE_PROPERTY_FILTER,
@@ -56,4 +54,9 @@ export const removeGeography = geographyIndex => ({
 export const handleGetAdvancedSearch = response => ({
   type: c.HANDLE_GET_ADVANCED_SEARCH,
   data: response.data,
+})
+
+export const resetAdvancedSearchReducer = propertyFilter => ({
+  type: c.RESET_ADVANCED_SEARCH_REDUCER,
+  propertyFilter,
 })

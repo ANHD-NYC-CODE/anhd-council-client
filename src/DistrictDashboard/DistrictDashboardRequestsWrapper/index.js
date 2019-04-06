@@ -2,7 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { setMapFilterDate } from 'Store/AppState/actions'
 
-import { getRequestType, getManyRequestTypes, getRequestByConstant } from 'Store/AppState/selectors'
+import {
+  getDefaultRequest,
+  getRequestType,
+  getManyRequestTypes,
+  getDefaultResultsFilter,
+  getRequestByConstant,
+} from 'Store/AppState/selectors'
 
 import { requestWithAuth } from 'shared/utilities/authUtils'
 import { makeRequest } from 'Store/Request/actions'
@@ -17,7 +23,6 @@ class DistrictDashboardRequestsWrapper extends React.PureComponent {
 
     this.loadRequests = this.loadRequests.bind(this)
     this.getInitialRequest = this.getInitialRequest.bind(this)
-    this.getInitialResultsFilter = this.getInitialResultsFilter.bind(this)
     this.switchSelectedRequest = this.switchSelectedRequest.bind(this)
   }
 
@@ -37,11 +42,7 @@ class DistrictDashboardRequestsWrapper extends React.PureComponent {
   getInitialRequest() {
     return getRequestType(this.props.requests, 'ADVANCED_SEARCH').length
       ? getRequestType(this.props.requests, 'ADVANCED_SEARCH')[0]
-      : getRequestType(this.props.requests, 'MAP_FILTER')[0]
-  }
-
-  getInitialResultsFilter() {
-    return undefined
+      : getDefaultRequest(this.props.requests)
   }
 
   loadRequests(requests = []) {
@@ -57,7 +58,9 @@ class DistrictDashboardRequestsWrapper extends React.PureComponent {
           this.props.appState.switchSelectedRequest === 'MAP_FILTER'
             ? this.props.appState.selectedRequest
             : this.getInitialRequest(),
-        selectedResultsFilter: this.props.appState.selectedResultsFilter || this.getInitialResultsFilter(),
+        selectedResultsFilter:
+          this.props.appState.selectedResultsFilter ||
+          getDefaultResultsFilter(this.props.config.resourceModels['PROPERTY']),
       })
     )
   }
@@ -108,6 +111,7 @@ class DistrictDashboardRequestsWrapper extends React.PureComponent {
 
 DistrictDashboardRequestsWrapper.propTypes = {
   appState: PropTypes.object,
+  config: PropTypes.object,
   mapFilterDate: PropTypes.string,
   requests: PropTypes.array,
 }

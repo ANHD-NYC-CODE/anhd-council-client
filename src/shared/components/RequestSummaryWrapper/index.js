@@ -8,6 +8,9 @@ import { requestWithAuth } from 'shared/utilities/authUtils'
 import { makeRequest } from 'Store/Request/actions'
 import RequestErrorCard from 'shared/components/RequestErrorCard'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTimesCircle } from '@fortawesome/free-regular-svg-icons'
+import ClearAdvancedSearchButton from 'shared/components/buttons/ClearAdvancedSearchButton'
 import { Col, Row } from 'react-bootstrap'
 class RequestSummaryWrapper extends React.Component {
   constructor(props) {
@@ -77,6 +80,13 @@ class RequestSummaryWrapper extends React.Component {
         {!this.props.print && (
           <Col xs={2} md={1} className="px-1">
             <InfoModalButton modalConstant={this.props.infoKey || this.getInfoKey()} />
+            {this.props.request.type === 'ADVANCED_SEARCH' && (
+              <ClearAdvancedSearchButton>
+                <button className="button">
+                  <FontAwesomeIcon icon={faTimesCircle} size="xl" />
+                </button>
+              </ClearAdvancedSearchButton>
+            )}
           </Col>
         )}
       </Row>

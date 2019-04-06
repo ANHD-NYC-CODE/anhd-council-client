@@ -3,6 +3,8 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { createErrorSelector } from 'Store/Error/selectors'
 import { createLoadingSelector } from 'Store/Loading/selectors'
+import { getDefaultRequest, getDefaultResultsFilter } from 'Store/AppState/selectors'
+
 import { GET_DATASETS } from 'Store/Dataset/constants'
 import { GET_COUNCILS } from 'Store/Council/constants'
 import { GET_COMMUNITIES } from 'Store/Community/constants'
@@ -14,12 +16,11 @@ import { infoModals } from 'shared/models/modals'
 import ConfigLoader from 'shared/components/Loaders/ConfigLoader'
 import PageError from 'shared/components/PageError'
 import Filter from 'shared/classes/Filter'
-
+import { setDefaultSelections } from 'Store/AppState/actions'
 import { newMapRequests, newLookupRequests, newAdvancedSearchRequest } from 'shared/utilities/configUtils'
 import { setupResourceModels } from 'shared/utilities/configUtils'
 import { createAdvancedSearchFilters } from 'shared/utilities/filterUtils'
-import { replacePropertyFilter } from 'Store/AdvancedSearch/actions'
-
+import { resetAdvancedSearchReducer, replacePropertyFilter } from 'Store/AdvancedSearch/actions'
 class Config extends React.Component {
   constructor(props) {
     super(props)
@@ -38,6 +39,7 @@ class Config extends React.Component {
     this.createMapRequests = this.createMapRequests.bind(this)
     this.createLookupRequests = this.createLookupRequests.bind(this)
     this.createAdvancedSearchRequest = this.createAdvancedSearchRequest.bind(this)
+    this.clearAdvancedSearch = this.clearAdvancedSearch.bind(this)
     this.state = {
       geographyType: undefined,
       geographyId: undefined,
@@ -83,6 +85,11 @@ class Config extends React.Component {
     }
   }
 
+  clearAdvancedSearch() {
+    this.props.dispatch(setDefaultSelections(this.props.resourceModels['PROPERTY']))
+    this.props.dispatch(resetAdvancedSearchReducer(this.props.resourceModels['PROPERTY']))
+  }
+
   selectGeographyData(type) {
     switch (type) {
       case 'COUNCIL':
@@ -115,6 +122,7 @@ class Config extends React.Component {
     ) : (
       <ConfigContext.Provider
         value={{
+          clearAdvancedSearch: this.clearAdvancedSearch,
           createMapRequests: this.createMapRequests,
           createLookupRequests: this.createLookupRequests,
           createAdvancedSearchRequest: this.createAdvancedSearchRequest,

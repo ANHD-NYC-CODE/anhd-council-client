@@ -5,6 +5,7 @@ import RequestSummaryWrapper from 'shared/components/RequestSummaryWrapper'
 import SummaryResultCard from 'shared/components/ResultCard/SummaryResultCard'
 import { Card, Row, Col } from 'react-bootstrap'
 import BaseLink from 'shared/components/BaseLink'
+
 const DistrictSummarySection = props => {
   return (
     <Row className="district-summary-section">
