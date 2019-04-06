@@ -3,9 +3,13 @@ import Condition from 'shared/classes/Condition'
 import ConditionFilter from 'shared/classes/ConditionFilter'
 import { cloneInstance } from 'shared/utilities/classUtils'
 
+const defaultCondition = () => {
+  return new Condition({ key: '0', type: 'AND', filters: [] })
+}
+
 export const initialState = () => ({
   conditions: {
-    '0': new Condition({ key: '0', type: 'AND', filters: [] }),
+    '0': defaultCondition(),
   },
   geographies: [],
   propertyFilter: undefined, // initialize in Config/index.js
@@ -126,7 +130,7 @@ export const advancedSearchReducer = (state = Object.freeze(initialState()), act
 
     case c.RESET_ADVANCED_SEARCH_REDUCER: {
       return {
-        ...initialState,
+        ...initialState(),
         propertyFilter: action.propertyFilter,
       }
     }

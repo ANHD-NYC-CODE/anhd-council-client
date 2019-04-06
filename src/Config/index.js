@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { createErrorSelector } from 'Store/Error/selectors'
 import { createLoadingSelector } from 'Store/Loading/selectors'
-import { getDefaultRequest, getDefaultResultsFilter } from 'Store/AppState/selectors'
 
 import { GET_DATASETS } from 'Store/Dataset/constants'
 import { GET_COUNCILS } from 'Store/Council/constants'
@@ -16,7 +15,7 @@ import { infoModals } from 'shared/models/modals'
 import ConfigLoader from 'shared/components/Loaders/ConfigLoader'
 import PageError from 'shared/components/PageError'
 import Filter from 'shared/classes/Filter'
-import { setDefaultSelections } from 'Store/AppState/actions'
+import { removeRequestType, setDefaultSelections } from 'Store/AppState/actions'
 import { newMapRequests, newLookupRequests, newAdvancedSearchRequest } from 'shared/utilities/configUtils'
 import { setupResourceModels } from 'shared/utilities/configUtils'
 import { createAdvancedSearchFilters } from 'shared/utilities/filterUtils'
@@ -40,6 +39,7 @@ class Config extends React.Component {
     this.createLookupRequests = this.createLookupRequests.bind(this)
     this.createAdvancedSearchRequest = this.createAdvancedSearchRequest.bind(this)
     this.clearAdvancedSearch = this.clearAdvancedSearch.bind(this)
+    this.newPropertyFilter = this.newPropertyFilter.bind(this)
     this.state = {
       geographyType: undefined,
       geographyId: undefined,
@@ -74,20 +74,21 @@ class Config extends React.Component {
 
   componentDidUpdate() {
     if (!this.props.advancedSearch.propertyFilter && !!Object.keys(this.props.resourceModels).length) {
-      this.props.dispatch(
-        replacePropertyFilter(
-          new Filter({
-            resourceModel: this.props.resourceModels['PROPERTY'],
-            schema: this.props.resourceModels['PROPERTY'].ownResourceFilters,
-          })
-        )
-      )
+      this.props.dispatch(replacePropertyFilter(this.newPropertyFilter()))
     }
+  }
+
+  newPropertyFilter() {
+    return new Filter({
+      resourceModel: this.props.resourceModels['PROPERTY'],
+      schema: this.props.resourceModels['PROPERTY'].ownResourceFilters,
+    })
   }
 
   clearAdvancedSearch() {
     this.props.dispatch(setDefaultSelections(this.props.resourceModels['PROPERTY']))
-    this.props.dispatch(resetAdvancedSearchReducer(this.props.resourceModels['PROPERTY']))
+    this.props.dispatch(removeRequestType('ADVANCED_SEARCH'))
+    this.props.dispatch(resetAdvancedSearchReducer(this.newPropertyFilter()))
   }
 
   selectGeographyData(type) {

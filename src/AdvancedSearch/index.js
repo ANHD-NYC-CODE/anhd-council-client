@@ -8,10 +8,10 @@ import { connect } from 'react-redux'
 import { Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
 import AdvancedSearchSentence from 'AdvancedSearch/Sentence'
-import { Jumbotron, Row, Col, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
+import { Button, Jumbotron, Row, Col, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
 import AdvancedSearchForm from 'AdvancedSearch/AdvancedSearchForm'
 import AdvancedSearchInstructions from 'AdvancedSearch/AdvancedSearchInstructions'
-
+import ClearAdvancedSearchButton from 'shared/components/buttons/ClearAdvancedSearchButton'
 import ConfigContext from 'Config/ConfigContext'
 import { setAppState } from 'Store/AppState/actions'
 import classnames from 'classnames'
@@ -80,6 +80,9 @@ export class AdvancedSearch extends React.Component {
                       Search Guide
                     </ToggleButton>
                   </ToggleButtonGroup>
+                  <ClearAdvancedSearchButton className="d-inline">
+                    <Button variant="outline-warning">Clear Search</Button>
+                  </ClearAdvancedSearchButton>
                 </Col>
               </Row>
               <Row className="mb-5">
