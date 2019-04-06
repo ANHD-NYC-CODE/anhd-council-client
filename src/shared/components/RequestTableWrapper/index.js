@@ -36,6 +36,7 @@ class RequestTableWrapper extends React.Component {
           dispatch={this.props.dispatch}
           error={this.processError(this.props.error)}
           errorAction={(this.props.error || {}).status === 504 ? this.retryRequest : null}
+          expandable={this.props.expandable}
           loading={this.props.loading}
           records={
             this.props.selectedResultsFilter.internalFilter(
