@@ -25,7 +25,7 @@ class Auth extends React.Component {
         value={{
           loginError: this.props.loginError,
           user: this.props.auth.user,
-          logoutUser: () => this.props.dispatch(logoutUser()),
+          logoutUser: () => this.props.dispatch(logoutUser(true)),
         }}
       >
         {this.props.children}

@@ -83,7 +83,7 @@ class RequestSummaryWrapper extends React.Component {
             {this.props.request.type === 'ADVANCED_SEARCH' && (
               <ClearAdvancedSearchButton>
                 <button className="button">
-                  <FontAwesomeIcon icon={faTimesCircle} size="xl" />
+                  <FontAwesomeIcon icon={faTimesCircle} size="lg" />
                 </button>
               </ClearAdvancedSearchButton>
             )}

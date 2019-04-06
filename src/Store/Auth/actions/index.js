@@ -88,10 +88,10 @@ export const loginUser = data => dispatch => {
     })
 }
 
-export const logoutUser = () => (dispatch, getState) => {
+export const logoutUser = (sentToast = false) => dispatch => {
   removeUserStorageData()
-  if (getState().auth.user) {
-    dispatch(handleUserLogout())
+  dispatch(handleUserLogout())
+  if (sentToast) {
     toast.info("You've been logged out.")
   }
 }
