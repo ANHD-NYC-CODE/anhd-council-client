@@ -8,6 +8,11 @@ export const setAppState = state => ({
   state,
 })
 
+export const setDefaultSelections = model => ({
+  type: c.SET_DEFAULT_SELECTED_REQUEST,
+  model,
+})
+
 export const removeRequestType = requestType => ({
   type: c.REMOVE_REQUEST_TYPE,
   requestType,

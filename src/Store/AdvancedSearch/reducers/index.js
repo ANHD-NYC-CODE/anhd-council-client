@@ -124,6 +124,13 @@ export const advancedSearchReducer = (state = Object.freeze(initialState()), act
       }
     }
 
+    case c.RESET_ADVANCED_SEARCH_REDUCER: {
+      return {
+        ...initialState,
+        propertyFilter: action.propertyFilter,
+      }
+    }
+
     default:
       return state
   }

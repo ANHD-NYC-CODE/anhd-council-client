@@ -194,6 +194,7 @@ class DistrictDashboardShow extends React.PureComponent {
                   <DistrictSummarySection
                     appState={this.props.appState}
                     combinedFilters={this.state.combinedFilters}
+                    dispatch={this.props.dispatch}
                     switchTable={this.switchTable}
                     selectedRequest={this.props.selectedRequest}
                     geographyRequests={this.props.geographyRequests}

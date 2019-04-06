@@ -81,7 +81,7 @@ const PropertySummaryBody = props => {
           <span className="profile-summary-body__value">{props.profile.unitsrentstabilized || 0}</span>
         </Card.Text>
         <Card.Text className="lookup-profile-summary__group">
-          <label className="profile-summary-body__label">Lost since 2007: </label>
+          <label className="profile-summary-body__label">Change since 2007: </label>
           <span className="profile-summary-body__value">
             {(props.profile.rsunits_percent_lost * 100).toFixed(2) || 0}%
           </span>
