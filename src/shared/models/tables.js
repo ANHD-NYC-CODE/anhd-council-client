@@ -491,14 +491,10 @@ export const getTableColumns = (
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
-          dataField: 'corporationname',
-          text: 'Corp Name',
-        }),
-        constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'title',
           text: 'Title',
         }),
+
         constructStandardColumn({
           columnEvent: expandColumnEvent,
           dataField: 'firstname',
@@ -508,6 +504,11 @@ export const getTableColumns = (
           columnEvent: expandColumnEvent,
           dataField: 'lastname',
           text: 'Last Name',
+        }),
+        constructStandardColumn({
+          columnEvent: expandColumnEvent,
+          dataField: 'corporationname',
+          text: 'Corp Name',
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,

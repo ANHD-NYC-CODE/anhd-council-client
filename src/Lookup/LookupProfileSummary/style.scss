@@ -1,5 +1,22 @@
 @import 'shared/styles/bootstrap/_variables.scss';
 
+.property-section {
+  background-color: $info;
+
+  a {
+    color: $primary;
+    font-weight: bold;
+    text-decoration: underline;
+  }
+}
+
+.property-summary__table {
+  @include media-breakpoint-up(xl) {
+    margin-left: -45px;
+    margin-right: -45px;
+  }
+}
+
 .lookup-profile-summary.card {
   border: 0;
   background-color: transparent;

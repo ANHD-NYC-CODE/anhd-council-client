@@ -12,7 +12,7 @@ class LookupLinks extends React.Component {
 
   render() {
     return this.props.property ? (
-      <div className="lookup-links">
+      <div className="property-section lookup-links">
         <Card.Body>
           <Row>
             <Col>

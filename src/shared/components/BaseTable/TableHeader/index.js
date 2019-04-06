@@ -9,7 +9,7 @@ const TableHeader = props => {
     <div className="table-header">
       <Row>
         <Col>
-          <h4>{props.title}</h4>
+          <h4 className={props.headerClass}>{props.title}</h4>
         </Col>
       </Row>
       <Row>
@@ -27,6 +27,7 @@ TableHeader.defaultProps = {
 
 TableHeader.propTypes = {
   datasetModelName: PropTypes.string,
+  headerClass: PropTypes.string,
   showUpdate: PropTypes.bool,
   title: PropTypes.string,
 }
