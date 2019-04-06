@@ -3,6 +3,13 @@ import PropTypes from 'prop-types'
 import { boroCodeToName, constructAddressString } from 'shared/utilities/languageUtils'
 import './style.scss'
 import { Card, Row, Col } from 'react-bootstrap'
+import BaseLink from 'shared/components/BaseLink'
+import { constantToModelName } from 'shared/utilities/filterUtils'
+import BaseTable from 'shared/components/BaseTable'
+import TableHeader from 'shared/components/BaseTable/TableHeader'
+import TableConfig from 'shared/classes/TableConfig'
+
+import { getTableColumns } from 'shared/models/tables'
 
 const getSubsidiesText = props => {
   if (props.profile.subsidyrecords.length) {
@@ -17,7 +24,7 @@ const getSubsidiesText = props => {
 
 const PropertySummaryBody = props => {
   return (
-    <Row className="property-summary-body">
+    <Row className="property-summary-body property-section">
       <Col xs={12}>
         <Row>
           <Col>
@@ -38,11 +45,6 @@ const PropertySummaryBody = props => {
         <hr />
       </Col>
       <Col xs={6}>
-        <Card.Text className="lookup-profile__geography-link">
-          <label className="profile-summary-body__label">Owner Name: </label>
-          <span className="profile-summary-body__value">{props.profile.ownername}</span>
-        </Card.Text>
-
         <Card.Text className="lookup-profile__geography-link">
           <label className="profile-summary-body__label">Year Built: </label>
           <span className="profile-summary-body__value">{props.profile.yearbuilt}</span>

@@ -11,8 +11,9 @@ import BaseLink from 'shared/components/BaseLink'
 import BaseTable from 'shared/components/BaseTable'
 import { getTableColumns } from 'shared/models/tables'
 import TableConfig from 'shared/classes/TableConfig'
-import { Card } from 'react-bootstrap'
+import { Card, Row, Col } from 'react-bootstrap'
 import PropertySummaryBody from 'Lookup/LookupProfileSummary/PropertySummaryBody'
+import OwnershipSection from 'Lookup/LookupProfileSummary/OwnershipSection'
 import PrintLookupProfileSummary from 'Lookup/PrintLookupProfileSummary'
 import LayoutContext from 'Layout/LayoutContext'
 import './style.scss'
@@ -49,30 +50,8 @@ const LookupProfileSummary = props => {
                     return <PropertySummaryBody config={config} profile={profile} />
                   }}
                 </ConfigContext.Consumer>
-
+                <OwnershipSection profile={profile} dispatch={props.dispatch} request={props.request} />
                 <div className="lookup-profile-summary__bottom-info py-4">
-                  {profile.hpdregistrations.length ? (
-                    <div className="mb-4">
-                      <TableHeader
-                        showUpdate={false}
-                        title="HPD Registrations"
-                        datasetModelName={constantToModelName('HPDHPD_REGISTRATION')}
-                      />
-                      <BaseTable
-                        classes="fluid-table"
-                        wrapperClasses="text-dark"
-                        columns={getTableColumns('HPD_REGISTRATION')}
-                        dispatch={props.dispatch}
-                        records={profile.hpdregistrations}
-                        request={props.request}
-                        tableConfig={new TableConfig({ resourceConstant: 'HPD_REGISTRATION' })}
-                      />
-                    </div>
-                  ) : (
-                    <Card.Text className="text-info text-center font-weight-bold my-4">
-                      No HPD Registrations Found
-                    </Card.Text>
-                  )}
                   {profile.rentstabilizationrecord ? (
                     <div className="mb-4">
                       <TableHeader
