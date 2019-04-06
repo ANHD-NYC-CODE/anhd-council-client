@@ -49,12 +49,13 @@ export default class TableConfig {
     return getDescriptionKey(this._resourceConstant)
   }
 
-  getColumns({ expandColumnFunction, constructFilter } = {}) {
+  getColumns({ expandColumnFunction, constructFilter, dispatch } = {}) {
     return getTableColumns(
       this._resourceConstant,
       expandColumnFunction,
       getLinkProps(this._resourceConstant),
-      constructFilter
+      constructFilter,
+      dispatch
     )
   }
 

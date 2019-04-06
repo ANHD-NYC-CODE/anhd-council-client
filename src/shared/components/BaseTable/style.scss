@@ -38,9 +38,18 @@ table.table,
       content: '(+) ';
     }
   }
-  tr:not(.expanding-row) td:not(.table-column--active):not(.react-bs-table-no-data):hover {
-    background-color: $primary;
-    color: white;
+
+  @media (hover: hover) {
+    table.no-expand {
+      tr:hover {
+        background-color: $primary;
+        color: white;
+      }
+    }
+    tr:not(.expanding-row) td:not(.table-column--active):not(.react-bs-table-no-data):hover {
+      background-color: $primary;
+      color: white;
+    }
   }
 
   .table-column--active {

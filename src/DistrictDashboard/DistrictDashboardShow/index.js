@@ -294,6 +294,7 @@ class DistrictDashboardShow extends React.PureComponent {
                         {this.props.geographyRequests.concat(this.props.housingTypeRequests).map((request, index) => {
                           return (
                             <RequestTableWrapper
+                              expandable={false}
                               key={`request-wrapper-${this.props.appState.requests.indexOf(request)}`}
                               visible={this.props.selectedRequest === request}
                               request={request}

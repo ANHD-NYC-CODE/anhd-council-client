@@ -25,7 +25,6 @@ class BaseTable extends React.Component {
     this.expandRow = this.expandRow.bind(this)
     this.constructFilter = this.constructFilter.bind(this)
     this.filters = {}
-
     this.state = {
       expandedRowContent: '',
       displayedRecordsCount: (props.records || {}).length,
@@ -35,6 +34,7 @@ class BaseTable extends React.Component {
       columns: props.tableConfig.getColumns({
         expandColumnFunction: this.setExpandedContent,
         constructFilter: this.constructFilter,
+        dispatch: props.dispatch,
       }),
     }
   }
@@ -51,6 +51,7 @@ class BaseTable extends React.Component {
       columns: nextProps.tableConfig.getColumns({
         expandColumnFunction: this.setExpandedContent,
         constructFilter: this.constructFilter,
+        dispatch: nextProps.dispatch,
       }),
     })
   }
