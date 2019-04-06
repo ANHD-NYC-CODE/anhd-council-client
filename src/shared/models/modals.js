@@ -158,7 +158,7 @@ export const infoModals = {
     ],
   },
   EVICTION: {
-    title: 'Marshall Evictions',
+    title: 'Marshal Evictions',
     body:
       'These properties recorded evictions executed by marshals. Evictions in affordable rent-regulated apartments usually indicate an immediate loss of affordable housing because landlords take advantage of the vacancy to dramatically raise the rent. A high rate of evictions may also be an indicator of tenant harassment and displacement by a landlord aggressively driving vacancies.',
     sources: [
