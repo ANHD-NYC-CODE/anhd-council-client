@@ -290,7 +290,7 @@ describe('convertConditionMappingToSentence', () => {
         }),
       }
 
-      const result = ` that have at least 5 HPD violations between ${todayminus1year} and ${todayplus1year} and that either have at least 5 DOB violations between ${todayminus1year} and ${todayplus1year} or have at least 5 ECB violations between ${todayminus1year} and ${todayplus1year} or that have at least 5 HPD complaints between ${todayminus1year} and ${todayplus1year} and have at least 5 DOB complaints between ${todayminus1year} and ${todayplus1year} and that either have at least 1 marshall eviction between ${todayminus1year} and ${todayplus1year} or have at least 5 HPD violations between ${todayminus1year} and ${todayplus1year}.`
+      const result = ` that have at least 5 HPD violations between ${todayminus1year} and ${todayplus1year} and that either have at least 5 DOB violations between ${todayminus1year} and ${todayplus1year} or have at least 5 ECB violations between ${todayminus1year} and ${todayplus1year} or that have at least 5 HPD complaints between ${todayminus1year} and ${todayplus1year} and have at least 5 DOB complaints between ${todayminus1year} and ${todayplus1year} and that either have at least 1 marshal eviction between ${todayminus1year} and ${todayplus1year} or have at least 5 HPD violations between ${todayminus1year} and ${todayplus1year}.`
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
@@ -381,7 +381,7 @@ describe('convertConditionMappingToSentence', () => {
         }),
       }
 
-      const result = ` that have at least 1 marshall eviction between ${todayminus1year} and ${todayplus1year}.`
+      const result = ` that have at least 1 marshal eviction between ${todayminus1year} and ${todayplus1year}.`
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
