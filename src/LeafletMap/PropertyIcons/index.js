@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import * as c from 'shared/constants'
 
 import PropertyIcon from 'LeafletMap/PropertyIcon'
 
@@ -10,8 +11,6 @@ class PropertyIcons extends React.Component {
 
     this.handleAlert = this.handleAlert.bind(this)
     this.handleAlert()
-
-    this.iconLimit = 2000
   }
 
   componentDidUpdate() {
@@ -19,9 +18,9 @@ class PropertyIcons extends React.Component {
   }
 
   handleAlert() {
-    if (this.props.results.length > this.iconLimit) {
-      this.props.switchView()
-      this.props.setAlertMessage(`Will not render more than ${this.iconLimit} map icons due to device limitations.`)
+    if (!this.props.overrideWarning && this.props.results.length > c.MAP_MARKER_LIMIT) {
+      // this.props.switchView()
+      this.props.setAlertMessage(`Warning - more than ${c.MAP_MARKER_LIMIT} map icons may slow down this page.`)
     } else {
       this.props.setAlertMessage('')
     }
@@ -36,7 +35,7 @@ class PropertyIcons extends React.Component {
   render() {
     if (!(this.props.visible && this.props.displayedRequest && this.props.results)) return null
     if (this.props.iconConfig === 'MULTIPLE') {
-      if (this.props.results.length > this.iconLimit) return null
+      if (!this.props.overrideWarning && this.props.results.length > c.MAP_MARKER_LIMIT) return null
       return this.props.results
         .map((result, index) => {
           if (this.getLatLng(result)) {

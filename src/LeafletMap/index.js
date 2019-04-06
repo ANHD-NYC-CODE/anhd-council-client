@@ -23,6 +23,7 @@ export default class LeafletMap extends React.PureComponent {
       height: this.props.height,
       hasError: false,
       alertMessage: undefined,
+      overrideWarning: false,
     }
     this.updateDimensions = this.updateDimensions.bind(this)
     this.centerMapOnGeography = this.centerMapOnGeography.bind(this)
@@ -32,13 +33,13 @@ export default class LeafletMap extends React.PureComponent {
   }
 
   componentDidUpdate() {
-    if (this.mapRef.current) {
-      this.mapRef.current.leafletElement.invalidateSize()
-    }
-
     // Center over selected geography
     if (this.props.communityDistricts.length || this.props.councilDistricts.length) {
       this.centerMapOnGeography()
+    }
+
+    if (this.mapRef.current) {
+      this.mapRef.current.leafletElement.invalidateSize()
     }
   }
 
@@ -116,8 +117,20 @@ export default class LeafletMap extends React.PureComponent {
         style={{ height: this.props.height || this.state.height, width: this.props.width || '100%' }}
       >
         {this.state.alertMessage && (
-          <Alert dismissible={true} variant="danger">
-            {this.state.alertMessage}
+          <Alert variant="warning">
+            <span>{this.state.alertMessage}</span>
+            <Button
+              block
+              variant="primary"
+              size="sm"
+              onClick={() =>
+                this.setState({
+                  overrideWarning: true,
+                })
+              }
+            >
+              Proceed
+            </Button>
           </Alert>
         )}
         <Map
@@ -205,6 +218,7 @@ export default class LeafletMap extends React.PureComponent {
               </Popup>
             )}
           <PropertyIcons
+            overrideWarning={this.state.overrideWarning}
             iconConfig={this.props.iconConfig}
             setAlertMessage={this.setAlertMessage}
             switchView={this.props.switchView}
