@@ -12,9 +12,9 @@ const GeographyGeoJson = props => {
   }
 
   const getFillOpacity = geography => {
-    if (props.currentGeographyId == geography.properties.id) return '0.7'
-    if (props.changingGeographyId == geography.properties.id) return '0.5'
-    else return '0.3'
+    if (props.currentGeographyId == geography.properties.id) return '0.4'
+    if (props.changingGeographyId == geography.properties.id) return '0.2'
+    else return '0.1'
   }
   const getStyle = geography => {
     return {
