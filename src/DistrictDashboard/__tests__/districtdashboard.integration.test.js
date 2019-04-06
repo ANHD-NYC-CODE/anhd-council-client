@@ -65,7 +65,7 @@ describe('DistrictDashboard', () => {
   })
 
   describe('with a geography type and id', () => {
-    it('sets the currentGeographyType and currentGeographyId', () => {
+    it('has initial state w/ the currentGeographyType and currentGeographyId', () => {
       const [wrapper, store] = setupWrapper({
         router: { location: { pathname: '/council/1' }, action: 'POP' },
       })
@@ -80,8 +80,14 @@ describe('DistrictDashboard', () => {
       expect(wrapper.find('ToggleButtonGroup')).toHaveLength(2)
       expect(wrapper.find('GeographyProfile')).toHaveLength(1)
       expect(wrapper.find('LeafletMap')).toHaveLength(1)
-      expect(wrapper.find('DistrictResultsTitle').text()).toEqual('All Properties  w/ 10+ HPD Violations')
+      expect(wrapper.find('DistrictResultsTitle').text()).toEqual('All Residential Properties')
       expect(wrapper.find('RequestSummaryWrapper')).toHaveLength(12)
+
+      expect(wrapper.findWhere(node => node.key() === 'housingtype-summary-0').props().children.props.selected).toEqual(
+        true
+      )
+
+      expect(wrapper.find('DistrictResultsTitle').text()).toEqual('All Residential Properties')
     })
     describe('geography select', () => {
       it('shows the selected geography values', () => {
@@ -197,17 +203,15 @@ describe('DistrictDashboard', () => {
           .at(1)
           .simulate('change', { target: { checked: true } })
 
-        expect(wrapper.findWhere(node => node.key() === 'request-wrapper-1').props().visible).toEqual(true)
-        expect(wrapper.find('DistrictResultsTitle').text()).toEqual('All Properties  w/ 10+ HPD Violations')
         wrapper
-          .findWhere(node => node.key() === 'request-summary-2')
+          .findWhere(node => node.key() === 'request-summary-MAP_FILTER-2')
           .find('button')
           .simulate('click')
 
         wrapper.update()
-        expect(wrapper.findWhere(node => node.key() === 'request-wrapper-1').props().visible).toEqual(false)
-        expect(wrapper.findWhere(node => node.key() === 'request-wrapper-2').props().visible).toEqual(true)
-        expect(wrapper.find('DistrictResultsTitle').text()).toEqual('All Properties  w/ 2+ DOB Complaints')
+
+        expect(wrapper.findWhere(node => node.key() === 'request-wrapper-3').props().visible).toEqual(true)
+        expect(wrapper.find('DistrictResultsTitle').text()).toEqual('All Properties  w/ 5+ HPD Complaints')
       })
     })
 
@@ -282,7 +286,7 @@ describe('DistrictDashboard', () => {
         })
 
         wrapper
-          .findWhere(node => node.key() === 'request-summary-2')
+          .findWhere(node => node.key() === 'request-summary-MAP_FILTER-2')
           .find('button')
           .simulate('click')
 
@@ -297,8 +301,7 @@ describe('DistrictDashboard', () => {
         const [wrapper, store] = setupWrapper({
           router: { location: { pathname: '/council/1' }, action: 'POP' },
         })
-        await flushAllPromises()
-        wrapper.update()
+
         expect(
           wrapper
             .find('div.geography-request-summary__container')
@@ -332,6 +335,46 @@ describe('DistrictDashboard', () => {
           .simulate('click')
         newWrapper.update()
         expect(newWrapper.find('DistrictResultsTitle').text()).toEqual('Custom Search')
+      })
+
+      it('clears the custom filter', async () => {
+        const [wrapper, store] = setupWrapper({
+          router: { location: { pathname: '/council/1' }, action: 'POP' },
+        })
+
+        const [newWrapper, newStore] = setupWrapper({
+          router: { location: { pathname: '/council/1' }, action: 'POP' },
+          appState: {
+            ...store.getState().appState,
+            requests: [
+              ...store.getState().appState.requests,
+              new DataRequest({
+                type: 'ADVANCED_SEARCH',
+                resourceModel: resourceModels['PROPERTY'],
+                tableConfig: new TableConfig({ resourceConstant: 'PROPERTY' }),
+              }),
+            ],
+          },
+        })
+
+        await flushAllPromises()
+        newWrapper.update()
+        expect(newWrapper.find('RequestSummaryWrapper')).toHaveLength(13)
+        expect(
+          newWrapper
+            .findWhere(node => {
+              return node.key() === 'request-summary-ADVANCED_SEARCH-5'
+            })
+            .props().selected
+        ).toEqual(true)
+
+        newWrapper.find('ClearAdvancedSearchButton').simulate('click')
+        newWrapper.update()
+
+        expect(newWrapper.find('RequestSummaryWrapper')).toHaveLength(12)
+        expect(
+          newWrapper.findWhere(node => node.key() === 'housingtype-summary-0').props().children.props.selected
+        ).toEqual(true)
       })
     })
   })

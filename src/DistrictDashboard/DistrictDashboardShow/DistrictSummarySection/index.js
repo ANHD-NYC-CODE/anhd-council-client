@@ -13,7 +13,7 @@ const DistrictSummarySection = props => {
         return (
           <Col xs={12} sm={6} xl={4} key={`rs-col-${index}`} className="geography-request-summary__container">
             <RequestSummaryWrapper
-              key={`request-summary-${props.appState.requests.indexOf(request)}`}
+              key={`request-summary-${request.type}-${index}`}
               request={request}
               resultsFilter={request.type === 'ADVANCED_SEARCH' ? undefined : props.selectedResultsFilter}
               label={request.type === 'ADVANCED_SEARCH' ? 'Custom Search' : undefined}

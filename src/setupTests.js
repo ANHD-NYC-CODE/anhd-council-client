@@ -2,7 +2,7 @@ import { configure, mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
 configure({ adapter: new Adapter() })
-console.log('------------------------------------------  setting up up global envs ')
+console.log('------------------------------------------  setting up global envs ')
 
 window.scrollTo = () => {}
 window.document.childNodes.length === 0
