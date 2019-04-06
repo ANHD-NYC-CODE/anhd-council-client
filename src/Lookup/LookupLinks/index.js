@@ -16,16 +16,8 @@ class LookupLinks extends React.Component {
         <Card.Body>
           <Row>
             <Col>
-              <p className="font-weight-bold text-dark-gray">External Links:</p>
-            </Col>
-          </Row>
-          <Row className="mb-2">
-            <Col>
-              <BaseLink
-                className="lookup-links__link"
-                href={`https://whoownswhat.justfix.nyc/bbl/${this.props.property.bbl}`}
-                text="Other properties owned by this landlord (via WhoOwnsWhat)"
-              />
+              <h5 className="font-weight-bold text-dark-gray">External Links:</h5>
+              <hr />
             </Col>
           </Row>
 
