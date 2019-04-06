@@ -16,6 +16,7 @@ const OwnershipSection = props => {
           <Row>
             <Col>
               <h5 className="text-dark">Ownership</h5>
+              <hr />
             </Col>
           </Row>
           <Row>
