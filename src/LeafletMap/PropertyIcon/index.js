@@ -3,6 +3,9 @@ import PropTypes from 'prop-types'
 import { Marker, Popup, Tooltip } from 'react-leaflet'
 import BaseLink from 'shared/components/BaseLink'
 import { Card, Button } from 'react-bootstrap'
+import { MarkerIcon } from './MarkerIcon'
+
+import './style.scss'
 
 class PropertyIcon extends React.Component {
   constructor(props) {
@@ -22,7 +25,7 @@ class PropertyIcon extends React.Component {
   render() {
     return (
       <div className="property-icon">
-        <Marker position={this.props.position}>
+        <Marker icon={MarkerIcon} position={this.props.position}>
           {this.props.interactive && (
             <div>
               <Popup>

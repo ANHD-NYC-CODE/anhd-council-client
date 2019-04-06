@@ -1,0 +1,10 @@
+@import 'shared/styles/_variables.scss';
+
+.leaflet-marker-icon.leaflet-div-icon {
+  background: transparent;
+  border: none;
+
+  path {
+    fill: $primary;
+  }
+}
