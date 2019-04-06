@@ -37,24 +37,31 @@ const OwnershipSection = props => {
       </Row>
       <Row className="my-4">
         <Col>
-          <Row>
-            <h5 className="text-light">HPD Registrations</h5>
-          </Row>
-          <Row>
-            {props.profile.hpdregistrations.length ? (
-              <BaseTable
-                classes="fluid-table"
-                wrapperClasses="text-dark property-summary__table"
-                columns={getTableColumns('HPD_REGISTRATION')}
-                dispatch={props.dispatch}
-                records={props.profile.hpdregistrations}
-                request={props.request}
-                tableConfig={new TableConfig({ resourceConstant: 'HPD_REGISTRATION' })}
-              />
-            ) : (
-              <Col className="text-dark-gray text-center font-weight-bold my-4">No HPD Registrations Found</Col>
-            )}
-          </Row>
+          {props.profile.hpdregistrations.length ? (
+            <Row>
+              <Col>
+                <Row>
+                  <h5 className="text-light">HPD Registrations</h5>
+                </Row>
+                <Row>
+                  <BaseTable
+                    classes="fluid-table"
+                    wrapperClasses="text-dark property-summary__table"
+                    columns={getTableColumns('HPD_REGISTRATION')}
+                    dispatch={props.dispatch}
+                    records={props.profile.hpdregistrations}
+                    request={props.request}
+                    includeHeader={false}
+                    tableConfig={new TableConfig({ resourceConstant: 'HPD_REGISTRATION' })}
+                  />
+                </Row>
+              </Col>
+            </Row>
+          ) : (
+            <Row>
+              <Col className="text-info text-center font-weight-bold my-4">No HPD Registrations Found</Col>
+            </Row>
+          )}
         </Col>
       </Row>
     </div>

@@ -143,7 +143,7 @@ class BaseTable extends React.Component {
       >
         {({ paginationProps, paginationTableProps }) => (
           <div className={`base-table ${this.props.wrapperClasses}`} key={`table-${this.props.tableConfig.keyField}`}>
-            {!this.props.nested && (
+            {!this.props.nested && !!this.props.includeHeader && (
               <Row>
                 <Col xs={12}>
                   <TableHeader
@@ -211,7 +211,7 @@ class BaseTable extends React.Component {
                 action={this.props.errorAction}
               />
             )}
-            {!this.props.nested && (
+            {!this.props.nested && !!this.includeHeader && (
               <Row>
                 <Col xs={6}>
                   <PaginationListStandalone {...paginationProps} />
@@ -227,6 +227,7 @@ class BaseTable extends React.Component {
 
 BaseTable.defaultProps = {
   expandable: true,
+  includeHeader: true,
   nested: false,
 }
 

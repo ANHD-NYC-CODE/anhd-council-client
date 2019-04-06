@@ -11,6 +11,7 @@
 }
 
 .property-summary__table {
+  padding: 0;
   @include media-breakpoint-up(xl) {
     // margin-left: -45px;
     // margin-right: -45px;
@@ -52,6 +53,10 @@
 
   .base-table {
     background-color: $white;
-    padding: 20px;
+    padding: 0px;
+
+    .expanded-row--wrapper {
+      margin-left: 10px;
+    }
   }
 }

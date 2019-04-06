@@ -3,13 +3,6 @@ import PropTypes from 'prop-types'
 import { boroCodeToName, constructAddressString } from 'shared/utilities/languageUtils'
 import './style.scss'
 import { Card, Row, Col } from 'react-bootstrap'
-import BaseLink from 'shared/components/BaseLink'
-import { constantToModelName } from 'shared/utilities/filterUtils'
-import BaseTable from 'shared/components/BaseTable'
-import TableHeader from 'shared/components/BaseTable/TableHeader'
-import TableConfig from 'shared/classes/TableConfig'
-
-import { getTableColumns } from 'shared/models/tables'
 
 const getSubsidiesText = props => {
   if (props.profile.subsidyrecords.length) {
@@ -45,6 +38,10 @@ const PropertySummaryBody = props => {
         <hr />
       </Col>
       <Col xs={6}>
+        <Card.Text className="lookup-profile-summary__group">
+          <label className="profile-summary-body__label">BBL: </label>
+          <span className="profile-summary-body__value">{props.profile.bbl}</span>
+        </Card.Text>
         <Card.Text className="lookup-profile__geography-link">
           <label className="profile-summary-body__label">Year Built: </label>
           <span className="profile-summary-body__value">{props.profile.yearbuilt}</span>
@@ -61,12 +58,14 @@ const PropertySummaryBody = props => {
           <label className="profile-summary-body__label">NYCHA? </label>
           <span className="profile-summary-body__value">{props.profile.nycha.length ? 'Yes' : 'No'}</span>
         </Card.Text>
+        <Card.Text className="lookup-profile-summary__group">
+          <label className="profile-summary-body__label">CONH? </label>
+          <span className="profile-summary-body__value">
+            {(props.profile.conh_records || {}).length ? 'Yes' : 'No'}
+          </span>
+        </Card.Text>
       </Col>
       <Col xs={6}>
-        <Card.Text className="lookup-profile-summary__group">
-          <label className="profile-summary-body__label">BBL: </label>
-          <span className="profile-summary-body__value">{props.profile.bbl}</span>
-        </Card.Text>
         <Card.Text className="lookup-profile-summary__group">
           <label className="profile-summary-body__label">Total Units: </label>
           <span className="profile-summary-body__value">{props.profile.unitstotal || 0}</span>
