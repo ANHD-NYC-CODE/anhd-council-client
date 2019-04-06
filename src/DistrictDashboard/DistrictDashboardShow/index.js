@@ -9,7 +9,7 @@ import HousingTypeSection from 'DistrictDashboard/DistrictDashboardShow/HousingT
 import DistrictResultsTitle from 'DistrictDashboard/DistrictDashboardShow/DistrictResultsTitle'
 import LeafletMap from 'LeafletMap'
 import RequestTableWrapper from 'shared/components/RequestTableWrapper'
-
+import CsvButton from 'shared/components/buttons/CsvButton'
 import DistrictSummarySection from 'DistrictDashboard/DistrictDashboardShow/DistrictSummarySection'
 import PrintButton from 'shared/components/PrintButton'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -138,13 +138,20 @@ class DistrictDashboardShow extends React.PureComponent {
                     }
                   />
                 </Col>
-                <Col className="d-none d-md-block" xs={12} md={{ span: 2, offset: 1 }} lg={{ span: 2, offset: 2 }}>
+                <Col className="d-none d-md-block" xs={12} md={{ span: 1, offset: 2 }} lg={{ span: 1, offset: 2 }}>
                   <PrintButton
                     textClass="text-light"
                     title={`${geographySelectionToString({
                       type: this.props.appState.currentGeographyType,
                       id: this.props.appState.currentGeographyId,
                     })} summary`}
+                  />
+                </Col>
+                <Col className="d-none d-md-block" xs={12} md={{ span: 1, offset: 0 }} lg={{ span: 1, offset: 0 }}>
+                  <CsvButton
+                    className="text-light"
+                    dispatch={this.props.dispatch}
+                    request={this.props.appState.selectedRequest}
                   />
                 </Col>
               </Row>

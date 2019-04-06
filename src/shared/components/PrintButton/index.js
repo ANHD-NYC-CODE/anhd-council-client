@@ -21,7 +21,7 @@ const PrintButton = props => {
               layout.togglePrint(props.title)
             }}
           >
-            <FontAwesomeIcon size="lg" icon={faPrint} />
+            <FontAwesomeIcon size="sm" icon={faPrint} />
             <h5 className="d-inline"> Print</h5>
           </a>
         )}
