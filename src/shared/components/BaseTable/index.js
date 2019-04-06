@@ -11,10 +11,8 @@ import filterFactory from 'react-bootstrap-table2-filter'
 import TableHeader from 'shared/components/BaseTable/TableHeader'
 import { Row, Col } from 'react-bootstrap'
 import TableAlert from 'shared/components/BaseTable/TableAlert'
+import CsvButton from 'shared/components/buttons/CsvButton'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFileCsv } from '@fortawesome/free-solid-svg-icons'
-import { makeCsvRequest } from 'Store/Request/actions'
 import classnames from 'classnames'
 import './style.scss'
 
@@ -165,15 +163,7 @@ class BaseTable extends React.Component {
                   xs={4}
                   className="table-header__share-column d-none d-md-flex justify-content-end align-items-center"
                 >
-                  <a
-                    onClick={e => {
-                      e.preventDefault()
-                      this.props.dispatch(makeCsvRequest(this.props.request))
-                    }}
-                  >
-                    <FontAwesomeIcon icon={faFileCsv} />
-                    <span>Csv</span>
-                  </a>
+                  <CsvButton dispatch={this.props.dispatch} request={this.props.request} />
                 </Col>
                 <Col xs={4} className="d-flex align-items-center justify-content-end">
                   <SizePerPageDropdownStandalone btnContextual="btn-outline-primary" {...paginationProps} />

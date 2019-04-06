@@ -183,6 +183,10 @@ export const getTableColumns = (constant, columnExpandFunction, getLinkProps = (
           if (e.target.closest('table').classList.contains('no-expand')) return e
           handleColumnEvent({ e, column, columnIndex, row, rowIndex, component })
         },
+        onMouseEnter: (e, column, columnIndex, row, rowIndex) => {
+          if (e.target.closest('table').classList.contains('no-expand')) return e
+          handleColumnEvent({ e, column, columnIndex, row, rowIndex, component })
+        },
         // onTouchStart: (e, column, columnIndex, row, rowIndex) => {
         //   // row = column due to table bug
         //   handleColumnEvent({ e, column, columnIndex, row: column, rowIndex, component })
@@ -213,6 +217,10 @@ export const getTableColumns = (constant, columnExpandFunction, getLinkProps = (
       hidden,
       events: {
         onClick: (e, column, columnIndex, row, rowIndex) => {
+          if (e.target.closest('table').classList.contains('no-expand')) return e
+          handleColumnEvent({ e, column, columnIndex, row, rowIndex, component, dataKey, tableConfig })
+        },
+        onMouseEnter: (e, column, columnIndex, row, rowIndex) => {
           if (e.target.closest('table').classList.contains('no-expand')) return e
           handleColumnEvent({ e, column, columnIndex, row, rowIndex, component, dataKey, tableConfig })
         },
