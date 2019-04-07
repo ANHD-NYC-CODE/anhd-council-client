@@ -42,7 +42,7 @@ export const getKeyField = constant => {
     case 'DOB_ISSUED_PERMIT':
       return 'key'
     case 'DOB_FILED_PERMIT':
-      return 'id'
+      return 'key'
     case 'HOUSING_LITIGATION':
       return 'litigationid'
     case 'ACRIS_REAL_MASTER':
@@ -69,7 +69,7 @@ export const getLinkId = constant => {
     case 'DOB_ISSUED_PERMIT':
       return 'jobfilingnumber'
     case 'DOB_FILED_PERMIT':
-      return 'job'
+      return 'jobfilingnumber'
     case 'ACRIS_REAL_MASTER':
       return 'documentid'
     default:
@@ -803,18 +803,18 @@ export const getTableColumns = (
       columns = [
         constructStandardColumn({
           columnEvent: expandColumnEvent,
-          dataField: 'id',
-          text: 'ID',
+          dataField: 'key',
+          text: 'KEY',
           hidden: true,
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
-          dataField: 'job',
-          text: 'Job #',
+          dataField: 'jobfilingnumber',
+          text: 'Job Filing #',
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
-          dataField: 'prefilingdate',
+          dataField: 'datefiled',
           text: 'Date Filed',
           formatter: dateFormatter,
           sort: true,
@@ -837,9 +837,16 @@ export const getTableColumns = (
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
-          dataField: 'jobstatusdescrp',
+          dataField: 'jobstatus',
           text: 'Status',
           filter: constructFilter(textFilter),
+          sort: true,
+        }),
+        constructStandardColumn({
+          columnEvent: expandColumnEvent,
+          dataField: 'type',
+          text: 'Source',
+          formatter: dobPermitSourceFormatter,
           sort: true,
         }),
       ]

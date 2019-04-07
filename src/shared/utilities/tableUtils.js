@@ -715,5 +715,9 @@ export const dobPermitSourceFormatter = (cell, row, index) => {
       return 'Legacy'
     case 'dobpermitissuednow':
       return 'DOB NOW'
+    case 'doblegacyfiledpermit':
+      return 'Legacy'
+    case 'dobnowfiledpermit':
+      return 'DOB NOW'
   }
 }

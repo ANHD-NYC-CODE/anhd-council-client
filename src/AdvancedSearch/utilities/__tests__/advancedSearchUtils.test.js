@@ -214,7 +214,7 @@ describe('convertConditionMappingToQ', () => {
         '0': new Condition({ type: 'AND', filters: condition0Filters }),
       }
 
-      const result = `*condition_0=AND filter_0=doblegacyfiledpermits__count__gte=5,doblegacyfiledpermits__prefilingdate__gte=${todayminus1year},doblegacyfiledpermits__prefilingdate__lte=${todayplus1year}`
+      const result = `*condition_0=AND filter_0=dobfiledpermits__count__gte=5,dobfiledpermits__datefiled__gte=${todayminus1year},dobfiledpermits__datefiled__lte=${todayplus1year}`
       expect(a.convertConditionMappingToQ(conditions)).toEqual(result)
     })
   })

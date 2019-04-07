@@ -236,7 +236,7 @@ const Property = databaseObject => {
       PROPERTY_SALE_BY_AMOUNT: 'acrisreallegals__documentid',
       PROPERTY_SALE_BY_COUNT: 'acrisreallegals__documentid',
       DOB_COMPLAINT: 'dobcomplaints',
-      DOB_FILED_PERMIT: 'doblegacyfiledpermits',
+      DOB_FILED_PERMIT: 'dobfiledpermits',
       DOB_ISSUED_PERMIT: 'dobissuedpermits',
       DOB_VIOLATION: 'dobviolations',
       ECB_VIOLATION: 'ecbviolations',

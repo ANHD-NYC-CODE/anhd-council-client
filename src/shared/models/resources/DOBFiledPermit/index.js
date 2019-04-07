@@ -4,7 +4,7 @@ const DOBFiledPermit = databaseObject => ({
   summaryBackgroundColorClass: 'dob-red',
 
   resourceConstant: 'DOB_FILED_PERMIT',
-  urlPath: 'doblegacyfiledpermits',
+  urlPath: 'dobfiledpermits',
   label: 'DOB Permit Applications',
   sentenceNoun: 'DOB permit applications',
   ownResourceFilters: {
