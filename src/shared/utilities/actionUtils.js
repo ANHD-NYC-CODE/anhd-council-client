@@ -47,7 +47,6 @@ export const handleCatchError = (error, type, dispatch, requestId) => {
       errorMessage = ERROR_500_MESSAGE
       errorStatus = error.status
     } else {
-      debugger
       errorMessage = findErrorKeyValue(error.status, error)
       errorStatus = 500
     }
