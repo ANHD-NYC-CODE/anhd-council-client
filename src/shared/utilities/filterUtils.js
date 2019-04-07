@@ -380,7 +380,7 @@ export const getDatasetDateField = datasetConstant => {
     case 'DOB_ISSUED_PERMIT':
       return 'issuedate'
     case 'DOB_FILED_PERMIT':
-      return 'prefilingdate'
+      return 'datefiled'
     case 'HOUSING_LITIGATION':
       return 'caseopendate'
     case 'HPD_REGISTRATION':

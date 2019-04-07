@@ -18,9 +18,6 @@ export const setupResourceModels = datasets => {
   Object.keys(resources).forEach(constant => {
     let databaseObject
     switch (constant) {
-      case 'DOB_FILED_PERMIT':
-        databaseObject = datasets.find(object => (object.model_name || {}).toUpperCase() === 'DOBLEGACYFILEDPERMIT')
-        break
       default:
         databaseObject = datasets.find(
           object => (object.model_name || {}).toUpperCase() === constantToModelName(constant).toUpperCase()
@@ -191,14 +188,12 @@ export const newLookupRequests = ({ bbl, bin, resourceModels } = {}) => {
           bin: bin,
           resourceConstant: 'DOB_FILED_PERMIT',
           resourceModel: resourceModels['DOB_FILED_PERMIT'],
-          datasetModelName: constantToModelName('DOB_LEGACY_FILED_PERMIT'),
         })
       : newPropertyRequest({
           type: 'LOOKUP_FILTER',
           bbl: bbl,
           resourceConstant: 'DOB_FILED_PERMIT',
           resourceModel: resourceModels['DOB_FILED_PERMIT'],
-          datasetModelName: constantToModelName('DOB_LEGACY_FILED_PERMIT'),
         }),
     bin
       ? newBuildingRequest({

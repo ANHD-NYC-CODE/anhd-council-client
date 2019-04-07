@@ -52,7 +52,7 @@ export const mockDatasetsResponse = [
   { model_name: 'eviction' },
   { model_name: 'lispenden' },
   { model_name: 'housinglitigation' },
-  { model_name: 'doblegacyfiledpermit' },
+  { model_name: 'dobfiledpermit' },
   { model_name: 'dobissuedpermit' },
 ]
 

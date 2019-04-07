@@ -162,7 +162,7 @@ describe('Lookup', () => {
       mock.onGet('/buildings/2/dobcomplaints/').reply(200, results)
       mock.onGet('/buildings/2/hpdcomplaints/').reply(200, results)
       mock.onGet('/buildings/2/ecbviolations/').reply(200, results)
-      mock.onGet('/buildings/2/doblegacyfiledpermits/').reply(200, results)
+      mock.onGet('/buildings/2/dobfiledermits/').reply(200, results)
       mock.onGet('/buildings/2/dobissuedpermits/').reply(200, results)
       mock.onGet('/buildings/2/housinglitigations/').reply(200, results)
 
@@ -185,7 +185,7 @@ describe('Lookup', () => {
       mock.onGet('/buildings/2/dobcomplaints/').reply(200, results)
       mock.onGet('/buildings/2/hpdcomplaints/').reply(200, results)
       mock.onGet('/buildings/2/ecbviolations/').reply(200, results)
-      mock.onGet('/buildings/2/doblegacyfiledpermits/').reply(200, results)
+      mock.onGet('/buildings/2/dobfiledermits/').reply(200, results)
       mock.onGet('/buildings/2/dobissuedpermits/').reply(200, results)
       mock.onGet('/buildings/2/housinglitigations/').reply(200, results)
 
