@@ -1,7 +1,8 @@
 import React from 'react'
 import moment from 'moment'
 import { Button } from 'react-bootstrap'
-
+import BaseLink from 'shared/components/BaseLink'
+import { getLinkId, getLinkProps } from 'shared/models/tables'
 export const dateFormatter = (cell, row, index) => {
   try {
     const date = moment(cell)
@@ -9,6 +10,12 @@ export const dateFormatter = (cell, row, index) => {
   } catch (e) {
     return cell
   }
+}
+
+export const linkFormatter = (cell, row, index, constant, id) => {
+  const linkProps = getLinkProps(constant)({ linkId: row[getLinkId(constant)], bin: row.bin })
+
+  return <BaseLink href={linkProps.href} text={linkProps.linkText} />
 }
 
 export const expandTableFormatter = (cell, row, index) => {

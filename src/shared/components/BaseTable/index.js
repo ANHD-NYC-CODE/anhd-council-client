@@ -77,6 +77,7 @@ class BaseTable extends React.Component {
       expandedSet = []
       expandedRowProps = undefined
       // Remove active column class
+      if (e.type === 'mouseenter') return // But not for mouseenter, only click
       e.currentTarget
         .closest('tbody')
         .querySelectorAll('td')
@@ -116,7 +117,7 @@ class BaseTable extends React.Component {
               <NestedTable nested={true} {...this.state.expandedRowProps} />
             </div>
           )
-        } else {
+        } else if (this.state.expandedRowProps) {
           return this.state.expandedRowComponent(this.state.expandedRowProps)
         }
       },

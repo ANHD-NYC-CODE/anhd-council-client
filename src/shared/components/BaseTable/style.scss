@@ -35,7 +35,7 @@ table.table,
 
   table:not(.no-expand) {
     tr:not(.expanding-row) td:not(.table-column--active):not(.react-bs-table-no-data):not(.nested-table-column):before {
-      content: '(+) ';
+      // content: '(+) ';
     }
   }
 
@@ -46,19 +46,23 @@ table.table,
         color: white;
       }
     }
-    tr:not(.expanding-row) td:not(.table-column--active):not(.react-bs-table-no-data):hover {
-      background-color: $primary;
-      color: white;
-    }
+    // tr:not(.expanding-row) td:not(.table-column--active):not(.react-bs-table-no-data):hover {
+    //   background-color: $primary;
+    //   color: white;
+    // }
   }
 
   .table-column--active {
     background-color: $primary;
     color: white;
+    // text-overflow: inherit;
+    // white-space: normal;
+    // overflow-x: hidden;
+    // active
   }
 
   .table-column--active:before {
-    content: '(-) ';
+    // content: '(-) ';
   }
 
   .filter {

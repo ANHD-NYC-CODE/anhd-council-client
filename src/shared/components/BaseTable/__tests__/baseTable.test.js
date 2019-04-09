@@ -65,18 +65,6 @@ describe('BaseTable', () => {
   })
 
   describe('cell click', () => {
-    it('expands the row with the cell data', () => {
-      const wrapper = setupWrapper(records, tableConfig)
-      wrapper
-        .find('tbody td')
-        .at(1)
-        .simulate('click')
-      wrapper.update()
-      expect(wrapper.find('tbody tr')).toHaveLength(3)
-      expect(wrapper.find('tbody .expanded-row')).toHaveLength(1)
-      expect(wrapper.find('tbody .expanded-row').text()).toMatch(/01\/01\/2018Search HPD Online/)
-    })
-
     it('expands the nested table row', () => {
       const wrapper = setupWrapper(records, tableConfig)
       wrapper
