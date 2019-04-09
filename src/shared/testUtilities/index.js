@@ -42,18 +42,21 @@ const mockGeography = id => {
 }
 
 export const mockDatasetsResponse = [
-  { model_name: 'property' },
-  { model_name: 'hpdviolation' },
-  { model_name: 'dobviolation' },
-  { model_name: 'hpdcomplaint' },
-  { model_name: 'dobcomplaint' },
-  { model_name: 'ecbviolation' },
-  { model_name: 'acrisrealmaster' },
-  { model_name: 'eviction' },
-  { model_name: 'lispenden' },
-  { model_name: 'housinglitigation' },
-  { model_name: 'dobfiledpermit' },
-  { model_name: 'dobissuedpermit' },
+  { model_name: 'Property' },
+  { model_name: 'HPDViolation' },
+  { model_name: 'DOBViolation' },
+  { model_name: 'HPDComplaint' },
+  { model_name: 'DOBComplaint' },
+  { model_name: 'ECBViolation' },
+  { model_name: 'AcrisRealMaster' },
+  { model_name: 'Eviction' },
+  { model_name: 'Lispenden' },
+  { model_name: 'HousingLitigation' },
+  { model_name: 'DOBFiledPermit' },
+  { model_name: 'DOBIssuedPermit' },
+  { model_name: 'CONHRecord', version: '2018' },
+  { model_name: 'RentStabilizationRecord', version: '2017' },
+  { model_name: 'TaxLien', version: '2018' },
 ]
 
 export const configuredState = state => {

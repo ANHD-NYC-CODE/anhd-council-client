@@ -35,36 +35,43 @@ const PropertySummaryBody = props => {
             <span className="profile-summary-body__value">{props.profile.bbl}</span>
           </Col>
         </Row>
-        <Row>
-          <Col>
-            <label className="profile-summary-body__label">Council District</label>
+        {!props.print && (
+          <div>
+            <Row>
+              <Col>
+                <label className="profile-summary-body__label">Council District</label>
 
-            <BaseLink
-              className="profile-summary-body__value"
-              href={geographyToLink('COUNCIL', props.profile.council)}
-              text={councilIdToString(props.profile.council)}
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <label className="profile-summary-body__label">Community District</label>
+                <BaseLink
+                  className="profile-summary-body__value"
+                  href={geographyToLink('COUNCIL', props.profile.council)}
+                  text={councilIdToString(props.profile.council)}
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col>
+                <label className="profile-summary-body__label">Community District</label>
 
-            <BaseLink
-              className="profile-summary-body__value"
-              href={geographyToLink('COMMUNITY', props.profile.cd)}
-              text={`Community District  ${communityIdToString(props.profile.cd)}`}
-            />
-          </Col>
-        </Row>
-        <hr />
+                <BaseLink
+                  className="profile-summary-body__value"
+                  href={geographyToLink('COMMUNITY', props.profile.cd)}
+                  text={`Community District  ${communityIdToString(props.profile.cd)}`}
+                />
+              </Col>
+            </Row>
+            <hr />
+          </div>
+        )}
       </Col>
-      <Col xs={12} className="mb-2">
-        <BaseLink
-          href={`https://whoownswhat.justfix.nyc/bbl/${props.profile.bbl}`}
-          text='View ownership at "Who Owns What?'
-        />
-      </Col>
+      {!props.print && (
+        <Col xs={12} className="mb-2">
+          <BaseLink
+            href={`https://whoownswhat.justfix.nyc/bbl/${props.profile.bbl}`}
+            text='View ownership at "Who Owns What?"'
+          />
+        </Col>
+      )}
+
       <Col xs={6}>
         <Row className="lookup-profile__geography-link">
           <Col>
