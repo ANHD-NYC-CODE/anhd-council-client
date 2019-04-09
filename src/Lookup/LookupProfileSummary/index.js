@@ -34,15 +34,10 @@ const LookupProfileSummary = props => {
                     return (
                       <div>
                         <PropertySummaryBody config={config} profile={profile} />
-                        <OwnershipSection profile={profile} dispatch={props.dispatch} request={props.request} />
+                        <OwnershipSection profile={profile} request={props.request} />
                         <ProgramSection config={config} profile={profile} />
 
-                        <RentStabilizationSection
-                          config={config}
-                          profile={profile}
-                          dispatch={props.dispatch}
-                          request={props.request}
-                        />
+                        <RentStabilizationSection config={config} profile={profile} request={props.request} />
                       </div>
                     )
                   }}
@@ -62,7 +57,7 @@ LookupProfileSummary.propTypes = {
 }
 
 LookupProfileSummary.propTypes = {
-  records: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
+  records: PropTypes.object,
 }
 
 export default LookupProfileSummary
