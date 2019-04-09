@@ -53,9 +53,9 @@ class DistrictDashboardRequestsWrapper extends React.PureComponent {
     this.props.dispatch(
       setAppState({
         selectedRequest:
-          this.props.appState.selectedRequest === 'ADVANCED_SEARCH' ||
-          this.props.appState.selectedRequest === 'GEOGRAPHY_HOUSING_TYPE' ||
-          this.props.appState.switchSelectedRequest === 'MAP_FILTER'
+          (this.props.appState.selectedRequest || {}).type === 'ADVANCED_SEARCH' ||
+          (this.props.appState.selectedRequest || {}).type === 'GEOGRAPHY_HOUSING_TYPE' ||
+          (this.props.appState.selectedRequest || {}).type === 'MAP_FILTER'
             ? this.props.appState.selectedRequest
             : this.getInitialRequest(),
         selectedResultsFilter:
