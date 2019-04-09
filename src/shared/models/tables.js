@@ -1,10 +1,11 @@
+import React from 'react'
 import { textFilter } from 'react-bootstrap-table2-filter'
 import TableConfig from 'shared/classes/TableConfig'
 import ExpandedLinkRow from 'shared/components/BaseTable/ExpandedLinkRow'
 import { push } from 'connected-react-router'
 import { addressResultToPath } from 'shared/utilities/routeUtils'
-
 import BaseTable from 'shared/components/BaseTable'
+
 import {
   dateFormatter,
   bldgClassFormater,
@@ -13,6 +14,7 @@ import {
   acrisDocTypeFormatter,
   dobPermitSourceFormatter,
   expandTableFormatter,
+  linkFormatter,
 } from 'shared/utilities/tableUtils'
 
 export const getKeyField = constant => {
@@ -147,7 +149,7 @@ export const getDescriptionKey = constant => {
 export const getTableColumns = (
   constant,
   columnExpandFunction,
-  getLinkProps = () => null,
+  linkPropsFunction = () => null,
   constructFilter,
   dispatch
 ) => {
@@ -161,7 +163,7 @@ export const getTableColumns = (
         records: row[dataKey],
         tableConfig,
         content: e.target.textContent,
-        ...getLinkProps({ linkId: row[getLinkId(constant)], bin: row.bin }),
+        ...linkPropsFunction({ linkId: row[getLinkId(constant)], bin: row.bin }),
       },
       rowId: row[rowKey],
       e,
@@ -192,7 +194,9 @@ export const getTableColumns = (
       formatter,
       hidden,
       events: {
-        onClick: (e, column, columnIndex, row, rowIndex) => columnEvent({ row }),
+        onClick: (e, column, columnIndex, row, rowIndex) => {
+          if (columnEvent) return columnEvent({ row })
+        },
       },
     }
   }
@@ -217,8 +221,12 @@ export const getTableColumns = (
       formatter,
       hidden,
       events: {
-        onClick: (e, column, columnIndex, row, rowIndex) => columnEvent({ e, column, row, component }),
-        onMouseEnter: (e, column, columnIndex, row, rowIndex) => columnEvent({ e, column, row, component }),
+        onClick: (e, column, columnIndex, row, rowIndex) => {
+          if (columnEvent) return columnEvent({ e, column, row, component })
+        },
+        onMouseEnter: (e, column, columnIndex, row, rowIndex) => {
+          if (columnEvent) return columnEvent({ e, column, row, component })
+        },
       },
     }
   }
@@ -245,10 +253,12 @@ export const getTableColumns = (
       formatter,
       hidden,
       events: {
-        onClick: (e, column, columnIndex, row, rowIndex) =>
-          columnEvent({ e, column, row, component, dataKey, tableConfig }),
-        onMouseEnter: (e, column, columnIndex, row, rowIndex) =>
-          columnEvent({ e, column, row, component, dataKey, tableConfig }),
+        onClick: (e, column, columnIndex, row, rowIndex) => {
+          if (columnEvent) return columnEvent({ e, column, row, component, dataKey, tableConfig })
+        },
+        onMouseEnter: (e, column, columnIndex, row, rowIndex) => {
+          if (columnEvent) return columnEvent({ e, column, row, component, dataKey, tableConfig })
+        },
       },
     }
   }
@@ -435,25 +445,16 @@ export const getTableColumns = (
     case 'HPD_VIOLATION':
       columns = [
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
-          dataField: 'registrationcontactid',
-          text: 'ID',
-          hidden: true,
-        }),
-        constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'violationid',
           text: 'Violation ID',
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'approveddate',
           text: 'Date Approved',
           formatter: dateFormatter,
           sort: true,
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'class_name',
           text: 'Class',
           filter: constructFilter(textFilter),
@@ -467,14 +468,12 @@ export const getTableColumns = (
           classes: 'table-column--description',
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'currentstatus',
           text: 'Notice Status',
           filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'violationstatus',
           text: 'Violation Status',
           filter: constructFilter(textFilter),
@@ -485,58 +484,47 @@ export const getTableColumns = (
     case 'HPD_CONTACT':
       columns = [
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'type',
           text: 'Type',
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'title',
           text: 'Title',
         }),
 
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'firstname',
           text: 'First Name',
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'lastname',
           text: 'Last Name',
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'corporationname',
           text: 'Corp Name',
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'businesshousenumber',
           text: 'Address No.',
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'businessstreetname',
           text: 'Street',
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'businessapartment',
           text: 'Apt.',
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'businesscity',
           text: 'City',
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'businessstate',
           text: 'State',
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'businesszip',
           text: 'Zip',
         }),
@@ -545,25 +533,21 @@ export const getTableColumns = (
     case 'HPD_COMPLAINT':
       columns = [
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'complaintid',
           text: 'Complaint ID',
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'receiveddate',
           text: 'Date Received',
           formatter: dateFormatter,
           sort: true,
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'apartment',
           text: 'Apt.',
           sort: true,
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'status',
           text: 'Status',
           filter: constructFilter(textFilter),
@@ -583,19 +567,16 @@ export const getTableColumns = (
     case 'HPD_PROBLEM':
       columns = [
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'problemid',
           text: 'Problem ID',
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'type',
           text: 'Urgency',
           filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'unittype',
           text: 'Unit Type',
           filter: constructFilter(textFilter),
@@ -641,12 +622,15 @@ export const getTableColumns = (
     case 'DOB_VIOLATION':
       columns = [
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
+          dataField: 'id',
+          text: 'View Record',
+          formatter: (cell, row, index) => linkFormatter(cell, row, index, 'DOB_VIOLATION', 'isndobbisviol'),
+        }),
+        constructStandardColumn({
           dataField: 'isndobbisviol',
           text: 'isndobbisviol',
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'issuedate',
           text: 'Date Issued',
           formatter: dateFormatter,
@@ -678,12 +662,15 @@ export const getTableColumns = (
     case 'DOB_COMPLAINT':
       columns = [
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
+          dataField: 'id',
+          text: 'View Record',
+          formatter: (cell, row, index) => linkFormatter(cell, row, index, 'DOB_COMPLAINT', 'complaintnumber'),
+        }),
+        constructStandardColumn({
           dataField: 'complaintnumber',
           text: 'Complaint #',
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'dateentered',
           text: 'Date Entered',
           formatter: dateFormatter,
@@ -699,7 +686,6 @@ export const getTableColumns = (
           sort: true,
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'status',
           text: 'Status',
           filter: constructFilter(textFilter),
@@ -710,26 +696,27 @@ export const getTableColumns = (
     case 'ECB_VIOLATION':
       columns = [
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
+          dataField: 'id',
+          text: 'View Record',
+          formatter: (cell, row, index) => linkFormatter(cell, row, index, 'ECB_VIOLATION', 'ecbviolationnumber'),
+        }),
+        constructStandardColumn({
           dataField: 'ecbviolationnumber',
           text: 'Violation #',
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'issuedate',
           text: 'Date Issued',
           formatter: dateFormatter,
           sort: true,
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'violationtype',
           text: 'Violation Type',
           filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'severity',
           text: 'Severity',
           filter: constructFilter(textFilter),
@@ -743,7 +730,6 @@ export const getTableColumns = (
           filter: constructFilter(textFilter),
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'ecbviolationstatus',
           text: 'Status',
           filter: constructFilter(textFilter),
@@ -754,44 +740,42 @@ export const getTableColumns = (
     case 'DOB_ISSUED_PERMIT':
       columns = [
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
+          dataField: 'id',
+          text: 'View Record',
+          formatter: (cell, row, index) => linkFormatter(cell, row, index, 'DOB_ISSUED_PERMIT', 'jobfilingnumber'),
+        }),
+        constructStandardColumn({
           dataField: 'key',
           text: 'Key',
           hidden: true,
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'jobfilingnumber',
           text: 'Job Filing #',
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'workpermit',
           text: 'Work Permit',
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'issuedate',
           text: 'Date Issued',
           formatter: dateFormatter,
           sort: true,
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'worktype',
           text: 'Work Type',
           filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'jobdescription',
           text: 'Description',
           filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'type',
           text: 'Source',
           formatter: dobPermitSourceFormatter,
@@ -802,18 +786,20 @@ export const getTableColumns = (
     case 'DOB_FILED_PERMIT':
       columns = [
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
+          dataField: 'id',
+          text: 'View Record',
+          formatter: (cell, row, index) => linkFormatter(cell, row, index, 'DOB_FILED_PERMIT', 'jobfilingnumber'),
+        }),
+        constructStandardColumn({
           dataField: 'key',
           text: 'KEY',
           hidden: true,
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'jobfilingnumber',
           text: 'Job Filing #',
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'datefiled',
           text: 'Date Filed',
           formatter: dateFormatter,
@@ -843,7 +829,6 @@ export const getTableColumns = (
           sort: true,
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'type',
           text: 'Source',
           formatter: dobPermitSourceFormatter,
@@ -854,39 +839,33 @@ export const getTableColumns = (
     case 'HOUSING_LITIGATION':
       columns = [
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'litigationid',
           text: 'Litigation ID',
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'caseopendate',
           text: 'Date Open',
           formatter: dateFormatter,
           sort: true,
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'casetype',
           text: 'Case Type',
           filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'openjudgement',
           text: 'Open Judgement?',
           filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'penalty',
           text: 'Penalty',
           sort: true,
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'casestatus',
           text: 'Status',
           filter: constructFilter(textFilter),
@@ -897,19 +876,21 @@ export const getTableColumns = (
     case 'ACRIS_REAL_MASTER':
       columns = [
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
+          dataField: 'id',
+          text: 'View Record',
+          formatter: (cell, row, index) => linkFormatter(cell, row, index, 'ACRIS_REAL_MASTER', 'documentid'),
+        }),
+        constructStandardColumn({
           dataField: 'documentid',
           text: 'Document ID',
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'docdate',
           text: 'Date',
           formatter: dateFormatter,
           sort: true,
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'doctype',
           text: 'Document Type',
           formatter: acrisDocTypeFormatter,
@@ -917,7 +898,6 @@ export const getTableColumns = (
           sort: true,
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'docamount',
           text: 'Amount',
           sort: true,
@@ -936,12 +916,10 @@ export const getTableColumns = (
     case 'ACRIS_REAL_PARTY':
       columns = [
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'documentid',
           text: 'Document ID',
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'partytype',
           text: 'Party Type',
           filter: constructFilter(textFilter),
@@ -969,28 +947,24 @@ export const getTableColumns = (
           sort: true,
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'city',
           text: 'City',
           filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'state',
           text: 'State',
           filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'zip',
           text: 'Zip',
           filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'country',
           text: 'Country',
           filter: constructFilter(textFilter),
@@ -1001,17 +975,14 @@ export const getTableColumns = (
     case 'EVICTION':
       columns = [
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'courtindexnumber',
           text: 'Court Index #',
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'docketnumber',
           text: 'Docker #',
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'executeddate',
           text: 'Date',
           formatter: dateFormatter,
@@ -1029,12 +1000,10 @@ export const getTableColumns = (
     case 'LISPENDEN':
       columns = [
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'key',
           text: 'Key',
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'fileddate',
           text: 'Date Filed',
           formatter: dateFormatter,
