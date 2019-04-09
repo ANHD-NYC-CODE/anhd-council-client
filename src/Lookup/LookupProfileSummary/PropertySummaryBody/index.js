@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { boroCodeToName, constructAddressString } from 'shared/utilities/languageUtils'
+import BaseLink from 'shared/components/BaseLink'
 import './style.scss'
 import { Card, Row, Col } from 'react-bootstrap'
 
@@ -36,6 +37,12 @@ const PropertySummaryBody = props => {
           </Col>
         </Row>
         <hr />
+      </Col>
+      <Col xs={12}>
+        <BaseLink
+          href={`https://whoownswhat.justfix.nyc/bbl/${props.profile.bbl}`}
+          text='View ownership at "Who Owns What?'
+        />
       </Col>
       <Col xs={6}>
         <Card.Text className="lookup-profile-summary__group">
@@ -73,19 +80,6 @@ const PropertySummaryBody = props => {
         <Card.Text className="lookup-profile-summary__group">
           <label className="profile-summary-body__label">Residential Units: </label>
           <span className="profile-summary-body__value">{props.profile.unitsres || 0}</span>
-        </Card.Text>
-        <Card.Text className="lookup-profile-summary__group">
-          <label className="profile-summary-body__label">
-            Stabilized Units (
-            {(props.config.datasets.find(ds => ds.model_name === 'RentStabilizationRecord') || {}).version}):{' '}
-          </label>
-          <span className="profile-summary-body__value">{props.profile.unitsrentstabilized || 0}</span>
-        </Card.Text>
-        <Card.Text className="lookup-profile-summary__group">
-          <label className="profile-summary-body__label">Change since 2007: </label>
-          <span className="profile-summary-body__value">
-            {(props.profile.rsunits_percent_lost * 100).toFixed(2) || 0}%
-          </span>
         </Card.Text>
         <Card.Text className="lookup-profile-summary__group">
           <label className="profile-summary-body__label">
