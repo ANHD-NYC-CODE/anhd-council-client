@@ -11,7 +11,11 @@ import './style.scss'
 const IntroductionBlock = props => {
   return (
     <Jumbotron className="introduction-block text-light mb-0">
-      <h3 className="mb-4">Welcome to DAP Portal</h3>
+      <h3 className="mb-4">
+        Welcome to
+        <br />
+        DAP Portal
+      </h3>
       <FontAwesomeIcon icon={faCity} size="2x" />
       <p>
         For New Yorkers, stopping tenant displacement is one of the most urgent issues of the day. The Displacement
