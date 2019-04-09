@@ -3,18 +3,10 @@ import PropTypes from 'prop-types'
 import { boroCodeToName, constructAddressString } from 'shared/utilities/languageUtils'
 import BaseLink from 'shared/components/BaseLink'
 import './style.scss'
-import { Card, Row, Col } from 'react-bootstrap'
+import { Row, Col } from 'react-bootstrap'
 
-const getSubsidiesText = props => {
-  if (props.profile.subsidyrecords.length) {
-    return props.profile.subsidyrecords.map(record => record.programname).join(' ')
-  } else {
-    return [
-      props.profile.subsidyj51records.length ? 'J-51 Tax Incentive' : undefined,
-      props.profile.subsidy421arecords.length ? '421a Tax Incentive Program' : '',
-    ].filter(sp => sp)
-  }
-}
+import { councilIdToString, communityIdToString } from 'shared/utilities/languageUtils'
+import { geographyToLink } from 'shared/utilities/routeUtils'
 
 const PropertySummaryBody = props => {
   return (
@@ -37,56 +29,69 @@ const PropertySummaryBody = props => {
           </Col>
         </Row>
         <hr />
+        <Row className="lookup-profile-summary__group">
+          <Col>
+            <label className="profile-summary-body__label">BBL </label>
+            <span className="profile-summary-body__value">{props.profile.bbl}</span>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <label className="profile-summary-body__label">Council District</label>
+
+            <BaseLink
+              className="profile-summary-body__value"
+              href={geographyToLink('COUNCIL', props.profile.council)}
+              text={councilIdToString(props.profile.council)}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <label className="profile-summary-body__label">Community District</label>
+
+            <BaseLink
+              className="profile-summary-body__value"
+              href={geographyToLink('COMMUNITY', props.profile.cd)}
+              text={`Community District  ${communityIdToString(props.profile.cd)}`}
+            />
+          </Col>
+        </Row>
+        <hr />
       </Col>
-      <Col xs={12}>
+      <Col xs={12} className="mb-2">
         <BaseLink
           href={`https://whoownswhat.justfix.nyc/bbl/${props.profile.bbl}`}
           text='View ownership at "Who Owns What?'
         />
       </Col>
       <Col xs={6}>
-        <Card.Text className="lookup-profile-summary__group">
-          <label className="profile-summary-body__label">BBL: </label>
-          <span className="profile-summary-body__value">{props.profile.bbl}</span>
-        </Card.Text>
-        <Card.Text className="lookup-profile__geography-link">
-          <label className="profile-summary-body__label">Year Built: </label>
-          <span className="profile-summary-body__value">{props.profile.yearbuilt}</span>
-        </Card.Text>
-        <Card.Text className="lookup-profile-summary__group">
-          <label className="profile-summary-body__label">Zoning: </label>
-          <span className="profile-summary-body__value">{props.profile.zonedist1}</span>
-        </Card.Text>
-        <Card.Text className="lookup-profile-summary__group">
-          <label className="profile-summary-body__label">Rent Programs: </label>
-          <span className="profile-summary-body__value">{getSubsidiesText(props)}</span>
-        </Card.Text>
-        <Card.Text className="lookup-profile-summary__group">
-          <label className="profile-summary-body__label">NYCHA? </label>
-          <span className="profile-summary-body__value">{props.profile.nycha.length ? 'Yes' : 'No'}</span>
-        </Card.Text>
-        <Card.Text className="lookup-profile-summary__group">
-          <label className="profile-summary-body__label">CONH? </label>
-          <span className="profile-summary-body__value">
-            {(props.profile.conh_records || {}).length ? 'Yes' : 'No'}
-          </span>
-        </Card.Text>
+        <Row className="lookup-profile__geography-link">
+          <Col>
+            <label className="profile-summary-body__label">Year Built</label>
+            <span className="profile-summary-body__value">{props.profile.yearbuilt}</span>
+          </Col>
+        </Row>
+        <Row className="lookup-profile-summary__group">
+          <Col>
+            <label className="profile-summary-body__label">Zoning</label>
+            <span className="profile-summary-body__value">{props.profile.zonedist1}</span>
+          </Col>
+        </Row>
       </Col>
       <Col xs={6}>
-        <Card.Text className="lookup-profile-summary__group">
-          <label className="profile-summary-body__label">Total Units: </label>
-          <span className="profile-summary-body__value">{props.profile.unitstotal || 0}</span>
-        </Card.Text>
-        <Card.Text className="lookup-profile-summary__group">
-          <label className="profile-summary-body__label">Residential Units: </label>
-          <span className="profile-summary-body__value">{props.profile.unitsres || 0}</span>
-        </Card.Text>
-        <Card.Text className="lookup-profile-summary__group">
-          <label className="profile-summary-body__label">
-            Tax Lien? ({(props.config.datasets.find(ds => ds.model_name === 'TaxLien') || {}).version}):{' '}
-          </label>
-          <span className="profile-summary-body__value">{props.profile.taxliens.length ? 'Yes' : 'No'}</span>
-        </Card.Text>
+        <Row className="lookup-profile-summary__group">
+          <Col>
+            <label className="profile-summary-body__label">Total Units</label>
+            <span className="profile-summary-body__value">{props.profile.unitstotal || 0}</span>
+          </Col>
+        </Row>
+        <Row className="lookup-profile-summary__group">
+          <Col>
+            <label className="profile-summary-body__label">Residential Units</label>
+            <span className="profile-summary-body__value">{props.profile.unitsres || 0}</span>
+          </Col>
+        </Row>
       </Col>
     </Row>
   )

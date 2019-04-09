@@ -7,7 +7,7 @@
   padding: 40px 5px;
 
   @include media-breakpoint-up(sm) {
-    margin-left: -30px;
+    margin-fleft: -30px;
     margin-right: -30px;
     padding: 40px 20px;
   }
@@ -20,7 +20,7 @@
   @include media-breakpoint-up(xl) {
     margin-left: -75px;
     margin-right: -75px;
-    padding: 60px 45px;
+    padding: 60px 60px;
   }
 
   h5 {
@@ -34,18 +34,16 @@
   }
 
   .profile-summary-body__label {
-    display: inline;
+    display: block;
     font-size: 0.9rem;
     font-weight: bold;
-  }
-
-  .profile-summary-body__label:after {
-    content: ' ';
+    margin: 0;
   }
 
   .profile-summary-body__value {
-    display: inline;
+    display: block;
     font-size: 0.9rem;
     font-weight: normal;
+    margin-bottom: 0.5rem;
   }
 }

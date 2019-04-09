@@ -31,7 +31,7 @@ const RentStabilizationSection = props => {
               </Row>
               <Row className="lookup-profile-summary__group">
                 <Col>
-                  <label className="profile-summary-body__label">Change since 2007: </label>
+                  <label className="profile-summary-body__label">Change since 2007</label>
                   <span className="profile-summary-body__value">
                     {(props.profile.rsunits_percent_lost * 100).toFixed(2) || 0}%
                   </span>

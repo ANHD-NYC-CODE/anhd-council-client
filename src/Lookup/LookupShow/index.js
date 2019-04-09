@@ -137,8 +137,9 @@ class LookupShow extends React.Component {
                     />
                   </Col>
                 </Row>
+                <hr />
                 <Row className="mb-4">
-                  <Col>
+                  <Col col={12}>
                     <LeafletMap
                       appState={this.props.appState}
                       currentGeographyType={this.props.appState.currentGeographyType}
@@ -154,7 +155,7 @@ class LookupShow extends React.Component {
                   </Col>
                 </Row>
                 <Row className="mb-4">
-                  <Col>
+                  <Col xs={12}>
                     <LookupLinks request={this.props.profileRequest} />
                   </Col>
                 </Row>

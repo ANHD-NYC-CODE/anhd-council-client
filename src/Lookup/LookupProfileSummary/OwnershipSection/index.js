@@ -9,7 +9,7 @@ import TableConfig from 'shared/classes/TableConfig'
 
 const OwnershipSection = props => {
   return (
-    <Row className="my-4">
+    <Row className="ownership-section my-4">
       <Col>
         {props.profile.hpdregistrations.length ? (
           <Row>

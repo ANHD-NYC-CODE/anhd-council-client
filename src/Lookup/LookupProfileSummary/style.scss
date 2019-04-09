@@ -13,10 +13,10 @@
 .property-summary__table-header,
 .property-summary__table {
   padding: 0;
-  @include media-breakpoint-up(xl) {
-    margin-left: -15px;
-    margin-right: -15px;
-  }
+  // @include media-breakpoint-up(xl) {
+  //   margin-left: -15px;
+  //   margin-right: -15px;
+  // }
 }
 
 .lookup-profile-summary.card {
@@ -58,6 +58,10 @@
 
     .expanded-row--wrapper {
       margin-left: 10px;
+    }
+
+    .expanded-row {
+      overflow: hidden;
     }
   }
 }
