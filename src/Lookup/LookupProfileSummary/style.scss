@@ -10,11 +10,12 @@
   }
 }
 
+.property-summary__table-header,
 .property-summary__table {
   padding: 0;
   @include media-breakpoint-up(xl) {
-    // margin-left: -45px;
-    // margin-right: -45px;
+    margin-left: -15px;
+    margin-right: -15px;
   }
 }
 
