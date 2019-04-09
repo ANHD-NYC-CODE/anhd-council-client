@@ -4,14 +4,11 @@ import InnerLoader from 'shared/components/Loaders/InnerLoader'
 import ConfigContext from 'Config/ConfigContext'
 import TableAlert from 'shared/components/BaseTable/TableAlert'
 
-import { councilIdToString, communityIdToString } from 'shared/utilities/languageUtils'
-import { geographyToLink } from 'shared/utilities/routeUtils'
-import BaseLink from 'shared/components/BaseLink'
-
 import { Card } from 'react-bootstrap'
 import PropertySummaryBody from 'Lookup/LookupProfileSummary/PropertySummaryBody'
 import OwnershipSection from 'Lookup/LookupProfileSummary/OwnershipSection'
 import RentStabilizationSection from 'Lookup/LookupProfileSummary/RentStabilizationSection'
+import ProgramSection from 'Lookup/LookupProfileSummary/ProgramSection'
 
 import PrintLookupProfileSummary from 'Lookup/PrintLookupProfileSummary'
 import LayoutContext from 'Layout/LayoutContext'
@@ -32,33 +29,21 @@ const LookupProfileSummary = props => {
           ) : (
             <Card className="lookup-profile-summary p-0 m-0">
               <Card.Body className="lookup-profile-summary__body p-0">
-                <h5 className=" lookup-profile-summary__geography-link">
-                  <BaseLink
-                    href={geographyToLink('COUNCIL', profile.council)}
-                    text={councilIdToString(profile.council)}
-                  />
-                </h5>
-                <p className=" lookup-profile-summary__geography-link">
-                  <BaseLink
-                    href={geographyToLink('COMMUNITY', profile.cd)}
-                    text={`Community District  ${communityIdToString(profile.cd)}`}
-                  />
-                </p>
-                <ConfigContext.Consumer>
-                  {config => {
-                    return <PropertySummaryBody config={config} profile={profile} />
-                  }}
-                </ConfigContext.Consumer>
-                <OwnershipSection profile={profile} dispatch={props.dispatch} request={props.request} />
                 <ConfigContext.Consumer>
                   {config => {
                     return (
-                      <RentStabilizationSection
-                        config={config}
-                        profile={profile}
-                        dispatch={props.dispatch}
-                        request={props.request}
-                      />
+                      <div>
+                        <PropertySummaryBody config={config} profile={profile} />
+                        <OwnershipSection profile={profile} dispatch={props.dispatch} request={props.request} />
+                        <ProgramSection config={config} profile={profile} />
+
+                        <RentStabilizationSection
+                          config={config}
+                          profile={profile}
+                          dispatch={props.dispatch}
+                          request={props.request}
+                        />
+                      </div>
                     )
                   }}
                 </ConfigContext.Consumer>
