@@ -5,6 +5,7 @@
 
   input.form-control {
     padding-right: 50px;
+    border-bottom: 2px solid $info;
   }
   input.form-control.valued {
     border-bottom-left-radius: 0;
