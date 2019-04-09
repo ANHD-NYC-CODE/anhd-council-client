@@ -16,6 +16,8 @@ import ConfigContext from 'Config/ConfigContext'
 import { setAppState } from 'Store/AppState/actions'
 import classnames from 'classnames'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import './style.scss'
 export class AdvancedSearch extends React.Component {
   constructor(props) {
@@ -81,7 +83,9 @@ export class AdvancedSearch extends React.Component {
                     </ToggleButton>
                   </ToggleButtonGroup>
                   <ClearAdvancedSearchButton className="d-inline">
-                    <Button variant="outline-warning">Clear Search</Button>
+                    <label className="text-warning toggle-link btn">
+                      <FontAwesomeIcon icon={faTimes} /> Clear Search
+                    </label>
                   </ClearAdvancedSearchButton>
                 </Col>
               </Row>
