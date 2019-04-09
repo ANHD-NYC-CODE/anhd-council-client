@@ -7,13 +7,16 @@ import { getAdvancedSearchParamMaps } from 'Store/AdvancedSearch/utilities/advan
 import { setGeographyAndRequestsAndRedirect } from 'Store/AppState/actions'
 import FilterComponent from 'AdvancedSearch/FilterComponent'
 import { replacePropertyFilter } from 'Store/AdvancedSearch/actions'
+import ClearAdvancedSearchButton from 'shared/components/buttons/ClearAdvancedSearchButton'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { addGeography, updateGeography } from 'Store/AdvancedSearch/actions'
 import { setAppState, setAdvancedSearchRequestAndRedirect } from 'Store/AppState/actions'
 import ConditionComponent from 'AdvancedSearch/ConditionComponent'
 import GeographySelect from 'shared/components/GeographySelect'
 import FormError from 'shared/components/FormError'
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, Row, Col } from 'react-bootstrap'
 import { Formik } from 'formik'
 import './style.scss'
 const schema = yup.object({
@@ -187,7 +190,18 @@ class AdvancedSearchForm extends React.PureComponent {
             validated={this.state.validated}
           >
             <FormError show={!!this.props.error} message={(this.props.error || {}).message} />
-            <h4 className="text-muted font-weight-bold text-uppercase mb-4">1) Select a geography</h4>
+            <Row>
+              <Col xs={12} md={6}>
+                <h4 className="text-muted font-weight-bold text-uppercase mb-4">1) Select a geography</h4>
+              </Col>
+              <Col xs={12} md={6} className="mb-4 mb-md-0">
+                <ClearAdvancedSearchButton className="d-inline">
+                  <label className="border-danger text-danger toggle-link btn">
+                    <FontAwesomeIcon icon={faTimes} /> Clear Search
+                  </label>
+                </ClearAdvancedSearchButton>
+              </Col>
+            </Row>
             <GeographySelect
               cancelChangeGeography={this.cancelChangeGeography}
               changing={this.props.appState.changingGeography}

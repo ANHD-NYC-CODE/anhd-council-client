@@ -8,7 +8,7 @@ import { setAppState } from 'Store/AppState/actions'
 import StandardizedInput from 'shared/classes/StandardizedInput'
 import IntroductionBlock from 'shared/components/IntroductionBlock'
 import { Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
-
+import * as c from 'shared/constants'
 import { Row, Col } from 'react-bootstrap'
 class Main extends React.Component {
   constructor(props) {
@@ -83,10 +83,10 @@ class Main extends React.Component {
     return (
       <div id="main" className="main">
         <Row>
-          <Col className="layout__left-column touch-left padding-xs-sm-0" xs={12} lg={5}>
+          <Col className="layout__left-column touch-left padding-xs-sm-0" xs={12} lg={c.SIDEBAR_COLUMN_SIZE}>
             <IntroductionBlock scrollToControls={this.scrollToControls} />
           </Col>
-          <Col className="px-md-4 py-3 py-lg-6" xs={12} lg={7}>
+          <Col className="px-md-4 py-3 py-lg-6" xs={12} lg={12 - c.SIDEBAR_COLUMN_SIZE}>
             <p className="text-muted font-weight-bold">Select a district or enter a building address to begin.</p>
             <Element name="main-controls" />
             <div className="mb-4">

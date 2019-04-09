@@ -64,7 +64,7 @@ export default class SearchBar extends React.PureComponent {
         />
         {this.props.show && (
           <div className="search-bar__close" onClick={e => this.props.hideSearch(e, true)}>
-            <FontAwesomeIcon className="text-warning" size="lg" icon={faTimesCircle} />
+            <FontAwesomeIcon className="text-secondary" size="lg" icon={faTimesCircle} />
           </div>
         )}
         <div className="search-bar__loading">{this.props.loading && <SpinnerLoader size="40px" />}</div>

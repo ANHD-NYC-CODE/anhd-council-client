@@ -66,7 +66,16 @@ export const setGeographyAndRequestsAndRedirect = ({
   }
 }
 
-export const setLookupAndRequestsAndRedirect = ({ bbl, bin, replaceHistory = false, requests } = {}) => dispatch => {
+export const setLookupAndRequestsAndRedirect = ({ bbl, bin, replaceHistory = false, requests } = {}) => (
+  dispatch,
+  getState
+) => {
+  const currentProperty = getState().appState.currentProperty
+  const currentBuilding = getState().appState.currentBuilding
+  if (currentProperty === bbl && currentBuilding === bin) {
+    return dispatch(replace(addressResultToPath({ bbl, bin })))
+  }
+
   dispatch(removeRequestType('LOOKUP_FILTER'))
   dispatch(removeRequestType('LOOKUP_PROFILE'))
   dispatch(removeManyRequests(requests.map(r => r.requestConstant)))

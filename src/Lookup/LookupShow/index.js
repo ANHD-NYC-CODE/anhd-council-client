@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import SummaryResultCard from 'shared/components/ResultCard/SummaryResultCard'
 import { getCurrentBuilding } from 'Lookup/utilities'
+import * as c from 'shared/constants'
 
 import LeafletMap from 'LeafletMap'
 import AddressSearch from 'Lookup/AddressSearch'
@@ -112,7 +113,11 @@ class LookupShow extends React.Component {
             />
           ) : (
             <Row className="lookup-show">
-              <Col className="layout__left-column lookup-show__property-column px-lg-2 px-xl-5" xs={12} lg={5}>
+              <Col
+                className="layout__left-column touch-left lookup-show__property-column px-lg-2 px-xl-5"
+                xs={12}
+                lg={c.SIDEBAR_COLUMN_SIZE}
+              >
                 <Row className="mt-4">
                   <Col xs={12}>
                     <h3 className="text-light-gray font-weight-bold text-uppercase">Property Info</h3>
@@ -160,7 +165,7 @@ class LookupShow extends React.Component {
                   </Col>
                 </Row>
               </Col>
-              <Col xs={12} lg={7}>
+              <Col xs={12} lg={12 - c.SIDEBAR_COLUMN_SIZE}>
                 <Row className="mt-2 mb-4 mt-lg-4 mb-lg-2 px-xl-3">
                   <Col>
                     <Row>
