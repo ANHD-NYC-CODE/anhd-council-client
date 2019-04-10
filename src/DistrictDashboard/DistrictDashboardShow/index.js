@@ -31,7 +31,7 @@ class DistrictDashboardShow extends React.PureComponent {
       view: 1,
     }
 
-    this.getTableRecords = this.getTableRecords.bind(this)
+    this.getResultRecords = this.getResultRecords.bind(this)
     this.getGeographySummaryResultsFilter = this.getGeographySummaryResultsFilter.bind(this)
     this.getDisplayedResultsFilter = this.getDisplayedResultsFilter.bind(this)
   }
@@ -65,7 +65,7 @@ class DistrictDashboardShow extends React.PureComponent {
     return this.props.selectedResultsFilter
   }
 
-  getTableRecords() {
+  getResultRecords() {
     const resultFilter = this.props.appState.selectedResultsFilter
       ? results =>
           this.props.appState.selectedResultsFilter.internalFilter(
@@ -256,7 +256,7 @@ class DistrictDashboardShow extends React.PureComponent {
                           handleChangeGeography={this.props.handleChangeGeography}
                           handleChangeGeographyId={this.props.handleChangeGeographyId}
                           iconConfig="MULTIPLE"
-                          results={[]}
+                          results={this.getResultRecords()}
                           displayedResultsFilter={this.getDisplayedResultsFilter()}
                           selectGeographyData={this.props.config.selectGeographyData}
                           switchView={this.setViewTable}
@@ -270,7 +270,7 @@ class DistrictDashboardShow extends React.PureComponent {
                           errorAction={(this.props.error || {}).status === 504 ? this.retryRequest : null}
                           expandable={false}
                           loading={this.props.loading}
-                          records={this.getTableRecords()}
+                          records={this.getResultRecords()}
                           tableConfig={this.props.propertySummaryRequest.tableConfig}
                         />
 

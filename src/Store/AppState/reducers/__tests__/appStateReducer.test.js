@@ -39,12 +39,17 @@ describe('App State reducer', () => {
   describe('SET_ADVANCED_SEARCH_REQUEST', () => {
     const advancedSearchRequest = 4
     const requests = [1, 2, 3]
+    const selectedRequests = [requests]
     it('sets the request', () => {
       expect(
-        r.appStateReducer({ ...r.initialState, requests }, a.handleSetAdvancedSearchRequest(advancedSearchRequest))
+        r.appStateReducer(
+          { ...r.initialState, requests, selectedRequests },
+          a.handleSetAdvancedSearchRequest(advancedSearchRequest)
+        )
       ).toEqual({
         ...r.initialState,
         requests: [...requests, advancedSearchRequest],
+        selectedRequests: [advancedSearchRequest],
       })
     })
   })
@@ -62,7 +67,7 @@ describe('App State reducer', () => {
 
   describe('TOGGLE_SELECTED_REQUEST', () => {
     describe('if request is not in array', () => {
-      const requests = [{ type: 'GEOGRAPHY_HOUSING_TYPE' }, { type: 'A' }]
+      const requests = [{ type: 'A' }]
       const newRequest = { type: 'B' }
 
       it('adds the request', () => {
@@ -82,17 +87,18 @@ describe('App State reducer', () => {
     describe('if request is in array', () => {
       const removeRequest = { type: 'B' }
       const requests = [{ type: 'GEOGRAPHY_HOUSING_TYPE' }, { type: 'A' }, removeRequest]
+      const selectedRequests = [{ type: 'A' }, removeRequest]
 
       it('removes the request', () => {
         expect(
           r.appStateReducer(
-            { ...r.initialState, selectedRequests: requests, requests },
+            { ...r.initialState, selectedRequests: selectedRequests, requests },
             a.toggleSelectedRequest(removeRequest)
           )
         ).toEqual({
           ...r.initialState,
           requests,
-          selectedRequests: [{ type: 'GEOGRAPHY_HOUSING_TYPE' }, { type: 'A' }],
+          selectedRequests: [{ type: 'A' }],
         })
       })
     })
@@ -112,6 +118,42 @@ describe('App State reducer', () => {
           ...r.initialState,
           requests,
           selectedRequests: [{ type: 'GEOGRAPHY_HOUSING_TYPE' }],
+        })
+      })
+    })
+
+    describe('if default request is present', () => {
+      const defaultRequest = { type: 'GEOGRAPHY_HOUSING_TYPE' }
+      const newRequest = { type: 'B' }
+      const requests = [defaultRequest, newRequest]
+      it('it removes default request', () => {
+        expect(
+          r.appStateReducer(
+            { ...r.initialState, selectedRequests: [defaultRequest], requests },
+            a.toggleSelectedRequest(newRequest)
+          )
+        ).toEqual({
+          ...r.initialState,
+          requests,
+          selectedRequests: [newRequest],
+        })
+      })
+    })
+
+    describe('if advanced search request is present', () => {
+      const defaultRequest = { type: 'ADVANCED_SEARCH' }
+      const newRequest = { type: 'B' }
+      const requests = [defaultRequest, newRequest]
+      it('it removes advanced search request', () => {
+        expect(
+          r.appStateReducer(
+            { ...r.initialState, selectedRequests: [defaultRequest], requests },
+            a.toggleSelectedRequest(newRequest)
+          )
+        ).toEqual({
+          ...r.initialState,
+          requests,
+          selectedRequests: [newRequest],
         })
       })
     })

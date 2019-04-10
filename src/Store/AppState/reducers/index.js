@@ -26,10 +26,10 @@ export const appStateReducer = (state = Object.freeze(initialState), action = { 
     }
     case c.TOGGLE_SELECTED_REQUEST: {
       const defaultRequest = getDefaultRequest(state.requests)
+      const exclusiveRequests = [defaultRequest, { type: 'ADVANCED_SEARCH' }].filter(r => r)
       let selectedRequests = [...state.selectedRequests]
-
-      // Remove default request if it exists
-      if (selectedRequests.includes(defaultRequest)) {
+      // Remove exclusive requests if present
+      if (selectedRequests.some(request => exclusiveRequests.some(r => r.type === request.type))) {
         selectedRequests = []
       }
 
@@ -72,8 +72,8 @@ export const appStateReducer = (state = Object.freeze(initialState), action = { 
     case c.SET_ADVANCED_SEARCH_REQUEST: {
       return {
         ...state,
-        selectedRequest: action.advancedSearchReques,
         requests: [...state.requests, action.advancedSearchRequest],
+        selectedRequests: [action.advancedSearchRequest],
       }
     }
     case c.REMOVE_REQUEST_TYPE: {
