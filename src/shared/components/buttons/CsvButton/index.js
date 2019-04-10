@@ -11,10 +11,14 @@ const CsvButton = props => {
   return (
     <a
       className={classnames('csv-button', props.className)}
-      onClick={e => {
-        e.preventDefault()
-        props.dispatch(makeCsvRequest(props.request))
-      }}
+      onClick={
+        props.onClick
+          ? props.onClick
+          : e => {
+              e.preventDefault()
+              props.dispatch(makeCsvRequest(props.request))
+            }
+      }
     >
       <FontAwesomeIcon icon={faFileCsv} />
       <span>Csv</span>
@@ -22,6 +26,8 @@ const CsvButton = props => {
   )
 }
 
-CsvButton.propTypes = {}
+CsvButton.propTypes = {
+  onClick: PropTypes.func,
+}
 
 export default CsvButton

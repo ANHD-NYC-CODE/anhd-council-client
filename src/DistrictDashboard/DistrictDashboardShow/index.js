@@ -20,6 +20,8 @@ import GeographyProfile from 'DistrictDashboard/GeographyProfile'
 import { districtDashboardFilterdates } from 'shared/utilities/componentUtils'
 import PrintDistrictDashboard from 'DistrictDashboard/PrintDistrictDashboard'
 import BaseTable from 'shared/components/BaseTable'
+import { makeBblCsvrequest } from 'Store/Request/actions'
+
 import './style.scss'
 
 class DistrictDashboardShow extends React.PureComponent {
@@ -140,11 +142,20 @@ class DistrictDashboardShow extends React.PureComponent {
                   />
                 </Col>
                 <Col className="d-none d-md-block" xs={12} md={{ span: 1, offset: 0 }} lg={{ span: 1, offset: 0 }}>
-                  {/* <CsvButton
+                  <CsvButton
                     className="text-light"
+                    onClick={e => {
+                      e.preventDefault()
+                      this.props.dispatch(
+                        makeBblCsvrequest(
+                          this.props.propertySummaryRequest,
+                          resultRecords.map(r => r.bbl).filter(r => r)
+                        )
+                      )
+                    }}
                     dispatch={this.props.dispatch}
                     request={this.props.appState.selectedRequest}
-                  /> */}
+                  />
                 </Col>
               </Row>
               <Row className="py-2 mb-4 mb-lg-0">
