@@ -7,7 +7,8 @@ const DistrictResultsTitle = props => {
     <h5 className="font-weight-bold text-uppercase mb-4">Custom Search</h5>
   ) : (
     <h5 className="font-weight-bold text-uppercase mb-4">
-      {constructSummaryFilterSentence(props.displayedRequest, props.displayedResultsFilter)}
+      Properties Found: {props.records.length}
+      {/* {constructSummaryFilterSentence({ request: props.displayedRequest, resultsFilter: props.displayedResultsFilter })} */}
     </h5>
   )
 }
@@ -15,6 +16,7 @@ const DistrictResultsTitle = props => {
 DistrictResultsTitle.propTypes = {
   displayedRequest: PropTypes.object,
   displayedResultsFilter: PropTypes.object,
+  records: PropTypes.array,
 }
 
 export default DistrictResultsTitle

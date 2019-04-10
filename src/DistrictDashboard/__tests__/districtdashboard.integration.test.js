@@ -80,14 +80,14 @@ describe('DistrictDashboard', () => {
       expect(wrapper.find('ToggleButtonGroup')).toHaveLength(2)
       expect(wrapper.find('GeographyProfile')).toHaveLength(1)
       expect(wrapper.find('LeafletMap')).toHaveLength(1)
-      expect(wrapper.find('DistrictResultsTitle').text()).toEqual('All Residential Properties')
+
       expect(wrapper.find('RequestSummaryWrapper')).toHaveLength(12)
 
       expect(wrapper.findWhere(node => node.key() === 'housingtype-summary-0').props().children.props.selected).toEqual(
         true
       )
 
-      expect(wrapper.find('DistrictResultsTitle').text()).toEqual('All Residential Properties')
+      expect(wrapper.find('DistrictResultsTitle').text()).toEqual('Properties Found: 0')
     })
     describe('geography select', () => {
       it('shows the selected geography values', () => {
@@ -152,7 +152,7 @@ describe('DistrictDashboard', () => {
         wrapper.update()
         expect(wrapper.find('ToggleButtonGroup')).toHaveLength(2)
         expect(wrapper.find('GeographySelect')).toHaveLength(1)
-        expect(wrapper.find('RequestTableWrapper')).toHaveLength(6)
+        expect(wrapper.find('BaseTable')).toHaveLength(1)
       })
 
       it('updates the request card summaries when data is received', async () => {
@@ -198,20 +198,21 @@ describe('DistrictDashboard', () => {
           router: { location: { pathname: '/council/1' }, action: 'POP' },
         })
 
+        const summaryElement = wrapper.find('RequestSummaryWrapper').at(4)
         wrapper
-          .find('input[name="view"]')
-          .at(1)
-          .simulate('change', { target: { checked: true } })
-
-        wrapper
-          .findWhere(node => node.key() === 'request-summary-MAP_FILTER-2')
+          .find('RequestSummaryWrapper')
+          .at(4)
           .find('button')
           .simulate('click')
-
+        summaryElement.update()
         wrapper.update()
+        expect(
+          wrapper
+            .find('RequestSummaryWrapper')
+            .at(4)
 
-        expect(wrapper.findWhere(node => node.key() === 'request-wrapper-3').props().visible).toEqual(true)
-        expect(wrapper.find('DistrictResultsTitle').text()).toEqual('All Properties  w/ 5+ HPD Complaints')
+            .props().selected
+        ).toEqual(true)
       })
     })
 
@@ -236,9 +237,9 @@ describe('DistrictDashboard', () => {
           .simulate('click')
 
         wrapper.update()
-        expect(wrapper.find('DistrictResultsTitle').text()).toEqual('All Residential Properties')
+        expect(wrapper.find('DistrictResultsTitle').text()).toEqual('Properties Found: 3')
         // 3 residential out of 4
-        expect(wrapper.findWhere(node => node.key() === 'request-wrapper-0').find('tbody tr')).toHaveLength(3)
+        expect(wrapper.find('BaseTable').find('tbody tr')).toHaveLength(3)
 
         wrapper
           .findWhere(node => node.key() === 'housingtype-summary-3')
@@ -247,52 +248,8 @@ describe('DistrictDashboard', () => {
 
         wrapper.update()
         // 2 Small homes
-        expect(wrapper.findWhere(node => node.key() === 'request-wrapper-0').find('tbody tr')).toHaveLength(2)
-        expect(wrapper.find('DistrictResultsTitle').text()).toEqual('Small Homes Properties')
-      })
-    })
-
-    describe('combined filters', () => {
-      it('Switches the results filter', async () => {
-        const results = [
-          createPropertyRequestMock({ bbl: 1, unitsres: 1 }),
-          createPropertyRequestMock({ bbl: 2, unitsres: 1 }),
-          createPropertyRequestMock({ bbl: 3, unitsres: 0 }),
-          createPropertyRequestMock({ bbl: 4, unitsres: 10 }),
-        ]
-        mock.onGet('/councils/1/properties/').reply(200, results)
-        const [wrapper, store] = setupWrapper({
-          router: { location: { pathname: '/council/1' }, action: 'POP' },
-        })
-
-        await flushAllPromises()
-        wrapper.find('input#combineFilters').simulate('change', { target: { checked: true } })
-        wrapper.update()
-        expect(wrapper.find('DistrictResultsTitle').text()).toEqual('All Residential Properties  w/ 10+ HPD Violations')
-        wrapper.find('table').forEach(table => {
-          expect(table.find('tbody tr')).toHaveLength(3)
-        })
-
-        wrapper
-          .findWhere(node => node.key() === 'housingtype-summary-3')
-          .find('button')
-          .simulate('click')
-        wrapper.update()
-
-        expect(wrapper.find('DistrictResultsTitle').text()).toEqual('Small Homes Properties  w/ 10+ HPD Violations')
-
-        wrapper.find('table').forEach(table => {
-          expect(table.find('tbody tr')).toHaveLength(2)
-        })
-
-        wrapper
-          .findWhere(node => node.key() === 'request-summary-MAP_FILTER-2')
-          .find('button')
-          .simulate('click')
-
-        wrapper.find('table').forEach(table => {
-          expect(table.find('tbody tr')).toHaveLength(2)
-        })
+        expect(wrapper.find('BaseTable').find('tbody tr')).toHaveLength(2)
+        expect(wrapper.find('DistrictResultsTitle').text()).toEqual('Properties Found: 2')
       })
     })
 
@@ -334,7 +291,7 @@ describe('DistrictDashboard', () => {
           .at(12)
           .simulate('click')
         newWrapper.update()
-        expect(newWrapper.find('DistrictResultsTitle').text()).toEqual('Custom Search')
+        expect(newWrapper.find('DistrictResultsTitle').text()).toEqual('Properties Found: 0')
       })
 
       it('clears the custom filter', async () => {
@@ -342,18 +299,18 @@ describe('DistrictDashboard', () => {
           router: { location: { pathname: '/council/1' }, action: 'POP' },
         })
 
+        const advancedRequest = new DataRequest({
+          type: 'ADVANCED_SEARCH',
+          resourceModel: resourceModels['PROPERTY'],
+          tableConfig: new TableConfig({ resourceConstant: 'PROPERTY' }),
+        })
+
         const [newWrapper, newStore] = setupWrapper({
           router: { location: { pathname: '/council/1' }, action: 'POP' },
           appState: {
             ...store.getState().appState,
-            requests: [
-              ...store.getState().appState.requests,
-              new DataRequest({
-                type: 'ADVANCED_SEARCH',
-                resourceModel: resourceModels['PROPERTY'],
-                tableConfig: new TableConfig({ resourceConstant: 'PROPERTY' }),
-              }),
-            ],
+            requests: [...store.getState().appState.requests, advancedRequest],
+            selectedRequests: [advancedRequest],
           },
         })
 
