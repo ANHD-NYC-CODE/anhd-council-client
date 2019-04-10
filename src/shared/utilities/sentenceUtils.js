@@ -12,7 +12,7 @@ import {
 ///////////////////
 // Summary Sentence
 
-export const constructSummaryFilterSentence = (request, resultsFilter) => {
+export const constructSummaryFilterSentence = ({ request, resultsFilter }) => {
   const filterSegment = resultsFilter ? resultsFilter.label + ' Properties' : 'All Properties'
 
   const datasetSegment = !!request && Object.keys(request).length ? ' w/ ' + request.summaryCardLabel : ''

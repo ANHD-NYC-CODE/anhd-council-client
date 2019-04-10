@@ -61,7 +61,6 @@ export const handleCatchError = (error, type, dispatch, requestId) => {
   dispatch(errorActions.handleFailure(type, errorStatus, errorMessage))
 
   dispatch(loadingActions.handleCompletedRequest(type, requestId))
-  console.log(errorStatus, errorMessage)
   handleToast(errorStatus, errorMessage)
 }
 

@@ -94,6 +94,7 @@ class DistrictDashboardShow extends React.PureComponent {
   }
 
   render() {
+    const resultRecords = this.getResultRecords()
     return (
       <LayoutContext.Consumer>
         {layout =>
@@ -218,14 +219,15 @@ class DistrictDashboardShow extends React.PureComponent {
                 <Col xs={12} lg={5} xl={6}>
                   <Row className="mb-2 mb-lg-0 district-dashboard-show__results-container">
                     <Col xs={12} xl={7}>
-                      {/* <DistrictResultsTitle
+                      <DistrictResultsTitle
+                        records={resultRecords}
                         displayedRequest={
                           this.props.selectedRequest !== this.props.propertySummaryRequest
                             ? this.props.selectedRequest
                             : undefined
                         }
                         displayedResultsFilter={this.props.selectedResultsFilter}
-                      /> */}
+                      />
                     </Col>
                     <Col className="d-flex view-toggle__container" xs={12} xl={5}>
                       <ToggleButtonGroup
@@ -256,7 +258,7 @@ class DistrictDashboardShow extends React.PureComponent {
                           handleChangeGeography={this.props.handleChangeGeography}
                           handleChangeGeographyId={this.props.handleChangeGeographyId}
                           iconConfig="MULTIPLE"
-                          results={this.getResultRecords()}
+                          results={resultRecords}
                           displayedResultsFilter={this.getDisplayedResultsFilter()}
                           selectGeographyData={this.props.config.selectGeographyData}
                           switchView={this.setViewTable}
@@ -270,7 +272,7 @@ class DistrictDashboardShow extends React.PureComponent {
                           errorAction={(this.props.error || {}).status === 504 ? this.retryRequest : null}
                           expandable={false}
                           loading={this.props.loading}
-                          records={this.getResultRecords()}
+                          records={resultRecords}
                           tableConfig={this.props.propertySummaryRequest.tableConfig}
                         />
 
