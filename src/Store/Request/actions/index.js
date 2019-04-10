@@ -1,5 +1,5 @@
 import * as c from '../constants'
-import { constructAxiosGet } from 'shared/utilities/Axios'
+import { constructAxiosGet, constructAxiosPost } from 'shared/utilities/Axios'
 
 export const addRequest = requestConstant => ({
   type: c.ADD_REQUEST,
@@ -36,6 +36,24 @@ export const makeRequest = dataRequest => (dispatch, getState, access_token) => 
     access_token,
     dataRequest.requestConstant,
     handleRequestResults
+  )
+}
+
+export const makeBblCsvrequest = (dataRequest, bblList) => (dispatch, getState, access_token) => {
+  const csv_constant = `${dataRequest.requestConstant}_CSV`
+  dispatch(addRequest(csv_constant))
+  const requestId = Math.floor(Math.random() * 1000000)
+
+  return constructAxiosPost(
+    dispatch,
+    getState,
+    requestId,
+    '/bbls',
+    JSON.stringify(bblList), // Body
+    dataRequest.csv_params,
+    access_token,
+    csv_constant,
+    undefined
   )
 }
 

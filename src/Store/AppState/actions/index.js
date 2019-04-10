@@ -59,6 +59,7 @@ export const setGeographyAndRequestsAndRedirect = ({
   dispatch(removeRequestType('GEOGRAPHY_HOUSING_TYPE'))
   dispatch(removeRequestType('ADVANCED_SEARCH'))
   dispatch(removeManyRequests(requests.map(r => r.requestConstant)))
+  dispatch(setAppState({ selectedRequests: [] }))
   dispatch(handleSetGeographyRequests(geographyType, geographyId, requests))
 
   if (redirect) {
