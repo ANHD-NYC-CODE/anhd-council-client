@@ -8,6 +8,11 @@ export const setAppState = state => ({
   state,
 })
 
+export const toggleSelectedRequest = request => ({
+  type: c.TOGGLE_SELECTED_REQUEST,
+  toggledRequest: request,
+})
+
 export const setDefaultSelections = model => ({
   type: c.SET_DEFAULT_SELECTED_REQUEST,
   model,

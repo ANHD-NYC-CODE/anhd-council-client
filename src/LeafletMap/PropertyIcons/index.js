@@ -33,7 +33,7 @@ class PropertyIcons extends React.Component {
   }
 
   render() {
-    if (!(this.props.visible && this.props.displayedRequest && this.props.results)) return null
+    if (!(this.props.visible && this.props.results.length)) return null
     if (this.props.iconConfig === 'MULTIPLE') {
       if (!this.props.overrideWarning && this.props.results.length > c.MAP_MARKER_LIMIT) return null
       return this.props.results
@@ -72,16 +72,8 @@ PropertyIcons.propTypes = {
   handlePropertyAction: PropTypes.func,
   dispatch: PropTypes.func,
   results: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
-  displayedRequest: PropTypes.object,
   displayedResultsFilter: PropTypes.object,
   visible: PropTypes.bool,
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const results = state.requests[(ownProps.displayedRequest || {}).requestConstant] || []
-  return {
-    results: ownProps.displayedResultsFilter.internalFilter(results, ownProps.displayedResultsFilter.paramMaps),
-  }
-}
-
-export default connect(mapStateToProps)(PropertyIcons)
+export default PropertyIcons

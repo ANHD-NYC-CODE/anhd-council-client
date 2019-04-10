@@ -150,7 +150,6 @@ class BaseTable extends React.Component {
                   <TableHeader
                     datasetModelName={this.props.datasetModelName}
                     dispatch={this.props.dispatch}
-                    request={this.props.request}
                     title={this.props.caption}
                   />
                 </Col>
@@ -165,7 +164,7 @@ class BaseTable extends React.Component {
                   xs={4}
                   className="table-header__share-column d-none d-md-flex justify-content-end align-items-center"
                 >
-                  <CsvButton dispatch={this.props.dispatch} request={this.props.request} />
+                  {this.props.request && <CsvButton dispatch={this.props.dispatch} request={this.props.request} />}
                 </Col>
                 <Col xs={4} className="d-flex align-items-center justify-content-end">
                   <SizePerPageDropdownStandalone btnContextual="btn-outline-primary" {...paginationProps} />
@@ -230,6 +229,7 @@ BaseTable.defaultProps = {
   expandable: true,
   includeHeader: true,
   nested: false,
+  request: undefined,
 }
 
 BaseTable.propTypes = {

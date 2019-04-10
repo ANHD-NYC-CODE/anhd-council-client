@@ -3,6 +3,9 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { push, createMatchSelector } from 'connected-react-router'
 import { setGeographyAndRequestsAndRedirect } from 'Store/AppState/actions'
+import { createLoadingSelector } from 'Store/Loading/selectors'
+import { createErrorSelector } from 'Store/Error/selectors'
+
 import DistrictDashboardIndex from 'DistrictDashboard/DistrictDashboardIndex'
 import DistrictDashboardRequestsWrapper from 'DistrictDashboard/DistrictDashboardRequestsWrapper'
 import StandardizedInput from 'shared/classes/StandardizedInput'
@@ -163,7 +166,10 @@ class DistrictDashboard extends React.PureComponent {
         handleChangeGeography={this.submitGeography}
         handleChangeGeographyType={this.handleChangeGeographyType}
         handleChangeGeographyId={this.handleChangeGeographyId}
+        mapRequests={this.props.mapRequests}
         requests={this.props.requests}
+        selectedLoading={this.props.selectedLoading}
+        selectedError={this.props.selectedError}
         trigger404Error={this.trigger404Error}
       />
     )
@@ -181,6 +187,12 @@ DistrictDashboard.propTypes = {
 
 const makeMapStateToProps = () => {
   const mapStateToProps = state => {
+    const loadingSelector = createLoadingSelector([
+      state.appState.selectedRequests.map(request => request.requestConstant),
+    ])
+
+    const errorSelector = createErrorSelector([state.appState.selectedRequests.map(request => request.requestConstant)])
+
     const selectRequests = makeSelectRequests
     const pathMatch = state.router.location.pathname.match(/(council|community)/)
     const path = pathMatch ? pathMatch[0] : undefined
@@ -193,7 +205,10 @@ const makeMapStateToProps = () => {
       advancedSearch: state.advancedSearch,
       geographyId: match ? match.params.id : undefined,
       geographyType: path ? path.toUpperCase() : undefined,
-      requests: selectRequests(state),
+      mapRequests: selectRequests(state),
+      selectedLoading: loadingSelector(state),
+      selectedError: errorSelector(state),
+      requests: state.requests,
     }
   }
   return mapStateToProps

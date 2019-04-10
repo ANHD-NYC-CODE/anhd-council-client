@@ -11,14 +11,6 @@ class RequestTableWrapper extends React.Component {
     super(props)
 
     this.retryRequest = this.retryRequest.bind(this)
-    this.processError = this.processError.bind(this)
-  }
-
-  processError(error) {
-    if ((error || {}).status === 408) {
-      error.message = 'The request exceeded 2 minutes and timed out. Trying again may yield a result.'
-    }
-    return error
   }
 
   retryRequest() {
@@ -34,7 +26,7 @@ class RequestTableWrapper extends React.Component {
           caption={this.props.caption}
           datasetModelName={this.props.request.tableConfig.datasetModelName}
           dispatch={this.props.dispatch}
-          error={this.processError(this.props.error)}
+          error={this.props.error}
           errorAction={(this.props.error || {}).status === 504 ? this.retryRequest : null}
           expandable={this.props.expandable}
           loading={this.props.loading}

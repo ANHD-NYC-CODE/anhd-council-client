@@ -19,21 +19,19 @@ import { geographySelectionToString } from 'shared/utilities/languageUtils'
 import GeographyProfile from 'DistrictDashboard/GeographyProfile'
 import { districtDashboardFilterdates } from 'shared/utilities/componentUtils'
 import PrintDistrictDashboard from 'DistrictDashboard/PrintDistrictDashboard'
-
+import BaseTable from 'shared/components/BaseTable'
 import './style.scss'
 
 class DistrictDashboardShow extends React.PureComponent {
   constructor(props) {
     super(props)
     this.setViewTable = this.setViewTable.bind(this)
-    this.switchTable = this.switchTable.bind(this)
     this.toggleView = this.toggleView.bind(this)
-    this.applyCombinedFilters = this.applyCombinedFilters.bind(this)
     this.state = {
       view: 1,
-      combinedFilters: false,
     }
 
+    this.getTableRecords = this.getTableRecords.bind(this)
     this.getGeographySummaryResultsFilter = this.getGeographySummaryResultsFilter.bind(this)
     this.getDisplayedResultsFilter = this.getDisplayedResultsFilter.bind(this)
   }
@@ -59,47 +57,40 @@ class DistrictDashboardShow extends React.PureComponent {
     })
   }
 
-  applyCombinedFilters(e) {
-    this.setState({
-      combinedFilters: !this.state.combinedFilters,
-    })
-
-    if (e.target.checked) {
-      const defaultRequest =
-        this.props.appState.selectedRequest === this.props.propertySummaryRequest
-          ? this.props.geographyRequests[0]
-          : this.props.appState.selectedRequest
-
-      const defaultFilter =
-        this.props.appState.selectedResultsFilter || this.props.config.resourceModels['PROPERTY'].ownResultFilters[0]
-      this.switchTable(defaultRequest, defaultFilter)
-    } else {
-      this.switchTable(this.props.appState.selectedRequest, undefined)
-    }
-  }
-
-  switchTable(request, filter) {
-    let appliedRequest
-    if (request) {
-      appliedRequest = request
-    } else {
-      appliedRequest = this.props.appState.selectedRequest
-    }
-    this.props.switchSelectedRequest(appliedRequest, filter)
-    this.props.cancelChangeGeography()
-  }
-
   getGeographySummaryResultsFilter() {
-    return this.state.combinedFilters ? this.props.selectedResultsFilter : undefined
+    return this.props.selectedResultsFilter
   }
 
   getDisplayedResultsFilter() {
-    if ((this.props.selectedRequest || {}).type === 'ADVANCED_SEARCH') return undefined
-    if (this.state.combinedFilters || (this.props.selectedRequest || {}).type === 'GEOGRAPHY_HOUSING_TYPE') {
-      return this.props.selectedResultsFilter
-    } else {
-      return undefined
+    return this.props.selectedResultsFilter
+  }
+
+  getTableRecords() {
+    const resultFilter = this.props.appState.selectedResultsFilter
+      ? results =>
+          this.props.appState.selectedResultsFilter.internalFilter(
+            results,
+            this.props.appState.selectedResultsFilter.paramMaps
+          )
+      : results => results
+
+    const requestResults = []
+
+    const fullResults = [].concat.apply(
+      [],
+      this.props.appState.selectedRequests.map(request => this.props.requests[request.requestConstant]).filter(r => r)
+    )
+
+    // Make distinct array
+    const map = new Map()
+    for (const item of fullResults) {
+      if (!map.has(item.bbl)) {
+        map.set(item.bbl, true) // set any value to Map
+        requestResults.push(item)
+      }
     }
+
+    return resultFilter(requestResults)
   }
 
   render() {
@@ -148,11 +139,11 @@ class DistrictDashboardShow extends React.PureComponent {
                   />
                 </Col>
                 <Col className="d-none d-md-block" xs={12} md={{ span: 1, offset: 0 }} lg={{ span: 1, offset: 0 }}>
-                  <CsvButton
+                  {/* <CsvButton
                     className="text-light"
                     dispatch={this.props.dispatch}
                     request={this.props.appState.selectedRequest}
-                  />
+                  /> */}
                 </Col>
               </Row>
               <Row className="py-2 mb-4 mb-lg-0">
@@ -184,7 +175,7 @@ class DistrictDashboardShow extends React.PureComponent {
                     </Col>
                   </Row>
                   <Row className="py-2 mb-4 mb-lg-0">
-                    {(this.props.selectedRequest || {}).type === 'ADVANCED_SEARCH' ? (
+                    {this.props.appState.selectedRequests.find(request => request.type === 'ADVANCED_SEARCH') ? (
                       <Col>
                         <h5 className="text-primary font-weight-bold">Custom Search:</h5>
                         <AdvancedSearchSentence advancedSearch={this.props.advancedSearch} />
@@ -200,10 +191,7 @@ class DistrictDashboardShow extends React.PureComponent {
                   </Row>
                   <DistrictSummarySection
                     appState={this.props.appState}
-                    combinedFilters={this.state.combinedFilters}
                     dispatch={this.props.dispatch}
-                    switchTable={this.switchTable}
-                    selectedRequest={this.props.selectedRequest}
                     geographyRequests={this.props.geographyRequests}
                     selectedResultsFilter={this.getGeographySummaryResultsFilter()}
                   />
@@ -220,11 +208,9 @@ class DistrictDashboardShow extends React.PureComponent {
                   <Row className="housingtype-section py-2 mb-4 mb-lg-0">
                     <HousingTypeSection
                       appState={this.props.appState}
-                      combinedFilters={this.state.combinedFilters}
                       housingTypeRequests={this.props.housingTypeRequests}
                       propertySummaryRequest={this.props.propertySummaryRequest}
-                      selectedRequest={this.props.selectedRequest}
-                      switchTable={this.switchTable}
+                      switchSelectedFilter={this.props.switchSelectedFilter}
                       selectedResultsFilter={this.props.selectedResultsFilter}
                     />
                   </Row>
@@ -232,14 +218,14 @@ class DistrictDashboardShow extends React.PureComponent {
                 <Col xs={12} lg={5} xl={6}>
                   <Row className="mb-2 mb-lg-0 district-dashboard-show__results-container">
                     <Col xs={12} xl={7}>
-                      <DistrictResultsTitle
+                      {/* <DistrictResultsTitle
                         displayedRequest={
                           this.props.selectedRequest !== this.props.propertySummaryRequest
                             ? this.props.selectedRequest
                             : undefined
                         }
                         displayedResultsFilter={this.props.selectedResultsFilter}
-                      />
+                      /> */}
                     </Col>
                     <Col className="d-flex view-toggle__container" xs={12} xl={5}>
                       <ToggleButtonGroup
@@ -258,21 +244,7 @@ class DistrictDashboardShow extends React.PureComponent {
                       </ToggleButtonGroup>
                     </Col>
                   </Row>
-                  <Row>
-                    <Col xs={12}>
-                      <Form.Check
-                        className="combineFilters__checkbox"
-                        custom
-                        type={'checkbox'}
-                        id={'combineFilters'}
-                        label={'Combine Dataset Filters with Housing Type Filters'}
-                        checked={this.state.combinedFilters}
-                        onChange={e => {
-                          this.applyCombinedFilters(e)
-                        }}
-                      />
-                    </Col>
-                  </Row>
+
                   <Row className="py-2 mb-4 mb-lg-0">
                     <Col>
                       <div className={classnames({ 'd-none': this.state.view !== 1 })}>
@@ -284,14 +256,25 @@ class DistrictDashboardShow extends React.PureComponent {
                           handleChangeGeography={this.props.handleChangeGeography}
                           handleChangeGeographyId={this.props.handleChangeGeographyId}
                           iconConfig="MULTIPLE"
-                          displayedRequest={this.props.selectedRequest}
+                          results={[]}
                           displayedResultsFilter={this.getDisplayedResultsFilter()}
                           selectGeographyData={this.props.config.selectGeographyData}
                           switchView={this.setViewTable}
                         />
                       </div>
                       <div className={classnames({ 'd-none': this.state.view === 1 })}>
-                        {this.props.geographyRequests.concat(this.props.housingTypeRequests).map((request, index) => {
+                        <BaseTable
+                          datasetModelName={this.props.propertySummaryRequest.tableConfig.datasetModelName}
+                          dispatch={this.props.dispatch}
+                          error={this.props.error}
+                          errorAction={(this.props.error || {}).status === 504 ? this.retryRequest : null}
+                          expandable={false}
+                          loading={this.props.loading}
+                          records={this.getTableRecords()}
+                          tableConfig={this.props.propertySummaryRequest.tableConfig}
+                        />
+
+                        {/* {this.props.geographyRequests.concat(this.props.housingTypeRequests).map((request, index) => {
                           return (
                             <RequestTableWrapper
                               expandable={false}
@@ -301,7 +284,7 @@ class DistrictDashboardShow extends React.PureComponent {
                               selectedResultsFilter={this.getDisplayedResultsFilter()}
                             />
                           )
-                        })}
+                        })} */}
                       </div>
                     </Col>
                   </Row>
