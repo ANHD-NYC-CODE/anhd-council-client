@@ -9,13 +9,15 @@ describe('App State reducer', () => {
   describe('SET_GEOGRAPHY_TYPE_AND_ID', () => {
     const type = 'COUNCIL'
     const id = '1'
-    const requests = [1, 2, 3]
-    it('sets the geography', () => {
+    const defaultRequest = { type: 'GEOGRAPHY_HOUSING_TYPE' }
+    const requests = [defaultRequest, 2, 3]
+    it('sets the geography, and default selectedRequest', () => {
       expect(r.appStateReducer(undefined, a.handleSetGeographyRequests(type, id, requests))).toEqual({
         ...r.initialState,
         currentGeographyType: type,
         currentGeographyId: id,
         requests: requests,
+        selectedRequests: [defaultRequest],
       })
     })
   })
@@ -54,6 +56,63 @@ describe('App State reducer', () => {
         ...r.initialState,
 
         requests: [{ type: 'B' }],
+      })
+    })
+  })
+
+  describe('TOGGLE_SELECTED_REQUEST', () => {
+    describe('if request is not in array', () => {
+      const requests = [{ type: 'GEOGRAPHY_HOUSING_TYPE' }, { type: 'A' }]
+      const newRequest = { type: 'B' }
+
+      it('adds the request', () => {
+        expect(
+          r.appStateReducer(
+            { ...r.initialState, selectedRequests: requests, requests },
+            a.toggleSelectedRequest(newRequest)
+          )
+        ).toEqual({
+          ...r.initialState,
+          requests,
+          selectedRequests: [...requests, newRequest],
+        })
+      })
+    })
+
+    describe('if request is in array', () => {
+      const removeRequest = { type: 'B' }
+      const requests = [{ type: 'GEOGRAPHY_HOUSING_TYPE' }, { type: 'A' }, removeRequest]
+
+      it('removes the request', () => {
+        expect(
+          r.appStateReducer(
+            { ...r.initialState, selectedRequests: requests, requests },
+            a.toggleSelectedRequest(removeRequest)
+          )
+        ).toEqual({
+          ...r.initialState,
+          requests,
+          selectedRequests: [{ type: 'GEOGRAPHY_HOUSING_TYPE' }, { type: 'A' }],
+        })
+      })
+    })
+
+    describe('if removed request is last element in array', () => {
+      const removeRequest = { type: 'B' }
+      const requests = [{ type: 'GEOGRAPHY_HOUSING_TYPE' }, removeRequest]
+      const initialSelectedRequests = [removeRequest]
+
+      it('adds the default request', () => {
+        expect(
+          r.appStateReducer(
+            { ...r.initialState, selectedRequests: initialSelectedRequests, requests },
+            a.toggleSelectedRequest(removeRequest)
+          )
+        ).toEqual({
+          ...r.initialState,
+          requests,
+          selectedRequests: [{ type: 'GEOGRAPHY_HOUSING_TYPE' }],
+        })
       })
     })
   })

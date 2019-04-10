@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
+import { toggleSelectedRequest } from 'Store/AppState/actions'
 import RequestSummaryWrapper from 'shared/components/RequestSummaryWrapper'
 import SummaryResultCard from 'shared/components/ResultCard/SummaryResultCard'
 import { Card, Row, Col } from 'react-bootstrap'
@@ -17,11 +17,9 @@ const DistrictSummarySection = props => {
               request={request}
               resultsFilter={request.type === 'ADVANCED_SEARCH' ? undefined : props.selectedResultsFilter}
               label={request.type === 'ADVANCED_SEARCH' ? 'Custom Search' : undefined}
-              onClick={() =>
-                props.switchTable(request, props.combinedFilters ? props.selectedResultsFilter : undefined)
-              }
+              onClick={() => props.dispatch(toggleSelectedRequest(request))}
               resultsComponent={SummaryResultCard}
-              selected={props.selectedRequest === request}
+              selected={props.appState.selectedRequests.includes(request)}
             />
           </Col>
         )

@@ -35,12 +35,7 @@ const HousingTypeSection = props => {
                       <RequestSummaryWrapper
                         request={props.propertySummaryRequest}
                         totalRequest={props.propertySummaryRequest}
-                        onClick={() =>
-                          props.switchTable(
-                            props.combinedFilters ? undefined : props.propertySummaryRequest,
-                            ownResultFilter
-                          )
-                        }
+                        onClick={() => props.switchSelectedFilter(ownResultFilter)}
                         label={ownResultFilter.label}
                         resultsFilter={ownResultFilter}
                         resultsComponent={HousingTypeResultCard}
@@ -66,9 +61,8 @@ HousingTypeSection.propTypes = {
   housingTypeRequests: PropTypes.array,
   propertySummaryRequest: PropTypes.object,
   propertyResource: PropTypes.object,
-  selectedRequest: PropTypes.object,
   selectedResultsFilter: PropTypes.object,
-  switchTable: PropTypes.func,
+  switchSelectedFilter: PropTypes.func,
 }
 
 export default HousingTypeSection

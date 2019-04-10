@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { setMapFilterDate } from 'Store/AppState/actions'
+import { setAppState, setMapFilterDate } from 'Store/AppState/actions'
 
 import {
   getDefaultRequest,
@@ -12,7 +12,6 @@ import {
 
 import { requestWithAuth } from 'shared/utilities/authUtils'
 import { makeRequest } from 'Store/Request/actions'
-import { setAppState } from 'Store/AppState/actions'
 import DistrictDashboardShow from 'DistrictDashboard/DistrictDashboardShow'
 import InnerLoader from 'shared/components/Loaders/InnerLoader'
 
@@ -23,26 +22,26 @@ class DistrictDashboardRequestsWrapper extends React.PureComponent {
 
     this.loadRequests = this.loadRequests.bind(this)
     this.getInitialRequest = this.getInitialRequest.bind(this)
-    this.switchSelectedRequest = this.switchSelectedRequest.bind(this)
+    this.switchSelectedFilter = this.switchSelectedFilter.bind(this)
   }
 
   componentDidMount() {
-    if (this.props.requests.length) {
-      this.loadRequests(this.props.requests)
+    if (this.props.mapRequests.length) {
+      this.loadRequests(this.props.mapRequests)
     }
   }
 
   componentDidUpdate() {
-    const uncalledRequests = this.props.requests.filter(r => !r.called)
+    const uncalledRequests = this.props.mapRequests.filter(r => !r.called)
     if (uncalledRequests.length) {
       this.loadRequests(uncalledRequests)
     }
   }
 
   getInitialRequest() {
-    return getRequestType(this.props.requests, 'ADVANCED_SEARCH').length
-      ? getRequestType(this.props.requests, 'ADVANCED_SEARCH')[0]
-      : getDefaultRequest(this.props.requests)
+    return getRequestType(this.props.mapRequests, 'ADVANCED_SEARCH').length
+      ? getRequestType(this.props.mapRequests, 'ADVANCED_SEARCH')[0]
+      : getDefaultRequest(this.props.mapRequests)
   }
 
   loadRequests(requests = []) {
@@ -53,10 +52,10 @@ class DistrictDashboardRequestsWrapper extends React.PureComponent {
     this.props.dispatch(
       setAppState({
         selectedRequest:
-          (this.props.appState.selectedRequest || {}).type === 'ADVANCED_SEARCH' ||
-          (this.props.appState.selectedRequest || {}).type === 'GEOGRAPHY_HOUSING_TYPE' ||
-          (this.props.appState.selectedRequest || {}).type === 'MAP_FILTER'
-            ? this.props.appState.selectedRequest
+          this.props.appState.selectedRequests.find(request => request.type === 'ADVANCED_SEARCH') ||
+          this.props.appState.selectedRequests.find(request => request.type === 'GEOGRAPHY_HOUSING_TYPE') ||
+          this.props.appState.selectedRequests.find(request => request.type === 'MAP_FILTER')
+            ? this.props.appState.selectedRequests[0]
             : this.getInitialRequest(),
         selectedResultsFilter:
           this.props.appState.selectedResultsFilter ||
@@ -68,7 +67,7 @@ class DistrictDashboardRequestsWrapper extends React.PureComponent {
   toggleDateRange(value) {
     this.props.dispatch(setMapFilterDate(value))
 
-    const mapRequests = getRequestType(this.props.requests, 'MAP_FILTER')
+    const mapRequests = getRequestType(this.props.mapRequests, 'MAP_FILTER')
     if (!mapRequests.length) return
     mapRequests.forEach(request => {
       request.called = false
@@ -82,24 +81,23 @@ class DistrictDashboardRequestsWrapper extends React.PureComponent {
     this.loadRequests(mapRequests)
   }
 
-  switchSelectedRequest(request, filter) {
+  switchSelectedFilter(filter) {
     this.props.dispatch(
       setAppState({
-        selectedRequest: request,
         selectedResultsFilter: filter,
       })
     )
   }
 
   render() {
-    return this.props.requests.length ? (
+    return this.props.mapRequests.length ? (
       <DistrictDashboardShow
-        geographyRequests={getManyRequestTypes(this.props.requests, ['MAP_FILTER', 'ADVANCED_SEARCH'])}
-        housingTypeRequests={getRequestType(this.props.requests, 'GEOGRAPHY_HOUSING_TYPE')}
-        propertySummaryRequest={getRequestByConstant(this.props.requests, 'GEOGRAPHY_HOUSING_TYPE_ALL')[0]}
+        geographyRequests={getManyRequestTypes(this.props.mapRequests, ['MAP_FILTER', 'ADVANCED_SEARCH'])}
+        housingTypeRequests={getRequestType(this.props.mapRequests, 'GEOGRAPHY_HOUSING_TYPE')}
+        propertySummaryRequest={getRequestByConstant(this.props.mapRequests, 'GEOGRAPHY_HOUSING_TYPE_ALL')[0]}
         toggleDateRange={this.toggleDateRange}
         selectedRequest={this.props.appState.selectedRequest}
-        switchSelectedRequest={this.switchSelectedRequest}
+        switchSelectedFilter={this.switchSelectedFilter}
         selectedResultsFilter={this.props.appState.selectedResultsFilter}
         {...this.props}
       />
