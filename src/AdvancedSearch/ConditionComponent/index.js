@@ -205,13 +205,13 @@ export class ConditionComponent extends React.Component {
             ) : (
               <AddFilterButton createNewFilter={this.createNewFilter} showPopups={this.props.showPopups} />
             )}
-            {(isCondition0() || (!isCondition0() && !this.props.condition.hasCondition())) && (
+            {/* {(isCondition0() || (!isCondition0() && !this.props.condition.hasCondition())) && (
               <AddConditionButton
                 condition={this.props.condition}
                 addCondition={this.addCondition}
                 showPopups={this.props.showPopups}
               />
-            )}
+            )} */}
           </div>
           {this.conditionGroupFilters().map(filter => {
             return renderFilterOrCondition(filter, this.props.condition.filters.indexOf(filter))
