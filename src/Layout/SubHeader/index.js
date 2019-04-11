@@ -7,7 +7,7 @@ import { getGeographyPath, addressResultToPath } from 'shared/utilities/routeUti
 import logo from 'shared/images/portallogo-white.png'
 import LoginModal from 'Auth/LoginModal'
 import classnames from 'classnames'
-
+import BaseLink from 'shared/components/BaseLink'
 import './style.scss'
 class SubHeader extends React.Component {
   constructor(props) {
@@ -35,27 +35,30 @@ class SubHeader extends React.Component {
           </Col>
           <Col xs={12} md={8} lg={9}>
             <Row className="sub-header__wrapper--top">
-              <Col xs={12} md={{ span: 5, offset: 7 }}>
-                {this.props.auth.user ? (
-                  <Row className="sub-header__auth-row flex-column flex-sm-row">
-                    <Col>
-                      <Nav.Item className="text-secondary">{this.props.auth.user.username}</Nav.Item>
-                    </Col>
-                    <Col>
-                      <Nav.Item
-                        onClick={e => {
-                          e.preventDefault()
-                          this.props.auth.logoutUser()
-                        }}
-                      >
-                        <a className="text-secondary" href="#">
-                          Logout
-                        </a>
-                      </Nav.Item>
-                    </Col>
-                  </Row>
-                ) : (
-                  <Row className="sub-header__auth-row flex-column flex-sm-row">
+              <Col xs={12} md={{ span: 6, offset: 6 }}>
+                <Row className="sub-header__auth-row flex-column flex-sm-row">
+                  <Col>
+                    <BaseLink href="https://forms.gle/EAUkzgsAkHn8NgbTA" className="text-secondary" text="Feedback" />
+                  </Col>
+                  {this.props.auth.user ? (
+                    <div className="d-flex">
+                      <Col>
+                        <Nav.Item className="text-secondary">{this.props.auth.user.username}</Nav.Item>
+                      </Col>
+                      <Col>
+                        <Nav.Item
+                          onClick={e => {
+                            e.preventDefault()
+                            this.props.auth.logoutUser()
+                          }}
+                        >
+                          <a className="text-secondary" href="#">
+                            Logout
+                          </a>
+                        </Nav.Item>
+                      </Col>
+                    </div>
+                  ) : (
                     <Nav.Item
                       onClick={e => {
                         e.preventDefault()
@@ -68,8 +71,8 @@ class SubHeader extends React.Component {
                         Login
                       </a>
                     </Nav.Item>
-                  </Row>
-                )}
+                  )}
+                </Row>
               </Col>
             </Row>
             <Row className="sub-header__wrapper--bottom">
