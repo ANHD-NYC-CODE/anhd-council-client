@@ -49,6 +49,8 @@ export const getKeyField = constant => {
       return 'litigationid'
     case 'ACRIS_REAL_MASTER':
       return 'documentid'
+    case 'ACRIS_REAL_PARTY':
+      return 'key'
     case 'EVICTION':
       return 'courtindexnumber'
     case 'LISPENDEN':
@@ -915,6 +917,11 @@ export const getTableColumns = (
       break
     case 'ACRIS_REAL_PARTY':
       columns = [
+        constructStandardColumn({
+          dataField: 'key',
+          text: 'Key',
+          hidden: true,
+        }),
         constructStandardColumn({
           dataField: 'documentid',
           text: 'Document ID',
