@@ -10,3 +10,5 @@ export { default as DOB_ISSUED_PERMIT } from 'shared/models/resources/DOBIssuedP
 export { default as DOB_FILED_PERMIT } from 'shared/models/resources/DOBFiledPermit'
 export { default as HOUSING_LITIGATION } from 'shared/models/resources/HousingLitigation'
 export { default as ACRIS_REAL_MASTER } from 'shared/models/resources/AcrisRealMaster'
+export { default as TAX_LIEN } from 'shared/models/resources/TaxLien'
+export { default as CONH_RECORD } from 'shared/models/resources/ConhRecord'

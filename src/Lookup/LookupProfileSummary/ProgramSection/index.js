@@ -43,7 +43,7 @@ const ProgramSection = props => {
               CONH? ({(props.config.datasets.find(ds => ds.model_name === 'CONHRecord') || {}).version})
             </label>
             <span className="profile-summary-body__value">
-              {(props.profile.conh_records || {}).length ? 'Yes' : 'No'}
+              {(props.profile.conhrecords || {}).length ? 'Yes' : 'No'}
             </span>
           </Col>
         </Row>

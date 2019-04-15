@@ -80,6 +80,12 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
     {
       resourceModel: resourceModels['ACRIS_REAL_MASTER'],
     },
+    {
+      resourceModel: resourceModels['TAX_LIEN'],
+    },
+    {
+      resourceModel: resourceModels['CONH_RECORD'],
+    },
   ]
 }
 

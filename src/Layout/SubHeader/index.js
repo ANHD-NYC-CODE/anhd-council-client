@@ -37,41 +37,51 @@ class SubHeader extends React.Component {
             <Row className="sub-header__wrapper--top">
               <Col xs={12} md={{ span: 6, offset: 6 }}>
                 <Row className="sub-header__auth-row flex-column flex-sm-row">
-                  <Col>
-                    <BaseLink href="https://forms.gle/EAUkzgsAkHn8NgbTA" className="text-secondary" text="Feedback" />
-                  </Col>
-                  {this.props.auth.user ? (
-                    <div className="d-flex">
-                      <Col>
-                        <Nav.Item className="text-secondary">{this.props.auth.user.username}</Nav.Item>
-                      </Col>
+                  <div className="d-flex">
+                    <Col>
+                      <Nav.Item>
+                        <BaseLink
+                          href="https://forms.gle/EAUkzgsAkHn8NgbTA"
+                          className="text-secondary"
+                          text="Feedback"
+                        />
+                      </Nav.Item>
+                    </Col>
+                    {this.props.auth.user ? (
+                      <div className="d-flex">
+                        <Col>
+                          <Nav.Item className="text-secondary">{this.props.auth.user.username}</Nav.Item>
+                        </Col>
+                        <Col>
+                          <Nav.Item
+                            onClick={e => {
+                              e.preventDefault()
+                              this.props.auth.logoutUser()
+                            }}
+                          >
+                            <a className="text-secondary" href="#">
+                              Logout
+                            </a>
+                          </Nav.Item>
+                        </Col>
+                      </div>
+                    ) : (
                       <Col>
                         <Nav.Item
                           onClick={e => {
                             e.preventDefault()
-                            this.props.auth.logoutUser()
+                            this.props.modal.setModal({
+                              modalComponent: LoginModal,
+                            })
                           }}
                         >
                           <a className="text-secondary" href="#">
-                            Logout
+                            Login
                           </a>
                         </Nav.Item>
                       </Col>
-                    </div>
-                  ) : (
-                    <Nav.Item
-                      onClick={e => {
-                        e.preventDefault()
-                        this.props.modal.setModal({
-                          modalComponent: LoginModal,
-                        })
-                      }}
-                    >
-                      <a className="text-secondary" href="#">
-                        Login
-                      </a>
-                    </Nav.Item>
-                  )}
+                    )}
+                  </div>
                 </Row>
               </Col>
             </Row>
