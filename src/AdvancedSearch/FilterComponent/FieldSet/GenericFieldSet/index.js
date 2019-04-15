@@ -1,16 +1,30 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
+import { InputGroup, Col } from 'react-bootstrap'
 const GenericFieldSet = props => {
   return (
-    <div className="generic-fieldset" key={props.key}>
+    <InputGroup
+      className="generic-fieldset"
+      key={props.key}
+      as={Col}
+      xs={{
+        '3': props.filter && !props.paramMap.rangeKey,
+        '6': !props.filter,
+        '8': props.filter && props.paramMap.rangeKey,
+      }}
+    >
+      {props.paramMap.valuePrefix && (
+        <InputGroup.Prepend>
+          <InputGroup.Text>{props.paramMap.valuePrefix}</InputGroup.Text>
+        </InputGroup.Prepend>
+      )}
       {props.paramMap.baseComponent({
         key: `paramMap-field-${props.paramMapIndex}`,
         dispatchAction: props.dispatchAction,
         options: props.paramMap.options,
         paramMap: props.paramMap,
       })}
-    </div>
+    </InputGroup>
   )
 }
 

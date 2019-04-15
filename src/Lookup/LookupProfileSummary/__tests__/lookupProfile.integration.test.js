@@ -94,7 +94,7 @@ describe('LookupProfileSummary', () => {
     describe('with records', () => {
       it('renders the correct state', () => {
         const result = createPropertyRequestMock({
-          conhRecords: [{ id: 1 }],
+          conhrecords: [{ id: 1 }],
           taxliens: [{ id: 1 }],
           nycha: [{ id: 1 }],
           subsidyrecords: [{ programname: 'J51' }],
@@ -111,7 +111,7 @@ describe('LookupProfileSummary', () => {
         expect(wrapper.find('OwnershipSection').text()).toMatch(
           'HPD RegistrationsEnd DateView Contacts01/01/2018() Expand'
         )
-        expect(wrapper.find('ProgramSection').text()).toMatch('ProgramsJ51NYCHA? YesCONH? (2018)NoTax Lien? (2018)Yes')
+        expect(wrapper.find('ProgramSection').text()).toMatch('ProgramsJ51NYCHA? YesCONH? (2018)YesTax Lien? (2018)Yes')
         expect(wrapper.find('RentStabilizationSection').text()).toMatch(
           'Rent StabilizationStabilized Units (2017): 0Change since 200750.00%'
         )

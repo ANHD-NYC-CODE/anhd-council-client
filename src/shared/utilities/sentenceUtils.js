@@ -82,6 +82,8 @@ const parseParamMapComparison = (paramMap, nounOverride = undefined) => {
         .join(' ')
     case 'MULTI-TEXT':
       return `${paramMap.comparisonPrefix} ${grammaticalList(paramMap.value.split(','), 'or')}`.trim()
+    case 'BOOL':
+      return [paramMap.value === '0' ? 'no' : '', nounOverride || paramMap.paramNoun].filter(p => p).join(' ')
   }
 }
 
