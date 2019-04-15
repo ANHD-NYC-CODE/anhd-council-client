@@ -79,13 +79,20 @@ export default class Condition {
 
   removeFilter({ dispatchAction, filterIndex }) {
     this._filters = this._filters.filter((f, index) => index !== filterIndex)
+    // Reset condition 0 type to 'AND' if only 1 filter exists
+    if (this.key === '0' && this.filters.length <= 1) {
+      this.type = 'AND'
+    }
     if (dispatchAction) {
       dispatchAction()
     }
   }
 
   removeNewFilters({ dispatchAction }) {
-    this._filters = this._filters.filter(f => f.id !== 'NEW_FILTER')
+    this._filters
+      .filter(f => f.id === 'NEW_FILTER')
+      .map(f => this._filters.indexOf(f))
+      .forEach(index => this.removeFilter({ filterIndex: index }))
     if (dispatchAction) {
       dispatchAction()
     }

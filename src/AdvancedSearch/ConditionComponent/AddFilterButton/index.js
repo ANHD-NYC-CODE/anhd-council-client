@@ -8,6 +8,7 @@ class AddFilterButton extends React.PureComponent {
     super(props)
 
     this.ref = React.createRef()
+    this.handleClick = this.handleClick.bind(this)
   }
 
   componentDidMount() {
@@ -16,31 +17,31 @@ class AddFilterButton extends React.PureComponent {
     }
   }
 
+  handleClick(e) {
+    e.preventDefault()
+    this.props.createNewFilter()
+    if (this.props.onClick) this.props.onClick()
+  }
+
   render() {
     return (
-      <div>
+      <Button className="add-filter" size="lg" onClick={e => this.handleClick(e)} ref={this.ref} variant="success">
         <Overlay placement="bottom" show={this.props.showPopups} target={this.ref.current}>
           {props => {
             return <Tooltip {...props}>Add a filter to this condition</Tooltip>
           }}
         </Overlay>
-        <Button
-          className="add-filter"
-          size="lg"
-          onClick={e => {
-            e.preventDefault()
-            this.props.createNewFilter()
-          }}
-          ref={this.ref}
-          variant="success"
-        >
-          <FontAwesomeIcon icon={faPlus} /> New filter
-        </Button>
-      </div>
+        <FontAwesomeIcon icon={faPlus} /> {this.props.text}
+      </Button>
     )
   }
 }
-
-AddFilterButton.propTypes = {}
+AddFilterButton.defaultProps = {
+  text: 'New Filter',
+}
+AddFilterButton.propTypes = {
+  handleClick: PropTypes.func,
+  text: PropTypes.string,
+}
 
 export default AddFilterButton

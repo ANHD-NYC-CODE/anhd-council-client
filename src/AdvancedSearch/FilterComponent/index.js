@@ -29,13 +29,13 @@ export class FilterComponent extends React.Component {
       return (
         <div className="d-flex align-items-center">
           <RemoveFilterButton showPopups={this.props.showPopups} removeFilter={this.removeFilter} />
-          {this.props.allowNewCondition && (
+          {/* {this.props.allowNewCondition && (
             <AddConditionButton
               addCondition={this.props.addCondition}
               filterIndex={this.props.filterIndex}
               showPopups={this.props.showPopups}
             />
-          )}
+          )} */}
         </div>
       )
     } else if (!!paramSet.paramMaps.length && key !== 'initial') {

@@ -5,11 +5,13 @@ import StandardizedInput from 'shared/classes/StandardizedInput'
 import NewFilterSelect from 'AdvancedSearch/FilterComponent/NewFilterSelect'
 import uuidv4 from 'uuid/v4'
 import { addNewCondition, updateCondition, removeCondition } from 'Store/AdvancedSearch/actions'
-import { Form, Button, Col } from 'react-bootstrap'
+import { ButtonGroup, Form, Button, Col } from 'react-bootstrap'
 import FormError from 'shared/components/FormError'
 import FilterComponent from 'AdvancedSearch/FilterComponent'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
+import AddFilterGroup from 'AdvancedSearch/ConditionComponent/AddFilterGroup'
+
 import AddFilterButton from 'AdvancedSearch/ConditionComponent/AddFilterButton'
 import AddConditionButton from 'AdvancedSearch/ConditionComponent/AddConditionButton'
 
@@ -152,7 +154,7 @@ export class ConditionComponent extends React.Component {
           </div>
         )}
 
-        <Col xs={3} sm={2} className="condition-control flex-column align-self-center">
+        {/* <Col xs={3} sm={2} className="condition-control flex-column align-self-center">
           <div className="condition-control-column d-flex align-items-center flex-column">
             {isCondition0() && !this.props.condition.hasCondition() ? (
               <SwitchConditionButton
@@ -173,7 +175,7 @@ export class ConditionComponent extends React.Component {
               />
             )}
           </div>
-        </Col>
+        </Col> */}
         <Col xs={9} sm={10} className="d-flex flex-column justify-content-center">
           <FormError
             show={!!this.props.condition.errors.length}
@@ -203,7 +205,11 @@ export class ConditionComponent extends React.Component {
                 <FontAwesomeIcon icon={faTimes} /> Cancel
               </Button>
             ) : (
-              <AddFilterButton createNewFilter={this.createNewFilter} showPopups={this.props.showPopups} />
+              <AddFilterGroup
+                condition={this.props.condition}
+                createNewFilter={this.createNewFilter}
+                switchCondition={this.switchCondition}
+              />
             )}
             {/* {(isCondition0() || (!isCondition0() && !this.props.condition.hasCondition())) && (
               <AddConditionButton
