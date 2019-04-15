@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { InputGroup, Col } from 'react-bootstrap'
+import './style.scss'
 const GenericFieldSet = props => {
   return (
     <InputGroup
