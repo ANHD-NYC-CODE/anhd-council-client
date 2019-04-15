@@ -37,7 +37,7 @@ describe('App State reducer', () => {
   })
 
   describe('SET_ADVANCED_SEARCH_REQUEST', () => {
-    const advancedSearchRequest = 4
+    const advancedSearchRequest = { resourceModel: { ownResultFilters: [] } }
     const requests = [1, 2, 3]
     const selectedRequests = [requests]
     it('sets the request', () => {

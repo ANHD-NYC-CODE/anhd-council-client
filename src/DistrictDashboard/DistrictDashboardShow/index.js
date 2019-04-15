@@ -2,13 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
 import GeographySelect from 'shared/components/GeographySelect'
-import { Form, Button, Row, Col, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
+import { Row, Col, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
 import AdvancedSearchSentence from 'AdvancedSearch/Sentence'
 import LayoutContext from 'Layout/LayoutContext'
 import HousingTypeSection from 'DistrictDashboard/DistrictDashboardShow/HousingTypeSection'
 import DistrictResultsTitle from 'DistrictDashboard/DistrictDashboardShow/DistrictResultsTitle'
 import LeafletMap from 'LeafletMap'
-import RequestTableWrapper from 'shared/components/RequestTableWrapper'
 import CsvButton from 'shared/components/buttons/CsvButton'
 import DistrictSummarySection from 'DistrictDashboard/DistrictDashboardShow/DistrictSummarySection'
 import PrintButton from 'shared/components/PrintButton'
@@ -286,18 +285,6 @@ class DistrictDashboardShow extends React.PureComponent {
                           records={resultRecords}
                           tableConfig={this.props.propertySummaryRequest.tableConfig}
                         />
-
-                        {/* {this.props.geographyRequests.concat(this.props.housingTypeRequests).map((request, index) => {
-                          return (
-                            <RequestTableWrapper
-                              expandable={false}
-                              key={`request-wrapper-${this.props.appState.requests.indexOf(request)}`}
-                              visible={this.props.selectedRequest === request}
-                              request={request}
-                              selectedResultsFilter={this.getDisplayedResultsFilter()}
-                            />
-                          )
-                        })} */}
                       </div>
                     </Col>
                   </Row>

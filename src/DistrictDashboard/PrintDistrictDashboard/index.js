@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Col, Row } from 'react-bootstrap'
+import * as c from 'shared/constants'
 
 import { getManyRequestTypes } from 'Store/AppState/selectors'
 import HousingTypeResultCard from 'shared/components/ResultCard/HousingTypeResultCard'
@@ -16,7 +17,7 @@ const PrintDistrictDashboard = props => {
   const geographyRequests = getManyRequestTypes(props.appState.requests, ['MAP_FILTER'])
 
   const propertyResource = props.config.resourceModels['PROPERTY']
-  const residentialFilter = propertyResource.ownResultFilters.find(f => f.id === 'HOUSING_TYPE_RESIDENTIAL')
+  const residentialFilter = propertyResource.ownResultFilters.find(f => f.id === c.HOUSING_TYPE_RESIDENTIAL)
 
   return (
     <div className="print-alert-map">

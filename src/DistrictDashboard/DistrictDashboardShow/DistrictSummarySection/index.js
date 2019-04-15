@@ -1,10 +1,25 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { toggleSelectedRequest } from 'Store/AppState/actions'
+import { setAppState, toggleSelectedRequest } from 'Store/AppState/actions'
+import { getAdvancedSearchResultsFilter } from 'Store/AppState/selectors'
+
 import RequestSummaryWrapper from 'shared/components/RequestSummaryWrapper'
 import SummaryResultCard from 'shared/components/ResultCard/SummaryResultCard'
 import { Card, Row, Col } from 'react-bootstrap'
 import BaseLink from 'shared/components/BaseLink'
+
+const handleSummaryClick = (dispatch, request) => {
+  if (request.type === 'ADVANCED_SEARCH') {
+    dispatch(
+      setAppState({
+        selectedRequests: [request],
+        selectedResultsFilter: getAdvancedSearchResultsFilter(request),
+      })
+    )
+  } else {
+    dispatch(toggleSelectedRequest(request))
+  }
+}
 
 const DistrictSummarySection = props => {
   return (
@@ -17,7 +32,7 @@ const DistrictSummarySection = props => {
               request={request}
               resultsFilter={request.type === 'ADVANCED_SEARCH' ? undefined : props.selectedResultsFilter}
               label={request.type === 'ADVANCED_SEARCH' ? 'Custom Search' : undefined}
-              onClick={() => props.dispatch(toggleSelectedRequest(request))}
+              onClick={() => handleSummaryClick(props.dispatch, request)}
               resultsComponent={SummaryResultCard}
               selected={props.appState.selectedRequests.includes(request)}
             />
