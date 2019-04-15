@@ -1,6 +1,7 @@
 import * as c from '../constants'
 import { districtDashboardFilterdates } from 'shared/utilities/componentUtils'
-import { getDefaultRequest, getDefaultResultsFilter } from 'Store/AppState/selectors'
+import { getAdvancedSearchResultsFilter, getDefaultRequest, getDefaultResultsFilter } from 'Store/AppState/selectors'
+
 export const initialState = {
   currentGeographyType: undefined,
   currentGeographyId: undefined,
@@ -74,6 +75,7 @@ export const appStateReducer = (state = Object.freeze(initialState), action = { 
         ...state,
         requests: [...state.requests, action.advancedSearchRequest],
         selectedRequests: [action.advancedSearchRequest],
+        selectedResultsFilter: getAdvancedSearchResultsFilter(action.advancedSearchRequest),
       }
     }
     case c.REMOVE_REQUEST_TYPE: {

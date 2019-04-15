@@ -1,4 +1,6 @@
 import ParamMap from 'shared/classes/ParamMap'
+import * as c from 'shared/constants'
+
 import {
   comparisonOptions,
   dateComparisonOptions,
@@ -49,7 +51,7 @@ const Property = databaseObject => {
     },
     ownResultFilters: [
       {
-        id: 'HOUSING_TYPE_RESIDENTIAL',
+        id: c.HOUSING_TYPE_RESIDENTIAL,
         category: 'HOUSING_TYPE',
         label: 'All Residential',
         paramMaps: [new ParamMap({ field: 'unitsres', comparison: 'gte', value: 1 })],
@@ -59,7 +61,7 @@ const Property = databaseObject => {
         },
       },
       {
-        id: 'HOUSING_TYPE_RENT_STABILIZED',
+        id: c.HOUSING_TYPE_RENT_STABILIZED,
         category: 'HOUSING_TYPE',
         label: 'Rent Stabilized',
         paramMaps: [
@@ -72,7 +74,7 @@ const Property = databaseObject => {
         },
       },
       {
-        id: 'HOUSING_TYPE_SUBSIDIZED_HOUSING',
+        id: c.HOUSING_TYPE_SUBSIDIZED_HOUSING,
         category: 'HOUSING_TYPE',
         label: 'Subsidized Housing',
         paramMaps: [
@@ -86,7 +88,7 @@ const Property = databaseObject => {
         },
       },
       {
-        id: 'HOUSING_TYPE_SMALL_HOMES',
+        id: c.HOUSING_TYPE_SMALL_HOME,
         category: 'HOUSING_TYPE',
         label: 'Small Homes',
         paramMaps: [
@@ -98,7 +100,7 @@ const Property = databaseObject => {
           results.filter(result => paramMaps.every(paramMap => paramMap.evaluate(result))),
       },
       {
-        id: 'HOUSING_TYPE_MARKET_RATE',
+        id: c.HOUSING_TYPE_MARKET_RATE,
         category: 'HOUSING_TYPE',
         label: 'Market Rate',
         paramMaps: [
@@ -115,7 +117,7 @@ const Property = databaseObject => {
         },
       },
       {
-        id: 'HOUSING_TYPE_PUBLIC_HOUSING',
+        id: c.HOUSING_TYPE_PUBLIC_HOUSING,
         category: 'HOUSING_TYPE',
         label: 'Public Housing',
         paramMaps: [new ParamMap({ field: 'nycha', comparison: 'bool', value: true })],
