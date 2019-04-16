@@ -5,7 +5,7 @@ import { Form, InputGroup, Col } from 'react-bootstrap'
 import classnames from 'classnames'
 const ComparisonFieldSet = props => {
   return (
-    <Form.Row className="comparison-fieldset" key={props.key}>
+    <Form.Row className="fieldset comparison-fieldset" key={props.key}>
       <InputGroup as={Col} xs={props.filter ? 4 : 6}>
         <InputGroup.Prepend>
           <InputGroup.Text>{props.paramMap.comparisonPrefix}</InputGroup.Text>

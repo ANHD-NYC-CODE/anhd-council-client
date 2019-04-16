@@ -22,11 +22,8 @@
   }
 
   .switch-condition-row {
+    margin-top: 20px;
     margin-bottom: 20px;
-
-    @include media-breakpoint-up(sm) {
-      margin-bottom: 0;
-    }
   }
 
   .new-filter-row {

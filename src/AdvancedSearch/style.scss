@@ -19,11 +19,15 @@
     // margin-bottom: 10px;
     width: 700px;
     @include media-breakpoint-up(md) {
-      width: 850px;
+      width: 800px;
+    }
+
+    @include media-breakpoint-up(lg) {
+      width: 700px;
     }
 
     @include media-breakpoint-up(xl) {
-      width: 850px;
+      width: 750px;
     }
   }
 

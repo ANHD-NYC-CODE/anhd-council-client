@@ -33,7 +33,7 @@ const hasPrefix = props => {
 const RangeFieldSet = props => {
   return (
     <Form.Row>
-      <InputGroup as={Col} xs={12} sm={12} md={hasPrefix(props) ? 12 : 2}>
+      <InputGroup className="fieldset range-fieldset" as={Col} xs={12} sm={12} md={hasPrefix(props) ? 12 : 2}>
         <InputGroup.Prepend>
           {!!hasPrefix(props) && <InputGroup.Text>{props.paramMapRangeGroup[0].comparisonPrefix}</InputGroup.Text>}
         </InputGroup.Prepend>

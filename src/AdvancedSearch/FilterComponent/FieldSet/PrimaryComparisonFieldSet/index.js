@@ -6,7 +6,7 @@ import NewFilterSelect from 'AdvancedSearch/FilterComponent/NewFilterSelect'
 import classnames from 'classnames'
 const PrimaryComparisonFieldSet = props => {
   return (
-    <Form.Row className="comparison-fieldset" key={props.key}>
+    <Form.Row className="fieldset comparison-fieldset" key={props.key}>
       <InputGroup as={Col} xs={props.filter ? 4 : 6}>
         <InputGroup.Prepend>
           <InputGroup.Text />
