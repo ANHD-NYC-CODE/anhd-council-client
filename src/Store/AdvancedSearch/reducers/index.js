@@ -95,6 +95,27 @@ export const advancedSearchReducer = (state = Object.freeze(initialState()), act
             : newConditions,
       }
     }
+    case c.REMOVE_CONDITION_GROUP: {
+      const clonedConditions = { ...state.conditions }
+      const pCondition = clonedConditions[action.parentConditionKey]
+      const rCondition = clonedConditions[action.removedConditionKey]
+      pCondition.filters = [...pCondition.filters, ...rCondition.filters]
+      pCondition.removeNewFilters()
+      pCondition.removeFilter({
+        filterIndex: pCondition.filters.indexOf(
+          pCondition.filters.find(f => f.conditionGroup === action.removedConditionKey)
+        ),
+      })
+
+      delete clonedConditions[action.removedConditionKey]
+      return {
+        ...state,
+        conditions:
+          Object.entries(clonedConditions).length === 0 && clonedConditions.constructor === Object
+            ? { ...initialState().conditions }
+            : clonedConditions,
+      }
+    }
     case c.ADD_FILTER: {
       const newConditions = { ...state.conditions }
       let condition = newConditions[action.conditionKey]

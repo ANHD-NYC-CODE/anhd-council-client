@@ -44,6 +44,12 @@ export const removeCondition = conditionKey => ({
   conditionKey,
 })
 
+export const removeConditionGroup = (removedConditionKey, parentConditionKey) => ({
+  type: c.REMOVE_CONDITION_GROUP,
+  removedConditionKey,
+  parentConditionKey,
+})
+
 export const addGeography = geography => ({
   type: c.ADD_GEOGRAPHY,
   geography,

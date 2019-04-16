@@ -4,7 +4,7 @@ import Filter from 'shared/classes/Filter'
 import StandardizedInput from 'shared/classes/StandardizedInput'
 import NewFilterSelect from 'AdvancedSearch/FilterComponent/NewFilterSelect'
 import uuidv4 from 'uuid/v4'
-import { addNewConditionGroup, updateCondition, removeCondition } from 'Store/AdvancedSearch/actions'
+import { addNewConditionGroup, updateCondition, removeConditionGroup } from 'Store/AdvancedSearch/actions'
 import { Form, Button, Col } from 'react-bootstrap'
 import FormError from 'shared/components/FormError'
 import FilterComponent from 'AdvancedSearch/FilterComponent'
@@ -56,10 +56,11 @@ export class ConditionComponent extends React.Component {
   }
 
   removeCondition() {
-    this.props.dispatch(removeCondition(this.props.condition.key))
+    this.props.dispatch(removeConditionGroup(this.props.condition.key, this.props.parentCondition.key))
   }
 
   createNewFilter() {
+    this.props.condition.removeNewFilters()
     const newFilter = new Filter({ modelConstant: 'NEW_FILTER', resourceModel: { schema: {} } })
     this.props.condition.addFilter({ filter: newFilter })
     this.dispatchAction()
