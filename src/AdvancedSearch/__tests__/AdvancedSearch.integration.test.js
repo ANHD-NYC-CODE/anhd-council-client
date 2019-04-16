@@ -37,9 +37,14 @@ const setupWrapper = state => {
   return wrapper
 }
 
-const selectedGeographyWrapper = ({ wrapper = undefined, selectValue = undefined, idValue = undefined } = {}) => {
+const selectedGeographyWrapper = ({
+  wrapper = undefined,
+  selectValue = undefined,
+  idValue = undefined,
+  state = undefined,
+} = {}) => {
   if (!wrapper) {
-    wrapper = setupWrapper()
+    wrapper = setupWrapper(state)
   }
   wrapper
     .find('select[name="geographyType"]')
@@ -202,7 +207,18 @@ describe('AdvancedSearch', () => {
     })
 
     it('it switches between conditions', () => {
-      const wrapper = selectedGeographyWrapper({ selectValue: 'COUNCIL', idValue: '1' })
+      const wrapper = selectedFilterWrapper({ selectValue: 'HPD_VIOLATION' })
+
+      wrapper
+        .find('ConditionComponent button.add-filter')
+        .at(1)
+        .simulate('click')
+      wrapper.update()
+      wrapper
+        .find('select[name="newFilter"]')
+        .at(1)
+        .simulate('change', { target: { name: 'newFilter', value: 'DOB_VIOLATION' } })
+      wrapper.update()
       wrapper.find('ConditionComponent button.dropdown-toggle').simulate('click')
       wrapper
         .find('ConditionComponent a.dropdown-item')
@@ -210,8 +226,7 @@ describe('AdvancedSearch', () => {
         .simulate('click')
       wrapper.update()
       expect(wrapper.find('ConditionComponent').props().condition.type).toEqual('OR')
-      expect(wrapper.find('NewFilterSelect')).toHaveLength(0)
-      expect(wrapper.find('ConditionComponent FilterComponent')).toHaveLength(0)
+      expect(wrapper.find('ConditionComponent FilterComponent')).toHaveLength(2)
     })
 
     it('it shows a new filter select', () => {
