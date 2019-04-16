@@ -1,3 +1,6 @@
 @import 'shared/styles/bootstrap/_variables.scss';
 $input-border-focus: 4px dotted $primary;
+$input-border-focus-mobile: 2px dotted $primary;
+
 $input-border: 4px dotted $gray-400;
+$input-border-mobile: 2px dotted $gray-400;

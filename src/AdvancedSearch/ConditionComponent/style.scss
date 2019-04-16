@@ -21,6 +21,14 @@
     }
   }
 
+  .switch-condition-row {
+    margin-bottom: 20px;
+
+    @include media-breakpoint-up(sm) {
+      margin-bottom: 0;
+    }
+  }
+
   .new-filter-row {
     font-weight: bold;
     justify-content: flex-start;
