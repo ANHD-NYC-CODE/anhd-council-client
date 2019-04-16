@@ -42,7 +42,14 @@ describe('ConditionComponent', () => {
         '1': newCondition({ type: 'OR', filters: [] }),
       }
       const dispatch = sinon.spy()
-      const wrapper = shallow(<ConditionComponent conditions={conditions} condition={condition} dispatch={dispatch} />)
+      const wrapper = shallow(
+        <ConditionComponent
+          conditions={conditions}
+          condition={condition}
+          dispatch={dispatch}
+          parentCondition={new Condition({ type: 'AND' })}
+        />
+      )
       it('renders a second condition', () => {
         expect(wrapper.find(ConditionComponent)).toHaveLength(1)
       })
@@ -63,7 +70,14 @@ describe('ConditionComponent', () => {
     })
     const conditions = { [conditionKey]: condition }
     const dispatch = sinon.spy()
-    const wrapper = shallow(<ConditionComponent conditions={conditions} condition={condition} dispatch={dispatch} />)
+    const wrapper = shallow(
+      <ConditionComponent
+        conditions={conditions}
+        condition={condition}
+        dispatch={dispatch}
+        parentCondition={new Condition({ type: 'AND' })}
+      />
+    )
 
     it('renders the component', () => {
       expect(wrapper.find('.condition')).toBeDefined()
@@ -80,7 +94,14 @@ describe('ConditionComponent', () => {
       }
       const dispatch = sinon.spy()
 
-      const wrapper = shallow(<ConditionComponent conditions={conditions} condition={condition} dispatch={dispatch} />)
+      const wrapper = shallow(
+        <ConditionComponent
+          conditions={conditions}
+          condition={condition}
+          dispatch={dispatch}
+          parentCondition={new Condition({ type: 'AND' })}
+        />
+      )
 
       it('renders a second condition', () => {
         expect(wrapper.find(ConditionComponent)).toHaveLength(1)
@@ -109,7 +130,14 @@ describe('ConditionComponent', () => {
     const dispatch = sinon.spy()
 
     describe('With a filter', () => {
-      const wrapper = shallow(<ConditionComponent conditions={conditions} condition={condition} dispatch={dispatch} />)
+      const wrapper = shallow(
+        <ConditionComponent
+          conditions={conditions}
+          condition={condition}
+          dispatch={dispatch}
+          parentCondition={new Condition({ type: 'AND' })}
+        />
+      )
 
       it('renders a filter component', () => {
         expect(wrapper.find(FilterComponent)).toHaveLength(1)
