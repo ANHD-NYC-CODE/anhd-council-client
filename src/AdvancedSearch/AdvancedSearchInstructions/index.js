@@ -20,31 +20,14 @@ const AdvancedSearchInstructions = props => {
             And
           </Button>
         </span>
-        <p>Returns properties where every filter contained within is true.</p>
+        <p>Returns results where every single applied filter is true for each property.</p>
         <span className="d-flex align-items-center">
           <h5>OR&nbsp;</h5>
           <Button size="lg" role="header" variant="success">
             Or
           </Button>
         </span>
-        <p>Returns properties where any of the filters contained within are true.</p>
-        <h5>New Conditions</h5>
-        <p>
-          Only the opposite condition type can be added. This is because, for example, the filters inside a parent "AND"
-          condition and a child "AND" condition can be expressed the same if all of the filters were within the parent
-          condition.
-        </p>
-        <h5>Groupings</h5>
-        <p>
-          All of the filters within a logical condition are considered to be a group. This is to avoid ambiguous
-          queries, such as when searching for properties with X, Y, OR Z, the groupings specify whether you mean to
-          query for properties with (X AND Y) OR Z, or properties with X AND (Y OR Z).{' '}
-        </p>
-        <h5>Multiple Conditions</h5>
-        <p>
-          Only the first condition can contain more than 1 condition inside of it. This is designed to reduce the
-          complexity of queries and improve the chances of a successful result.{' '}
-        </p>
+        <p>Returns results where any one of the applied filters are true for the property.</p>
       </div>
 
       <div className="py-2 mb-2">

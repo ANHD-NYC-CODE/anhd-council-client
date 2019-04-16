@@ -220,6 +220,7 @@ export class ConditionComponent extends React.Component {
                 <AddFilterGroup
                   condition={this.props.condition}
                   createNewFilter={this.createNewFilter}
+                  showPopups={this.props.showPopups}
                   switchCondition={this.switchCondition}
                 />
               )}
