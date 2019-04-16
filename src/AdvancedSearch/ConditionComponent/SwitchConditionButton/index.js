@@ -16,39 +16,36 @@ class SwitchConditionButton extends React.Component {
 
   render() {
     return (
-      <div>
+      <DropdownButton
+        ref={this.ref}
+        as={ButtonGroup}
+        title={this.props.condition.type === 'AND' ? 'all' : 'any'}
+        size="sm"
+        variant="success"
+        id="bg-vertical-dropdown-1"
+      >
         <Overlay position={'left'} show={this.props.showPopups} target={this.ref.current}>
           {props => {
             return <Tooltip {...props}>Switch the logical condition type (and | or)</Tooltip>
           }}
         </Overlay>
-        <DropdownButton
-          ref={this.ref}
+        <Dropdown.Item
           className="control-button"
-          as={ButtonGroup}
-          title={this.props.condition.type === 'AND' ? 'all' : 'any'}
+          eventKey="1"
           size="sm"
-          variant="success"
-          id="bg-vertical-dropdown-1"
+          onClick={() => this.props.switchCondition('AND')}
         >
-          <Dropdown.Item
-            className="control-button"
-            eventKey="1"
-            size="lg"
-            onClick={() => this.props.switchCondition('AND')}
-          >
-            All
-          </Dropdown.Item>
-          <Dropdown.Item
-            className="control-button"
-            eventKey="2"
-            size="lg"
-            onClick={() => this.props.switchCondition('OR')}
-          >
-            Any
-          </Dropdown.Item>
-        </DropdownButton>
-      </div>
+          All
+        </Dropdown.Item>
+        <Dropdown.Item
+          className="control-button"
+          eventKey="2"
+          size="sm"
+          onClick={() => this.props.switchCondition('OR')}
+        >
+          Any
+        </Dropdown.Item>
+      </DropdownButton>
     )
   }
 }

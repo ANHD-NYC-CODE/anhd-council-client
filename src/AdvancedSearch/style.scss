@@ -9,6 +9,11 @@
     padding-right: 0;
   }
 
+  .sticky-section {
+    position: sticky;
+    top: 20px;
+  }
+
   .paramset-wrapper,
   .form-row__container {
     // margin-bottom: 10px;
@@ -38,23 +43,12 @@
     display: inline-block;
     flex: 1 1 100%;
     width: 40px;
-    border-right: 5px double $gray-400;
+    border-left: 5px double $gray-400;
     margin-right: 40px;
   }
 
   .form-row__connection:first-child {
     border-bottom: 5px double $gray-400;
-  }
-
-  .condition-connection {
-    .form-row__connection {
-      border-right: 5px double $primary;
-      margin-right: 0px;
-    }
-
-    .form-row__connection:first-child {
-      border-bottom: 5px double $primary;
-    }
   }
 
   .advanced-search__left-column {

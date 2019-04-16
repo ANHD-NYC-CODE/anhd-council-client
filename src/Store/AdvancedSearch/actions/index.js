@@ -5,12 +5,21 @@ export const replacePropertyFilter = propertyFilter => ({
   propertyFilter,
 })
 
-export const addNewCondition = (parentKey, conditionKey, filterIndex) => {
+export const addNewCondition = ({ parentKey, conditionKey, filterIndex = undefined } = {}) => {
   return {
     type: c.ADD_NEW_CONDITION,
     parentKey,
     conditionKey,
     filterIndex, // optionally move a filter to new condition from parent
+  }
+}
+
+export const addNewConditionGroup = ({ parentKey, conditionKey, filters = [] } = {}) => {
+  return {
+    type: c.ADD_NEW_CONDITION_GROUP,
+    parentKey,
+    conditionKey,
+    filters, // optionally create new condition with filters
   }
 }
 

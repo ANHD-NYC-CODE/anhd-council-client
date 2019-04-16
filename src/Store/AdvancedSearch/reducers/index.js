@@ -40,6 +40,26 @@ export const advancedSearchReducer = (state = Object.freeze(initialState()), act
         conditions: { ...newConditions, [action.conditionKey]: newCondition },
       }
     }
+    case c.ADD_NEW_CONDITION_GROUP: {
+      const newConditions = { ...state.conditions }
+      const parentCondition = newConditions[action.parentKey]
+
+      const newCondition = new Condition({
+        key: action.conditionKey,
+        type: parentCondition.type,
+        filters: [...action.filters],
+      })
+
+      parentCondition.removeDatasetFilters()
+      parentCondition.toggleType()
+      parentCondition.addConditionGroup({
+        filter: new ConditionFilter({ conditionGroup: action.conditionKey }),
+      })
+      return {
+        ...state,
+        conditions: { ...newConditions, [action.conditionKey]: newCondition },
+      }
+    }
     case c.CHANGE_CONDITION_TYPE: {
       const changedCondition = cloneInstance(state.conditions[action.conditionKey])
       changedCondition.type = action.conditionType

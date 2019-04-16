@@ -1,4 +1,3 @@
-import StandardizedInput from 'shared/classes/StandardizedInput'
 import ParamError from 'shared/classes/ParamError'
 
 export default class Condition {
@@ -30,13 +29,10 @@ export default class Condition {
     this._filters = filters
   }
 
-  toggleAndOrConditionType(e) {
-    if (e && !(e instanceof StandardizedInput))
-      throw 'please pass a StandardizedInput class instance into the "e" parameter'
-
-    if (e.value.toUpperCase() === 'AND') {
+  toggleType() {
+    if (this._type === 'AND') {
       this._type = 'OR'
-    } else if (e.value.toUpperCase() === 'OR') {
+    } else {
       this._type = 'AND'
     }
   }
@@ -53,7 +49,7 @@ export default class Condition {
     return this._filters.some(filter => filter.conditionGroup)
   }
 
-  addFilter({ dispatchAction, filter }) {
+  addFilter({ dispatchAction, filter } = {}) {
     // Adds condition groups to the end
     if (filter.conditionGroup) {
       this._filters = [...this._filters, filter]
@@ -69,7 +65,7 @@ export default class Condition {
     }
   }
 
-  replaceFilter({ dispatchAction, filterIndex, filter }) {
+  replaceFilter({ dispatchAction, filterIndex, filter } = {}) {
     this._filters = [...this._filters.slice(0, filterIndex), filter, ...this._filters.slice(filterIndex + 1)]
 
     if (dispatchAction) {
@@ -77,18 +73,19 @@ export default class Condition {
     }
   }
 
-  removeFilter({ dispatchAction, filterIndex }) {
+  removeFilter({ dispatchAction, filterIndex } = {}) {
     this._filters = this._filters.filter((f, index) => index !== filterIndex)
     // Reset condition 0 type to 'AND' if only 1 filter exists
-    if (this.key === '0' && this.filters.length <= 1) {
-      this.type = 'AND'
+    if (this.key === '0' && this._filters.length <= 1) {
+      this._type = 'AND'
     }
+
     if (dispatchAction) {
       dispatchAction()
     }
   }
 
-  removeNewFilters({ dispatchAction }) {
+  removeNewFilters({ dispatchAction = undefined } = {}) {
     this._filters
       .filter(f => f.id === 'NEW_FILTER')
       .map(f => this._filters.indexOf(f))
@@ -96,6 +93,21 @@ export default class Condition {
     if (dispatchAction) {
       dispatchAction()
     }
+  }
+
+  removeDatasetFilters({ dispatchAction = undefined } = {}) {
+    this._filters
+      .filter(f => !f.conditionGroup)
+      .map(f => this._filters.indexOf(f))
+      .forEach(index => this.removeFilter({ filterIndex: index }))
+    if (dispatchAction) {
+      dispatchAction()
+    }
+  }
+
+  addConditionGroup({ filter: conditionFilter } = {}) {
+    this.removeDatasetFilters()
+    this._filters = [conditionFilter]
   }
 
   get paramMaps() {
@@ -120,23 +132,23 @@ export default class Condition {
 
   validate() {
     this.clearErrors()
-    const filterCount = this.filters.filter(f => !f.conditionGroup).length
+    const datasetFilterCount = this.filters.filter(f => !f.conditionGroup).length
     const conditionFilterCount = this.filters.filter(f => f.conditionGroup).length
     if (this.key === '0') {
       // If has 1 condition filters, but no other filters
-      if (conditionFilterCount === 1 && !filterCount) {
-        this.addError(new ParamError({ message: 'Please add a filter or another condition' }))
+      if (conditionFilterCount === 1 && !datasetFilterCount) {
+        this.addError(new ParamError({ message: 'Please add a filter to this group.' }))
       }
 
-      if (this.type === 'OR' && filterCount === 1) {
+      if (this.type === 'OR' && this.filters.length === 1) {
         this.addError(new ParamError({ message: 'Please add at least 2 filters to an "OR" condition.' }))
       }
     } else if (this.key !== '0') {
-      if (!filterCount) {
+      if (!datasetFilterCount) {
         this.addError(new ParamError({ message: 'Please add a filter' }))
       }
 
-      if (this.type === 'OR' && filterCount < 2) {
+      if (this.type === 'OR' && datasetFilterCount < 2) {
         this.addError(new ParamError({ message: 'Please add at least 2 filters to an "OR" condition.' }))
       }
     }

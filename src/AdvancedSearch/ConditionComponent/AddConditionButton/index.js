@@ -18,29 +18,32 @@ class AddConditionButton extends React.PureComponent {
 
   render() {
     return (
-      <div className="ml-2">
+      <Button
+        className="add-condition"
+        size="sm"
+        onClick={e => {
+          e.preventDefault()
+          this.props.addCondition()
+        }}
+        ref={this.ref}
+        variant="info"
+      >
         <Overlay placement="top" show={this.props.showPopups} target={this.ref.current}>
           {props => {
-            return <Tooltip {...props}>Add a new logical condition within the current one.</Tooltip>
+            return <Tooltip {...props}>Create a filter group with these filters</Tooltip>
           }}
         </Overlay>
-        <Button
-          className="add-condition"
-          size="lg"
-          onClick={e => {
-            e.preventDefault()
-            this.props.addCondition()
-          }}
-          ref={this.ref}
-          variant="info"
-        >
-          <FontAwesomeIcon icon={faPlus} /> {this.props.condition.type === 'AND' ? '(OR)' : '(AND)'}
-        </Button>
-      </div>
+        <FontAwesomeIcon icon={faPlus} /> Create filter group
+      </Button>
     )
   }
 }
 
-AddConditionButton.propTypes = {}
+AddConditionButton.propTypes = {
+  addCondition: PropTypes.func,
+  condition: PropTypes.object,
+  filterIndex: PropTypes.number,
+  showPopups: PropTypes.bool,
+}
 
 export default AddConditionButton

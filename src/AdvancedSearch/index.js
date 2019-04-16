@@ -17,8 +17,6 @@ import ConfigContext from 'Config/ConfigContext'
 import { setAppState } from 'Store/AppState/actions'
 import classnames from 'classnames'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import './style.scss'
 export class AdvancedSearch extends React.Component {
   constructor(props) {
@@ -61,43 +59,45 @@ export class AdvancedSearch extends React.Component {
         <Row>
           <Col className="touch-left padding-xs-sm-0" xs={12} lg={c.SIDEBAR_COLUMN_SIZE}>
             <Jumbotron className="layout__left-column advanced-search__left-column">
-              <Row className="advanced-search__row mb-4">
-                <Col xs={12} xl={11}>
-                  <h3 className="text-uppercase font-weight-bold m-0">Custom Search</h3>
-                </Col>
-              </Row>
-              <Row className="mb-2">
-                <Col>
-                  <ToggleButtonGroup
-                    name="view"
-                    type="radio"
-                    className="view-toggle"
-                    value={this.state.view}
-                    variant="info"
-                    onChange={this.toggleView}
-                  >
-                    <ToggleButton className="toggle-link light" value={1}>
-                      Sentence
-                    </ToggleButton>
-                    <ToggleButton className="toggle-link light" value={2}>
-                      Search Guide
-                    </ToggleButton>
-                  </ToggleButtonGroup>
-                </Col>
-              </Row>
+              <div className="sticky-section">
+                <Row className="advanced-search__row mb-4">
+                  <Col xs={12} xl={11}>
+                    <h3 className="text-uppercase font-weight-bold m-0">Custom Search</h3>
+                  </Col>
+                </Row>
+                <Row className="mb-2">
+                  <Col>
+                    <ToggleButtonGroup
+                      name="view"
+                      type="radio"
+                      className="view-toggle"
+                      value={this.state.view}
+                      variant="info"
+                      onChange={this.toggleView}
+                    >
+                      <ToggleButton className="toggle-link light" value={1}>
+                        Sentence
+                      </ToggleButton>
+                      <ToggleButton className="toggle-link light" value={2}>
+                        Search Guide
+                      </ToggleButton>
+                    </ToggleButtonGroup>
+                  </Col>
+                </Row>
 
-              <Row className="mb-5">
-                <Col>
-                  <div className={classnames({ 'd-none': this.state.view === 1 })}>
-                    <AdvancedSearchInstructions />
-                  </div>
-                  <div
-                    className={classnames('advanced-search__sentence-container', { 'd-none': this.state.view !== 1 })}
-                  >
-                    <AdvancedSearchSentence advancedSearch={this.props.advancedSearch} />
-                  </div>
-                </Col>
-              </Row>
+                <Row className="mb-5">
+                  <Col>
+                    <div className={classnames({ 'd-none': this.state.view === 1 })}>
+                      <AdvancedSearchInstructions />
+                    </div>
+                    <div
+                      className={classnames('advanced-search__sentence-container', { 'd-none': this.state.view !== 1 })}
+                    >
+                      <AdvancedSearchSentence advancedSearch={this.props.advancedSearch} />
+                    </div>
+                  </Col>
+                </Row>
+              </div>
             </Jumbotron>
           </Col>
           <Col className="advanced-search-form--container px-lg-4 pt-6" xs={12} lg={12 - c.SIDEBAR_COLUMN_SIZE}>
