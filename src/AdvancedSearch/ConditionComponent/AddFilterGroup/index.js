@@ -33,6 +33,7 @@ const AddFilterGroup = props => {
 AddFilterGroup.propTypes = {
   createNewFilter: PropTypes.func,
   condition: PropTypes.object,
+  showPopups: PropTypes.bool,
   switchCondition: PropTypes.func,
 }
 
