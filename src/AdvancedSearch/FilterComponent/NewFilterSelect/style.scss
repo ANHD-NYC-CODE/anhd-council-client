@@ -1,0 +1,8 @@
+@import 'shared/styles/_variables.scss';
+.new-filter-select {
+  margin-bottom: 20px;
+
+  .form-control {
+    border-color: $secondary;
+  }
+}

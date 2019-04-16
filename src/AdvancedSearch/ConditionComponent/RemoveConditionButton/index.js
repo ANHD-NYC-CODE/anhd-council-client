@@ -18,23 +18,20 @@ class RemoveConditionButton extends React.PureComponent {
 
   render() {
     return (
-      <div>
-        <Overlay placement="left" show={this.props.showPopups} target={this.ref.current}>
+      <Button
+        className="remove-condition"
+        size="sm"
+        ref={this.ref}
+        onClick={() => this.props.removeCondition(this.props.condition.key)}
+        variant="outline-danger"
+      >
+        <Overlay placement="top" show={this.props.showPopups} target={this.ref.current}>
           {props => {
-            return <Tooltip {...props}>Remove the entire logical condition</Tooltip>
+            return <Tooltip {...props}>Remove this filter group</Tooltip>
           }}
         </Overlay>
-
-        <Button
-          className="control-button remove-condition"
-          size="lg"
-          ref={this.ref}
-          onClick={() => this.props.removeCondition(this.props.condition.key)}
-          variant="outline-danger"
-        >
-          <FontAwesomeIcon icon={faMinus} />
-        </Button>
-      </div>
+        <FontAwesomeIcon icon={faMinus} /> Remove filter group
+      </Button>
     )
   }
 }

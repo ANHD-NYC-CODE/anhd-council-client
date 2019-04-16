@@ -4,18 +4,15 @@ import Filter from 'shared/classes/Filter'
 import StandardizedInput from 'shared/classes/StandardizedInput'
 import NewFilterSelect from 'AdvancedSearch/FilterComponent/NewFilterSelect'
 import uuidv4 from 'uuid/v4'
-import { addNewCondition, updateCondition, removeCondition } from 'Store/AdvancedSearch/actions'
-import { ButtonGroup, Form, Button, Col } from 'react-bootstrap'
+import { addNewConditionGroup, updateCondition, removeCondition } from 'Store/AdvancedSearch/actions'
+import { Form, Button, Col } from 'react-bootstrap'
 import FormError from 'shared/components/FormError'
 import FilterComponent from 'AdvancedSearch/FilterComponent'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
-import AddFilterGroup from 'AdvancedSearch/ConditionComponent/AddFilterGroup'
+import AddFilterButtonGroup from 'AdvancedSearch/ConditionComponent/AddFilterButtonGroup'
+import ConditionControlGroup from 'AdvancedSearch/ConditionComponent/ConditionControlGroup'
 
-import AddFilterButton from 'AdvancedSearch/ConditionComponent/AddFilterButton'
-import AddConditionButton from 'AdvancedSearch/ConditionComponent/AddConditionButton'
-
-import RemoveConditionButton from 'AdvancedSearch/ConditionComponent/RemoveConditionButton'
 import SwitchConditionButton from 'AdvancedSearch/ConditionComponent/SwitchConditionButton'
 
 import './style.scss'
@@ -24,7 +21,7 @@ export class ConditionComponent extends React.Component {
   constructor(props) {
     super(props)
 
-    this.addCondition = this.addCondition.bind(this)
+    this.addConditionGroup = this.addConditionGroup.bind(this)
     this.removeCondition = this.removeCondition.bind(this)
     this.dispatchAction = this.dispatchAction.bind(this)
     this.replaceFilter = this.replaceFilter.bind(this)
@@ -39,8 +36,15 @@ export class ConditionComponent extends React.Component {
     }
   }
 
-  addCondition(filterIndex = undefined) {
-    this.props.dispatch(addNewCondition(this.props.condition.key, uuidv4(), filterIndex))
+  addConditionGroup() {
+    this.props.dispatch(
+      addNewConditionGroup({
+        parentKey: this.props.condition.key,
+        conditionKey: uuidv4(),
+        filters: this.props.condition.filters,
+      })
+    )
+    this.createNewFilter()
   }
 
   dispatchAction() {
@@ -109,6 +113,7 @@ export class ConditionComponent extends React.Component {
               config={this.props.config}
               dispatch={this.props.dispatch}
               showPopups={this.props.showPopups}
+              parentCondition={this.props.condition}
             />
           </div>
         )
@@ -129,7 +134,7 @@ export class ConditionComponent extends React.Component {
         return (
           <div className="form-row__container" key={`filter-${this.props.condition.key}-${filter.id}-${filterIndex}`}>
             <FilterComponent
-              addCondition={this.addCondition}
+              addCondition={this.addConditionGroup}
               allowNewCondition={isCondition0() || (!isCondition0() && !this.props.condition.hasCondition())}
               condition={this.props.condition}
               config={this.props.config}
@@ -147,47 +152,40 @@ export class ConditionComponent extends React.Component {
 
     return (
       <div className="condition">
-        {this.props.condition.filters.filter(f => f.id !== 'NEW_FILTER').length > 1 && (
-          <Form.Row className="align-items-center">
-            Properties with{' '}
-            <SwitchConditionButton
-              showPopups={this.props.showPopups}
-              condition={this.props.condition}
-              switchCondition={this.switchCondition}
-            />{' '}
-            of the following:
+        {((this.props.condition.key === '0' &&
+          this.props.condition.filters.filter(f => f.id !== 'NEW_FILTER').length > 1) ||
+          this.props.condition.key !== '0') && (
+          <Form.Row className="switch-condition-row">
+            <Col xs={12} sm={8} className="align-items-center d-flex">
+              <div>
+                {this.props.condition.key !== '0' && this.props.parentCondition.type.toLowerCase() + ' '}
+                Properties with{' '}
+                <SwitchConditionButton
+                  showPopups={this.props.showPopups}
+                  condition={this.props.condition}
+                  switchCondition={this.switchCondition}
+                />{' '}
+                of the following:
+              </div>
+            </Col>
+            <Col xs={12} sm={4}>
+              <ConditionControlGroup
+                condition={this.props.condition}
+                addCondition={this.addConditionGroup}
+                showPopups={this.props.showPopups}
+                removeCondition={this.removeCondition}
+              />
+            </Col>
           </Form.Row>
         )}
         <Form.Row>
           {!isCondition0() && (
-            <div className="form-row__connection-container condition-connection d-flex flex-column">
+            <Col className="form-row__connection-container condition-connection d-flex flex-column">
               <div className="form-row__connection" />
               <div className="form-row__connection" />
-            </div>
+            </Col>
           )}
 
-          {/* <Col xs={3} sm={2} className="condition-control flex-column align-self-center">
-          <div className="condition-control-column d-flex align-items-center flex-column">
-            {isCondition0() && !this.props.condition.hasCondition() ? (
-              <SwitchConditionButton
-                showPopups={this.props.showPopups}
-                condition={this.props.condition}
-                switchCondition={this.switchCondition}
-              />
-            ) : (
-              <Button className="control-button" size="lg" variant="success" disabled>
-                {this.props.condition.type}
-              </Button>
-            )}
-            {!isCondition0() && (
-              <RemoveConditionButton
-                condition={this.props.condition}
-                removeCondition={this.removeCondition}
-                showPopups={this.props.showPopups}
-              />
-            )}
-          </div>
-        </Col> */}
           <Col xs={9} sm={10} className="d-flex flex-column justify-content-center">
             <FormError
               show={!!this.props.condition.errors.length}
@@ -202,6 +200,9 @@ export class ConditionComponent extends React.Component {
               return renderFilterOrCondition(filter, this.props.condition.filters.indexOf(filter))
             })}
 
+            {this.conditionGroupFilters().map(filter => {
+              return renderFilterOrCondition(filter, this.props.condition.filters.indexOf(filter))
+            })}
             <div className="new-filter-row d-flex">
               {this.props.condition.filters.some(filter => filter.id === 'NEW_FILTER') ? (
                 <Button
@@ -217,24 +218,14 @@ export class ConditionComponent extends React.Component {
                   <FontAwesomeIcon icon={faTimes} /> Cancel
                 </Button>
               ) : (
-                <AddFilterGroup
+                <AddFilterButtonGroup
                   condition={this.props.condition}
                   createNewFilter={this.createNewFilter}
                   showPopups={this.props.showPopups}
                   switchCondition={this.switchCondition}
                 />
               )}
-              {/* {(isCondition0() || (!isCondition0() && !this.props.condition.hasCondition())) && (
-              <AddConditionButton
-                condition={this.props.condition}
-                addCondition={this.addCondition}
-                showPopups={this.props.showPopups}
-              />
-            )} */}
             </div>
-            {this.conditionGroupFilters().map(filter => {
-              return renderFilterOrCondition(filter, this.props.condition.filters.indexOf(filter))
-            })}
           </Col>
         </Form.Row>
       </div>

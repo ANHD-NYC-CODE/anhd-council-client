@@ -26,7 +26,9 @@ describe('Custom Search reducer', () => {
           type: 'AND',
           filters: [new ConditionFilter({ conditionGroup: newConditionId })],
         })
-        expect(r.advancedSearchReducer(state, a.addNewCondition('0', newConditionId))).toEqual({
+        expect(
+          r.advancedSearchReducer(state, a.addNewCondition({ parentKey: '0', conditionKey: newConditionId }))
+        ).toEqual({
           ...r.initialState(),
           conditions: { '0': expectedCondition0, [newConditionId]: condition1 },
         })
@@ -55,7 +57,12 @@ describe('Custom Search reducer', () => {
           }),
         }
 
-        expect(r.advancedSearchReducer(state, a.addNewCondition('0', newConditionId, 0))).toEqual({
+        expect(
+          r.advancedSearchReducer(
+            state,
+            a.addNewCondition({ parentKey: '0', conditionKey: newConditionId, filterIndex: 0 })
+          )
+        ).toEqual({
           ...r.initialState(),
           conditions: expectedConditions,
         })

@@ -1,7 +1,26 @@
 @import 'shared/styles/bootstrap/_variables.scss';
 
 .condition {
-  min-height: 200px;
+  min-height: 100px;
+
+  .condition {
+    .switch-condition-row {
+      margin-left: 80px;
+    }
+
+    .form-row__connection-container:not(.condition-connection) {
+      .form-row__connection {
+        border-color: $primary;
+      }
+
+      .form-row__connection:first-child {
+        border-bottom: 5px double $primary;
+      }
+    }
+    .condition-connection {
+    }
+  }
+
   .new-filter-row {
     font-weight: bold;
     justify-content: flex-start;

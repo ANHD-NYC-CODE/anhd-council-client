@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Form } from 'react-bootstrap'
 import ConfigContext from 'Config/ConfigContext'
 import FormError from 'shared/components/FormError'
+import './style.scss'
 const datasetOptions = advancedSearchFilters => {
   return [
     <option disabled key={'new-filter-option-disabled'} value={-1}>
@@ -25,7 +26,7 @@ const NewFilterSelect = props => {
     <ConfigContext.Consumer>
       {config => {
         return (
-          <div className="w-100">
+          <div className="new-filter-select w-100">
             <Form.Control
               as="select"
               className="new-filter-select valued"

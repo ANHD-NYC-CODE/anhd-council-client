@@ -3,8 +3,9 @@ import PropTypes from 'prop-types'
 
 import { Form, Col, Button } from 'react-bootstrap'
 import FormError from 'shared/components/FormError'
-import AddConditionButton from 'AdvancedSearch/FilterComponent/AddConditionButton'
+import AddInnerConditionButton from 'AdvancedSearch/FilterComponent/AddInnerConditionButton'
 import RemoveFilterButton from 'AdvancedSearch/FilterComponent/RemoveFilterButton'
+import { removeCondition } from 'Store/AdvancedSearch/actions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMinus } from '@fortawesome/free-solid-svg-icons'
 
@@ -22,6 +23,10 @@ export class FilterComponent extends React.Component {
       dispatchAction: this.props.dispatchAction,
       filterIndex: this.props.filterIndex,
     })
+
+    if (this.props.condition.key !== '0' && !this.props.condition.filters.length) {
+      this.props.dispatch(removeCondition(this.props.condition.key))
+    }
   }
 
   renderButtons(paramSet, key) {
@@ -30,7 +35,7 @@ export class FilterComponent extends React.Component {
         <div className="d-flex align-items-center">
           <RemoveFilterButton showPopups={this.props.showPopups} removeFilter={this.removeFilter} />
           {/* {this.props.allowNewCondition && (
-            <AddConditionButton
+            <AddInnerConditionButton
               addCondition={this.props.addCondition}
               filterIndex={this.props.filterIndex}
               showPopups={this.props.showPopups}
