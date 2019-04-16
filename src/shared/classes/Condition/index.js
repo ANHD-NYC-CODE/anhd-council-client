@@ -30,10 +30,10 @@ export default class Condition {
   }
 
   toggleType() {
-    if (this._type === 'AND') {
-      this._type = 'OR'
-    } else {
-      this._type = 'AND'
+    if (this.isAnd()) {
+      this.type = 'OR'
+    } else if (this.isOr()) {
+      this.type = 'AND'
     }
   }
 
@@ -96,10 +96,8 @@ export default class Condition {
   }
 
   removeDatasetFilters({ dispatchAction = undefined } = {}) {
-    this._filters
-      .filter(f => !f.conditionGroup)
-      .map(f => this._filters.indexOf(f))
-      .forEach(index => this.removeFilter({ filterIndex: index }))
+    this._filters = this._filters.filter(f => !f.conditionGroup)
+
     if (dispatchAction) {
       dispatchAction()
     }

@@ -17,17 +17,20 @@ export const initialState = () => ({
 })
 
 export const advancedSearchReducer = (state = Object.freeze(initialState()), action = { data: [] }) => {
+  let newConditions
+  let newCondition
+  let parentCondition
   switch (action.type) {
     case c.ADD_NEW_CONDITION: {
-      const newConditions = { ...state.conditions }
-      const parentCondition = newConditions[action.parentKey]
+      newConditions = { ...state.conditions }
+      parentCondition = newConditions[action.parentKey]
 
       const transferredFilter =
         action.filterIndex || action.filterIndex === 0 ? parentCondition.filters[action.filterIndex] : undefined
 
-      const newCondition = new Condition({
+      newCondition = new Condition({
         key: action.conditionKey,
-        type: parentCondition.type === 'AND' ? 'OR' : 'AND',
+        type: parentCondition.type,
         filters: transferredFilter ? [transferredFilter] : [],
       })
 
@@ -41,10 +44,10 @@ export const advancedSearchReducer = (state = Object.freeze(initialState()), act
       }
     }
     case c.ADD_NEW_CONDITION_GROUP: {
-      const newConditions = { ...state.conditions }
-      const parentCondition = newConditions[action.parentKey]
+      newConditions = { ...state.conditions }
+      parentCondition = newConditions[action.parentKey]
 
-      const newCondition = new Condition({
+      newCondition = new Condition({
         key: action.conditionKey,
         type: parentCondition.type,
         filters: [...action.filters],
@@ -61,7 +64,7 @@ export const advancedSearchReducer = (state = Object.freeze(initialState()), act
       }
     }
     case c.CHANGE_CONDITION_TYPE: {
-      const changedCondition = cloneInstance(state.conditions[action.conditionKey])
+      let changedCondition = cloneInstance(state.conditions[action.conditionKey])
       changedCondition.type = action.conditionType
       return {
         ...state,
@@ -75,7 +78,7 @@ export const advancedSearchReducer = (state = Object.freeze(initialState()), act
       }
     }
     case c.REMOVE_CONDITION: {
-      const newConditions = { ...state.conditions }
+      newConditions = { ...state.conditions }
 
       delete newConditions[action.conditionKey]
 
@@ -96,28 +99,31 @@ export const advancedSearchReducer = (state = Object.freeze(initialState()), act
       }
     }
     case c.REMOVE_CONDITION_GROUP: {
-      const clonedConditions = { ...state.conditions }
-      const pCondition = clonedConditions[action.parentConditionKey]
-      const rCondition = clonedConditions[action.removedConditionKey]
-      pCondition.filters = [...pCondition.filters, ...rCondition.filters]
-      pCondition.removeNewFilters()
-      pCondition.removeFilter({
-        filterIndex: pCondition.filters.indexOf(
-          pCondition.filters.find(f => f.conditionGroup === action.removedConditionKey)
+      newConditions = { ...state.conditions }
+      parentCondition = newConditions[action.parentConditionKey]
+      let removedCondition = newConditions[action.removedConditionKey]
+      removedCondition.removeNewFilters()
+      parentCondition.removeNewFilters()
+      parentCondition.removeFilter({
+        filterIndex: parentCondition.filters.indexOf(
+          parentCondition.filters.find(f => f.conditionGroup === action.removedConditionKey)
         ),
       })
 
-      delete clonedConditions[action.removedConditionKey]
+      parentCondition.type = !parentCondition.filters.length ? removedCondition.type : parentCondition.type
+      parentCondition.filters = [...parentCondition.filters, ...removedCondition.filters]
+
+      delete newConditions[action.removedConditionKey]
       return {
         ...state,
         conditions:
-          Object.entries(clonedConditions).length === 0 && clonedConditions.constructor === Object
+          Object.entries(newConditions).length === 0 && newConditions.constructor === Object
             ? { ...initialState().conditions }
-            : clonedConditions,
+            : newConditions,
       }
     }
     case c.ADD_FILTER: {
-      const newConditions = { ...state.conditions }
+      newConditions = { ...state.conditions }
       let condition = newConditions[action.conditionKey]
       let conditionGroups = condition.filters.filter(f => f.conditionGroup)
       condition.filters = condition.filters.filter(f => !f.conditionGroup)
