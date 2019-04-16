@@ -5,7 +5,7 @@ import './style.scss'
 const GenericFieldSet = props => {
   return (
     <InputGroup
-      className="generic-fieldset"
+      className="generic-fieldset fieldset"
       key={props.key}
       as={Col}
       xs={{
