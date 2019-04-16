@@ -14,13 +14,21 @@ select.form-control.valued {
   outline: none;
   border: none;
   border-radius: 0;
-  border-bottom: $input-border;
+  border-bottom: $input-border-mobile;
+
+  @include media-breakpoint-up(sm) {
+    border-bottom: $input-border;
+  }
 }
 .form-control:focus,
 .form-control:focus-within {
   outline: none;
   box-shadow: none;
-  border-bottom: $input-border-focus;
+  border-bottom: $input-border-focus-mobile;
+
+  @include media-breakpoint-up(sm) {
+    border-bottom: $input-border-focus;
+  }
 }
 input.form-control:focus,
 input.form-control {
@@ -47,8 +55,3 @@ input.form-control::placeholder {
     line-height: 2.25;
   }
 }
-
-// .xl-form-control:focus {
-//   background-color: $info;
-//   color: $primary;
-// }
