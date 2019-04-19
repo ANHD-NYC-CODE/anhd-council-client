@@ -34,6 +34,7 @@ const HousingTypeSection = props => {
                   return (
                     <Col xs={12} sm={6} lg={12} key={`housingtype-summary-${index}`}>
                       <RequestSummaryWrapper
+                        key={`housingtype-wrapper-${index}`}
                         request={props.propertySummaryRequest}
                         totalRequest={props.propertySummaryRequest}
                         onClick={() => props.switchSelectedFilter(ownResultFilter)}

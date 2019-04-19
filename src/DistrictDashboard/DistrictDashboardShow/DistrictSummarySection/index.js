@@ -53,21 +53,23 @@ const DistrictSummarySection = props => {
       {// Custom Search
       props.geographyRequests
         .filter(r => r.type === 'ADVANCED_SEARCH')
-        .map(request => (
-          <Col xs={12} sm={6} xl={4} key={'rs-col-custom-search'} className="geography-request-summary__container">
-            <RequestSummaryWrapper
-              key={'request-summary-custom-search'}
-              request={request}
-              resultsFilter={undefined}
-              label={'Custom Search'}
-              onClick={() =>
-                props.dispatch(setAppState({ districtShowCustomView: !props.appState.districtShowCustomView }))
-              }
-              resultsComponent={SummaryResultCard}
-              selected={props.customView}
-            />
-          </Col>
-        ))}
+        .map(request => {
+          return (
+            <Col xs={12} sm={6} xl={4} key={'rs-col-custom-search'} className="geography-request-summary__container">
+              <RequestSummaryWrapper
+                key={'request-summary-custom-search'}
+                request={request}
+                resultsFilter={undefined}
+                label={'Custom Search'}
+                onClick={() =>
+                  props.dispatch(setAppState({ districtShowCustomView: !props.appState.districtShowCustomView }))
+                }
+                resultsComponent={SummaryResultCard}
+                selected={props.customView}
+              />
+            </Col>
+          )
+        })}
       {!props.geographyRequests.some(r => r.type === 'ADVANCED_SEARCH') && (
         <Col className="geography-request-summary__container d-flex" xs={12} sm={6} xl={4}>
           <Col className="align-self-center pl-0 pl-lg-2 pr-0" xs={11}>

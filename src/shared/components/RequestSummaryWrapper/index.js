@@ -75,6 +75,7 @@ class RequestSummaryWrapper extends React.Component {
               results: results,
               totalResults: totalResults,
               loading: this.props.loading,
+              className: this.props.className,
             })
           )}
         </Col>

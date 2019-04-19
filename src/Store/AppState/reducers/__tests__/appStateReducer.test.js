@@ -39,7 +39,7 @@ describe('App State reducer', () => {
   describe('SET_ADVANCED_SEARCH_REQUEST', () => {
     const advancedSearchRequest = { resourceModel: { ownResultFilters: [] } }
     const requests = [1, 2, 3]
-    const selectedRequests = [requests]
+    const selectedRequests = requests
     it('sets the request', () => {
       expect(
         r.appStateReducer(
@@ -49,7 +49,8 @@ describe('App State reducer', () => {
       ).toEqual({
         ...r.initialState,
         requests: [...requests, advancedSearchRequest],
-        selectedRequests: [advancedSearchRequest],
+        selectedRequests: selectedRequests,
+        districtShowCustomView: true,
       })
     })
   })
