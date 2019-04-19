@@ -4,7 +4,7 @@ import Adapter from 'enzyme-adapter-react-16'
 import { Axios } from 'shared/utilities/Axios'
 import MockAdapter from 'axios-mock-adapter'
 import { setupStore, configuredState } from 'shared/testUtilities'
-
+import * as appStateReducer from 'Store/AppState/reducers'
 import { Provider } from 'react-redux'
 
 const mock = new MockAdapter(Axios)
@@ -74,7 +74,9 @@ describe('navigation', () => {
 
   describe('with current geography app state', () => {
     it('changes district map link to the selected geography', () => {
-      const wrapper = setupWrapper({ appState: { currentGeographyType: 'COUNCIL', currentGeographyId: '3' } })
+      const wrapper = setupWrapper({
+        appState: { ...appStateReducer.initialState, currentGeographyType: 'COUNCIL', currentGeographyId: '3' },
+      })
       expect(
         wrapper
           .find('SubHeader a')
@@ -86,7 +88,7 @@ describe('navigation', () => {
 
   describe('with current property app state', () => {
     it('changes lookup link to the selected property', () => {
-      const wrapper = setupWrapper({ appState: { currentProperty: '1' } })
+      const wrapper = setupWrapper({ appState: { ...appStateReducer.initialState, currentProperty: '1' } })
       expect(
         wrapper
           .find('SubHeader a')
@@ -96,7 +98,9 @@ describe('navigation', () => {
     })
 
     it('changes lookup link to the selected property and building', () => {
-      const wrapper = setupWrapper({ appState: { currentProperty: '1', currentBuilding: '7' } })
+      const wrapper = setupWrapper({
+        appState: { ...appStateReducer.initialState, currentProperty: '1', currentBuilding: '7' },
+      })
       expect(
         wrapper
           .find('SubHeader a')

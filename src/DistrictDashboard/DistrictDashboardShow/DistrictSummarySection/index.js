@@ -8,20 +8,27 @@ import SummaryResultCard from 'shared/components/ResultCard/SummaryResultCard'
 import { Card, Row, Col } from 'react-bootstrap'
 import BaseLink from 'shared/components/BaseLink'
 
-const handleSummaryClick = (dispatch, request) => {
-  if (request.type === 'ADVANCED_SEARCH') {
-    dispatch(
-      setAppState({
-        selectedRequests: [request],
-        selectedResultsFilter: getAdvancedSearchResultsFilter(request),
-      })
-    )
-  } else {
-    dispatch(toggleSelectedRequest(request))
-  }
-}
-
 const DistrictSummarySection = props => {
+  const handleSummaryClick = request => {
+    if (request.type === 'ADVANCED_SEARCH') {
+      props.dispatch(
+        setAppState({
+          selectedRequests: [request],
+          selectedResultsFilter: undefined,
+        })
+      )
+    } else {
+      props.dispatch(toggleSelectedRequest(request))
+      if (!props.appState.selectedResultsFilter) {
+        props.dispatch(
+          setAppState({
+            selectedResultsFilter: props.appState.resultFilters[0],
+          })
+        )
+      }
+    }
+  }
+
   return (
     <Row className="district-summary-section">
       {props.geographyRequests.map((request, index) => {
@@ -32,7 +39,7 @@ const DistrictSummarySection = props => {
               request={request}
               resultsFilter={request.type === 'ADVANCED_SEARCH' ? undefined : props.selectedResultsFilter}
               label={request.type === 'ADVANCED_SEARCH' ? 'Custom Search' : undefined}
-              onClick={() => handleSummaryClick(props.dispatch, request)}
+              onClick={() => handleSummaryClick(request)}
               resultsComponent={SummaryResultCard}
               selected={props.appState.selectedRequests.includes(request)}
             />

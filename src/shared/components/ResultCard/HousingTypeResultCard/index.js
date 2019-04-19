@@ -10,6 +10,7 @@ const HousingTypeResultCard = props => {
     <Card
       as={Button}
       bg={classnames({ secondary: props.selected })}
+      disabled={props.disabled}
       text={classnames({ light: props.selected, dark: !props.selected })}
       className={classnames('housingtype-summary-result-card', 'result-card flex-row', 'mb-2', {
         active: props.selected,

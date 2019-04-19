@@ -24,9 +24,9 @@ class SwitchConditionButton extends React.Component {
         variant="success"
         id="bg-vertical-dropdown-1"
       >
-        <Overlay position={'left'} show={this.props.showPopups} target={this.ref.current}>
+        <Overlay position={'top'} show={this.props.showPopups} target={this.ref.current}>
           {props => {
-            return <Tooltip {...props}>Switch the logical condition type (and | or)</Tooltip>
+            return <Tooltip {...props}>Switch the condition type (AND / OR)</Tooltip>
           }}
         </Overlay>
         <Dropdown.Item

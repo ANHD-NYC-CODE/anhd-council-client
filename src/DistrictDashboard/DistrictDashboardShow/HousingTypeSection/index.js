@@ -44,6 +44,7 @@ const HousingTypeSection = props => {
                         unitsLabel={ownResultFilter === residentialFilter ? 'of all properties' : 'of residential'}
                         totalResultsFilter={ownResultFilter === residentialFilter ? undefined : residentialFilter}
                         selected={isSelected(props, ownResultFilter)}
+                        disabled={props.appState.selectedRequests.some(r => r.type === 'ADVANCED_SEARCH')}
                       />
                     </Col>
                   )
