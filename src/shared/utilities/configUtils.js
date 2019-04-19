@@ -1,4 +1,5 @@
 import * as resources from 'shared/models/resources'
+import * as c from 'shared/constants'
 import DataRequest from 'shared/classes/DataRequest'
 import { getApiMap } from 'shared/utilities/classUtils'
 import TableConfig from 'shared/classes/TableConfig'
@@ -7,7 +8,6 @@ import ParamMap from 'shared/classes/ParamMap'
 import Resource from 'shared/classes/Resource'
 import { housingTypeCodeToName } from 'shared/utilities/languageUtils'
 import { constantToModelName } from 'shared/utilities/filterUtils'
-import { districtDashboardFilterdates } from 'shared/utilities/componentUtils'
 
 import { getUrlFormattedParamMaps } from 'Store/AdvancedSearch/utilities/advancedSearchStoreUtils'
 
@@ -255,7 +255,7 @@ export const newGeographyRequest = ({
         type: 'DATE',
         field: `${resourceModel.urlPath}__start`,
         comparison: '',
-        value: districtDashboardFilterdates()[0],
+        value: c.DISTRICT_RESULTS_DATE_ONE,
       }),
       new ParamMap({
         resourceModel,

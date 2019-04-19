@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import moment from 'moment'
+import * as c from 'shared/constants'
 import GeographySelect from 'shared/components/GeographySelect'
 import { Row, Col, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
 import AdvancedSearchSentence from 'AdvancedSearch/Sentence'
@@ -16,7 +17,6 @@ import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
 import classnames from 'classnames'
 import { geographySelectionToString } from 'shared/utilities/languageUtils'
 import GeographyProfile from 'DistrictDashboard/GeographyProfile'
-import { districtDashboardFilterdates } from 'shared/utilities/componentUtils'
 import PrintDistrictDashboard from 'DistrictDashboard/PrintDistrictDashboard'
 import BaseTable from 'shared/components/BaseTable'
 import { makeBblCsvrequest } from 'Store/Request/actions'
@@ -167,18 +167,18 @@ class DistrictDashboardShow extends React.PureComponent {
                         <ToggleButton
                           variant="outline-primary"
                           className="p-1 toggle-link"
-                          value={districtDashboardFilterdates()[2]}
-                        >{`Last 3 Years (${moment(districtDashboardFilterdates()[2]).format('YYYY')})`}</ToggleButton>
+                          value={c.DISTRICT_RESULTS_DATE_THREE}
+                        >{`Last 3 Years (${moment(c.DISTRICT_RESULTS_DATE_THREE).format('YYYY')})`}</ToggleButton>
                         <ToggleButton
                           className="p-1 toggle-link"
                           variant="outline-primary"
-                          value={districtDashboardFilterdates()[1]}
-                        >{`Last Year (${moment(districtDashboardFilterdates()[1]).format('YYYY')})`}</ToggleButton>
+                          value={c.DISTRICT_RESULTS_DATE_TWO}
+                        >{`Last Year (${moment(c.DISTRICT_RESULTS_DATE_TWO).format('YYYY')})`}</ToggleButton>
                         <ToggleButton
                           className="p-1 toggle-link"
                           variant="outline-primary"
-                          value={districtDashboardFilterdates()[0]}
-                        >{`Last Month (${moment(districtDashboardFilterdates()[0]).format('MM/YYYY')})`}</ToggleButton>
+                          value={c.DISTRICT_RESULTS_DATE_ONE}
+                        >{`Last Month (${moment(c.DISTRICT_RESULTS_DATE_ONE).format('MM/YYYY')})`}</ToggleButton>
                       </ToggleButtonGroup>
                     </Col>
                   </Row>
