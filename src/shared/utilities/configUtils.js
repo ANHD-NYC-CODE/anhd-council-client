@@ -265,6 +265,12 @@ export const newGeographyRequest = ({
         value: true,
       }),
       new ParamMap({
+        type: 'TEXT',
+        field: 'unitsres',
+        comparison: 'gte',
+        value: 1,
+      }),
+      new ParamMap({
         resourceModel,
         type: 'TEXT',
         field: 'summary-type',
