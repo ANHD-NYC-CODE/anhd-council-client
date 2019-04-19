@@ -26,10 +26,9 @@ import './style.scss'
 class DistrictDashboardShow extends React.PureComponent {
   constructor(props) {
     super(props)
-    this.setViewTable = this.setViewTable.bind(this)
-    this.toggleView = this.toggleView.bind(this)
+    this.setTableView = this.setTableView.bind(this)
     this.state = {
-      view: 1,
+      tableView: false,
     }
 
     this.getResultRecords = this.getResultRecords.bind(this)
@@ -46,15 +45,9 @@ class DistrictDashboardShow extends React.PureComponent {
     }
   }
 
-  toggleView(value) {
+  setTableView(value) {
     this.setState({
-      view: value,
-    })
-  }
-
-  setViewTable() {
-    this.setState({
-      view: 2,
+      tableView: value,
     })
   }
 
@@ -68,8 +61,7 @@ class DistrictDashboardShow extends React.PureComponent {
 
   getResultRecords() {
     const resultFilter =
-      !this.props.appState.selectedRequests.some(r => r.type === 'ADVANCED_SEARCH') &&
-      this.props.appState.selectedResultsFilter
+      !this.props.appState.districtShowCustomView && this.props.appState.selectedResultsFilter
         ? results =>
             this.props.appState.selectedResultsFilter.internalFilter(
               results,
@@ -77,19 +69,22 @@ class DistrictDashboardShow extends React.PureComponent {
             )
         : results => results
 
-    const requestResults = []
+    let requestResults = []
+    if (this.props.appState.districtShowCustomView) {
+      requestResults = this.props.requests['ADVANCED_SEARCH'] || []
+    } else {
+      const fullResults = [].concat.apply(
+        [],
+        this.props.appState.selectedRequests.map(request => this.props.requests[request.requestConstant]).filter(r => r)
+      )
 
-    const fullResults = [].concat.apply(
-      [],
-      this.props.appState.selectedRequests.map(request => this.props.requests[request.requestConstant]).filter(r => r)
-    )
-
-    // Make distinct array
-    const map = new Map()
-    for (const item of fullResults) {
-      if (!map.has(item.bbl)) {
-        map.set(item.bbl, true) // set any value to Map
-        requestResults.push(item)
+      // Make distinct array
+      const map = new Map()
+      for (const item of fullResults) {
+        if (!map.has(item.bbl)) {
+          map.set(item.bbl, true) // set any value to Map
+          requestResults.push(item)
+        }
       }
     }
 
@@ -204,6 +199,7 @@ class DistrictDashboardShow extends React.PureComponent {
                   </Row>
                   <DistrictSummarySection
                     appState={this.props.appState}
+                    customView={this.props.appState.districtShowCustomView}
                     dispatch={this.props.dispatch}
                     geographyRequests={this.props.geographyRequests}
                     selectedResultsFilter={this.getGeographySummaryResultsFilter()}
@@ -220,8 +216,7 @@ class DistrictDashboardShow extends React.PureComponent {
 
                   <Row className="housingtype-section py-2 mb-4 mb-lg-0">
                     <HousingTypeSection
-                      appState={this.props.appState}
-                      housingTypeRequests={this.props.housingTypeRequests}
+                      customView={this.props.appState.districtShowCustomView}
                       propertySummaryRequest={this.props.propertySummaryRequest}
                       switchSelectedFilter={this.props.switchSelectedFilter}
                       selectedResultsFilter={this.props.selectedResultsFilter}
@@ -250,13 +245,13 @@ class DistrictDashboardShow extends React.PureComponent {
                         name="view"
                         type="radio"
                         className="view-toggle"
-                        value={this.state.view}
-                        onChange={this.toggleView}
+                        value={this.state.tableView}
+                        onChange={this.setTableView}
                       >
-                        <ToggleButton className="toggle-link" value={1}>
+                        <ToggleButton className="toggle-link" value={false}>
                           Map View
                         </ToggleButton>
-                        <ToggleButton className="toggle-link" value={2}>
+                        <ToggleButton className="toggle-link" value={true}>
                           Table View
                         </ToggleButton>
                       </ToggleButtonGroup>
@@ -265,7 +260,7 @@ class DistrictDashboardShow extends React.PureComponent {
 
                   <Row className="py-2 mb-4 mb-lg-0">
                     <Col>
-                      <div className={classnames({ 'd-none': this.state.view !== 1 })}>
+                      <div className={classnames({ 'd-none': this.state.tableView })}>
                         <LeafletMap
                           appState={this.props.appState}
                           councilDistricts={this.props.config.councilDistricts}
@@ -281,10 +276,10 @@ class DistrictDashboardShow extends React.PureComponent {
                               : this.getDisplayedResultsFilter()
                           }
                           selectGeographyData={this.props.config.selectGeographyData}
-                          switchView={this.setViewTable}
+                          switchView={() => this.setViewTable(1)}
                         />
                       </div>
-                      <div className={classnames({ 'd-none': this.state.view === 1 })}>
+                      <div className={classnames({ 'd-none': !this.state.tableView })}>
                         <BaseTable
                           datasetModelName={this.props.propertySummaryRequest.tableConfig.datasetModelName}
                           dispatch={this.props.dispatch}

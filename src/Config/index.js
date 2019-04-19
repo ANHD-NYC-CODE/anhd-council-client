@@ -15,7 +15,7 @@ import { infoModals } from 'shared/models/modals'
 import ConfigLoader from 'shared/components/Loaders/ConfigLoader'
 import PageError from 'shared/components/PageError'
 import Filter from 'shared/classes/Filter'
-import { loadResultFilters, removeRequestType, setDefaultSelections } from 'Store/AppState/actions'
+import { setAppState, loadResultFilters, removeRequestType, setDefaultSelections } from 'Store/AppState/actions'
 import { newMapRequests, newLookupRequests, newAdvancedSearchRequest } from 'shared/utilities/configUtils'
 import { setupResourceModels } from 'shared/utilities/configUtils'
 import { createAdvancedSearchFilters } from 'shared/utilities/filterUtils'
@@ -89,7 +89,7 @@ class Config extends React.PureComponent {
   }
 
   clearAdvancedSearch() {
-    this.props.dispatch(setDefaultSelections(this.props.resourceModels['PROPERTY']))
+    this.props.dispatch(setAppState({ districtShowCustomView: false }))
     this.props.dispatch(removeRequestType('ADVANCED_SEARCH'))
     this.props.dispatch(resetAdvancedSearchReducer(this.newPropertyFilter()))
   }

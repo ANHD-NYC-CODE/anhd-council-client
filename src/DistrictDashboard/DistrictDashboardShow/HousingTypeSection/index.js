@@ -43,12 +43,8 @@ const HousingTypeSection = props => {
                         infoKey={ownResultFilter.id}
                         unitsLabel={ownResultFilter === residentialFilter ? 'of all properties' : 'of residential'}
                         totalResultsFilter={ownResultFilter === residentialFilter ? undefined : residentialFilter}
-                        selected={
-                          props.appState.selectedRequests.some(r => r.type === 'ADVANCED_SEARCH')
-                            ? undefined
-                            : isSelected(props, ownResultFilter)
-                        }
-                        disabled={props.appState.selectedRequests.some(r => r.type === 'ADVANCED_SEARCH')}
+                        selected={props.customView ? undefined : isSelected(props, ownResultFilter)}
+                        disabled={props.customView}
                       />
                     </Col>
                   )
@@ -63,8 +59,7 @@ const HousingTypeSection = props => {
 }
 
 HousingTypeSection.propTypes = {
-  appState: PropTypes.object,
-  housingTypeRequests: PropTypes.array,
+  customView: PropTypes.bool,
   propertySummaryRequest: PropTypes.object,
   propertyResource: PropTypes.object,
   selectedResultsFilter: PropTypes.object,

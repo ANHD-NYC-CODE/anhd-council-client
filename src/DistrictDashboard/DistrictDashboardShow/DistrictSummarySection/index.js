@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { setAppState, toggleSelectedRequest } from 'Store/AppState/actions'
-import { getAdvancedSearchResultsFilter } from 'Store/AppState/selectors'
 
 import RequestSummaryWrapper from 'shared/components/RequestSummaryWrapper'
 import SummaryResultCard from 'shared/components/ResultCard/SummaryResultCard'
@@ -18,6 +17,7 @@ const DistrictSummarySection = props => {
         })
       )
     } else {
+      props.dispatch(setAppState({ districtShowCustomView: false }))
       props.dispatch(toggleSelectedRequest(request))
       if (!props.appState.selectedResultsFilter) {
         props.dispatch(
@@ -31,21 +31,43 @@ const DistrictSummarySection = props => {
 
   return (
     <Row className="district-summary-section">
-      {props.geographyRequests.map((request, index) => {
-        return (
-          <Col xs={12} sm={6} xl={4} key={`rs-col-${index}`} className="geography-request-summary__container">
+      {// Not Custom Search
+      props.geographyRequests
+        .filter(r => r.type !== 'ADVANCED_SEARCH')
+        .map((request, index) => {
+          return (
+            <Col xs={12} sm={6} xl={4} key={`rs-col-${index}`} className="geography-request-summary__container">
+              <RequestSummaryWrapper
+                key={`request-summary-${request.type}-${index}`}
+                request={request}
+                resultsFilter={props.selectedResultsFilter}
+                label={undefined}
+                onClick={() => handleSummaryClick(request)}
+                resultsComponent={SummaryResultCard}
+                selected={!props.customView && props.appState.selectedRequests.includes(request)}
+              />
+            </Col>
+          )
+        })}
+
+      {// Custom Search
+      props.geographyRequests
+        .filter(r => r.type === 'ADVANCED_SEARCH')
+        .map(request => (
+          <Col xs={12} sm={6} xl={4} key={'rs-col-custom-search'} className="geography-request-summary__container">
             <RequestSummaryWrapper
-              key={`request-summary-${request.type}-${index}`}
+              key={'request-summary-custom-search'}
               request={request}
-              resultsFilter={request.type === 'ADVANCED_SEARCH' ? undefined : props.selectedResultsFilter}
-              label={request.type === 'ADVANCED_SEARCH' ? 'Custom Search' : undefined}
-              onClick={() => handleSummaryClick(request)}
+              resultsFilter={undefined}
+              label={'Custom Search'}
+              onClick={() =>
+                props.dispatch(setAppState({ districtShowCustomView: !props.appState.districtShowCustomView }))
+              }
               resultsComponent={SummaryResultCard}
-              selected={props.appState.selectedRequests.includes(request)}
+              selected={props.customView}
             />
           </Col>
-        )
-      })}
+        ))}
       {!props.geographyRequests.some(r => r.type === 'ADVANCED_SEARCH') && (
         <Col className="geography-request-summary__container d-flex" xs={12} sm={6} xl={4}>
           <Col className="align-self-center pl-0 pl-lg-2 pr-0" xs={11}>
@@ -62,6 +84,8 @@ const DistrictSummarySection = props => {
   )
 }
 
-DistrictSummarySection.propTypes = {}
+DistrictSummarySection.propTypes = {
+  customView: PropTypes.bool,
+}
 
 export default DistrictSummarySection

@@ -16,6 +16,7 @@ export const initialState = {
   selectedResultsFilter: undefined,
   resultFilters: [], // initialize in Config/index.js
   requests: [],
+  districtShowCustomView: false,
 }
 
 export const appStateReducer = (state = Object.freeze(initialState), action = { data: [] }) => {
@@ -80,9 +81,8 @@ export const appStateReducer = (state = Object.freeze(initialState), action = { 
     case c.SET_ADVANCED_SEARCH_REQUEST: {
       return {
         ...state,
+        districtShowCustomView: true,
         requests: [...state.requests, action.advancedSearchRequest],
-        selectedRequests: [action.advancedSearchRequest],
-        // selectedResultsFilter: undefined,
       }
     }
     case c.REMOVE_REQUEST_TYPE: {
