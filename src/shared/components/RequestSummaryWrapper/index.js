@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import * as c from 'shared/constants'
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
 import InfoModalButton from 'shared/components/InfoModalButton'
@@ -61,7 +62,10 @@ class RequestSummaryWrapper extends React.Component {
             />
           ) : (
             this.props.resultsComponent({
-              summaryBackgroundColorClass: this.props.request.resourceModel.summaryBackgroundColorClass,
+              summaryBackgroundColorClass:
+                this.props.request.type === 'ADVANCED_SEARCH'
+                  ? c.CUSTOM_CARD_BACKGROUND_COLOR_CLASS
+                  : this.props.request.resourceModel.summaryBackgroundColorClass,
               summaryTextColorClass: this.props.request.resourceModel.summaryTextColorClass,
               error: this.props.error,
               errorAction: this.retryRequest,

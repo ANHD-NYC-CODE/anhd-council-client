@@ -36,7 +36,16 @@ const DistrictSummarySection = props => {
         .filter(r => r.type !== 'ADVANCED_SEARCH')
         .map((request, index) => {
           return (
-            <Col xs={12} sm={6} xl={4} key={`rs-col-${index}`} className="geography-request-summary__container">
+            <Col
+              xs={12}
+              sm={6}
+              xl={4}
+              key={`rs-col-${index}`}
+              className="geography-request-summary__container"
+              onClick={
+                props.customView ? () => props.dispatch(setAppState({ districtShowCustomView: false })) : undefined
+              }
+            >
               <RequestSummaryWrapper
                 key={`request-summary-${request.type}-${index}`}
                 request={request}
@@ -44,6 +53,7 @@ const DistrictSummarySection = props => {
                 label={undefined}
                 onClick={() => handleSummaryClick(request)}
                 resultsComponent={SummaryResultCard}
+                disabled={props.customView}
                 selected={!props.customView && props.appState.selectedRequests.includes(request)}
               />
             </Col>
