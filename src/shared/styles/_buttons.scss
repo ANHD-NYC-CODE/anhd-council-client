@@ -1,3 +1,5 @@
+@import 'shared/styles/_variables.scss';
+
 button.button {
   padding: 0;
   border: 0;
@@ -8,4 +10,8 @@ button.button {
 
 button.button:focus {
   outline: none;
+}
+
+button.btn-primary:disabled {
+  background-color: lighten($info, 10%);
 }

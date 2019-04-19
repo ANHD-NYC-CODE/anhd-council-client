@@ -36,6 +36,7 @@ const SummaryResultCard = props => {
     <Card
       as={Button}
       bg={classnames({ primary: props.selected })}
+      disabled={props.disabled}
       text={classnames({ light: props.selected, dark: !props.selected })}
       className={classnames('summary-result-card', 'result-card flex-row', props.summaryBackgroundColorClass, 'mb-2', {
         active: props.selected,

@@ -6,6 +6,7 @@ import RequestSummaryWrapper from 'shared/components/RequestSummaryWrapper'
 import BasicResultsHeader from 'shared/components/ResultCard/BasicResultsHeader'
 import ConfigContext from 'Config/ConfigContext'
 import * as c from 'shared/constants'
+import { setAppState } from 'Store/AppState/actions'
 
 import { Row, Col } from 'react-bootstrap'
 
@@ -32,7 +33,17 @@ const HousingTypeSection = props => {
               <Row>
                 {propertyResource.ownResultFilters.map((ownResultFilter, index) => {
                   return (
-                    <Col xs={12} sm={6} lg={12} key={`housingtype-summary-${index}`}>
+                    <Col
+                      xs={12}
+                      sm={6}
+                      lg={12}
+                      key={`housingtype-summary-${index}`}
+                      onClick={
+                        props.customView
+                          ? () => props.dispatch(setAppState({ districtShowCustomView: false }))
+                          : undefined
+                      }
+                    >
                       <RequestSummaryWrapper
                         key={`housingtype-wrapper-${index}`}
                         request={props.propertySummaryRequest}

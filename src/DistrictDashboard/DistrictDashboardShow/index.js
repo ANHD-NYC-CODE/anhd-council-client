@@ -217,6 +217,7 @@ class DistrictDashboardShow extends React.PureComponent {
                   <Row className="housingtype-section py-2 mb-4 mb-lg-0">
                     <HousingTypeSection
                       customView={this.props.appState.districtShowCustomView}
+                      dispatch={this.props.dispatch}
                       propertySummaryRequest={this.props.propertySummaryRequest}
                       switchSelectedFilter={this.props.switchSelectedFilter}
                       selectedResultsFilter={this.props.selectedResultsFilter}
