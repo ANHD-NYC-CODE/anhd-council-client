@@ -8,9 +8,12 @@ import InfoModalButton from 'shared/components/InfoModalButton'
 import { requestWithAuth } from 'shared/utilities/authUtils'
 import { makeRequest } from 'Store/Request/actions'
 import RequestErrorCard from 'shared/components/RequestErrorCard'
-
+import UserContext from 'Auth/UserContext'
+import ModalContext from 'Modal/ModalContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimesCircle } from '@fortawesome/free-regular-svg-icons'
+import LoginModal from 'Auth/LoginModal'
+
 import ClearAdvancedSearchButton from 'shared/components/buttons/ClearAdvancedSearchButton'
 import { Col, Row } from 'react-bootstrap'
 class RequestSummaryWrapper extends React.Component {
@@ -55,11 +58,32 @@ class RequestSummaryWrapper extends React.Component {
       <Row className="request-summary">
         <Col className="pr-md-0" xs={this.props.print ? 12 : 10} md={this.props.print ? 12 : 11}>
           {this.props.error ? (
-            <RequestErrorCard
-              error={this.props.error}
-              errorAction={this.retryRequest}
-              requestLabel={this.props.label}
-            />
+            <UserContext.Consumer>
+              {auth => {
+                return (
+                  <ModalContext.Consumer>
+                    {modal => {
+                      return (
+                        <RequestErrorCard
+                          error={this.props.error}
+                          errorAction={
+                            this.props.error.status === 401 && !auth.user
+                              ? e => {
+                                  e.preventDefault()
+                                  modal.setModal({
+                                    modalComponent: LoginModal,
+                                  })
+                                }
+                              : this.retryRequest
+                          }
+                          requestLabel={this.props.label}
+                        />
+                      )
+                    }}
+                  </ModalContext.Consumer>
+                )
+              }}
+            </UserContext.Consumer>
           ) : (
             this.props.resultsComponent({
               summaryBackgroundColorClass:
