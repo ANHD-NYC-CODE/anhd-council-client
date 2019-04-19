@@ -1,6 +1,5 @@
-import * as c from '../constants'
-import { districtDashboardFilterdates } from 'shared/utilities/componentUtils'
-import { getDefaultRequest, getDefaultResultsFilter } from 'Store/AppState/selectors'
+import * as c from 'shared/constants'
+import { getDefaultRequest } from 'Store/AppState/selectors'
 
 export const initialState = {
   currentGeographyType: undefined,
@@ -10,7 +9,7 @@ export const initialState = {
   changingGeography: false,
   changingGeographyType: undefined,
   changingGeographyId: undefined,
-  mapFilterDate: districtDashboardFilterdates()[0],
+  mapFilterDate: c.DISTRICT_RESULTS_DATE_ONE,
   selectedRequests: [],
   selectedRequest: undefined, // DEPRECATED
   selectedResultsFilter: undefined,
@@ -31,6 +30,7 @@ export const appStateReducer = (state = Object.freeze(initialState), action = { 
       return {
         ...state,
         resultFilters: action.resultFilters,
+        selectedResultsFilter: action.resultFilters[0],
       }
     }
     case c.TOGGLE_SELECTED_REQUEST: {

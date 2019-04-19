@@ -83,10 +83,12 @@ describe('DistrictDashboard', () => {
       expect(wrapper.find('LeafletMap')).toHaveLength(1)
 
       expect(wrapper.find('RequestSummaryWrapper')).toHaveLength(12)
+      const housingTypeCards = wrapper.findWhere(node => (node.key() || '').match(/housingtype-wrapper/))
+      housingTypeCards.forEach(card => {
+        expect(card.props().disabled).toEqual(false)
+      })
 
-      expect(wrapper.findWhere(node => node.key() === 'housingtype-summary-0').props().children.props.selected).toEqual(
-        true
-      )
+      expect(housingTypeCards.at(0).props().selected).toEqual(true)
 
       expect(wrapper.find('DistrictResultsTitle').text()).toEqual('Properties Found: 0')
     })
