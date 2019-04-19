@@ -28,7 +28,7 @@ class AddFilterButton extends React.PureComponent {
       <Button className="mt-2 add-filter" size="lg" onClick={e => this.handleClick(e)} ref={this.ref} variant="success">
         <Overlay placement="bottom" show={this.props.showPopups} target={this.ref.current}>
           {props => {
-            return <Tooltip {...props}>Add a filter to this condition</Tooltip>
+            return <Tooltip {...props}>Add a filter to this group</Tooltip>
           }}
         </Overlay>
         <FontAwesomeIcon icon={faPlus} /> {this.props.text}

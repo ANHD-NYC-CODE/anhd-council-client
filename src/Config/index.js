@@ -15,12 +15,12 @@ import { infoModals } from 'shared/models/modals'
 import ConfigLoader from 'shared/components/Loaders/ConfigLoader'
 import PageError from 'shared/components/PageError'
 import Filter from 'shared/classes/Filter'
-import { removeRequestType, setDefaultSelections } from 'Store/AppState/actions'
+import { loadResultFilters, removeRequestType, setDefaultSelections } from 'Store/AppState/actions'
 import { newMapRequests, newLookupRequests, newAdvancedSearchRequest } from 'shared/utilities/configUtils'
 import { setupResourceModels } from 'shared/utilities/configUtils'
 import { createAdvancedSearchFilters } from 'shared/utilities/filterUtils'
 import { resetAdvancedSearchReducer, replacePropertyFilter } from 'Store/AdvancedSearch/actions'
-class Config extends React.Component {
+class Config extends React.PureComponent {
   constructor(props) {
     super(props)
     if (!props.datasets.length) {
@@ -75,6 +75,9 @@ class Config extends React.Component {
   componentDidUpdate() {
     if (!this.props.advancedSearch.propertyFilter && !!Object.keys(this.props.resourceModels).length) {
       this.props.dispatch(replacePropertyFilter(this.newPropertyFilter()))
+    }
+    if (!this.props.appStateResultFilters.length && !!Object.keys(this.props.resourceModels).length) {
+      this.props.dispatch(loadResultFilters(this.props.resourceModels['PROPERTY'].ownResultFilters))
     }
   }
 
@@ -166,6 +169,7 @@ const loadingSelector = createLoadingSelector([GET_DATASETS, GET_COUNCILS, GET_C
 const mapStateToProps = state => {
   return {
     advancedSearch: state.advancedSearch,
+    appStateResultFilters: state.appState.resultFilters,
     datasets: state.dataset.datasets,
     resourceModels: setupResourceModels(state.dataset.datasets),
     councilDistricts: state.council.districts,

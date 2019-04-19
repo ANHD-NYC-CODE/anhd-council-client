@@ -1,6 +1,6 @@
 import * as c from '../constants'
 import { districtDashboardFilterdates } from 'shared/utilities/componentUtils'
-import { getAdvancedSearchResultsFilter, getDefaultRequest, getDefaultResultsFilter } from 'Store/AppState/selectors'
+import { getDefaultRequest, getDefaultResultsFilter } from 'Store/AppState/selectors'
 
 export const initialState = {
   currentGeographyType: undefined,
@@ -14,6 +14,7 @@ export const initialState = {
   selectedRequests: [],
   selectedRequest: undefined, // DEPRECATED
   selectedResultsFilter: undefined,
+  resultFilters: [], // initialize in Config/index.js
   requests: [],
 }
 
@@ -23,6 +24,12 @@ export const appStateReducer = (state = Object.freeze(initialState), action = { 
       return {
         ...state,
         ...action.state,
+      }
+    }
+    case c.LOAD_RESULT_FILTERS: {
+      return {
+        ...state,
+        resultFilters: action.resultFilters,
       }
     }
     case c.TOGGLE_SELECTED_REQUEST: {
@@ -75,7 +82,7 @@ export const appStateReducer = (state = Object.freeze(initialState), action = { 
         ...state,
         requests: [...state.requests, action.advancedSearchRequest],
         selectedRequests: [action.advancedSearchRequest],
-        selectedResultsFilter: getAdvancedSearchResultsFilter(action.advancedSearchRequest),
+        selectedResultsFilter: undefined,
       }
     }
     case c.REMOVE_REQUEST_TYPE: {
@@ -96,7 +103,7 @@ export const appStateReducer = (state = Object.freeze(initialState), action = { 
         ...state,
         selectedRequests: [getDefaultRequest(state.requests)],
         selectedRequest: getDefaultRequest(state.requests),
-        selectedResultsFilter: getDefaultResultsFilter(action.model),
+        selectedResultsFilter: state.resultFilters[0],
       }
     }
     default:

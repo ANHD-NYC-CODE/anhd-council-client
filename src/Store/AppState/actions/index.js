@@ -8,6 +8,11 @@ export const setAppState = state => ({
   state,
 })
 
+export const loadResultFilters = resultFilters => ({
+  type: c.LOAD_RESULT_FILTERS,
+  resultFilters,
+})
+
 export const toggleSelectedRequest = request => ({
   type: c.TOGGLE_SELECTED_REQUEST,
   toggledRequest: request,

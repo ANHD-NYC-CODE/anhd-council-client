@@ -68,6 +68,7 @@ class RequestSummaryWrapper extends React.Component {
               label: this.props.label,
               handleClick: this.handleClick,
               selected: this.props.selected,
+              disabled: this.props.disabled,
               unitsLabel: this.props.unitsLabel,
               request: this.props.request,
               resultsFilter: this.props.resultsFilter,
