@@ -14,7 +14,7 @@ const DistrictSummarySection = props => {
       props.dispatch(
         setAppState({
           selectedRequests: [request],
-          selectedResultsFilter: undefined,
+          // selectedResultsFilter: undefined,
         })
       )
     } else {

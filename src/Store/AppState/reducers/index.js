@@ -82,7 +82,7 @@ export const appStateReducer = (state = Object.freeze(initialState), action = { 
         ...state,
         requests: [...state.requests, action.advancedSearchRequest],
         selectedRequests: [action.advancedSearchRequest],
-        selectedResultsFilter: undefined,
+        // selectedResultsFilter: undefined,
       }
     }
     case c.REMOVE_REQUEST_TYPE: {
