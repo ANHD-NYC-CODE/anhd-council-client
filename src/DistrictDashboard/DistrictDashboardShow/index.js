@@ -67,13 +67,15 @@ class DistrictDashboardShow extends React.PureComponent {
   }
 
   getResultRecords() {
-    const resultFilter = this.props.appState.selectedResultsFilter
-      ? results =>
-          this.props.appState.selectedResultsFilter.internalFilter(
-            results,
-            this.props.appState.selectedResultsFilter.paramMaps
-          )
-      : results => results
+    const resultFilter =
+      !this.props.appState.selectedRequests.some(r => r.type === 'ADVANCED_SEARCH') &&
+      this.props.appState.selectedResultsFilter
+        ? results =>
+            this.props.appState.selectedResultsFilter.internalFilter(
+              results,
+              this.props.appState.selectedResultsFilter.paramMaps
+            )
+        : results => results
 
     const requestResults = []
 
@@ -236,7 +238,11 @@ class DistrictDashboardShow extends React.PureComponent {
                             ? this.props.selectedRequest
                             : undefined
                         }
-                        displayedResultsFilter={this.props.selectedResultsFilter}
+                        displayedResultsFilter={
+                          this.props.appState.selectedRequests.some(r => r.type === 'ADVANCED_SEARCH')
+                            ? undefined
+                            : this.props.selectedResultsFilter
+                        }
                       />
                     </Col>
                     <Col className="d-flex view-toggle__container" xs={12} xl={5}>
@@ -269,7 +275,11 @@ class DistrictDashboardShow extends React.PureComponent {
                           handleChangeGeographyId={this.props.handleChangeGeographyId}
                           iconConfig="MULTIPLE"
                           results={resultRecords}
-                          displayedResultsFilter={this.getDisplayedResultsFilter()}
+                          displayedResultsFilter={
+                            this.props.appState.selectedRequests.some(r => r.type === 'ADVANCED_SEARCH')
+                              ? undefined
+                              : this.getDisplayedResultsFilter()
+                          }
                           selectGeographyData={this.props.config.selectGeographyData}
                           switchView={this.setViewTable}
                         />
