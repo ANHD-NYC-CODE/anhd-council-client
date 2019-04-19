@@ -121,6 +121,7 @@ export default class DataRequest {
   }
 
   get requestConstant() {
+    if (this.type === 'ADVANCED_SEARCH') return this.type
     return (
       this._requestConstant ||
       []
