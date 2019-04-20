@@ -1,11 +1,10 @@
 @import 'shared/styles/bootstrap/_variables.scss';
 
-
 .address-search,
 .address-search .table-hover tbody tr:hover {
   position: relative;
   width: 100%;
-  z-index: 10000;
+  z-index: 1000;
 }
 
 .address-search .table-hover tbody tr:hover {

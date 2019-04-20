@@ -11,7 +11,7 @@ const BaseModal = props => {
       centered={props.centered}
       className={props.className}
       dialogClassName={props.dialogClassName}
-      onHide={props.onHide}
+      onHide={props.hideModal}
       show={props.show}
       size={props.size}
     >
@@ -43,7 +43,7 @@ BaseModal.propTypes = {
   dialogClassName: PropTypes.string,
   labelId: PropTypes.string,
   modalFooter: PropTypes.object,
-  onHide: PropTypes.func,
+  hideModal: PropTypes.func,
   show: PropTypes.bool,
   size: PropTypes.string,
   title: PropTypes.string,
