@@ -6,8 +6,14 @@
   }
 
   a {
-    color: $white;
+    color: $acris-yellow;
     font-weight: bold;
-    text-decoration: underline;
+  }
+
+  @media (hover: hover) {
+    a:hover {
+      color: $secondary-light;
+      text-decoration: underline;
+    }
   }
 }

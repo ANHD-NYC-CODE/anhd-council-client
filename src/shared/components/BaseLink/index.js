@@ -9,7 +9,7 @@ const BaseLink = props => {
   }
   return isExternal() ? (
     <a {...props} href={props.href} target="_blank" rel="noopener noreferrer">
-      {props.text}
+      {props.text || props.children}
     </a>
   ) : (
     <Link {...props} to={props.href}>
