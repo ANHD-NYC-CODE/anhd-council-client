@@ -16,8 +16,14 @@ const schema = yup.object({
     .string()
     .max(64)
     .required(),
-  first_name: yup.string().max(120),
-  last_name: yup.string().max(120),
+  first_name: yup
+    .string()
+    .required()
+    .max(120),
+  last_name: yup
+    .string()
+    .required()
+    .max(120),
   organization: yup.string().max(120),
   description: yup.string(),
 })
@@ -90,6 +96,7 @@ class UserRequestForm extends React.Component {
               <Form.Group controlId="userRequestFirstName">
                 <Form.Label>First name</Form.Label>
                 <Form.Control
+                  required
                   name="first_name"
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -106,6 +113,7 @@ class UserRequestForm extends React.Component {
               <Form.Group controlId="userRequestLastName">
                 <Form.Label>Last name</Form.Label>
                 <Form.Control
+                  required
                   name="last_name"
                   onChange={handleChange}
                   onBlur={handleBlur}
