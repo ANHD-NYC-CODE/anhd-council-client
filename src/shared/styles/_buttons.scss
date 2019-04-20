@@ -15,3 +15,11 @@ button.button:focus {
 button.btn-primary:disabled {
   background-color: lighten($info, 10%);
 }
+
+.btn-outline-primary,
+.btn-outline-secondary,
+.btn-outline-info,
+.btn-outline-warning,
+.btn-outline-danger {
+  background-color: white;
+}
