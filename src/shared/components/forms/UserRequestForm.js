@@ -1,11 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import * as c from 'shared/constants'
 import { Form, Button } from 'react-bootstrap'
 import { postUserRequest } from 'Store/Request/actions'
 import { Formik } from 'formik'
 import * as yup from 'yup'
 import FormError from 'shared/components/FormError'
-
+import { toast } from 'react-toastify'
 const schema = yup.object({
   email: yup
     .string()
@@ -30,8 +31,13 @@ class UserRequestForm extends React.Component {
     }
 
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleSuccessfulSubmit = this.handleSuccessfulSubmit.bind(this)
   }
 
+  handleSuccessfulSubmit() {
+    this.props.hideModal()
+    toast.success('Your request has been submitted. Thank you!')
+  }
   handleSubmit(formData) {
     this.setState({ validated: true })
     const userData = {
@@ -43,7 +49,7 @@ class UserRequestForm extends React.Component {
       description: formData.description,
     }
 
-    this.props.dispatch(postUserRequest(userData, this.props.hideModal))
+    this.props.dispatch(postUserRequest(userData, this.handleSuccessfulSubmit))
   }
 
   render() {
@@ -154,7 +160,8 @@ class UserRequestForm extends React.Component {
               </Form.Group>
               <small className="form-text text-muted my-3">
                 Please allow us time to process your request. Once approved, you'll receive an email containing a
-                temporary password.
+                temporary password. Please contact <a href={`mailto:${c.CONTACT_EMAIL}`}>{c.CONTACT_EMAIL}</a> if you
+                have any questions.
               </small>
               <Button block disabled={this.props.loading} variant="primary" type="submit">
                 Submit

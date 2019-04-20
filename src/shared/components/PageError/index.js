@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import * as c from 'shared/constants'
 import { Card, ButtonGroup, Button } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBug } from '@fortawesome/free-solid-svg-icons'
@@ -24,10 +25,10 @@ class PageError extends React.Component {
               <span className="" />
               Take Me Home{' '}
             </Button>
-            <Button href="mailto:anhd.tech@gmail.com" variant="warning">
+            <Button href={`mailto:${c.CONTACT_EMAIL}`} variant="warning">
               Contact Support
             </Button>
-            <span className="w-100 text-center text-primary">anhd.tech@gmail.com</span>
+            <span className="w-100 text-center text-primary">{c.CONTACT_EMAIL}</span>
           </ButtonGroup>
         </Card.Body>
       </Card>

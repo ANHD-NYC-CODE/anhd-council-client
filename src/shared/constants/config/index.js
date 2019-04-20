@@ -1,5 +1,9 @@
 import moment from 'moment'
 
+// Generic
+export const CONTACT_EMAIL = 'anhd.tech@gmail.com'
+
+// Layout
 export const SIDEBAR_COLUMN_SIZE = 4
 
 // District Dashboard

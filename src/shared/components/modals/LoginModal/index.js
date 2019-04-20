@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import BaseModal from 'shared/components/BaseModal'
-import LoginForm from 'Auth/LoginForm'
+import LoginForm from 'shared/components/forms/LoginForm'
 import { connect } from 'react-redux'
 import UserContext from 'Auth/UserContext'
 const LoginModal = props => {

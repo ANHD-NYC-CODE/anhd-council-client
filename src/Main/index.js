@@ -1,12 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { push } from 'connected-react-router'
 import AddressSearch from 'Lookup/AddressSearch'
 import GeographySelect from 'shared/components/GeographySelect'
 import { setGeographyAndRequestsAndRedirect } from 'Store/AppState/actions'
 import { setAppState } from 'Store/AppState/actions'
 import StandardizedInput from 'shared/classes/StandardizedInput'
 import IntroductionBlock from 'shared/components/IntroductionBlock'
+import LoginModal from 'shared/components/modals/LoginModal'
+import LoginModalFooter from 'shared/components/forms/LoginForm/LoginModalFooter'
+
 import { Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 import * as c from 'shared/constants'
 import { Row, Col } from 'react-bootstrap'
@@ -26,6 +30,22 @@ class Main extends React.Component {
 
   componentDidMount() {
     scrollSpy.update()
+    if (this.props.login) {
+      this.props.modal.setModal({
+        modalComponent: LoginModal,
+        modalProps: {
+          hideModal: () => {
+            this.props.modal.hideModal()
+            this.props.dispatch(push('/'))
+          },
+          modalFooter: <LoginModalFooter />,
+        },
+      })
+    }
+
+    if (this.props.user) {
+      this.props.dispatch(push('/'))
+    }
   }
 
   componentWillUnmount() {

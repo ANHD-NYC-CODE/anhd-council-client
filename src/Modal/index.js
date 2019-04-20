@@ -30,7 +30,7 @@ class Modal extends React.Component {
   setModal({ modalComponent = BaseModal, modalProps }) {
     this.setState({
       modalComponent,
-      modalProps,
+      modalProps: { ...this.state.modalProps, ...modalProps },
       show: true,
     })
   }
@@ -59,7 +59,7 @@ class Modal extends React.Component {
           setModal: this.setModal,
         }}
       >
-        <ModalComponent hideModal={this.hideModal} show={this.state.show} {...this.state.modalProps} />
+        <ModalComponent show={this.state.show} {...this.state.modalProps} />
 
         {this.props.children}
       </ModalContext.Provider>

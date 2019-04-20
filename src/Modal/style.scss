@@ -4,3 +4,11 @@ body.modal-open {
     z-index: 10000;
   }
 }
+
+.modal-footer.row {
+  & > :not(:last-child),
+  & > :not(:first-child) {
+    margin-left: initial;
+    margin-right: initial;
+  }
+}
