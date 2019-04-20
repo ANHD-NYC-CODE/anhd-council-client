@@ -16,6 +16,7 @@ const UserRequestModal = props => {
       hideModal={props.hideModal}
       show={props.show}
       title="Request an account"
+      {...props}
     >
       <UserRequestForm
         dispatch={props.dispatch}

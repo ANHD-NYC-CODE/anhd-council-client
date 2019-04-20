@@ -13,15 +13,19 @@ class Modal extends React.Component {
     this.hideModal = this.hideModal.bind(this)
     this.showModal = this.showModal.bind(this)
 
+    this.defaultModalProps = {
+      centered: true,
+      className: 'base-modal',
+      labelId: 'baseModal',
+      modalFooter: undefined,
+      hideModal: this.hideModal,
+      title: 'Modal Title',
+    }
+
     this.state = {
       modalComponent: BaseModal,
       modalProps: {
-        centered: true,
-        className: 'base-modal',
-        labelId: 'baseModal',
-        modalFooter: undefined,
-        hideModal: this.hideModal,
-        title: 'Modal Title',
+        ...this.defaultModalProps,
       },
       show: false,
     }
@@ -30,7 +34,7 @@ class Modal extends React.Component {
   setModal({ modalComponent = BaseModal, modalProps }) {
     this.setState({
       modalComponent,
-      modalProps: { ...this.state.modalProps, ...modalProps },
+      modalProps: { ...this.defaultModalProps, ...modalProps },
       show: true,
     })
   }

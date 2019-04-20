@@ -15,6 +15,10 @@ const LoginModalFooter = props => {
             e.preventDefault()
             props.modal.setModal({
               modalComponent: UserRequestModal,
+              modalProps: {
+                title: 'Request an account',
+                size: 'lg',
+              },
             })
           }}
         >
