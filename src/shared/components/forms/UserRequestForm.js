@@ -65,6 +65,10 @@ class UserRequestForm extends React.Component {
           return (
             <Form noValidate className="auth-login-form" validated={this.state.validated} onSubmit={handleSubmit}>
               <FormError show={!!this.props.error} message={(this.props.error || {}).message} />
+              <Form.Text className="text-muted mb-3">
+                We'll only use your email and name to maintain your account and we won't share it with anyone else.
+                Please answer the optional fields to help us better understand who uses this app and how to improve it.
+              </Form.Text>
               <Form.Group controlId="userRequestEmail">
                 <Form.Label>Email *</Form.Label>
                 <Form.Control
@@ -78,6 +82,7 @@ class UserRequestForm extends React.Component {
                   placeholder="Enter your email"
                 />
                 <FormError show={!!((submitCount || touched.email) && errors.email)} message={errors.email} />
+                <Form.Text className="text-muted">If applicable, please use your organization's email.</Form.Text>
               </Form.Group>
               <Form.Group controlId="userRequestUsername">
                 <Form.Label>Username *</Form.Label>
@@ -140,7 +145,7 @@ class UserRequestForm extends React.Component {
                 />
               </Form.Group>
               <Form.Group controlId="userRequestDescription">
-                <Form.Label>Describe yourself</Form.Label>
+                <Form.Label>Your role</Form.Label>
                 <Form.Control
                   name="description"
                   as="select"
@@ -166,11 +171,11 @@ class UserRequestForm extends React.Component {
                   })}
                 </Form.Control>
               </Form.Group>
-              <small className="form-text text-muted my-3">
+              <Form.Text className="text-muted my-3">
                 Please allow us time to process your request. Once approved, you'll receive an email containing a
                 temporary password. Please contact <a href={`mailto:${c.CONTACT_EMAIL}`}>{c.CONTACT_EMAIL}</a> if you
                 have any questions.
-              </small>
+              </Form.Text>
               <Button block disabled={this.props.loading} variant="primary" type="submit">
                 Submit
               </Button>
