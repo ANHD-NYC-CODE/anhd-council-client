@@ -41,7 +41,7 @@ const findErrorKeyValue = (status, data) => {
       case 502:
         return ERROR_502_MESSAGE
       default:
-        return data.detail || data.non_field_errors[0] || data.refresh[0] || ERROR_500_MESSAGE
+        return data.detail || data.non_field_errors || data.refresh || ERROR_500_MESSAGE
     }
   } catch (err) {
     return ERROR_500_MESSAGE

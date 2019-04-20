@@ -43,6 +43,7 @@ export const constructAxiosPost = (
   params,
   access_token,
   constant,
+  dispatchAction,
   handleAction
 ) => {
   if (!requestId) throw 'Misconfigured Axios Request (missing id)'
@@ -54,8 +55,12 @@ export const constructAxiosPost = (
     .then(response => {
       const requestIsValid = !!getState().loading.requests.filter(request => request.id === requestId).length
       if (requestIsValid) {
+        if (dispatchAction) {
+          dispatch(dispatchAction(response, constant))
+        }
+
         if (handleAction) {
-          dispatch(handleAction(response, constant))
+          handleAction()
         }
         dispatch(handleCompletedRequest(constant, requestId))
 
