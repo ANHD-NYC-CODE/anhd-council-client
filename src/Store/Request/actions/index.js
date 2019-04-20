@@ -87,3 +87,18 @@ export const postUserRequest = (userRequestData, hideModal) => (dispatch, getSta
     hideModal
   )
 }
+
+export const postBugReport = (bugData, hideModal) => (dispatch, getState, access_token) => {
+  const requestId = Math.floor(Math.random() * 1000000)
+  return constructAxiosPost(
+    dispatch,
+    getState,
+    requestId,
+    '/bug-reports/',
+    JSON.stringify(bugData), // Body
+    { format: null },
+    access_token,
+    'POST_BUG_REPORT',
+    hideModal
+  )
+}

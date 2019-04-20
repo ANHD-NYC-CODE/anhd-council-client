@@ -2,29 +2,35 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import BaseModal from 'shared/components/BaseModal'
 import UserRequestForm from 'shared/components/forms/UserRequestForm'
-
+import ModalContext from 'Modal/ModalContext'
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
 import { connect } from 'react-redux'
 const UserRequestModal = props => {
   return (
-    <BaseModal
-      centered={true}
-      className="auth-login-modal"
-      labelId={props.labelId}
-      modalFooter={props.modalFooter}
-      hideModal={props.hideModal}
-      show={props.show}
-      title="Request an account"
-      {...props}
-    >
-      <UserRequestForm
-        dispatch={props.dispatch}
-        error={props.error}
-        loading={props.loading}
-        hideModal={props.hideModal}
-      />
-    </BaseModal>
+    <ModalContext.Consumer>
+      {modal => {
+        return (
+          <BaseModal
+            centered={true}
+            className="auth-login-modal"
+            labelId={props.labelId}
+            modalFooter={props.modalFooter}
+            hideModal={modal.hideModal}
+            show={props.show}
+            size={props.size}
+            title="Request an account"
+          >
+            <UserRequestForm
+              dispatch={props.dispatch}
+              error={props.error}
+              loading={props.loading}
+              hideModal={modal.hideModal}
+            />
+          </BaseModal>
+        )
+      }}
+    </ModalContext.Consumer>
   )
 }
 
