@@ -107,7 +107,7 @@ class GeographySelect extends React.Component {
                 </Col>
               )}
               {!!this.props.changingGeographyType && !this.props.showSubmit && (
-                <Col xs={2}>
+                <Col xs={12} md={2} className="mt-2 mt-md-0">
                   <Button
                     block
                     size="lg"
@@ -120,7 +120,7 @@ class GeographySelect extends React.Component {
                 </Col>
               )}
               {this.props.showSubmit && (
-                <Col xs={2}>
+                <Col xs={12} md={2} className="mt-2 mt-md-0">
                   <Button
                     block
                     size="lg"
