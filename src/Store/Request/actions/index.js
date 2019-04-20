@@ -84,6 +84,7 @@ export const postUserRequest = (userRequestData, hideModal) => (dispatch, getSta
     { format: null },
     access_token,
     'POST_USER_REQUEST',
+    undefined,
     hideModal
   )
 }
@@ -99,6 +100,7 @@ export const postBugReport = (bugData, hideModal) => (dispatch, getState, access
     { format: null },
     access_token,
     'POST_BUG_REPORT',
+    undefined,
     hideModal
   )
 }

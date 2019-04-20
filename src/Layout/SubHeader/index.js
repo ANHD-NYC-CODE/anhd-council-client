@@ -38,7 +38,7 @@ class SubHeader extends React.Component {
           </Col>
           <Col xs={12} md={8} lg={9}>
             <Row className="sub-header__wrapper--top">
-              <Col xs={12} md={{ span: 6, offset: 6 }}>
+              <Col xs={12} md={{ span: 10, offset: 2 }}>
                 <Row className="sub-header__auth-row flex-column flex-sm-row">
                   <div className="d-flex">
                     <Col>

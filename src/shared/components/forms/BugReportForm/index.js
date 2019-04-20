@@ -8,7 +8,7 @@ import * as yup from 'yup'
 import FormError from 'shared/components/FormError'
 import { toast } from 'react-toastify'
 const schema = yup.object({
-  from_email: yup
+  email: yup
     .string()
     .email()
     .required(),
@@ -37,7 +37,7 @@ class BugReportForm extends React.Component {
   handleSubmit(formData) {
     this.setState({ validated: true })
     const bugData = {
-      from_email: formData.from_email,
+      from_email: formData.email,
       description: formData.description,
     }
 
@@ -52,18 +52,18 @@ class BugReportForm extends React.Component {
             <Form noValidate className="auth-login-form" validated={this.state.validated} onSubmit={handleSubmit}>
               <FormError show={!!this.props.error} message={(this.props.error || {}).message} />
               <Form.Text className="text-muted mb-3">
-                We'll only use your email to clarify if needed and won't share it with anyone else.
+                We'll only use your email if needed to clarify your report and won't share it with anyone else.
               </Form.Text>
               <Form.Group controlId="userRequestEmail">
                 <Form.Label>Email *</Form.Label>
                 <Form.Control
                   required
-                  name="from_email"
+                  name="email"
                   onChange={handleChange}
                   onBlur={handleBlur}
                   isValid={false}
-                  isInvalid={!!this.props.submitCount || (touched.from_email && errors.from_email)}
-                  type="from_email"
+                  isInvalid={!!this.props.submitCount || (touched.email && errors.email)}
+                  type="email"
                   placeholder="Enter your email"
                 />
                 <FormError show={!!((submitCount || touched.email) && errors.email)} message={errors.email} />
@@ -92,7 +92,10 @@ class BugReportForm extends React.Component {
                   type="description"
                 />
 
-                <FormError show={!!((submitCount || touched.username) && errors.username)} message={errors.username} />
+                <FormError
+                  show={!!((submitCount || touched.description) && errors.description)}
+                  message={errors.description}
+                />
               </Form.Group>
 
               <Button block disabled={this.props.loading} variant="primary" type="submit">
@@ -104,6 +107,10 @@ class BugReportForm extends React.Component {
       </Formik>
     )
   }
+}
+
+BugReportForm.defaultProps = {
+  error: null,
 }
 
 BugReportForm.propTypes = {

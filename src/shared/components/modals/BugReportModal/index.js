@@ -33,6 +33,10 @@ const BugReportModal = props => {
   )
 }
 
+BugReportModal.defaultProps = {
+  error: null,
+}
+
 BugReportModal.propTypes = {
   centered: PropTypes.bool,
   className: PropTypes.string,
