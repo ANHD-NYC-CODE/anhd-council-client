@@ -66,7 +66,7 @@ class UserRequestForm extends React.Component {
             <Form noValidate className="auth-login-form" validated={this.state.validated} onSubmit={handleSubmit}>
               <FormError show={!!this.props.error} message={(this.props.error || {}).message} />
               <Form.Group controlId="userRequestEmail">
-                <Form.Label>Email</Form.Label>
+                <Form.Label>Email *</Form.Label>
                 <Form.Control
                   required
                   name="email"
@@ -80,7 +80,7 @@ class UserRequestForm extends React.Component {
                 <FormError show={!!((submitCount || touched.email) && errors.email)} message={errors.email} />
               </Form.Group>
               <Form.Group controlId="userRequestUsername">
-                <Form.Label>Username</Form.Label>
+                <Form.Label>Username *</Form.Label>
                 <Form.Control
                   required
                   name="username"
@@ -94,7 +94,7 @@ class UserRequestForm extends React.Component {
                 <FormError show={!!((submitCount || touched.username) && errors.username)} message={errors.username} />
               </Form.Group>
               <Form.Group controlId="userRequestFirstName">
-                <Form.Label>First name</Form.Label>
+                <Form.Label>First name *</Form.Label>
                 <Form.Control
                   required
                   name="first_name"
@@ -111,7 +111,7 @@ class UserRequestForm extends React.Component {
                 />
               </Form.Group>
               <Form.Group controlId="userRequestLastName">
-                <Form.Label>Last name</Form.Label>
+                <Form.Label>Last name *</Form.Label>
                 <Form.Control
                   required
                   name="last_name"
