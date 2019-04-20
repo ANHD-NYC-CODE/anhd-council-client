@@ -7,6 +7,7 @@ import { getGeographyPath, addressResultToPath } from 'shared/utilities/routeUti
 import logo from 'shared/images/portallogo-white.png'
 import LoginModal from 'shared/components/modals/LoginModal'
 import LoginModalFooter from 'shared/components/forms/LoginForm/LoginModalFooter'
+import BugReportModal from 'shared/components/modals/BugReportModal'
 
 import classnames from 'classnames'
 import BaseLink from 'shared/components/BaseLink'
@@ -40,6 +41,23 @@ class SubHeader extends React.Component {
               <Col xs={12} md={{ span: 6, offset: 6 }}>
                 <Row className="sub-header__auth-row flex-column flex-sm-row">
                   <div className="d-flex">
+                    <Col>
+                      <Nav.Item
+                        onClick={e => {
+                          e.preventDefault()
+                          this.props.modal.setModal({
+                            modalComponent: BugReportModal,
+                            modalProps: {
+                              size: 'lg',
+                            },
+                          })
+                        }}
+                      >
+                        <a className="text-secondary" href="#">
+                          Report a bug
+                        </a>
+                      </Nav.Item>
+                    </Col>
                     <Col>
                       <Nav.Item>
                         <BaseLink
