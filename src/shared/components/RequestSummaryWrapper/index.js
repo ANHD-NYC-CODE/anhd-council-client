@@ -12,7 +12,7 @@ import UserContext from 'Auth/UserContext'
 import ModalContext from 'Modal/ModalContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimesCircle } from '@fortawesome/free-regular-svg-icons'
-import LoginModal from 'Auth/LoginModal'
+import LoginModal from 'shared/components/modals/LoginModal'
 
 import ClearAdvancedSearchButton from 'shared/components/buttons/ClearAdvancedSearchButton'
 import { Col, Row } from 'react-bootstrap'

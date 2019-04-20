@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
+import * as c from 'shared/constants'
 import L from 'leaflet'
 import { geographySelectionToString } from 'shared/utilities/languageUtils'
 
@@ -106,8 +106,8 @@ export default class LeafletMap extends React.PureComponent {
           <h4>
             <FontAwesomeIcon icon={faBug} />
           </h4>
-          Sorry, a map error occured. Please reload the page or <a href="mailto:anhd.tech@gmail.com">contact support</a>{' '}
-          if this continues to occur.
+          Sorry, a map error occured. Please reload the page or{' '}
+          <a href={`mailto:${c.CONTACT_EMAIL}`}>contact support</a> if this continues to occur.
         </Jumbotron>
       )
     return (

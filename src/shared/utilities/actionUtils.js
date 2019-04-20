@@ -1,5 +1,6 @@
 import * as loadingActions from 'Store/Loading/actions'
 import * as errorActions from 'Store/Error/actions'
+import * as c from 'shared/constants'
 import { toast } from 'react-toastify'
 
 const ERROR_400_MESSAGE = 'Incorrect username or password.'
@@ -19,11 +20,18 @@ const findErrorKeyValue = (status, data) => {
   try {
     switch (status) {
       case 400:
-        if (data['email']) {
-          return 'We already have an account request for this email. Please email anhd.tech@gmail.com if you need to check its status.'
+        if (data['email'] && data['email'].includes('user request with this email already exists.')) {
+          return `We already have an account request for this email. Please email ${
+            c.CONTACT_EMAIL
+          } if you need to check your status.`
+        } else if (data['errors'] && data['errors'].length) {
+          return data['errors'].map((error, index) => {
+            return `${error}`
+          })
+        } else {
+          return ERROR_400_MESSAGE
         }
 
-        return ERROR_400_MESSAGE
       case 401:
         return ERROR_401_MESSAGE
       case 404:

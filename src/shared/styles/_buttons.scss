@@ -23,3 +23,11 @@ button.btn-primary:disabled {
 .btn-outline-danger {
   background-color: white;
 }
+
+.btn-outline-secondary:not(:disabled):not(.disabled):active {
+  color: white;
+}
+
+a.btn-link:hover {
+  text-decoration: none;
+}

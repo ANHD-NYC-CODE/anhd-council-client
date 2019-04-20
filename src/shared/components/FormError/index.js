@@ -8,7 +8,11 @@ const FormError = props => {
     !!props.show && (
       <div className="form-error">
         <Form.Text className="text-danger" type="invalid">
-          {props.message}
+          {Array.isArray(props.message)
+            ? props.message.map((m, index) => {
+                return <p key={`error-message-${index}`}>{m}</p>
+              })
+            : props.message}
         </Form.Text>
       </div>
     )

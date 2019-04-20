@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { history } from 'Store/configureStore'
+import ModalContext from 'Modal/ModalContext'
+import UserContext from 'Auth/UserContext'
 
 import { ConnectedRouter } from 'connected-react-router'
 import { Route, Switch } from 'react-router'
@@ -23,6 +25,24 @@ class Router extends React.Component {
               <Layout>
                 <Switch>
                   <Route exact path="/" render={() => <Main config={config} />} />
+                  <ModalContext.Consumer>
+                    {modal => {
+                      return (
+                        <UserContext.Consumer>
+                          {auth => {
+                            return (
+                              <Route
+                                exact
+                                path="/login"
+                                render={() => <Main config={config} login={true} user={auth.user} modal={modal} />}
+                              />
+                            )
+                          }}
+                        </UserContext.Consumer>
+                      )
+                    }}
+                  </ModalContext.Consumer>
+
                   <Route
                     exact
                     path="/lookup"
