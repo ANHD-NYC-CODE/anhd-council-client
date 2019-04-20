@@ -126,6 +126,7 @@ class DistrictDashboardShow extends React.PureComponent {
                       this.props.appState.changingGeographyType &&
                       this.props.appState.changingGeographyId > 0
                     }
+                    submitButtonVariant="outline-primary"
                   />
                 </Col>
                 <Col className="d-none d-md-block" xs={12} md={{ span: 1, offset: 2 }} lg={{ span: 1, offset: 2 }}>

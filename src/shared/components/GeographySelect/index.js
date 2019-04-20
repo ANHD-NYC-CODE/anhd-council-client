@@ -35,7 +35,7 @@ class GeographySelect extends React.Component {
         <ConfigContext.Consumer>
           {config => (
             <Row>
-              <Col xs={12} md={this.props.changingGeographyType || this.props.currentGeographyType ? 6 : 12}>
+              <Col xs={12} md={this.props.changingGeographyType || this.props.currentGeographyType ? 5 : 12}>
                 <Form.Control
                   required
                   className={classnames(this.props.selectClass, {
@@ -70,7 +70,7 @@ class GeographySelect extends React.Component {
                 />
               </Col>
               {!!(this.props.currentGeographyType || this.props.changingGeographyType) && (
-                <Col className="mt-2 mt-sm-2 mt-md-0" xs={12} md={6}>
+                <Col className="mt-2 mt-sm-2 mt-md-0" xs={12} md={5}>
                   <Form.Control
                     required
                     as="select"
@@ -106,43 +106,42 @@ class GeographySelect extends React.Component {
                   />
                 </Col>
               )}
+              {!!this.props.changingGeographyType && !this.props.showSubmit && (
+                <Col xs={2}>
+                  <Button
+                    block
+                    size="lg"
+                    className="cancel-geography-change"
+                    onClick={this.props.cancelChangeGeography}
+                    variant="outline-secondary"
+                  >
+                    <FontAwesomeIcon size="lg" icon={faTimesCircle} />
+                  </Button>
+                </Col>
+              )}
+              {this.props.showSubmit && (
+                <Col xs={2}>
+                  <Button
+                    block
+                    size="lg"
+                    className="submit-geography-change"
+                    onClick={this.props.handleChangeGeography}
+                    variant={this.props.submitButtonVariant}
+                  >
+                    Go
+                  </Button>
+                </Col>
+              )}
             </Row>
           )}
         </ConfigContext.Consumer>
-        {(!!this.props.changingGeographyType || this.props.showSubmit) && (
-          <Row className="mt-2">
-            {!!this.props.changingGeographyType && (
-              <Col xs={6}>
-                <Button
-                  block
-                  size="lg"
-                  className="cancel-geography-change"
-                  onClick={this.props.cancelChangeGeography}
-                  variant="warning"
-                >
-                  <FontAwesomeIcon icon={faTimesCircle} />
-                  Cancel
-                </Button>
-              </Col>
-            )}
-            {this.props.showSubmit && (
-              <Col xs={{ span: 6, offset: this.props.changingGeographyType ? 0 : 6 }}>
-                <Button
-                  block
-                  size="lg"
-                  className="submit-geography-change"
-                  onClick={this.props.handleChangeGeography}
-                  variant="primary"
-                >
-                  Go
-                </Button>
-              </Col>
-            )}
-          </Row>
-        )}
       </div>
     )
   }
+}
+
+GeographySelect.defaultProps = {
+  submitButtonVariant: 'primary',
 }
 
 GeographySelect.propTypes = {
@@ -159,6 +158,7 @@ GeographySelect.propTypes = {
   touched: PropTypes.object,
   placeholder: PropTypes.string,
   showSubmit: PropTypes.bool,
+  submitButtonVariant: PropTypes.string,
 }
 
 export default GeographySelect
