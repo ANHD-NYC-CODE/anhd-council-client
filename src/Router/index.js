@@ -25,23 +25,24 @@ class Router extends React.Component {
               <Layout>
                 <Switch>
                   <Route exact path="/" render={() => <Main config={config} />} />
-                  <ModalContext.Consumer>
-                    {modal => {
-                      return (
-                        <UserContext.Consumer>
-                          {auth => {
-                            return (
-                              <Route
-                                exact
-                                path="/login"
-                                render={() => <Main config={config} login={true} user={auth.user} modal={modal} />}
-                              />
-                            )
-                          }}
-                        </UserContext.Consumer>
-                      )
-                    }}
-                  </ModalContext.Consumer>
+
+                  <Route
+                    exact
+                    path="/login"
+                    render={() => (
+                      <ModalContext.Consumer>
+                        {modal => {
+                          return (
+                            <UserContext.Consumer>
+                              {auth => {
+                                return <Main config={config} login={true} user={auth.user} modal={modal} />
+                              }}
+                            </UserContext.Consumer>
+                          )
+                        }}
+                      </ModalContext.Consumer>
+                    )}
+                  />
 
                   <Route
                     exact
