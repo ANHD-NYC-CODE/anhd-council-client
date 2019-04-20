@@ -1,11 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Container, Navbar, Nav, Col, Row } from 'react-bootstrap'
+import { Modal, Button, Container, Navbar, Nav, Col, Row } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { getGeographyPath, addressResultToPath } from 'shared/utilities/routeUtils'
 import logo from 'shared/images/portallogo-white.png'
 import LoginModal from 'Auth/LoginModal'
+import UserRequestModal from 'shared/components/modals/UserRequestModal'
 import classnames from 'classnames'
 import BaseLink from 'shared/components/BaseLink'
 import './style.scss'
@@ -72,6 +73,35 @@ class SubHeader extends React.Component {
                             e.preventDefault()
                             this.props.modal.setModal({
                               modalComponent: LoginModal,
+                              modalProps: {
+                                modalFooter: (
+                                  <Modal.Footer>
+                                    <Row>
+                                      <Col xs={12}>
+                                        <Button
+                                          block
+                                          variant="outline-primary"
+                                          onClick={e => {
+                                            e.preventDefault()
+                                            this.props.modal.setModal({
+                                              modalComponent: UserRequestModal,
+                                            })
+                                          }}
+                                        >
+                                          Request an account
+                                        </Button>
+                                      </Col>
+                                      <Col xs={12}>
+                                        <BaseLink href="https://api.displacementalert.org/password_reset">
+                                          <Button block variant="outline-secondary">
+                                            Reset Password
+                                          </Button>
+                                        </BaseLink>
+                                      </Col>
+                                    </Row>
+                                  </Modal.Footer>
+                                ),
+                              },
                             })
                           }}
                         >

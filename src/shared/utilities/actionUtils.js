@@ -19,6 +19,10 @@ const findErrorKeyValue = (status, data) => {
   try {
     switch (status) {
       case 400:
+        if (data['email']) {
+          return 'We already have an account request for this email. Please email anhd.tech@gmail.com if you need to check its status.'
+        }
+
         return ERROR_400_MESSAGE
       case 401:
         return ERROR_401_MESSAGE

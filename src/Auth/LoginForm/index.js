@@ -5,6 +5,7 @@ import { loginUser } from 'Store/Auth/actions'
 import { Formik } from 'formik'
 import * as yup from 'yup'
 import FormError from 'shared/components/FormError'
+import UserRequestModal from 'shared/components/modals/UserRequestModal'
 
 const schema = yup.object({
   username: yup.string().required(),
@@ -62,7 +63,7 @@ class LoginForm extends React.Component {
                 />
                 <FormError show={!!((submitCount || touched.password) && errors.password)} message={errors.password} />
               </Form.Group>
-              <Button disabled={this.props.loading} variant="primary" type="submit">
+              <Button block disabled={this.props.loading} variant="primary" type="submit">
                 Submit
               </Button>
             </Form>
@@ -75,6 +76,7 @@ class LoginForm extends React.Component {
 
 LoginForm.propTypes = {
   dispatch: PropTypes.func,
+  modal: PropTypes.object,
   error: PropTypes.object,
   loading: PropTypes.bool,
 }

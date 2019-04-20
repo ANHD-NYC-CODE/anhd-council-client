@@ -8,14 +8,14 @@ const LoginModal = props => {
   return (
     <UserContext.Consumer>
       {auth => {
-        if (auth.user) props.onHide()
+        if (auth.user) props.hideModal()
         return (
           <BaseModal
             centered={true}
             className="auth-login-modal"
             labelId={props.labelId}
             modalFooter={props.modalFooter}
-            onHide={props.onHide}
+            hideModal={props.hideModal}
             show={props.show}
             title="Login"
           >
@@ -40,7 +40,7 @@ LoginModal.propTypes = {
   labelId: PropTypes.string,
   loading: PropTypes.bool,
   modalFooter: PropTypes.object,
-  onHide: PropTypes.func,
+  hideModal: PropTypes.func,
   show: PropTypes.bool,
   size: PropTypes.string,
   title: PropTypes.string,

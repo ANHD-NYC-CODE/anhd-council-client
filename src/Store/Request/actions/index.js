@@ -72,3 +72,18 @@ export const makeCsvRequest = dataRequest => (dispatch, getState, access_token) 
     undefined
   )
 }
+
+export const postUserRequest = (userRequestData, hideModal) => (dispatch, getState, access_token) => {
+  const requestId = Math.floor(Math.random() * 1000000)
+  return constructAxiosPost(
+    dispatch,
+    getState,
+    requestId,
+    '/user-requests/',
+    JSON.stringify(userRequestData), // Body
+    { format: null },
+    access_token,
+    'POST_USER_REQUEST',
+    hideModal
+  )
+}
