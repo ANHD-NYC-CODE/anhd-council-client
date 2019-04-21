@@ -1,11 +1,12 @@
 import React from 'react'
+import * as c from 'shared/constants'
 import { textFilter } from 'react-bootstrap-table2-filter'
 import TableConfig from 'shared/classes/TableConfig'
 import ExpandedLinkRow from 'shared/components/BaseTable/ExpandedLinkRow'
 import { push } from 'connected-react-router'
 import { addressResultToPath } from 'shared/utilities/routeUtils'
 import BaseTable from 'shared/components/BaseTable'
-
+import moment from 'moment'
 import {
   dateFormatter,
   bldgClassFormater,
@@ -148,13 +149,15 @@ export const getDescriptionKey = constant => {
   }
 }
 
-export const getTableColumns = (
+export const getTableColumns = ({
   constant,
   columnExpandFunction,
   linkPropsFunction = () => null,
   constructFilter,
-  dispatch
-) => {
+  dispatch,
+  annotationStart = moment(c.DISTRICT_RESULTS_DATE_ONE).format('MM/DD/YYYY'),
+  annotationEnd = moment(moment.now()).format('MM/DD/YYYY'),
+} = {}) => {
   let columns
   const handleColumnEvent = ({ e, row, component, dataKey, tableConfig } = {}) => {
     const rowKey = getKeyField(constant)
@@ -283,14 +286,6 @@ export const getTableColumns = (
         }),
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
-          dataField: 'bldgclass',
-          text: 'Class',
-          filter: constructFilter(textFilter),
-          formatter: bldgClassFormater,
-          sort: true,
-        }),
-        constructPropertyColumn({
-          columnEvent: linkToColumnEvent,
           dataField: 'zonedist1',
           text: 'Zone 1',
           filter: constructFilter(textFilter),
@@ -324,6 +319,48 @@ export const getTableColumns = (
           columnEvent: linkToColumnEvent,
           dataField: 'numbldgs',
           text: '# Buildings',
+          sort: true,
+        }),
+        constructPropertyColumn({
+          columnEvent: linkToColumnEvent,
+          dataField: `hpdviolations__${annotationStart}-${annotationEnd}`,
+          text: `HPD Violations (${annotationStart}-${annotationEnd})`,
+          sort: true,
+        }),
+        constructPropertyColumn({
+          columnEvent: linkToColumnEvent,
+          dataField: `dobviolations__${annotationStart}-${annotationEnd}`,
+          text: `DOB Violations (${annotationStart}-${annotationEnd})`,
+          sort: true,
+        }),
+        constructPropertyColumn({
+          columnEvent: linkToColumnEvent,
+          dataField: `ecbviolations__${annotationStart}-${annotationEnd}`,
+          text: `ECB Violations (${annotationStart}-${annotationEnd})`,
+          sort: true,
+        }),
+        constructPropertyColumn({
+          columnEvent: linkToColumnEvent,
+          dataField: `hpdcomplaints__${annotationStart}-${annotationEnd}`,
+          text: `HPD Complaints (${annotationStart}-${annotationEnd})`,
+          sort: true,
+        }),
+        constructPropertyColumn({
+          columnEvent: linkToColumnEvent,
+          dataField: `dobcomplaints__${annotationStart}-${annotationEnd}`,
+          text: `DOB Complaints (${annotationStart}-${annotationEnd})`,
+          sort: true,
+        }),
+        constructPropertyColumn({
+          columnEvent: linkToColumnEvent,
+          dataField: `dobfiledpermits__${annotationStart}-${annotationEnd}`,
+          text: `DOB Permit Applications (${annotationStart}-${annotationEnd})`,
+          sort: true,
+        }),
+        constructPropertyColumn({
+          columnEvent: linkToColumnEvent,
+          dataField: `evictions__${annotationStart}-${annotationEnd}`,
+          text: `Marshall Evictions (${annotationStart}-${annotationEnd})`,
           sort: true,
         }),
       ]

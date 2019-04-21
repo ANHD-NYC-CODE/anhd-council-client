@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { setAppState, setMapFilterDate } from 'Store/AppState/actions'
-
+import moment from 'moment'
 import {
   getDefaultRequest,
   getRequestType,
@@ -60,6 +60,12 @@ class DistrictDashboardRequestsWrapper extends React.PureComponent {
     this.props.dispatch(setMapFilterDate(value))
 
     const mapRequests = getRequestType(this.props.mapRequests, 'MAP_FILTER')
+
+    const propertySummaryRequest = getRequestByConstant(this.props.mapRequests, 'GEOGRAPHY_HOUSING_TYPE_ALL')[0]
+    propertySummaryRequest.called = false
+    propertySummaryRequest.tableConfig.annotationStart = moment(value).format('MM/DD/YYYY')
+    propertySummaryRequest.paramMaps.find(p => p.field === 'annotation__start').value = value
+
     if (!mapRequests.length) return
     mapRequests.forEach(request => {
       request.called = false
