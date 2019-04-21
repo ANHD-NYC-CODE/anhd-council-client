@@ -211,7 +211,7 @@ class BaseTable extends React.Component {
                 action={this.props.errorAction}
               />
             )}
-            {!this.props.nested && !!this.includeHeader && (
+            {!this.props.nested && !!this.props.includeHeader && (
               <Row>
                 <Col xs={6}>
                   <PaginationListStandalone {...paginationProps} />
