@@ -2,13 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { setAppState, setMapFilterDate } from 'Store/AppState/actions'
 import moment from 'moment'
-import {
-  getDefaultRequest,
-  getRequestType,
-  getManyRequestTypes,
-  getDefaultResultsFilter,
-  getRequestByConstant,
-} from 'Store/AppState/selectors'
+import { getDefaultRequest, getRequestType, getManyRequestTypes, getRequestByConstant } from 'Store/AppState/selectors'
 
 import { requestWithAuth } from 'shared/utilities/authUtils'
 import { makeRequest } from 'Store/Request/actions'
@@ -58,25 +52,33 @@ class DistrictDashboardRequestsWrapper extends React.PureComponent {
 
   toggleDateRange(value) {
     this.props.dispatch(setMapFilterDate(value))
+    const newStart = moment(value).format('MM/DD/YYYY')
+    // const mapRequests = getRequestType(this.props.mapRequests, 'MAP_FILTER')
 
-    const mapRequests = getRequestType(this.props.mapRequests, 'MAP_FILTER')
-
+    // Change property request annotations
     const propertySummaryRequest = getRequestByConstant(this.props.mapRequests, 'GEOGRAPHY_HOUSING_TYPE_ALL')[0]
     propertySummaryRequest.called = false
-    propertySummaryRequest.tableConfig.annotationStart = moment(value).format('MM/DD/YYYY')
+    propertySummaryRequest.tableConfig.annotationStart = newStart
     propertySummaryRequest.paramMaps.find(p => p.field === 'annotation__start').value = value
 
-    if (!mapRequests.length) return
-    mapRequests.forEach(request => {
-      request.called = false
-      request.paramMaps
-        .filter(p => p.type === 'DATE')
-        .forEach(paramMap => {
-          paramMap.value = value
-        })
-    })
+    // Change result filter annotations
+    this.props.appState.resultFilters
+      .filter(rf => rf.category === 'AMOUNT')
+      .forEach(rf => {
+        rf.annotationStart = newStart
+      })
 
-    this.loadRequests(mapRequests)
+    // if (!mapRequests.length) return
+    // mapRequests.forEach(request => {
+    //   request.called = false
+    //   request.paramMaps
+    //     .filter(p => p.type === 'DATE')
+    //     .forEach(paramMap => {
+    //       paramMap.value = value
+    //     })
+    // })
+
+    // this.loadRequests(mapRequests)
   }
 
   switchSelectedFilter(filter) {

@@ -1,7 +1,7 @@
 import * as resources from 'shared/models/resources'
 import * as c from 'shared/constants'
 import DataRequest from 'shared/classes/DataRequest'
-import ResultAmountFilter from 'shared/classes/ResultAmountFilter'
+import AnnotatedResultFilter from 'shared/classes/AnnotatedResultFilter'
 import { getApiMap } from 'shared/utilities/classUtils'
 import TableConfig from 'shared/classes/TableConfig'
 import ApiMap from 'shared/classes/ApiMap'
@@ -392,9 +392,14 @@ export const generateResultFilter = ({
   annotationEnd = moment(moment.now()).format('MM/DD/YYYY'),
   value = 5,
 } = {}) => {
-  const field = `${resourceModel.urlPath}__${annotationStart}-${annotationEnd}`
-
-  return new ResultAmountFilter({ resourceModel, field, comparison: 'gte', value: value })
+  return new AnnotatedResultFilter({
+    resourceModel,
+    fieldName: resourceModel.urlPath,
+    annotationStart,
+    annotationEnd,
+    comparison: 'gte',
+    value: value,
+  })
 }
 
 export const newMapResultFilters = ({ resourceModels, annotationStart, annotationEnd } = {}) => {
