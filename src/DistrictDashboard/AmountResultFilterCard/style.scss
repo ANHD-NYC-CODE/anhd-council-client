@@ -1,0 +1,15 @@
+.amount-result-filter-card.card {
+  align-items: stretch;
+  justify-content: stretch;
+  display: flex;
+
+  height: 120px;
+  min-height: 120px;
+  width: 100%;
+
+  .amount-result-filter-card__body {
+    flex: 1 1 100%;
+    height: 100%;
+    width: 100%;
+  }
+}

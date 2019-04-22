@@ -100,6 +100,7 @@ class RequestSummaryWrapper extends React.Component {
               unitsLabel: this.props.unitsLabel,
               request: this.props.request,
               resultsFilter: this.props.resultsFilter,
+              percentageOfWhole: this.props.percentageOfWhole,
               results: results,
               totalResults: totalResults,
               loading: this.props.loading,

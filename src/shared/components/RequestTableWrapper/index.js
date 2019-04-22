@@ -31,9 +31,9 @@ class RequestTableWrapper extends React.Component {
           expandable={this.props.expandable}
           loading={this.props.loading}
           records={
-            this.props.selectedResultsFilter.internalFilter(
+            this.props.housingTypeResultFilter.internalFilter(
               this.props.results,
-              this.props.selectedResultsFilter.paramMaps
+              this.props.housingTypeResultFilter.paramMaps
             ) ||
             this.props.results ||
             []
@@ -48,7 +48,7 @@ class RequestTableWrapper extends React.Component {
 
 RequestTableWrapper.defaultProps = {
   results: [],
-  selectedResultsFilter: {
+  housingTypeResultFilter: {
     internalFilter: results => results,
     paramMaps: [],
   },

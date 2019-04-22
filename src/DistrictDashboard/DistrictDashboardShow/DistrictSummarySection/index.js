@@ -1,40 +1,37 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { setAppState, toggleSelectedRequest } from 'Store/AppState/actions'
+import { setAppState, toggleSelectedAmountFilter } from 'Store/AppState/actions'
 
 import RequestSummaryWrapper from 'shared/components/RequestSummaryWrapper'
+import AmountResultFilterCard from 'DistrictDashboard/AmountResultFilterCard'
 import SummaryResultCard from 'shared/components/ResultCard/SummaryResultCard'
 import { Card, Row, Col } from 'react-bootstrap'
 import BaseLink from 'shared/components/BaseLink'
 
 const DistrictSummarySection = props => {
-  const handleSummaryClick = request => {
-    if (request.type === 'ADVANCED_SEARCH') {
+  const handleResultFilterClick = amountFilter => {
+    props.dispatch(setAppState({ districtShowCustomView: false }))
+    props.dispatch(toggleSelectedAmountFilter(amountFilter))
+    if (!props.appState.housingTypeResultFilter) {
       props.dispatch(
         setAppState({
-          selectedRequests: [request],
-          // selectedResultsFilter: undefined,
+          housingTypeResultFilter: props.appState.resultFilters[0],
         })
       )
-    } else {
-      props.dispatch(setAppState({ districtShowCustomView: false }))
-      props.dispatch(toggleSelectedRequest(request))
-      if (!props.appState.selectedResultsFilter) {
-        props.dispatch(
-          setAppState({
-            selectedResultsFilter: props.appState.resultFilters[0],
-          })
-        )
-      }
     }
+
+    props.dispatch(
+      setAppState({
+        selectedResultFilters: amountFilter,
+      })
+    )
   }
 
   return (
     <Row className="district-summary-section">
-      {// Not Custom Search
-      props.geographyRequests
-        .filter(r => r.type !== 'ADVANCED_SEARCH')
-        .map((request, index) => {
+      {props.appState.resultFilters
+        .filter(f => f.category === 'AMOUNT')
+        .map((amountFilter, index) => {
           return (
             <Col
               xs={12}
@@ -46,20 +43,56 @@ const DistrictSummarySection = props => {
                 props.customView ? () => props.dispatch(setAppState({ districtShowCustomView: false })) : undefined
               }
             >
-              <RequestSummaryWrapper
+              <AmountResultFilterCard
+                key={`request-summary-${amountFilter.category}-${index}`}
+                amountFilter={amountFilter}
+                disabled={props.customView}
+                selected={!props.customView && props.appState.selectedFilters.includes(amountFilter)}
+                handleClick={() => handleResultFilterClick(amountFilter)}
+              />
+              {/* <RequestSummaryWrapper
                 key={`request-summary-${request.type}-${index}`}
                 request={request}
-                resultsFilter={props.selectedResultsFilter}
+                resultsFilter={props.housingTypeResultFilter}
                 label={undefined}
                 onClick={() => handleSummaryClick(request)}
                 resultsComponent={SummaryResultCard}
                 disabled={props.customView}
                 selected={!props.customView && props.appState.selectedRequests.includes(request)}
-              />
+              /> */}
             </Col>
           )
         })}
-
+      {
+        // Not Custom Search
+        // props.geographyRequests
+        //   .filter(r => r.type !== 'ADVANCED_SEARCH')
+        //   .map((request, index) => {
+        //     return (
+        //       <Col
+        //         xs={12}
+        //         sm={6}
+        //         xl={4}
+        //         key={`rs-col-${index}`}
+        //         className="geography-request-summary__container"
+        //         onClick={
+        //           props.customView ? () => props.dispatch(setAppState({ districtShowCustomView: false })) : undefined
+        //         }
+        //       >
+        //         <RequestSummaryWrapper
+        //           key={`request-summary-${request.type}-${index}`}
+        //           request={request}
+        //           resultsFilter={props.housingTypeResultFilter}
+        //           label={undefined}
+        //           onClick={() => handleSummaryClick(request)}
+        //           resultsComponent={SummaryResultCard}
+        //           disabled={props.customView}
+        //           selected={!props.customView && props.appState.selectedRequests.includes(request)}
+        //         />
+        //       </Col>
+        //     )
+        //   })}
+      }
       {// Custom Search
       props.geographyRequests
         .filter(r => r.type === 'ADVANCED_SEARCH')

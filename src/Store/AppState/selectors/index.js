@@ -13,6 +13,10 @@ export const getDefaultRequest = requests => {
   return requests.find(request => request.type === 'GEOGRAPHY_HOUSING_TYPE')
 }
 
+export const getDefaultAmountFilter = amountFilters => {
+  return amountFilters[0]
+}
+
 export const getAdvancedSearchResultsFilter = advancedSearchRequest => {
   return advancedSearchRequest.resourceModel.ownResultFilters.find(
     orf => orf.id === advancedSearchRequest.paramMaps.find(pm => pm.field === 'housingtype').value

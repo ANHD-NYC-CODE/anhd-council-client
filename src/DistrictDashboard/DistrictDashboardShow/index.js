@@ -52,43 +52,34 @@ class DistrictDashboardShow extends React.PureComponent {
   }
 
   getGeographySummaryResultsFilter() {
-    return this.props.selectedResultsFilter
+    return this.props.housingTypeResultFilter
   }
 
   getDisplayedResultsFilter() {
-    return this.props.selectedResultsFilter
+    return this.props.housingTypeResultFilter
   }
 
   getResultRecords() {
-    const resultFilter =
-      !this.props.appState.districtShowCustomView && this.props.appState.selectedResultsFilter
+    const housingTypeFilter =
+      !this.props.appState.districtShowCustomView && this.props.appState.housingTypeResultFilter
         ? results =>
-            this.props.appState.selectedResultsFilter.internalFilter(
+            this.props.appState.housingTypeResultFilter.internalFilter(
               results,
-              this.props.appState.selectedResultsFilter.paramMaps
+              this.props.appState.housingTypeResultFilter.paramMaps
             )
         : results => results
 
-    let requestResults = []
-    if (this.props.appState.districtShowCustomView) {
-      requestResults = this.props.requests['ADVANCED_SEARCH'] || []
-    } else {
-      const fullResults = [].concat.apply(
-        [],
-        this.props.appState.selectedRequests.map(request => this.props.requests[request.requestConstant]).filter(r => r)
-      )
+    let propertyResults = this.props.totalPropertyResults
 
-      // Make distinct array
-      const map = new Map()
-      for (const item of fullResults) {
-        if (!map.has(item.bbl)) {
-          map.set(item.bbl, true) // set any value to Map
-          requestResults.push(item)
-        }
-      }
+    if (this.props.appState.districtShowCustomView) {
+      propertyResults = this.props.requests['ADVANCED_SEARCH'] || []
+    } else if (this.props.appState.selectedFilters.length) {
+      propertyResults = propertyResults.filter(result =>
+        this.props.appState.selectedFilters.some(selectedFilter => selectedFilter.evaluate(result))
+      )
     }
 
-    return resultFilter(requestResults)
+    return housingTypeFilter(propertyResults)
   }
 
   render() {
@@ -203,7 +194,7 @@ class DistrictDashboardShow extends React.PureComponent {
                     customView={this.props.appState.districtShowCustomView}
                     dispatch={this.props.dispatch}
                     geographyRequests={this.props.geographyRequests}
-                    selectedResultsFilter={this.getGeographySummaryResultsFilter()}
+                    housingTypeResultFilter={this.getGeographySummaryResultsFilter()}
                   />
                 </Col>
               </Row>
@@ -221,7 +212,7 @@ class DistrictDashboardShow extends React.PureComponent {
                       dispatch={this.props.dispatch}
                       propertySummaryRequest={this.props.propertySummaryRequest}
                       switchSelectedFilter={this.props.switchSelectedFilter}
-                      selectedResultsFilter={this.props.selectedResultsFilter}
+                      housingTypeResultFilter={this.props.housingTypeResultFilter}
                     />
                   </Row>
                 </Col>
@@ -238,7 +229,7 @@ class DistrictDashboardShow extends React.PureComponent {
                         displayedResultsFilter={
                           this.props.appState.selectedRequests.some(r => r.type === 'ADVANCED_SEARCH')
                             ? undefined
-                            : this.props.selectedResultsFilter
+                            : this.props.housingTypeResultFilter
                         }
                       />
                     </Col>
@@ -315,6 +306,10 @@ class DistrictDashboardShow extends React.PureComponent {
   }
 }
 
+DistrictDashboardShow.defaultProps = {
+  totalPropertyResults: [],
+}
+
 DistrictDashboardShow.propTypes = {
   appState: PropTypes.object,
   config: PropTypes.object,
@@ -322,6 +317,7 @@ DistrictDashboardShow.propTypes = {
   requests: PropTypes.array,
   toggleDateRange: PropTypes.func,
   propertySummaryRequest: PropTypes.object,
+  totalPropertyResults: PropTypes.array,
 }
 
 export default DistrictDashboardShow

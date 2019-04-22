@@ -1,5 +1,5 @@
 import * as c from 'shared/constants'
-import { getDefaultRequest } from 'Store/AppState/selectors'
+import { getDefaultRequest, getDefaultAmountFilter } from 'Store/AppState/selectors'
 
 export const initialState = {
   currentGeographyType: undefined,
@@ -11,8 +11,9 @@ export const initialState = {
   changingGeographyId: undefined,
   mapFilterDate: c.DISTRICT_RESULTS_DATE_ONE,
   selectedRequests: [],
+  selectedFilters: [],
   selectedRequest: undefined, // DEPRECATED
-  selectedResultsFilter: undefined,
+  housingTypeResultFilter: undefined,
   resultFilters: [], // initialize in Config/index.js
   requests: [],
   districtShowCustomView: false,
@@ -30,7 +31,28 @@ export const appStateReducer = (state = Object.freeze(initialState), action = { 
       return {
         ...state,
         resultFilters: action.resultFilters,
-        selectedResultsFilter: action.resultFilters[0],
+        housingTypeResultFilter: action.resultFilters[0],
+      }
+    }
+    case c.TOGGLE_SELECTED_AMOUNT_FILTER: {
+      const defaultAmountFilter = getDefaultAmountFilter(state.resultFilters.filter(fil => fil.category === 'AMOUNT'))
+
+      let selectedFilters = [...state.selectedFilters]
+
+      if (selectedFilters.includes(action.toggledFilter)) {
+        selectedFilters = selectedFilters.filter(request => request !== action.toggledFilter)
+      } else {
+        selectedFilters.push(action.toggledFilter)
+      }
+
+      // Add default request if empty
+      if (!selectedFilters.length) {
+        selectedFilters.push(defaultAmountFilter)
+      }
+
+      return {
+        ...state,
+        selectedFilters: [...selectedFilters],
       }
     }
     case c.TOGGLE_SELECTED_REQUEST: {
@@ -103,7 +125,7 @@ export const appStateReducer = (state = Object.freeze(initialState), action = { 
         ...state,
         selectedRequests: [getDefaultRequest(state.requests)],
         selectedRequest: getDefaultRequest(state.requests),
-        selectedResultsFilter: state.resultFilters[0],
+        housingTypeResultFilter: state.resultFilters[0],
       }
     }
     default:
