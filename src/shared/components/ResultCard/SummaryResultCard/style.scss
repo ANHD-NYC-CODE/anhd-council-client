@@ -20,9 +20,9 @@
   .result-card.card.btn-primary:not(:disabled):hover,
   .result-card.card.btn-primary:not(:disabled).active {
     box-shadow: 1px 3px 6px $gray-600;
-    border: 2px dashed $white;
+    border: 1px dashed $white;
     color: white;
-    padding: 0 9px;
+    // padding: 0 9px;
 
     p,
     span,

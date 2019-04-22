@@ -23,6 +23,11 @@ export const toggleSelectedAmountFilter = amountFilter => ({
   toggledFilter: amountFilter,
 })
 
+export const updateAmountFilter = amountFilter => ({
+  type: c.UPDATE_AMOUNT_FILTER,
+  amountFilter,
+})
+
 export const setDefaultSelections = model => ({
   type: c.SET_DEFAULT_SELECTED_REQUEST,
   model,

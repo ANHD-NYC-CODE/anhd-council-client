@@ -1,15 +1,121 @@
-.amount-result-filter-card.card {
-  align-items: stretch;
-  justify-content: stretch;
-  display: flex;
+@import 'shared/styles/_variables.scss';
 
-  height: 120px;
-  min-height: 120px;
+.amount-result-filter-card {
+  align-items: stretch;
+  border: 0;
+  display: flex;
+  height: 100px;
+  justify-content: stretch;
+  // overflow: hidden;
+  padding: 0;
+  transition: all 0.2s ease-in-out;
   width: 100%;
 
+  .amount-result-filter-card__title {
+    text-align: left;
+  }
+
+  .amount-result-filter-card__header {
+    display: flex;
+  }
+
+  .amount-result-filter-card__title {
+  }
+
+  .amount-result-filter-card__total {
+    display: flex;
+    font-size: 16px;
+  }
+
   .amount-result-filter-card__body {
+    border: 0;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
     flex: 1 1 100%;
+    text-align: left;
     height: 100%;
     width: 100%;
+  }
+
+  .amount-result-filter-card__body--inner-wrapper {
+    border: 1px solid $primary;
+    border-radius: 8px;
+    // border-top-right-radius: 0;
+    // border-bottom-right-radius: 0;
+    display: flex;
+    flex: 1 1 80%;
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  .amount-result-filter-card__body--inner-wrapper.active {
+    background-color: $primary;
+    color: white;
+  }
+
+  @media (hover: hover) {
+    &:not(:disabled) {
+      .amount-result-filter-card__body--inner-wrapper:not(.active):hover {
+        background-color: $info;
+        border-color: $info;
+        color: $black;
+        box-shadow: 1px 12px 20px $gray-400;
+        transition: transform 0.2s ease-in-out;
+        transform: translateY(-6px);
+      }
+    }
+  }
+
+  .amount-result-filter-card__controls {
+    flex: 1 1 20%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .amount-result-filter-card__filter {
+    display: flex;
+  }
+
+  .amount-result-filter-card__input--prefix {
+    flex: 1 1 50%;
+  }
+
+  .amount-result-filter-card__input {
+    flex: 1 1 50%;
+    font-weight: bold;
+  }
+
+  .amount-result-filter-card__arrow {
+    border: 1px solid transparent;
+    border-radius: 50%;
+    color: $black;
+    cursor: pointer;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  // .amount-result-filter-card__arrow:first-child {
+  //   border-top-right-radius: 6px;
+  // }
+  //
+  // .amount-result-filter-card__arrow:last-child {
+  //   border-bottom-right-radius: 6px;
+  // }
+
+  @media (hover: hover) {
+    .amount-result-filter-card__arrow:hover {
+      color: white;
+    }
+    .amount-result-filter-card__arrow:first-child:hover {
+      background-color: $success;
+    }
+
+    .amount-result-filter-card__arrow:last-child:hover {
+      background-color: $danger;
+    }
   }
 }

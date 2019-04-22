@@ -46,13 +46,21 @@ export const appStateReducer = (state = Object.freeze(initialState), action = { 
       }
 
       // Add default request if empty
-      if (!selectedFilters.length) {
-        selectedFilters.push(defaultAmountFilter)
-      }
+      // if (!selectedFilters.length) {
+      //   selectedFilters.push(defaultAmountFilter)
+      // }
 
       return {
         ...state,
         selectedFilters: [...selectedFilters],
+      }
+    }
+    case c.UPDATE_AMOUNT_FILTER: {
+      const selectedFilters = [...state.selectedFilters]
+      selectedFilters[selectedFilters.indexOf(action.amountFilter)] = action.amountFilter
+      return {
+        ...state,
+        selectedFilters,
       }
     }
     case c.TOGGLE_SELECTED_REQUEST: {

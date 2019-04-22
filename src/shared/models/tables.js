@@ -363,6 +363,12 @@ export const getTableColumns = ({
           text: `Marshall Evictions (${annotationStart}-${annotationEnd})`,
           sort: true,
         }),
+        constructPropertyColumn({
+          columnEvent: linkToColumnEvent,
+          dataField: `acrisrealmasters__${annotationStart}-${annotationEnd}`,
+          text: `Sales (${annotationStart}-${annotationEnd})`,
+          sort: true,
+        }),
       ]
       break
     case 'HPD_REGISTRATION':

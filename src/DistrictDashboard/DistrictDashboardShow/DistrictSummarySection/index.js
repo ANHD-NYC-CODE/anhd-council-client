@@ -26,7 +26,6 @@ const DistrictSummarySection = props => {
       })
     )
   }
-
   return (
     <Row className="district-summary-section">
       {props.appState.resultFilters
@@ -46,7 +45,9 @@ const DistrictSummarySection = props => {
               <AmountResultFilterCard
                 key={`request-summary-${amountFilter.category}-${index}`}
                 amountFilter={amountFilter}
+                calculatedTotal={amountFilter.internalFilter(props.totalPropertyResults).length}
                 disabled={props.customView}
+                dispatch={props.dispatch}
                 selected={!props.customView && props.appState.selectedFilters.includes(amountFilter)}
                 handleClick={() => handleResultFilterClick(amountFilter)}
               />
