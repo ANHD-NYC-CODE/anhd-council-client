@@ -170,6 +170,7 @@ class DistrictDashboard extends React.PureComponent {
         requests={this.props.requests}
         selectedLoading={this.props.selectedLoading}
         selectedError={this.props.selectedError}
+        totalPropertyResults={this.props.totalPropertyResults}
         trigger404Error={this.trigger404Error}
       />
     )
@@ -209,6 +210,7 @@ const makeMapStateToProps = () => {
       selectedLoading: loadingSelector(state),
       selectedError: errorSelector(state),
       requests: state.requests,
+      totalPropertyResults: state.requests['GEOGRAPHY_HOUSING_TYPE_ALL'],
     }
   }
   return mapStateToProps

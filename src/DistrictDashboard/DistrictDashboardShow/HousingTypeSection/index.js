@@ -11,7 +11,7 @@ import { setAppState } from 'Store/AppState/actions'
 import { Row, Col } from 'react-bootstrap'
 
 const isSelected = (props, ownResultFilter) => {
-  return (props.selectedResultsFilter || {}).id === ownResultFilter.id
+  return (props.housingTypeResultFilter || {}).id === ownResultFilter.id
 }
 
 const HousingTypeSection = props => {
@@ -53,6 +53,7 @@ const HousingTypeSection = props => {
                         resultsFilter={ownResultFilter}
                         resultsComponent={HousingTypeResultCard}
                         infoKey={ownResultFilter.id}
+                        percentageOfWhole={ownResultFilter !== residentialFilter}
                         unitsLabel={ownResultFilter === residentialFilter ? 'of all properties' : 'of residential'}
                         totalResultsFilter={ownResultFilter === residentialFilter ? undefined : residentialFilter}
                         selected={props.customView ? undefined : isSelected(props, ownResultFilter)}
@@ -74,7 +75,7 @@ HousingTypeSection.propTypes = {
   customView: PropTypes.bool,
   propertySummaryRequest: PropTypes.object,
   propertyResource: PropTypes.object,
-  selectedResultsFilter: PropTypes.object,
+  housingTypeResultFilter: PropTypes.object,
   switchSelectedFilter: PropTypes.func,
 }
 

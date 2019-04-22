@@ -37,7 +37,7 @@ const HousingTypeResultCard = props => {
                 <span className="summary-units">units</span>
               </p>
             </div>
-            {props.totalResults && !!props.totalResults.length && (
+            {props.percentageOfWhole && props.totalResults && !!props.totalResults.length && (
               <div className="d-flex flex-column align-items-flex-end h-100 text-right">
                 <h5 className="text-right font-weight-bold mb-0">
                   {`${((props.results.length / props.totalResults.length) * 100).toFixed(2)}%`}{' '}
@@ -58,6 +58,7 @@ HousingTypeResultCard.defaultProps = {
   results: [],
   totalResults: [],
   selected: false,
+  percentageOfWhole: true,
 }
 
 HousingTypeResultCard.propTypes = {

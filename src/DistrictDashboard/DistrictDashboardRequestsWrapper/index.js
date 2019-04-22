@@ -51,7 +51,7 @@ class DistrictDashboardRequestsWrapper extends React.PureComponent {
 
     this.props.dispatch(
       setAppState({
-        selectedResultsFilter: this.props.appState.selectedResultsFilter || this.props.appState.resultFilters[0],
+        housingTypeResultFilter: this.props.appState.housingTypeResultFilter || this.props.appState.resultFilters[0],
       })
     )
   }
@@ -82,7 +82,7 @@ class DistrictDashboardRequestsWrapper extends React.PureComponent {
   switchSelectedFilter(filter) {
     this.props.dispatch(
       setAppState({
-        selectedResultsFilter: filter,
+        housingTypeResultFilter: filter,
       })
     )
   }
@@ -96,7 +96,7 @@ class DistrictDashboardRequestsWrapper extends React.PureComponent {
         toggleDateRange={this.toggleDateRange}
         selectedRequest={this.props.appState.selectedRequest}
         switchSelectedFilter={this.switchSelectedFilter}
-        selectedResultsFilter={this.props.appState.selectedResultsFilter}
+        housingTypeResultFilter={this.props.appState.housingTypeResultFilter}
         {...this.props}
       />
     ) : (
@@ -110,6 +110,7 @@ DistrictDashboardRequestsWrapper.propTypes = {
   config: PropTypes.object,
   mapFilterDate: PropTypes.string,
   requests: PropTypes.array,
+  totalPropertyResults: PropTypes.array,
 }
 
 export default DistrictDashboardRequestsWrapper

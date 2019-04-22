@@ -16,7 +16,15 @@ import ConfigLoader from 'shared/components/Loaders/ConfigLoader'
 import PageError from 'shared/components/PageError'
 import Filter from 'shared/classes/Filter'
 import { setAppState, loadResultFilters, removeRequestType, setDefaultSelections } from 'Store/AppState/actions'
-import { newMapRequests, newLookupRequests, newAdvancedSearchRequest } from 'shared/utilities/configUtils'
+
+import moment from 'moment'
+
+import {
+  newMapRequests,
+  newMapResultFilters,
+  newLookupRequests,
+  newAdvancedSearchRequest,
+} from 'shared/utilities/configUtils'
 import { setupResourceModels } from 'shared/utilities/configUtils'
 import { createAdvancedSearchFilters } from 'shared/utilities/filterUtils'
 import { resetAdvancedSearchReducer, replacePropertyFilter } from 'Store/AdvancedSearch/actions'
@@ -36,6 +44,7 @@ class Config extends React.PureComponent {
 
     this.selectGeographyData = this.selectGeographyData.bind(this)
     this.createMapRequests = this.createMapRequests.bind(this)
+    this.createMapResultFilters = this.createMapResultFilters
     this.createLookupRequests = this.createLookupRequests.bind(this)
     this.createAdvancedSearchRequest = this.createAdvancedSearchRequest.bind(this)
     this.clearAdvancedSearch = this.clearAdvancedSearch.bind(this)
@@ -77,7 +86,14 @@ class Config extends React.PureComponent {
       this.props.dispatch(replacePropertyFilter(this.newPropertyFilter()))
     }
     if (!this.props.appStateResultFilters.length && !!Object.keys(this.props.resourceModels).length) {
-      this.props.dispatch(loadResultFilters(this.props.resourceModels['PROPERTY'].ownResultFilters))
+      const mapAmountResultFilters = this.createMapResultFilters({
+        annotationStart: moment(this.props.appStateMapFilterDate).format('MM/DD/YYYY'),
+        annotationEnd: moment(moment.now()).format('MM/DD/YYYY'),
+      })
+
+      this.props.dispatch(
+        loadResultFilters([...this.props.resourceModels['PROPERTY'].ownResultFilters, ...mapAmountResultFilters])
+      )
     }
   }
 
@@ -105,6 +121,13 @@ class Config extends React.PureComponent {
 
   createMapRequests(geographyType, geographyId) {
     return newMapRequests({ geographyType, geographyId, resourceModels: this.props.resourceModels })
+  }
+
+  createMapResultFilters({
+    annotationStart = moment(this.props.appStateMapFilterDate).format('MM/DD/YYYY'),
+    annotationEnd = moment(moment.now()).format('MM/DD/YYYY'),
+  } = {}) {
+    return newMapResultFilters({ resourceModels: this.props.resourceModels, annotationStart, annotationEnd })
   }
 
   createLookupRequests(bbl, bin) {
@@ -169,6 +192,7 @@ const loadingSelector = createLoadingSelector([GET_DATASETS, GET_COUNCILS, GET_C
 const mapStateToProps = state => {
   return {
     advancedSearch: state.advancedSearch,
+    appStateMapFilterDate: state.appState.mapFilterDate,
     appStateResultFilters: state.appState.resultFilters,
     datasets: state.dataset.datasets,
     resourceModels: setupResourceModels(state.dataset.datasets),

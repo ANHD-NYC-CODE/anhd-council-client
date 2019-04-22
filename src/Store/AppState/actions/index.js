@@ -18,6 +18,11 @@ export const toggleSelectedRequest = request => ({
   toggledRequest: request,
 })
 
+export const toggleSelectedAmountFilter = amountFilter => ({
+  type: c.TOGGLE_SELECTED_AMOUNT_FILTER,
+  toggledFilter: amountFilter,
+})
+
 export const setDefaultSelections = model => ({
   type: c.SET_DEFAULT_SELECTED_REQUEST,
   model,

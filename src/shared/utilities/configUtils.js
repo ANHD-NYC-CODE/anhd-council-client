@@ -1,6 +1,7 @@
 import * as resources from 'shared/models/resources'
 import * as c from 'shared/constants'
 import DataRequest from 'shared/classes/DataRequest'
+import ResultAmountFilter from 'shared/classes/ResultAmountFilter'
 import { getApiMap } from 'shared/utilities/classUtils'
 import TableConfig from 'shared/classes/TableConfig'
 import ApiMap from 'shared/classes/ApiMap'
@@ -8,7 +9,7 @@ import ParamMap from 'shared/classes/ParamMap'
 import Resource from 'shared/classes/Resource'
 import { housingTypeCodeToName } from 'shared/utilities/languageUtils'
 import { constantToModelName } from 'shared/utilities/filterUtils'
-
+import moment from 'moment'
 import { getUrlFormattedParamMaps } from 'Store/AdvancedSearch/utilities/advancedSearchStoreUtils'
 
 import LookupProfileSummary from 'Lookup/LookupProfileSummary'
@@ -326,6 +327,12 @@ export const newGeographyHousingTypeRequest = ({
         comparison: '',
         value: c.DISTRICT_RESULTS_DATE_ONE,
       }),
+      new ParamMap({
+        type: 'TEXT',
+        field: 'unitsres',
+        comparison: 'gte',
+        value: 1,
+      }),
     ],
     tableConfig: new TableConfig({ resourceConstant: 'PROPERTY' }),
   })
@@ -376,6 +383,37 @@ export const newMapRequests = ({ geographyType, geographyId, resourceModels } = 
     //   resourceModel: resourceModels['ACRIS_REAL_MASTER'],
     //   defaultValue: 1,
     // }),
+  ]
+}
+
+export const generateResultFilter = ({
+  resourceModel,
+  annotationStart,
+  annotationEnd = moment(moment.now()).format('MM/DD/YYYY'),
+  value = 5,
+} = {}) => {
+  const field = `${resourceModel.urlPath}__${annotationStart}-${annotationEnd}`
+
+  return new ResultAmountFilter({ resourceModel, field, comparison: 'gte', value: value })
+}
+
+export const newMapResultFilters = ({ resourceModels, annotationStart, annotationEnd } = {}) => {
+  return [
+    generateResultFilter({ resourceModel: resourceModels['HPD_VIOLATION'], value: 10, annotationStart, annotationEnd }),
+    generateResultFilter({ resourceModel: resourceModels['DOB_COMPLAINT'], value: 2, annotationStart, annotationEnd }),
+    generateResultFilter({ resourceModel: resourceModels['HPD_COMPLAINT'], value: 5, annotationStart, annotationEnd }),
+    generateResultFilter({
+      resourceModel: resourceModels['DOB_FILED_PERMIT'],
+      value: 1,
+      annotationStart,
+      annotationEnd,
+    }),
+    generateResultFilter({
+      resourceModel: resourceModels['ACRIS_REAL_MASTER'],
+      value: 1,
+      annotationStart,
+      annotationEnd,
+    }),
   ]
 }
 
