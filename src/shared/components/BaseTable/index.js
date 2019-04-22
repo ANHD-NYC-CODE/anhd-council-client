@@ -34,6 +34,7 @@ class BaseTable extends React.Component {
       columns: props.tableConfig.getColumns({
         expandColumnFunction: this.setExpandedContent,
         constructFilter: this.constructFilter,
+        rowExample: props.records[0],
         dispatch: props.dispatch,
       }),
     }
@@ -51,6 +52,7 @@ class BaseTable extends React.Component {
       columns: nextProps.tableConfig.getColumns({
         expandColumnFunction: this.setExpandedContent,
         constructFilter: this.constructFilter,
+        rowExample: nextProps.records[0],
         dispatch: nextProps.dispatch,
       }),
     })

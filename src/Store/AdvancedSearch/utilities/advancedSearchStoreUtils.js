@@ -18,5 +18,20 @@ export const getUrlFormattedParamMaps = advancedSearch => {
     field: 'q',
     value: convertConditionMappingToQ(advancedSearch.conditions),
   })
-  return [...advancedSearch.propertyFilter.paramMaps, qParamMap].filter(p => p)
+
+  const summaryMaps = [
+    new ParamMap({
+      type: 'TEXT',
+      field: 'summary',
+      comparison: '',
+      value: true,
+    }),
+    new ParamMap({
+      type: 'TEXT',
+      field: 'summary-type',
+      comparison: '',
+      value: 'short-annotated',
+    }),
+  ]
+  return [...advancedSearch.propertyFilter.paramMaps, qParamMap, ...summaryMaps].filter(p => p)
 }

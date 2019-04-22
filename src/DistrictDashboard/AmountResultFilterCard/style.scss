@@ -89,6 +89,7 @@
   .amount-result-filter-card__arrow {
     border: 1px solid transparent;
     border-radius: 50%;
+
     color: $black;
     cursor: pointer;
     height: 100%;
@@ -108,14 +109,14 @@
 
   @media (hover: hover) {
     .amount-result-filter-card__arrow:hover {
-      color: white;
+      color: $gray-500;
     }
     .amount-result-filter-card__arrow:first-child:hover {
-      background-color: $success;
+      color: $success;
     }
 
     .amount-result-filter-card__arrow:last-child:hover {
-      background-color: $danger;
+      color: $danger;
     }
   }
 }

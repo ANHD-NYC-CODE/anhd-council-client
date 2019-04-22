@@ -13,9 +13,11 @@ export const DISTRICT_RESULTS_DATE_ONE = moment() // The 1st of last month
   .subtract(1, 'months')
   .startOf('month')
   .format('YYYY-MM-DD')
-export const DISTRICT_RESULTS_DATE_TWO = moment() // 1 year ago today.
+export const DISTRICT_RESULTS_DATE_TWO = moment() // 1 year ago jan 1st.
+  .startOf('year')
   .subtract('1', 'year')
   .format('YYYY-MM-DD')
-export const DISTRICT_RESULTS_DATE_THREE = moment() // Three years ago today.
+export const DISTRICT_RESULTS_DATE_THREE = moment() // Three years jan 1st.
+  .startOf('year')
   .subtract('3', 'year')
   .format('YYYY-MM-DD')

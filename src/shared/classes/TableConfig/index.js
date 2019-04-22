@@ -75,13 +75,14 @@ export default class TableConfig {
     return getDescriptionKey(this._resourceConstant)
   }
 
-  getColumns({ expandColumnFunction, constructFilter, dispatch } = {}) {
+  getColumns({ expandColumnFunction, constructFilter, rowExample, dispatch } = {}) {
     return getTableColumns({
       constant: this._resourceConstant,
       columnExpandFunction: expandColumnFunction,
       linkPropsFunction: getLinkProps(this._resourceConstant),
       constructFilter: constructFilter,
       dispatch: dispatch,
+      rowExample,
       annotationStart: this._annotationStart,
       annotationEnd: this._annotationEnd,
     })
