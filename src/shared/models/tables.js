@@ -155,10 +155,31 @@ export const getTableColumns = ({
   linkPropsFunction = () => null,
   constructFilter,
   dispatch,
+  rowExample,
   annotationStart = moment(c.DISTRICT_RESULTS_DATE_ONE).format('MM/DD/YYYY'),
   annotationEnd = moment(moment.now()).format('MM/DD/YYYY'),
 } = {}) => {
   let columns
+
+  const getAnnotatedDataField = ({ annotationKey = '', rowExample = undefined } = {}) => {
+    if (!rowExample) return ''
+
+    const columnKey = Object.keys(rowExample).find(key => key.match(annotationKey))
+
+    return columnKey
+  }
+
+  const getAnnotatedLabel = ({ annotationLabel = '', annotationKey = '', rowExample = undefined } = {}) => {
+    if (!rowExample) return ''
+
+    const columnKey = Object.keys(rowExample).find(key => key.match(annotationKey))
+
+    const startDate = columnKey.split('__')[1].split('-')[0]
+    const endDate = columnKey.split('__')[1].split('-')[1]
+
+    return `${annotationLabel} (${startDate} - ${endDate})`
+  }
+
   const handleColumnEvent = ({ e, row, component, dataKey, tableConfig } = {}) => {
     const rowKey = getKeyField(constant)
 
@@ -190,6 +211,7 @@ export const getTableColumns = ({
   }
 
   const constructPropertyColumn = ({ dataField, text, sort, filter, classes, formatter, hidden, columnEvent }) => {
+    if (!dataField) return null
     return {
       dataField,
       text,
@@ -323,53 +345,81 @@ export const getTableColumns = ({
         }),
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
-          dataField: `hpdviolations__${annotationStart}-${annotationEnd}`,
-          text: `HPD Violations (${annotationStart}-${annotationEnd})`,
+          dataField: getAnnotatedDataField({
+            annotationKey: 'hpdviolations',
+            rowExample,
+          }),
+          text: getAnnotatedLabel({ annotationLabel: 'HPD Violations', rowExample, annotationKey: 'hpdviolations' }),
           sort: true,
         }),
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
-          dataField: `dobviolations__${annotationStart}-${annotationEnd}`,
-          text: `DOB Violations (${annotationStart}-${annotationEnd})`,
+          dataField: getAnnotatedDataField({
+            annotationKey: 'dobviolations',
+            rowExample,
+          }),
+          text: getAnnotatedLabel({ annotationLabel: 'DOB Violations', rowExample, annotationKey: 'dobviolations' }),
           sort: true,
         }),
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
-          dataField: `ecbviolations__${annotationStart}-${annotationEnd}`,
-          text: `ECB Violations (${annotationStart}-${annotationEnd})`,
+          dataField: getAnnotatedDataField({
+            annotationKey: 'ecbviolations',
+            rowExample,
+          }),
+          text: getAnnotatedLabel({ annotationLabel: 'ECB Violations', rowExample, annotationKey: 'ecbviolations' }),
           sort: true,
         }),
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
-          dataField: `hpdcomplaints__${annotationStart}-${annotationEnd}`,
-          text: `HPD Complaints (${annotationStart}-${annotationEnd})`,
+          dataField: getAnnotatedDataField({
+            annotationKey: 'hpdcomplaints',
+            rowExample,
+          }),
+          text: getAnnotatedLabel({ annotationLabel: 'HPD Complaints', rowExample, annotationKey: 'hpdcomplaints' }),
           sort: true,
         }),
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
-          dataField: `dobcomplaints__${annotationStart}-${annotationEnd}`,
-          text: `DOB Complaints (${annotationStart}-${annotationEnd})`,
+          dataField: getAnnotatedDataField({
+            annotationKey: 'dobcomplaints',
+            rowExample,
+          }),
+          text: getAnnotatedLabel({ annotationLabel: 'DOB Complaints', rowExample, annotationKey: 'dobcomplaints' }),
           sort: true,
         }),
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
-          dataField: `dobfiledpermits__${annotationStart}-${annotationEnd}`,
-          text: `DOB Permit Applications (${annotationStart}-${annotationEnd})`,
+          dataField: getAnnotatedDataField({
+            annotationKey: 'dobfiledpermits',
+            rowExample,
+          }),
+          text: getAnnotatedLabel({
+            annotationLabel: 'DOB Permit Applications',
+            rowExample,
+            annotationKey: 'dobfiledpermits',
+          }),
           sort: true,
         }),
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
-          dataField: `evictions__${annotationStart}-${annotationEnd}`,
-          text: `Marshall Evictions (${annotationStart}-${annotationEnd})`,
+          dataField: getAnnotatedDataField({
+            annotationKey: 'evictions',
+            rowExample,
+          }),
+          text: getAnnotatedLabel({ annotationLabel: 'Marshall Evictions', rowExample, annotationKey: 'evictions' }),
           sort: true,
         }),
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
-          dataField: `acrisrealmasters__${annotationStart}-${annotationEnd}`,
-          text: `Sales (${annotationStart}-${annotationEnd})`,
+          dataField: getAnnotatedDataField({
+            annotationKey: 'acrisrealmasters',
+            rowExample,
+          }),
+          text: getAnnotatedLabel({ annotationLabel: 'Sales', rowExample, annotationKey: 'acrisrealmasters' }),
           sort: true,
         }),
-      ]
+      ].filter(c => c)
       break
     case 'HPD_REGISTRATION':
       columns = [
