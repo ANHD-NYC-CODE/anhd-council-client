@@ -1,17 +1,40 @@
 @import 'shared/styles/_variables.scss';
 
+.amount-result-filter-card--container {
+  // align-items: center;
+  display: flex;
+}
+
+.amount-result-filter-card__info {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-left: 5px;
+}
+
 .amount-result-filter-card {
   align-items: stretch;
   border: 0;
+  border: 1px dotted $primary;
+
   display: flex;
   height: 100px;
   justify-content: stretch;
   // overflow: hidden;
+  box-shadow: 1px 1px 6px $gray-400;
+  border-radius: 8px;
   padding: 0;
   transition: all 0.2s ease-in-out;
   width: 100%;
-
+  hr {
+    margin: 0;
+  }
   .amount-result-filter-card__title {
+    margin-bottom: 0;
+    font-size: 18px;
+    font-weight: bold;
     text-align: left;
   }
 
@@ -24,7 +47,7 @@
 
   .amount-result-filter-card__total {
     display: flex;
-    font-size: 16px;
+    font-size: 15px;
   }
 
   .amount-result-filter-card__body {
@@ -38,24 +61,34 @@
     width: 100%;
   }
 
+  .amount-result-filter-card__body.disabled {
+    cursor: initial;
+    color: $gray-500;
+    background-color: lighten($info, 10%);
+  }
+
   .amount-result-filter-card__body--inner-wrapper {
-    border: 1px solid $primary;
+    border: 0;
     border-radius: 8px;
-    // border-top-right-radius: 0;
-    // border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
     display: flex;
     flex: 1 1 80%;
     flex-direction: column;
     padding: 10px;
   }
 
-  .amount-result-filter-card__body--inner-wrapper.active {
+  &.active .amount-result-filter-card__body--inner-wrapper:not(.disabled) {
     background-color: $primary;
     color: white;
   }
 
+  &.active {
+    border: 1px dotted $white;
+  }
+
   @media (hover: hover) {
-    &:not(:disabled) {
+    &:not(.disabled) .amount-result-filter-card__body:not(.disabled) {
       .amount-result-filter-card__body--inner-wrapper:not(.active):hover {
         background-color: $info;
         border-color: $info;
@@ -79,6 +112,7 @@
 
   .amount-result-filter-card__input--prefix {
     flex: 1 1 50%;
+    font-size: 16px;
   }
 
   .amount-result-filter-card__input {
@@ -99,13 +133,13 @@
     justify-content: center;
   }
 
-  // .amount-result-filter-card__arrow:first-child {
-  //   border-top-right-radius: 6px;
-  // }
-  //
-  // .amount-result-filter-card__arrow:last-child {
-  //   border-bottom-right-radius: 6px;
-  // }
+  .amount-result-filter-card__arrow:first-child {
+    border-top-right-radius: 6px;
+  }
+
+  .amount-result-filter-card__arrow:last-child {
+    border-bottom-right-radius: 6px;
+  }
 
   @media (hover: hover) {
     .amount-result-filter-card__arrow:hover {
