@@ -82,7 +82,8 @@ describe('DistrictDashboard', () => {
       expect(wrapper.find('GeographyProfile')).toHaveLength(1)
       expect(wrapper.find('LeafletMap')).toHaveLength(1)
 
-      expect(wrapper.find('RequestSummaryWrapper')).toHaveLength(12)
+      expect(wrapper.find('RequestSummaryWrapper')).toHaveLength(6)
+      expect(wrapper.find('AmountResultFilterCard')).toHaveLength(5)
       const housingTypeCards = wrapper.findWhere(node => (node.key() || '').match(/housingtype-wrapper/))
       housingTypeCards.forEach(card => {
         expect(card.props().disabled).toEqual(false)
@@ -172,7 +173,7 @@ describe('DistrictDashboard', () => {
         await flushAllPromises()
         wrapper.update()
         expect(wrapper.find('.housing-type-section__wrapper').text()).toMatch(
-          'Total properties: 3All Residential2 properties11 units66.67% of all propertiesRent Stabilized0 properties0 units0.00% of residentialSubsidized Housing0 properties0 units0.00% of residentialSmall Homes1 properties1 units50.00% of residentialMarket Rate2 properties11 units100.00% of residentialPublic Housing0 properties0 units0.00% of residential'
+          'All Residential2 properties11 unitsRent Stabilized0 properties0 units0.00% of residentialSubsidized Housing0 properties0 units0.00% of residentialSmall Homes1 properties1 units50.00% of residentialMarket Rate2 properties11 units100.00% of residentialPublic Housing0 properties0 units0.00% of residential'
         )
       })
 
@@ -302,7 +303,7 @@ describe('DistrictDashboard', () => {
         )
         await flushAllPromises()
         newWrapper.update()
-        expect(newWrapper.find('RequestSummaryWrapper')).toHaveLength(13)
+        expect(newWrapper.find('RequestSummaryWrapper')).toHaveLength(7)
 
         newWrapper
           .findWhere(node => node.key() === 'request-summary-custom-search')
@@ -342,12 +343,12 @@ describe('DistrictDashboard', () => {
 
         await flushAllPromises()
         newWrapper.update()
-        expect(newWrapper.find('RequestSummaryWrapper')).toHaveLength(13)
+        expect(newWrapper.find('RequestSummaryWrapper')).toHaveLength(7)
 
         newWrapper.find('ClearAdvancedSearchButton .clear-advanced-search-button button').simulate('click')
         newWrapper.update()
 
-        expect(newWrapper.find('RequestSummaryWrapper')).toHaveLength(12)
+        expect(newWrapper.find('RequestSummaryWrapper')).toHaveLength(6)
 
         const housingTypeCards = newWrapper.findWhere(node => (node.key() || '').match(/housingtype-wrapper/))
 

@@ -57,5 +57,13 @@ export const createPropertyRequestMock = ({
     ownertype: ownertype,
     lat: lat,
     lng: lng,
+    'hpdviolations__01/01/2010-01/01/2019': 0,
+    'dobviolations__01/01/2010-01/01/2019': 0,
+    'ecbviolations__01/01/2010-01/01/2019': 0,
+    'hpdcomplaints__01/01/2010-01/01/2019': 0,
+    'dobcomplaints__01/01/2010-01/01/2019': 0,
+    'acrisrealmasters__01/01/2010-01/01/2019': 0,
+    'evictions__01/01/2010-01/01/2019': 0,
+    'dobfiledpermits__01/01/2010-01/01/2019': 0,
   }
 }

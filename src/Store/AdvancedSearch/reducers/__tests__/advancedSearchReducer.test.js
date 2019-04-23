@@ -12,9 +12,9 @@ describe('Custom Search reducer', () => {
 
   describe('ADD_NEW_CONDITION', () => {
     const newConditionId = '1'
-    const condition1 = new Condition({ key: newConditionId, type: 'OR', filters: [] })
+    const condition1 = new Condition({ key: newConditionId, type: 'AND', filters: [] })
     describe('without an optional filter', () => {
-      it('adds to condition array, adds opposite type, adds condition filter at end', () => {
+      it('adds to condition array, adds condition filter at end', () => {
         const state = {
           ...r.initialState(),
           conditions: {
@@ -52,7 +52,7 @@ describe('Custom Search reducer', () => {
           }),
           [newConditionId]: new Condition({
             key: newConditionId,
-            type: 'OR',
+            type: 'AND',
             filters: [{ id: 1 }],
           }),
         }
@@ -66,6 +66,34 @@ describe('Custom Search reducer', () => {
           ...r.initialState(),
           conditions: expectedConditions,
         })
+      })
+    })
+  })
+
+  describe('ADD_NEW_CONDITION_GROUP', () => {
+    const filters = [{ id: 1 }, { id: 2 }]
+    it('adds an empty condition of opposite type as a parent, movies filter to child ', () => {
+      const state = {
+        ...r.initialState(),
+        conditions: {
+          '0': new Condition({ key: '0', type: 'AND', filters: filters }),
+        },
+      }
+      const expectedCondition0 = new Condition({
+        key: '0',
+        type: 'OR',
+        filters: [new ConditionFilter({ conditionGroup: '1' })],
+      })
+      const expectedCondition1 = new Condition({
+        key: '1',
+        type: 'AND',
+        filters: filters,
+      })
+      expect(
+        r.advancedSearchReducer(state, a.addNewConditionGroup({ parentKey: '0', conditionKey: '1', filters }))
+      ).toEqual({
+        ...r.initialState(),
+        conditions: { '0': expectedCondition0, '1': expectedCondition1 },
       })
     })
   })

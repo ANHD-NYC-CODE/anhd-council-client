@@ -171,7 +171,6 @@ export const getTableColumns = ({
 
   const getAnnotatedLabel = ({ annotationLabel = '', annotationKey = '', rowExample = undefined } = {}) => {
     if (!rowExample) return ''
-
     const columnKey = Object.keys(rowExample).find(key => key.match(annotationKey))
 
     const startDate = columnKey.split('__')[1].split('-')[0]
@@ -1080,7 +1079,7 @@ export const getTableColumns = ({
         }),
         constructStandardColumn({
           dataField: 'docketnumber',
-          text: 'Docker #',
+          text: 'Docket #',
         }),
         constructStandardColumn({
           dataField: 'executeddate',
