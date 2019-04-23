@@ -19,7 +19,7 @@ export const addNewConditionGroup = ({ parentKey, conditionKey, filters = [] } =
     type: c.ADD_NEW_CONDITION_GROUP,
     parentKey,
     conditionKey,
-    filters, // optionally create new condition with filters
+    filters,
   }
 }
 

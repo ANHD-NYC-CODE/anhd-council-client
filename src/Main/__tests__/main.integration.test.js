@@ -37,37 +37,19 @@ describe('Landing page', () => {
     expect(
       wrapper
         .find('SubHeader a')
-        .at(0)
-        .props().href
-    ).toEqual('/')
-    expect(
-      wrapper
-        .find('SubHeader a')
-        .at(1)
-        .props().href
-    ).toMatch('forms.gle')
-    expect(
-      wrapper
-        .find('SubHeader a')
-        .at(2)
-        .props().href
-    ).toEqual('#')
-    expect(
-      wrapper
-        .find('SubHeader a')
-        .at(3)
+        .at(4)
         .props().href
     ).toEqual('/lookup')
     expect(
       wrapper
         .find('SubHeader a')
-        .at(4)
+        .at(5)
         .props().href
     ).toEqual('/map')
     expect(
       wrapper
         .find('SubHeader a')
-        .at(5)
+        .at(6)
         .props().href
     ).toEqual('/search')
   })
@@ -127,7 +109,7 @@ describe('Landing page', () => {
       expect(
         wrapper
           .find('SubHeader a')
-          .at(4)
+          .at(5)
           .props().href
       ).toEqual('/community/102')
     })
