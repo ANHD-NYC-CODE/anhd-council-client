@@ -3,7 +3,9 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import * as c from 'shared/constants'
 import GeographySelect from 'shared/components/GeographySelect'
-import { Row, Col, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
+import { Card, Row, Col, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
+import BaseLink from 'shared/components/BaseLink'
+
 import AdvancedSearchSentence from 'AdvancedSearch/Sentence'
 import LayoutContext from 'Layout/LayoutContext'
 import HousingTypeSection from 'DistrictDashboard/DistrictDashboardShow/HousingTypeSection'
@@ -20,6 +22,11 @@ import GeographyProfile from 'DistrictDashboard/GeographyProfile'
 import PrintDistrictDashboard from 'DistrictDashboard/PrintDistrictDashboard'
 import BaseTable from 'shared/components/BaseTable'
 import { makeBblCsvrequest } from 'Store/Request/actions'
+import { setAppState } from 'Store/AppState/actions'
+
+import RequestSummaryWrapper from 'shared/components/RequestSummaryWrapper'
+
+import SummaryResultCard from 'shared/components/ResultCard/SummaryResultCard'
 
 import './style.scss'
 
@@ -174,10 +181,46 @@ class DistrictDashboardShow extends React.PureComponent {
                       </ToggleButtonGroup>
                     </Col>
                   </Row>
+                  <Row>
+                    {// Custom Search
+                    this.props.geographyRequests
+                      .filter(r => r.type === 'ADVANCED_SEARCH')
+                      .map(request => {
+                        return (
+                          <Col xs={12} key={'rs-col-custom-search'} className="geography-request-summary__container">
+                            <RequestSummaryWrapper
+                              key={'request-summary-custom-search'}
+                              request={request}
+                              resultsFilter={undefined}
+                              label={'Custom Search'}
+                              onClick={() =>
+                                this.props.dispatch(
+                                  setAppState({ districtShowCustomView: !this.props.appState.districtShowCustomView })
+                                )
+                              }
+                              resultsComponent={SummaryResultCard}
+                              selected={this.props.appState.districtShowCustomView}
+                            />
+                          </Col>
+                        )
+                      })}
+                    {!this.props.geographyRequests.some(r => r.type === 'ADVANCED_SEARCH') && (
+                      <Col className="geography-request-summary__container d-flex" xs={12}>
+                        <Col className="align-self-center pl-0 pl-lg-2 pr-0" xs={11}>
+                          <BaseLink href="/search">
+                            <Card className="border-0">
+                              <Card.Body>+ Add Custom Search</Card.Body>
+                            </Card>
+                          </BaseLink>
+                        </Col>
+                        <Col xs={1} className="pl-0 pr-1" />
+                      </Col>
+                    )}
+                  </Row>
                   <Row className="py-2 mb-4 mb-lg-0">
-                    {this.props.appState.selectedRequests.find(request => request.type === 'ADVANCED_SEARCH') ? (
+                    {this.props.appState.districtShowCustomView ? (
                       <Col>
-                        <h5 className="text-primary font-weight-bold">Custom Search:</h5>
+                        <h5 className="text-primary font-weight-bold">Description:</h5>
                         <AdvancedSearchSentence advancedSearch={this.props.advancedSearch} />
                       </Col>
                     ) : null}
@@ -186,7 +229,7 @@ class DistrictDashboardShow extends React.PureComponent {
                 <Col xs={12} lg={8}>
                   <Row className="mb-1">
                     <Col xs={12}>
-                      <h5 className="text-muted font-weight-bold text-uppercase">Filter by dataset</h5>
+                      <h5 className="text-muted font-weight-bold text-uppercase">Filter by dataset(s)</h5>
                     </Col>
                   </Row>
                   <DistrictSummarySection
