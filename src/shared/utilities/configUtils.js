@@ -419,6 +419,12 @@ export const newMapResultFilters = ({ resourceModels, annotationStart, annotatio
       annotationStart,
       annotationEnd,
     }),
+    // generateResultFilter({
+    //   resourceModel: resourceModels['LISPENDEN'],
+    //   value: 1,
+    //   annotationStart,
+    //   annotationEnd,
+    // }),
   ]
 }
 
