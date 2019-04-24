@@ -78,9 +78,9 @@ const Property = databaseObject => {
         category: 'HOUSING_TYPE',
         label: 'Subsidized Housing',
         paramMaps: [
-          new ParamMap({ field: 'subsidyrecords', comparison: 'bool', value: true }),
-          new ParamMap({ field: 'subsidyj51records', comparison: 'bool', value: true }),
-          new ParamMap({ field: 'subsidy421arecords', comparison: 'bool', value: true }),
+          new ParamMap({ field: 'subsidyprograms', comparison: 'bool', value: true }),
+          new ParamMap({ field: 'subsidyj51', comparison: 'bool', value: true }),
+          new ParamMap({ field: 'subsidy421a', comparison: 'bool', value: true }),
         ],
         internalFilter: (results, paramMaps) => {
           if (!results) return []
@@ -107,9 +107,9 @@ const Property = databaseObject => {
           new ParamMap({ field: 'unitsres', comparison: 'gte', value: 1 }),
           new ParamMap({ field: 'nycha', comparison: 'bool', value: false }),
           new ParamMap({ field: 'unitsrentstabilized', comparison: 'bool', value: false }),
-          new ParamMap({ field: 'subsidyrecords', comparison: 'bool', value: false }),
-          new ParamMap({ field: 'subsidyj51records', comparison: 'bool', value: false }),
-          new ParamMap({ field: 'subsidy421arecords', comparison: 'bool', value: false }),
+          new ParamMap({ field: 'subsidyprograms', comparison: 'bool', value: false }),
+          new ParamMap({ field: 'subsidyj51', comparison: 'bool', value: false }),
+          new ParamMap({ field: 'subsidy421a', comparison: 'bool', value: false }),
         ],
         internalFilter: (results, paramMaps) => {
           if (!results) return []

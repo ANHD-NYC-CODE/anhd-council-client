@@ -97,7 +97,7 @@ describe('LookupProfileSummary', () => {
           conhrecords: [{ id: 1 }],
           taxliens: [{ id: 1 }],
           nycha: [{ id: 1 }],
-          subsidyrecords: [{ programname: 'J51' }],
+          subsidyprograms: 'J51',
           hpdregistrations: [{ registrationid: 1, registrationenddate: '2018-01-01' }],
           rentstabilizationrecord: {
             ucbbl: 1,
