@@ -34,7 +34,7 @@ const ProgramSection = props => {
         <Row className="lookup-profile-summary__group">
           <Col>
             <label className="profile-summary-body__label">NYCHA? </label>
-            <span className="profile-summary-body__value">{props.profile.nycha.length ? 'Yes' : 'No'}</span>
+            <span className="profile-summary-body__value">{props.profile.nycha ? 'Yes' : 'No'}</span>
           </Col>
         </Row>
         <Row className="lookup-profile-summary__group">
@@ -42,9 +42,7 @@ const ProgramSection = props => {
             <label className="profile-summary-body__label">
               CONH? ({(props.config.datasets.find(ds => ds.model_name === 'CONHRecord') || {}).version})
             </label>
-            <span className="profile-summary-body__value">
-              {(props.profile.conhrecords || {}).length ? 'Yes' : 'No'}
-            </span>
+            <span className="profile-summary-body__value">{props.profile.conhrecord ? 'Yes' : 'No'}</span>
           </Col>
         </Row>
         <Row>
@@ -52,7 +50,7 @@ const ProgramSection = props => {
             <label className="profile-summary-body__label">
               Tax Lien? ({(props.config.datasets.find(ds => ds.model_name === 'TaxLien') || {}).version})
             </label>
-            <span className="profile-summary-body__value">{props.profile.taxliens.length ? 'Yes' : 'No'}</span>
+            <span className="profile-summary-body__value">{props.profile.taxlien ? 'Yes' : 'No'}</span>
           </Col>
         </Row>
       </Col>

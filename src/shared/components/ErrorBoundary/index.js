@@ -19,7 +19,7 @@ export default class ErrorBoundary extends React.Component {
       return (
         <PageError
           title="Sorry, you encountered an internal service error!"
-          message="Please try what you were doing again. If there error persists, please let us know!"
+          message="Please try what you were doing again. If the error persists, please let us know!"
         />
       )
     }
