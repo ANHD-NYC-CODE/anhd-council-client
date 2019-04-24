@@ -3,12 +3,12 @@ import PropTypes from 'prop-types'
 import { Row, Col } from 'react-bootstrap'
 
 const getSubsidiesText = props => {
-  if (props.profile.subsidyrecords.length) {
-    return props.profile.subsidyrecords.map(record => record.programname).join(' ')
-  } else if (props.profile.subsidyj51records.length || props.profile.subsidy421arecords.length) {
+  if (props.profile.subsidyprograms) {
+    return props.profile.subsidyprograms
+  } else if (props.profile.subsidyj51 || props.profile.subsidy421a) {
     return [
-      props.profile.subsidyj51records.length ? 'J-51 Tax Incentive' : undefined,
-      props.profile.subsidy421arecords.length ? '421a Tax Incentive Program' : '',
+      props.profile.subsidyj51 ? 'J-51 Tax Incentive' : undefined,
+      props.profile.subsidy421a ? '421a Tax Incentive Program' : '',
     ].filter(sp => sp)
   } else {
     return 'None'
