@@ -94,9 +94,9 @@ describe('LookupProfileSummary', () => {
     describe('with records', () => {
       it('renders the correct state', () => {
         const result = createPropertyRequestMock({
-          conhrecords: [{ id: 1 }],
-          taxliens: [{ id: 1 }],
-          nycha: [{ id: 1 }],
+          conhrecord: true,
+          taxlien: true,
+          nycha: true,
           subsidyprograms: 'J51',
           hpdregistrations: [{ registrationid: 1, registrationenddate: '2018-01-01' }],
           rentstabilizationrecord: {
