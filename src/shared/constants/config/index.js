@@ -1,5 +1,8 @@
 import moment from 'moment'
 
+// Feature Flags
+export const ENABLE_PRINT = false // Shows print buttons
+
 // Generic
 export const CONTACT_EMAIL = 'anhd.tech@gmail.com'
 

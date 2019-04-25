@@ -96,7 +96,6 @@ class DistrictDashboardRequestsWrapper extends React.PureComponent {
         housingTypeRequests={getRequestType(this.props.mapRequests, 'GEOGRAPHY_HOUSING_TYPE')}
         propertySummaryRequest={getRequestByConstant(this.props.mapRequests, 'GEOGRAPHY_HOUSING_TYPE_ALL')[0]}
         toggleDateRange={this.toggleDateRange}
-        selectedRequest={this.props.appState.selectedRequest}
         switchSelectedFilter={this.switchSelectedFilter}
         housingTypeResultFilter={this.props.appState.housingTypeResultFilter}
         {...this.props}

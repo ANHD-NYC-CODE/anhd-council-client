@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import DatasetInfo from 'shared/components/DatasetInfo'
+
 import classnames from 'classnames'
 import { Row, Col } from 'react-bootstrap'
 

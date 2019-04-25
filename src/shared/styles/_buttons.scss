@@ -31,3 +31,15 @@ button.btn-primary:disabled {
 a.btn-link:hover {
   text-decoration: none;
 }
+
+.link-button {
+  background-color: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+.link-button:disabled {
+  color: $gray-300 !important;
+  cursor: initial;
+  pointer-events: none;
+}
