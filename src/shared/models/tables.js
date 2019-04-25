@@ -9,10 +9,12 @@ import BaseTable from 'shared/components/BaseTable'
 import moment from 'moment'
 import {
   dateFormatter,
+  annotatedColumnFormatter,
   bldgClassFormater,
   dobComplaintCategoryFormatter,
   dobPermitWorkTypeFormatter,
   acrisDocTypeFormatter,
+  dollarFormatter,
   dobPermitSourceFormatter,
   expandTableFormatter,
   linkFormatter,
@@ -172,7 +174,7 @@ export const getTableColumns = ({
   const getAnnotatedLabel = ({ annotationLabel = '', annotationKey = '', rowExample = undefined } = {}) => {
     if (!rowExample) return ''
     const columnKey = Object.keys(rowExample).find(key => key.match(annotationKey))
-
+    if (!columnKey) return ''
     const startDate = columnKey.split('__')[1].split('-')[0]
     const endDate = columnKey.split('__')[1].split('-')[1]
 
@@ -209,7 +211,18 @@ export const getTableColumns = ({
     handleColumnEvent({ e, column, row, component, dataKey, tableConfig })
   }
 
-  const constructPropertyColumn = ({ dataField, text, sort, filter, classes, formatter, hidden, columnEvent }) => {
+  const constructPropertyColumn = ({
+    dataField,
+    text,
+    sort,
+    filter,
+    classes,
+    formatter,
+    hidden,
+    csvExport,
+    csvFormatter,
+    columnEvent,
+  }) => {
     if (!dataField) return null
     return {
       dataField,
@@ -219,6 +232,8 @@ export const getTableColumns = ({
       classes,
       formatter,
       hidden,
+      csvExport,
+      csvFormatter,
       events: {
         onClick: (e, column, columnIndex, row, rowIndex) => {
           if (columnEvent) return columnEvent({ row })
@@ -235,6 +250,8 @@ export const getTableColumns = ({
     classes,
     formatter,
     hidden,
+    csvExport,
+    csvFormatter,
     component = ExpandedLinkRow,
     columnEvent,
   }) => {
@@ -246,6 +263,8 @@ export const getTableColumns = ({
       classes,
       formatter,
       hidden,
+      csvExport,
+      csvFormatter,
       events: {
         onClick: (e, column, columnIndex, row, rowIndex) => {
           if (columnEvent) return columnEvent({ e, column, row, component })
@@ -265,6 +284,8 @@ export const getTableColumns = ({
     classes,
     formatter,
     hidden,
+    csvExport,
+    csvFormatter,
     component = BaseTable,
     dataKey,
     tableConfig,
@@ -278,6 +299,8 @@ export const getTableColumns = ({
       classes,
       formatter,
       hidden,
+      csvExport,
+      csvFormatter,
       events: {
         onClick: (e, column, columnIndex, row, rowIndex) => {
           if (columnEvent) return columnEvent({ e, column, row, component, dataKey, tableConfig })
@@ -307,13 +330,6 @@ export const getTableColumns = ({
         }),
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
-          dataField: 'zonedist1',
-          text: 'Zone 1',
-          filter: constructFilter(textFilter),
-          sort: true,
-        }),
-        constructPropertyColumn({
-          columnEvent: linkToColumnEvent,
           dataField: 'yearbuilt',
           text: 'Year Built',
           sort: true,
@@ -335,12 +351,14 @@ export const getTableColumns = ({
           dataField: 'unitsrentstabilized',
           text: 'Rent Stabilized Units',
           sort: true,
+          formatter: annotatedColumnFormatter,
         }),
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
-          dataField: 'numbldgs',
-          text: '# Buildings',
+          dataField: 'latestsaleprice',
+          text: 'Latest sale price',
           sort: true,
+          formatter: annotatedColumnFormatter,
         }),
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
@@ -350,6 +368,7 @@ export const getTableColumns = ({
           }),
           text: getAnnotatedLabel({ annotationLabel: 'HPD Violations', rowExample, annotationKey: 'hpdviolations' }),
           sort: true,
+          formatter: annotatedColumnFormatter,
         }),
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
@@ -359,6 +378,7 @@ export const getTableColumns = ({
           }),
           text: getAnnotatedLabel({ annotationLabel: 'DOB Violations', rowExample, annotationKey: 'dobviolations' }),
           sort: true,
+          formatter: annotatedColumnFormatter,
         }),
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
@@ -368,6 +388,7 @@ export const getTableColumns = ({
           }),
           text: getAnnotatedLabel({ annotationLabel: 'ECB Violations', rowExample, annotationKey: 'ecbviolations' }),
           sort: true,
+          formatter: annotatedColumnFormatter,
         }),
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
@@ -377,6 +398,7 @@ export const getTableColumns = ({
           }),
           text: getAnnotatedLabel({ annotationLabel: 'HPD Complaints', rowExample, annotationKey: 'hpdcomplaints' }),
           sort: true,
+          formatter: annotatedColumnFormatter,
         }),
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
@@ -386,6 +408,7 @@ export const getTableColumns = ({
           }),
           text: getAnnotatedLabel({ annotationLabel: 'DOB Complaints', rowExample, annotationKey: 'dobcomplaints' }),
           sort: true,
+          formatter: annotatedColumnFormatter,
         }),
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
@@ -399,6 +422,35 @@ export const getTableColumns = ({
             annotationKey: 'dobfiledpermits',
           }),
           sort: true,
+          formatter: annotatedColumnFormatter,
+        }),
+        constructPropertyColumn({
+          columnEvent: linkToColumnEvent,
+          dataField: getAnnotatedDataField({
+            annotationKey: 'dobissuedpermits',
+            rowExample,
+          }),
+          text: getAnnotatedLabel({
+            annotationLabel: 'DOB Permit Issuances',
+            rowExample,
+            annotationKey: 'dobissuedpermits',
+          }),
+          sort: true,
+          formatter: annotatedColumnFormatter,
+        }),
+        constructPropertyColumn({
+          columnEvent: linkToColumnEvent,
+          dataField: getAnnotatedDataField({
+            annotationKey: 'housinglitigations',
+            rowExample,
+          }),
+          text: getAnnotatedLabel({
+            annotationLabel: 'Litigations against landlords',
+            rowExample,
+            annotationKey: 'housinglitigations',
+          }),
+          sort: true,
+          formatter: annotatedColumnFormatter,
         }),
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
@@ -408,6 +460,7 @@ export const getTableColumns = ({
           }),
           text: getAnnotatedLabel({ annotationLabel: 'Marshall Evictions', rowExample, annotationKey: 'evictions' }),
           sort: true,
+          formatter: annotatedColumnFormatter,
         }),
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
@@ -417,6 +470,17 @@ export const getTableColumns = ({
           }),
           text: getAnnotatedLabel({ annotationLabel: 'Sales', rowExample, annotationKey: 'acrisrealmasters' }),
           sort: true,
+          formatter: annotatedColumnFormatter,
+        }),
+        constructPropertyColumn({
+          columnEvent: linkToColumnEvent,
+          dataField: getAnnotatedDataField({
+            annotationKey: 'lispendens',
+            rowExample,
+          }),
+          text: getAnnotatedLabel({ annotationLabel: 'Foreclosures', rowExample, annotationKey: 'lispendens' }),
+          sort: true,
+          formatter: annotatedColumnFormatter,
         }),
       ].filter(c => c)
       break
@@ -433,6 +497,7 @@ export const getTableColumns = ({
           dataField: 'registrationenddate',
           text: 'End Date',
           formatter: dateFormatter,
+          csvFormatter: dateFormatter,
           sort: true,
         }),
         constructNestedTableColumn({
@@ -546,6 +611,7 @@ export const getTableColumns = ({
           dataField: 'approveddate',
           text: 'Date Approved',
           formatter: dateFormatter,
+          csvFormatter: dateFormatter,
           sort: true,
         }),
         constructStandardColumn({
@@ -634,6 +700,7 @@ export const getTableColumns = ({
           dataField: 'receiveddate',
           text: 'Date Received',
           formatter: dateFormatter,
+          csvFormatter: dateFormatter,
           sort: true,
         }),
         constructStandardColumn({
@@ -719,6 +786,7 @@ export const getTableColumns = ({
           dataField: 'id',
           text: 'View Record',
           formatter: (cell, row, index) => linkFormatter(cell, row, index, 'DOB_VIOLATION', 'isndobbisviol'),
+          csvExport: false,
         }),
         constructStandardColumn({
           dataField: 'isndobbisviol',
@@ -728,6 +796,7 @@ export const getTableColumns = ({
           dataField: 'issuedate',
           text: 'Date Issued',
           formatter: dateFormatter,
+          csvFormatter: dateFormatter,
           sort: true,
         }),
         constructStandardColumn({
@@ -759,6 +828,7 @@ export const getTableColumns = ({
           dataField: 'id',
           text: 'View Record',
           formatter: (cell, row, index) => linkFormatter(cell, row, index, 'DOB_COMPLAINT', 'complaintnumber'),
+          csvExport: false,
         }),
         constructStandardColumn({
           dataField: 'complaintnumber',
@@ -768,6 +838,7 @@ export const getTableColumns = ({
           dataField: 'dateentered',
           text: 'Date Entered',
           formatter: dateFormatter,
+          csvFormatter: dateFormatter,
           sort: true,
         }),
         constructStandardColumn({
@@ -793,6 +864,7 @@ export const getTableColumns = ({
           dataField: 'id',
           text: 'View Record',
           formatter: (cell, row, index) => linkFormatter(cell, row, index, 'ECB_VIOLATION', 'ecbviolationnumber'),
+          csvExport: false,
         }),
         constructStandardColumn({
           dataField: 'ecbviolationnumber',
@@ -802,6 +874,7 @@ export const getTableColumns = ({
           dataField: 'issuedate',
           text: 'Date Issued',
           formatter: dateFormatter,
+          csvFormatter: dateFormatter,
           sort: true,
         }),
         constructStandardColumn({
@@ -837,6 +910,7 @@ export const getTableColumns = ({
           dataField: 'id',
           text: 'View Record',
           formatter: (cell, row, index) => linkFormatter(cell, row, index, 'DOB_ISSUED_PERMIT', 'jobfilingnumber'),
+          csvExport: false,
         }),
         constructStandardColumn({
           dataField: 'key',
@@ -855,6 +929,7 @@ export const getTableColumns = ({
           dataField: 'issuedate',
           text: 'Date Issued',
           formatter: dateFormatter,
+          csvFormatter: dateFormatter,
           sort: true,
         }),
         constructStandardColumn({
@@ -883,6 +958,7 @@ export const getTableColumns = ({
           dataField: 'id',
           text: 'View Record',
           formatter: (cell, row, index) => linkFormatter(cell, row, index, 'DOB_FILED_PERMIT', 'jobfilingnumber'),
+          csvExport: false,
         }),
         constructStandardColumn({
           dataField: 'key',
@@ -897,6 +973,7 @@ export const getTableColumns = ({
           dataField: 'datefiled',
           text: 'Date Filed',
           formatter: dateFormatter,
+          csvFormatter: dateFormatter,
           sort: true,
         }),
         constructStandardColumn({
@@ -940,6 +1017,7 @@ export const getTableColumns = ({
           dataField: 'caseopendate',
           text: 'Date Open',
           formatter: dateFormatter,
+          csvFormatter: dateFormatter,
           sort: true,
         }),
         constructStandardColumn({
@@ -973,6 +1051,7 @@ export const getTableColumns = ({
           dataField: 'id',
           text: 'View Record',
           formatter: (cell, row, index) => linkFormatter(cell, row, index, 'ACRIS_REAL_MASTER', 'documentid'),
+          csvExport: false,
         }),
         constructStandardColumn({
           dataField: 'documentid',
@@ -982,6 +1061,7 @@ export const getTableColumns = ({
           dataField: 'docdate',
           text: 'Date',
           formatter: dateFormatter,
+          csvFormatter: dateFormatter,
           sort: true,
         }),
         constructStandardColumn({
@@ -994,9 +1074,11 @@ export const getTableColumns = ({
         constructStandardColumn({
           dataField: 'docamount',
           text: 'Amount',
+          formatter: dollarFormatter,
           sort: true,
         }),
         constructNestedTableColumn({
+          csvExport: false,
           columnEvent: expandNestedColumnEvent,
           dataField: 'acrisrealparties',
           text: 'View Parties',
@@ -1085,6 +1167,7 @@ export const getTableColumns = ({
           dataField: 'executeddate',
           text: 'Date',
           formatter: dateFormatter,
+          csvFormatter: dateFormatter,
           sort: true,
         }),
         constructStandardColumn({
@@ -1106,6 +1189,7 @@ export const getTableColumns = ({
           dataField: 'fileddate',
           text: 'Date Filed',
           formatter: dateFormatter,
+          csvFormatter: dateFormatter,
           sort: true,
         }),
         constructStandardColumn({

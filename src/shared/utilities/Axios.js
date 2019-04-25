@@ -24,7 +24,7 @@ export const constructAxiosGet = (dispatch, getState, requestId, url, params, ac
         }
         dispatch(handleCompletedRequest(constant, requestId))
 
-        if (response.headers && response.headers['content-type'].match(/csv/)) {
+        if (constant.includes('_CSV')) {
           FileDownload(response.data, response.config.params.filename)
         }
       }

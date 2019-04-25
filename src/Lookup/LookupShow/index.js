@@ -178,7 +178,9 @@ class LookupShow extends React.Component {
                             </h3>
                           </Col>
                           <Col xs={3}>
-                            <PrintButton textClass="text-dark d-none d-md-block" title={this.getPrintTitle()} />
+                            {c.ENABLE_PRINT && (
+                              <PrintButton textClass="text-dark d-none d-md-block" title={this.getPrintTitle()} />
+                            )}
                           </Col>
                         </Row>
                         <BuildingSelect

@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import BootstrapTable from 'react-bootstrap-table-next'
+
 import InnerLoader from 'shared/components/Loaders/InnerLoader'
 import paginationFactory, {
   PaginationProvider,
@@ -12,7 +13,9 @@ import TableHeader from 'shared/components/BaseTable/TableHeader'
 import { Row, Col } from 'react-bootstrap'
 import TableAlert from 'shared/components/BaseTable/TableAlert'
 import CsvButton from 'shared/components/buttons/CsvButton'
-
+import ToolkitProvider, { CSVExport } from 'react-bootstrap-table2-toolkit'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFileCsv } from '@fortawesome/free-solid-svg-icons'
 import classnames from 'classnames'
 import './style.scss'
 
@@ -140,89 +143,111 @@ class BaseTable extends React.Component {
   }
 
   render() {
+    const { ExportCSVButton } = CSVExport
     return (
-      <PaginationProvider
-        pagination={paginationFactory(this.props.tableConfig.paginationOptions(this.state, this.setPage))}
+      <ToolkitProvider
+        keyField={`${this.props.tableConfig.keyField}`}
+        data={this.props.records}
+        columns={this.state.columns}
+        exportCSV={{
+          fileName: 'dap-portal.csv',
+        }}
+        bootstrap4={true}
       >
-        {({ paginationProps, paginationTableProps }) => (
-          <div className={`base-table ${this.props.wrapperClasses}`} key={`table-${this.props.tableConfig.keyField}`}>
-            {!this.props.nested && !!this.props.includeHeader && (
-              <Row>
-                <Col xs={12}>
-                  <TableHeader
-                    datasetModelName={this.props.datasetModelName}
-                    dispatch={this.props.dispatch}
-                    title={this.props.caption}
-                  />
-                </Col>
+        {props => (
+          <PaginationProvider
+            pagination={paginationFactory(this.props.tableConfig.paginationOptions(this.state, this.setPage))}
+          >
+            {({ paginationProps, paginationTableProps }) => (
+              <div
+                className={`base-table ${this.props.wrapperClasses}`}
+                key={`table-${this.props.tableConfig.keyField}`}
+              >
+                {!this.props.nested && !!this.props.includeHeader && (
+                  <Row>
+                    <Col xs={12}>
+                      <TableHeader
+                        datasetModelName={this.props.datasetModelName}
+                        dispatch={this.props.dispatch}
+                        title={this.props.caption}
+                      />
+                    </Col>
 
-                <Col xs={4} className="text-right d-flex justify-content-start align-items-center">
-                  Total:
-                  {paginationProps.dataSize === paginationProps.totalSize
-                    ? paginationProps.totalSize
-                    : `${paginationProps.dataSize}/${paginationProps.totalSize}`}
-                </Col>
-                <Col
-                  xs={4}
-                  className="table-header__share-column d-none d-md-flex justify-content-end align-items-center"
-                >
-                  {this.props.request && <CsvButton dispatch={this.props.dispatch} request={this.props.request} />}
-                </Col>
-                <Col xs={4} className="d-flex align-items-center justify-content-end">
-                  <SizePerPageDropdownStandalone btnContextual="btn-outline-primary" {...paginationProps} />
-                </Col>
-              </Row>
-            )}
+                    <Col xs={4} className="text-right d-flex justify-content-start align-items-center">
+                      Total:
+                      {paginationProps.dataSize === paginationProps.totalSize
+                        ? paginationProps.totalSize
+                        : `${paginationProps.dataSize}/${paginationProps.totalSize}`}
+                    </Col>
+                    <Col
+                      xs={4}
+                      className="table-header__share-column d-none d-md-flex justify-content-end align-items-center"
+                    >
+                      <ExportCSVButton className="csv-button" {...props.csvProps}>
+                        <FontAwesomeIcon icon={faFileCsv} />
+                        Export CSV
+                      </ExportCSVButton>
 
-            <BootstrapTable
-              bootstrap4
-              columns={this.state.columns}
-              condensed
-              classes={classnames(this.props.classes, { 'no-expand': !this.props.expandable })}
-              data={this.props.records}
-              {...paginationTableProps}
-              defaultSorted={this.state.defaultSorted}
-              expandRow={this.props.expandable ? this.expandRow() : undefined}
-              filter={filterFactory()}
-              height="200px"
-              scrollTop="top"
-              keyField={`${this.props.tableConfig.keyField}`}
-              noDataIndication={() => (
-                <TableAlert
-                  textType="text-dark"
-                  variant="warning"
-                  message={'No records found'}
-                  buttonText="Clear Filters"
-                  buttonVariant="outline-secondary"
-                  action={
-                    this.props.records.length
-                      ? () => Object.keys(this.filters).forEach(key => this.filters[key](''))
-                      : null
-                  }
+                      {/* {this.props.request && <CsvButton dispatch={this.props.dispatch} request={this.props.request} />} */}
+                    </Col>
+                    <Col xs={4} className="d-flex align-items-center justify-content-end">
+                      <SizePerPageDropdownStandalone btnContextual="btn-outline-primary" {...paginationProps} />
+                    </Col>
+                  </Row>
+                )}
+
+                <BootstrapTable
+                  // bootstrap4={props.baseProps.bootstrap4}
+                  {...props.baseProps}
+                  // columns={props.baseProps.columns}
+                  condensed
+                  classes={classnames(this.props.classes, { 'no-expand': !this.props.expandable })}
+                  // data={this.props.baseProps.data}
+                  {...paginationTableProps}
+                  defaultSorted={this.state.defaultSorted}
+                  expandRow={this.props.expandable ? this.expandRow() : undefined}
+                  filter={filterFactory()}
+                  height="200px"
+                  scrollTop="top"
+                  // keyField={props.baseProps.keyField}
+                  noDataIndication={() => (
+                    <TableAlert
+                      textType="text-dark"
+                      variant="warning"
+                      message={'No records found'}
+                      buttonText="Clear Filters"
+                      buttonVariant="outline-secondary"
+                      action={
+                        this.props.records.length
+                          ? () => Object.keys(this.filters).forEach(key => this.filters[key](''))
+                          : null
+                      }
+                    />
+                  )}
+                  rowClasses={this.props.tableConfig.tableRowClasses}
+                  tabIndexCell
                 />
-              )}
-              rowClasses={this.props.tableConfig.tableRowClasses}
-              tabIndexCell
-            />
-            {this.props.loading && <InnerLoader />}
-            {this.props.error && (
-              <TableAlert
-                variant="danger"
-                textType="text-danger"
-                message={this.props.error.message}
-                action={this.props.errorAction}
-              />
+                {this.props.loading && <InnerLoader />}
+                {this.props.error && (
+                  <TableAlert
+                    variant="danger"
+                    textType="text-danger"
+                    message={this.props.error.message}
+                    action={this.props.errorAction}
+                  />
+                )}
+                {!this.props.nested && !!this.props.includeHeader && (
+                  <Row>
+                    <Col xs={6}>
+                      <PaginationListStandalone {...paginationProps} />
+                    </Col>
+                  </Row>
+                )}
+              </div>
             )}
-            {!this.props.nested && !!this.props.includeHeader && (
-              <Row>
-                <Col xs={6}>
-                  <PaginationListStandalone {...paginationProps} />
-                </Col>
-              </Row>
-            )}
-          </div>
+          </PaginationProvider>
         )}
-      </PaginationProvider>
+      </ToolkitProvider>
     )
   }
 }

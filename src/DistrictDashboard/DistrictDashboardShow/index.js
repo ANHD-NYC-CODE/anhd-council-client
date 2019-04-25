@@ -11,7 +11,6 @@ import LayoutContext from 'Layout/LayoutContext'
 import HousingTypeSection from 'DistrictDashboard/DistrictDashboardShow/HousingTypeSection'
 import DistrictResultsTitle from 'DistrictDashboard/DistrictDashboardShow/DistrictResultsTitle'
 import LeafletMap from 'LeafletMap'
-import CsvButton from 'shared/components/buttons/CsvButton'
 import DistrictSummarySection from 'DistrictDashboard/DistrictDashboardShow/DistrictSummarySection'
 import PrintButton from 'shared/components/PrintButton'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -128,29 +127,15 @@ class DistrictDashboardShow extends React.PureComponent {
                   />
                 </Col>
                 <Col className="d-none d-md-block" xs={12} md={{ span: 1, offset: 2 }} lg={{ span: 1, offset: 2 }}>
-                  <PrintButton
-                    textClass="text-light"
-                    title={`${geographySelectionToString({
-                      type: this.props.appState.currentGeographyType,
-                      id: this.props.appState.currentGeographyId,
-                    })} summary`}
-                  />
-                </Col>
-                <Col className="d-none d-md-block" xs={12} md={{ span: 1, offset: 0 }} lg={{ span: 1, offset: 0 }}>
-                  <CsvButton
-                    className="text-light"
-                    onClick={e => {
-                      e.preventDefault()
-                      this.props.dispatch(
-                        makeBblCsvrequest(
-                          this.props.propertySummaryRequest,
-                          resultRecords.map(r => r.bbl).filter(r => r)
-                        )
-                      )
-                    }}
-                    dispatch={this.props.dispatch}
-                    request={this.props.appState.selectedRequest}
-                  />
+                  {c.ENABLE_PRINT && (
+                    <PrintButton
+                      textClass="text-light"
+                      title={`${geographySelectionToString({
+                        type: this.props.appState.currentGeographyType,
+                        id: this.props.appState.currentGeographyId,
+                      })} summary`}
+                    />
+                  )}
                 </Col>
               </Row>
               <Row className="py-2 mb-4 mb-lg-0">

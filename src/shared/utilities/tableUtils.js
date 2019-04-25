@@ -6,7 +6,19 @@ import { getLinkId, getLinkProps } from 'shared/models/tables'
 export const dateFormatter = (cell, row, index) => {
   try {
     const date = moment(cell)
-    return date.isValid() ? date.format('MM/DD/YYYY') : null
+    return date.isValid() ? date.format('MM/DD/YYYY') : ''
+  } catch (e) {
+    return ''
+  }
+}
+
+export const dollarFormatter = (cell, row, index) => {
+  return cell.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 })
+}
+
+export const annotatedColumnFormatter = (cell, row, index) => {
+  try {
+    return cell ? cell : 0
   } catch (e) {
     return cell
   }

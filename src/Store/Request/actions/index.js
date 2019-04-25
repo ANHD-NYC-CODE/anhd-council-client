@@ -40,8 +40,7 @@ export const makeRequest = dataRequest => (dispatch, getState, access_token) => 
 }
 
 export const makeBblCsvrequest = (dataRequest, bblList) => (dispatch, getState, access_token) => {
-  const csv_constant = `${dataRequest.requestConstant}_CSV`
-  dispatch(addRequest(csv_constant))
+  dispatch(addRequest(dataRequest.csvRequestConstant))
   const requestId = Math.floor(Math.random() * 1000000)
 
   return constructAxiosPost(
@@ -52,14 +51,13 @@ export const makeBblCsvrequest = (dataRequest, bblList) => (dispatch, getState, 
     JSON.stringify(bblList), // Body
     dataRequest.csv_params,
     access_token,
-    csv_constant,
+    dataRequest.csvRequestConstant,
     undefined
   )
 }
 
 export const makeCsvRequest = dataRequest => (dispatch, getState, access_token) => {
-  const csv_constant = `${dataRequest.requestConstant}_CSV`
-  dispatch(addRequest(csv_constant))
+  dispatch(addRequest(dataRequest.csvRequestConstant))
   const requestId = Math.floor(Math.random() * 1000000)
   return constructAxiosGet(
     dispatch,
@@ -68,7 +66,7 @@ export const makeCsvRequest = dataRequest => (dispatch, getState, access_token) 
     dataRequest.path,
     dataRequest.csv_params,
     access_token,
-    csv_constant,
+    dataRequest.csvRequestConstant,
     undefined
   )
 }
