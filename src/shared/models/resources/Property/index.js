@@ -64,10 +64,7 @@ const Property = databaseObject => {
         id: c.HOUSING_TYPE_RENT_STABILIZED,
         category: 'HOUSING_TYPE',
         label: 'Rent Stabilized',
-        paramMaps: [
-          new ParamMap({ field: 'rentstabilizationrecord', comparison: 'bool', value: true }),
-          new ParamMap({ field: 'unitsrentstabilized', comparison: 'bool', value: true }),
-        ],
+        paramMaps: [new ParamMap({ field: 'unitsrentstabilized', comparison: 'bool', value: true })],
         internalFilter: (results, paramMaps) => {
           if (!results) return []
           return results.filter(result => paramMaps.every(paramMap => paramMap.evaluate(result)))

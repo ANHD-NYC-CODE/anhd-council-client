@@ -9,7 +9,7 @@ export const initialState = {
   changingGeography: false,
   changingGeographyType: undefined,
   changingGeographyId: undefined,
-  mapFilterDate: c.DISTRICT_RESULTS_DATE_ONE,
+  mapFilterDate: c.DISTRICT_REQUEST_DATE_ONE,
   selectedRequests: [],
   selectedFilters: [],
   selectedRequest: undefined, // DEPRECATED
