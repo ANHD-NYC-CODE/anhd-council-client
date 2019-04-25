@@ -226,70 +226,6 @@ export const newLookupRequests = ({ bbl, bin, resourceModels } = {}) => {
   ].filter(r => !!r)
 }
 
-export const newGeographyRequest = ({
-  type = undefined,
-  geographyType = undefined,
-  geographyId,
-  resourceModel,
-  resourceConstant = undefined,
-  defaultValue = 10,
-} = {}) => {
-  return new DataRequest({
-    type: type,
-    resourceModel,
-    apiMaps: [
-      new ApiMap({ constant: geographyType, resourceId: geographyId }),
-      new ApiMap({ constant: 'PROPERTY', name: 'Properties' }),
-    ],
-    paramMaps: [
-      new ParamMap({
-        resourceConstant,
-        resourceModel,
-        type: 'AMOUNT',
-        field: resourceModel.urlPath,
-        comparison: 'gte',
-        value: defaultValue,
-      }),
-      new ParamMap({
-        resourceConstant,
-        resourceModel,
-        type: 'DATE',
-        field: `${resourceModel.urlPath}__start`,
-        comparison: '',
-        value: c.DISTRICT_RESULTS_DATE_ONE,
-      }),
-      new ParamMap({
-        resourceModel,
-        type: 'TEXT',
-        field: 'summary',
-        comparison: '',
-        value: true,
-      }),
-      new ParamMap({
-        resourceModel,
-        type: 'TEXT',
-        field: 'summary-type',
-        comparison: '',
-        value: 'short-annotated',
-      }),
-      new ParamMap({
-        resourceModel,
-        type: 'DATE',
-        field: 'annotation__start',
-        comparison: '',
-        value: c.DISTRICT_RESULTS_DATE_ONE,
-      }),
-      new ParamMap({
-        type: 'TEXT',
-        field: 'unitsres',
-        comparison: 'gte',
-        value: 1,
-      }),
-    ],
-    tableConfig: new TableConfig({ resourceConstant: 'PROPERTY' }),
-  })
-}
-
 export const newGeographyHousingTypeRequest = ({
   type = undefined,
   geographyType = undefined,
@@ -325,7 +261,7 @@ export const newGeographyHousingTypeRequest = ({
         type: 'DATE',
         field: 'annotation__start',
         comparison: '',
-        value: c.DISTRICT_RESULTS_DATE_ONE,
+        value: c.DISTRICT_REQUEST_DATE_ONE,
       }),
       new ParamMap({
         type: 'TEXT',
@@ -347,42 +283,6 @@ export const newMapRequests = ({ geographyType, geographyId, resourceModels } = 
       resourceModel: resourceModels['PROPERTY'],
       paramValue: 'all',
     }),
-    // newGeographyRequest({
-    //   type: 'MAP_FILTER',
-    //   geographyType,
-    //   geographyId,
-    //   resourceModel: resourceModels['HPD_VIOLATION'],
-    //   defaultValue: 10,
-    // }),
-    // newGeographyRequest({
-    //   type: 'MAP_FILTER',
-    //   geographyType,
-    //   geographyId,
-    //   resourceModel: resourceModels['DOB_COMPLAINT'],
-    //   defaultValue: 2,
-    // }),
-    // newGeographyRequest({
-    //   type: 'MAP_FILTER',
-    //   geographyType,
-    //   geographyId,
-    //   resourceModel: resourceModels['HPD_COMPLAINT'],
-    //   defaultValue: 5,
-    // }),
-    //
-    // newGeographyRequest({
-    //   type: 'MAP_FILTER',
-    //   geographyType,
-    //   geographyId,
-    //   resourceModel: resourceModels['DOB_FILED_PERMIT'],
-    //   defaultValue: 1,
-    // }),
-    // newGeographyRequest({
-    //   type: 'MAP_FILTER',
-    //   geographyType,
-    //   geographyId,
-    //   resourceModel: resourceModels['ACRIS_REAL_MASTER'],
-    //   defaultValue: 1,
-    // }),
   ]
 }
 
