@@ -95,21 +95,23 @@ export default class AnnotatedResultFilter {
   }
 
   evaluate(result) {
+    const resultField = Object.keys(result).find(key => key.match(this.fieldName))
+
     switch (this.comparison) {
       case 'gte':
-        return result[this.field] >= this.value
+        return result[resultField] >= this.value
       case 'gt':
-        return result[this.field] > this.value
+        return result[resultField] > this.value
       case 'lte':
-        return result[this.field] <= this.value
+        return result[resultField] <= this.value
       case 'lt':
-        return result[this.field] < this.value
+        return result[resultField] < this.value
       case 'bool':
-        return Array.isArray(result[this.field])
-          ? !!result[this.field].length === this.value
-          : !!result[this.field] == this.value
+        return Array.isArray(result[resultField])
+          ? !!result[resultField].length === this.value
+          : !!result[resultField] == this.value
       default:
-        return result[this.field] == this.value
+        return result[resultField] == this.value
     }
   }
 }
