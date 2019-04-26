@@ -86,10 +86,7 @@ class Config extends React.PureComponent {
       this.props.dispatch(replacePropertyFilter(this.newPropertyFilter()))
     }
     if (!this.props.appStateResultFilters.length && !!Object.keys(this.props.resourceModels).length) {
-      const mapAmountResultFilters = this.createMapResultFilters({
-        annotationStart: moment(this.props.appStateMapFilterDate).format('MM/DD/YYYY'),
-        annotationEnd: moment(moment.now()).format('MM/DD/YYYY'),
-      })
+      const mapAmountResultFilters = this.createMapResultFilters()
 
       this.props.dispatch(
         loadResultFilters([...this.props.resourceModels['PROPERTY'].ownResultFilters, ...mapAmountResultFilters])
@@ -123,11 +120,8 @@ class Config extends React.PureComponent {
     return newMapRequests({ geographyType, geographyId, resourceModels: this.props.resourceModels })
   }
 
-  createMapResultFilters({
-    annotationStart = moment(this.props.appStateMapFilterDate).format('MM/DD/YYYY'),
-    annotationEnd = moment(moment.now()).format('MM/DD/YYYY'),
-  } = {}) {
-    return newMapResultFilters({ resourceModels: this.props.resourceModels, annotationStart, annotationEnd })
+  createMapResultFilters() {
+    return newMapResultFilters({ resourceModels: this.props.resourceModels })
   }
 
   createLookupRequests(bbl, bin) {

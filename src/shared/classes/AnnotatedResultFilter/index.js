@@ -1,11 +1,8 @@
-import moment from 'moment'
 export default class AnnotatedResultFilter {
   constructor({
     resourceModel = undefined,
     category = 'AMOUNT',
     fieldName = '',
-    annotationStart = '',
-    annotationEnd = moment(moment.now).format('MM/DD-YYYY'),
     comparison = 'gte',
     value = 5,
     min = 1,
@@ -13,8 +10,6 @@ export default class AnnotatedResultFilter {
     this._resourceModel = resourceModel
     this._category = category
     this._fieldName = fieldName
-    this._annotationStart = annotationStart
-    this._annotationEnd = annotationEnd
     this._comparison = comparison
     this._value = value
     this._min = min
@@ -44,34 +39,10 @@ export default class AnnotatedResultFilter {
     this._fieldName = fieldName
   }
 
-  get annotationStart() {
-    return this._annotationStart
-  }
-
-  set annotationStart(annotationStart) {
-    this._annotationStart = annotationStart
-  }
-
-  get annotationEnd() {
-    return this._annotationEnd
-  }
-
-  set annotationEnd(annotationEnd) {
-    this._annotationEnd = annotationEnd
-  }
-
   internalFilter(records) {
     return records.filter(record => {
       return this.evaluate(record)
     })
-  }
-
-  get field() {
-    return `${this._fieldName}__${this._annotationStart}-${this._annotationEnd}`
-  }
-
-  set field(field) {
-    this._field = field
   }
 
   get comparison() {

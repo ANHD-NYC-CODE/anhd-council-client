@@ -223,6 +223,7 @@ class DistrictDashboardShow extends React.PureComponent {
                     dispatch={this.props.dispatch}
                     geographyRequests={this.props.geographyRequests}
                     housingTypeResultFilter={this.getGeographySummaryResultsFilter()}
+                    resendPropertyRequest={this.props.resendPropertyRequest}
                     totalPropertyResults={this.props.totalPropertyResults}
                   />
                 </Col>

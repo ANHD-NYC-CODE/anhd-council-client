@@ -19,7 +19,13 @@ const LoginModal = props => {
             show={props.show}
             title="Login"
           >
-            <LoginForm dispatch={props.dispatch} error={auth.loginError} loading={props.loading} user={auth.user} />
+            <LoginForm
+              dispatch={props.dispatch}
+              error={auth.loginError}
+              loading={props.loading}
+              postLoginAction={props.postLoginAction}
+              user={auth.user}
+            />
           </BaseModal>
         )
       }}

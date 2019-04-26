@@ -1,0 +1,37 @@
+@import 'shared/styles/bootstrap/_variables.scss';
+
+.result-filter-error {
+  margin: 0;
+  padding: 0;
+
+  @media (hover: hover) {
+    &:hover
+      .amount-result-filter-card__body:not(.disabled)
+      .amount-result-filter-card__body--inner-wrapper:not(.active) {
+      background-color: initial;
+      box-shadow: none;
+      transition: none;
+      transform: none;
+    }
+  }
+
+  .amount-result-filter-card__body {
+    background-color: lighten($danger, 30%);
+  }
+
+  span.badge {
+    cursor: pointer;
+    width: 100%;
+  }
+
+  @media (hover: hover) {
+    &:hover {
+      svg {
+        transform: scale(1.1);
+      }
+      span.badge {
+        text-decoration: underline;
+      }
+    }
+  }
+}

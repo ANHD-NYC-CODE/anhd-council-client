@@ -72,7 +72,7 @@ export const refreshTokens = refresh_token => dispatch => {
     })
 }
 
-export const loginUser = data => dispatch => {
+export const loginUser = (data, postLoginAction) => dispatch => {
   dispatch(loadingActions.handleRequest(GET_TOKEN))
   dispatch(errorActions.handleClearErrors(GET_TOKEN))
   return Axios.post(TOKEN_URL, { username: data.username, password: data.password })
@@ -82,6 +82,7 @@ export const loginUser = data => dispatch => {
       updateAuthLocalStorage(response.data.access, response.data.refresh, null, dispatch)
       dispatch(handleSyncStorage(getUserStorageData()))
       dispatch(requestWithAuth(getUserProfile()))
+      if (postLoginAction) postLoginAction()
     })
     .catch(error => {
       handleCatchError(error, GET_TOKEN, dispatch)

@@ -13,6 +13,7 @@ import ModalContext from 'Modal/ModalContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimesCircle } from '@fortawesome/free-regular-svg-icons'
 import LoginModal from 'shared/components/modals/LoginModal'
+import LoginModalFooter from 'shared/components/forms/LoginForm/LoginModalFooter'
 
 import ClearAdvancedSearchButton from 'shared/components/buttons/ClearAdvancedSearchButton'
 import { Col, Row } from 'react-bootstrap'
@@ -72,6 +73,10 @@ class RequestSummaryWrapper extends React.Component {
                                   e.preventDefault()
                                   modal.setModal({
                                     modalComponent: LoginModal,
+                                    modalProps: {
+                                      postLoginAction: () => this.retryRequest(),
+                                      modalFooter: <LoginModalFooter modal={modal} />,
+                                    },
                                   })
                                 }
                               : this.retryRequest

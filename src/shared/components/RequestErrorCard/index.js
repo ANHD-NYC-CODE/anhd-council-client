@@ -6,17 +6,17 @@ import { faRedo } from '@fortawesome/free-solid-svg-icons'
 
 import './style.scss'
 
-const ResultCardError = props => {
+const RequestErrorCard = props => {
   return (
     <Card
-      className="result-card-error result-card flex-column text-left mb-2 p-2"
+      className="request-card-error request-card flex-column text-left mb-2 p-2"
       onClick={e => {
         e.stopPropagation()
         props.errorAction(e)
       }}
     >
       <p className="text-left">{props.requestLabel}</p>
-      <p className="result-card-error__message text-left">{props.error.message}</p>
+      <p className="request-card-error__message text-left">{props.error.message}</p>
       <Badge variant="danger">
         <FontAwesomeIcon icon={faRedo} />
         <span> Retry</span>
@@ -25,15 +25,15 @@ const ResultCardError = props => {
   )
 }
 
-ResultCardError.defaultProps = {
+RequestErrorCard.defaultProps = {
   error: {
     message: 'Oops, something went wrong.',
   },
 }
 
-ResultCardError.propTypes = {
+RequestErrorCard.propTypes = {
   error: PropTypes.object,
   errorAction: PropTypes.func,
 }
 
-export default ResultCardError
+export default RequestErrorCard
