@@ -223,6 +223,7 @@ class DistrictDashboardShow extends React.PureComponent {
                     dispatch={this.props.dispatch}
                     geographyRequests={this.props.geographyRequests}
                     housingTypeResultFilter={this.getGeographySummaryResultsFilter()}
+                    loading={this.props.loading}
                     resendPropertyRequest={this.props.resendPropertyRequest}
                     totalPropertyResults={this.props.totalPropertyResults}
                   />
@@ -337,6 +338,7 @@ class DistrictDashboardShow extends React.PureComponent {
 }
 
 DistrictDashboardShow.defaultProps = {
+  loading: false,
   totalPropertyResults: [],
 }
 
@@ -344,6 +346,7 @@ DistrictDashboardShow.propTypes = {
   appState: PropTypes.object,
   config: PropTypes.object,
   dispatch: PropTypes.func,
+  loading: PropTypes.bool,
   requests: PropTypes.array,
   toggleDateRange: PropTypes.func,
   propertySummaryRequest: PropTypes.object,

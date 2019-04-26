@@ -8,9 +8,11 @@ import { updateAmountFilter } from 'Store/AppState/actions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons'
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
+import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import InfoModalButton from 'shared/components/InfoModalButton'
 
-class AmountResultFilterCard extends React.Component {
+class AnnotatedResultFilterCard extends React.Component {
   constructor(props) {
     super(props)
 
@@ -54,15 +56,21 @@ class AmountResultFilterCard extends React.Component {
                 <h6 className="amount-result-filter-card__title">
                   {this.props.amountFilter.resourceModel.shortLabel || this.props.amountFilter.resourceModel.label}
                 </h6>
+                <span className="amount-result-filter--deselect">
+                  <FontAwesomeIcon icon={faTimes} size="xl" />
+                </span>
+                <span className="amount-result-filter--select">
+                  <FontAwesomeIcon icon={faPlus} size="xl" />
+                </span>
               </div>
               <hr />
               <div className="amount-result-filter-card__filter">
                 <div className="amount-result-filter-card__input--prefix">
-                  at least <span className="amount-result-filter-card__input">{this.props.amountFilter.value}</span>
+                  at least: <span className="amount-result-filter-card__input">{this.props.amountFilter.value}</span>
                 </div>
               </div>
               <div className="amount-result-filter-card__total">
-                <div className="amount-result-filter-card__total--prefix">Results:&nbsp;</div>
+                <div className="amount-result-filter-card__total--prefix">Properties:&nbsp;</div>
                 <div className="amount-result-filter-card__total--value">{this.props.calculatedTotal}</div>
               </div>
             </div>
@@ -84,8 +92,8 @@ class AmountResultFilterCard extends React.Component {
   }
 }
 
-AmountResultFilterCard.propTypes = {
+AnnotatedResultFilterCard.propTypes = {
   amountField: PropTypes.object,
 }
 
-export default AmountResultFilterCard
+export default AnnotatedResultFilterCard

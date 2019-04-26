@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { setAppState, toggleSelectedAmountFilter } from 'Store/AppState/actions'
 import UserContext from 'Auth/UserContext'
-import AmountResultFilterCard from 'DistrictDashboard/AmountResultFilterCard'
+import AnnotatedResultFilterCard from 'DistrictDashboard/AnnotatedResultFilterCard'
 import { Row, Col } from 'react-bootstrap'
 import ResultFilterError from 'shared/components/ResultFilterError'
 
@@ -56,6 +56,7 @@ const DistrictSummarySection = props => {
                           return (
                             <ResultFilterError
                               amountFilter={amountFilter}
+                              ctaText="Login"
                               error={{ message: 'Please login to view.' }}
                               errorAction={e => {
                                 e.preventDefault()
@@ -73,12 +74,12 @@ const DistrictSummarySection = props => {
                         }}
                       </ModalContext.Consumer>
                     ) : (
-                      <AmountResultFilterCard
+                      <AnnotatedResultFilterCard
                         auth={auth}
                         key={`request-summary-${amountFilter.category}-${index}`}
                         amountFilter={amountFilter}
                         calculatedTotal={amountFilter.internalFilter(props.totalPropertyResults).length}
-                        disabled={props.customView}
+                        disabled={props.customView || props.loading}
                         dispatch={props.dispatch}
                         selected={!props.customView && props.appState.selectedFilters.includes(amountFilter)}
                         handleClick={() => handleResultFilterClick(amountFilter)}
@@ -93,9 +94,13 @@ const DistrictSummarySection = props => {
     </UserContext.Consumer>
   )
 }
-
+DistrictSummarySection.defaultProps = {
+  loading: false,
+  customView: false,
+}
 DistrictSummarySection.propTypes = {
   customView: PropTypes.bool,
+  loading: PropTypes.bool,
 }
 
 export default DistrictSummarySection

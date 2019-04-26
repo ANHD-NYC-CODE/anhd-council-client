@@ -9,23 +9,24 @@ import './style.scss'
 const RequestErrorCard = props => {
   return (
     <Card
-      className="request-card-error request-card flex-column text-left mb-2 p-2"
+      className="result-card-error result-card flex-column text-left mb-2 p-2"
       onClick={e => {
         e.stopPropagation()
         props.errorAction(e)
       }}
     >
       <p className="text-left">{props.requestLabel}</p>
-      <p className="request-card-error__message text-left">{props.error.message}</p>
+      <p className="result-card-error__message text-left">{props.error.message}</p>
       <Badge variant="danger">
         <FontAwesomeIcon icon={faRedo} />
-        <span> Retry</span>
+        <span> {props.ctaText}</span>
       </Badge>
     </Card>
   )
 }
 
 RequestErrorCard.defaultProps = {
+  ctaText: 'Retry',
   error: {
     message: 'Oops, something went wrong.',
   },

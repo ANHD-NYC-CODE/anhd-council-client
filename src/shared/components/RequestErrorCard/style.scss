@@ -1,13 +1,13 @@
 @import 'shared/styles/bootstrap/_variables.scss';
 
-.request-card-error {
+.result-card-error {
   &.card {
     background-color: lighten($danger, 30%);
   }
   margin: 0;
   padding: 0;
 
-  .request-card-error__message {
+  .result-card-error__message {
     font-size: 16px;
     font-weight: 400;
   }

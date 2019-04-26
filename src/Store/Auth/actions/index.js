@@ -95,4 +95,5 @@ export const logoutUser = (sentToast = false) => dispatch => {
   if (sentToast) {
     toast.info("You've been logged out.")
   }
+  window.location = '/'
 }

@@ -83,7 +83,7 @@ describe('DistrictDashboard', () => {
       expect(wrapper.find('LeafletMap')).toHaveLength(1)
 
       expect(wrapper.find('RequestSummaryWrapper')).toHaveLength(6)
-      expect(wrapper.find('AmountResultFilterCard')).toHaveLength(5)
+      expect(wrapper.find('AnnotatedResultFilterCard')).toHaveLength(5)
       const housingTypeCards = wrapper.findWhere(node => (node.key() || '').match(/housingtype-wrapper/))
       housingTypeCards.forEach(card => {
         expect(card.props().disabled).toEqual(false)
