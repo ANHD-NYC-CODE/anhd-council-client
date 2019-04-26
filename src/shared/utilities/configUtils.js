@@ -56,6 +56,7 @@ export const newPropertyRequest = ({
   datasetModelName = undefined,
   resourceModel,
   tableComponent = undefined,
+  isAuthenticated = false,
 } = {}) => {
   // WARNING: Do not change the summary request path or params without
   // simultaneously updating the backend app's core/utils/cache.py
@@ -65,6 +66,7 @@ export const newPropertyRequest = ({
   return new DataRequest({
     type: type,
     resourceModel,
+    isAuthenticated,
     apiMaps: [
       new ApiMap({ constant: 'PROPERTY', resourceId: bbl, name: 'Properties' }),
       resourceConstant ? getApiMap(resourceConstant) : undefined,
@@ -115,6 +117,7 @@ export const newLookupRequests = ({ bbl, bin, resourceModels } = {}) => {
           resourceConstant: 'LISPENDEN',
           resourceModel: resourceModels['LISPENDEN'],
           datasetModelName: constantToModelName('LISPENDEN'),
+          isAuthenticated: true,
         })
       : null,
     bin
@@ -232,10 +235,12 @@ export const newGeographyHousingTypeRequest = ({
   geographyId,
   resourceModel,
   paramValue = undefined,
+  isAuthenticated = false,
 } = {}) => {
   return new DataRequest({
     type: type,
     resourceModel,
+    isAuthenticated,
     requestConstant: `${type}_${paramValue.toUpperCase()}`,
     apiMaps: [
       new ApiMap({ constant: geographyType, resourceId: geographyId }),
@@ -277,6 +282,7 @@ export const newGeographyHousingTypeRequest = ({
 export const newMapRequests = ({ geographyType, geographyId, resourceModels } = {}) => {
   return [
     newGeographyHousingTypeRequest({
+      isAuthenticated: true,
       type: 'GEOGRAPHY_HOUSING_TYPE',
       geographyType,
       geographyId,

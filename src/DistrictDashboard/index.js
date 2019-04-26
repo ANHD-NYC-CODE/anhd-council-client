@@ -168,7 +168,7 @@ class DistrictDashboard extends React.PureComponent {
         handleChangeGeographyId={this.handleChangeGeographyId}
         mapRequests={this.props.mapRequests}
         requests={this.props.requests}
-        selectedLoading={this.props.selectedLoading}
+        loading={this.props.loading}
         selectedError={this.props.selectedError}
         totalPropertyResults={this.props.totalPropertyResults}
         trigger404Error={this.trigger404Error}
@@ -207,7 +207,7 @@ const makeMapStateToProps = () => {
       geographyId: match ? match.params.id : undefined,
       geographyType: path ? path.toUpperCase() : undefined,
       mapRequests: selectRequests(state),
-      selectedLoading: loadingSelector(state),
+      loading: loadingSelector(state),
       selectedError: errorSelector(state),
       requests: state.requests,
       totalPropertyResults: state.requests['GEOGRAPHY_HOUSING_TYPE_ALL'],

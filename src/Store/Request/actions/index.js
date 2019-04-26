@@ -1,5 +1,6 @@
 import * as c from '../constants'
 import { constructAxiosGet, constructAxiosPost } from 'shared/utilities/Axios'
+import { requestWithAuth } from 'shared/utilities/authUtils'
 
 export const addRequest = requestConstant => ({
   type: c.ADD_REQUEST,
@@ -21,6 +22,14 @@ export const removeManyRequests = requestConstantsArray => ({
   type: c.REMOVE_MANY_REQUESTS,
   requestConstantsArray,
 })
+
+export const retryAuthenticatedRequests = () => (dispatch, getState) => {
+  getState().appState.requests.forEach(request => {
+    if (!request.isAuthenticated) return
+    request.called = false
+    dispatch(requestWithAuth(makeRequest(request)))
+  })
+}
 
 export const makeRequest = dataRequest => (dispatch, getState, access_token) => {
   if (!dataRequest || dataRequest.called) return

@@ -39,19 +39,20 @@
   }
 
   .amount-result-filter-card__header {
+    align-items: center;
     display: flex;
-  }
-
-  .amount-result-filter-card__title {
+    justify-content: space-between;
   }
 
   .amount-result-filter-card__total {
     display: flex;
-    font-size: 15px;
+    font-size: 16px;
   }
 
   .amount-result-filter-card__body {
     border: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
     cursor: pointer;
     display: flex;
     flex-direction: column;
@@ -87,14 +88,37 @@
     border: 1px dotted $white;
   }
 
+  .amount-result-filter--deselect {
+    color: $white;
+    display: none;
+  }
+
+  .amount-result-filter--select {
+    color: $primary;
+    display: block;
+  }
+
+  &.active {
+    .amount-result-filter--deselect {
+      display: block;
+    }
+
+    .amount-result-filter--select {
+      display: none;
+    }
+  }
+
   @media (hover: hover) {
-    &:not(.disabled) .amount-result-filter-card__body--inner-wrapper:not(.active):hover {
-      background-color: $info;
-      border-color: $info;
-      color: $black;
-      box-shadow: 1px 12px 20px $gray-400;
-      transition: transform 0.2s ease-in-out;
-      transform: translateY(-6px);
+    &:not(.disabled):not(.active) {
+      .amount-result-filter-card__body:not(.disabled)
+        .amount-result-filter-card__body--inner-wrapper:not(.active):not(.disabled):hover {
+        background-color: $info;
+        border-color: $info;
+        color: $black;
+        box-shadow: 1px 12px 20px $gray-400;
+        transition: transform 0.05s ease-in-out;
+        transform: translateY(-2px);
+      }
     }
   }
 
@@ -106,16 +130,17 @@
 
   .amount-result-filter-card__filter {
     display: flex;
+    font-size: 16px;
   }
 
   .amount-result-filter-card__input--prefix {
     flex: 1 1 50%;
-    font-size: 16px;
   }
 
   .amount-result-filter-card__input {
     flex: 1 1 50%;
     font-weight: bold;
+    font-size: 20px;
   }
 
   .amount-result-filter-card__arrow {
@@ -144,7 +169,7 @@
       color: $gray-500;
     }
     .amount-result-filter-card__arrow:first-child:hover {
-      color: $success;
+      color: $primary;
     }
 
     .amount-result-filter-card__arrow:last-child:hover {

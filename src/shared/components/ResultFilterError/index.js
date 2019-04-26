@@ -30,7 +30,7 @@ const ResultFilterError = props => {
             <div className="amount-result-filter-card__total">
               <Badge variant="danger">
                 <FontAwesomeIcon icon={faRedo} />
-                <span> Retry</span>
+                <span> {props.ctaText}</span>
               </Badge>
             </div>
           </div>
@@ -48,6 +48,7 @@ const ResultFilterError = props => {
 }
 
 ResultFilterError.defaultProps = {
+  ctaText: 'Retry',
   error: {
     message: 'Oops, something went wrong.',
   },
