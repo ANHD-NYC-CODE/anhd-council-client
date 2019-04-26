@@ -29,7 +29,7 @@ import SummaryResultCard from 'shared/components/ResultCard/SummaryResultCard'
 
 import './style.scss'
 
-class DistrictDashboardShow extends React.PureComponent {
+class DistrictDashboardShow extends React.Component {
   constructor(props) {
     super(props)
     this.setTableView = this.setTableView.bind(this)
@@ -305,6 +305,10 @@ class DistrictDashboardShow extends React.PureComponent {
                       </div>
                       <div className={classnames({ 'd-none': !this.state.tableView })}>
                         <BaseTable
+                          key={`table-${this.props.appState.mapFilterDate}`}
+                          annotationStart={
+                            this.props.appState.districtShowCustomView ? '' : this.props.appState.mapFilterDate
+                          }
                           datasetModelName={this.props.propertySummaryRequest.tableConfig.datasetModelName}
                           dispatch={this.props.dispatch}
                           error={this.props.error}

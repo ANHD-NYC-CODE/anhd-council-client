@@ -27,6 +27,7 @@ class BaseTable extends React.Component {
     this.setPage = this.setPage.bind(this)
     this.expandRow = this.expandRow.bind(this)
     this.constructFilter = this.constructFilter.bind(this)
+    this.clearFilters = this.clearFilters.bind(this)
     this.filters = {}
     this.state = {
       expandedRowContent: '',
@@ -39,6 +40,7 @@ class BaseTable extends React.Component {
         constructFilter: this.constructFilter,
         rowExample: props.records[0],
         dispatch: props.dispatch,
+        annotationStart: props.annotationStart,
       }),
     }
   }
@@ -57,6 +59,7 @@ class BaseTable extends React.Component {
         constructFilter: this.constructFilter,
         rowExample: nextProps.records[0],
         dispatch: nextProps.dispatch,
+        annotationStart: nextProps.annotationStart,
       }),
     })
   }
@@ -102,6 +105,10 @@ class BaseTable extends React.Component {
       expandedRowComponent: component,
       expanded: expandedSet,
     })
+  }
+
+  clearFilters() {
+    this.props.records.length ? () => Object.keys(this.filters).forEach(key => this.filters[key]('')) : null
   }
 
   expandRow() {
@@ -187,8 +194,6 @@ class BaseTable extends React.Component {
                         <FontAwesomeIcon icon={faFileCsv} />
                         Export CSV
                       </ExportCSVButton>
-
-                      {/* {this.props.request && <CsvButton dispatch={this.props.dispatch} request={this.props.request} />} */}
                     </Col>
                     <Col xs={4} className="d-flex align-items-center justify-content-end">
                       <SizePerPageDropdownStandalone btnContextual="btn-outline-primary" {...paginationProps} />
@@ -217,11 +222,7 @@ class BaseTable extends React.Component {
                       message={'No records found'}
                       buttonText="Clear Filters"
                       buttonVariant="outline-secondary"
-                      action={
-                        this.props.records.length
-                          ? () => Object.keys(this.filters).forEach(key => this.filters[key](''))
-                          : null
-                      }
+                      action={this.clearFilters()}
                     />
                   )}
                   rowClasses={this.props.tableConfig.tableRowClasses}
@@ -269,6 +270,7 @@ BaseTable.propTypes = {
   records: PropTypes.array,
   tableConfig: PropTypes.object,
   nested: PropTypes.bool,
+  annotationStart: PropTypes.string,
 }
 
 export default BaseTable

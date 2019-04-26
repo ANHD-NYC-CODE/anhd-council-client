@@ -9,7 +9,6 @@ import ParamMap from 'shared/classes/ParamMap'
 import Resource from 'shared/classes/Resource'
 import { housingTypeCodeToName } from 'shared/utilities/languageUtils'
 import { constantToModelName } from 'shared/utilities/filterUtils'
-import moment from 'moment'
 import { getUrlFormattedParamMaps } from 'Store/AdvancedSearch/utilities/advancedSearchStoreUtils'
 
 import LookupProfileSummary from 'Lookup/LookupProfileSummary'
@@ -266,7 +265,7 @@ export const newGeographyHousingTypeRequest = ({
         type: 'DATE',
         field: 'annotation__start',
         comparison: '',
-        value: c.DISTRICT_REQUEST_DATE_ONE,
+        value: c.DISTRICT_REQUEST_DATE_FULL,
       }),
       new ParamMap({
         type: 'TEXT',
@@ -298,6 +297,7 @@ export const generateResultFilter = ({ resourceModel, value = 5 } = {}) => {
     fieldName: resourceModel.urlPath,
     comparison: 'gte',
     value: value,
+    annotationStart: c.DISTRICT_REQUEST_DATE_ONE,
   })
 }
 
