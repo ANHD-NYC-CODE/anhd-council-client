@@ -6,6 +6,7 @@ export default class AnnotatedResultFilter {
     comparison = 'gte',
     value = 5,
     min = 1,
+    annotationStart,
   } = {}) {
     this._resourceModel = resourceModel
     this._category = category
@@ -13,6 +14,7 @@ export default class AnnotatedResultFilter {
     this._comparison = comparison
     this._value = value
     this._min = min
+    this._annotationStart = annotationStart
   }
 
   get resourceModel() {
@@ -65,8 +67,18 @@ export default class AnnotatedResultFilter {
     }
   }
 
+  get annotationStart() {
+    return this._annotationStart
+  }
+
+  set annotationStart(annotationStart) {
+    this._annotationStart = annotationStart
+  }
+
   evaluate(result) {
-    const resultField = Object.keys(result).find(key => key.match(this.fieldName))
+    const resultField = Object.keys(result).find(key =>
+      key.match(`${this.fieldName}${this._annotationStart ? '_' + this._annotationStart : ''}`)
+    )
 
     switch (this.comparison) {
       case 'gte':

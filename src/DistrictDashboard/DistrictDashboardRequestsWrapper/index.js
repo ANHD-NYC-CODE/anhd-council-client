@@ -58,34 +58,12 @@ class DistrictDashboardRequestsWrapper extends React.PureComponent {
   }
 
   toggleDateRange(value) {
-    this.props.dispatch(setMapFilterDate(value))
-    const newStart = moment(value).format('MM/DD/YYYY')
-    // const mapRequests = getRequestType(this.props.mapRequests, 'MAP_FILTER')
-
-    // Change property request annotations
-    const propertySummaryRequest = getRequestByConstant(this.props.mapRequests, 'GEOGRAPHY_HOUSING_TYPE_ALL')[0]
-    propertySummaryRequest.called = false
-    propertySummaryRequest.tableConfig.annotationStart = newStart
-    propertySummaryRequest.paramMaps.find(p => p.field === 'annotation__start').value = value
-
-    // Change result filter annotations
     this.props.appState.resultFilters
       .filter(rf => rf.category === 'AMOUNT')
       .forEach(rf => {
-        rf.annotationStart = newStart
+        rf.annotationStart = value
       })
-
-    // if (!mapRequests.length) return
-    // mapRequests.forEach(request => {
-    //   request.called = false
-    //   request.paramMaps
-    //     .filter(p => p.type === 'DATE')
-    //     .forEach(paramMap => {
-    //       paramMap.value = value
-    //     })
-    // })
-
-    // this.loadRequests(mapRequests)
+    this.props.dispatch(setMapFilterDate(value))
   }
 
   switchSelectedFilter(filter) {

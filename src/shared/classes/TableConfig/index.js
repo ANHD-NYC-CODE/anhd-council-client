@@ -6,17 +6,10 @@ import { constantToModelName } from 'shared/utilities/filterUtils'
 import moment from 'moment'
 
 export default class TableConfig {
-  constructor({
-    component = BaseTable,
-    resourceConstant = undefined,
-    datasetModelName = undefined,
-    annotationStart = moment(c.DISTRICT_RESULTS_DATE_ONE).format('MM/DD/YYYY'),
-    annotationEnd = moment(moment.now()).format('MM/DD/YYYY'),
-  } = {}) {
+  constructor({ component = BaseTable, resourceConstant = undefined, datasetModelName = undefined } = {}) {
     this._component = component
     this._resourceConstant = resourceConstant
     this._datasetModelName = datasetModelName || constantToModelName(this.resourceConstant)
-    ;(this._annotationStart = annotationStart), (this._annotationEnd = annotationEnd)
   }
 
   get component() {
@@ -43,22 +36,6 @@ export default class TableConfig {
     this._datasetModelName = datasetModelName
   }
 
-  get annotationStart() {
-    return this._annotationStart
-  }
-
-  set annotationStart(annotationStart) {
-    this._annotationStart = annotationStart
-  }
-
-  get annotationEnd() {
-    return this._annotationEnd
-  }
-
-  set annotationEnd(annotationEnd) {
-    this._annotationEnd = annotationEnd
-  }
-
   get hover() {
     return this._hover
   }
@@ -75,7 +52,7 @@ export default class TableConfig {
     return getDescriptionKey(this._resourceConstant)
   }
 
-  getColumns({ expandColumnFunction, constructFilter, rowExample, dispatch } = {}) {
+  getColumns({ expandColumnFunction, constructFilter, rowExample, dispatch, annotationStart } = {}) {
     return getTableColumns({
       constant: this._resourceConstant,
       columnExpandFunction: expandColumnFunction,
@@ -83,8 +60,7 @@ export default class TableConfig {
       constructFilter: constructFilter,
       dispatch: dispatch,
       rowExample,
-      annotationStart: this._annotationStart,
-      annotationEnd: this._annotationEnd,
+      annotationStart: annotationStart,
     })
   }
 
