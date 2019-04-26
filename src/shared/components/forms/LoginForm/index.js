@@ -5,7 +5,6 @@ import { loginUser } from 'Store/Auth/actions'
 import { Formik } from 'formik'
 import * as yup from 'yup'
 import FormError from 'shared/components/FormError'
-import UserRequestModal from 'shared/components/modals/UserRequestModal'
 
 const schema = yup.object({
   username: yup.string().required(),
@@ -26,7 +25,7 @@ class LoginForm extends React.Component {
   handleSubmit(formData) {
     this.setState({ validated: true })
     const userData = { username: formData.username, password: formData.password }
-    this.props.dispatch(loginUser(userData))
+    this.props.dispatch(loginUser(userData, this.props.postLoginAction))
   }
 
   render() {

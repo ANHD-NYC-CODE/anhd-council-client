@@ -88,15 +88,13 @@
   }
 
   @media (hover: hover) {
-    &:not(.disabled) .amount-result-filter-card__body:not(.disabled) {
-      .amount-result-filter-card__body--inner-wrapper:not(.active):hover {
-        background-color: $info;
-        border-color: $info;
-        color: $black;
-        box-shadow: 1px 12px 20px $gray-400;
-        transition: transform 0.2s ease-in-out;
-        transform: translateY(-6px);
-      }
+    &:not(.disabled) .amount-result-filter-card__body--inner-wrapper:not(.active):hover {
+      background-color: $info;
+      border-color: $info;
+      color: $black;
+      box-shadow: 1px 12px 20px $gray-400;
+      transition: transform 0.2s ease-in-out;
+      transform: translateY(-6px);
     }
   }
 

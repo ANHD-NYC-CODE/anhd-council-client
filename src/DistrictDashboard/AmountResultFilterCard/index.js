@@ -44,7 +44,6 @@ class AmountResultFilterCard extends React.Component {
               { disabled: this.props.disabled },
               this.props.amountFilter.resourceModel.summaryBackgroundColorClass
             )}
-            // bg={classnames({ primary: this.props.selected })}
             disabled={this.props.disabled}
           >
             <div

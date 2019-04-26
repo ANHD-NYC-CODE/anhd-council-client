@@ -70,7 +70,6 @@ export const handleCatchError = (error, type, dispatch, requestId) => {
       errorMessage = findErrorKeyValue(error.response.status, error.response.data)
     }
   }
-
   dispatch(errorActions.handleFailure(type, errorStatus, errorMessage))
 
   dispatch(loadingActions.handleCompletedRequest(type, requestId))

@@ -286,45 +286,32 @@ export const newMapRequests = ({ geographyType, geographyId, resourceModels } = 
   ]
 }
 
-export const generateResultFilter = ({
-  resourceModel,
-  annotationStart,
-  annotationEnd = moment(moment.now()).format('MM/DD/YYYY'),
-  value = 5,
-} = {}) => {
+export const generateResultFilter = ({ resourceModel, value = 5 } = {}) => {
   return new AnnotatedResultFilter({
     resourceModel,
     fieldName: resourceModel.urlPath,
-    annotationStart,
-    annotationEnd,
     comparison: 'gte',
     value: value,
   })
 }
 
-export const newMapResultFilters = ({ resourceModels, annotationStart, annotationEnd } = {}) => {
+export const newMapResultFilters = ({ resourceModels } = {}) => {
   return [
-    generateResultFilter({ resourceModel: resourceModels['HPD_VIOLATION'], value: 10, annotationStart, annotationEnd }),
-    generateResultFilter({ resourceModel: resourceModels['DOB_COMPLAINT'], value: 2, annotationStart, annotationEnd }),
-    generateResultFilter({ resourceModel: resourceModels['HPD_COMPLAINT'], value: 5, annotationStart, annotationEnd }),
+    generateResultFilter({ resourceModel: resourceModels['HPD_VIOLATION'], value: 10 }),
+    generateResultFilter({ resourceModel: resourceModels['DOB_COMPLAINT'], value: 2 }),
+    generateResultFilter({ resourceModel: resourceModels['HPD_COMPLAINT'], value: 5 }),
     generateResultFilter({
       resourceModel: resourceModels['DOB_FILED_PERMIT'],
       value: 1,
-      annotationStart,
-      annotationEnd,
     }),
     generateResultFilter({
       resourceModel: resourceModels['ACRIS_REAL_MASTER'],
       value: 1,
-      annotationStart,
-      annotationEnd,
     }),
-    // generateResultFilter({
-    //   resourceModel: resourceModels['LISPENDEN'],
-    //   value: 1,
-    //   annotationStart,
-    //   annotationEnd,
-    // }),
+    generateResultFilter({
+      resourceModel: resourceModels['LISPENDEN'],
+      value: 1,
+    }),
   ]
 }
 
