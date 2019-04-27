@@ -11,11 +11,24 @@ class RequestTableWrapper extends React.Component {
     super(props)
 
     this.retryRequest = this.retryRequest.bind(this)
+
+    this.constructBaseCsvFileName = this.constructBaseCsvFileName.bind(this)
   }
 
   retryRequest() {
     this.props.request.called = false
     this.props.dispatch(requestWithAuth(makeRequest(this.props.request)))
+  }
+
+  constructBaseCsvFileName() {
+    // TODO: add date, dataset filters
+    // The base name before additional filters added
+    let resourceWithId = this.props.request.apiMaps.find(map => map.resourceId)
+    let resourceWithIdLabel
+    if (resourceWithId) {
+      resourceWithIdLabel = `${resourceWithId.constant.toLowerCase()}=${resourceWithId.resourceId}`
+    }
+    return `${this.props.request.resourceModel.label}${'-' + resourceWithIdLabel}`
   }
 
   render() {
@@ -24,7 +37,8 @@ class RequestTableWrapper extends React.Component {
       <div className="request-wrapper">
         <TableComponent
           caption={this.props.caption}
-          datasetModelName={this.props.request.tableConfig.datasetModelName}
+          csvBaseFileName={this.constructBaseCsvFileName()}
+          datasetModelName={this.props.request.resourceModel.label}
           dispatch={this.props.dispatch}
           error={this.props.error}
           errorAction={(this.props.error || {}).status === 504 ? this.retryRequest : null}
