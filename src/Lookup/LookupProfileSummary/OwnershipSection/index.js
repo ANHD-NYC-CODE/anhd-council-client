@@ -67,7 +67,7 @@ const OwnershipSection = props => {
           </Row>
         ) : (
           <Row>
-            <Col className="text-info text-center font-weight-bold my-4">No HPD Registrations Found</Col>
+            <Col className="text-dark text-center font-weight-bold my-4">No HPD Registrations Found</Col>
           </Row>
         )}
         <hr />

@@ -12,75 +12,69 @@ class LookupLinks extends React.Component {
 
   render() {
     return this.props.property ? (
-      <div className="property-section lookup-links">
-        <Card.Body>
+      <Row className="property-section property-summary-body lookup-links">
+        <Col xs={12}>
+          <h5 className="font-weight-bold text-dark-gray">External Links:</h5>
+          <hr />
+        </Col>
+
+        <Col xs={12} className="small">
           <Row>
             <Col>
-              <h5 className="font-weight-bold text-dark-gray">External Links:</h5>
-              <hr />
+              <BaseLink
+                className="lookup-links__link"
+                href={`https://hpdonline.hpdnyc.org/HPDonline/Provide_address.aspx?p1=1&p2=${
+                  this.props.property.address.split(' ')[0]
+                }&p3=${this.props.property.address
+                  .split(' ')
+                  .slice(1)
+                  .join(' ')}&SearchButton=Search`}
+                text="HPD Property Overview"
+              />
             </Col>
           </Row>
-
-          <Row className="small">
+          <Row>
             <Col>
-              <Row>
-                <Col>
-                  <BaseLink
-                    className="lookup-links__link"
-                    href={`https://hpdonline.hpdnyc.org/HPDonline/Provide_address.aspx?p1=1&p2=${
-                      this.props.property.address.split(' ')[0]
-                    }&p3=${this.props.property.address
-                      .split(' ')
-                      .slice(1)
-                      .join(' ')}&SearchButton=Search`}
-                    text="HPD Property Overview"
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <BaseLink
-                    className="lookup-links__link"
-                    href={`http://a810-bisweb.nyc.gov/bisweb/PropertyProfileOverviewServlet?boro=${this.props.property.bbl.charAt(
-                      0
-                    )}&block=${this.props.property.bbl.slice(1, 6)}&lot=${this.props.property.bbl.slice(6, 10)}`}
-                    text="DOB Property Overview"
-                  />
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <BaseLink
-                    className="lookup-links__link"
-                    href={`http://a836-acris.nyc.gov/bblsearch/bblsearch.asp?borough=${this.props.property.bbl.charAt(
-                      0
-                    )}&block=${this.props.property.bbl.slice(1, 6)}&lot=${this.props.property.bbl.slice(6, 10)}`}
-                    text="ACRIS Documents"
-                  />
-                </Col>
-              </Row>
-            </Col>
-            <Col>
-              <Row>
-                <Col>
-                  <BaseLink className="lookup-links__link" href={'http://www.oasisnyc.net/map.aspx'} text="Oasis" />
-                </Col>
-              </Row>
-              <Row>
-                <Col>
-                  <BaseLink
-                    className="lookup-links__link"
-                    href={`https://zola.planning.nyc.gov/lot/${this.props.property.bbl.charAt(
-                      0
-                    )}/${this.props.property.bbl.slice(1, 6)}/${this.props.property.bbl.slice(6, 10)}`}
-                    text="Zola"
-                  />
-                </Col>
-              </Row>
+              <BaseLink
+                className="lookup-links__link"
+                href={`http://a810-bisweb.nyc.gov/bisweb/PropertyProfileOverviewServlet?boro=${this.props.property.bbl.charAt(
+                  0
+                )}&block=${this.props.property.bbl.slice(1, 6)}&lot=${this.props.property.bbl.slice(6, 10)}`}
+                text="DOB Property Overview"
+              />
             </Col>
           </Row>
-        </Card.Body>
-      </div>
+          <Row>
+            <Col>
+              <BaseLink
+                className="lookup-links__link"
+                href={`http://a836-acris.nyc.gov/bblsearch/bblsearch.asp?borough=${this.props.property.bbl.charAt(
+                  0
+                )}&block=${this.props.property.bbl.slice(1, 6)}&lot=${this.props.property.bbl.slice(6, 10)}`}
+                text="ACRIS Documents"
+              />
+            </Col>
+          </Row>
+        </Col>
+        <Col xs={12} className="small">
+          <Row>
+            <Col>
+              <BaseLink className="lookup-links__link" href={'http://www.oasisnyc.net/map.aspx'} text="Oasis" />
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <BaseLink
+                className="lookup-links__link"
+                href={`https://zola.planning.nyc.gov/lot/${this.props.property.bbl.charAt(
+                  0
+                )}/${this.props.property.bbl.slice(1, 6)}/${this.props.property.bbl.slice(6, 10)}`}
+                text="Zola"
+              />
+            </Col>
+          </Row>
+        </Col>
+      </Row>
     ) : null
   }
 }
