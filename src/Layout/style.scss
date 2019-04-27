@@ -10,6 +10,7 @@
     background-color: $primary;
     border-radius: 0;
     height: 100%;
+    overflow-x: hidden;
 
     @include media-breakpoint-up(lg) {
       min-height: 100vh;

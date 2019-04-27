@@ -159,11 +159,7 @@ class LookupShow extends React.PureComponent {
                     />
                   </Col>
                 </Row>
-                <Row className="mb-4">
-                  <Col xs={12}>
-                    <LookupLinks request={this.props.profileRequest} />
-                  </Col>
-                </Row>
+                <LookupLinks request={this.props.profileRequest} />
               </Col>
               <Col xs={12} lg={12 - c.SIDEBAR_COLUMN_SIZE}>
                 <Row className="mt-2 mb-4 mt-lg-4 mb-lg-2 px-xl-3">
