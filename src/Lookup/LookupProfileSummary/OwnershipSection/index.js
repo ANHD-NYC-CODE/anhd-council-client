@@ -27,7 +27,7 @@ const OwnershipSection = props => {
     )
   }
   return (
-    <Row className="ownership-section my-4">
+    <Row className="ownership-section property-section property-summary-body my-4">
       <Col>
         {latestHPDRegistration ? (
           <Row>
@@ -35,10 +35,11 @@ const OwnershipSection = props => {
               <Row>
                 <Col>
                   <span className="d-block">
-                    <h5 className="property-summary__table-header text-light font-weight-bold d-inline">
-                      HPD Registration
-                    </h5>
-                    <span className="text-light"> ({dateFormatter(latestHPDRegistration.lastregistrationdate)})</span>
+                    <h5 className="property-summary__table-header  font-weight-bold d-inline">HPD Registration</h5>
+                    <span className="font-weight-bold text-muted">
+                      {' '}
+                      ({dateFormatter(latestHPDRegistration.lastregistrationdate)})
+                    </span>
                   </span>
                 </Col>
               </Row>

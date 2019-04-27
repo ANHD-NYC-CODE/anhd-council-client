@@ -4,7 +4,7 @@ import { Row, Col } from 'react-bootstrap'
 
 const getSubsidiesText = props => {
   if (props.profile.subsidyprograms) {
-    return props.profile.subsidyprograms
+    return [...new Set(props.profile.subsidyprograms.split(', '))].join(', ')
   } else if (props.profile.subsidyj51 || props.profile.subsidy421a) {
     return [
       props.profile.subsidyj51 ? 'J-51 Tax Incentive' : undefined,
