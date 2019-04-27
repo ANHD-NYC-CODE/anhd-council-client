@@ -7,18 +7,18 @@ const NavigationBar = props => {
   return (
     <div className="navigation-bar">
       <Navbar bg="dark" variant="dark" expand="lg">
-        <Nav.Link as="li">
-          <a
-            className="text-muted"
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://portal.displacementalert.org"
-          >
-            Home
-          </a>
-        </Nav.Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
+          <Nav.Link as="li">
+            <a
+              className="text-muted"
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://portal.displacementalert.org"
+            >
+              Home
+            </a>
+          </Nav.Link>
           <Nav.Link as="li">
             <a
               className="text-muted"

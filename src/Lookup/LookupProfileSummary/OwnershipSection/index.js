@@ -7,7 +7,7 @@ import BaseLink from 'shared/components/BaseLink'
 import './style.scss'
 const getLatestHPDRegistration = hpdRegistrations => {
   if (!hpdRegistrations.length) return
-  return hpdRegistrations.sort((a, b) => a.lastregistrationdate > b.lastregistrationdate)[0]
+  return hpdRegistrations.sort((a, b) => b.lastregistrationdate > a.lastregistrationdate)[0]
 }
 
 const OwnershipSection = props => {
