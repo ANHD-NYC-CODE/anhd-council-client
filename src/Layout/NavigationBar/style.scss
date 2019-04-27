@@ -1,6 +1,5 @@
 @import 'shared/styles/bootstrap/_variables.scss';
 
-
 .navigation-bar {
   height: auto;
   @include media-breakpoint-up(lg) {
@@ -15,6 +14,19 @@
     @include media-breakpoint-up(lg) {
       padding-bottom: 0px;
     }
+  }
+
+  .navbar-collapse {
+    @include media-breakpoint-up(lg) {
+      align-items: center;
+      display: flex;
+      justify-content: center;
+    }
+
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: lighter;
+    font-family: helvetica, sans-serif;
   }
 
   .navbar,
