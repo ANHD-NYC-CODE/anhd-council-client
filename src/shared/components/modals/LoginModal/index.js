@@ -22,7 +22,7 @@ const LoginModal = props => {
             <LoginForm
               dispatch={props.dispatch}
               error={auth.loginError}
-              loading={props.loading}
+              loading={auth.loginLoading}
               postLoginAction={props.postLoginAction}
               user={auth.user}
             />

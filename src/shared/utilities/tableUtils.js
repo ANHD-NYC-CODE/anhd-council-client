@@ -13,6 +13,7 @@ export const dateFormatter = (cell, row, index) => {
 }
 
 export const dollarFormatter = (cell, row, index) => {
+  if (!cell) return cell
   return cell.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 })
 }
 

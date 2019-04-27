@@ -7,6 +7,8 @@ import { Formik } from 'formik'
 import * as yup from 'yup'
 import FormError from 'shared/components/FormError'
 import { toast } from 'react-toastify'
+import SpinnerLoader from 'shared/components/Loaders/SpinnerLoader'
+
 const schema = yup.object({
   email: yup
     .string()
@@ -99,7 +101,8 @@ class BugReportForm extends React.Component {
               </Form.Group>
 
               <Button block disabled={this.props.loading} variant="primary" type="submit">
-                Submit
+                <span>Submit</span>
+                <div className="button-loader__container">{this.props.loading && <SpinnerLoader size="20px" />}</div>
               </Button>
             </Form>
           )

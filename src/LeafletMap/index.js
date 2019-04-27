@@ -34,12 +34,13 @@ export default class LeafletMap extends React.PureComponent {
 
   componentDidUpdate() {
     // Center over selected geography
-    if (this.props.communityDistricts.length || this.props.councilDistricts.length) {
-      this.centerMapOnGeography()
-    }
 
     if (this.mapRef.current) {
       this.mapRef.current.leafletElement.invalidateSize()
+    }
+    if (this.props.communityDistricts.length || this.props.councilDistricts.length) {
+      this.centerMapOnGeography()
+      this.mapRef.current.leafletElement.setZoom(14)
     }
   }
 
@@ -117,7 +118,7 @@ export default class LeafletMap extends React.PureComponent {
         style={{ height: this.props.height || this.state.height, width: this.props.width || '100%' }}
       >
         {this.state.alertMessage && (
-          <Alert variant="warning">
+          <Alert className="leaflet-map__alert" variant="warning">
             <span>{this.state.alertMessage}</span>
             <Button
               block
@@ -244,7 +245,7 @@ LeafletMap.defaultProps = {
     internalFilter: results => results,
     paramMaps: [],
   },
-  zoom: 11,
+  zoom: 12,
 }
 
 LeafletMap.propTypes = {

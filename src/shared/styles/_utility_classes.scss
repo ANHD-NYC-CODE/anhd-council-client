@@ -114,3 +114,10 @@ label.toggle-link.active.btn-primary:not(:disabled).light.active {
   color: $white;
   border: 2px dashed $white;
 }
+
+.h-0 {
+  height: 0% !important;
+}
+.w-0 {
+  width: 0% !important;
+}
