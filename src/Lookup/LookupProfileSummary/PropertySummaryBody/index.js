@@ -63,14 +63,6 @@ const PropertySummaryBody = props => {
           </div>
         )}
       </Col>
-      {!props.print && (
-        <Col xs={12} className="mb-2">
-          <BaseLink
-            href={`https://whoownswhat.justfix.nyc/bbl/${props.profile.bbl}`}
-            text='View ownership at "Who Owns What?"'
-          />
-        </Col>
-      )}
 
       <Col xs={6}>
         <Row className="lookup-profile__geography-link">

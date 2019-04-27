@@ -15,4 +15,5 @@
 - Add Foreclosure card to district dashboard
 - Added a post-login action to redo all authenticated data requests upon login.
 - Added post-logout redirect to main '/' to clear authenticated data from page.
-- configured front end tables and filter cards to handle a response with `annotation_start=full`. This response contains a full annotation with all 3 annotation thresholds in a single request.
+- configured front end tables and filter cards to handle a response with `annotation_start=full`. This response contains a full annotation with all 3 annotation thresholds in a single request. Improves speed and reduces # of requests needed for this page.
+- Add loading spinners to form buttons on submit.

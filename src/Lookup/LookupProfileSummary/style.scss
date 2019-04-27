@@ -19,6 +19,20 @@
   // }
 }
 
+.profile-summary-body__label {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.profile-summary-body__value {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: normal;
+  margin-bottom: 0.5rem;
+}
+
 .lookup-profile-summary.card {
   border: 0;
   background-color: transparent;

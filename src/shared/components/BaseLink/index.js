@@ -8,11 +8,11 @@ const BaseLink = props => {
     return props.href.match(/(http)/)
   }
   return isExternal() ? (
-    <a {...props} href={props.href} target="_blank" rel="noopener noreferrer">
+    <a {...props} href={props.href} target="_blank" rel="noopener noreferrer" style={props.style}>
       {props.text || props.children}
     </a>
   ) : (
-    <Link {...props} to={props.href}>
+    <Link {...props} to={props.href} style={props.style}>
       {props.text || props.children}
     </Link>
   )
