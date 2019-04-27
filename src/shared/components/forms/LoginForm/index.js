@@ -5,7 +5,7 @@ import { loginUser } from 'Store/Auth/actions'
 import { Formik } from 'formik'
 import * as yup from 'yup'
 import FormError from 'shared/components/FormError'
-
+import SpinnerLoader from 'shared/components/Loaders/SpinnerLoader'
 const schema = yup.object({
   username: yup.string().required(),
   password: yup.string().required(),
@@ -63,7 +63,8 @@ class LoginForm extends React.Component {
                 <FormError show={!!((submitCount || touched.password) && errors.password)} message={errors.password} />
               </Form.Group>
               <Button block disabled={this.props.loading} variant="primary" type="submit">
-                Submit
+                <span>Submit</span>
+                <div className="button-loader__container">{this.props.loading && <SpinnerLoader size="20px" />}</div>
               </Button>
             </Form>
           )

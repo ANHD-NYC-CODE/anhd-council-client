@@ -358,13 +358,15 @@ export const getTableColumns = ({
           text: 'Rent Stabilized Units',
           sort: true,
           formatter: annotatedColumnFormatter,
+          csvFormatter: annotatedColumnFormatter,
         }),
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
           dataField: 'latestsaleprice',
           text: 'Latest sale price',
+          formatter: dollarFormatter,
+          csvFormatter: annotatedColumnFormatter,
           sort: true,
-          formatter: annotatedColumnFormatter,
         }),
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
@@ -379,6 +381,7 @@ export const getTableColumns = ({
           }),
           sort: true,
           formatter: annotatedColumnFormatter,
+          csvFormatter: annotatedColumnFormatter,
         }),
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
@@ -393,6 +396,7 @@ export const getTableColumns = ({
           }),
           sort: true,
           formatter: annotatedColumnFormatter,
+          csvFormatter: annotatedColumnFormatter,
         }),
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
@@ -407,6 +411,7 @@ export const getTableColumns = ({
           }),
           sort: true,
           formatter: annotatedColumnFormatter,
+          csvFormatter: annotatedColumnFormatter,
         }),
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
@@ -421,6 +426,7 @@ export const getTableColumns = ({
           }),
           sort: true,
           formatter: annotatedColumnFormatter,
+          csvFormatter: annotatedColumnFormatter,
         }),
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
@@ -435,6 +441,7 @@ export const getTableColumns = ({
           }),
           sort: true,
           formatter: annotatedColumnFormatter,
+          csvFormatter: annotatedColumnFormatter,
         }),
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
@@ -449,6 +456,7 @@ export const getTableColumns = ({
           }),
           sort: true,
           formatter: annotatedColumnFormatter,
+          csvFormatter: annotatedColumnFormatter,
         }),
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
@@ -463,6 +471,7 @@ export const getTableColumns = ({
           }),
           sort: true,
           formatter: annotatedColumnFormatter,
+          csvFormatter: annotatedColumnFormatter,
         }),
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
@@ -477,6 +486,7 @@ export const getTableColumns = ({
           }),
           sort: true,
           formatter: annotatedColumnFormatter,
+          csvFormatter: annotatedColumnFormatter,
         }),
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
@@ -491,6 +501,7 @@ export const getTableColumns = ({
           }),
           sort: true,
           formatter: annotatedColumnFormatter,
+          csvFormatter: annotatedColumnFormatter,
         }),
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
@@ -505,6 +516,7 @@ export const getTableColumns = ({
           }),
           sort: true,
           formatter: annotatedColumnFormatter,
+          csvFormatter: annotatedColumnFormatter,
         }),
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
@@ -519,6 +531,7 @@ export const getTableColumns = ({
           }),
           sort: true,
           formatter: annotatedColumnFormatter,
+          csvFormatter: annotatedColumnFormatter,
         }),
       ].filter(c => c)
       break
@@ -1106,6 +1119,7 @@ export const getTableColumns = ({
           dataField: 'doctype',
           text: 'Document Type',
           formatter: acrisDocTypeFormatter,
+          csvFormatter: acrisDocTypeFormatter,
           filter: constructFilter(textFilter),
           sort: true,
         }),
@@ -1113,6 +1127,8 @@ export const getTableColumns = ({
           dataField: 'docamount',
           text: 'Amount',
           formatter: dollarFormatter,
+          csvFormatter: annotatedColumnFormatter,
+
           sort: true,
         }),
         constructNestedTableColumn({

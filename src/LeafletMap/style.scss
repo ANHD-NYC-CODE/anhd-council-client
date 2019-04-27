@@ -2,3 +2,19 @@
   height: 100%;
   width: 100%;
 }
+
+.leaflet-pane,
+.leaflet-top,
+.leaflet-left,
+.leaflet-bottom,
+.leaflet-right {
+  z-index: 1;
+}
+
+.leaflet-map__alert {
+  position: absolute !important;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
