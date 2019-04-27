@@ -17,3 +17,5 @@
 - Added post-logout redirect to main '/' to clear authenticated data from page.
 - configured front end tables and filter cards to handle a response with `annotation_start=full`. This response contains a full annotation with all 3 annotation thresholds in a single request. Improves speed and reduces # of requests needed for this page.
 - Add loading spinners to form buttons on submit.
+- Redesign HPD Registration table - displaying only latest registration and their contacts.
+- Copy DAP Navbar styles.

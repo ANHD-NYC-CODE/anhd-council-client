@@ -14,7 +14,7 @@ const NavigationBar = props => {
               className="text-muted"
               target="_blank"
               rel="noopener noreferrer"
-              href="https://portal.displacementalert.org"
+              href="https://www.displacementalert.org/"
             >
               Home
             </a>

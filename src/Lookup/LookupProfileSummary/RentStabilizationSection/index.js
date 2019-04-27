@@ -4,16 +4,14 @@ import { Row, Col } from 'react-bootstrap'
 import { constantToModelName } from 'shared/utilities/filterUtils'
 import TableHeader from 'shared/components/BaseTable/TableHeader'
 
-import BaseTable from 'shared/components/BaseTable'
-import { getTableColumns } from 'shared/models/tables'
-import TableConfig from 'shared/classes/TableConfig'
+import './style.scss'
 const RentStabilizationSection = props => {
   return (
     <div>
       {props.profile.rentstabilizationrecord ? (
         <div className="my-4">
-          <Row className="property-section property-summary-body">
-            <Col>
+          <Row className="rentstabilization-section property-section property-summary-body">
+            <Col xs={12} className="my-4">
               <Row>
                 <Col>
                   <h5 className="font-weight-bold mb-2">Rent Stabilization</h5>
@@ -33,14 +31,13 @@ const RentStabilizationSection = props => {
                 <Col>
                   <label className="profile-summary-body__label">Change since 2007</label>
                   <span className="profile-summary-body__value">
+                    {props.profile.rsunits_percent_lost > 0 ? '+' : ''}
                     {(props.profile.rsunits_percent_lost * 100).toFixed(2) || 0}%
                   </span>
                 </Col>
               </Row>
             </Col>
-          </Row>
-          <Row className="my-4">
-            <Col>
+            <Col xs={12}>
               <TableHeader
                 className="property-summary__table-header"
                 showUpdate={false}
@@ -48,15 +45,31 @@ const RentStabilizationSection = props => {
                 datasetModelName={constantToModelName('RENT_STABILIZATION_RECORD')}
                 size="sm"
               />
-              <BaseTable
-                expandable={false}
-                wrapperClasses="text-dark property-summary__table"
-                columns={getTableColumns('RENT_STABILIZATION_RECORD')}
-                dispatch={props.dispatch}
-                records={[props.profile.rentstabilizationrecord]}
-                request={props.request}
-                tableConfig={new TableConfig({ resourceConstant: 'RENT_STABILIZATION_RECORD' })}
-              />
+              <table className="renstabilization-section__table">
+                {Object.keys(props.profile.rentstabilizationrecord)
+                  .filter(key => key.includes('uc20'))
+                  .map(year => year.replace('uc', ''))
+                  .map(year => {
+                    if (
+                      parseInt(year) >
+                      parseInt(
+                        (props.config.datasets.find(ds => ds.model_name === 'RentStabilizationRecord') || {}).version
+                      )
+                    )
+                      return
+                    return (
+                      <Row className="renstabilization-section__table--row" key={`rstable-year-${year}`}>
+                        <Col xs={4}>
+                          <th>{year}</th>
+                        </Col>
+                        <Col>
+                          <td>{props.profile.rentstabilizationrecord[`uc${year}`]}</td>
+                        </Col>
+                      </Row>
+                    )
+                  })
+                  .filter(f => f)}
+              </table>
             </Col>
           </Row>
         </div>

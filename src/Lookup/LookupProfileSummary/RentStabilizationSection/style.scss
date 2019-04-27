@@ -1,0 +1,34 @@
+@import 'shared/styles/_variables.scss';
+
+.rentstabilization-section {
+  .dataset-info {
+    color: $gray-500;
+    font-weight: bold;
+  }
+}
+
+.renstabilization-section__table {
+  &:not(.fluid-table) {
+    overflow-x: hidden;
+  }
+
+  .renstabilization-section__table {
+    color: $gray-500;
+  }
+
+  .renstabilization-section__table--row {
+    border-bottom: 2px solid $gray-500;
+
+    th {
+      border-right: 1px solid $gray-500;
+      display: block;
+      padding: 10px 0;
+      padding-right: 10px;
+      width: 100%;
+    }
+
+    td {
+      padding: 10px 0;
+    }
+  }
+}
