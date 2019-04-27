@@ -543,13 +543,17 @@ export const getTableColumns = ({
           text: 'ID',
           hidden: true,
         }),
+        // constructStandardColumn({
+        //   columnEvent: expandColumnEvent,
+        //   dataField: 'lastregistrationdate',
+        //   text: 'Last Registration Date',
+        //   formatter: dateFormatter,
+        //   csvFormatter: dateFormatter,
+        //   sort: true,
+        // }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
-          dataField: 'registrationenddate',
-          text: 'End Date',
-          formatter: dateFormatter,
-          csvFormatter: dateFormatter,
-          sort: true,
+          dataField: 'lastregistrationdate',
+          text: 'Last Registration Date',
         }),
         constructNestedTableColumn({
           columnEvent: expandNestedColumnEvent,

@@ -1,0 +1,28 @@
+@import 'shared/styles/_variables.scss';
+
+.ownership-section__hpdcontact-row {
+  color: white;
+}
+
+.ownership-section__hpdcontact__whoownswhat {
+  display: flex;
+  // align-items: center;
+  // justify-content: center;
+
+  a {
+    color: $white;
+    max-width: 280px;
+  }
+
+  a:hover {
+    color: $white;
+    text-decoration: none;
+    b {
+      color: $secondary;
+    }
+  }
+
+  b {
+    text-decoration: underline;
+  }
+}

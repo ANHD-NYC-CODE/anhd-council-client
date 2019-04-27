@@ -26,7 +26,7 @@ import { faBuilding } from '@fortawesome/free-solid-svg-icons'
 import { faLayerGroup } from '@fortawesome/free-solid-svg-icons'
 
 import './style.scss'
-class LookupShow extends React.Component {
+class LookupShow extends React.PureComponent {
   constructor(props) {
     super(props)
 
