@@ -38,6 +38,7 @@ class DistrictDashboardShow extends React.Component {
     }
 
     this.getResultRecords = this.getResultRecords.bind(this)
+    this.constructBaseCsvFileName = this.constructBaseCsvFileName.bind(this)
     this.getGeographySummaryResultsFilter = this.getGeographySummaryResultsFilter.bind(this)
     this.getDisplayedResultsFilter = this.getDisplayedResultsFilter.bind(this)
   }
@@ -55,6 +56,11 @@ class DistrictDashboardShow extends React.Component {
     this.setState({
       tableView: value,
     })
+  }
+
+  constructBaseCsvFileName() {
+    // TODO: add date, housing filter, dataset filters
+    return `properties-${this.props.appState.currentGeographyType}=${this.props.appState.currentGeographyId}`
   }
 
   getGeographySummaryResultsFilter() {
@@ -305,6 +311,7 @@ class DistrictDashboardShow extends React.Component {
                       </div>
                       <div className={classnames({ 'd-none': !this.state.tableView })}>
                         <BaseTable
+                          csvBaseFileName={this.constructBaseCsvFileName()}
                           key={`table-${this.props.appState.mapFilterDate}`}
                           annotationStart={
                             this.props.appState.districtShowCustomView ? '' : this.props.appState.mapFilterDate

@@ -17,6 +17,7 @@ import ToolkitProvider, { CSVExport } from 'react-bootstrap-table2-toolkit'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFileCsv } from '@fortawesome/free-solid-svg-icons'
 import classnames from 'classnames'
+import ReactGA from 'react-ga'
 import './style.scss'
 
 class BaseTable extends React.Component {
@@ -28,6 +29,8 @@ class BaseTable extends React.Component {
     this.expandRow = this.expandRow.bind(this)
     this.constructFilter = this.constructFilter.bind(this)
     this.clearFilters = this.clearFilters.bind(this)
+    this.handleCsvClick = this.handleCsvClick.bind(this)
+    this.constructCsvFilename = this.constructCsvFilename.bind(this)
     this.filters = {}
     this.state = {
       expandedRowContent: '',
@@ -67,6 +70,18 @@ class BaseTable extends React.Component {
   componentWillUnmount() {
     Object.keys(this.filters).forEach(key => this.filters[key](''))
     this.filters = {}
+  }
+
+  handleCsvClick() {
+    ReactGA.event({
+      category: 'Csv',
+      action: 'download',
+      label: this.constructCsvFilename(),
+    })
+  }
+
+  constructCsvFilename() {
+    return `${this.props.csvBaseFileName}.csv`.replace(' ', '_').toLowerCase()
   }
 
   setPage(page) {
@@ -157,7 +172,7 @@ class BaseTable extends React.Component {
         data={this.props.records}
         columns={this.state.columns}
         exportCSV={{
-          fileName: 'dap-portal.csv',
+          fileName: this.constructCsvFilename(),
         }}
         bootstrap4={true}
       >
@@ -190,10 +205,11 @@ class BaseTable extends React.Component {
                       xs={4}
                       className="table-header__share-column d-none d-md-flex justify-content-end align-items-center"
                     >
-                      <ExportCSVButton className="csv-button" {...props.csvProps}>
-                        <FontAwesomeIcon icon={faFileCsv} />
-                        Export CSV
-                      </ExportCSVButton>
+                      <CsvButton
+                        onClick={this.handleCsvClick}
+                        ExportCSVButton={ExportCSVButton}
+                        csvProps={props.csvProps}
+                      />
                     </Col>
                     <Col xs={4} className="d-flex align-items-center justify-content-end">
                       <SizePerPageDropdownStandalone btnContextual="btn-outline-primary" {...paginationProps} />
