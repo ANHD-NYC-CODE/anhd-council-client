@@ -129,3 +129,30 @@ table.table,
   cursor: pointer;
   font-size: 16px;
 }
+
+.hide-filter {
+  input {
+    display: none;
+  }
+}
+
+.table-filter-button-group {
+  display: flex;
+  flex-direction: column;
+  max-width: 20%;
+
+  .table-filter-button {
+    border-radius: 12px;
+    border: 1px solid $gray-500;
+    padding: 4px;
+    line-height: 100%;
+    margin: 4px 0;
+  }
+
+  @media (hover: hover) {
+    .table-filter-button:hover {
+      background-color: $primary;
+      color: $white;
+    }
+  }
+}

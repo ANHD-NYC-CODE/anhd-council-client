@@ -52,24 +52,25 @@ export default class TableConfig {
     return getDescriptionKey(this._resourceConstant)
   }
 
-  getColumns({ expandColumnFunction, constructFilter, rowExample, dispatch, annotationStart } = {}) {
+  getColumns({ expandColumnFunction, constructFilter, filter_prototypes, rowExample, dispatch, annotationStart } = {}) {
     return getTableColumns({
       constant: this._resourceConstant,
       columnExpandFunction: expandColumnFunction,
       linkPropsFunction: getLinkProps(this._resourceConstant),
       constructFilter: constructFilter,
+      filter_prototypes,
       dispatch: dispatch,
       rowExample,
       annotationStart: annotationStart,
     })
   }
 
-  paginationOptions(componentState, setPage) {
+  paginationOptions(recordsLength, pageNumber, setPage) {
     return {
       custom: true,
-      totalSize: componentState.displayedRecordsCount,
+      totalSize: recordsLength,
       sizePerPageList: [10, 50, 100],
-      page: componentState.page,
+      page: pageNumber,
       onPageChange: (page, sizePerPage) => {
         setPage(page)
       },

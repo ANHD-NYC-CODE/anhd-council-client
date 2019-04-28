@@ -156,6 +156,7 @@ export const getTableColumns = ({
   columnExpandFunction,
   linkPropsFunction = () => null,
   constructFilter,
+  filter_prototypes,
   dispatch,
   rowExample,
   annotationStart = c.DISTRICT_REQUEST_DATE_ONE,
@@ -246,6 +247,7 @@ export const getTableColumns = ({
     sort,
     filter,
     classes,
+    headerClasses,
     formatter,
     hidden,
     csvExport,
@@ -259,15 +261,13 @@ export const getTableColumns = ({
       sort,
       filter,
       classes,
+      headerClasses,
       formatter,
       hidden,
       csvExport,
       csvFormatter,
       events: {
         onClick: (e, column, columnIndex, row, rowIndex) => {
-          if (columnEvent) return columnEvent({ e, column, row, component })
-        },
-        onMouseEnter: (e, column, columnIndex, row, rowIndex) => {
           if (columnEvent) return columnEvent({ e, column, row, component })
         },
       },
@@ -301,9 +301,6 @@ export const getTableColumns = ({
       csvFormatter,
       events: {
         onClick: (e, column, columnIndex, row, rowIndex) => {
-          if (columnEvent) return columnEvent({ e, column, row, component, dataKey, tableConfig })
-        },
-        onMouseEnter: (e, column, columnIndex, row, rowIndex) => {
           if (columnEvent) return columnEvent({ e, column, row, component, dataKey, tableConfig })
         },
       },
@@ -691,7 +688,8 @@ export const getTableColumns = ({
         constructStandardColumn({
           dataField: 'violationstatus',
           text: 'Violation Status',
-          filter: constructFilter(textFilter),
+          filter: filter_prototypes['HPD_VIOLATION_OPEN'],
+          headerClasses: 'hide-filter',
           sort: true,
         }),
       ]
