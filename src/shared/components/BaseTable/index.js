@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import BootstrapTable from 'react-bootstrap-table-next'
+import { textFilter } from 'react-bootstrap-table2-filter'
 
 import InnerLoader from 'shared/components/Loaders/InnerLoader'
 import paginationFactory, {
@@ -30,7 +31,55 @@ class BaseTable extends React.Component {
     this.clearFilters = this.clearFilters.bind(this)
     this.handleCsvClick = this.handleCsvClick.bind(this)
     this.constructCsvFilename = this.constructCsvFilename.bind(this)
-    this.filters = {}
+
+    this.filters = {
+      HPD_VIOLATION_OPEN: undefined,
+    }
+    this.filter_prototypes = {
+      HPD_VIOLATION_OPEN: textFilter({
+        getFilter: filter => {
+          this.filters['HPD_VIOLATION_OPEN'] = filter
+        },
+      }),
+    }
+    this.filterFunctions = {
+      HPD_VIOLATION_OPEN: (e, value = 'open') => {
+        this.filters['HPD_VIOLATION_OPEN'](value)
+        this.selectedFilters['HPD_VIOLATION_OPEN'] = true
+      },
+    }
+
+    this.selectedFilters = {
+      HPD_VIOLATION_OPEN: false,
+    }
+
+    this.filter_button_sets = {
+      HPD_VIOLATION: [
+        selectedFilters => {
+          return (
+            <div key="hpdviolation-open" className="table-filter-button-group">
+              <button
+                className={`${classnames('table-filter-button', 'btn', {
+                  'btn-primary': !!this.selectedFilters['HPD_VIOLATION_OPEN'],
+                })}`}
+                onClick={this.filterFunctions['HPD_VIOLATION_OPEN']}
+              >
+                Open
+              </button>
+              <button
+                className={`${classnames('table-filter-button', 'btn', {
+                  'btn-primary': !this.selectedFilters['HPD_VIOLATION_OPEN'],
+                })}`}
+                onClick={() => this.clearFilter('HPD_VIOLATION_OPEN')}
+              >
+                All
+              </button>
+            </div>
+          )
+        },
+      ],
+    }
+
     this.state = {
       expandedRowContent: '',
       displayedRecordsCount: (props.records || {}).length,
@@ -40,6 +89,7 @@ class BaseTable extends React.Component {
       columns: props.tableConfig.getColumns({
         expandColumnFunction: this.setExpandedContent,
         constructFilter: this.constructFilter,
+        filter_prototypes: this.filter_prototypes,
         rowExample: props.records[0],
         dispatch: props.dispatch,
         annotationStart: props.annotationStart,
@@ -47,28 +97,26 @@ class BaseTable extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    Object.keys(this.filters).forEach(key => this.filters[key](''))
-
-    this.setState({
-      expandedRowContent: '',
-      displayedRecordsCount: (nextProps.records || {}).length,
-      page: 1,
-      defaultSorted: nextProps.tableConfig.defaultSorted,
-      expanded: [],
-      columns: nextProps.tableConfig.getColumns({
-        expandColumnFunction: this.setExpandedContent,
-        constructFilter: this.constructFilter,
-        rowExample: nextProps.records[0],
-        dispatch: nextProps.dispatch,
-        annotationStart: nextProps.annotationStart,
-      }),
-    })
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   this.setState({
+  //     expandedRowContent: '',
+  //     displayedRecordsCount: (nextProps.records || {}).length,
+  //     page: 1,
+  //     defaultSorted: nextProps.tableConfig.defaultSorted,
+  //     expanded: [],
+  //     columns: nextProps.tableConfig.getColumns({
+  //       expandColumnFunction: this.setExpandedContent,
+  //       constructFilter: this.constructFilter,
+  //       filter_prototypes: this.filter_prototypes,
+  //       rowExample: nextProps.records[0],
+  //       dispatch: nextProps.dispatch,
+  //       annotationStart: nextProps.annotationStart,
+  //     }),
+  //   })
+  // }
 
   componentWillUnmount() {
-    Object.keys(this.filters).forEach(key => this.filters[key](''))
-    this.filters = {}
+    // this.clearFilters()
   }
 
   handleCsvClick() {
@@ -117,8 +165,19 @@ class BaseTable extends React.Component {
     })
   }
 
+  clearFilter(filterConstant) {
+    if (this.filterFunctions[filterConstant]) {
+      this.filterFunctions[filterConstant](undefined, '')
+      this.selectedFilters[filterConstant] = false
+    }
+  }
+
   clearFilters() {
-    this.props.records.length ? () => Object.keys(this.filters).forEach(key => this.filters[key]('')) : null
+    Object.keys(this.filters).forEach(key => {
+      if (this.filters[key]) {
+        this.filters[key]('')
+      }
+    })
   }
 
   expandRow() {
@@ -160,6 +219,7 @@ class BaseTable extends React.Component {
   }
 
   render() {
+    console.log('hiii', this.props.records.length)
     const { ExportCSVButton } = CSVExport
     return (
       <ToolkitProvider
@@ -173,7 +233,9 @@ class BaseTable extends React.Component {
       >
         {props => (
           <PaginationProvider
-            pagination={paginationFactory(this.props.tableConfig.paginationOptions(this.state, this.setPage))}
+            pagination={paginationFactory(
+              this.props.tableConfig.paginationOptions(this.props.records.length, this.state.page, this.setPage)
+            )}
           >
             {({ paginationProps, paginationTableProps }) => (
               <div
@@ -212,6 +274,13 @@ class BaseTable extends React.Component {
                   </Row>
                 )}
 
+                <Row>
+                  {this.filter_button_sets[this.props.tableConfig.resourceConstant] &&
+                    this.filter_button_sets[this.props.tableConfig.resourceConstant].map((set, index) => {
+                      return <Col key={`button-set${index}`}>{set(this.selectedFilters)}</Col>
+                    })}
+                </Row>
+
                 <BootstrapTable
                   // bootstrap4={props.baseProps.bootstrap4}
                   {...props.baseProps}
@@ -233,7 +302,7 @@ class BaseTable extends React.Component {
                       message={'No records found'}
                       buttonText="Clear Filters"
                       buttonVariant="outline-secondary"
-                      action={this.clearFilters()}
+                      action={this.clearFilters}
                     />
                   )}
                   rowClasses={this.props.tableConfig.tableRowClasses}

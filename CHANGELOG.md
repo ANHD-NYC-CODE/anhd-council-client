@@ -27,3 +27,11 @@
 - Adds Google Analytics events to user login, csv download, filter and table selection, custom search actions.
 - creates csv download filenames based on table parameters.
 - Adds analytics modal to explain our tracking
+
+#### 1.0.0b1.0.3
+
+4/27/19
+
+- Adds Google Analytics events to user login, csv download, filter and table selection, custom search actions.
+- creates csv download filenames based on table parameters.
+- Adds analytics modal to explain our tracking
