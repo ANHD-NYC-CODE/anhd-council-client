@@ -1,8 +1,7 @@
 import BaseTable from 'shared/components/BaseTable'
 import * as c from 'shared/constants'
-import { getTableColumns, getKeyField, getDescriptionKey, getLinkProps } from 'shared/models/tables'
-import { getDatasetDateField } from 'shared/utilities/filterUtils'
-import { constantToModelName } from 'shared/utilities/filterUtils'
+import { getTableColumns, getKeyField, getDescriptionKey, getLinkProps } from 'shared/tables/tableColumns'
+import { getDatasetDateField, constantToModelName } from 'shared/utilities/filterUtils'
 import moment from 'moment'
 
 export default class TableConfig {
@@ -52,13 +51,13 @@ export default class TableConfig {
     return getDescriptionKey(this._resourceConstant)
   }
 
-  getColumns({ expandColumnFunction, constructFilter, filter_prototypes, rowExample, dispatch, annotationStart } = {}) {
+  getColumns({ expandColumnFunction, constructFilter, baseTableConfig, rowExample, dispatch, annotationStart } = {}) {
     return getTableColumns({
       constant: this._resourceConstant,
       columnExpandFunction: expandColumnFunction,
       linkPropsFunction: getLinkProps(this._resourceConstant),
       constructFilter: constructFilter,
-      filter_prototypes,
+      baseTableConfig,
       dispatch: dispatch,
       rowExample,
       annotationStart: annotationStart,

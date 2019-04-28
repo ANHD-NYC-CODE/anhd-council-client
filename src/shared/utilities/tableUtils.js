@@ -2,7 +2,7 @@ import React from 'react'
 import moment from 'moment'
 import { Button } from 'react-bootstrap'
 import BaseLink from 'shared/components/BaseLink'
-import { getLinkId, getLinkProps } from 'shared/models/tables'
+import { getLinkId, getLinkProps } from 'shared/tables/tableColumns'
 export const dateFormatter = (cell, row, index) => {
   try {
     const date = moment(cell)

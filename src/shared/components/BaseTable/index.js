@@ -1,8 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import BootstrapTable from 'react-bootstrap-table-next'
-import { textFilter } from 'react-bootstrap-table2-filter'
-
+import BaseTableConfig from 'shared/classes/BaseTableConfig'
 import InnerLoader from 'shared/components/Loaders/InnerLoader'
 import paginationFactory, {
   PaginationProvider,
@@ -32,53 +31,7 @@ class BaseTable extends React.Component {
     this.handleCsvClick = this.handleCsvClick.bind(this)
     this.constructCsvFilename = this.constructCsvFilename.bind(this)
 
-    this.filters = {
-      HPD_VIOLATION_OPEN: undefined,
-    }
-    this.filter_prototypes = {
-      HPD_VIOLATION_OPEN: textFilter({
-        getFilter: filter => {
-          this.filters['HPD_VIOLATION_OPEN'] = filter
-        },
-      }),
-    }
-    this.filterFunctions = {
-      HPD_VIOLATION_OPEN: (e, value = 'open') => {
-        this.filters['HPD_VIOLATION_OPEN'](value)
-        this.selectedFilters['HPD_VIOLATION_OPEN'] = true
-      },
-    }
-
-    this.selectedFilters = {
-      HPD_VIOLATION_OPEN: false,
-    }
-
-    this.filter_button_sets = {
-      HPD_VIOLATION: [
-        selectedFilters => {
-          return (
-            <div key="hpdviolation-open" className="table-filter-button-group">
-              <button
-                className={`${classnames('table-filter-button', 'btn', {
-                  'btn-primary': !!this.selectedFilters['HPD_VIOLATION_OPEN'],
-                })}`}
-                onClick={this.filterFunctions['HPD_VIOLATION_OPEN']}
-              >
-                Open
-              </button>
-              <button
-                className={`${classnames('table-filter-button', 'btn', {
-                  'btn-primary': !this.selectedFilters['HPD_VIOLATION_OPEN'],
-                })}`}
-                onClick={() => this.clearFilter('HPD_VIOLATION_OPEN')}
-              >
-                All
-              </button>
-            </div>
-          )
-        },
-      ],
-    }
+    this.baseTableConfig = new BaseTableConfig()
 
     this.state = {
       expandedRowContent: '',
@@ -89,34 +42,12 @@ class BaseTable extends React.Component {
       columns: props.tableConfig.getColumns({
         expandColumnFunction: this.setExpandedContent,
         constructFilter: this.constructFilter,
-        filter_prototypes: this.filter_prototypes,
+        baseTableConfig: this.baseTableConfig,
         rowExample: props.records[0],
         dispatch: props.dispatch,
         annotationStart: props.annotationStart,
       }),
     }
-  }
-
-  // componentWillReceiveProps(nextProps) {
-  //   this.setState({
-  //     expandedRowContent: '',
-  //     displayedRecordsCount: (nextProps.records || {}).length,
-  //     page: 1,
-  //     defaultSorted: nextProps.tableConfig.defaultSorted,
-  //     expanded: [],
-  //     columns: nextProps.tableConfig.getColumns({
-  //       expandColumnFunction: this.setExpandedContent,
-  //       constructFilter: this.constructFilter,
-  //       filter_prototypes: this.filter_prototypes,
-  //       rowExample: nextProps.records[0],
-  //       dispatch: nextProps.dispatch,
-  //       annotationStart: nextProps.annotationStart,
-  //     }),
-  //   })
-  // }
-
-  componentWillUnmount() {
-    // this.clearFilters()
   }
 
   handleCsvClick() {
@@ -163,13 +94,6 @@ class BaseTable extends React.Component {
       expandedRowComponent: component,
       expanded: expandedSet,
     })
-  }
-
-  clearFilter(filterConstant) {
-    if (this.filterFunctions[filterConstant]) {
-      this.filterFunctions[filterConstant](undefined, '')
-      this.selectedFilters[filterConstant] = false
-    }
   }
 
   clearFilters() {
@@ -219,7 +143,6 @@ class BaseTable extends React.Component {
   }
 
   render() {
-    console.log('hiii', this.props.records.length)
     const { ExportCSVButton } = CSVExport
     return (
       <ToolkitProvider
@@ -275,9 +198,9 @@ class BaseTable extends React.Component {
                 )}
 
                 <Row>
-                  {this.filter_button_sets[this.props.tableConfig.resourceConstant] &&
-                    this.filter_button_sets[this.props.tableConfig.resourceConstant].map((set, index) => {
-                      return <Col key={`button-set${index}`}>{set(this.selectedFilters)}</Col>
+                  {!!this.baseTableConfig.filterButtonSets[this.props.tableConfig.resourceConstant] &&
+                    this.baseTableConfig.filterButtonSets[this.props.tableConfig.resourceConstant].map((set, index) => {
+                      return <Col key={`button-set${index}`}>{set(this.baseTableConfig.selectedFilters)}</Col>
                     })}
                 </Row>
 
