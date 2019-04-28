@@ -12,7 +12,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import AddFilterButtonGroup from 'AdvancedSearch/ConditionComponent/AddFilterButtonGroup'
 import ConditionControlGroup from 'AdvancedSearch/ConditionComponent/ConditionControlGroup'
-
+import {
+  fireCustomSearchSelectFilterEvent,
+  fireCustomSearchSwitchConditionEvent,
+  fireCustomSearchAddConditionGroupEvent,
+} from 'Store/Analytics/actions'
 import SwitchConditionButton from 'AdvancedSearch/ConditionComponent/SwitchConditionButton'
 
 import './style.scss'
@@ -45,6 +49,7 @@ export class ConditionComponent extends React.Component {
       })
     )
     this.createNewFilter()
+    this.props.dispatch(fireCustomSearchAddConditionGroupEvent())
   }
 
   dispatchAction() {
@@ -79,11 +84,15 @@ export class ConditionComponent extends React.Component {
     })
     this.props.condition.replaceFilter({ filterIndex, filter: newFilter })
     this.dispatchAction()
+    this.props.dispatch(fireCustomSearchSelectFilterEvent(newFilter.resourceModel.label))
   }
 
   switchCondition(value) {
     this.props.condition.type = value
     this.dispatchAction()
+    // only track if filters are already added since we want to track
+    // the condition type of this filter.
+    this.props.dispatch(fireCustomSearchSwitchConditionEvent(value))
   }
 
   standardFilters() {

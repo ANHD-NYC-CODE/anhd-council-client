@@ -5,8 +5,7 @@ const AcrisRealMaster = databaseObject => ({
   resourceConstant: 'ACRIS_REAL_MASTER',
   urlPath: 'acrisrealmasters',
   summaryBackgroundColorClass: 'acris-yellow',
-  label: 'Sales and Financing (ACRIS)',
-  shortLabel: 'Sales',
+  label: 'Sales',
   sentenceNoun: 'Sales',
   ownResourceFilters: {
     initial: {

@@ -152,8 +152,6 @@ export default class DataRequest {
     if (this.type === 'ADVANCED_SEARCH') return 'Custom Search'
     const amountPm = this._paramMaps.find(pm => pm.type === 'AMOUNT')
 
-    return `${
-      amountPm ? `${amountPm.summaryString}${grammaticalNoun(amountPm.resourceModel.label, amountPm.value)}` : ''
-    }`
+    return `${amountPm ? `${amountPm.summaryString}` : ''}`
   }
 }

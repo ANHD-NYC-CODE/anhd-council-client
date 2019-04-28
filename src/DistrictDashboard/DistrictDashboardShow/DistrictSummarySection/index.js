@@ -10,11 +10,12 @@ import ModalContext from 'Modal/ModalContext'
 
 import LoginModal from 'shared/components/modals/LoginModal'
 import LoginModalFooter from 'shared/components/forms/LoginForm/LoginModalFooter'
-
+import { fireFilterSelectEvent } from 'Store/Analytics/actions'
 const DistrictSummarySection = props => {
   const handleResultFilterClick = amountFilter => {
     props.dispatch(setAppState({ districtShowCustomView: false }))
     props.dispatch(toggleSelectedAmountFilter(amountFilter))
+    props.dispatch(fireFilterSelectEvent(amountFilter))
     if (!props.appState.housingTypeResultFilter) {
       props.dispatch(
         setAppState({

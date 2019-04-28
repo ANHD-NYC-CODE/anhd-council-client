@@ -1,8 +1,7 @@
 import StandardizedInput from 'shared/classes/StandardizedInput'
 import { amountComparisonOptions } from 'shared/utilities/filterUtils'
 
-import { shortAmountComparisonString } from 'shared/utilities/languageUtils'
-
+import { grammaticalNoun, shortAmountComparisonString } from 'shared/utilities/languageUtils'
 import { minValidate, maxValidate, requiredValidate, typeValidate } from 'shared/classes/ParamMap/utilities/validations'
 
 export default class ParamMap {
@@ -184,7 +183,10 @@ export default class ParamMap {
   }
 
   get summaryString() {
-    return `${shortAmountComparisonString(this._comparison, this._value)}`
+    return `${shortAmountComparisonString(this._comparison, this._value)}${grammaticalNoun(
+      this._resourceModel.label,
+      this._value
+    )}`
   }
 
   createOptions(values) {

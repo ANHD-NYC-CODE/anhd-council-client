@@ -11,7 +11,7 @@ import { addressResultToPath } from 'shared/utilities/routeUtils'
 import { boroCodeToName } from 'shared/utilities/languageUtils'
 import BaseLink from 'shared/components/BaseLink'
 import { Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
-
+import { fireSwitchLookupTableEvent } from 'Store/Analytics/actions'
 import { Button, Row, Col, InputGroup } from 'react-bootstrap'
 import { setAppState } from 'Store/AppState/actions'
 import RequestTableWrapper from 'shared/components/RequestTableWrapper'
@@ -72,6 +72,7 @@ class LookupShow extends React.PureComponent {
   }
 
   switchTable(request) {
+    this.props.dispatch(fireSwitchLookupTableEvent(request.resourceModel.label))
     this.props.dispatch(
       setAppState({
         selectedRequest: request,
