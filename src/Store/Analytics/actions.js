@@ -96,3 +96,12 @@ export const fireSwitchLookupTableEvent = name => (dispatch, getState) => {
     label: name,
   })
 }
+
+export const fireAnalyticsModalOpenEvent = name => (dispatch, getState) => {
+  const userId = getState().auth.user ? getState().auth.user.id : undefined
+  ReactGA.event({
+    category: 'Modal',
+    action: 'analytics-information',
+    value: parseInt(userId),
+  })
+}
