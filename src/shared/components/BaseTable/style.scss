@@ -139,7 +139,9 @@ table.table,
 .table-filter-button-group {
   display: flex;
   flex-direction: column;
-  max-width: 20%;
+  flex-wrap: wrap;
+  max-height: 80px;
+  max-width: 220px;
 
   .table-filter-button {
     border-radius: 12px;
@@ -147,6 +149,7 @@ table.table,
     padding: 4px;
     line-height: 100%;
     margin: 4px 0;
+    max-width: 100px;
   }
 
   @media (hover: hover) {

@@ -156,7 +156,7 @@ export const getTableColumns = ({
   columnExpandFunction,
   linkPropsFunction = () => null,
   constructFilter,
-  filter_prototypes,
+  baseTableConfig,
   dispatch,
   rowExample,
   annotationStart = c.DISTRICT_REQUEST_DATE_ONE,
@@ -669,7 +669,8 @@ export const getTableColumns = ({
         constructStandardColumn({
           dataField: 'class_name',
           text: 'Class',
-          filter: constructFilter(textFilter),
+          filter: baseTableConfig.filterPrototypes['HPD_VIOLATION_CLASS'],
+          headerClasses: 'hide-filter',
           sort: true,
         }),
         constructStandardColumn({
@@ -682,13 +683,12 @@ export const getTableColumns = ({
         constructStandardColumn({
           dataField: 'currentstatus',
           text: 'Notice Status',
-          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
           dataField: 'violationstatus',
           text: 'Violation Status',
-          filter: filter_prototypes['HPD_VIOLATION_OPEN'],
+          filter: baseTableConfig.filterPrototypes['HPD_VIOLATION_OPEN'],
           headerClasses: 'hide-filter',
           sort: true,
         }),
