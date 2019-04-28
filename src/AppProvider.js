@@ -11,6 +11,7 @@ if (c.ENABLE_GOOGLE_ANALYTICS) {
     debug: process.env.NODE_ENV === 'development',
     testMode: process.env.NODE_ENV === 'development',
     anonymizeIp: true, // Removes last 3 digits from IP
+    cookieDomain: false,
   })
 }
 ReactGA.pageview(window.location.pathname + window.location.search)
