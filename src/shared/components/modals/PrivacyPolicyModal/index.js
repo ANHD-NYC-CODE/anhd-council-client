@@ -61,6 +61,13 @@ const Component = props => {
             <td>The ID # of the user</td>
           </tr>
           <tr>
+            <td>Viewing a page</td>
+            <td>
+              See generally which pages are viewed and specifically which districts and properties people are visiting.
+            </td>
+            <td>The page URL</td>
+          </tr>
+          <tr>
             <td>CSV Download</td>
             <td>See generally how many people use the CSV feature and specifically what CSVs are most popular.</td>
             <td>The auto-generated file name of the CSV</td>
