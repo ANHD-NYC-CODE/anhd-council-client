@@ -24,5 +24,5 @@
 
 4/27/19
 
-- Adds Google Analytics events to user login and csv download
+- Adds Google Analytics events to user login, csv download, filter and table selection, custom search actions.
 - creates csv download filenames based on table parameters.

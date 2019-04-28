@@ -45,7 +45,6 @@ export const fireCustomSearchPropertyTypeEvent = label => (dispatch, getState) =
     category: 'CustomSearch',
     action: 'property-type',
     value: parseInt(userId),
-    label: label,
   })
 }
 
