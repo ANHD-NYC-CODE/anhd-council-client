@@ -7,6 +7,7 @@ import {
   longAmountComparisonString,
   constructDateComparisonString,
   grammaticalNoun,
+  stringWithComparisonStringsToSymbol,
 } from 'shared/utilities/languageUtils'
 
 ///////////////////
@@ -142,7 +143,7 @@ const parseRoleGroup = (paramMaps, joiner = ' ') => {
   }
 }
 
-export const convertFilterToSentence = filter => {
+export const convertFilterToSentence = (filter, withModifiers = true) => {
   if (!filter) return
   if (filter.paramMaps.length) {
     // Get Primary
@@ -164,7 +165,7 @@ export const convertFilterToSentence = filter => {
 
     const limiterSegment = limiterParamMaps.length ? parseRoleGroup(limiterParamMaps).trim() : undefined
 
-    return [primaryLeadingWord, primarySegment, modifyingSegment, limiterSegment]
+    return [primaryLeadingWord, primarySegment, withModifiers ? modifyingSegment : null, limiterSegment]
       .filter(p => p)
       .join(' ')
       .trim()
@@ -228,6 +229,38 @@ export const convertHousingTypesToSentence = housingTypes => {
     }),
     'and'
   )}`
+}
+
+const convertFiltertoCsvFileName = filter => {
+  const primaryParamMap = filter.paramMaps.find(pm => pm.role === 'PRIMARY')
+
+  // Get Limiter
+  const limiterParamMaps = filter.paramMaps.filter(pm => pm.role === 'LIMITER')
+
+  const modifyingParamMaps = filter.paramMaps.filter(pm => pm.role !== 'PRIMARY' && pm.role !== 'LIMITER')
+
+  const parsedModifyingParamMaps = parseRoleGroup(modifyingParamMaps, ', ').trim()
+
+  const modifyingSegment = parsedModifyingParamMaps.length ? `(${parsedModifyingParamMaps})`.trim() : undefined
+
+  const limiterSegment = limiterParamMaps.length ? parseRoleGroup(limiterParamMaps).trim() : undefined
+
+  return [primaryParamMap.summaryString, stringWithComparisonStringsToSymbol(modifyingSegment), limiterSegment]
+    .filter(f => f)
+    .join('_')
+}
+
+export const convertConditionMappingToCsvFileName = (condition, conditions) => {
+  return `(${condition.filters
+    .map(f => {
+      if (f.conditionGroup) {
+        return convertConditionMappingToCsvFileName(conditions[f.conditionGroup])
+      } else {
+        return convertFiltertoCsvFileName(f)
+      }
+    })
+    .filter(f => f)
+    .join(`_${condition.type.toUpperCase()}_`)})`
 }
 
 export const constructSentence = advancedSearch => {

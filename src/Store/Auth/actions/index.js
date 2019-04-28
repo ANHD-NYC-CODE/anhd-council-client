@@ -10,7 +10,7 @@ import { requestWithAuth } from 'shared/utilities/authUtils'
 import { updateAuthLocalStorage } from 'shared/utilities/storageUtils'
 
 import { toast } from 'react-toastify'
-import ReactGA from 'react-ga'
+import { fireUserLoginEvent } from 'Store/Analytics/actions'
 export const HANDLE_SYNC_STORAGE = 'HANDLE_SYNC_STORAGE'
 export const HANDLE_USER_LOGOUT = 'HANDLE_USER_LOGOUT'
 
@@ -41,11 +41,7 @@ export const getUserProfile = () => (dispatch, getState, access_token) => {
         dispatch(loadingActions.handleCompletedRequest(GET_USER_PROFILE))
         updateAuthLocalStorage(null, null, response.data, dispatch)
         dispatch(handleSyncStorage(getUserStorageData()))
-        ReactGA.event({
-          category: 'User',
-          action: 'Login',
-          label: response.data.username,
-        })
+        dispatch(fireUserLoginEvent(response.data.id, response.data.email))
         toast.success(`Welcome, ${response.data.username}!`)
       })
       .catch(error => {

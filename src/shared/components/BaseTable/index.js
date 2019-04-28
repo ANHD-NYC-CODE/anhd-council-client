@@ -14,10 +14,9 @@ import { Row, Col } from 'react-bootstrap'
 import TableAlert from 'shared/components/BaseTable/TableAlert'
 import CsvButton from 'shared/components/buttons/CsvButton'
 import ToolkitProvider, { CSVExport } from 'react-bootstrap-table2-toolkit'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFileCsv } from '@fortawesome/free-solid-svg-icons'
+
 import classnames from 'classnames'
-import ReactGA from 'react-ga'
+import { fireCsvDownloadEvent } from 'Store/Analytics/actions'
 import './style.scss'
 
 class BaseTable extends React.Component {
@@ -73,11 +72,7 @@ class BaseTable extends React.Component {
   }
 
   handleCsvClick() {
-    ReactGA.event({
-      category: 'Csv',
-      action: 'download',
-      label: this.constructCsvFilename(),
-    })
+    this.props.dispatch(fireCsvDownloadEvent(this.constructCsvFilename()))
   }
 
   constructCsvFilename() {

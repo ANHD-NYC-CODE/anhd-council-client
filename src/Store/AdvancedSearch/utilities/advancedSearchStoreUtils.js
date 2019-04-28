@@ -1,5 +1,24 @@
 import { convertConditionMappingToQ } from 'AdvancedSearch/utilities/advancedSearchUtils'
 import ParamMap from 'shared/classes/ParamMap'
+import { convertFilterToSentence, convertConditionMappingToCsvFileName } from 'shared/utilities/sentenceUtils'
+import { stringWithComparisonStringsToSymbol } from 'shared/utilities/languageUtils'
+
+export const constructCsvFileName = (advancedSearch, annotated = true) => {
+  let propertyFilterSentence = stringWithComparisonStringsToSymbol(
+    convertFilterToSentence(advancedSearch.propertyFilter, false)
+  )
+    .replace(/ /g, '_')
+    .replace(',', '')
+  let geographySentence = advancedSearch.geographies.map(g => `${g.name}=${g.id}`).join('_')
+  let conditionSentence = convertConditionMappingToCsvFileName(
+    advancedSearch.conditions['0'],
+    advancedSearch.conditions
+  ) // TOO LONG - FILE NAMES MUST BE LESS THAN 255 CHARS!
+  return [propertyFilterSentence, geographySentence, annotated ? 'custom_search' : conditionSentence]
+    .join('__')
+    .replace(/ /g, '_')
+    .toLowerCase()
+}
 
 export const getAdvancedSearchParamMaps = advancedSearch => {
   const conditionParamMaps = [].concat.apply(

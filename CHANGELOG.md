@@ -19,3 +19,10 @@
 - Add loading spinners to form buttons on submit.
 - Redesign HPD Registration table - displaying only latest registration and their contacts.
 - Copy DAP Navbar styles.
+
+#### 1.0.0b1.0.2
+
+4/27/19
+
+- Adds Google Analytics events to user login and csv download
+- creates csv download filenames based on table parameters.

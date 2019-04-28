@@ -8,7 +8,7 @@ import { setGeographyAndRequestsAndRedirect } from 'Store/AppState/actions'
 import FilterComponent from 'AdvancedSearch/FilterComponent'
 import { replacePropertyFilter } from 'Store/AdvancedSearch/actions'
 import ClearAdvancedSearchButton from 'shared/components/buttons/ClearAdvancedSearchButton'
-
+import { fireAdvancedSearchSubmitEvent, fireCustomSearchPropertyTypeEvent } from 'Store/Analytics/actions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { addGeography, updateGeography } from 'Store/AdvancedSearch/actions'
@@ -119,7 +119,6 @@ class AdvancedSearchForm extends React.PureComponent {
 
   updatePropertyFilter() {
     const propertyFilter = this.props.advancedSearch.propertyFilter
-
     this.props.dispatch(replacePropertyFilter(propertyFilter))
   }
 
@@ -151,6 +150,7 @@ class AdvancedSearchForm extends React.PureComponent {
         return
       } else {
         this.setState({ hasErrors: false })
+        this.props.dispatch(fireAdvancedSearchSubmitEvent(this.props.advancedSearch))
         this.props.dispatch(
           setAdvancedSearchRequestAndRedirect({
             redirect: true,

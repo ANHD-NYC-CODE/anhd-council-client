@@ -5,7 +5,7 @@ import * as c from 'shared/constants'
 import GeographySelect from 'shared/components/GeographySelect'
 import { Card, Row, Col, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
 import BaseLink from 'shared/components/BaseLink'
-
+import { constructCsvFileName } from 'Store/AdvancedSearch/utilities/advancedSearchStoreUtils'
 import AdvancedSearchSentence from 'AdvancedSearch/Sentence'
 import LayoutContext from 'Layout/LayoutContext'
 import HousingTypeSection from 'DistrictDashboard/DistrictDashboardShow/HousingTypeSection'
@@ -16,11 +16,10 @@ import PrintButton from 'shared/components/PrintButton'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons'
 import classnames from 'classnames'
-import { geographySelectionToString } from 'shared/utilities/languageUtils'
+import { geographySelectionToString, shortAmountComparisonString } from 'shared/utilities/languageUtils'
 import GeographyProfile from 'DistrictDashboard/GeographyProfile'
 import PrintDistrictDashboard from 'DistrictDashboard/PrintDistrictDashboard'
 import BaseTable from 'shared/components/BaseTable'
-import { makeBblCsvrequest } from 'Store/Request/actions'
 import { setAppState } from 'Store/AppState/actions'
 
 import RequestSummaryWrapper from 'shared/components/RequestSummaryWrapper'
@@ -60,7 +59,30 @@ class DistrictDashboardShow extends React.Component {
 
   constructBaseCsvFileName() {
     // TODO: add date, housing filter, dataset filters
-    return `properties-${this.props.appState.currentGeographyType}=${this.props.appState.currentGeographyId}`
+    const housingFilter = this.props.appState.housingTypeFilter
+    const geographyType = this.props.appState.currentGeographyType
+    const geographyId = this.props.appState.currentGeographyId
+    const selectedFilters = this.props.appState.selectedFilters
+    const mapFilterDate = () => {
+      switch (this.props.appState.mapFilterDate) {
+        case c.DISTRICT_REQUEST_DATE_ONE:
+          return moment(c.DISTRICT_RESULTS_DATE_ONE).format('MM/DD/YYYY')
+        case c.DISTRICT_REQUEST_DATE_TWO:
+          return moment(c.DISTRICT_RESULTS_DATE_TWO).format('MM/DD/YYYY')
+        case c.DISTRICT_REQUEST_DATE_THREE:
+          return moment(c.DISTRICT_RESULTS_DATE_THREE).format('MM/DD/YYYY')
+      }
+    }
+
+    if (this.props.appState.districtShowCustomView) {
+      return constructCsvFileName(this.props.advancedSearch)
+    } else {
+      return `${
+        housingFilter ? housingFilter.label : 'residential'
+      }_properties__${geographyType}${geographyId}__${selectedFilters
+        .map(filter => `${filter.fieldName}_${shortAmountComparisonString(filter.comparison, filter.value)}`)
+        .join('_or_')}${mapFilterDate()}-${moment(moment.now()).format('MM/DD/YYYY')}`
+    }
   }
 
   getGeographySummaryResultsFilter() {

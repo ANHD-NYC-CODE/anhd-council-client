@@ -3,12 +3,12 @@ import PropTypes from 'prop-types'
 import { setAppState, setMapFilterDate } from 'Store/AppState/actions'
 import moment from 'moment'
 import { getDefaultRequest, getRequestType, getManyRequestTypes, getRequestByConstant } from 'Store/AppState/selectors'
-
+import { fireMapDateRangeSelectEvent } from 'Store/Analytics/actions'
 import { requestWithAuth } from 'shared/utilities/authUtils'
 import { makeRequest } from 'Store/Request/actions'
 import DistrictDashboardShow from 'DistrictDashboard/DistrictDashboardShow'
 import InnerLoader from 'shared/components/Loaders/InnerLoader'
-
+import { fireFilterSelectEvent } from 'Store/Analytics/actions'
 class DistrictDashboardRequestsWrapper extends React.PureComponent {
   constructor(props) {
     super(props)
@@ -63,6 +63,8 @@ class DistrictDashboardRequestsWrapper extends React.PureComponent {
       .forEach(rf => {
         rf.annotationStart = value
       })
+
+    this.props.dispatch(fireMapDateRangeSelectEvent(value))
     this.props.dispatch(setMapFilterDate(value))
   }
 
@@ -72,6 +74,7 @@ class DistrictDashboardRequestsWrapper extends React.PureComponent {
         housingTypeResultFilter: filter,
       })
     )
+    this.props.dispatch(fireFilterSelectEvent(filter))
   }
 
   render() {

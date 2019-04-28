@@ -53,9 +53,7 @@ class AnnotatedResultFilterCard extends React.Component {
               className={classnames('amount-result-filter-card__body--inner-wrapper')}
             >
               <div className="amount-result-filter-card__header">
-                <h6 className="amount-result-filter-card__title">
-                  {this.props.amountFilter.resourceModel.shortLabel || this.props.amountFilter.resourceModel.label}
-                </h6>
+                <h6 className="amount-result-filter-card__title">{this.props.amountFilter.resourceModel.label}</h6>
                 <span className="amount-result-filter--deselect">
                   <FontAwesomeIcon icon={faTimes} size="xl" />
                 </span>

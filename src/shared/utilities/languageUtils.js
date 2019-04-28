@@ -38,12 +38,21 @@ export const singular = string => {
   }
 }
 
+export const stringWithComparisonStringsToSymbol = string => {
+  if (!string) return ''
+  return string
+    .toLowerCase()
+    .replace(/at least /g, '+')
+    .replace(/exactly /g, '=')
+    .replace(/at most /g, '-')
+}
+
 export const shortAmountComparisonString = (comparison, value) => {
   switch (comparison) {
     case 'gte':
       return `${value}+`
     case 'exact':
-      return `${value}`
+      return `=${value}`
     case 'lte':
       return `${value}-`
   }
