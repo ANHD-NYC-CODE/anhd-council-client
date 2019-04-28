@@ -15,7 +15,16 @@ import { faMapSigns } from '@fortawesome/free-solid-svg-icons'
 import ConfigContext from 'Config/ConfigContext'
 import PageError from 'shared/components/PageError'
 import Layout from 'Layout'
+import ReactGA from 'react-ga'
 class Router extends React.Component {
+  constructor(props) {
+    super(props)
+
+    history.listen((location, action) => {
+      ReactGA.pageview(window.location.pathname + window.location.search)
+    })
+  }
+
   render() {
     return (
       <ConnectedRouter history={history}>
