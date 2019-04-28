@@ -51,38 +51,43 @@ const Component = props => {
         </thead>
         <tbody>
           <tr>
+            <td>Opening this modal</td>
+            <td>See specifically how many people care to read this information about analytics.</td>
+            <td>Just the event</td>
+          </tr>
+          <tr>
             <td>Login</td>
             <td>See generally how many people login to use the site.</td>
             <td>The ID # of the user</td>
           </tr>
           <tr>
             <td>CSV Download</td>
-            <td>See generally how many people use the CSV feature and what CSVs are most popular.</td>
+            <td>See generally how many people use the CSV feature and specifically what CSVs are most popular.</td>
             <td>The auto-generated file name of the CSV</td>
           </tr>
           <tr>
             <td>Filter selection on district dashboard and property lookup.</td>
-            <td>See generally which filters in district dashboard are most popular.</td>
+            <td>See specifically which filters in district dashboard are most popular.</td>
             <td>The name of the filter (ex: HPD Violations)</td>
           </tr>
           <tr>
             <td>Date selection on district dashboards</td>
-            <td>See generally which dates in district dashboard are most popular.</td>
+            <td>See specifically which dates in district dashboard are most popular.</td>
             <td>The value of the date (ex: last 3 years)</td>
           </tr>
           <tr>
             <td>Custom Search submission</td>
-            <td>See generally how many people use the custom search and what queries they create.</td>
+            <td>See generally how many people use the custom search and specifically what queries they create.</td>
             <td>A sentence summarizing the constructed search query.</td>
           </tr>
           <tr>
             <td>Custom Search filter added</td>
-            <td>See generally which filters are most popular in custom search.</td>
+            <td>See specifically which filters are most popular in custom search.</td>
             <td>The name of the filter (ex: HPD Violations)</td>
           </tr>
           <tr>
             <td>Custom Search condition switched</td>
-            <td>See generally which logical conditions are most used.</td>
+            <td>See specifically which logical conditions are most used.</td>
             <td>The name of the condition (ex: AND, or OR)</td>
           </tr>
           <tr>

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import { Modal, Row, Col, Button } from 'react-bootstrap'
 import BaseLink from 'shared/components/BaseLink'
 import UserRequestModal from 'shared/components/modals/UserRequestModal'
-
 const LoginModalFooter = props => {
   return (
     <Modal.Footer as={Row}>
