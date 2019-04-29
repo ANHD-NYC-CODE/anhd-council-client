@@ -145,7 +145,7 @@ export const infoModals = {
   ACRIS_REAL_MASTER: {
     title: 'Sales',
     body:
-      'The sale price of a building matters because speculative investment is one of the key underlying threats to existing affordable housing. A high sale price can mean a new owner plans to displace existing tenants to make large profits.',
+      'Sales come from the Department of Finance’s ACRIS database and include all deeds recorded. The sale price of a building matters because speculative investment is one of the key underlying threats to existing affordable housing. A high sale price can mean a new owner plans to displace existing tenants to make large profits.',
     sources: [
       {
         text: 'NYC Open Data - ACRIS Real Property Master',
@@ -175,7 +175,7 @@ export const infoModals = {
   EVICTION: {
     title: 'Marshal Evictions',
     body:
-      'These properties recorded evictions executed by marshals. Evictions in affordable rent-regulated apartments usually indicate an immediate loss of affordable housing because landlords take advantage of the vacancy to dramatically raise the rent. A high rate of evictions may also be an indicator of tenant harassment and displacement by a landlord aggressively driving vacancies.',
+      'Evictions were executed by court-ordered marshals since 1/1/2017. Evictions in affordable rent-regulated apartments usually indicate an immediate loss of affordable housing because landlords take advantage of the vacancy to dramatically raise the rent. A high rate of evictions may also be an indicator of tenant harassment and displacement by a landlord aggressively driving vacancies.',
     sources: [
       {
         text: 'NYC Open Data - Evictions',
