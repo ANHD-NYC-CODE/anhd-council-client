@@ -37,6 +37,7 @@ class RequestTableWrapper extends React.Component {
       <div className="request-wrapper">
         <TableComponent
           caption={this.props.caption}
+          classes={this.props.classes}
           csvBaseFileName={this.constructBaseCsvFileName()}
           datasetModelName={this.props.request.resourceModel.label}
           dispatch={this.props.dispatch}
@@ -71,6 +72,7 @@ RequestTableWrapper.defaultProps = {
 
 RequestTableWrapper.propTypes = {
   caption: PropTypes.string,
+  classes: PropTypes.string,
   dispatch: PropTypes.func,
   request: PropTypes.object,
   visible: PropTypes.bool,

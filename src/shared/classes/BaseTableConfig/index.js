@@ -8,10 +8,22 @@ export default class BaseTableConfig {
     this._filterPrototypes = {
       ...this.createFilterPrototype('HPD_VIOLATION_OPEN'),
       ...this.createFilterPrototype('HPD_VIOLATION_CLASS'),
+      ...this.createFilterPrototype('HPD_COMPLAINT_OPEN'),
+      ...this.createFilterPrototype('DOB_VIOLATION_ACTIVE'),
+      ...this.createFilterPrototype('DOB_COMPLAINT_ACTIVE'),
+      ...this.createFilterPrototype('ECB_VIOLATION_ACTIVE'),
+      ...this.createFilterPrototype('DOB_FILED_PERMIT_TYPE'),
+      ...this.createFilterPrototype('DOB_ISSUED_PERMIT_TYPE'),
     }
     this._filterFunctions = {
       ...this.createFilterFunction('HPD_VIOLATION_OPEN'),
       ...this.createFilterFunction('HPD_VIOLATION_CLASS'),
+      ...this.createFilterFunction('HPD_COMPLAINT_OPEN'),
+      ...this.createFilterFunction('DOB_VIOLATION_ACTIVE'),
+      ...this.createFilterFunction('DOB_COMPLAINT_ACTIVE'),
+      ...this.createFilterFunction('ECB_VIOLATION_ACTIVE'),
+      ...this.createFilterFunction('DOB_FILED_PERMIT_TYPE'),
+      ...this.createFilterFunction('DOB_ISSUED_PERMIT_TYPE'),
     }
     this.filterButtonSets = {
       HPD_VIOLATION: [
@@ -29,6 +41,55 @@ export default class BaseTableConfig {
             this.createFilterItem('Class B', 'B'),
             this.createFilterItem('Class C', 'C'),
           ],
+          'All'
+        ),
+      ],
+      HPD_COMPLAINT: [
+        this.createFilterButtonSet(
+          'HPD_COMPLAINT',
+          'HPD_COMPLAINT_OPEN',
+          [this.createFilterItem('Open', 'open')],
+          'All'
+        ),
+      ],
+      DOB_COMPLAINT: [
+        this.createFilterButtonSet(
+          'DOB_COMPLAINT',
+          'DOB_COMPLAINT_ACTIVE',
+          [this.createFilterItem('Active', 'active')],
+          'All'
+        ),
+      ],
+
+      DOB_VIOLATION: [
+        this.createFilterButtonSet(
+          'DOB_VIOLATION',
+          'DOB_VIOLATION_ACTIVE',
+          [this.createFilterItem('Active', 'active')],
+          'All'
+        ),
+      ],
+      ECB_VIOLATION: [
+        this.createFilterButtonSet(
+          'ECB_VIOLATION',
+          'ECB_VIOLATION_ACTIVE',
+          [this.createFilterItem('Active', 'active')],
+          'All'
+        ),
+      ],
+      DOB_FILED_PERMIT: [
+        this.createFilterButtonSet(
+          'DOB_FILED_PERMIT',
+          'DOB_FILED_PERMIT_TYPE',
+          [this.createFilterItem('A1', 'a1'), this.createFilterItem('A2', 'a2'), this.createFilterItem('NB', 'nb')],
+          'All'
+        ),
+      ],
+      DOB_ISSUED_PERMIT: [
+        this.createFilterButtonSet(
+          'DOB_ISSUED_PERMIT',
+          'DOB_ISSUED_PERMIT_TYPE',
+          [this.createFilterItem('A1', 'a1'), this.createFilterItem('A2', 'a2'), this.createFilterItem('NB', 'nb')],
           'All'
         ),
       ],

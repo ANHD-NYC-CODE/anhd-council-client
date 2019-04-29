@@ -3,6 +3,35 @@ import moment from 'moment'
 import { Button } from 'react-bootstrap'
 import BaseLink from 'shared/components/BaseLink'
 import { getLinkId, getLinkProps } from 'shared/tables/tableColumns'
+import { capitalizeWords } from 'shared/utilities/languageUtils'
+
+export const capitalizeFormatter = (cell, row, index) => {
+  if (!cell) return cell
+  return capitalizeWords(cell)
+}
+
+export const dobViolationStatusFormatter = (cell, row, index) => {
+  if (!cell) return cell
+  return capitalizeWords(
+    cell
+      .toUpperCase()
+      .replace('V-DOB VIOLATION - ', '')
+      .replace('V*-DOB VIOLATION - ', '')
+      .trim()
+  )
+}
+
+export const lispendenCleanupFormatter = (cell, row, index) => {
+  if (!cell) return cell
+  return cell.replace('00000', '')
+}
+
+export const hpdStatusFormatter = (cell, row, index) => {
+  if (!cell) return ''
+  if (cell.toLowerCase().includes('close')) return 'Closed'
+  if (cell.toLowerCase().includes('open')) return 'Open'
+}
+
 export const dateFormatter = (cell, row, index) => {
   try {
     const date = moment(cell)
@@ -14,7 +43,7 @@ export const dateFormatter = (cell, row, index) => {
 
 export const dollarFormatter = (cell, row, index) => {
   if (!cell) return cell
-  return cell.toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 })
+  return parseInt(cell).toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 })
 }
 
 export const annotatedColumnFormatter = (cell, row, index) => {
