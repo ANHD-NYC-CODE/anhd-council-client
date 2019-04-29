@@ -11,15 +11,19 @@ import {
   dateFormatter,
   annotatedColumnFormatter,
   bldgClassFormater,
-  dobComplaintCategoryFormatter,
+  dobComplaintCategoryPriorityFormatter,
+  dobComplaintCategoryDescriptionFormatter,
   dobPermitWorkTypeFormatter,
   acrisDocTypeFormatter,
+  acrisParties1Formatter,
+  acrisParties2Formatter,
   dollarFormatter,
   dobPermitSourceFormatter,
   expandTableFormatter,
   linkFormatter,
   hpdStatusFormatter,
   lispendenCleanupFormatter,
+  lispendenCommentFormatter,
   dobViolationStatusFormatter,
   capitalizeFormatter,
 } from 'shared/utilities/tableUtils'
@@ -246,6 +250,7 @@ export const getTableColumns = ({
   }
 
   const constructStandardColumn = ({
+    key,
     dataField,
     text,
     sort,
@@ -260,6 +265,7 @@ export const getTableColumns = ({
     columnEvent,
   }) => {
     return {
+      key,
       dataField,
       text,
       sort,
@@ -537,12 +543,12 @@ export const getTableColumns = ({
       break
     case 'HPD_REGISTRATION':
       columns = [
-        constructStandardColumn({
-          columnEvent: expandColumnEvent,
-          dataField: 'registrationid',
-          text: 'ID',
-          hidden: true,
-        }),
+        // constructStandardColumn({
+        //   columnEvent: expandColumnEvent,
+        //   dataField: 'registrationid',
+        //   text: 'ID',
+        //   hidden: true,
+        // }),
         // constructStandardColumn({
         //   columnEvent: expandColumnEvent,
         //   dataField: 'lastregistrationdate',
@@ -551,19 +557,19 @@ export const getTableColumns = ({
         //   csvFormatter: dateFormatter,
         //   sort: true,
         // }),
-        constructStandardColumn({
-          dataField: 'lastregistrationdate',
-          text: 'Last Registration Date',
-        }),
-        constructNestedTableColumn({
-          columnEvent: expandNestedColumnEvent,
-          dataField: 'contacts',
-          text: 'View Contacts',
-          formatter: expandTableFormatter,
-          dataKey: 'contacts',
-          classes: 'nested-table-column',
-          tableConfig: new TableConfig({ resourceConstant: 'HPD_CONTACT' }),
-        }),
+        // constructStandardColumn({
+        //   dataField: 'lastregistrationdate',
+        //   text: 'Last Registration Date',
+        // }),
+        // constructNestedTableColumn({
+        //   columnEvent: expandNestedColumnEvent,
+        //   dataField: 'contacts',
+        //   text: 'View Contacts',
+        //   formatter: expandTableFormatter,
+        //   dataKey: 'contacts',
+        //   classes: 'nested-table-column',
+        //   tableConfig: new TableConfig({ resourceConstant: 'HPD_CONTACT' }),
+        // }),
       ]
       break
     case 'RENT_STABILIZATION_RECORD':
@@ -788,34 +794,29 @@ export const getTableColumns = ({
         constructStandardColumn({
           dataField: 'type',
           text: 'Urgency',
-          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
           dataField: 'unittype',
           text: 'Unit Type',
-          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
           dataField: 'spacetype',
           text: 'Space Type',
-          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
           dataField: 'majorcategory',
           text: 'Major Category',
-          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
           dataField: 'minorcategory',
           text: 'Minor Category',
-          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
@@ -900,7 +901,22 @@ export const getTableColumns = ({
           columnEvent: expandColumnEvent,
           dataField: 'complaintcategory',
           text: 'Category',
-          formatter: dobComplaintCategoryFormatter,
+          sort: true,
+        }),
+        constructStandardColumn({
+          columnEvent: expandColumnEvent,
+          dataField: 'complaintcategory',
+          text: 'Priority',
+          formatter: dobComplaintCategoryPriorityFormatter,
+          csvFormatter: dobComplaintCategoryPriorityFormatter,
+          sort: true,
+        }),
+        constructStandardColumn({
+          columnEvent: expandColumnEvent,
+          dataField: 'complaintcategory',
+          text: 'Description',
+          formatter: dobComplaintCategoryDescriptionFormatter,
+          csvFormatter: dobComplaintCategoryDescriptionFormatter,
           classes: 'table-column--description',
           filter: constructFilter(textFilter),
           sort: true,
@@ -909,8 +925,9 @@ export const getTableColumns = ({
           dataField: 'status',
           text: 'Status',
           formatter: capitalizeFormatter,
+          csvFormatter: capitalizeFormatter,
           filter: baseTableConfig.filterPrototypes['DOB_COMPLAINT_ACTIVE'],
-          headerClasses: 'hide-filters',
+          headerClasses: 'hide-filter',
           sort: true,
         }),
       ]
@@ -948,6 +965,7 @@ export const getTableColumns = ({
           dataField: 'penalityimposed',
           text: 'Penalty Imposed',
           formatter: dollarFormatter,
+          csvFormatter: dollarFormatter,
           sort: true,
         }),
         constructStandardColumn({
@@ -970,6 +988,7 @@ export const getTableColumns = ({
           headerClasses: 'hide-filter',
           sort: true,
           formatter: capitalizeFormatter,
+          csvFormatter: capitalizeFormatter,
         }),
       ]
       break
@@ -1017,6 +1036,7 @@ export const getTableColumns = ({
           dataField: 'type',
           text: 'Source',
           formatter: dobPermitSourceFormatter,
+          csvFormatter: dobPermitSourceFormatter,
           sort: true,
         }),
       ]
@@ -1066,13 +1086,13 @@ export const getTableColumns = ({
           columnEvent: expandColumnEvent,
           dataField: 'jobstatus',
           text: 'Status',
-          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
           dataField: 'type',
           text: 'Source',
           formatter: dobPermitSourceFormatter,
+          csvFormatter: dobPermitSourceFormatter,
           sort: true,
         }),
       ]
@@ -1093,13 +1113,11 @@ export const getTableColumns = ({
         constructStandardColumn({
           dataField: 'casetype',
           text: 'Case Type',
-          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
           dataField: 'openjudgement',
           text: 'Open Judgement?',
-          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
@@ -1110,9 +1128,9 @@ export const getTableColumns = ({
         constructStandardColumn({
           dataField: 'casestatus',
           text: 'Status',
-          filter: constructFilter(textFilter),
           sort: true,
           formatter: capitalizeFormatter,
+          csvFormatter: capitalizeFormatter,
         }),
       ]
       break
@@ -1140,7 +1158,6 @@ export const getTableColumns = ({
           text: 'Document Type',
           formatter: acrisDocTypeFormatter,
           csvFormatter: acrisDocTypeFormatter,
-          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
@@ -1148,19 +1165,36 @@ export const getTableColumns = ({
           text: 'Amount',
           formatter: dollarFormatter,
           csvFormatter: annotatedColumnFormatter,
-
           sort: true,
         }),
-        constructNestedTableColumn({
-          csvExport: false,
-          columnEvent: expandNestedColumnEvent,
+        constructStandardColumn({
+          columnEvent: expandColumnEvent,
           dataField: 'acrisrealparties',
-          text: 'View Parties',
-          formatter: expandTableFormatter,
-          dataKey: 'acrisrealparties',
-          classes: 'nested-table-column',
-          tableConfig: new TableConfig({ resourceConstant: 'ACRIS_REAL_PARTY' }),
+          key: 'acrisparties1',
+          text: 'Parties (1)',
+          formatter: acrisParties1Formatter,
+          csvFormatter: acrisParties1Formatter,
+          sort: true,
         }),
+        constructStandardColumn({
+          columnEvent: expandColumnEvent,
+          dataField: 'acrisrealparties',
+          key: 'acrisparties2',
+          text: 'Parties (2)',
+          formatter: acrisParties2Formatter,
+          csvFormatter: acrisParties2Formatter,
+          sort: true,
+        }),
+        // constructNestedTableColumn({
+        //   csvExport: false,
+        //   columnEvent: expandNestedColumnEvent,
+        //   dataField: 'acrisrealparties',
+        //   text: 'View Parties',
+        //   formatter: expandTableFormatter,
+        //   dataKey: 'acrisrealparties',
+        //   classes: 'nested-table-column',
+        //   tableConfig: new TableConfig({ resourceConstant: 'ACRIS_REAL_PARTY' }),
+        // }),
       ]
       break
     case 'ACRIS_REAL_PARTY':
@@ -1248,7 +1282,6 @@ export const getTableColumns = ({
           columnEvent: expandColumnEvent,
           dataField: 'evictionaddress',
           text: 'Address',
-          filter: constructFilter(textFilter),
           sort: true,
         }),
       ]
@@ -1272,6 +1305,7 @@ export const getTableColumns = ({
           dataField: 'cr',
           text: 'Creditor',
           formatter: lispendenCleanupFormatter,
+          csvFormatter: lispendenCleanupFormatter,
           sort: true,
         }),
         constructStandardColumn({
@@ -1279,7 +1313,16 @@ export const getTableColumns = ({
           dataField: 'debtor',
           text: 'Debtor',
           formatter: lispendenCleanupFormatter,
+          csvFormatter: lispendenCleanupFormatter,
           sort: true,
+        }),
+        constructStandardColumn({
+          columnEvent: expandColumnEvent,
+          dataField: 'comments',
+          text: 'Comments',
+          formatter: lispendenCommentFormatter,
+          csvFormatter: lispendenCommentFormatter,
+          // sort: true,
         }),
       ]
       break

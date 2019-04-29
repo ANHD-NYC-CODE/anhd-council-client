@@ -5,6 +5,40 @@ import BaseLink from 'shared/components/BaseLink'
 import { getLinkId, getLinkProps } from 'shared/tables/tableColumns'
 import { capitalizeWords } from 'shared/utilities/languageUtils'
 
+export const acrisParties1Formatter = (cell, row, index) => {
+  if (!cell.length) return ''
+  try {
+    return cell
+      .filter(party => party.partytype === 1)
+      .map(party => party.name)
+      .filter(f => f)
+      .join(', ')
+  } catch (e) {
+    return ''
+  }
+}
+
+export const acrisParties2Formatter = (cell, row, index) => {
+  if (!cell.length) return ''
+  try {
+    return cell
+      .filter(party => party.partytype === 2)
+      .map(party => party.name)
+      .filter(f => f)
+      .join(', ')
+  } catch (e) {
+    return ''
+  }
+}
+
+export const lispendenCommentFormatter = (cell, row, index) => {
+  if (!cell.length) return cell
+  return cell
+    .map(comment => comment.datecomments.split('-')[1])
+    .filter(f => f)
+    .join(' || ')
+}
+
 export const capitalizeFormatter = (cell, row, index) => {
   if (!cell) return cell
   return capitalizeWords(cell)
@@ -712,10 +746,408 @@ export const dobComplaintCategoryFormatter = (cell, row, index) => {
   }
 }
 
+export const dobComplaintCategoryPriorityFormatter = (cell, row, index) => {
+  switch (cell) {
+    case '01':
+      return 'A'
+    case '03':
+      return 'A'
+    case '04':
+      return 'B'
+    case '05':
+      return 'B'
+    case '06':
+      return 'B'
+    case '09':
+      return 'B'
+    case '10':
+      return 'A'
+    case '12':
+      return 'A'
+    case '13':
+      return 'A'
+    case '14':
+      return 'A'
+    case '15':
+      return 'B'
+    case '16':
+      return 'A'
+    case '18':
+      return 'A'
+    case '20':
+      return 'A'
+    case '21':
+      return 'B'
+    case '23':
+      return 'B'
+    case '29':
+      return 'C'
+    case '30':
+      return 'A'
+    case '31':
+      return 'C'
+    case '35':
+      return 'D'
+    case '37':
+      return 'A'
+    case '45':
+      return 'B'
+    case '49':
+      return 'C'
+    case '50':
+      return 'A'
+    case '52':
+      return 'B'
+    case '53':
+      return 'D'
+    case '54':
+      return 'B'
+    case '55':
+      return 'D'
+    case '56':
+      return 'A'
+    case '58':
+      return 'B'
+    case '59':
+      return 'B'
+    case '62':
+      return 'A'
+    case '63':
+      return 'B'
+    case '65':
+      return 'A'
+    case '66':
+      return 'B'
+    case '67':
+      return 'A'
+    case '71':
+      return 'B'
+    case '73':
+      return 'C'
+    case '74':
+      return 'C'
+    case '75':
+      return 'B'
+    case '76':
+      return 'A'
+    case '77':
+      return 'C'
+    case '78':
+      return 'B'
+    case '79':
+      return 'C'
+    case '80':
+      return 'D'
+    case '81':
+      return 'A'
+    case '82':
+      return 'A'
+    case '83':
+      return 'B'
+    case '85':
+      return 'C'
+    case '86':
+      return 'A'
+    case '88':
+      return 'B'
+    case '89':
+      return 'A'
+    case '90':
+      return 'C'
+    case '91':
+      return 'A'
+    case '92':
+      return 'B'
+    case '93':
+      return 'B'
+    case '94':
+      return 'C'
+    case '1A':
+      return 'B'
+    case '1B':
+      return 'B'
+    case '1D':
+      return 'B'
+    case '1E':
+      return 'A'
+    case '1G':
+      return 'B'
+    case '1K':
+      return 'D'
+    case '1Z':
+      return 'D'
+    case '2A':
+      return 'B'
+    case '2B':
+      return 'A'
+    case '2C':
+      return 'B'
+    case '2D':
+      return 'B'
+    case '2E':
+      return 'A'
+    case '2F':
+      return 'D'
+    case '2G':
+      return 'C'
+    case '2H':
+      return 'D'
+    case '2J':
+      return 'D'
+    case '2K':
+      return 'D'
+    case '2L':
+      return 'D'
+    case '2M':
+      return 'D'
+    case '3A':
+      return 'B'
+    case '4A':
+      return 'B'
+    case '4B':
+      return 'B'
+    case '4C':
+      return 'D'
+    case '4D':
+      return 'D'
+    case '4F':
+      return 'D'
+    case '4G':
+      return 'B'
+    case '4J':
+      return 'D'
+    case '4K':
+      return 'D'
+    case '4L':
+      return 'D'
+    case '4M':
+      return 'D'
+    case '4N':
+      return 'D'
+    case '4P':
+      return 'D'
+    case '4W':
+      return 'C'
+    case '5A':
+      return 'B'
+    case '5B':
+      return 'A'
+    case '5C':
+      return 'A'
+    case '5E':
+      return 'A'
+    case '5F':
+      return 'B'
+    case '5G':
+      return 'B'
+    case '6A':
+      return 'C'
+  }
+}
+
+export const dobComplaintCategoryDescriptionFormatter = (cell, row, index) => {
+  switch (cell) {
+    case '01':
+      return 'Accident – Construction/Plumbing '
+    case '03':
+      return 'Adjacent Buildings - Not Protected '
+    case '04':
+      return 'After Hours Work – Illegal '
+    case '05':
+      return 'Permit – None (Building/PA/Demo etc.) '
+    case '06':
+      return 'Construction – Change Grade/Change Watercourse '
+    case '09':
+      return 'Debris – Excessive '
+    case '10':
+      return 'Debris/Building -Falling or In Danger of Falling '
+    case '12':
+      return 'Demolition-Unsafe/Illegal/Mechanical Demo '
+    case '13':
+      return 'Elevator In (FDNY) Readiness-None '
+    case '14':
+      return 'Excavation - Undermining Adjacent Building '
+    case '15':
+      return 'Fence - None/Inadequate/Illegal '
+    case '16':
+      return 'Inadequate Support/Shoring '
+    case '18':
+      return 'Material Storage – Unsafe '
+    case '20':
+      return 'Landmark Building – Illegal Work '
+    case '21':
+      return 'Safety Net/Guardrail-Damaged/Inadequate/None (over 6 Story/75 ft.) '
+    case '23':
+      return 'Sidewalk Shed/Supported Scaffold/Inadequate/Defective/None/No Permit/No Cert '
+    case '29':
+      return 'Building – Vacant, Open and Unguarded '
+    case '30':
+      return 'Building Shaking/Vibrating/Structural Stability Affected '
+    case '31':
+      return 'Certificate of Occupancy – None/Illegal/Contrary to Co '
+    case '35':
+      return 'Curb Cut/Driveway/Carport – Illegal '
+    case '37':
+      return 'Egress – Locked/Blocked/Improper/No Secondary Means '
+    case '45':
+      return 'Illegal Conversion '
+    case '49':
+      return 'Storefront or Business Sign/Awning/Marquee/Canopy – Illegal '
+    case '50':
+      return 'Sign Falling - Danger/Sign Erection or Display In Progress – Illegal '
+    case '52':
+      return 'Sprinkler System – Inadequate '
+    case '53':
+      return 'Vent/Exhaust – Illegal/Improper '
+    case '54':
+      return 'Wall/Retaining Wall – Bulging/Cracked '
+    case '55':
+      return 'Zoning – Non-conforming '
+    case '56':
+      return 'Boiler – Fumes/Smoke/Carbon Monoxide '
+    case '58':
+      return 'Boiler – Defective/Non-operative/No Permit '
+    case '59':
+      return 'Electrical Wiring – Defective/Exposed, In Progress '
+    case '62':
+      return 'Elevator-Danger Condition/Shaft Open/Unguarded '
+    case '63':
+      return 'Elevator-Danger Condition/Shaft Open/Unguarded '
+    case '65':
+      return 'Gas Hook-Up/Piping – Illegal or Defective '
+    case '66':
+      return 'Plumbing Work – Illegal/No Permit(Also Sprinkler/Standpipe) '
+    case '67':
+      return 'Crane – No Permit/License/Cert/Unsafe/Illegal '
+    case '71':
+      return 'SRO – Illegal Work/No Permit/Change In Occupancy Use '
+    case '73':
+      return 'Failure to Maintain '
+    case '74':
+      return 'Illegal Commercial/Manufacturing Use In Residential Zone '
+    case '75':
+      return 'Adult Establishment '
+    case '76':
+      return 'Unlicensed/Illegal/Improper Plumbing Work In Progress '
+    case '77':
+      return 'Contrary To Ll58/87 (Handicap Access) '
+    case '78':
+      return 'Privately Owned Public Space/Non-Compliance '
+    case '79':
+      return 'Lights from Parking Lot Shining on Building '
+    case '80':
+      return 'Elevator Not Inspected/Illegal/No Permit '
+    case '81':
+      return 'Elevator – Accident '
+    case '82':
+      return 'Boiler – Accident/Explosion '
+    case '83':
+      return 'Construction – Contrary/Beyond Approved Plans/Permits '
+    case '85':
+      return 'Failure to Retain Water/Improper Drainage (LL103/89) '
+    case '86':
+      return 'Work Contrary to Stop Work Order '
+    case '88':
+      return 'Safety Net/Guard Rail-Dam/Inadequate/None(6fl.75ft. or less) '
+    case '89':
+      return 'Accident – Cranes/Derricks/Suspension '
+    case '90':
+      return 'Unlicensed/Illegal Activity '
+    case '91':
+      return 'Site Conditions Endangering Workers '
+    case '92':
+      return 'Illegal Conversion of Manufacturing/Industrial Space '
+    case '93':
+      return 'Request for Retaining Wall Safety Inspection '
+    case '94':
+      return 'Plumbing-Defective/Leaking/Not Maintained '
+    case '1A':
+      return 'Illegal Conversion Commercial Building/Space to Dwelling Units '
+    case '1B':
+      return 'Illegal Tree Removal/Topo. Change In SNAD '
+    case '1D':
+      return 'Con Edison Referral '
+    case '1E':
+      return 'Suspended (Hanging) Scaffolds- No Permit/License/Dangerous/Accident '
+    case '1G':
+      return 'Stalled Construction Site '
+    case '1K':
+      return 'Bowstring Truss Tracking Complaint '
+    case '1Z':
+      return 'Enforcement Work Order (DOB) '
+    case '2A':
+      return 'Posted Notice or Order Removed/Tampered With '
+    case '2B':
+      return 'Failure to Comply with Vacate Order '
+    case '2C':
+      return 'Smoking Ban – Smoking on Construction Site '
+    case '2D':
+      return 'Smoking Signs – ‘No Smoking Signs’ Not Observed on Construction Site '
+    case '2E':
+      return 'Demolition Notification Received '
+    case '2F':
+      return 'Building Under Structural Monitoring '
+    case '2G':
+      return 'Advertising Sign/Billboard/Posters/Flexible Fabric – Illegal '
+    case '2H':
+      return 'Second Avenue Subway Construction '
+    case '2J':
+      return 'Sandy: Building Destroyed '
+    case '2K':
+      return 'Structurally Compromised Building (LL33/08) '
+    case '2L':
+      return 'Façade (LL11/98) – Unsafe Notification '
+    case '2M':
+      return 'Monopole Tracking Complaint '
+    case '3A':
+      return 'Unlicensed/Illegal/Improper Electrical Work In Progress '
+    case '4A':
+      return 'Illegal Hotel Rooms In Residential Buildings '
+    case '4B':
+      return 'SEP – Professional Certification Compliance Audit '
+    case '4C':
+      return 'Excavation Tracking Complaint '
+    case '4D':
+      return 'Interior Demo Tracking Complaint '
+    case '4F':
+      return 'SST Tracking Complaint '
+    case '4G':
+      return 'Illegal Conversion No Access Follow-Up '
+    case '4J':
+      return 'M.A.R.C.H. Program (Interagency) '
+    case '4K':
+      return 'CSC – DM Tracking Complaint '
+    case '4L':
+      return 'CSC – High-Rise Tracking Complaint '
+    case '4M':
+      return 'CSC – Low-Rise Tracking Complaint '
+    case '4N':
+      return 'Retaining Wall Tracking Complaint '
+    case '4P':
+      return 'Legal/Padlock Tracking Complaint '
+    case '4W':
+      return 'Woodside Settlement Project '
+    case '5A':
+      return 'Request for Joint FDNY/DOB Inspection '
+    case '5B':
+      return 'Non-Compliance with Lightweight Materials '
+    case '5C':
+      return 'Structural Stability Impacted – New Building Under Construction '
+    case '5E':
+      return 'Amusement Ride Accident/Incident '
+    case '5F':
+      return 'Compliance Inspection '
+    case '5G':
+      return 'Unlicensed/Illegal/Improper Work In Progress '
+    case '6A':
+      return 'Vesting Inspection '
+  }
+}
+
 export const dobPermitWorkTypeFormatter = (cell, row, index) => {
   switch (cell) {
     case 'NB':
-      return `${cell} - Construction of new structures`
+      return 'Construction of new structures'
     case 'A1':
       return `${cell} - ALT1: Major alterations that will change use, egress or occupancy`
     case 'A2':

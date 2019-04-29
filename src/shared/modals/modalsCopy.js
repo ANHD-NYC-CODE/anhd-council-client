@@ -65,7 +65,7 @@ export const infoModals = {
     ],
   },
   HPD_COMPLAINT: {
-    title: 'HPD Complaints',
+    title: 'HPD Complaints & Problems',
     body:
       'Complaints that tenants make about conditions in their apartment or building get sent to Housing Preservation and Development for inspection. Complaints can be an early signal that landlords are neglecting to make repairs.',
     sources: [
@@ -164,7 +164,7 @@ export const infoModals = {
   LISPENDEN: {
     title: 'Foreclosures',
     body:
-      'Lis pendens, pre-foreclosures, and foreclosures indicate that an owner is in financial distress any may lose the property to the mortgage lender.',
+      'Lis pendens, pre-foreclosures, and foreclosures indicate that an owner is in financial distress any may lose the property to the mortgage lender. Data available since Dec, 2018',
     sources: [
       {
         text: 'Public Data Corporation',

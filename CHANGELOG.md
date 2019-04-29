@@ -37,3 +37,13 @@
 - Adds analytics modal to explain our tracking
 - Adds Table Filter buttons to certain tables
 - Add new copy to info modals.
+
+#### 1.0.0b1.0.31
+
+4/28/19
+
+- Add selected lookup filters to CSV download filename
+- remove more text filters from column headers
+- separate DOB Complaint Category - Priority - Description columns
+- add concatenated lispenden comments column
+- add concatenated Acris parties column

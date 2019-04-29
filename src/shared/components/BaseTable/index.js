@@ -30,7 +30,7 @@ class BaseTable extends React.Component {
     this.handleCsvClick = this.handleCsvClick.bind(this)
     this.constructCsvFilename = this.constructCsvFilename.bind(this)
 
-    this.baseTableConfig = new BaseTableConfig()
+    this.baseTableConfig = new BaseTableConfig({ component: this })
 
     this.state = {
       expandedRowContent: '',
@@ -49,28 +49,38 @@ class BaseTable extends React.Component {
     }
   }
 
-  componentDidUpdate() {
-    if (this.props.records.length > this.state.displayedRecordsCount) {
+  componentDidUpdate(props, state) {
+    if (props.records.length !== state.displayedRecordsCount) {
       this.setState({
-        displayedRecordsCount: this.props.records.length,
-        columns: this.props.tableConfig.getColumns({
+        displayedRecordsCount: props.records.length,
+        defaultSorted: props.tableConfig.defaultSorted,
+        columns: props.tableConfig.getColumns({
           expandColumnFunction: this.setExpandedContent,
           constructFilter: this.constructFilter,
           baseTableConfig: this.baseTableConfig,
-          rowExample: this.props.records[0],
-          dispatch: this.props.dispatch,
-          annotationStart: this.props.annotationStart,
+          rowExample: props.records[0],
+          dispatch: props.dispatch,
+          annotationStart: props.annotationStart,
         }),
       })
     }
   }
 
   handleCsvClick() {
-    this.props.dispatch(fireCsvDownloadEvent(this.constructCsvFilename()))
+    this.props.dispatch(fireCsvDownloadEvent(this.constructCsvFilename(this.baseTableConfig.selectedFilters)))
   }
 
-  constructCsvFilename() {
-    return `${this.props.csvBaseFileName}.csv`.replace(' ', '_').toLowerCase()
+  constructCsvFilename(selectedFilters) {
+    const filters = Object.keys(selectedFilters)
+      .map(key => {
+        if (selectedFilters[key]) {
+          return key.split('__')[1].trim()
+        }
+      })
+      .filter(f => f)
+      .join('_')
+
+    return `${this.props.csvBaseFileName}${filters ? '__' + filters : ''}.csv`.replace(' ', '_').toLowerCase()
   }
 
   setPage(page) {
@@ -152,112 +162,115 @@ class BaseTable extends React.Component {
   render() {
     const { ExportCSVButton } = CSVExport
     return (
-      <ToolkitProvider
-        keyField={`${this.props.tableConfig.keyField}`}
-        data={this.props.records}
-        columns={this.state.columns}
-        exportCSV={{
-          fileName: this.constructCsvFilename(),
-        }}
-        bootstrap4={true}
-      >
-        {props => (
-          <PaginationProvider
-            pagination={paginationFactory(
-              this.props.tableConfig.paginationOptions(this.props.records.length, this.state.page, this.setPage)
-            )}
-          >
-            {({ paginationProps, paginationTableProps }) => (
-              <div
-                className={`base-table ${this.props.wrapperClasses}`}
-                key={`table-${this.props.tableConfig.keyField}`}
-              >
-                {!this.props.nested && !!this.props.includeHeader && (
-                  <Row>
-                    <Col xs={12}>
-                      <TableHeader
-                        datasetModelName={this.props.datasetModelName}
-                        dispatch={this.props.dispatch}
-                        title={this.props.caption}
-                      />
-                    </Col>
-
-                    <Col xs={4} className="text-right d-flex justify-content-start align-items-center">
-                      Total:
-                      {paginationProps.dataSize === paginationProps.totalSize
-                        ? paginationProps.totalSize
-                        : `${paginationProps.dataSize}/${paginationProps.totalSize}`}
-                    </Col>
-                    <Col
-                      xs={4}
-                      className="table-header__share-column d-none d-md-flex justify-content-end align-items-center"
-                    >
-                      <CsvButton
-                        onClick={this.handleCsvClick}
-                        ExportCSVButton={ExportCSVButton}
-                        csvProps={props.csvProps}
-                      />
-                    </Col>
-                    <Col xs={4} className="d-flex align-items-center justify-content-end">
-                      <SizePerPageDropdownStandalone btnContextual="btn-outline-primary" {...paginationProps} />
-                    </Col>
-                  </Row>
-                )}
-
-                <Row>
-                  {!!this.baseTableConfig.filterButtonSets[this.props.tableConfig.resourceConstant] &&
-                    this.baseTableConfig.filterButtonSets[this.props.tableConfig.resourceConstant].map((set, index) => {
-                      return <Col key={`button-set${index}`}>{set(this.baseTableConfig.selectedFilters)}</Col>
-                    })}
-                </Row>
-
-                <BootstrapTable
-                  // bootstrap4={props.baseProps.bootstrap4}
-                  {...props.baseProps}
-                  // columns={props.baseProps.columns}
-                  condensed
-                  classes={classnames(this.props.classes, { 'no-expand': !this.props.expandable })}
-                  // data={this.props.baseProps.data}
-                  {...paginationTableProps}
-                  defaultSorted={this.state.defaultSorted}
-                  expandRow={this.props.expandable ? this.expandRow() : undefined}
-                  filter={filterFactory()}
-                  height="200px"
-                  scrollTop="top"
-                  // keyField={props.baseProps.keyField}
-                  noDataIndication={() => (
-                    <TableAlert
-                      textType="text-dark"
-                      variant="warning"
-                      message={'No records found'}
-                      buttonText="Clear Filters"
-                      buttonVariant="outline-secondary"
-                    />
-                  )}
-                  rowClasses={this.props.tableConfig.tableRowClasses}
-                  tabIndexCell
-                />
-                {this.props.loading && <InnerLoader />}
-                {this.props.error && (
-                  <TableAlert
-                    variant="danger"
-                    textType="text-danger"
-                    message={this.props.error.message}
-                    action={this.props.errorAction}
-                  />
-                )}
-                {!this.props.nested && !!this.props.includeHeader && (
-                  <Row>
-                    <Col xs={6}>
-                      <PaginationListStandalone {...paginationProps} />
-                    </Col>
-                  </Row>
-                )}
-              </div>
-            )}
-          </PaginationProvider>
+      <PaginationProvider
+        pagination={paginationFactory(
+          this.props.tableConfig.paginationOptions(this.props.records.length, this.state.page, this.setPage)
         )}
-      </ToolkitProvider>
+      >
+        {({ paginationProps, paginationTableProps }) => {
+          return (
+            <ToolkitProvider
+              keyField={`${this.props.tableConfig.keyField}`}
+              data={this.props.records}
+              columns={this.state.columns}
+              exportCSV={{
+                fileName: this.constructCsvFilename(this.baseTableConfig.selectedFilters),
+              }}
+              bootstrap4={true}
+            >
+              {toolKitProps => {
+                return (
+                  <div
+                    className={`base-table ${this.props.wrapperClasses}`}
+                    key={`table-${this.props.tableConfig.keyField}`}
+                  >
+                    {!this.props.nested && !!this.props.includeHeader && (
+                      <Row>
+                        <Col xs={12}>
+                          <TableHeader
+                            datasetModelName={this.props.datasetModelName}
+                            dispatch={this.props.dispatch}
+                            title={this.props.caption}
+                          />
+                        </Col>
+
+                        <Col xs={4} className="text-right d-flex justify-content-start align-items-center">
+                          Total:
+                          {paginationProps.dataSize === paginationProps.totalSize
+                            ? paginationProps.totalSize
+                            : `${paginationProps.dataSize}/${paginationProps.totalSize}`}
+                        </Col>
+                        <Col
+                          xs={4}
+                          className="table-header__share-column d-none d-md-flex justify-content-end align-items-center"
+                        >
+                          <CsvButton
+                            parentComponent={this}
+                            onClick={this.handleCsvClick}
+                            ExportCSVButton={ExportCSVButton}
+                            csvProps={toolKitProps.csvProps}
+                          />
+                        </Col>
+                        <Col xs={4} className="d-flex align-items-center justify-content-end">
+                          <SizePerPageDropdownStandalone btnContextual="btn-outline-primary" {...paginationProps} />
+                        </Col>
+                      </Row>
+                    )}
+
+                    <Row>
+                      {!!this.baseTableConfig.filterButtonSets[this.props.tableConfig.resourceConstant] &&
+                        this.baseTableConfig.filterButtonSets[this.props.tableConfig.resourceConstant].map(
+                          (set, index) => {
+                            return <Col key={`button-set${index}`}>{set(this.baseTableConfig.selectedFilters)}</Col>
+                          }
+                        )}
+                    </Row>
+
+                    <BootstrapTable
+                      {...toolKitProps.baseProps}
+                      {...paginationTableProps}
+                      condensed
+                      classes={classnames(this.props.classes, { 'no-expand': !this.props.expandable })}
+                      defaultSorted={this.state.defaultSorted}
+                      expandRow={this.props.expandable ? this.expandRow() : undefined}
+                      filter={filterFactory()}
+                      height="200px"
+                      scrollTop="top"
+                      noDataIndication={() => (
+                        <TableAlert
+                          textType="text-dark"
+                          variant="warning"
+                          message={'No records found'}
+                          buttonText="Clear Filters"
+                          buttonVariant="outline-secondary"
+                        />
+                      )}
+                      rowClasses={this.props.tableConfig.tableRowClasses}
+                      tabIndexCell
+                    />
+                    {this.props.loading && <InnerLoader />}
+                    {this.props.error && (
+                      <TableAlert
+                        variant="danger"
+                        textType="text-danger"
+                        message={this.props.error.message}
+                        action={this.props.errorAction}
+                      />
+                    )}
+                    {!this.props.nested && !!this.props.includeHeader && (
+                      <Row>
+                        <Col xs={6}>
+                          <PaginationListStandalone {...paginationProps} />
+                        </Col>
+                      </Row>
+                    )}
+                  </div>
+                )
+              }}
+            </ToolkitProvider>
+          )
+        }}
+      </PaginationProvider>
     )
   }
 }
