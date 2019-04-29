@@ -4,7 +4,8 @@ const HPDComplaint = databaseObject => ({
   summaryBackgroundColorClass: 'hpd-orange',
   resourceConstant: 'HPD_COMPLAINT',
   urlPath: 'hpdcomplaints',
-  label: 'HPD Complaints',
+  label: 'HPD Complaints & Problems',
+  dashboardLabel: 'HPD Complaints',
   sentenceNoun: 'HPD complaints',
   ownResourceFilters: {
     initial: {

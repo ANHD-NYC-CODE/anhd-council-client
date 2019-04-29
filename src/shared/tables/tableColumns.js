@@ -18,6 +18,10 @@ import {
   dobPermitSourceFormatter,
   expandTableFormatter,
   linkFormatter,
+  hpdStatusFormatter,
+  lispendenCleanupFormatter,
+  dobViolationStatusFormatter,
+  capitalizeFormatter,
 } from 'shared/utilities/tableUtils'
 
 export const getKeyField = constant => {
@@ -328,7 +332,6 @@ export const getTableColumns = ({
           columnEvent: linkToColumnEvent,
           dataField: 'address',
           text: 'Address',
-          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructPropertyColumn({
@@ -449,7 +452,7 @@ export const getTableColumns = ({
           text: getAnnotatedLabel({
             annotationLabel: 'DOB Permit Applications',
             rowExample,
-            annotationKey: getAnnotationKey('hpdviolations', annotationStart),
+            annotationKey: getAnnotationKey('dobfiledpermits', annotationStart),
           }),
           sort: true,
           formatter: annotatedColumnFormatter,
@@ -681,15 +684,11 @@ export const getTableColumns = ({
           classes: 'table-column--description',
         }),
         constructStandardColumn({
-          dataField: 'currentstatus',
-          text: 'Notice Status',
-          sort: true,
-        }),
-        constructStandardColumn({
           dataField: 'violationstatus',
           text: 'Violation Status',
           filter: baseTableConfig.filterPrototypes['HPD_VIOLATION_OPEN'],
           headerClasses: 'hide-filter',
+          formatter: hpdStatusFormatter,
           sort: true,
         }),
       ]
@@ -764,8 +763,10 @@ export const getTableColumns = ({
         constructStandardColumn({
           dataField: 'status',
           text: 'Status',
-          filter: constructFilter(textFilter),
+          filter: baseTableConfig.filterPrototypes['HPD_COMPLAINT_OPEN'],
+          headerClasses: 'hide-filter',
           sort: true,
+          formatter: hpdStatusFormatter,
         }),
         constructNestedTableColumn({
           columnEvent: expandNestedColumnEvent,
@@ -843,7 +844,7 @@ export const getTableColumns = ({
         }),
         constructStandardColumn({
           dataField: 'isndobbisviol',
-          text: 'isndobbisviol',
+          text: 'Violation #',
         }),
         constructStandardColumn({
           dataField: 'issuedate',
@@ -856,21 +857,22 @@ export const getTableColumns = ({
           columnEvent: expandColumnEvent,
           dataField: 'violationtype',
           text: 'Violation Type',
-          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
           dataField: 'description',
           text: 'Description',
-          classes: 'table-column--description',
           filter: constructFilter(textFilter),
+          classes: 'table-column--description',
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
           dataField: 'violationcategory',
           text: 'Status',
-          filter: constructFilter(textFilter),
+          filter: baseTableConfig.filterPrototypes['DOB_VIOLATION_ACTIVE'],
+          headerClasses: 'hide-filter',
+          formatter: dobViolationStatusFormatter,
           sort: true,
         }),
       ]
@@ -906,7 +908,9 @@ export const getTableColumns = ({
         constructStandardColumn({
           dataField: 'status',
           text: 'Status',
-          filter: constructFilter(textFilter),
+          formatter: capitalizeFormatter,
+          filter: baseTableConfig.filterPrototypes['DOB_COMPLAINT_ACTIVE'],
+          headerClasses: 'hide-filters',
           sort: true,
         }),
       ]
@@ -933,27 +937,39 @@ export const getTableColumns = ({
         constructStandardColumn({
           dataField: 'violationtype',
           text: 'Violation Type',
-          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
           dataField: 'severity',
           text: 'Severity',
-          filter: constructFilter(textFilter),
+          sort: true,
+        }),
+        constructStandardColumn({
+          dataField: 'penalityimposed',
+          text: 'Penalty Imposed',
+          formatter: dollarFormatter,
+          sort: true,
+        }),
+        constructStandardColumn({
+          columnEvent: expandColumnEvent,
+          dataField: 'sectionlawdescription1',
+          text: 'Standard Description',
           sort: true,
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
           dataField: 'violationdescription',
-          text: 'Description',
-          classes: 'table-column--description',
+          text: 'Violation Description',
           filter: constructFilter(textFilter),
+          classes: 'table-column--description',
         }),
         constructStandardColumn({
           dataField: 'ecbviolationstatus',
           text: 'Status',
-          filter: constructFilter(textFilter),
+          filter: baseTableConfig.filterPrototypes['ECB_VIOLATION_ACTIVE'],
+          headerClasses: 'hide-filter',
           sort: true,
+          formatter: capitalizeFormatter,
         }),
       ]
       break
@@ -988,13 +1004,13 @@ export const getTableColumns = ({
         constructStandardColumn({
           dataField: 'worktype',
           text: 'Work Type',
-          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
           dataField: 'jobdescription',
           text: 'Description',
-          filter: constructFilter(textFilter),
+          filter: baseTableConfig.filterPrototypes['DOB_ISSUED_PERMIT_TYPE'],
+          headerClasses: 'hide-filter',
           sort: true,
         }),
         constructStandardColumn({
@@ -1033,9 +1049,10 @@ export const getTableColumns = ({
           columnEvent: expandColumnEvent,
           dataField: 'jobtype',
           text: 'Job Type',
-          formatter: dobPermitWorkTypeFormatter,
-          filter: constructFilter(textFilter),
+          filter: baseTableConfig.filterPrototypes['DOB_FILED_PERMIT_TYPE'],
+          headerClasses: 'hide-filter',
           sort: true,
+          // formatter: dobPermitWorkTypeFormatter,
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
@@ -1095,6 +1112,7 @@ export const getTableColumns = ({
           text: 'Status',
           filter: constructFilter(textFilter),
           sort: true,
+          formatter: capitalizeFormatter,
         }),
       ]
       break
@@ -1229,7 +1247,7 @@ export const getTableColumns = ({
         constructStandardColumn({
           columnEvent: expandColumnEvent,
           dataField: 'evictionaddress',
-          text: 'Address Description',
+          text: 'Address',
           filter: constructFilter(textFilter),
           sort: true,
         }),
@@ -1240,6 +1258,7 @@ export const getTableColumns = ({
         constructStandardColumn({
           dataField: 'key',
           text: 'Key',
+          hidden: true,
         }),
         constructStandardColumn({
           dataField: 'fileddate',
@@ -1250,9 +1269,16 @@ export const getTableColumns = ({
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
+          dataField: 'cr',
+          text: 'Creditor',
+          formatter: lispendenCleanupFormatter,
+          sort: true,
+        }),
+        constructStandardColumn({
+          columnEvent: expandColumnEvent,
           dataField: 'debtor',
           text: 'Debtor',
-          filter: constructFilter(textFilter),
+          formatter: lispendenCleanupFormatter,
           sort: true,
         }),
       ]

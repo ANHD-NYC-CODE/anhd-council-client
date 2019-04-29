@@ -59,7 +59,7 @@ export const infoModals = {
       'HPD violations are notices of substandard living conditions as defined in the Housing Maintenance Code for which the landlord is responsible, placed by the Department of Housing Preservation and Development (HPD). A high number of Class A, B, and C violations may indicate that a landlord is neglecting or actively harassing tenants, Class C being the most severe.',
     sources: [
       {
-        text: 'NYC Open Data',
+        text: 'NYC Open Data - Housing Maintenance CodeViolations',
         url: 'https://data.cityofnewyork.us/Housing-Development/Housing-Maintenance-Code-Violations/wvxf-dwi5/data',
       },
     ],
@@ -70,7 +70,7 @@ export const infoModals = {
       'Complaints that tenants make about conditions in their apartment or building get sent to Housing Preservation and Development for inspection. Complaints can be an early signal that landlords are neglecting to make repairs.',
     sources: [
       {
-        text: 'NYC Open Data',
+        text: 'NYC Open Data - Housing Maintenance Code Complaints',
         url: 'https://data.cityofnewyork.us/Housing-Development/Housing-Maintenance-Code-Complaints/uwyv-629c/data',
       },
     ],
@@ -81,7 +81,7 @@ export const infoModals = {
       'DOB violations are notices of City building code or zoning code violations for which the landlord is responsible, placed by the Department of Buildings (DOB). These violations are sometimes part of a pattern of harassment against tenants.',
     sources: [
       {
-        text: 'NYC Open Data',
+        text: 'NYC Open Data - DOB Violations',
         url: 'https://data.cityofnewyork.us/Housing-Development/DOB-Violations/3h2n-5cm9',
       },
     ],
@@ -92,7 +92,7 @@ export const infoModals = {
       'Complaints that tenants make about issues related to construction, renovation, or certain building-wide issues are directed to the Department of Buildings. Aggressive or improper construction can be a signal of tenant harassment and displacement pressure.',
     sources: [
       {
-        text: 'NYC Open Data',
+        text: 'NYC Open Data - DOB Complaints Received',
         url: 'https://data.cityofnewyork.us/Housing-Development/DOB-Complaints-Received/eabe-havv',
       },
     ],
@@ -100,11 +100,14 @@ export const infoModals = {
   DOB_ISSUED_PERMIT: {
     title: 'DOB Issued Permits',
     body:
-      'Issued construction permits show that a landlord has permission to do construction and renovations, which often indicates harassment and displacement. For example, building-wide work can be used to increase rents via a Major Capital Improvement (MCI) and individual apartment renovations may show that a landlord is actively vacating apartments to dramatically raise rents via  Individual Apartment Improvements.',
+      'Issued construction permits show that a landlord has permission to do construction and renovations, which can indicate harassment and displacement. For example, building-wide work can be used to increase rents via a Major Capital Improvement (MCI) and individual apartment renovations may show that a landlord is actively vacating apartments to dramatically raise rents via Individual Apartment Improvements. One permit can contain multiple work types, which are listed here as separate records.',
     sources: [
-      { text: 'NYC Open Data', url: 'https://data.cityofnewyork.us/Housing-Development/DOB-Permit-Issuance/ipu4-2q9a' },
       {
-        text: 'NYC Open Data - DOB NOW',
+        text: 'NYC Open Data - DOB Permit Issuance',
+        url: 'https://data.cityofnewyork.us/Housing-Development/DOB-Permit-Issuance/ipu4-2q9a',
+      },
+      {
+        text: 'NYC Open Data - DOB NOW Build Approved Permits',
         url: 'https://data.cityofnewyork.us/Housing-Development/DOB-NOW-Build-Approved-Permits/rbx6-tga4',
       },
     ],
@@ -112,10 +115,14 @@ export const infoModals = {
   DOB_FILED_PERMIT: {
     title: 'DOB Permit Applications',
     body:
-      "Construction permit applications show a landlord's intention to do construction and renovations, which can be used to destabilize apartments. For example, building-wide work can be used to increase rents via a Major Capital Improvement (MCI) and individual apartment renovations may show that a landlord is actively vacating apartments to dramatically raise rents via Individual Apartment ImprovementsSource",
+      "Construction permit applications show a landlord's intention to do construction and renovations, which can be used to destabilize apartments. For example, building-wide work can be used to increase rents via a Major Capital Improvement (MCI) and individual apartment renovations may show that a landlord is actively vacating apartments to dramatically raise rents via Individual Apartment Improvements. One permit can contain multiple work types, which are listed here as separate records.",
     sources: [
       {
-        text: 'NYC Open Data',
+        text: 'NYC Open Data - DOB Job Application Filings',
+        url: '  https://data.cityofnewyork.us/Housing-Development//ic3t-wcy2/data',
+      },
+      {
+        text: 'NYC Open Data - DOB NOW Build Job Application Filings',
         url: 'https://data.cityofnewyork.us/Housing-Development/DOB-NOW-Build-Job-Application-Filings/w9ak-ipjd',
       },
     ],
@@ -123,10 +130,10 @@ export const infoModals = {
   ECB_VIOLATION: {
     title: 'ECB Violations',
     body:
-      'ECB violations are notices of City building code or zoning code violations that are subject to review by the Environmental Control Board.  These violations are sometimes part of a pattern of harassment against tenants.',
+      'ECB violations are notices of city building code or zoning code violations, issued by the Department of Buildings, that are subject to review by the Environmental Control Board. These violations are sometimes part of a pattern of harassment against tenants.',
     sources: [
       {
-        text: 'NYC Open Data',
+        text: 'NYC Open Data - DOB/ECB Violations',
         url: 'https://data.cityofnewyork.us/Housing-Development/DOB-ECB-Violations/6bgk-3dad',
       },
     ],
@@ -137,12 +144,16 @@ export const infoModals = {
       'The sale price of a building matters because speculative investment is one of the key underlying threats to existing affordable housing. A high sale price can mean a new owner plans to displace existing tenants to make large profits.',
     sources: [
       {
-        text: 'NYC Open Data - ACRIS real property masters',
+        text: 'NYC Open Data - ACRIS Real Property Master',
         url: 'https://data.cityofnewyork.us/City-Government/ACRIS-Real-Property-Master/bnx9-e6tj',
       },
       {
-        text: 'NYC Open Data - ACRIS real property legals',
+        text: 'NYC Open Data - ACRIS Real Property Legals',
         url: 'https://data.cityofnewyork.us/City-Government/ACRIS-Real-Property-Legals/8h5j-fqxa',
+      },
+      {
+        text: 'NYC Open Data - ACRIS Real Property Parties',
+        url: 'https://data.cityofnewyork.us/City-Government/ACRIS-Real-Property-Parties/636b-3b5g',
       },
     ],
   },
@@ -153,7 +164,7 @@ export const infoModals = {
     sources: [
       {
         text: 'Public Data Corporation',
-        url: 'https://data.cityofnewyork.us/City-Government/Evictions/6z8x-wfk4',
+        url: 'http://www.pdcny.com',
       },
     ],
   },
@@ -163,15 +174,16 @@ export const infoModals = {
       'These properties recorded evictions executed by marshals. Evictions in affordable rent-regulated apartments usually indicate an immediate loss of affordable housing because landlords take advantage of the vacancy to dramatically raise the rent. A high rate of evictions may also be an indicator of tenant harassment and displacement by a landlord aggressively driving vacancies.',
     sources: [
       {
-        text: 'NYC Open Data',
+        text: 'NYC Open Data - Evictions',
         url: 'https://data.cityofnewyork.us/City-Government/Evictions/6z8x-wfk4',
       },
     ],
   },
   HOUSING_LITIGATION: {
-    title: 'Repair Litigations',
-    body: 'Lorem ipsum...',
-    sourceText: 'NYC Open Data',
-    sourceUrl: '',
+    title: 'Litigations against landlords',
+    body:
+      'This dataset includes actions in Housing Court initiated by the Department of Housing Preservation and Development (HPD) or by tenants, where HPD is named as a party. Court cases indicate that a landlord is not maintaining building conditions or may be actively harassing tenants.',
+    sourceText: 'NYC Open Data - Housing-Litigations',
+    sourceUrl: 'https://data.cityofnewyork.us/Housing-Development/Housing-Litigations/59kj-x8nc',
   },
 }

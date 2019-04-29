@@ -27,7 +27,6 @@ class BaseTable extends React.Component {
     this.setPage = this.setPage.bind(this)
     this.expandRow = this.expandRow.bind(this)
     this.constructFilter = this.constructFilter.bind(this)
-    this.clearFilters = this.clearFilters.bind(this)
     this.handleCsvClick = this.handleCsvClick.bind(this)
     this.constructCsvFilename = this.constructCsvFilename.bind(this)
 
@@ -47,6 +46,22 @@ class BaseTable extends React.Component {
         dispatch: props.dispatch,
         annotationStart: props.annotationStart,
       }),
+    }
+  }
+
+  componentDidUpdate() {
+    if (this.props.records.length > this.state.displayedRecordsCount) {
+      this.setState({
+        displayedRecordsCount: this.props.records.length,
+        columns: this.props.tableConfig.getColumns({
+          expandColumnFunction: this.setExpandedContent,
+          constructFilter: this.constructFilter,
+          baseTableConfig: this.baseTableConfig,
+          rowExample: this.props.records[0],
+          dispatch: this.props.dispatch,
+          annotationStart: this.props.annotationStart,
+        }),
+      })
     }
   }
 
@@ -93,14 +108,6 @@ class BaseTable extends React.Component {
       expandedRowProps,
       expandedRowComponent: component,
       expanded: expandedSet,
-    })
-  }
-
-  clearFilters() {
-    Object.keys(this.filters).forEach(key => {
-      if (this.filters[key]) {
-        this.filters[key]('')
-      }
     })
   }
 
@@ -225,7 +232,6 @@ class BaseTable extends React.Component {
                       message={'No records found'}
                       buttonText="Clear Filters"
                       buttonVariant="outline-secondary"
-                      action={this.clearFilters}
                     />
                   )}
                   rowClasses={this.props.tableConfig.tableRowClasses}
