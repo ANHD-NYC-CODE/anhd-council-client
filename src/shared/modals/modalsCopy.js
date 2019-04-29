@@ -73,6 +73,10 @@ export const infoModals = {
         text: 'NYC Open Data - Housing Maintenance Code Complaints',
         url: 'https://data.cityofnewyork.us/Housing-Development/Housing-Maintenance-Code-Complaints/uwyv-629c/data',
       },
+      {
+        text: 'NYC Open Data - Complaint Problems',
+        url: 'https://data.cityofnewyork.us/Housing-Development/Complaint-Problems/a2nx-4u46',
+      },
     ],
   },
   DOB_VIOLATION: {
@@ -183,7 +187,11 @@ export const infoModals = {
     title: 'Litigations against landlords',
     body:
       'This dataset includes actions in Housing Court initiated by the Department of Housing Preservation and Development (HPD) or by tenants, where HPD is named as a party. Court cases indicate that a landlord is not maintaining building conditions or may be actively harassing tenants.',
-    sourceText: 'NYC Open Data - Housing-Litigations',
-    sourceUrl: 'https://data.cityofnewyork.us/Housing-Development/Housing-Litigations/59kj-x8nc',
+    sources: [
+      {
+        text: 'NYC Open Data - Housing Litigations',
+        url: 'https://data.cityofnewyork.us/Housing-Development/Housing-Litigations/59kj-x8nc',
+      },
+    ],
   },
 }
