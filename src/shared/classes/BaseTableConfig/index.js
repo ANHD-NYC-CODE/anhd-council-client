@@ -2,7 +2,8 @@ import React from 'react'
 import { textFilter } from 'react-bootstrap-table2-filter'
 import classnames from 'classnames'
 export default class BaseTableConfig {
-  constructor() {
+  constructor({ component = undefined } = {}) {
+    this._component = component
     this._filters = {}
     this._selectedFilters = {}
     this._filterPrototypes = {
@@ -128,6 +129,14 @@ export default class BaseTableConfig {
     this._selectedFilters = selectedFilters
   }
 
+  get component() {
+    return this._component
+  }
+
+  set component(component) {
+    this._component = component
+  }
+
   clearFilterGroup(filterConstant) {
     Object.keys(this.selectedFilters).map(key => {
       if (key.includes(filterConstant)) {
@@ -152,7 +161,7 @@ export default class BaseTableConfig {
       [constant]: (e, value) => {
         this.filters[constant](value)
         if (value) {
-          this.selectedFilters = { ...this.selectedFilters, [constant + value]: true }
+          this.selectedFilters = { ...this.selectedFilters, [`${constant}__ ${value}`]: true }
         }
       },
     }
@@ -171,7 +180,7 @@ export default class BaseTableConfig {
               <button
                 key={`button-${filterConstant}-${index}`}
                 className={`${classnames('table-filter-button', 'btn', {
-                  'btn-primary': !!selectedFilters[filterConstant + item.value],
+                  'btn-primary': !!selectedFilters[`${filterConstant}__ ${item.value}`],
                 })}`}
                 onClick={e => {
                   this.clearFilterGroup(filterConstant)
