@@ -29,7 +29,7 @@ class BaseTable extends React.Component {
     this.constructFilter = this.constructFilter.bind(this)
     this.handleCsvClick = this.handleCsvClick.bind(this)
     this.constructCsvFilename = this.constructCsvFilename.bind(this)
-
+    this.getSpecificTableSize = this.getSpecificTableSize.bind(this)
     this.baseTableConfig = new BaseTableConfig({ component: this })
 
     this.state = {
@@ -159,6 +159,51 @@ class BaseTable extends React.Component {
     })
   }
 
+  getSpecificTableSize(paginationProps) {
+    switch (this.props.tableConfig.resourceConstant) {
+      case 'HPD_COMPLAINT': {
+        return (
+          <span className="text-left">
+            Total Problems:{' '}
+            {paginationProps.dataSize === paginationProps.totalSize
+              ? paginationProps.totalSize
+              : `${paginationProps.dataSize}/${paginationProps.totalSize}`}
+          </span>
+        )
+      }
+      //   const map = new Map()
+      //   const totalComplaints = this.props.records
+      //
+      //   return (
+      //     <span className="text-left">
+      //       <div>
+      //         Total Complaints:{' '}
+      //         {paginationProps.dataSize === paginationProps.totalSize
+      //           ? paginationProps.totalSize
+      //           : `${paginationProps.dataSize}/${paginationProps.totalSize}`}
+      //         </div>
+      //         <div>
+      //           Total Problems:{' '}
+      //           {paginationProps.dataSize === paginationProps.totalSize
+      //             ? paginationProps.totalSize
+      //             : `${paginationProps.dataSize}/${paginationProps.totalSize}`}
+      //           </div>
+      //         </span>
+      //       )
+      // }
+      // debugger
+      default:
+        return (
+          <span>
+            Total:{' '}
+            {paginationProps.dataSize === paginationProps.totalSize
+              ? paginationProps.totalSize
+              : `${paginationProps.dataSize}/${paginationProps.totalSize}`}
+          </span>
+        )
+    }
+  }
+
   render() {
     const { ExportCSVButton } = CSVExport
     return (
@@ -197,10 +242,7 @@ class BaseTable extends React.Component {
                         </Col>
 
                         <Col xs={4} className="text-right d-flex justify-content-start align-items-center">
-                          Total:
-                          {paginationProps.dataSize === paginationProps.totalSize
-                            ? paginationProps.totalSize
-                            : `${paginationProps.dataSize}/${paginationProps.totalSize}`}
+                          {this.getSpecificTableSize(paginationProps)}
                         </Col>
                         <Col
                           xs={4}
@@ -229,6 +271,7 @@ class BaseTable extends React.Component {
                     </Row>
 
                     <BootstrapTable
+                      ref={n => (this.node = n)}
                       {...toolKitProps.baseProps}
                       {...paginationTableProps}
                       condensed

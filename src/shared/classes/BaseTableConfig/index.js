@@ -9,7 +9,7 @@ export default class BaseTableConfig {
     this._filterPrototypes = {
       ...this.createFilterPrototype('HPD_VIOLATION_OPEN'),
       ...this.createFilterPrototype('HPD_VIOLATION_CLASS'),
-      ...this.createFilterPrototype('HPD_COMPLAINT_OPEN'),
+      ...this.createFilterPrototype('HPD_COMPLAINT_OPEN', true),
       ...this.createFilterPrototype('DOB_VIOLATION_ACTIVE'),
       ...this.createFilterPrototype('DOB_COMPLAINT_ACTIVE'),
       ...this.createFilterPrototype('ECB_VIOLATION_ACTIVE'),
@@ -158,12 +158,15 @@ export default class BaseTableConfig {
     })
   }
 
-  createFilterPrototype(constant) {
+  createFilterPrototype(constant, forceUpdate = false) {
     return {
       [constant]: textFilter({
         getFilter: filter => {
           this.filters[constant] = filter
         },
+        // onFilter: (filter, data) => {
+        //   this.component.forceUpdate()
+        // },
       }),
     }
   }

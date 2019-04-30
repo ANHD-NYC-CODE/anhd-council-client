@@ -73,6 +73,7 @@ export const getTableSubheaderLinks = ({ constant, property } = {}) => {
               to view more HPD records.
             </li>
           )}
+          <li>One complaint can include multiple problems.</li>
         </ul>
       )
     case 'HOUSING_LITIGATION':
