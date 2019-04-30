@@ -45,7 +45,7 @@ class RequestTableWrapper extends React.Component {
           )
         )
       default:
-        results
+        return results
     }
   }
 
