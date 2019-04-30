@@ -57,3 +57,8 @@
 - Add table subheaders in lookup to include link information
 - Add "A3" and "DM" DOB permit filter type buttons.
 - Remove duplicate foreclosure comments
+
+#### 1.0.0b1.0.33
+
+- change contact email
+- create conjoined HPDComplaint & HPDProblem table, remove nesting.

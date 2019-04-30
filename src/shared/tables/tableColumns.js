@@ -9,6 +9,7 @@ import BaseTable from 'shared/components/BaseTable'
 import moment from 'moment'
 import {
   dateFormatter,
+  hpdProblemStatusFormatter,
   annotatedColumnFormatter,
   bldgClassFormater,
   dobComplaintCategoryPriorityFormatter,
@@ -759,6 +760,7 @@ export const getTableColumns = ({
         constructStandardColumn({
           dataField: 'complaintid',
           text: 'Complaint ID',
+          sort: true,
         }),
         constructStandardColumn({
           dataField: 'receiveddate',
@@ -780,15 +782,53 @@ export const getTableColumns = ({
           sort: true,
           formatter: hpdStatusFormatter,
         }),
-        constructNestedTableColumn({
-          columnEvent: expandNestedColumnEvent,
-          dataField: 'hpdproblems',
-          text: 'View Problems',
-          formatter: expandTableFormatter,
-          dataKey: 'hpdproblems',
-          classes: 'nested-table-column',
-          tableConfig: new TableConfig({ resourceConstant: 'HPD_PROBLEM' }),
+        constructStandardColumn({
+          dataField: 'type',
+          text: 'Urgency',
+          sort: true,
         }),
+        constructStandardColumn({
+          columnEvent: expandColumnEvent,
+          dataField: 'spacetype',
+          text: 'Space Type',
+          sort: true,
+        }),
+        constructStandardColumn({
+          columnEvent: expandColumnEvent,
+          dataField: 'majorcategory',
+          text: 'Major Category',
+          sort: true,
+        }),
+        constructStandardColumn({
+          columnEvent: expandColumnEvent,
+          dataField: 'minorcategory',
+          text: 'Minor Category',
+          sort: true,
+        }),
+        constructStandardColumn({
+          columnEvent: expandColumnEvent,
+          dataField: 'code',
+          text: 'Descriptor',
+          filter: constructFilter(textFilter),
+          sort: true,
+        }),
+        constructStandardColumn({
+          columnEvent: expandColumnEvent,
+          dataField: 'statusdescription',
+          text: 'Status Description',
+          formatter: hpdProblemStatusFormatter,
+          csvFormatter: hpdProblemStatusFormatter,
+          sort: true,
+        }),
+        // constructNestedTableColumn({
+        //   columnEvent: expandNestedColumnEvent,
+        //   dataField: 'hpdproblems',
+        //   text: 'View Problems',
+        //   formatter: expandTableFormatter,
+        //   dataKey: 'hpdproblems',
+        //   classes: 'nested-table-column',
+        //   tableConfig: new TableConfig({ resourceConstant: 'HPD_PROBLEM' }),
+        // }),
       ]
       break
     case 'HPD_PROBLEM':

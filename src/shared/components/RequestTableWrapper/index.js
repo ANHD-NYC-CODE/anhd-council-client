@@ -13,6 +13,7 @@ class RequestTableWrapper extends React.Component {
     this.retryRequest = this.retryRequest.bind(this)
 
     this.constructBaseCsvFileName = this.constructBaseCsvFileName.bind(this)
+    this.renderSpecificResults = this.renderSpecificResults.bind(this)
   }
 
   retryRequest() {
@@ -29,6 +30,23 @@ class RequestTableWrapper extends React.Component {
       resourceWithIdLabel = `${resourceWithId.constant.toLowerCase()}=${resourceWithId.resourceId}`
     }
     return `${this.props.request.resourceModel.label}${'-' + resourceWithIdLabel}`
+  }
+
+  renderSpecificResults(results) {
+    switch (this.props.request.resourceModel.resourceConstant) {
+      case 'HPD_COMPLAINT':
+        return [].concat(
+          ...results.map(complaint =>
+            complaint.hpdproblems.map(problem => {
+              problem.receiveddate = complaint.receiveddate
+              problem.apartment = complaint.apartment
+              return problem
+            })
+          )
+        )
+      default:
+        results
+    }
   }
 
   render() {
@@ -48,10 +66,10 @@ class RequestTableWrapper extends React.Component {
           loading={this.props.loading}
           records={
             this.props.housingTypeResultFilter.internalFilter(
-              this.props.results,
+              this.renderSpecificResults(this.props.results),
               this.props.housingTypeResultFilter.paramMaps
             ) ||
-            this.props.results ||
+            this.renderSpecificResults(this.props.results) ||
             []
           }
           request={this.props.request}
