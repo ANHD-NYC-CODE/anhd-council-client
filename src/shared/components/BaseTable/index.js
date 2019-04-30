@@ -162,18 +162,25 @@ class BaseTable extends React.Component {
   getSpecificTableSize(paginationProps) {
     switch (this.props.tableConfig.resourceConstant) {
       case 'HPD_COMPLAINT': {
+        const totalComplaints = new Map()
+        for (const item of this.props.records) {
+          if (!totalComplaints.has(item.complaintid)) {
+            totalComplaints.set(item.complaintid, true) // set any value to Map
+          }
+        }
         return (
           <span className="text-left">
-            Total Problems:{' '}
-            {paginationProps.dataSize === paginationProps.totalSize
-              ? paginationProps.totalSize
-              : `${paginationProps.dataSize}/${paginationProps.totalSize}`}
+            <div>Total Complaints: {totalComplaints.size}</div>
+            <div>
+              Total Problems:{' '}
+              {paginationProps.dataSize === paginationProps.totalSize
+                ? paginationProps.totalSize
+                : `${paginationProps.dataSize}/${paginationProps.totalSize}`}
+            </div>
           </span>
         )
       }
-      //   const map = new Map()
-      //   const totalComplaints = this.props.records
-      //
+
       //   return (
       //     <span className="text-left">
       //       <div>
@@ -209,7 +216,12 @@ class BaseTable extends React.Component {
     return (
       <PaginationProvider
         pagination={paginationFactory(
-          this.props.tableConfig.paginationOptions(this.props.records.length, this.state.page, this.setPage)
+          this.props.tableConfig.paginationOptions(
+            this.props.records.length,
+            this.state.page,
+            this.setPage,
+            this.node ? this.node.table.props.data : []
+          )
         )}
       >
         {({ paginationProps, paginationTableProps }) => {
@@ -242,7 +254,7 @@ class BaseTable extends React.Component {
                         </Col>
 
                         <Col xs={4} className="text-right d-flex justify-content-start align-items-center">
-                          {this.getSpecificTableSize(paginationProps)}
+                          {this.getSpecificTableSize(paginationProps, paginationTableProps, toolKitProps)}
                         </Col>
                         <Col
                           xs={4}

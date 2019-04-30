@@ -20,10 +20,7 @@ const RentStabilizationSection = props => {
               </Row>
               <Row className="lookup-profile-summary__group">
                 <Col>
-                  <label className="profile-summary-body__label">
-                    Stabilized Units (
-                    {(props.config.datasets.find(ds => ds.model_name === 'RentStabilizationRecord') || {}).version}):{' '}
-                  </label>
+                  <label className="profile-summary-body__label">Stabilized Units (most recent): </label>
                   <span className="profile-summary-body__value">{props.profile.unitsrentstabilized || 0}</span>
                 </Col>
               </Row>
