@@ -60,5 +60,13 @@
 
 #### 1.0.0b1.0.33
 
+4/30/19
+
 - change contact email
 - create conjoined HPDComplaint & HPDProblem table, remove nesting.
+
+#### 1.0.0b1.0.34
+
+4/30/19
+
+- small redesign of property lookup page, with more distinguishing characteristics for building vs tax lot data.
