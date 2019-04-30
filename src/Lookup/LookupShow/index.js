@@ -201,14 +201,20 @@ class LookupShow extends React.PureComponent {
                         </h4>
                       </Col>
                     </Row>
-                    <Row className="mb-2">
-                      <Col>
-                        <h6 className="font-weight-bold">Select a dataset ></h6>
-                      </Col>
-                    </Row>
+
                     <Row>
                       <Col xs={12} lg={4}>
                         <Row className="mb-4">
+                          <Col>
+                            <BuildingSelect
+                              bbl={this.props.bbl}
+                              bin={this.props.bin}
+                              changeLookup={this.props.changeLookup}
+                              request={this.props.profileRequest}
+                            />
+                          </Col>
+                        </Row>
+                        <Row className={classnames({ 'mb-4': this.props.bin })}>
                           {
                             // Property level requests
                           }
@@ -233,24 +239,17 @@ class LookupShow extends React.PureComponent {
                               )
                             })}
                         </Row>
-                        <hr />
-                        <Row className="mb-2">
-                          <Col>
-                            <BuildingSelect
-                              bbl={this.props.bbl}
-                              bin={this.props.bin}
-                              changeLookup={this.props.changeLookup}
-                              request={this.props.profileRequest}
-                            />
-                          </Col>
-                        </Row>
+
                         <Row>
                           {
                             // Building level requests
                           }
-                          <Col>
-                            <h6 className="lookup-show__datatype-header">Building Level Data</h6>
-                          </Col>
+                          {this.props.bin && (
+                            <Col>
+                              <h6 className="lookup-show__datatype-header">Building Level Data</h6>
+                            </Col>
+                          )}
+
                           {this.props.lookupRequests
                             .filter(r => r.level === 'BUILDING')
                             .map((request, index) => {
