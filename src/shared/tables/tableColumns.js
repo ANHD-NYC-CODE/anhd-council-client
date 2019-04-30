@@ -108,32 +108,38 @@ export const getLinkProps = constant => {
           10,
           '0'
         )}&ppremise60=080410B282913`,
-        linkText: 'View BIS Record',
+        linkText: linkId,
       })
     case 'ECB_VIOLATION':
       return ({ linkId }) => ({
         href: `http://a810-bisweb.nyc.gov/bisweb/ECBQueryByNumberServlet?ecbin=${linkId}&go7=+GO+&requestid=0`,
-        linkText: 'View BIS Record',
+        linkText: linkId,
       })
     case 'DOB_COMPLAINT':
       return ({ linkId }) => ({
         href: `http://a810-bisweb.nyc.gov/bisweb/OverviewForComplaintServlet?complaintno=${linkId}&go6=+GO+&requestid=0`,
-        linkText: 'View BIS Record',
+        linkText: linkId,
       })
     case 'DOB_ISSUED_PERMIT':
-      return ({ linkId }) => ({
-        href: `http://a810-bisweb.nyc.gov/bisweb/JobsQueryByNumberServlet?passjobnumber=${linkId}&passdocnumber=&go10=+GO+&requestid=0`,
-        linkText: 'View BIS Record',
+      return ({ linkId, type }) => ({
+        href:
+          type && type.toLowerCase().match(/legacy/)
+            ? `http://a810-bisweb.nyc.gov/bisweb/JobsQueryByNumberServlet?passjobnumber=${linkId}&passdocnumber=&go10=+GO+&requestid=0`
+            : 'https://a810-dobnow.nyc.gov/publish/#!/',
+        linkText: linkId,
       })
     case 'DOB_FILED_PERMIT':
-      return ({ linkId }) => ({
-        href: `http://a810-bisweb.nyc.gov/bisweb/JobsQueryByNumberServlet?passjobnumber=${linkId}&passdocnumber=&go10=+GO+&requestid=0`,
-        linkText: 'View BIS Record',
+      return ({ linkId, type }) => ({
+        href:
+          type && type.toLowerCase().match(/legacy/)
+            ? `http://a810-bisweb.nyc.gov/bisweb/JobsQueryByNumberServlet?passjobnumber=${linkId}&passdocnumber=&go10=+GO+&requestid=0`
+            : 'https://a810-dobnow.nyc.gov/publish/#!/',
+        linkText: linkId,
       })
     case 'ACRIS_REAL_MASTER':
       return ({ linkId }) => ({
         href: `https://a836-acris.nyc.gov/DS/DocumentSearch/DocumentDetail?doc_id=${linkId}`,
-        linkText: 'View ACRIS Document',
+        linkText: linkId,
       })
     default:
       return () => null
@@ -838,14 +844,15 @@ export const getTableColumns = ({
     case 'DOB_VIOLATION':
       columns = [
         constructStandardColumn({
-          dataField: 'id',
-          text: 'View Record',
+          dataField: 'isndobbisviol',
+          text: 'Violation #',
           formatter: (cell, row, index) => linkFormatter(cell, row, index, 'DOB_VIOLATION', 'isndobbisviol'),
           csvExport: false,
         }),
         constructStandardColumn({
           dataField: 'isndobbisviol',
           text: 'Violation #',
+          hidden: true,
         }),
         constructStandardColumn({
           dataField: 'issuedate',
@@ -881,14 +888,15 @@ export const getTableColumns = ({
     case 'DOB_COMPLAINT':
       columns = [
         constructStandardColumn({
-          dataField: 'id',
-          text: 'View Record',
+          dataField: 'complaintnumber',
+          text: 'Complaint #',
           formatter: (cell, row, index) => linkFormatter(cell, row, index, 'DOB_COMPLAINT', 'complaintnumber'),
           csvExport: false,
         }),
         constructStandardColumn({
           dataField: 'complaintnumber',
           text: 'Complaint #',
+          hidden: true,
         }),
         constructStandardColumn({
           dataField: 'dateentered',
@@ -935,14 +943,15 @@ export const getTableColumns = ({
     case 'ECB_VIOLATION':
       columns = [
         constructStandardColumn({
-          dataField: 'id',
-          text: 'View Record',
+          dataField: 'ecbviolationnumber',
+          text: 'Violation #',
           formatter: (cell, row, index) => linkFormatter(cell, row, index, 'ECB_VIOLATION', 'ecbviolationnumber'),
           csvExport: false,
         }),
         constructStandardColumn({
           dataField: 'ecbviolationnumber',
           text: 'Violation #',
+          hidden: true,
         }),
         constructStandardColumn({
           dataField: 'issuedate',
@@ -996,18 +1005,20 @@ export const getTableColumns = ({
       columns = [
         constructStandardColumn({
           dataField: 'id',
-          text: 'View Record',
+          text: 'Job Filing #',
           formatter: (cell, row, index) => linkFormatter(cell, row, index, 'DOB_ISSUED_PERMIT', 'jobfilingnumber'),
           csvExport: false,
         }),
         constructStandardColumn({
           dataField: 'key',
           text: 'Key',
+          csvExport: false,
           hidden: true,
         }),
         constructStandardColumn({
           dataField: 'jobfilingnumber',
           text: 'Job Filing #',
+          hidden: true,
         }),
         constructStandardColumn({
           dataField: 'workpermit',
@@ -1045,18 +1056,20 @@ export const getTableColumns = ({
       columns = [
         constructStandardColumn({
           dataField: 'id',
-          text: 'View Record',
+          text: 'Job Filing #',
           formatter: (cell, row, index) => linkFormatter(cell, row, index, 'DOB_FILED_PERMIT', 'jobfilingnumber'),
           csvExport: false,
         }),
         constructStandardColumn({
           dataField: 'key',
           text: 'KEY',
+          csvExport: false,
           hidden: true,
         }),
         constructStandardColumn({
           dataField: 'jobfilingnumber',
           text: 'Job Filing #',
+          hidden: true,
         }),
         constructStandardColumn({
           dataField: 'datefiled',
@@ -1137,14 +1150,15 @@ export const getTableColumns = ({
     case 'ACRIS_REAL_MASTER':
       columns = [
         constructStandardColumn({
-          dataField: 'id',
-          text: 'View Record',
+          dataField: 'documentid',
+          text: 'Document ID',
           formatter: (cell, row, index) => linkFormatter(cell, row, index, 'ACRIS_REAL_MASTER', 'documentid'),
           csvExport: false,
         }),
         constructStandardColumn({
           dataField: 'documentid',
-          text: 'Document ID',
+          text: 'documentid',
+          hidden: true,
         }),
         constructStandardColumn({
           dataField: 'docdate',

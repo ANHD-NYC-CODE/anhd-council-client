@@ -75,7 +75,6 @@ class RequestSummaryWrapper extends React.Component {
                                   modal.setModal({
                                     modalComponent: LoginModal,
                                     modalProps: {
-                                      postLoginAction: () => this.retryRequest(),
                                       modalFooter: <LoginModalFooter modal={modal} />,
                                     },
                                   })

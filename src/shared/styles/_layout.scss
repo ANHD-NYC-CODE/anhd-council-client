@@ -55,3 +55,15 @@ body {
 .pb-6 {
   padding-bottom: 4em !important;
 }
+
+.Toastify__toast.Toastify__toast--success {
+  background-color: $success;
+}
+
+.Toastify__toast.Toastify__toast--info {
+  background-color: $info;
+}
+
+.Toastify__toast.Toastify__toast--danger {
+  background-color: $danger;
+}

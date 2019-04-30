@@ -11,19 +11,13 @@ import BugReportModal from 'shared/components/modals/BugReportModal'
 
 import classnames from 'classnames'
 import BaseLink from 'shared/components/BaseLink'
-import { retryAuthenticatedRequests } from 'Store/Request/actions'
 import './style.scss'
 class SubHeader extends React.Component {
   constructor(props) {
     super(props)
-    this.loadAuthRequests = this.loadAuthRequests.bind(this)
     this.state = {
       key: '',
     }
-  }
-
-  loadAuthRequests() {
-    this.props.dispatch(retryAuthenticatedRequests())
   }
 
   render() {
@@ -99,7 +93,6 @@ class SubHeader extends React.Component {
                               modalComponent: LoginModal,
                               modalProps: {
                                 modalFooter: <LoginModalFooter modal={this.props.modal} />,
-                                postLoginAction: this.loadAuthRequests,
                               },
                             })
                           }}

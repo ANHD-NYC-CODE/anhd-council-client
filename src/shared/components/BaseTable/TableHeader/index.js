@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import DatasetInfo from 'shared/components/DatasetInfo'
-
+import { getTableSubheaders } from 'shared/tables/tableSubHeaders'
 import classnames from 'classnames'
 import { Row, Col } from 'react-bootstrap'
 
@@ -22,6 +22,7 @@ const TableHeader = props => {
           <DatasetInfo datasetModelName={props.datasetModelName} showUpdate={props.showUpdate} />
         </Col>
       </Row>
+      {getTableSubheaders({ constant: props.resourceConstant, property: props.property })}
     </div>
   )
 }
@@ -37,6 +38,7 @@ TableHeader.propTypes = {
   showUpdate: PropTypes.bool,
   size: PropTypes.string,
   title: PropTypes.string,
+  property: PropTypes.object,
 }
 
 export default TableHeader

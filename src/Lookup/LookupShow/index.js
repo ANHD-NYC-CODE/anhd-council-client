@@ -247,6 +247,7 @@ class LookupShow extends React.PureComponent {
                             return (
                               <Col xs={12} key={`rw-col-${index}`} className="request-wrapper-container">
                                 <RequestTableWrapper
+                                  property={this.props.propertyResult}
                                   caption={request.resourceModel.label}
                                   key={`request-wrapper-${this.props.appState.requests.indexOf(request)}`}
                                   visible={this.props.appState.selectedRequest === request}

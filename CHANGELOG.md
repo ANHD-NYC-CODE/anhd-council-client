@@ -47,3 +47,13 @@
 - separate DOB Complaint Category - Priority - Description columns
 - add concatenated lispenden comments column
 - add concatenated Acris parties column
+
+#### 1.0.0b1.0.32
+
+4/29/19
+
+- Improve access token handling with timeout refresh, fixes login bug
+- remove redirect to '/' on logout, instead re-request authenticated requests
+- Add table subheaders in lookup to include link information
+- Add "A3" and "DM" DOB permit filter type buttons.
+- Remove duplicate foreclosure comments

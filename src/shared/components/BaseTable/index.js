@@ -188,6 +188,8 @@ class BaseTable extends React.Component {
                       <Row>
                         <Col xs={12}>
                           <TableHeader
+                            property={this.props.property}
+                            resourceConstant={this.props.tableConfig.resourceConstant}
                             datasetModelName={this.props.datasetModelName}
                             dispatch={this.props.dispatch}
                             title={this.props.caption}
