@@ -64,12 +64,13 @@ export default class TableConfig {
     })
   }
 
-  paginationOptions(recordsLength, pageNumber, setPage) {
+  paginationOptions(recordsLength, pageNumber, setPage, tableData) {
     return {
       custom: true,
       totalSize: recordsLength,
       sizePerPageList: [10, 50, 100],
       page: pageNumber,
+      tableData,
       onPageChange: (page, sizePerPage) => {
         setPage(page)
       },
