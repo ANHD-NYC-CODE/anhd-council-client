@@ -41,7 +41,7 @@ class BuildingSelect extends React.Component {
             tax lot.
           </Col>
           <Col xs={12} className="text-muted small">
-            Select a building to filter the following data.
+            Select an address to filter building-specific data.
           </Col>
         </Row>
         <Row className="mb-2">
@@ -70,7 +70,7 @@ class BuildingSelect extends React.Component {
                 href={`${addressResultToPath({ bbl: this.props.bbl })}`}
                 onClick={() => this.props.changeLookup(this.props.bbl)}
               >
-                <Button variant="primary" size="sm" block>
+                <Button variant="secondary" size="sm" block>
                   View entire tax lot
                 </Button>
               </BaseLink>
