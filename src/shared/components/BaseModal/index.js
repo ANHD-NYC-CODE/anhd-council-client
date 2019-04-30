@@ -21,7 +21,7 @@ const BaseModal = props => {
       <Modal.Body>{props.body || props.children}</Modal.Body>
       {!!(props.sources || {}).length && (
         <Modal.Body>
-          <p>Source:</p>
+          <p>Source(s):</p>
           {props.sources.map((source, index) => {
             return (
               <div key={`source-${index}`}>

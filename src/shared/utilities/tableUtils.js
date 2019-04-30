@@ -5,6 +5,63 @@ import BaseLink from 'shared/components/BaseLink'
 import { getLinkId, getLinkProps } from 'shared/tables/tableColumns'
 import { capitalizeWords } from 'shared/utilities/languageUtils'
 
+export const hpdProblemStatusFormatter = (cell, row, index) => {
+  switch (cell) {
+    case 'The Department of Housing Preservation and Development responded to a complaint of no heat or hot water and was advised by a tenant in the building that heat and hot water had been restored. If the condition still exists, please file a new complaint.':
+      return 'HPD responded to a complaint of no heat or hot water and was advised by a tenant that heat/hot water had been restored.'
+    case 'The Department of Housing Preservation and Development inspected the following conditions. Violations were issued. However, HPD also identified potential lead-based paint conditions and will attempt to contact you to schedule a follow-up inspection to test the paint for lead. Information about specific violations is available at www.nyc.gov/hpd.':
+      return 'HPD inspected conditions and issued violations. HPD also identified potential lead-based paint conditions and will attempt to contact you for a follow-up inspection.'
+    case 'The following complaint conditions are still open. HPD may attempt to contact you to verify the correction of the condition or may conduct an inspection.':
+      return 'Complaint conditions are still open. HPD may attempt to contact you.'
+    case 'The Department of Housing Preservation and Development contacted a tenant in the building and verified that the following conditions were corrected. The complaint has been closed. If the condition still exists, please file a new complaint.':
+      return 'HPD contacted a tenant and verified conditions were corrected.'
+    case 'More than one complaint was received for this building-wide condition.This complaint status is for the initial complaint. The Department of Housing Preservation and Development inspected the following conditions. Violations were issued. Information about specific violations is available at www.nyc.gov/hpd.':
+      return 'HPD received more than one complaint; this is the initial complaint. HPD inspected conditions and issued violations.'
+    case 'The Department of Housing Preservation and Development was not able to gain access to your apartment to inspect for a lack of heat or hot water. However, HPD was able to verify that heat or hot water was inadequate by inspecting another apartment and a violation was issued. Information about specific violations is available at www.nyc.gov/hpd.':
+      return 'HPD was unable to gain access to apartment that filed complaint, but verified lack of heat/hot water in another apartment. HPD issued a violation.'
+    case 'The Department of Housing Preservation and Development responded to a complaint of no heat or hot water. Heat was not required at the time of the inspection. No violations were issued. If the condition still exists, please file a new complaint.':
+      return 'HPD responded to a complaint of no heat or hot water, but heat was not required at the time of inspection. No violations were issued.'
+    case 'The Department of Housing Preservation and Development inspected the following conditions. A Section 8 Failure was issued. Both the tenant and the property owner will receive a notice in the mail regarding the details of the Failure and the resulting action by the Agency.':
+      return 'HPD inspected conditions and issued a Section 8 Failure. Tenant and property owner will receive notices in the mail with details.'
+    case 'More than one complaint was received for this building-wide condition.This complaint status is for the initial complaint. The Department of Housing Preservation and Development responded to a complaint of no heat or hot water and was advised by a tenant in the building that heat and hot water had been restored. If the condition still exists, please file a new complaint.':
+      return 'HPD received more than one complaint about lack of heat or hot water; this is the initial complaint. HPD inspected and was advised by a tenant that heat/hot water was restored. '
+    case 'The Department of Housing Preservation and Development was not able to gain access to inspect the following conditions. The complaint has been closed. If the condition still exists, please file a new complaint.':
+      return 'HPD was unable to gain access and has closed the complaint.'
+    case 'The Department of Housing Preservation and Development contacted an occupant of the apartment and verified that the following conditions were corrected. The complaint has been closed. If the condition still exists, please file a new complaint.':
+      return 'HPD contacted tenant and verified conditions were corrected. Complaint has been closed.'
+    case 'More than one complaint was received for this building-wide condition.This complaint status is for the initial complaint. The Department of Housing Preservation and Development was not able to gain access to your apartment or others in the building to inspect for a lack of heat or hot water. The complaint has been closed. If the condition still exists, please file a new complaint.':
+      return 'HPD received more than one complaint about lack of heat/hot water; this is the initial complaint. HPD was unable to gain access to inspect. Complaint has been closed.'
+    case 'More than one complaint was received for this building-wide condition.This complaint status is for the initial complaint. The following complaint conditions are still open. HPD may attempt to contact you to verify the correction of the condition or may conduct an inspection.':
+      return 'HPD received more than one complaint about lack of heat/hot water; this is the initial complaint. Complaint is still open. HPD may contact you to verify the condition or conduct an inspection.'
+    case 'The Department of Housing Preservation and Development conducted an inspection for the following conditions and identified potential lead-based paint conditions. HPD will attempt to contact you to schedule a follow-up inspection to test the paint for lead.':
+      return 'HPD inspected conditions and identified potential lead-based paint. HPD will attempt to contact you for a follow-up inspection of lead-based paint.'
+    case 'The Department of Housing Preservation and Development inspected the following conditions. No violations were issued. The complaint has been closed.':
+      return 'HPD inspected conditions and did not issue a violation. Complaint has been closed.'
+    case 'The Department of Housing Preservation and Development was not able to gain access to inspect the conditions. If the conditions still exist and an inspection is required, please contact the borough office with your complaint number at':
+      return 'HPD was unable to gain access. If conditions still exist, contact borough office.'
+    case 'More than one complaint was received for this building-wide condition.This complaint status is for the initial complaint. The Department of Housing Preservation and Development responded to a complaint of no heat or hot water. Heat was not required at the time of the inspection. No violations were issued. If the condition still exists, please file a new complaint.':
+      return 'HPD received more than one complaint; this is the initial complaint. HPD responded to a complaint of no heat/hot water, but heat was not required at the time of inspection. No violations were issued.'
+    case 'The Department of Housing Preservation and Development inspected the following conditions. Violations were issued. Information about specific violations is available at www.nyc.gov/hpd.':
+      return 'HPD inspected conditions and issued violations.'
+    case 'More than one complaint was received for this building-wide condition.This complaint status is for the initial complaint. The Department of Housing Preservation and Development contacted an occupant of the apartment and verified that the following conditions were corrected. The complaint has been closed. If the condition still exists, please file a new complaint.':
+      return 'HPD received more than one complaint; this is the initial complaint. HPD contacted a tenant and verified conditions were corrected. Complaint has been closed.'
+    case 'More than one complaint was received for this building-wide condition.This complaint status is for the initial complaint. The Department of Housing Preservation and Development was not able to gain access to inspect the following conditions. The complaint has been closed. If the condition still exists, please file a new complaint.':
+      return 'HPD received more than one complaint; this is the initial complaint. HPD was unable to gain access. Complaint has been closed.'
+    case 'The Department of Housing Preservation and Development was not able to gain access to your apartment or others in the building to inspect for a lack of heat or hot water. The complaint has been closed. If the condition still exists, please file a new complaint.':
+      return 'HPD was unable to gain access to inspect a lack of heat/hot water. Complaint has been closed.'
+    case 'More than one complaint was received for this building-wide condition.This complaint status is for the initial complaint. The Department of Housing Preservation and Development inspected the following conditions. No violations were issued. The complaint has been closed.':
+      return 'HPD received more than one complaint; this is the initial complaint. HPD inspected conditions and did not issue a violation. Complaint has been closed.'
+    case 'The Department of Housing Preservation and Development inspected the following conditions. Violations were previously issued for these conditions. Information about specific violations is available at www.nyc.gov/hpd.':
+      return 'HPD inspected conditions and violations had already been issued.'
+    case 'More than one complaint was received for this building-wide condition.This complaint status is for the initial complaint. The Department of Housing Preservation and Development contacted a tenant in the building and verified that the following conditions were corrected. The complaint has been closed. If the condition still exists, please file a new complaint.':
+      return 'HPD received more than one complaint; this is the initial complaint. HPD contacted a tenant and verified conditions were corrected. Complaint has been closed.'
+    case 'The Department of Housing Preservation and Development was unable to access the rooms where the following conditions were reported. No violations were issued. The complaint has been closed.':
+      return 'HPD was unable to access rooms. No violations were issued and complaint has been closed. '
+    default:
+      return cell
+  }
+}
+
 export const acrisParties1Formatter = (cell, row, index) => {
   if (!cell.length) return ''
   try {
