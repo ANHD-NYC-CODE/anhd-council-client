@@ -79,7 +79,7 @@ class BugReportForm extends React.Component {
                   2) The url of the page that the bug occured on.
                 </Form.Text>
                 <Form.Text className="mb-3 text-primary font-weight-bold">
-                  3) (essential) The steps we'd need to take to see the bug for ourselves.
+                  3) (important!) The steps we'd need to take to see the bug for ourselves.
                 </Form.Text>
                 <Form.Label>Description *</Form.Label>
                 <Form.Control

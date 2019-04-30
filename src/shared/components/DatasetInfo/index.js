@@ -10,7 +10,6 @@ const DatasetInfo = props => {
     <div className="dataset-info">
       <ConfigContext.Consumer>
         {config => {
-          const c = config
           const dataset = config.datasets.find(ds => ds.model_name.toLowerCase() === props.datasetModelName)
           if (dataset) {
             return (
@@ -24,7 +23,7 @@ const DatasetInfo = props => {
 
                 {dataset.version && (
                   <div>
-                    <span>Version:</span>
+                    <span>Version: </span>
                     {dataset.version}
                   </div>
                 )}

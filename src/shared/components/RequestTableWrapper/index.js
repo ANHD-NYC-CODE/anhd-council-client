@@ -5,6 +5,7 @@ import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
 import { requestWithAuth } from 'shared/utilities/authUtils'
 import { makeRequest } from 'Store/Request/actions'
+import { constantToModelName } from 'shared/utilities/filterUtils'
 
 class RequestTableWrapper extends React.Component {
   constructor(props) {
@@ -59,12 +60,13 @@ class RequestTableWrapper extends React.Component {
           caption={this.props.caption}
           classes={this.props.classes}
           csvBaseFileName={this.constructBaseCsvFileName()}
-          datasetModelName={this.props.request.resourceModel.label}
+          datasetModelName={constantToModelName(this.props.request.resourceModel.resourceConstant)}
           dispatch={this.props.dispatch}
           error={this.props.error}
           errorAction={(this.props.error || {}).status === 504 ? this.retryRequest : null}
           expandable={this.props.expandable}
           loading={this.props.loading}
+          showUpdate={this.props.showUpdate}
           records={
             this.props.housingTypeResultFilter.internalFilter(
               this.renderSpecificResults(this.props.results),

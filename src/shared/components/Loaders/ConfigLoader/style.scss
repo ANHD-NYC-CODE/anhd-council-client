@@ -1,16 +1,23 @@
+@import 'shared/styles/_variables.scss';
+
 .loading {
   position: relative;
   transition: 'transform 5000 ease-in-out';
 
   .loading__logo-container {
+    background-color: white;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 20px;
   }
   img {
-    height: auto;
-    width: 100%;
-    max-width: 200px;
+    // height: auto;
+    width: auto;
+    max-height: 60px;
+    @include media-breakpoint-up(sm) {
+      max-height: 100px;
+    }
   }
   .loading__background {
     position: absolute;

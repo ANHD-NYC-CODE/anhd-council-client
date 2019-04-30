@@ -11,9 +11,9 @@ const TableHeader = props => {
       <Row>
         <Col xs={props.badge ? 8 : 12}>
           {props.size === 'sm' ? (
-            <h5 className={props.headerClass}>{props.title}</h5>
+            <h5 className={props.headerClass + ' mb-0'}>{props.title}</h5>
           ) : (
-            <h4 className={props.headerClass}>{props.title}</h4>
+            <h4 className={props.headerClass + ' mb-0'}>{props.title}</h4>
           )}
         </Col>
         {props.badge && <Col xs={4}>{props.badge}</Col>}

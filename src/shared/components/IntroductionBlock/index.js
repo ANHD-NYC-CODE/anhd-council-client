@@ -1,21 +1,44 @@
 import React from 'react'
-import { Col, Jumbotron, Button } from 'react-bootstrap'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChartBar } from '@fortawesome/free-solid-svg-icons'
-import { faCity } from '@fortawesome/free-solid-svg-icons'
-import { faTools } from '@fortawesome/free-solid-svg-icons'
-
+import { Jumbotron, Button } from 'react-bootstrap'
+import BugReportModal from 'shared/components/modals/BugReportModal'
+import ModalContext from 'Modal/ModalContext'
 import BaseLink from 'shared/components/BaseLink'
 import './style.scss'
 
 const IntroductionBlock = props => {
   return (
     <Jumbotron className="introduction-block text-light mb-0">
-      <h3 className="mb-4">Welcome to DAP Portal</h3>
+      <h3 className="mb-4">WELCOME TO DAP PORTAL [BETA]!</h3>
       <p className="font-weight-bold">
         DAP Portal is a comprehensive new research tool that includes dozens of datasets indicating harassment and
         potential displacement from New York City housing.
       </p>
+      <ModalContext.Consumer>
+        {modal => {
+          return (
+            <p className="font-weight-bold">
+              DAP Portal is currently in Beta, so please send us{' '}
+              <BaseLink href="https://forms.gle/EAUkzgsAkHn8NgbTA">feedback</BaseLink> or{' '}
+              <BaseLink
+                href="#"
+                onClick={e => {
+                  e.preventDefault()
+                  modal.setModal({
+                    modalComponent: BugReportModal,
+                    modalProps: {
+                      size: 'lg',
+                    },
+                  })
+                }}
+              >
+                report any bugs
+              </BaseLink>{' '}
+              you encounter.
+            </p>
+          )
+        }}
+      </ModalContext.Consumer>
+
       <p>
         The <BaseLink href="/lookup">Property Lookup</BaseLink> tool allows you to easily find all the relevant
         information about a building across a variety of city agency and other unique datasets.
@@ -46,7 +69,7 @@ const IntroductionBlock = props => {
       </p>
       <p>
         Existing data and information is fragmented and often confusing, which can make it challenging to identify which
-        buildings are most are most vulnerable in order to do something about it.
+        buildings are most vulnerable in order to do something about it.
       </p>
       <p>
         We use data and information visualization tools to proactively identify buildings that are facing a rising risk

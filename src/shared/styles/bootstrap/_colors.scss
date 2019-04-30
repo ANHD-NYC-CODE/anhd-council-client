@@ -47,7 +47,7 @@ $nyc-blue-lighten-10: lighten($nyc-blue, 10%);
 $nyc-blue-lighten-15: lighten($nyc-blue, 15%);
 $nyc-blue-lighten-20: lighten($nyc-blue, 20%);
 
-$nyc-orange: #fabf8f !default;
+$nyc-orange: #f8a35e !default;
 $nyc-crimson: #dfcdd3 !default;
 $tab-blue: #a0b9d1 !default;
 $logo-gray: #f2f2f2 !default;
@@ -88,7 +88,7 @@ $primary: $nyc-blue !default;
 $secondary: $nyc-orange !default;
 $secondary-light: lighten($secondary, 10%);
 $success: $green !default;
-$info: lighten($nyc-blue, 25%) !default;
+$info: lighten($nyc-blue, 17.5%) !default;
 $warning: $yellow !default;
 $danger: $red !default;
 $light: $gray-100 !default;

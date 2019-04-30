@@ -36,9 +36,9 @@ class BuildingSelect extends React.Component {
       <Form className="building-select">
         <Row className="mb-2">
           <Col xs={12} className="small">
-            {this.props.buildings.length}{' '}
-            {this.props.buildings.length > 1 || !this.props.buildings.length ? 'buildings' : 'building'} found on this
-            tax lot.
+            {this.props.buildings.length} building{' '}
+            {this.props.buildings.length > 1 || !this.props.buildings.length ? 'records' : 'record'} found for this tax
+            lot.
           </Col>
           <Col xs={12} className="text-muted small">
             Select an address to filter building-specific data.

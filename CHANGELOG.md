@@ -70,3 +70,11 @@
 4/30/19
 
 - small redesign of property lookup page, with more distinguishing characteristics for building vs tax lot data.
+
+#### 1.0.0b1.0.35
+
+4/30/19
+
+- darken $info and $secondary color variables
+- all percentages now 1 decimal place
+- small style tweaks to dashboard date toggles
