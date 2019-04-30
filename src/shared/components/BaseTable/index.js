@@ -250,6 +250,7 @@ class BaseTable extends React.Component {
                             resourceConstant={this.props.tableConfig.resourceConstant}
                             datasetModelName={this.props.datasetModelName}
                             dispatch={this.props.dispatch}
+                            showUpdate={this.props.showUpdate}
                             title={this.props.caption}
                           />
                         </Col>

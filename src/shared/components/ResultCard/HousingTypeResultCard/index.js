@@ -11,7 +11,7 @@ const HousingTypeResultCard = props => {
       as={Button}
       bg={classnames({ secondary: props.selected })}
       disabled={props.disabled}
-      text={'dark'}
+      text={props.selected ? 'light' : 'dark'}
       className={classnames('housingtype-summary-result-card', 'result-card flex-row', 'mb-2', {
         active: props.selected,
       })}
@@ -40,7 +40,7 @@ const HousingTypeResultCard = props => {
             {props.percentageOfWhole && props.totalResults && !!props.totalResults.length && (
               <div className="d-flex flex-column align-items-flex-end h-100 text-right">
                 <h5 className="text-right font-weight-bold mb-0">
-                  {`${((props.results.length / props.totalResults.length) * 100).toFixed(2)}%`}{' '}
+                  {`${((props.results.length / props.totalResults.length) * 100).toFixed(1)}%`}{' '}
                 </h5>
                 <small className="summary-units small ">{props.unitsLabel}</small>
               </div>

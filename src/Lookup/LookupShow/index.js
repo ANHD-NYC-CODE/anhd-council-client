@@ -286,6 +286,7 @@ class LookupShow extends React.PureComponent {
                                       <Badge className="building-pink building-card">Building Data</Badge>
                                     )
                                   }
+                                  showUpdate={true}
                                   property={this.props.propertyResult}
                                   caption={request.resourceModel.label}
                                   key={`request-wrapper-${this.props.appState.requests.indexOf(request)}`}

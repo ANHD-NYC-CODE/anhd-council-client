@@ -68,6 +68,7 @@ label.btn-primary:not(:disabled):not(.disabled):active {
   margin-bottom: 2px;
   outline: 0;
   text-decoration: underline;
+  max-width: 180px;
 }
 // Light toggles
 label.toggle-link.btn.light,
