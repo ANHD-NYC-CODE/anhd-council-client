@@ -44,7 +44,7 @@ export const getKeyField = constant => {
     case 'HPD_VIOLATION':
       return 'violationid'
     case 'HPD_COMPLAINT':
-      return 'complaintid'
+      return 'problemid'
     case 'HPD_PROBLEM':
       return 'problemid'
     case 'DOB_VIOLATION':
@@ -788,28 +788,23 @@ export const getTableColumns = ({
           sort: true,
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'spacetype',
           text: 'Space Type',
           sort: true,
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'majorcategory',
           text: 'Major Category',
           sort: true,
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'minorcategory',
           text: 'Minor Category',
           sort: true,
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'code',
           text: 'Descriptor',
-          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
