@@ -1,13 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { push } from 'connected-react-router'
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
 import { getCurrentBuilding } from 'Lookup/utilities'
 import { addressResultToPath } from 'shared/utilities/routeUtils'
 import StandardizedInput from 'shared/classes/StandardizedInput'
 import SpinnerLoader from 'shared/components/Loaders/SpinnerLoader'
-import { Form, InputGroup, Row, Col, Button } from 'react-bootstrap'
+import { Badge, Form, InputGroup, Row, Col, Button } from 'react-bootstrap'
 import CustomSelect from 'shared/components/CustomSelect'
 import BaseLink from 'shared/components/BaseLink'
 
@@ -34,40 +35,47 @@ class BuildingSelect extends React.Component {
     return !this.props.loading ? (
       <Form className="building-select">
         <Row className="mb-2">
-          <Col className="text-muted font-weight-bold">List of buildings (Total: {this.props.buildings.length})</Col>
+          <Col xs={12} className="small">
+            {this.props.buildings.length}{' '}
+            {this.props.buildings.length > 1 || !this.props.buildings.length ? 'buildings' : 'building'} found on this
+            tax lot.
+          </Col>
+          <Col xs={12} className="text-muted small">
+            Select a building to filter the following data.
+          </Col>
         </Row>
         <Row className="mb-2">
           <Col>
-            <InputGroup className="mb-2">
-              <CustomSelect
-                className="building-select__select mb-2"
-                size="lg"
-                onChange={e => this.props.changeLookup(this.props.bbl, new StandardizedInput(e).value)}
-                options={this.getBuildingOptions()}
-                value={
-                  this.props.bin
-                    ? {
-                        value: this.props.bin,
-                        label: `${selectedBuilding.house_number} ${selectedBuilding.stname}`,
-                      }
-                    : -1
-                }
-              />
-              {this.props.bin && (
-                <InputGroup.Append>
-                  <BaseLink
-                    className="d-inline-block mb-2"
-                    href={`${addressResultToPath({ bbl: this.props.bbl })}`}
-                    onClick={() => this.props.changeLookup(this.props.bbl)}
-                  >
-                    <Button variant="outline-secondary" size="lg">
-                      Back to Property
-                    </Button>
-                  </BaseLink>
-                </InputGroup.Append>
-              )}
-            </InputGroup>
+            <CustomSelect
+              className="building-select__select mb-2"
+              size="sm"
+              onChange={e => this.props.changeLookup(this.props.bbl, new StandardizedInput(e).value)}
+              options={this.getBuildingOptions()}
+              value={
+                this.props.bin
+                  ? {
+                      value: this.props.bin,
+                      label: `${selectedBuilding.house_number} ${selectedBuilding.stname}`,
+                    }
+                  : -1
+              }
+            />
           </Col>
+        </Row>
+        <Row>
+          {this.props.bin && (
+            <Col>
+              <BaseLink
+                className="d-inline-block mb-2 w-100"
+                href={`${addressResultToPath({ bbl: this.props.bbl })}`}
+                onClick={() => this.props.changeLookup(this.props.bbl)}
+              >
+                <Button variant="primary" size="sm" block>
+                  View entire tax lot
+                </Button>
+              </BaseLink>
+            </Col>
+          )}
         </Row>
       </Form>
     ) : (

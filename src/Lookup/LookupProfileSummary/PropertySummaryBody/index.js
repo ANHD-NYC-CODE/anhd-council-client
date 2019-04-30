@@ -16,7 +16,7 @@ const PropertySummaryBody = props => {
           <Col>
             <Row>
               <Col>
-                <h6 className="font-weight-bold text-muted">Primary property address</h6>
+                <h6 className="font-weight-bold text-muted">Primary tax lot address</h6>
               </Col>
             </Row>
             <h5>

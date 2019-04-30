@@ -38,9 +38,16 @@ const SummaryResultCard = props => {
       bg={classnames({ primary: props.selected })}
       disabled={props.disabled}
       text={classnames({ light: props.selected, dark: !props.selected })}
-      className={classnames('summary-result-card', 'result-card flex-row', props.summaryBackgroundColorClass, 'mb-2', {
-        active: props.selected,
-      })}
+      className={classnames(
+        'summary-result-card',
+        'result-card flex-row',
+        { 'building-link': props.request.level === 'BUILDING' },
+        props.summaryBackgroundColorClass,
+        'mb-2',
+        {
+          active: props.selected,
+        }
+      )}
       onClick={props.handleClick}
     >
       <Card.Body className="d-flex flex-row p-0">

@@ -203,6 +203,7 @@ class DistrictDashboardShow extends React.Component {
                           <Col xs={12} key={'rs-col-custom-search'} className="geography-request-summary__container">
                             <RequestSummaryWrapper
                               key={'request-summary-custom-search'}
+                              summaryBackgroundColorClass={c.CUSTOM_CARD_BACKGROUND_COLOR_CLASS}
                               request={request}
                               resultsFilter={undefined}
                               label={'Custom Search'}

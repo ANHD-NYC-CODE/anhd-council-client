@@ -5,6 +5,11 @@
     min-height: 80px;
     height: 80px;
   }
+  //
+  // .building-card,
+  // .building-card * {
+  //   color: white;
+  // }
 
   .lookup-show__data-address {
     border-bottom: 1px dotted $black;
@@ -14,5 +19,11 @@
     svg {
       margin-right: 10px;
     }
+  }
+
+  .lookup-show__datatype-header {
+    color: $gray-500;
+    text-transform: uppercase;
+    font-weight: bold;
   }
 }
