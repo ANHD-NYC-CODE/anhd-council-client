@@ -245,6 +245,7 @@ class BaseTable extends React.Component {
                       <Row>
                         <Col xs={12}>
                           <TableHeader
+                            badge={this.props.badge}
                             property={this.props.property}
                             resourceConstant={this.props.tableConfig.resourceConstant}
                             datasetModelName={this.props.datasetModelName}

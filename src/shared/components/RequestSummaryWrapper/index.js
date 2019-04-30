@@ -91,10 +91,7 @@ class RequestSummaryWrapper extends React.Component {
             </UserContext.Consumer>
           ) : (
             this.props.resultsComponent({
-              summaryBackgroundColorClass:
-                this.props.request.type === 'ADVANCED_SEARCH'
-                  ? c.CUSTOM_CARD_BACKGROUND_COLOR_CLASS
-                  : this.props.request.resourceModel.summaryBackgroundColorClass,
+              summaryBackgroundColorClass: this.props.summaryBackgroundColorClass,
               summaryTextColorClass: this.props.request.resourceModel.summaryTextColorClass,
               error: this.props.error,
               errorAction: this.retryRequest,

@@ -54,6 +54,7 @@ class RequestTableWrapper extends React.Component {
     return this.props.visible ? (
       <div className="request-wrapper">
         <TableComponent
+          badge={this.props.badge}
           property={this.props.property}
           caption={this.props.caption}
           classes={this.props.classes}

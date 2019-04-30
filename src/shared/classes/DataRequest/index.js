@@ -10,6 +10,7 @@ export default class DataRequest {
     apiMaps = [],
     tableConfig = undefined,
     isAuthenticated = false,
+    level = undefined,
   } = {}) {
     this._type = type
     this._resourceModel = resourceModel
@@ -19,6 +20,7 @@ export default class DataRequest {
     this._tableConfig = tableConfig
     this._called = false
     this._isAuthenticated = isAuthenticated
+    this._level = level
   }
 
   get type() {
@@ -79,6 +81,10 @@ export default class DataRequest {
 
   get isAuthenticated() {
     return this._isAuthenticated
+  }
+
+  get level() {
+    return this._level
   }
 
   get path() {

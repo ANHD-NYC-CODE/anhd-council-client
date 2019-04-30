@@ -12,7 +12,7 @@ import { boroCodeToName } from 'shared/utilities/languageUtils'
 import BaseLink from 'shared/components/BaseLink'
 import { Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 import { fireSwitchLookupTableEvent } from 'Store/Analytics/actions'
-import { Button, Row, Col, InputGroup } from 'react-bootstrap'
+import { Badge, Button, Row, Col, InputGroup } from 'react-bootstrap'
 import { setAppState } from 'Store/AppState/actions'
 import RequestTableWrapper from 'shared/components/RequestTableWrapper'
 import BuildingSelect from 'Lookup/BuildingSelect'
@@ -24,7 +24,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { faBuilding } from '@fortawesome/free-solid-svg-icons'
 import { faLayerGroup } from '@fortawesome/free-solid-svg-icons'
-
+import classnames from 'classnames'
 import './style.scss'
 class LookupShow extends React.PureComponent {
   constructor(props) {
@@ -167,7 +167,7 @@ class LookupShow extends React.PureComponent {
                   <Col>
                     <Row>
                       <Col>
-                        <Row>
+                        {/* <Row>
                           <Col xs={9}>
                             <h3 className="lookup-show__data-header text-muted font-weight-bold text-uppercase">
                               <FontAwesomeIcon icon={this.props.bin ? faBuilding : faLayerGroup} size="1x" />
@@ -179,18 +179,17 @@ class LookupShow extends React.PureComponent {
                               <PrintButton textClass="text-dark d-none d-md-block" title={this.getPrintTitle()} />
                             )}
                           </Col>
-                        </Row>
-                        <BuildingSelect
-                          bbl={this.props.bbl}
-                          bin={this.props.bin}
-                          changeLookup={this.props.changeLookup}
-                          request={this.props.profileRequest}
-                        />
+                        </Row> */}
                       </Col>
                     </Row>
 
                     <Row className="mb-2">
                       <Col>
+                        <h6 className="lookup-show__datatype-header">
+                          {this.props.bin && !!Object.keys(this.props.propertyResult).length
+                            ? 'Building Address'
+                            : 'Tax Lot Address'}
+                        </h6>
                         <h4 className="lookup-show__data-address font-weight-bold">
                           {this.props.bin && !!Object.keys(this.props.propertyResult).length
                             ? `${
@@ -204,41 +203,75 @@ class LookupShow extends React.PureComponent {
                     </Row>
                     <Row className="mb-2">
                       <Col>
-                        <h6 className="font-weight-bold">Select Filter ></h6>
+                        <h6 className="font-weight-bold">Select a dataset ></h6>
                       </Col>
                     </Row>
                     <Row>
                       <Col xs={12} lg={4}>
-                        {this.props.bin && (
-                          <Row className="mb-2">
-                            <Col xs={12}>
-                              <BaseLink
-                                className="text-left d-inline-block mb-2"
-                                href={`${addressResultToPath({ bbl: this.props.bbl })}`}
-                                onClick={() => this.props.changeLookup(this.props.bbl)}
-                              >
-                                <Button className="text-left" variant="outline-primary">
-                                  View Sales, Evictions, and Foreclosures.
-                                </Button>
-                              </BaseLink>
-                            </Col>
-                          </Row>
-                        )}
+                        <Row className="mb-4">
+                          {
+                            // Property level requests
+                          }
+                          <Col>
+                            <h6 className="lookup-show__datatype-header">Tax Lot Level Data</h6>
+                          </Col>
+                          {this.props.lookupRequests
+                            .filter(r => r.level === 'PROPERTY')
+                            .map((request, index) => {
+                              return (
+                                <Col xs={12} sm={6} md={4} lg={12} key={`rs-col-${index}`}>
+                                  <RequestSummaryWrapper
+                                    key={`request-summary-${this.props.appState.requests.indexOf(request)}`}
+                                    summaryBackgroundColorClass={'acris-yellow property-card'}
+                                    onClick={() => this.switchTable(request)}
+                                    selected={this.props.appState.selectedRequest === request}
+                                    request={request}
+                                    label={request.resourceModel.label}
+                                    resultsComponent={SummaryResultCard}
+                                  />
+                                </Col>
+                              )
+                            })}
+                        </Row>
+                        <hr />
+                        <Row className="mb-2">
+                          <Col>
+                            <BuildingSelect
+                              bbl={this.props.bbl}
+                              bin={this.props.bin}
+                              changeLookup={this.props.changeLookup}
+                              request={this.props.profileRequest}
+                            />
+                          </Col>
+                        </Row>
                         <Row>
-                          {this.props.lookupRequests.map((request, index) => {
-                            return (
-                              <Col xs={12} sm={6} md={4} lg={12} key={`rs-col-${index}`}>
-                                <RequestSummaryWrapper
-                                  key={`request-summary-${this.props.appState.requests.indexOf(request)}`}
-                                  onClick={() => this.switchTable(request)}
-                                  selected={this.props.appState.selectedRequest === request}
-                                  request={request}
-                                  label={request.resourceModel.label}
-                                  resultsComponent={SummaryResultCard}
-                                />
-                              </Col>
-                            )
-                          })}
+                          {
+                            // Building level requests
+                          }
+                          <Col>
+                            <h6 className="lookup-show__datatype-header">Building Level Data</h6>
+                          </Col>
+                          {this.props.lookupRequests
+                            .filter(r => r.level === 'BUILDING')
+                            .map((request, index) => {
+                              return (
+                                <Col xs={12} sm={6} md={4} lg={12} key={`rs-col-${index}`}>
+                                  <RequestSummaryWrapper
+                                    summaryBackgroundColorClass={
+                                      request.level === 'PROPERTY' || !this.props.bin
+                                        ? 'acris-yellow property-card'
+                                        : 'building-pink building-card'
+                                    }
+                                    key={`request-summary-${this.props.appState.requests.indexOf(request)}`}
+                                    onClick={() => this.switchTable(request)}
+                                    selected={this.props.appState.selectedRequest === request}
+                                    request={request}
+                                    label={request.resourceModel.label}
+                                    resultsComponent={SummaryResultCard}
+                                  />
+                                </Col>
+                              )
+                            })}
                         </Row>
                       </Col>
                       <Col xs={12} lg={8}>
@@ -247,6 +280,13 @@ class LookupShow extends React.PureComponent {
                             return (
                               <Col xs={12} key={`rw-col-${index}`} className="request-wrapper-container">
                                 <RequestTableWrapper
+                                  badge={
+                                    request.level === 'PROPERTY' || !this.props.bin ? (
+                                      <Badge className="acris-yellow">Tax Lot Data</Badge>
+                                    ) : (
+                                      <Badge className="building-pink building-card">Building Data</Badge>
+                                    )
+                                  }
                                   property={this.props.propertyResult}
                                   caption={request.resourceModel.label}
                                   key={`request-wrapper-${this.props.appState.requests.indexOf(request)}`}
