@@ -1,9 +1,12 @@
 import { Axios } from 'shared/utilities/Axios'
 import * as loadingActions from 'Store/Loading/actions'
 import * as errorActions from 'Store/Error/actions'
+import * as c from 'shared/constants'
 import { TOKEN_URL, TOKEN_REFRESH_URL, CURRENT_USER_URL } from 'shared/constants/urls'
 import { GET_TOKEN, GET_TOKEN_REFRESH, GET_USER_PROFILE } from 'shared/constants/actions'
 import { getUserStorageData, removeUserStorageData } from 'shared/utilities/storageUtils'
+import { makeRequest } from 'Store/Request/actions'
+import { retryAuthenticatedRequests } from 'Store/Request/actions'
 
 import { handleCatchError } from 'shared/utilities/actionUtils'
 import { requestWithAuth } from 'shared/utilities/authUtils'
@@ -14,10 +17,14 @@ import { fireUserLoginEvent } from 'Store/Analytics/actions'
 export const HANDLE_SYNC_STORAGE = 'HANDLE_SYNC_STORAGE'
 export const HANDLE_USER_LOGOUT = 'HANDLE_USER_LOGOUT'
 
-export const handleSyncStorage = storage => {
+export const handleSyncStorage = (storage, dispatch) => {
   return {
     type: HANDLE_SYNC_STORAGE,
     data: storage,
+    refreshTimeout: setTimeout(
+      () => dispatch(refreshTokens(storage.refresh.token)),
+      (c.TOKEN_EXPIRATIONS.access - 1) * 60000
+    ), // 4 minutes
   }
 }
 
@@ -40,7 +47,7 @@ export const getUserProfile = () => (dispatch, getState, access_token) => {
       .then(response => {
         dispatch(loadingActions.handleCompletedRequest(GET_USER_PROFILE))
         updateAuthLocalStorage(null, null, response.data, dispatch)
-        dispatch(handleSyncStorage(getUserStorageData()))
+        dispatch(handleSyncStorage(getUserStorageData(), dispatch))
         dispatch(fireUserLoginEvent(response.data.id, response.data.email))
         toast.success(`Welcome, ${response.data.username}!`)
       })
@@ -63,7 +70,7 @@ export const refreshTokens = refresh_token => dispatch => {
 
       const storage = getUserStorageData()
 
-      dispatch(handleSyncStorage(storage))
+      dispatch(handleSyncStorage(storage, dispatch))
 
       return storage
     })
@@ -73,7 +80,7 @@ export const refreshTokens = refresh_token => dispatch => {
     })
 }
 
-export const loginUser = (data, postLoginAction) => dispatch => {
+export const loginUser = (data, postLoginAction) => (dispatch, getState) => {
   dispatch(loadingActions.handleRequest(GET_TOKEN))
   dispatch(errorActions.handleClearErrors(GET_TOKEN))
   return Axios.post(TOKEN_URL, { username: data.username, password: data.password })
@@ -81,9 +88,11 @@ export const loginUser = (data, postLoginAction) => dispatch => {
       dispatch(loadingActions.handleCompletedRequest(GET_TOKEN))
 
       updateAuthLocalStorage(response.data.access, response.data.refresh, null, dispatch)
-      dispatch(handleSyncStorage(getUserStorageData()))
+
+      dispatch(handleSyncStorage(getUserStorageData(), dispatch))
       dispatch(requestWithAuth(getUserProfile()))
 
+      dispatch(retryAuthenticatedRequests())
       if (postLoginAction) postLoginAction()
     })
     .catch(error => {
@@ -91,11 +100,13 @@ export const loginUser = (data, postLoginAction) => dispatch => {
     })
 }
 
-export const logoutUser = (sentToast = false) => dispatch => {
+export const logoutUser = (sentToast = false) => (dispatch, getState) => {
   removeUserStorageData()
   dispatch(handleUserLogout())
   if (sentToast) {
     toast.info("You've been logged out.")
   }
-  window.location = '/'
+
+  dispatch(retryAuthenticatedRequests())
+  // window.location = '/'
 }

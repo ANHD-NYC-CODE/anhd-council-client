@@ -1,4 +1,5 @@
 import moment from 'moment'
+import * as c from 'shared/constants'
 export const LOCAL_STORAGE = 'anhd-dap-portal'
 export const USER_STORAGE = 'anhd-dap-portal--user'
 export const COUNCIL_DISTRICTS_INDEX = 'councils'
@@ -7,11 +8,6 @@ import { logoutUser } from 'Store/Auth/actions'
 import { get, set, del } from 'idb-keyval'
 import { handleActionDispatch } from 'shared/utilities/actionUtils'
 import { handleCompletedRequest } from 'Store/Loading/actions'
-
-const TOKEN_EXPIRATIONS = {
-  access: 5, // minutes
-  refresh: 10, // hours
-}
 
 export const getStorageDataAction = async (dispatch, constant, requestId, path, handleAction) => {
   handleActionDispatch(dispatch, constant, requestId)
@@ -108,7 +104,7 @@ export const updateAuthLocalStorage = (access = null, refresh = null, user = nul
       access = {
         token: access,
         expiration: moment()
-          .add(TOKEN_EXPIRATIONS.access, 'minutes')
+          .add(c.TOKEN_EXPIRATIONS.access, 'minutes')
           .format(),
       }
     }
@@ -117,7 +113,7 @@ export const updateAuthLocalStorage = (access = null, refresh = null, user = nul
       refresh = {
         token: refresh,
         expiration: moment()
-          .add(TOKEN_EXPIRATIONS.refresh, 'hours')
+          .add(c.TOKEN_EXPIRATIONS.refresh, 'hours')
           .format(),
       }
     }

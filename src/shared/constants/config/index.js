@@ -3,9 +3,13 @@ import moment from 'moment'
 // Feature Flags
 export const ENABLE_PRINT = false // Shows print buttons
 export const ENABLE_GOOGLE_ANALYTICS = true
+
 // Generic
 export const CONTACT_EMAIL = 'anhd.tech@gmail.com'
-
+export const TOKEN_EXPIRATIONS = {
+  access: 5, // minutes
+  refresh: 10, // hours
+}
 // Layout
 export const SIDEBAR_COLUMN_SIZE = 4
 

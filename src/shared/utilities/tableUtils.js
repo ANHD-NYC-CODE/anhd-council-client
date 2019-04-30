@@ -33,10 +33,7 @@ export const acrisParties2Formatter = (cell, row, index) => {
 
 export const lispendenCommentFormatter = (cell, row, index) => {
   if (!cell.length) return cell
-  return cell
-    .map(comment => comment.datecomments.split('-')[1])
-    .filter(f => f)
-    .join(' || ')
+  return [...new Set(cell.map(comment => comment.datecomments.split('-')[1]).filter(f => f))].join(' || ')
 }
 
 export const capitalizeFormatter = (cell, row, index) => {
@@ -76,7 +73,8 @@ export const dateFormatter = (cell, row, index) => {
 }
 
 export const dollarFormatter = (cell, row, index) => {
-  if (!cell) return cell
+  if (!cell) return ''
+  if (cell === 0) return ''
   return parseInt(cell).toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 })
 }
 
@@ -89,7 +87,7 @@ export const annotatedColumnFormatter = (cell, row, index) => {
 }
 
 export const linkFormatter = (cell, row, index, constant, id) => {
-  const linkProps = getLinkProps(constant)({ linkId: row[getLinkId(constant)], bin: row.bin })
+  const linkProps = getLinkProps(constant)({ linkId: row[getLinkId(constant)], bin: row.bin, type: row.type })
 
   return <BaseLink href={linkProps.href} text={linkProps.linkText} />
 }

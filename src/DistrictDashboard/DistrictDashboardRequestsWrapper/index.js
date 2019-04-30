@@ -17,7 +17,6 @@ class DistrictDashboardRequestsWrapper extends React.PureComponent {
     this.loadRequests = this.loadRequests.bind(this)
     this.getInitialRequest = this.getInitialRequest.bind(this)
     this.switchSelectedFilter = this.switchSelectedFilter.bind(this)
-    this.resendPropertyRequest = this.resendPropertyRequest.bind(this)
   }
 
   componentDidMount() {
@@ -51,12 +50,6 @@ class DistrictDashboardRequestsWrapper extends React.PureComponent {
     )
   }
 
-  resendPropertyRequest() {
-    const propertySummaryRequest = getRequestByConstant(this.props.mapRequests, 'GEOGRAPHY_HOUSING_TYPE_ALL')[0]
-    propertySummaryRequest.called = false
-    this.loadRequests([propertySummaryRequest])
-  }
-
   toggleDateRange(value) {
     this.props.appState.resultFilters
       .filter(rf => rf.category === 'AMOUNT')
@@ -87,7 +80,6 @@ class DistrictDashboardRequestsWrapper extends React.PureComponent {
         switchSelectedFilter={this.switchSelectedFilter}
         housingTypeResultFilter={this.props.appState.housingTypeResultFilter}
         {...this.props}
-        resendPropertyRequest={this.resendPropertyRequest}
       />
     ) : (
       <InnerLoader />

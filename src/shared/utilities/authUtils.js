@@ -11,14 +11,14 @@ export const requestMiddleware = () => {
       return request(dispatch, getState)
     }
 
-    // Refresh token if token has been alive for over 4 min
-    if (moment() > moment(auth.access.expiration).subtract(1, 'minutes')) {
+    // Refresh token if token has been alive for over 5 min
+    if (moment() > moment(auth.access.expiration)) {
       dispatch(refreshTokens(auth.refresh.token))
         .then(() => {
           auth = getState().auth
           return request(dispatch, getState, auth.access.token)
         })
-        .catch(() => {
+        .catch(e => {
           return dispatch(logoutUser())
         })
     } else {

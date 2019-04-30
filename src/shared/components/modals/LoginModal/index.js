@@ -21,7 +21,11 @@ const LoginModal = props => {
           >
             <LoginForm
               dispatch={props.dispatch}
-              error={auth.loginError}
+              error={
+                auth.loginError && auth.loginError.status === 401
+                  ? { status: 401, message: 'Incorrect username or password' }
+                  : auth.loginError
+              }
               loading={auth.loginLoading}
               postLoginAction={props.postLoginAction}
               user={auth.user}

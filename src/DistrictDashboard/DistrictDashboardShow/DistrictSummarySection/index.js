@@ -64,7 +64,6 @@ const DistrictSummarySection = props => {
                                 modal.setModal({
                                   modalComponent: LoginModal,
                                   modalProps: {
-                                    postLoginAction: () => props.resendPropertyRequest(),
                                     modalFooter: <LoginModalFooter modal={modal} />,
                                   },
                                 })
