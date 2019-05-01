@@ -262,7 +262,7 @@ LeafletMap.propTypes = {
   councilDistricts: PropTypes.array,
   iconConfig: PropTypes.string,
   displayedResultsFilter: PropTypes.object,
-  results: PropTypes.object,
+  results: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   interactive: PropTypes.bool,
   loading: PropTypes.bool,
 }

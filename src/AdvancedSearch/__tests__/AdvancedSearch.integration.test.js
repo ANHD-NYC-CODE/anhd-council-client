@@ -1,5 +1,6 @@
 import React from 'react'
 import moment from 'moment'
+import * as c from 'shared/constants'
 import { configure, mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 import { setupStore, configuredState } from 'shared/testUtilities'
@@ -10,13 +11,11 @@ import Config from 'Config'
 
 configure({ adapter: new Adapter() })
 
-const todayminus1year = moment(moment.now())
-  .subtract(1, 'Y')
-  .format('MM/DD/YYYY')
+const rawStartDate = c.CUSTOM_DEFAULT_START_DATE
+const rawEndDate = c.CUSTOM_DEFAULT_END_DATE
 
-const todayplus1year = moment(moment.now())
-  .add(1, 'Y')
-  .format('MM/DD/YYYY')
+const startDate = moment(rawStartDate, 'YYYY-MM-DD').format('MM/DD/YYYY')
+const endDate = moment(rawEndDate, 'YYYY-MM-DD').format('MM/DD/YYYY')
 
 const setupWrapper = state => {
   if (!state) {
@@ -304,7 +303,7 @@ describe('AdvancedSearch', () => {
           .props().value
       ).toEqual('between')
       expect(wrapper.find('AdvancedSearchSentence').text()).toContain(
-        `HPD violations between ${todayminus1year} and ${todayplus1year}`
+        `HPD violations between ${startDate} and ${endDate}`
       )
     })
   })
