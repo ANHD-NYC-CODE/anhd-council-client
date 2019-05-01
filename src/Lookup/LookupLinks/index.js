@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Card, Row, Col } from 'react-bootstrap'
+import { boroughAbbreviationToCode } from 'shared/utilities/languageUtils'
 import BaseLink from 'shared/components/BaseLink'
 import './style.scss'
 
@@ -23,9 +24,9 @@ class LookupLinks extends React.Component {
             <Col>
               <BaseLink
                 className="lookup-links__link"
-                href={`https://hpdonline.hpdnyc.org/HPDonline/Provide_address.aspx?p1=1&p2=${
-                  this.props.property.address.split(' ')[0]
-                }&p3=${this.props.property.address
+                href={`https://hpdonline.hpdnyc.org/HPDonline/Provide_address.aspx?p1=${boroughAbbreviationToCode(
+                  this.props.property.borough
+                )}&p2=${this.props.property.address.split(' ')[0]}&p3=${this.props.property.address
                   .split(' ')
                   .slice(1)
                   .join(' ')}&SearchButton=Search`}

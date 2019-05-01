@@ -6,13 +6,12 @@
   box-shadow: 1px 1px 6px $gray-400;
   padding: 0 10px;
   font-size: 0.9rem;
+  width: 100%;
 }
 
 @media (hover: hover) {
   .result-card.card.btn:not(:disabled):hover {
     box-shadow: 1px 12px 20px $gray-400;
-    transition: transform 0.2s ease-in-out;
-    transform: translateY(-6px);
   }
 }
 

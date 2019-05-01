@@ -84,7 +84,7 @@ class AnnotatedResultFilterCard extends React.Component {
             </div>
           </div>
         </div>
-        <div className="amount-result-filter-card__info">
+        <div className="amount-result-filter-card__info info-section">
           <InfoModalButton modalConstant={this.props.amountFilter.resourceModel.resourceConstant} />
         </div>
       </div>

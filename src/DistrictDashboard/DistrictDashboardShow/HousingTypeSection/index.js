@@ -25,11 +25,6 @@ const HousingTypeSection = props => {
         return (
           <Col xs={12} className="housingtype-request-summary__container">
             <div className="housing-type-section__wrapper">
-              {/* <RequestSummaryWrapper
-                request={props.propertySummaryRequest}
-                label={'Total properties:'}
-                resultsComponent={BasicResultsHeader}
-              /> */}
               <Row>
                 {propertyResource.ownResultFilters.map((ownResultFilter, index) => {
                   return (

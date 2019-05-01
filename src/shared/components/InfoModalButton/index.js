@@ -9,7 +9,7 @@ const InfoModalButton = props => {
   return (
     <ConfigContext.Consumer>
       {config => {
-        if (!config.infoModals[props.modalConstant]) return null
+        if (!config.infoModals[props.modalConstant]) return <div className="info-modal-button" />
         return (
           <ModalContext.Consumer>
             {modal => {

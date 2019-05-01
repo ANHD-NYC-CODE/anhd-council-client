@@ -7,12 +7,10 @@ import * as c from 'shared/constants'
 import LeafletMap from 'LeafletMap'
 import AddressSearch from 'Lookup/AddressSearch'
 import LayoutContext from 'Layout/LayoutContext'
-import { addressResultToPath } from 'shared/utilities/routeUtils'
 import { boroCodeToName } from 'shared/utilities/languageUtils'
-import BaseLink from 'shared/components/BaseLink'
 import { Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 import { fireSwitchLookupTableEvent } from 'Store/Analytics/actions'
-import { Badge, Button, Row, Col, InputGroup } from 'react-bootstrap'
+import { Badge, Row, Col, InputGroup } from 'react-bootstrap'
 import { setAppState } from 'Store/AppState/actions'
 import RequestTableWrapper from 'shared/components/RequestTableWrapper'
 import BuildingSelect from 'Lookup/BuildingSelect'
@@ -154,9 +152,10 @@ class LookupShow extends React.PureComponent {
                           ? [this.props.propertyResult.lat, this.props.propertyResult.lng]
                           : undefined
                       }
+                      results={this.props.propertyResult}
                       displayedRequest={this.props.appState.requests.find(request => request.type === 'LOOKUP_PROFILE')}
                       iconConfig="SINGLE"
-                      zoom={15}
+                      zoom={17}
                     />
                   </Col>
                 </Row>
@@ -166,21 +165,7 @@ class LookupShow extends React.PureComponent {
                 <Row className="mt-2 mb-4 mt-lg-4 mb-lg-2 px-xl-3">
                   <Col>
                     <Row>
-                      <Col>
-                        {/* <Row>
-                          <Col xs={9}>
-                            <h3 className="lookup-show__data-header text-muted font-weight-bold text-uppercase">
-                              <FontAwesomeIcon icon={this.props.bin ? faBuilding : faLayerGroup} size="1x" />
-                              {this.props.bin ? 'Building Data' : 'Property Data'}
-                            </h3>
-                          </Col>
-                          <Col xs={3}>
-                            {c.ENABLE_PRINT && (
-                              <PrintButton textClass="text-dark d-none d-md-block" title={this.getPrintTitle()} />
-                            )}
-                          </Col>
-                        </Row> */}
-                      </Col>
+                      <Col />
                     </Row>
 
                     <Row className="mb-2">
