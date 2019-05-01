@@ -71,7 +71,7 @@
 
 - small redesign of property lookup page, with more distinguishing characteristics for building vs tax lot data.
 
-#### 1.0.0b1.0.35
+#### 1.0.0b1.0.351
 
 4/30/19
 
@@ -85,3 +85,10 @@
 - reordered district indicator cards
 - restyled property lookup geography labels
 - add new copy and fields to user request modal
+
+#### 1.0.0b1.0.351
+
+5/1/19
+
+- add map spinning loader
+- change litigations sentence noun from
