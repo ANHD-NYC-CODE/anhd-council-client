@@ -384,6 +384,67 @@ export const getTableColumns = ({
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
           dataField: getAnnotatedDataField({
+            annotationKey: getAnnotationKey('acrisrealmasters', annotationStart),
+            rowExample,
+          }),
+          text: getAnnotatedLabel({
+            annotationLabel: 'Sales',
+            rowExample,
+            annotationKey: getAnnotationKey('acrisrealmasters', annotationStart),
+          }),
+          sort: true,
+          formatter: annotatedColumnFormatter,
+          csvFormatter: annotatedColumnFormatter,
+        }),
+        constructPropertyColumn({
+          columnEvent: linkToColumnEvent,
+          dataField: getAnnotatedDataField({
+            annotationKey: getAnnotationKey('evictions', annotationStart),
+            rowExample,
+          }),
+          text: getAnnotatedLabel({
+            annotationLabel: 'Marshall Evictions',
+            rowExample,
+            annotationKey: getAnnotationKey('evictions', annotationStart),
+          }),
+          sort: true,
+          formatter: annotatedColumnFormatter,
+          csvFormatter: annotatedColumnFormatter,
+        }),
+
+        constructPropertyColumn({
+          columnEvent: linkToColumnEvent,
+          dataField: getAnnotatedDataField({
+            annotationKey: getAnnotationKey('lispendens', annotationStart),
+            rowExample,
+          }),
+          text: getAnnotatedLabel({
+            annotationLabel: 'Foreclosures',
+            rowExample,
+            annotationKey: getAnnotationKey('lispendens', annotationStart),
+          }),
+          sort: true,
+          formatter: annotatedColumnFormatter,
+          csvFormatter: annotatedColumnFormatter,
+        }),
+        constructPropertyColumn({
+          columnEvent: linkToColumnEvent,
+          dataField: getAnnotatedDataField({
+            annotationKey: getAnnotationKey('hpdcomplaints', annotationStart),
+            rowExample,
+          }),
+          text: getAnnotatedLabel({
+            annotationLabel: 'HPD Complaints',
+            rowExample,
+            annotationKey: getAnnotationKey('hpdcomplaints', annotationStart),
+          }),
+          sort: true,
+          formatter: annotatedColumnFormatter,
+          csvFormatter: annotatedColumnFormatter,
+        }),
+        constructPropertyColumn({
+          columnEvent: linkToColumnEvent,
+          dataField: getAnnotatedDataField({
             annotationKey: getAnnotationKey('hpdviolations', annotationStart),
             rowExample,
           }),
@@ -391,6 +452,21 @@ export const getTableColumns = ({
             annotationLabel: 'HPD Violations',
             rowExample,
             annotationKey: getAnnotationKey('hpdviolations', annotationStart),
+          }),
+          sort: true,
+          formatter: annotatedColumnFormatter,
+          csvFormatter: annotatedColumnFormatter,
+        }),
+        constructPropertyColumn({
+          columnEvent: linkToColumnEvent,
+          dataField: getAnnotatedDataField({
+            annotationKey: getAnnotationKey('dobcomplaints', annotationStart),
+            rowExample,
+          }),
+          text: getAnnotatedLabel({
+            annotationLabel: 'DOB Complaints',
+            rowExample,
+            annotationKey: getAnnotationKey('dobcomplaints', annotationStart),
           }),
           sort: true,
           formatter: annotatedColumnFormatter,
@@ -421,36 +497,6 @@ export const getTableColumns = ({
             annotationLabel: 'ECB Violations',
             rowExample,
             annotationKey: getAnnotationKey('ecbviolations', annotationStart),
-          }),
-          sort: true,
-          formatter: annotatedColumnFormatter,
-          csvFormatter: annotatedColumnFormatter,
-        }),
-        constructPropertyColumn({
-          columnEvent: linkToColumnEvent,
-          dataField: getAnnotatedDataField({
-            annotationKey: getAnnotationKey('hpdcomplaints', annotationStart),
-            rowExample,
-          }),
-          text: getAnnotatedLabel({
-            annotationLabel: 'HPD Complaints',
-            rowExample,
-            annotationKey: getAnnotationKey('hpdcomplaints', annotationStart),
-          }),
-          sort: true,
-          formatter: annotatedColumnFormatter,
-          csvFormatter: annotatedColumnFormatter,
-        }),
-        constructPropertyColumn({
-          columnEvent: linkToColumnEvent,
-          dataField: getAnnotatedDataField({
-            annotationKey: getAnnotationKey('dobcomplaints', annotationStart),
-            rowExample,
-          }),
-          text: getAnnotatedLabel({
-            annotationLabel: 'DOB Complaints',
-            rowExample,
-            annotationKey: getAnnotationKey('dobcomplaints', annotationStart),
           }),
           sort: true,
           formatter: annotatedColumnFormatter,
@@ -496,51 +542,6 @@ export const getTableColumns = ({
             annotationLabel: 'Litigations against landlords',
             rowExample,
             annotationKey: getAnnotationKey('housinglitigations', annotationStart),
-          }),
-          sort: true,
-          formatter: annotatedColumnFormatter,
-          csvFormatter: annotatedColumnFormatter,
-        }),
-        constructPropertyColumn({
-          columnEvent: linkToColumnEvent,
-          dataField: getAnnotatedDataField({
-            annotationKey: getAnnotationKey('evictions', annotationStart),
-            rowExample,
-          }),
-          text: getAnnotatedLabel({
-            annotationLabel: 'Marshall Evictions',
-            rowExample,
-            annotationKey: getAnnotationKey('evictions', annotationStart),
-          }),
-          sort: true,
-          formatter: annotatedColumnFormatter,
-          csvFormatter: annotatedColumnFormatter,
-        }),
-        constructPropertyColumn({
-          columnEvent: linkToColumnEvent,
-          dataField: getAnnotatedDataField({
-            annotationKey: getAnnotationKey('acrisrealmasters', annotationStart),
-            rowExample,
-          }),
-          text: getAnnotatedLabel({
-            annotationLabel: 'Sales',
-            rowExample,
-            annotationKey: getAnnotationKey('acrisrealmasters', annotationStart),
-          }),
-          sort: true,
-          formatter: annotatedColumnFormatter,
-          csvFormatter: annotatedColumnFormatter,
-        }),
-        constructPropertyColumn({
-          columnEvent: linkToColumnEvent,
-          dataField: getAnnotatedDataField({
-            annotationKey: getAnnotationKey('lispendens', annotationStart),
-            rowExample,
-          }),
-          text: getAnnotatedLabel({
-            annotationLabel: 'Foreclosures',
-            rowExample,
-            annotationKey: getAnnotationKey('lispendens', annotationStart),
           }),
           sort: true,
           formatter: annotatedColumnFormatter,

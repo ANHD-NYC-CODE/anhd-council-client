@@ -4,7 +4,8 @@ import { boroCodeToName, constructAddressString } from 'shared/utilities/languag
 import BaseLink from 'shared/components/BaseLink'
 import './style.scss'
 import { Row, Col } from 'react-bootstrap'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faLocationArrow } from '@fortawesome/free-solid-svg-icons'
 import { councilIdToString, communityIdToString } from 'shared/utilities/languageUtils'
 import { geographyToLink } from 'shared/utilities/routeUtils'
 
@@ -32,6 +33,8 @@ const PropertySummaryBody = props => {
         <Row className="lookup-profile-summary__group">
           <Col>
             <label className="profile-summary-body__label">BBL </label>
+          </Col>
+          <Col>
             <span className="profile-summary-body__value">{props.profile.bbl}</span>
           </Col>
         </Row>
@@ -40,23 +43,33 @@ const PropertySummaryBody = props => {
             <Row>
               <Col>
                 <label className="profile-summary-body__label">Council District</label>
-
-                <BaseLink
-                  className="profile-summary-body__value"
-                  href={geographyToLink('COUNCIL', props.profile.council)}
-                  text={councilIdToString(props.profile.council)}
-                />
+              </Col>
+              <Col>
+                <span className="d-flex profile-summary__geography">
+                  <BaseLink
+                    className="profile-summary-body__value "
+                    href={geographyToLink('COUNCIL', props.profile.council)}
+                  >
+                    {councilIdToString(props.profile.council, false)}
+                    <FontAwesomeIcon className="ml-2" icon={faLocationArrow} size="xs" />
+                  </BaseLink>
+                </span>
               </Col>
             </Row>
             <Row>
               <Col>
                 <label className="profile-summary-body__label">Community District</label>
-
-                <BaseLink
-                  className="profile-summary-body__value"
-                  href={geographyToLink('COMMUNITY', props.profile.cd)}
-                  text={`Community District  ${communityIdToString(props.profile.cd)}`}
-                />
+              </Col>
+              <Col>
+                <span className="d-flex  profile-summary__geography">
+                  <BaseLink
+                    className="profile-summary-body__value "
+                    href={geographyToLink('COMMUNITY', props.profile.cd)}
+                  >
+                    {`${communityIdToString(props.profile.cd)}`}
+                    <FontAwesomeIcon className="ml-2" icon={faLocationArrow} size="xs" />
+                  </BaseLink>
+                </span>
               </Col>
             </Row>
             <hr />

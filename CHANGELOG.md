@@ -78,3 +78,10 @@
 - darken $info and $secondary color variables
 - all percentages now 1 decimal place
 - small style tweaks to dashboard date toggles
+- fix lookup map icon bug
+- set default custom search later date to today.
+- repositioned info ? icons
+- reordered property table columns
+- reordered district indicator cards
+- restyled property lookup geography labels
+- add new copy and fields to user request modal
