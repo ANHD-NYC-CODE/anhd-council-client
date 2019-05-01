@@ -8,7 +8,7 @@ import { history } from 'Store/configureStore'
 import ConfigContext from 'Config/ConfigContext'
 import Config from 'Config'
 import LayoutContext from 'Layout/LayoutContext'
-import { createPropertyRequestMock } from 'shared/testUtilities/mocks'
+import { createPropertyRequestMock, createHPDRegistrationMock } from 'shared/testUtilities/mocks'
 import { ConnectedRouter } from 'connected-react-router'
 
 import { Provider } from 'react-redux'
@@ -69,9 +69,8 @@ describe('LookupProfileSummary', () => {
       const bodyText = wrapper.find('PropertySummaryBody').text()
       expect(bodyText).toMatch('123 Fake Street, Brooklyn 11111')
       expect(bodyText).toMatch('BBL 1')
-      expect(bodyText).toMatch('Council DistrictCouncil District 1')
-      expect(bodyText).toMatch('Community DistrictCommunity District  Manhattan 01')
-      expect(bodyText).toMatch('View ownership at "Who Owns What?"')
+      expect(bodyText).toMatch('Council District1')
+      expect(bodyText).toMatch('Community DistrictManhattan 01')
       expect(bodyText).toMatch('Year Built2000')
       expect(bodyText).toMatch('ZoningR5')
       expect(bodyText).toMatch('Total Units10')
@@ -86,7 +85,7 @@ describe('LookupProfileSummary', () => {
         const [wrapper] = setupWrapper({ propertyResult: result })
 
         expect(wrapper.find('OwnershipSection').text()).toMatch('No HPD Registrations Found')
-        expect(wrapper.find('ProgramSection').text()).toMatch('ProgramsNoneNYCHA? NoCONH? (2018)NoTax Lien? (2018)No')
+        expect(wrapper.find('ProgramSection').text()).toMatch('Programs / StatusesSubsidy ProgramsNone')
         expect(wrapper.find('RentStabilizationSection').text()).toMatch('No Rent Stabilization History')
       })
     })
@@ -98,7 +97,9 @@ describe('LookupProfileSummary', () => {
           taxlien: true,
           nycha: true,
           subsidyprograms: 'J51',
-          hpdregistrations: [{ registrationid: 1, registrationenddate: '2018-01-01' }],
+          hpdregistrations: [
+            createHPDRegistrationMock({ registrationid: 1, lastregistrationdate: '2018-01-01', contacts: [] }),
+          ],
           rentstabilizationrecord: {
             ucbbl: 1,
             uc2007: '10',
@@ -109,14 +110,16 @@ describe('LookupProfileSummary', () => {
         const [wrapper] = setupWrapper({ propertyResult: result })
 
         expect(wrapper.find('OwnershipSection').text()).toMatch(
-          'HPD RegistrationsEnd DateView Contacts01/01/2018() Expand'
-        )
-        expect(wrapper.find('ProgramSection').text()).toMatch('ProgramsJ51NYCHA? YesCONH? (2018)YesTax Lien? (2018)Yes')
-        expect(wrapper.find('RentStabilizationSection').text()).toMatch(
-          'Rent StabilizationStabilized Units (2017): 0Change since 200750.00%'
+          'HPD Registration (01/01/2018)Site Manager:Head Officer:Agent:For more on ownership visit "Who Owns What?"'
         )
 
-        expect(wrapper.find('RentStabilizationSection').text()).toMatch('105')
+        expect(wrapper.find('ProgramSection').text()).toMatch(
+          'Programs / StatusesSubsidy ProgramsJ51This property is a NYCHA development.A building on this property is eligible for the Certificate of No Harassment Pilot Program.'
+        )
+
+        expect(wrapper.find('RentStabilizationSection').text()).toMatch(
+          'Rent StabilizationStabilized Units (most recent): 0Change since 2007+50.0%Rent Stabilization HistoryVersion: 201720071020175'
+        )
       })
     })
   })

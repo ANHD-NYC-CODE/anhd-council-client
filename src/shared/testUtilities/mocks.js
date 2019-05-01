@@ -20,6 +20,18 @@ export const createHpdComplaintProblemMock = ({
   }
 }
 
+export const createHPDRegistrationMock = ({
+  registrationid = '1',
+  lastregistrationdate = moment(moment.now()).format('YYYY-MM-DD'),
+  contacts = [],
+} = {}) => {
+  return {
+    registrationid,
+    lastregistrationdate,
+    contacts,
+  }
+}
+
 export const createPropertyRequestMock = ({
   bbl = '1',
   council = 1,
