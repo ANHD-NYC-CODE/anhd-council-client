@@ -383,7 +383,7 @@ DistrictDashboardShow.propTypes = {
   config: PropTypes.object,
   dispatch: PropTypes.func,
   loading: PropTypes.bool,
-  requests: PropTypes.array,
+  requests: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   toggleDateRange: PropTypes.func,
   propertySummaryRequest: PropTypes.object,
   totalPropertyResults: PropTypes.array,

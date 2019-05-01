@@ -7,6 +7,7 @@ import { setupStore, configuredState, flushAllPromises } from 'shared/testUtilit
 import { history } from 'Store/configureStore'
 import Config from 'Config'
 import ConfigContext from 'Config/ConfigContext'
+import UserContext from 'Auth/UserContext'
 import LayoutContext from 'Layout/LayoutContext'
 import { createPropertyRequestMock } from 'shared/testUtilities/mocks'
 import { ConnectedRouter } from 'connected-react-router'
@@ -39,15 +40,17 @@ const setupWrapper = state => {
   const wrapper = mount(
     <Provider store={store}>
       <LayoutContext.Provider value={{ print: false }}>
-        <Config>
-          <ConnectedRouter history={history}>
-            <ConfigContext.Consumer>
-              {config => {
-                return <DistrictDashboard config={config} />
-              }}
-            </ConfigContext.Consumer>
-          </ConnectedRouter>
-        </Config>
+        <UserContext.Provider value={{ user: {} }}>
+          <Config>
+            <ConnectedRouter history={history}>
+              <ConfigContext.Consumer>
+                {config => {
+                  return <DistrictDashboard config={config} />
+                }}
+              </ConfigContext.Consumer>
+            </ConnectedRouter>
+          </Config>
+        </UserContext.Provider>
       </LayoutContext.Provider>
     </Provider>
   )
