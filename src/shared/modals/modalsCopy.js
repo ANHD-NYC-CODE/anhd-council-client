@@ -175,7 +175,7 @@ export const infoModals = {
   EVICTION: {
     title: 'Marshal Evictions',
     body:
-      'Evictions were executed by court-ordered marshals since 1/1/2017. Evictions in affordable rent-regulated apartments usually indicate an immediate loss of affordable housing because landlords take advantage of the vacancy to dramatically raise the rent. A high rate of evictions may also be an indicator of tenant harassment and displacement by a landlord aggressively driving vacancies.',
+      'This dataset containts evictions that were executed by court-ordered marshals since 1/1/2017. Evictions in affordable rent-regulated apartments usually indicate an immediate loss of affordable housing because landlords take advantage of the vacancy to dramatically raise the rent. A high rate of evictions may also be an indicator of tenant harassment and displacement by a landlord aggressively driving vacancies.',
     sources: [
       {
         text: 'NYC Open Data - Evictions',

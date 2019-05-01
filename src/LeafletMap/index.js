@@ -12,6 +12,8 @@ import GeographyMarkerLabels from 'LeafletMap/GeographyMarkerLabels'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBug } from '@fortawesome/free-solid-svg-icons'
 import PropertyIcons from 'LeafletMap/PropertyIcons'
+import SpinnerLoader from 'shared/components/Loaders/SpinnerLoader'
+
 import './style.scss'
 export default class LeafletMap extends React.PureComponent {
   constructor(props) {
@@ -151,6 +153,11 @@ export default class LeafletMap extends React.PureComponent {
           zoom={this.props.zoom}
           zoomControl={this.props.interactive}
         >
+          {this.props.loading && (
+            <div className="map-loader">
+              <SpinnerLoader size="100px" />
+            </div>
+          )}
           <TileLayer
             attribution="mapbox"
             url="https://api.mapbox.com/styles/v1/anhdnyc/cjtgo9wv009uw1fo0ubm7elun/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYW5oZG55YyIsImEiOiJjanQ0ZWRqaDcxMmRxNDlsbHV1OXN0aGx6In0.i07oerfvXtcRfm3npws7mA"
@@ -239,6 +246,7 @@ LeafletMap.defaultProps = {
   communityDistricts: [],
   iconConfig: 'MULTIPLE',
   interactive: true,
+  loading: false,
   results: [],
   height: 0,
   displayedResultsFilter: {
@@ -256,4 +264,5 @@ LeafletMap.propTypes = {
   displayedResultsFilter: PropTypes.object,
   results: PropTypes.object,
   interactive: PropTypes.bool,
+  loading: PropTypes.bool,
 }
