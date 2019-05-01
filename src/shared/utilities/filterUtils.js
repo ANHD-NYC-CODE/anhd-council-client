@@ -1,5 +1,4 @@
-import moment from 'moment'
-
+import * as c from 'shared/constants'
 import ParamSet from 'shared/classes/ParamSet'
 import ParamMap from 'shared/classes/ParamMap'
 import MultiTypeFieldGroup from 'AdvancedSearch/FilterComponent/Group/MultiTypeFieldGroup'
@@ -108,10 +107,8 @@ export const constructCountDateParamSet = ({
   dateField = undefined,
   dateLowComparison = 'gte',
   dateHighComparison = 'lte',
-  dateLowValue = moment(moment.now())
-    .subtract(1, 'Y')
-    .format('YYYY-MM-DD'),
-  dateHighValue = moment(moment.now()).format('YYYY-MM-DD'),
+  dateLowValue = c.CUSTOM_DEFAULT_START_DATE,
+  dateHighValue = c.CUSTOM_DEFAULT_END_DATE,
   dateOptions = dateComparisonOptions(
     ['gte', 'between', 'lte'],
     ['After', 'Range', 'Before'],
@@ -225,12 +222,8 @@ export const constructDateRangeParamSet = ({
   dateField = undefined,
   dateLowComparison = 'gte',
   dateHighComparison = 'lte',
-  dateLowValue = moment(moment.now())
-    .subtract(1, 'Y')
-    .format('YYYY-MM-DD'),
-  dateHighValue = moment(moment.now())
-    .add(1, 'Y')
-    .format('YYYY-MM-DD'),
+  dateLowValue = c.CUSTOM_DEFAULT_START_DATE,
+  dateHighValue = c.CUSTOM_DEFAULT_END_DATE,
   dateOptions = dateComparisonOptions(
     ['gte', 'between', 'lte'],
     ['After', 'Range', 'Before'],
