@@ -1,10 +1,12 @@
+import * as u from 'shared/utilities/constantUtils'
+
 export const handleClearErrors = type => ({
-  type: type + '_CLEAR_ERRORS',
+  type: u.createClearedErrorsConstant(type),
 })
 
 export const handleFailure = (type, status, message) => {
   return {
-    type: type + '_FAILURE',
+    type: u.createFailureConstant(type),
     status: status,
     message: message,
   }

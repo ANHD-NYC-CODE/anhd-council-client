@@ -24,7 +24,10 @@ export const removeManyRequests = requestConstantsArray => ({
 })
 
 export const retryAuthenticatedRequests = () => (dispatch, getState) => {
-  getState().appState.requests.forEach(request => {
+  const appState = getState().appState
+  if (!appState) return
+
+  appState.requests.forEach(request => {
     if (!request.isAuthenticated) return
     request.called = false
     dispatch(requestWithAuth(makeRequest(request)))

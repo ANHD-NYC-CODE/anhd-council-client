@@ -1,9 +1,11 @@
+import * as u from 'shared/utilities/constantUtils'
+
 export const handleRequest = (type, requestId) => ({
-  type: type + '_PENDING',
+  type: u.createPendingRequestConstant(type),
   requestId,
 })
 
 export const handleCompletedRequest = (type, requestId) => ({
-  type: type + '_COMPLETE',
+  type: u.createCompletedRequestConstant(type),
   requestId,
 })

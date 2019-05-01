@@ -1,4 +1,5 @@
 import moment from 'moment'
+import * as c from 'shared/constants'
 import { logoutUser, refreshTokens } from 'Store/Auth/actions'
 
 export const requestMiddleware = () => {
@@ -29,7 +30,7 @@ export const requestMiddleware = () => {
 
 export const requestWithAuth = request => {
   return {
-    type: 'AUTH_REQUEST',
+    type: c.AUTH_REQUEST,
     request: (dispatch, getState, access_token) => request(dispatch, getState, access_token),
   }
 }

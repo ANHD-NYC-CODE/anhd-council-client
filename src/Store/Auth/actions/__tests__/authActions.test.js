@@ -1,6 +1,7 @@
 import configureStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 import { Axios } from 'shared/utilities/Axios'
+import * as c from 'shared/constants'
 import { TOKEN_URL, TOKEN_REFRESH_URL } from 'shared/constants/urls'
 import { getUserStorageData } from 'shared/utilities/storageUtils'
 import MockAdapter from 'axios-mock-adapter'
@@ -9,6 +10,7 @@ import * as errorActions from 'Store/Error/actions'
 import { push } from 'connected-react-router'
 import { requestWithAuth } from 'shared/utilities/authUtils'
 import { GET_TOKEN, GET_TOKEN_REFRESH } from 'shared/constants/actions'
+import * as u from 'shared/utilities/constantUtils'
 
 import {
   loginUser,
@@ -35,15 +37,23 @@ describe('loginUser', () => {
     mock.onPost(TOKEN_URL).reply(200, data)
 
     await store.dispatch(loginUser(formData)).then(() => {
-      const expectedActions = JSON.stringify([
-        loadingActions.handleRequest(GET_TOKEN),
-        errorActions.handleClearErrors(GET_TOKEN),
-        loadingActions.handleCompletedRequest(GET_TOKEN),
-        handleSyncStorage(getUserStorageData()),
-        requestWithAuth(getUserProfile()),
-      ])
+      expect(store.getActions()).toHaveLength(5)
 
-      expect(JSON.stringify(store.getActions())).toEqual(expectedActions)
+      expect(
+        store.getActions().find(action => action.type === u.createPendingRequestConstant(c.GET_TOKEN))
+      ).toBeDefined()
+
+      expect(
+        store.getActions().find(action => action.type === u.createClearedErrorsConstant(c.GET_TOKEN))
+      ).toBeDefined()
+
+      expect(
+        store.getActions().find(action => action.type === u.createCompletedRequestConstant(c.GET_TOKEN))
+      ).toBeDefined()
+
+      expect(store.getActions().find(action => action.type === c.HANDLE_SYNC_STORAGE)).toBeDefined()
+
+      expect(store.getActions().find(action => action.type === c.AUTH_REQUEST)).toBeDefined()
     })
   })
 
@@ -81,14 +91,21 @@ describe('refreshTokens', () => {
     mock.onPost(TOKEN_REFRESH_URL).reply(200, data)
 
     await store.dispatch(refreshTokens(token)).then(() => {
-      const expectedActions = [
-        loadingActions.handleRequest(GET_TOKEN_REFRESH),
-        errorActions.handleClearErrors(GET_TOKEN_REFRESH),
-        loadingActions.handleCompletedRequest(GET_TOKEN_REFRESH),
-        handleSyncStorage(getUserStorageData()),
-      ]
+      expect(store.getActions()).toHaveLength(4)
 
-      expect(store.getActions()).toEqual(expectedActions)
+      expect(
+        store.getActions().find(action => action.type === u.createPendingRequestConstant(c.GET_TOKEN_REFRESH))
+      ).toBeDefined()
+
+      expect(
+        store.getActions().find(action => action.type === u.createClearedErrorsConstant(c.GET_TOKEN_REFRESH))
+      ).toBeDefined()
+
+      expect(
+        store.getActions().find(action => action.type === u.createCompletedRequestConstant(c.GET_TOKEN_REFRESH))
+      ).toBeDefined()
+
+      expect(store.getActions().find(action => action.type === c.HANDLE_SYNC_STORAGE)).toBeDefined()
     })
   })
 

@@ -8,12 +8,11 @@ import ConditionFilter from 'shared/classes/ConditionFilter'
 import { filterMocks } from 'shared/models/__mocks__/filterMocks'
 import moment from 'moment'
 
-const rawStartDate = moment(c.CUSTOM_DEFAULT_START_DATE, 'YYYY-MM-DD')
-const rawEndDate = moment(c.CUSTOM_DEFAULT_END_DATE, 'YYYY-MM-DD')
+const rawStartDate = c.CUSTOM_DEFAULT_START_DATE
+const rawEndDate = c.CUSTOM_DEFAULT_END_DATE
 
-const startDate = rawStartDate.format('MM/DD/YYYY')
-
-const endDate = rawEndDate.format('MM/DD/YYYY')
+const startDate = moment(rawStartDate, 'YYYY-MM-DD').format('MM/DD/YYYY')
+const endDate = moment(rawEndDate, 'YYYY-MM-DD').format('MM/DD/YYYY')
 
 describe('convertFilterToSentence', () => {
   describe('from/to', () => {
