@@ -1,3 +1,25 @@
+export const createHpdComplaintProblemMock = ({
+  complaintid = '1',
+  problemid = '1',
+  spacetype = 'APT',
+  majorcategory = 'HEAT',
+  minorcategory = '',
+  receiveddate = '2018-01-01',
+  apartment = 'A',
+  status = 'OPEN',
+} = {}) => {
+  return {
+    complaintid,
+    problemid,
+    spacetype,
+    majorcategory,
+    minorcategory,
+    receiveddate,
+    apartment,
+    status,
+  }
+}
+
 export const createPropertyRequestMock = ({
   bbl = '1',
   council = 1,

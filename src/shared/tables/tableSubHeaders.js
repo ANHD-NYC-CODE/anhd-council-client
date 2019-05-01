@@ -9,7 +9,7 @@ export const getTableSubheaders = ({ constant, property } = {}) => {
   )
 }
 
-export const getTableSubheaderLinks = ({ constant, property } = {}) => {
+export const getTableSubheaderLinks = ({ constant = '', property = {} } = {}) => {
   switch (constant) {
     case 'ACRIS_REAL_MASTER':
       return (
