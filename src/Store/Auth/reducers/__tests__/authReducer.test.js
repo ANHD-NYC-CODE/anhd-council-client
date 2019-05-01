@@ -14,14 +14,14 @@ describe('Auth reducer', () => {
       const storage = {
         access: { token: access_token, expiration: moment().format() },
         refresh: { token: refresh_token, expiration: moment().format() },
+        refreshTimeout: 1,
         user: { id: 1 },
       }
-      expect(reducer.authReducer(undefined, actions.handleSyncStorage(storage))).toEqual({
-        ...reducer.initialState,
-        access: storage.access,
-        refresh: storage.refresh,
-        user: storage.user,
-      })
+
+      expect(reducer.authReducer(undefined, actions.handleSyncStorage(storage)).access).toEqual(storage.access)
+      expect(reducer.authReducer(undefined, actions.handleSyncStorage(storage)).refresh).toEqual(storage.refresh)
+      expect(reducer.authReducer(undefined, actions.handleSyncStorage(storage)).user).toEqual(storage.user)
+      expect(reducer.authReducer(undefined, actions.handleSyncStorage(storage)).refreshTimeout).toBeDefined()
     })
   })
 
