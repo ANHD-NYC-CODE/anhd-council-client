@@ -346,6 +346,7 @@ class DistrictDashboardShow extends React.Component {
                           expandable={false}
                           loading={this.props.loading}
                           records={resultRecords}
+                          showUpdate={false}
                           tableConfig={this.props.propertySummaryRequest.tableConfig}
                         />
                       </div>

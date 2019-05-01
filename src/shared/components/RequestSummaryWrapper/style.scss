@@ -1,0 +1,14 @@
+.request-summary {
+  .request-summary__wrapper {
+    display: flex;
+    flex-direction: row;
+
+    .info-section {
+      display: flex;
+      margin-left: 4px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}

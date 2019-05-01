@@ -111,9 +111,7 @@ export const constructCountDateParamSet = ({
   dateLowValue = moment(moment.now())
     .subtract(1, 'Y')
     .format('YYYY-MM-DD'),
-  dateHighValue = moment(moment.now())
-    .add(1, 'Y')
-    .format('YYYY-MM-DD'),
+  dateHighValue = moment(moment.now()).format('YYYY-MM-DD'),
   dateOptions = dateComparisonOptions(
     ['gte', 'between', 'lte'],
     ['After', 'Range', 'Before'],

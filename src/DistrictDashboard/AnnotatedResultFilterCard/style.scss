@@ -2,6 +2,7 @@
 
 .amount-result-filter-card--container {
   // align-items: center;
+  height: 100%;
   display: flex;
 }
 
@@ -116,8 +117,6 @@
         border-color: $info;
         color: $black;
         box-shadow: 1px 12px 20px $gray-400;
-        transition: transform 0.05s ease-in-out;
-        transform: translateY(-2px);
       }
     }
   }

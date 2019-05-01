@@ -17,6 +17,9 @@ import LoginModalFooter from 'shared/components/forms/LoginForm/LoginModalFooter
 
 import ClearAdvancedSearchButton from 'shared/components/buttons/ClearAdvancedSearchButton'
 import { Col, Row } from 'react-bootstrap'
+
+import './style.scss'
+
 class RequestSummaryWrapper extends React.Component {
   constructor(props) {
     super(props)
@@ -57,7 +60,11 @@ class RequestSummaryWrapper extends React.Component {
 
     return (
       <Row className="request-summary">
-        <Col className="pr-md-0" xs={this.props.print ? 12 : 10} md={this.props.print ? 12 : 11}>
+        <Col
+          className="request-summary__wrapper pr-md-0"
+          xs={this.props.print ? 12 : 10}
+          md={this.props.print ? 12 : 11}
+        >
           {this.props.error ? (
             <UserContext.Consumer>
               {auth => {
@@ -109,19 +116,19 @@ class RequestSummaryWrapper extends React.Component {
               className: this.props.className,
             })
           )}
+          {!this.props.print && (
+            <div className="info-section">
+              <InfoModalButton modalConstant={this.props.infoKey || this.getInfoKey()} />
+              {this.props.request.type === 'ADVANCED_SEARCH' && (
+                <ClearAdvancedSearchButton>
+                  <button className="button">
+                    <FontAwesomeIcon icon={faTimesCircle} size="lg" />
+                  </button>
+                </ClearAdvancedSearchButton>
+              )}
+            </div>
+          )}
         </Col>
-        {!this.props.print && (
-          <Col xs={2} md={1} className="px-1">
-            <InfoModalButton modalConstant={this.props.infoKey || this.getInfoKey()} />
-            {this.props.request.type === 'ADVANCED_SEARCH' && (
-              <ClearAdvancedSearchButton>
-                <button className="button">
-                  <FontAwesomeIcon icon={faTimesCircle} size="lg" />
-                </button>
-              </ClearAdvancedSearchButton>
-            )}
-          </Col>
-        )}
       </Row>
     )
   }

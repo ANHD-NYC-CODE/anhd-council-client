@@ -108,6 +108,21 @@ export const geographySelectionToString = ({ type, id } = {}) => {
   }
 }
 
+export const boroughAbbreviationToCode = abbreviation => {
+  switch (abbreviation) {
+    case 'MN':
+      return '1'
+    case 'BX':
+      return '2'
+    case 'BK':
+      return '3'
+    case 'QN':
+      return '4'
+    case 'SI':
+      return '5'
+  }
+}
+
 export const boroCodeToName = code => {
   switch (code) {
     case '1':
