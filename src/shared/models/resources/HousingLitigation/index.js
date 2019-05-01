@@ -6,7 +6,7 @@ const HousingLitigation = databaseObject => ({
   resourceConstant: 'HOUSING_LITIGATION',
   urlPath: 'housinglitigations',
   label: 'Litigations Against Landlords',
-  sentenceNoun: 'litigations against landlords',
+  sentenceNoun: 'litigations',
   ownResourceFilters: {
     initial: {
       generatorFunction: resourceModel => {

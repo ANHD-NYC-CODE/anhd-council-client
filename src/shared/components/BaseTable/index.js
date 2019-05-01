@@ -295,15 +295,17 @@ class BaseTable extends React.Component {
                       filter={filterFactory()}
                       height="200px"
                       scrollTop="top"
-                      noDataIndication={() => (
-                        <TableAlert
-                          textType="text-dark"
-                          variant="warning"
-                          message={'No records found'}
-                          buttonText="Clear Filters"
-                          buttonVariant="outline-secondary"
-                        />
-                      )}
+                      noDataIndication={() =>
+                        !this.props.loading && (
+                          <TableAlert
+                            textType="text-dark"
+                            variant="warning"
+                            message={'No records found'}
+                            buttonText="Clear Filters"
+                            buttonVariant="outline-secondary"
+                          />
+                        )
+                      }
                       rowClasses={this.props.tableConfig.tableRowClasses}
                       tabIndexCell
                     />

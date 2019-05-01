@@ -322,6 +322,7 @@ class DistrictDashboardShow extends React.Component {
                           handleChangeGeography={this.props.handleChangeGeography}
                           handleChangeGeographyId={this.props.handleChangeGeographyId}
                           iconConfig="MULTIPLE"
+                          loading={this.props.loading}
                           results={resultRecords}
                           displayedResultsFilter={
                             this.props.appState.selectedRequests.some(r => r.type === 'ADVANCED_SEARCH')

@@ -1,5 +1,6 @@
 table {
   &:not(.fluid-table) {
+    border: 0;
     @include media-breakpoint-up(xs) {
       display: block;
       width: 100%;
