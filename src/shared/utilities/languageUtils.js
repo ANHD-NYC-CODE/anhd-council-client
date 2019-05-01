@@ -156,8 +156,8 @@ export const constructAddressString = ({ number, street, borough, zip } = {}) =>
   }${zip ? `${zip} ` : ''}`
 }
 
-export const councilIdToString = id => {
-  return `Council District ${id}`
+export const councilIdToString = (id, prefix = true) => {
+  return `${prefix ? 'Council District ' : ''}${id}`
 }
 
 export const communityIdToString = id => {

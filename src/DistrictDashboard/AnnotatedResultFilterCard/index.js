@@ -11,6 +11,7 @@ import { faArrowDown } from '@fortawesome/free-solid-svg-icons'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import InfoModalButton from 'shared/components/InfoModalButton'
+import WhyLoginButton from 'shared/components/WhyLoginButton'
 
 class AnnotatedResultFilterCard extends React.Component {
   constructor(props) {
