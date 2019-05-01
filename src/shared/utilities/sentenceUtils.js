@@ -44,7 +44,7 @@ const parseParamMapComparison = (paramMap, nounOverride = undefined) => {
         paramMap.comparisonPrefix.trim(),
         paramMap.valuePrefix.trim(),
         constructDateComparisonString(paramMap.comparison).trim(),
-        moment(paramMap.value)
+        moment(paramMap.value, 'YYYY-MM-DD')
           .format('MM/DD/YYYY')
           .trim(),
       ]
