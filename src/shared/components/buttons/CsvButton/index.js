@@ -32,11 +32,16 @@ class CsvButton extends React.Component {
   }
 }
 
-CsvButton.propTypes = {
+CsvButton.defaultProps = {
   error: null,
   loading: false,
+}
+
+CsvButton.propTypes = {
+  error: PropTypes.object,
+  loading: PropTypes.bool,
   onClick: PropTypes.func,
-  ExportCSVButton: PropTypes.object,
+  ExportCSVButton: PropTypes.func,
   csvProps: PropTypes.object,
 }
 

@@ -1,4 +1,5 @@
 import * as actions from '../actions'
+import * as c from 'shared/constants'
 
 export const initialState = {
   user: undefined,
@@ -9,7 +10,7 @@ export const initialState = {
 
 export const authReducer = (state = Object.freeze(initialState), action = { data: [] }) => {
   switch (action.type) {
-    case actions.HANDLE_SYNC_STORAGE: {
+    case c.HANDLE_SYNC_STORAGE: {
       if (state.refreshTimeout) {
         clearTimeout(state.refreshTimeout)
       }
@@ -21,7 +22,7 @@ export const authReducer = (state = Object.freeze(initialState), action = { data
         refreshTimeout: action.refreshTimeout,
       }
     }
-    case actions.HANDLE_USER_LOGOUT: {
+    case c.HANDLE_USER_LOGOUT: {
       clearTimeout(state.refreshTimeout)
       return { ...initialState }
     }

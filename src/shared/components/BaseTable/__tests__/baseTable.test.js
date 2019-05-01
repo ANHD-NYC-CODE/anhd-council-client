@@ -1,49 +1,24 @@
 import React from 'react'
 import { configure, mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import sinon from 'sinon'
 import BaseTable from 'shared/components/BaseTable'
 import TableConfig from 'shared/classes/TableConfig'
 import ConfigContext from 'Config/ConfigContext'
+import { createHpdComplaintProblemMock } from 'shared/testUtilities/mocks'
+
 configure({ adapter: new Adapter() })
 
-const hpdProblemRecords = [
-  {
-    problemid: '1',
-    type: 'a',
-    unittype: 'b',
-    spacetype: 'c',
-    majorcategory: 'd',
-    minorcategory: 'e',
-    code: 'f',
-    statusdescription: 'g',
-  },
-  {
-    problemid: '2',
-    type: 'a',
-    unittype: 'b',
-    spacetype: 'c',
-    majorcategory: 'd',
-    minorcategory: 'e',
-    code: 'f',
-    statusdescription: 'g',
-  },
-]
 const records = [
-  {
+  createHpdComplaintProblemMock({
     complaintid: '1',
-    receiveddate: '2018-01-01',
-    apartment: '1a',
+    problemid: '1',
     status: 'CLOSE',
-    hpdproblems: hpdProblemRecords,
-  },
-  {
+  }),
+  createHpdComplaintProblemMock({
     complaintid: '2',
-    receiveddate: '2018-01-01',
-    apartment: '1b',
+    problemid: '2',
     status: 'CLOSE',
-    hpdproblems: [],
-  },
+  }),
 ]
 
 const tableConfig = new TableConfig({ resourceConstant: 'HPD_COMPLAINT' })
@@ -65,41 +40,83 @@ describe('BaseTable', () => {
   })
 
   describe('cell click', () => {
-    it('expands the nested table row', () => {
+    it('expands the row', () => {
       const wrapper = setupWrapper(records, tableConfig)
       wrapper
-        .find('tbody td')
-        .at(4)
+        .find('tbody td.table-column--description')
+        .at(1)
         .simulate('click')
       wrapper.update()
 
-      expect(wrapper.find('tbody tr')).toHaveLength(6)
-      expect(wrapper.find('tbody table')).toHaveLength(1)
-      expect(wrapper.find('tbody table').text()).toMatch(
-        /Problem IDUrgencyUnit TypeSpace TypeMajor CategoryMinor CategoryDescriptorFull Description/
-      )
+      expect(wrapper.find('tbody tr')).toHaveLength(3)
+      expect(wrapper.find('.expanding-row')).toHaveLength(1)
     })
   })
 
   describe('filters', () => {
     jest.useFakeTimers()
 
-    it('clears filters', () => {
-      const wrapper = setupWrapper(records, tableConfig)
-      wrapper
-        .find('thead th')
-        .at(3)
-        .find('input')
-        .simulate('change', { target: { value: 'OPEN' } })
-      jest.runAllTimers()
-      wrapper.update()
-      expect(wrapper.find('tbody tr')).toHaveLength(1)
-      expect(wrapper.find('tbody tr').text()).toMatch(/Clear Filters/)
+    describe('with matches', () => {
+      const records = [
+        createHpdComplaintProblemMock({
+          complaintid: '1',
+          problemid: '1',
+          status: 'CLOSE',
+        }),
+        createHpdComplaintProblemMock({
+          complaintid: '2',
+          problemid: '2',
+          status: 'CLOSE',
+        }),
+        createHpdComplaintProblemMock({
+          complaintid: '3',
+          problemid: '3',
+          status: 'CLOSE',
+        }),
+      ]
+      it('finds no matches', () => {
+        const wrapper = setupWrapper(records, tableConfig)
+        expect(wrapper.find('tbody tr')).toHaveLength(3)
+        wrapper
+          .find('.table-filter-button-group .table-filter-button')
+          .at(0)
+          .simulate('click')
+        jest.runAllTimers()
+        wrapper.update()
+        expect(wrapper.find('tbody tr')).toHaveLength(1)
+        expect(wrapper.find('tbody tr').text()).toMatch(/No records found/)
+      })
+    })
 
-      wrapper.find('tbody tr button').simulate('click')
-      wrapper.update()
-
-      expect(wrapper.find('tbody tr')).toHaveLength(2)
+    describe('without matches', () => {
+      const records = [
+        createHpdComplaintProblemMock({
+          complaintid: '1',
+          problemid: '1',
+          status: 'OPEN',
+        }),
+        createHpdComplaintProblemMock({
+          complaintid: '2',
+          problemid: '2',
+          status: 'OPEN',
+        }),
+        createHpdComplaintProblemMock({
+          complaintid: '3',
+          problemid: '3',
+          status: 'CLOSE',
+        }),
+      ]
+      it('filters', () => {
+        const wrapper = setupWrapper(records, tableConfig)
+        expect(wrapper.find('tbody tr')).toHaveLength(3)
+        wrapper
+          .find('.table-filter-button-group .table-filter-button')
+          .at(0)
+          .simulate('click')
+        jest.runAllTimers()
+        wrapper.update()
+        expect(wrapper.find('tbody tr')).toHaveLength(2)
+      })
     })
   })
 })

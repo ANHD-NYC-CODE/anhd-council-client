@@ -814,6 +814,7 @@ export const getTableColumns = ({
           text: 'Status Description',
           formatter: hpdProblemStatusFormatter,
           csvFormatter: hpdProblemStatusFormatter,
+          classes: 'table-column--description',
           sort: true,
         }),
         // constructNestedTableColumn({
