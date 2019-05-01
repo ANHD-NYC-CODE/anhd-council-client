@@ -103,7 +103,7 @@ describe('Lookup', () => {
         router: { location: { pathname: '/property/1/building/2' }, action: 'POP' },
       })
 
-      expect(wrapper.find('RequestTableWrapper')).toHaveLength(9)
+      expect(wrapper.find('RequestTableWrapper')).toHaveLength(12)
 
       wrapper.find('RequestTableWrapper').forEach((w, index) => {
         if (index === 0 || index === 1) {
@@ -119,7 +119,7 @@ describe('Lookup', () => {
         router: { location: { pathname: '/property/1/building/2' }, action: 'POP' },
       })
 
-      expect(wrapper.find('RequestSummaryWrapper')).toHaveLength(8)
+      expect(wrapper.find('RequestSummaryWrapper')).toHaveLength(11)
     })
 
     it('Switches the visible request wrapper', () => {
@@ -129,26 +129,26 @@ describe('Lookup', () => {
 
       expect(
         wrapper
-          .findWhere(node => node.key() === 'rw-col-0')
+          .findWhere(node => node.key() && node.key().includes('ACRIS_REAL_MASTER'))
           .find('RequestTableWrapper')
           .props().visible
       ).toEqual(true)
 
       wrapper
-        .findWhere(node => node.key() === 'rs-col-1')
+        .findWhere(node => node.key() && node.key().includes('HPD_VIOLATION'))
         .find('button.summary-result-card')
         .simulate('click')
 
       wrapper.update()
       expect(
         wrapper
-          .findWhere(node => node.key() === 'rw-col-0')
+          .findWhere(node => node.key() && node.key().includes('ACRIS_REAL_MASTER'))
           .find('RequestTableWrapper')
           .props().visible
       ).toEqual(false)
       expect(
         wrapper
-          .findWhere(node => node.key() === 'rw-col-1')
+          .findWhere(node => node.key() && node.key().includes('HPD_VIOLATION'))
           .find('RequestTableWrapper')
           .props().visible
       ).toEqual(true)

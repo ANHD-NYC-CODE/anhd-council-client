@@ -86,7 +86,7 @@ describe('DistrictDashboard', () => {
       expect(wrapper.find('LeafletMap')).toHaveLength(1)
 
       expect(wrapper.find('RequestSummaryWrapper')).toHaveLength(6)
-      expect(wrapper.find('AnnotatedResultFilterCard')).toHaveLength(5)
+      expect(wrapper.find('AnnotatedResultFilterCard')).toHaveLength(6)
       const housingTypeCards = wrapper.findWhere(node => (node.key() || '').match(/housingtype-wrapper/))
       housingTypeCards.forEach(card => {
         expect(card.props().disabled).toEqual(false)
@@ -176,7 +176,7 @@ describe('DistrictDashboard', () => {
         await flushAllPromises()
         wrapper.update()
         expect(wrapper.find('.housing-type-section__wrapper').text()).toMatch(
-          'All Residential2 properties11 unitsRent Stabilized0 properties0 units0.00% of residentialSubsidized Housing0 properties0 units0.00% of residentialSmall Homes1 properties1 units50.00% of residentialMarket Rate2 properties11 units100.00% of residentialPublic Housing0 properties0 units0.00% of residential'
+          'All Residential2 properties11 unitsRent Stabilized0 properties0 units0.0% of residentialSubsidized Housing0 properties0 units0.0% of residentialSmall Homes1 properties1 units50.0% of residentialMarket Rate2 properties11 units100.0% of residentialPublic Housing0 properties0 units0.0% of residential'
         )
       })
 

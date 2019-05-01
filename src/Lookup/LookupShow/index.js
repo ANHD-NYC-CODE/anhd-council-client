@@ -210,7 +210,13 @@ class LookupShow extends React.PureComponent {
                             .filter(r => r.level === 'PROPERTY')
                             .map((request, index) => {
                               return (
-                                <Col xs={12} sm={6} md={4} lg={12} key={`rs-col-${index}`}>
+                                <Col
+                                  xs={12}
+                                  sm={6}
+                                  md={4}
+                                  lg={12}
+                                  key={`rs-col-${index}-${request.resourceModel.resourceConstant}`}
+                                >
                                   <RequestSummaryWrapper
                                     key={`request-summary-${this.props.appState.requests.indexOf(request)}`}
                                     summaryBackgroundColorClass={'acris-yellow property-card'}
@@ -239,7 +245,13 @@ class LookupShow extends React.PureComponent {
                             .filter(r => r.level === 'BUILDING')
                             .map((request, index) => {
                               return (
-                                <Col xs={12} sm={6} md={4} lg={12} key={`rs-col-${index}`}>
+                                <Col
+                                  xs={12}
+                                  sm={6}
+                                  md={4}
+                                  lg={12}
+                                  key={`rs-col-${index}-${request.resourceModel.resourceConstant}`}
+                                >
                                   <RequestSummaryWrapper
                                     summaryBackgroundColorClass={
                                       request.level === 'PROPERTY' || !this.props.bin
@@ -262,7 +274,11 @@ class LookupShow extends React.PureComponent {
                         <Row>
                           {this.props.lookupRequests.map((request, index) => {
                             return (
-                              <Col xs={12} key={`rw-col-${index}`} className="request-wrapper-container">
+                              <Col
+                                xs={12}
+                                key={`rw-col-${index}-${request.resourceModel.resourceConstant}`}
+                                className="request-wrapper-container"
+                              >
                                 <RequestTableWrapper
                                   badge={
                                     request.level === 'PROPERTY' || !this.props.bin ? (
