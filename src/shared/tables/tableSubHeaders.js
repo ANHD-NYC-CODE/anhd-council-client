@@ -1,6 +1,7 @@
 import React from 'react'
 import BaseLink from 'shared/components/BaseLink'
 import { Col, Row } from 'react-bootstrap'
+import { boroughAbbreviationToCode } from 'shared/utilities/languageUtils'
 export const getTableSubheaders = ({ constant, property } = {}) => {
   return (
     <Row>
@@ -39,9 +40,9 @@ export const getTableSubheaderLinks = ({ constant = '', property = {} } = {}) =>
               Visit this property’s{' '}
               <BaseLink
                 className="lookup-links__link"
-                href={`https://hpdonline.hpdnyc.org/HPDonline/Provide_address.aspx?p1=1&p2=${
-                  property.address.split(' ')[0]
-                }&p3=${property.address
+                href={`https://hpdonline.hpdnyc.org/HPDonline/Provide_address.aspx?p1=${boroughAbbreviationToCode(
+                  property.borough
+                )}&p2=${property.address.split(' ')[0]}&p3=${property.address
                   .split(' ')
                   .slice(1)
                   .join(' ')}&SearchButton=Search`}
@@ -61,9 +62,9 @@ export const getTableSubheaderLinks = ({ constant = '', property = {} } = {}) =>
               Visit this property’s{' '}
               <BaseLink
                 className="lookup-links__link"
-                href={`https://hpdonline.hpdnyc.org/HPDonline/Provide_address.aspx?p1=1&p2=${
-                  property.address.split(' ')[0]
-                }&p3=${property.address
+                href={`https://hpdonline.hpdnyc.org/HPDonline/Provide_address.aspx?p1=${boroughAbbreviationToCode(
+                  property.borough
+                )}&p2=${property.address.split(' ')[0]}&p3=${property.address
                   .split(' ')
                   .slice(1)
                   .join(' ')}&SearchButton=Search`}
@@ -84,9 +85,9 @@ export const getTableSubheaderLinks = ({ constant = '', property = {} } = {}) =>
               Visit this property’s{' '}
               <BaseLink
                 className="lookup-links__link"
-                href={`https://hpdonline.hpdnyc.org/HPDonline/Provide_address.aspx?p1=1&p2=${
-                  property.address.split(' ')[0]
-                }&p3=${property.address
+                href={`https://hpdonline.hpdnyc.org/HPDonline/Provide_address.aspx?p1=${boroughAbbreviationToCode(
+                  property.borough
+                )}&p2=${property.address.split(' ')[0]}&p3=${property.address
                   .split(' ')
                   .slice(1)
                   .join(' ')}&SearchButton=Search`}
