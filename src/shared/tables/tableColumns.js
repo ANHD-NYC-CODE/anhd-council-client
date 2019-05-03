@@ -403,7 +403,7 @@ export const getTableColumns = ({
             rowExample,
           }),
           text: getAnnotatedLabel({
-            annotationLabel: 'Marshall Evictions',
+            annotationLabel: 'Marshal Evictions',
             rowExample,
             annotationKey: getAnnotationKey('evictions', annotationStart),
           }),
