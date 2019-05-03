@@ -21,7 +21,7 @@ const sortedLimitedYears = props => {
             .year()
         )
       }
-      return parseInt(year) < maxYear
+      return parseInt(year) <= maxYear
     })
     .map(year => parseInt(year))
     .sort()
