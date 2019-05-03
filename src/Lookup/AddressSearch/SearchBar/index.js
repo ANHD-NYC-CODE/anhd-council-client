@@ -22,9 +22,7 @@ export default class SearchBar extends React.PureComponent {
   componentWillReceiveProps(nextProps) {
     if (nextProps.selectedResult) {
       this.props.setSearchValue(
-        `${nextProps.selectedResult.housenumber} ${nextProps.selectedResult.street}, ${
-          nextProps.selectedResult.boroughName
-        }`
+        `${nextProps.selectedResult.housenumber.trim()} ${nextProps.selectedResult.street.trim()}, ${nextProps.selectedResult.boroughName.trim()}`
       )
     }
   }
@@ -41,7 +39,6 @@ export default class SearchBar extends React.PureComponent {
   onInputChange(e) {
     e = new StandardizedInput(e)
     this.props.clearSelectedSearch()
-
     this.props.setSearchValue(e.value)
     clearTimeout(this.props.searchTimeout)
     if (e.value) {
@@ -83,8 +80,7 @@ SearchBar.propTypes = {
   placeholder: PropTypes.string,
   inputClass: PropTypes.string,
   searchTimeout: PropTypes.number,
-  selectBuildingResult: PropTypes.func,
+  setSearchValue: PropTypes.func,
   selectedResult: PropTypes.object,
   searchValue: PropTypes.string,
-  setSearchValue: PropTypes.func,
 }

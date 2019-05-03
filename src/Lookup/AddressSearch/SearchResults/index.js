@@ -10,12 +10,11 @@ import './style.scss'
 const SearchResults = props => {
   const handleRowClick = (e, result) => {
     e.preventDefault()
-    props.dispatch(
-      setSearchValue(
-        `${result.buildingnumber ? result.buildingnumber + ' ' : ''}${result.buildingstreet ||
-          result.propertyaddress}, ${result.borough}`
-      )
-    )
+    const searchString = `${result.buildingnumber ? result.buildingnumber.replace(/ /g, '') : ''} ${
+      result.buildingstreet ? result.buildingstreet.trim() : result.propertyaddress.trim()
+    }, ${result.borough.trim()}`
+
+    props.dispatch(setSearchValue(searchString))
     props.hideSearch(e, true)
     props.dispatch(
       setLookupAndRequestsAndRedirect({
