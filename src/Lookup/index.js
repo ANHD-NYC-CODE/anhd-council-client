@@ -18,20 +18,50 @@ class Lookup extends React.Component {
     super(props)
     this.changeLookup = this.changeLookup.bind(this)
     this.trigger404Error = this.trigger404Error.bind(this)
+    this.syncLookup = this.syncLookup.bind(this)
+    this.needsLookupSync = this.needsLookupSync.bind(this)
+    this.getPathMatch = this.getPathMatch.bind(this)
     this.state = {
       error404: false,
       error404Message: 'Sorry, an error has occured. Page not found!',
     }
-    if (!props.bbl) {
-      props.dispatch(push('/lookup'))
-    } else if (!(props.bbl === props.appState.currentProperty) || !(props.bin === props.appState.currentBuilding)) {
-      this.changeLookup(props.bbl, props.bin)
-    }
+
+    this.syncLookup(props)
   }
 
   componentDidMount() {
     scrollSpy.update()
     this.scrollToControls()
+  }
+
+  componentDidUpdate(props) {
+    this.syncLookup(props)
+  }
+
+  getPathMatch() {
+    const propertyMatchSelector = createMatchSelector({ path: '/property/:bbl' })
+
+    const propertyBuildingMatchSelector = createMatchSelector({ path: '/property/:bbl/building/:bin' })
+    const match =
+      propertyBuildingMatchSelector({ router: this.props.router }) ||
+      propertyMatchSelector({ router: this.props.router })
+
+    return match
+  }
+
+  needsLookupSync(props, match) {
+    return (
+      !(match.params.bbl === props.appState.currentProperty) || !(match.params.bin === props.appState.currentBuilding)
+    )
+  }
+
+  syncLookup(props) {
+    const match = this.getPathMatch()
+    if (!match) {
+      props.dispatch(push('/lookup'))
+    } else if (this.needsLookupSync(props, match)) {
+      this.changeLookup(match.params.bbl, match.params.bin)
+    }
   }
 
   componentWillUnmount() {
@@ -67,6 +97,8 @@ class Lookup extends React.Component {
   }
 
   render() {
+    const match = this.getPathMatch()
+    if (!match || this.needsLookupSync(this.props, match)) return null
     if (this.state.error404)
       return <PageError title="Oops! 404 Page Not Found." message={this.state.error404Message} icon={faMapSigns} />
     if (this.props.bbl && !this.props.appState.currentProperty) return <InnerLoader />
@@ -99,17 +131,12 @@ Lookup.propTypes = {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const propertyMatchSelector = createMatchSelector({ path: '/property/:bbl' })
-
-  const propertyBuildingMatchSelector = createMatchSelector({ path: '/property/:bbl/building/:bin' })
-  const match = propertyBuildingMatchSelector(state) || propertyMatchSelector(state)
   return {
-    bbl: match ? match.params.bbl : undefined,
-    bin: match ? match.params.bin : undefined,
     appState: state.appState,
     propertyResult:
       state.requests[(getRequestType(state.appState.requests, 'LOOKUP_PROFILE')[0] || {}).requestConstant],
     propertyError: state.error[(getRequestType(state.appState.requests, 'LOOKUP_PROFILE')[0] || {}).requestConstant],
+    router: state.router,
   }
 }
 
