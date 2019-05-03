@@ -50,6 +50,7 @@ class Lookup extends React.Component {
   }
 
   needsLookupSync(props, match) {
+    if (props.router.location.pathname === '/lookup') return false
     return (
       !(match.params.bbl === props.appState.currentProperty) || !(match.params.bin === props.appState.currentBuilding)
     )
@@ -57,7 +58,7 @@ class Lookup extends React.Component {
 
   syncLookup(props) {
     const match = this.getPathMatch()
-    if (!match) {
+    if (props.router.location.pathname !== '/lookup' && !match) {
       props.dispatch(push('/lookup'))
     } else if (this.needsLookupSync(props, match)) {
       this.changeLookup(match.params.bbl, match.params.bin)
@@ -98,15 +99,15 @@ class Lookup extends React.Component {
 
   render() {
     const match = this.getPathMatch()
-    if (!match || this.needsLookupSync(this.props, match)) return null
-    if (this.state.error404)
-      return <PageError title="Oops! 404 Page Not Found." message={this.state.error404Message} icon={faMapSigns} />
+    if (match && this.needsLookupSync(this.props, match))
+      if (this.state.error404)
+        return <PageError title="Oops! 404 Page Not Found." message={this.state.error404Message} icon={faMapSigns} />
     if (this.props.bbl && !this.props.appState.currentProperty) return <InnerLoader />
-    return this.props.appState.currentProperty ? (
+    return match && this.props.appState.currentProperty ? (
       <LookupRequestsWrapper
         appState={this.props.appState}
-        bbl={this.props.bbl}
-        bin={this.props.bin}
+        bbl={match.params.bbl}
+        bin={match.params.bin}
         key={`${this.props.appState.currentProperty}${this.props.appState.currentBuilding}`}
         changeLookup={this.changeLookup}
         dispatch={this.props.dispatch}
