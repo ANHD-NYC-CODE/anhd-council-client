@@ -86,9 +86,16 @@
 - restyled property lookup geography labels
 - add new copy and fields to user request modal
 
-#### 1.0.0b1.0.351
+#### 1.0.0b1.0.352
 
 5/1/19
 
 - add map spinning loader
 - change litigations sentence noun from
+
+#### 1.0.0b1.0.353
+
+5/3/19
+
+- Fixes the order of years in the rent stabilization table in property lookup.
+- Adds copy to HPD Complaint, Acris, and Litigation info modals describing the update schedule.
