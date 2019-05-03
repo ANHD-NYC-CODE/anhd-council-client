@@ -3,8 +3,32 @@ import PropTypes from 'prop-types'
 import { Row, Col } from 'react-bootstrap'
 import { constantToModelName } from 'shared/utilities/filterUtils'
 import TableHeader from 'shared/components/BaseTable/TableHeader'
-
+import moment from 'moment'
 import './style.scss'
+
+const sortedLimitedYears = props => {
+  const years = Object.keys(props.profile.rentstabilizationrecord)
+    .filter(key => key.includes('uc20'))
+    .map(year => year.replace('uc', ''))
+    .filter(year => {
+      let maxYear = parseInt(
+        (props.config.datasets.find(ds => ds.model_name === 'RentStabilizationRecord') || {}).version
+      )
+      if (isNaN(maxYear)) {
+        maxYear = parseInt(
+          moment(moment.now())
+            .subtract(1, 'year')
+            .year()
+        )
+      }
+      return parseInt(year) < maxYear
+    })
+    .map(year => parseInt(year))
+    .sort()
+
+  return years
+}
+
 const RentStabilizationSection = props => {
   return (
     <div>
@@ -43,17 +67,8 @@ const RentStabilizationSection = props => {
                 size="sm"
               />
               <table className="renstabilization-section__table">
-                {Object.keys(props.profile.rentstabilizationrecord)
-                  .filter(key => key.includes('uc20'))
-                  .map(year => year.replace('uc', ''))
+                {sortedLimitedYears(props)
                   .map(year => {
-                    if (
-                      parseInt(year) >
-                      parseInt(
-                        (props.config.datasets.find(ds => ds.model_name === 'RentStabilizationRecord') || {}).version
-                      )
-                    )
-                      return
                     return (
                       <Row className="renstabilization-section__table--row" key={`rstable-year-${year}`}>
                         <Col xs={4}>

@@ -1,3 +1,5 @@
+import React from 'react'
+
 export const infoModals = {
   rs: {
     title: 'Rent Stabilized Housing',
@@ -66,8 +68,19 @@ export const infoModals = {
   },
   HPD_COMPLAINT: {
     title: 'HPD Complaints & Problems',
-    body:
-      'Complaints that tenants make about conditions in their apartment or building get sent to Housing Preservation and Development for inspection. Complaints can be an early signal that landlords are neglecting to make repairs.',
+    body: (
+      <div>
+        <p>
+          Complaints that tenants make about conditions in their apartment or building get sent to Housing Preservation
+          and Development for inspection. Complaints can be an early signal that landlords are neglecting to make
+          repairs.
+        </p>
+        <p>
+          <b>Note:</b> HPD complaint data updates once per month, so the "Last 30 Days" time period will display the
+          most recent calendar month of available data.
+        </p>
+      </div>
+    ),
     sources: [
       {
         text: 'NYC Open Data - Housing Maintenance Code Complaints',
@@ -144,8 +157,19 @@ export const infoModals = {
   },
   ACRIS_REAL_MASTER: {
     title: 'Sales',
-    body:
-      'Sales come from the Department of Finance’s ACRIS database and include all deeds recorded. The sale price of a building matters because speculative investment is one of the key underlying threats to existing affordable housing. A high sale price can mean a new owner plans to displace existing tenants to make large profits.',
+    body: (
+      <div>
+        <p>
+          Sales come from the Department of Finance’s ACRIS database and include all deeds recorded. The sale price of a
+          building matters because speculative investment is one of the key underlying threats to existing affordable
+          housing. A high sale price can mean a new owner plans to displace existing tenants to make large profits.
+        </p>
+        <p>
+          <b>Note:</b> Acris data updates once per month, so the "Last 30 Days" time period will display the most recent
+          calendar month of available data.
+        </p>
+      </div>
+    ),
     sources: [
       {
         text: 'NYC Open Data - ACRIS Real Property Master',
@@ -185,8 +209,19 @@ export const infoModals = {
   },
   HOUSING_LITIGATION: {
     title: 'Litigations against landlords',
-    body:
-      'This dataset includes actions in Housing Court initiated by the Department of Housing Preservation and Development (HPD) or by tenants, where HPD is named as a party. Court cases indicate that a landlord is not maintaining building conditions or may be actively harassing tenants.',
+    body: (
+      <div>
+        <p>
+          This dataset includes actions in Housing Court initiated by the Department of Housing Preservation and
+          Development (HPD) or by tenants, where HPD is named as a party. Court cases indicate that a landlord is not
+          maintaining building conditions or may be actively harassing tenants.
+        </p>
+        <p>
+          <b>Note:</b> Litigation data updates once per month, so the "Last 30 Days" time period will display the most
+          recent calendar month of available data.
+        </p>
+      </div>
+    ),
     sources: [
       {
         text: 'NYC Open Data - Housing Litigations',
