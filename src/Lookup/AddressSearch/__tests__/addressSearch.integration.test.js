@@ -75,20 +75,16 @@ describe('Address Search Module', () => {
       {
         bbl: 1,
         bin: 1,
-        housenumber: '100',
+        number: '100',
         street: 'awesome street',
         borough: 'brooklyn',
-        buildingnumber: '100',
-        buildingstreet: 'awesome street',
       },
       {
         bbl: 2,
         bin: 2,
-        housenumber: '100a',
+        number: '100a',
         street: 'awesome street',
         borough: 'brooklyn',
-        buildingnumber: '100a',
-        buildingstreet: 'awesome street',
       },
     ]
 

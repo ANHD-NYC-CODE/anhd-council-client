@@ -5,6 +5,7 @@
   cursor: pointer;
   font-size: $font-size-base;
   padding: 10px;
+  padding-left: 30px;
   z-index: 501;
   border-bottom: 1px dashed $gray-600;
 
@@ -16,6 +17,10 @@
   span {
     margin-right: 20px;
   }
+}
+
+.search-result-row:nth-child(odd) {
+  background-color: $gray-200;
 }
 
 @media (hover: hover) {

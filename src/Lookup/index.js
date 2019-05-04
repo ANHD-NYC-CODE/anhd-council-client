@@ -50,9 +50,10 @@ class Lookup extends React.Component {
   }
 
   needsLookupSync(props, match) {
-    if (props.router.location.pathname === '/lookup') return false
+    if (props.router.location.pathname === '/lookup' || !match) return false
     return (
-      !(match.params.bbl === props.appState.currentProperty) || !(match.params.bin === props.appState.currentBuilding)
+      !(String(match.params.bbl) === String(props.appState.currentProperty)) ||
+      !(String(match.params.bin) === String(props.appState.currentBuilding))
     )
   }
 
@@ -99,9 +100,9 @@ class Lookup extends React.Component {
 
   render() {
     const match = this.getPathMatch()
-    if (match && this.needsLookupSync(this.props, match))
-      if (this.state.error404)
-        return <PageError title="Oops! 404 Page Not Found." message={this.state.error404Message} icon={faMapSigns} />
+    if (match && this.needsLookupSync(this.props, match)) return null
+    if (this.state.error404)
+      return <PageError title="Oops! 404 Page Not Found." message={this.state.error404Message} icon={faMapSigns} />
     if (this.props.bbl && !this.props.appState.currentProperty) return <InnerLoader />
     return match && this.props.appState.currentProperty ? (
       <LookupRequestsWrapper

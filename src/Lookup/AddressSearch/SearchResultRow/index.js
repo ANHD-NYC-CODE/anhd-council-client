@@ -6,7 +6,7 @@ import { addressResultToPath } from 'shared/utilities/routeUtils'
 import './style.scss'
 
 const SearchResultRow = props => {
-  if (props.result.bin && !props.result.alternateaddress) {
+  if (props.result.number) {
     return (
       <div
         className="search-result-row"
@@ -14,40 +14,7 @@ const SearchResultRow = props => {
         to={addressResultToPath({ bbl: props.result.bbl, bin: props.result.bin })}
       >
         <div className="d-flex">
-          <span>
-            <BuildingIcon />
-          </span>
-          <span>{`${props.result.buildingnumber} ${props.result.buildingstreet.trim()}, ${props.result.borough}`}</span>
-        </div>
-      </div>
-    )
-  } else if (props.result.bin && props.result.alternateaddress) {
-    return (
-      <div
-        className="search-result-row"
-        onClick={e => props.onClick(e, props.result)}
-        to={addressResultToPath({ bbl: props.result.bbl, bin: props.result.bin })}
-      >
-        <div className="d-flex">
-          <span>
-            <BuildingIcon />
-          </span>
-          <span>{`${props.result.propertyaddress.trim()}, ${props.result.borough}`}</span>
-        </div>
-      </div>
-    )
-  } else if (props.result.alternateaddress) {
-    return (
-      <div
-        className="search-result-row"
-        onClick={e => props.onClick(e, props.result)}
-        to={addressResultToPath({ bbl: props.result.bbl, bin: props.result.bin })}
-      >
-        <div className="d-flex">
-          <span>
-            <BuildingIcon />
-          </span>
-          <span>{`${props.result.propertyaddress.trim()}, ${props.result.borough}`}</span>
+          <span>{`${props.result.number} ${props.result.street.trim()}, ${props.result.borough}`}</span>
         </div>
       </div>
     )
