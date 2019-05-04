@@ -10,8 +10,8 @@ import './style.scss'
 const SearchResults = props => {
   const handleRowClick = (e, result) => {
     e.preventDefault()
-    const searchString = `${result.buildingnumber ? result.buildingnumber.replace(/ /g, '') : ''} ${
-      result.buildingstreet ? result.buildingstreet.trim() : result.propertyaddress.trim()
+    const searchString = `${result.number ? result.number : ''} ${
+      result.street ? result.street.trim() : ''
     }, ${result.borough.trim()}`
 
     props.dispatch(setSearchValue(searchString))
