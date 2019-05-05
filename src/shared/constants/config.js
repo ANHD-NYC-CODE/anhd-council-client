@@ -1,6 +1,6 @@
 // Feature Flags
 export const ENABLE_PRINT = false // Shows print buttons
-export const ENABLE_GOOGLE_ANALYTICS = false
+export const ENABLE_GOOGLE_ANALYTICS = true
 
 // Generic
 export const CONTACT_EMAIL = 'dapadmin@anhd.org'
