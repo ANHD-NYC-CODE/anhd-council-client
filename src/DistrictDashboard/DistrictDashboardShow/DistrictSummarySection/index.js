@@ -78,7 +78,12 @@ const DistrictSummarySection = props => {
                         auth={auth}
                         key={`request-summary-${amountFilter.category}-${index}`}
                         amountFilter={amountFilter}
-                        calculatedTotal={amountFilter.internalFilter(props.totalPropertyResults).length}
+                        calculatedTotal={
+                          props.housingTypeResultFilter.internalFilter(
+                            amountFilter.internalFilter(props.totalPropertyResults),
+                            props.housingTypeResultFilter.paramMaps
+                          ).length
+                        }
                         disabled={props.customView || props.loading}
                         dispatch={props.dispatch}
                         selected={!props.customView && props.appState.selectedFilters.includes(amountFilter)}
