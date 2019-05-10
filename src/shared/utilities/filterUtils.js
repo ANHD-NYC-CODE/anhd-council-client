@@ -279,7 +279,7 @@ export const rentRegulatedProgramOptions = () => {
   const rentRegulatedPrograms = [
     '420-c Tax Incentive Program',
     '421a Affordable',
-    '421a Tax Incentive Program',
+    '421-a Tax Incentive Program',
     '421-g Tax Incentive Program',
     'Article 8A/HRP',
     'Federal Public Housing',

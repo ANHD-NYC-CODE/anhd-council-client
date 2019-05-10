@@ -125,7 +125,7 @@ describe('process property housing type filter', () => {
       object.paramSets['initial'].paramMaps.find(pm => pm.field === 'housingtype').value = 'rr'
       object.paramSets['housingType_rr_1'].createAll()
       object.paramSets['housingType_rr_2'].createAll()
-      object.paramSets['housingType_rr_1'].paramMaps.find(pm => pm.field === 'coresubsidyrecord__programname').value =
+      object.paramSets['housingType_rr_1'].paramMaps.find(pm => pm.field === 'subsidyprograms__programname').value =
         'LIHCT,J-51,421-a'
 
       const result = `subsidized housing properties (LIHCT, J-51, or 421-a, expiring between ${startDate} and ${endDate})`
