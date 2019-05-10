@@ -48,7 +48,7 @@ export default class SearchBar extends React.PureComponent {
 
   render() {
     return (
-      <div className="search-bar" onSubmit={this.onFormSubmit}>
+      <Form autocomplete="off" className="search-bar" onSubmit={this.onFormSubmit}>
         <Form.Control
           className={classnames(this.props.inputClass, { valued: !!this.props.searchValue })}
           name="address-search"
@@ -65,7 +65,7 @@ export default class SearchBar extends React.PureComponent {
           </div>
         )}
         <div className="search-bar__loading">{this.props.loading && <SpinnerLoader size="40px" />}</div>
-      </div>
+      </Form>
     )
   }
 }

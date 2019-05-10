@@ -250,6 +250,7 @@ class DistrictDashboardShow extends React.Component {
                     appState={this.props.appState}
                     customView={this.props.appState.districtShowCustomView}
                     dispatch={this.props.dispatch}
+                    endChangingState={this.props.endChangingState}
                     geographyRequests={this.props.geographyRequests}
                     housingTypeResultFilter={this.getGeographySummaryResultsFilter()}
                     loading={this.props.loading}
@@ -319,6 +320,7 @@ class DistrictDashboardShow extends React.Component {
                           councilDistricts={this.props.config.councilDistricts}
                           communityDistricts={this.props.config.communityDistricts}
                           currentGeographyType={this.props.appState.currentGeographyType}
+                          closeGeographyPopup={this.props.endChangingState}
                           handleChangeGeography={this.props.handleChangeGeography}
                           handleChangeGeographyId={this.props.handleChangeGeographyId}
                           iconConfig="MULTIPLE"
@@ -382,6 +384,7 @@ DistrictDashboardShow.propTypes = {
   appState: PropTypes.object,
   config: PropTypes.object,
   dispatch: PropTypes.func,
+  endChangingState: PropTypes.func,
   loading: PropTypes.bool,
   requests: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   toggleDateRange: PropTypes.func,

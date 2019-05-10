@@ -99,3 +99,12 @@
 
 - Fixes the order of years in the rent stabilization table in property lookup.
 - Adds copy to HPD Complaint, Acris, and Litigation info modals describing the update schedule.
+
+#### 1.0.0b1.0.354
+
+5/10/19
+
+- turn off autocomplete on the search bar form
+- display \$0 instead of blank if table dollar cell has 0
+- end geography changing state when a filter is clicked in district dashboard
+- hide pagination buttons when total results < selected page size

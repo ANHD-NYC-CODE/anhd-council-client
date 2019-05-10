@@ -17,6 +17,7 @@ class DistrictDashboardRequestsWrapper extends React.PureComponent {
     this.loadRequests = this.loadRequests.bind(this)
     this.getInitialRequest = this.getInitialRequest.bind(this)
     this.switchSelectedFilter = this.switchSelectedFilter.bind(this)
+    this.endChangingState = this.endChangingState.bind(this)
   }
 
   componentDidMount() {
@@ -61,7 +62,18 @@ class DistrictDashboardRequestsWrapper extends React.PureComponent {
     this.props.dispatch(setMapFilterDate(value))
   }
 
+  endChangingState() {
+    this.props.dispatch(
+      setAppState({
+        changingGeography: false, // end changing state
+        changingGeographyType: undefined,
+        changingGeographyId: undefined,
+      })
+    )
+  }
+
   switchSelectedFilter(filter) {
+    this.endChangingState()
     this.props.dispatch(
       setAppState({
         housingTypeResultFilter: filter,
@@ -73,6 +85,7 @@ class DistrictDashboardRequestsWrapper extends React.PureComponent {
   render() {
     return this.props.mapRequests.length ? (
       <DistrictDashboardShow
+        endChangingState={this.endChangingState}
         geographyRequests={getManyRequestTypes(this.props.mapRequests, ['MAP_FILTER', 'ADVANCED_SEARCH'])}
         housingTypeRequests={getRequestType(this.props.mapRequests, 'GEOGRAPHY_HOUSING_TYPE')}
         propertySummaryRequest={getRequestByConstant(this.props.mapRequests, 'GEOGRAPHY_HOUSING_TYPE_ALL')[0]}

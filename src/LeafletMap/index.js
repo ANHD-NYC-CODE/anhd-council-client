@@ -8,7 +8,7 @@ import { Map, TileLayer, Popup } from 'react-leaflet'
 import { Jumbotron, Button, Alert } from 'react-bootstrap'
 import GeographyGeoJson from 'LeafletMap/GeographyGeoJson'
 import GeographyMarkerLabels from 'LeafletMap/GeographyMarkerLabels'
-
+import { setAppState } from 'Store/AppState/actions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBug } from '@fortawesome/free-solid-svg-icons'
 import PropertyIcons from 'LeafletMap/PropertyIcons'
@@ -20,7 +20,6 @@ export default class LeafletMap extends React.PureComponent {
     super(props)
     this.mapContainerRef = React.createRef()
     this.mapRef = React.createRef()
-    this.geoJsonRef = React.createRef()
     this.state = {
       height: this.props.height,
       hasError: false,
@@ -202,7 +201,8 @@ export default class LeafletMap extends React.PureComponent {
             (this.props.appState.currentGeographyId !== this.props.appState.changingGeographyId &&
               this.props.appState.changingGeographyId > 0) && (
               <Popup
-                key={`${Math.random() * 100000}`}
+                key={`${this.changingGeographyType}-${this.changingGeographyId}`}
+                onClose={this.props.closeGeographyPopup}
                 position={
                   this.getGeographyCenter(
                     this.props.appState.changingGeographyType,
@@ -260,6 +260,7 @@ LeafletMap.propTypes = {
   appState: PropTypes.object,
   communityDistricts: PropTypes.array,
   councilDistricts: PropTypes.array,
+  closeGeographyPopup: PropTypes.func,
   iconConfig: PropTypes.string,
   displayedResultsFilter: PropTypes.object,
   results: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),

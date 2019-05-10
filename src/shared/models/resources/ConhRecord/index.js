@@ -17,7 +17,7 @@ const ConhRecord = databaseObject => ({
           baseComponent: TextSelectField,
           paramMapType: 'BOOL',
           paramMapRole: 'PRIMARY',
-          valuePrefix: 'Has certificate of no harassment?',
+          valuePrefix: 'Eligible for certificate of no harassment?',
           paramMapField: 'count',
           paramMapComparison: 'gte',
           paramMapValue: '1',
