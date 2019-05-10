@@ -190,7 +190,7 @@ const Property = databaseObject => {
             defaultOptions: rentRegulatedProgramOptions(),
             paramMapType: 'MULTI-TEXT',
             paramNoun: 'program(s)',
-            paramMapField: 'coresubsidyrecord__programname',
+            paramMapField: 'subsidyprograms__programname',
             paramMapComparison: 'any',
             paramMapValue: '',
           })
