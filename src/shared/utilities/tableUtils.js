@@ -130,8 +130,7 @@ export const dateFormatter = (cell, row, index) => {
 }
 
 export const dollarFormatter = (cell, row, index) => {
-  if (!cell) return ''
-  if (cell === 0) return ''
+  if (!cell && cell != 0) return ''
   return parseInt(cell).toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 })
 }
 

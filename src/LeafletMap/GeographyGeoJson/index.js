@@ -6,14 +6,14 @@ const GeographyGeoJson = props => {
   const getGeographyColor = geography => {
     const displayGeographyType = props.changingGeographyType || props.currentGeographyType
     if (props.currentGeographyId == geography.properties.id) return '#f7f8c6' // yellow
-    if (props.changingGeographyId == geography.properties.id) return '#dfcdd3'
-    // crimson
+    if (props.changingGeographyId == geography.properties.id) return 'white'
+    // selecting
     else return displayGeographyType === 'COUNCIL' ? '#4c8ad8' : '#f5862c' // blue | orange
   }
 
   const getFillOpacity = geography => {
     if (props.currentGeographyId == geography.properties.id) return '0.4'
-    if (props.changingGeographyId == geography.properties.id) return '0.2'
+    if (props.changingGeographyId == geography.properties.id) return '0.5'
     else return '0.1'
   }
   const getStyle = geography => {

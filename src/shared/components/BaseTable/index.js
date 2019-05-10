@@ -181,24 +181,6 @@ class BaseTable extends React.Component {
         )
       }
 
-      //   return (
-      //     <span className="text-left">
-      //       <div>
-      //         Total Complaints:{' '}
-      //         {paginationProps.dataSize === paginationProps.totalSize
-      //           ? paginationProps.totalSize
-      //           : `${paginationProps.dataSize}/${paginationProps.totalSize}`}
-      //         </div>
-      //         <div>
-      //           Total Problems:{' '}
-      //           {paginationProps.dataSize === paginationProps.totalSize
-      //             ? paginationProps.totalSize
-      //             : `${paginationProps.dataSize}/${paginationProps.totalSize}`}
-      //           </div>
-      //         </span>
-      //       )
-      // }
-      // debugger
       default:
         return (
           <span>
@@ -318,13 +300,15 @@ class BaseTable extends React.Component {
                         action={this.props.errorAction}
                       />
                     )}
-                    {!this.props.nested && !!this.props.includeHeader && (
-                      <Row>
-                        <Col xs={6}>
-                          <PaginationListStandalone {...paginationProps} />
-                        </Col>
-                      </Row>
-                    )}
+                    {!this.props.nested &&
+                      !!this.props.includeHeader &&
+                      paginationProps.sizePerPage < this.props.records.length && (
+                        <Row>
+                          <Col xs={6}>
+                            <PaginationListStandalone {...paginationProps} />
+                          </Col>
+                        </Row>
+                      )}
                   </div>
                 )
               }}
