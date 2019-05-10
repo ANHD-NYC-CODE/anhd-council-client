@@ -27,13 +27,27 @@ const ProgramSection = props => {
         </Row>
         <Row className="lookup-profile-summary__group">
           <Col>
-            <label className="profile-summary-body__label">Subsidy Programs</label>
-            <span className="profile-summary-body__value">{getSubsidiesText(props)}</span>
+            <label className="profile-summary-body__label">Subsidy Programs </label>
+            <small>
+              (from <BaseLink href="http://app.coredata.nyc">Furman's CoreData</BaseLink> and DOF's{' '}
+              <BaseLink href="https://www1.nyc.gov/site/finance/benefits/benefits-421a.page">421a</BaseLink> and{' '}
+              <BaseLink href="https://www1.nyc.gov/site/finance/benefits/benefits-j51.page">J-51</BaseLink> data)
+            </small>
+            <ul>
+              {getSubsidiesText(props)
+                .split(',')
+                .map(program => {
+                  return (
+                    <li key={`${props.profile.bbl} - ${program}`} className="profile-summary-body__value">
+                      {program}
+                    </li>
+                  )
+                })}
+            </ul>
           </Col>
         </Row>
         <Row className="lookup-profile-summary__group">
           <Col>
-            {/* <label className="profile-summary-body__label">NYCHA? </label> */}
             <span className="profile-summary-body__value">
               {props.profile.nycha && (
                 <span className="text-danger font-weight-bold">
@@ -46,9 +60,6 @@ const ProgramSection = props => {
         </Row>
         <Row className="lookup-profile-summary__group">
           <Col>
-            {/* <label className="profile-summary-body__label">
-              CONH? ({(props.config.datasets.find(ds => ds.model_name === 'CONHRecord') || {}).version})
-            </label> */}
             <span className="profile-summary-body__value">
               {props.profile.conhrecord && (
                 <span className="text-danger font-weight-bold">
