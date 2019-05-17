@@ -170,11 +170,14 @@ class LookupShow extends React.PureComponent {
 
                     <Row className="mb-2">
                       <Col>
-                        <h6 className="lookup-show__datatype-header">
+                        <h6 className="lookup-show__datatype-header mb-0">
                           {this.props.bin && !!Object.keys(this.props.propertyResult).length
                             ? 'Building Address'
                             : 'Tax Lot Address'}
                         </h6>
+                        {this.props.bin && (
+                          <small className="text-muted">* buildings may have alternate addresses</small>
+                        )}
                         <h4 className="lookup-show__data-address font-weight-bold">
                           {this.props.bin && !!Object.keys(this.props.propertyResult).length
                             ? `${
@@ -182,7 +185,7 @@ class LookupShow extends React.PureComponent {
                               } ${getCurrentBuilding(this.props.propertyResult.buildings, this.props.bin).stname}`
                             : this.props.propertyResult.address}
                           {!!Object.keys(this.props.propertyResult).length &&
-                            `, ${boroCodeToName(this.props.propertyResult.borough)}`}
+                            `, ${boroCodeToName(this.props.propertyResult.borough)}`}{' '}
                         </h4>
                       </Col>
                     </Row>
