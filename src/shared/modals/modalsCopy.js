@@ -13,7 +13,7 @@ export const infoModals = {
     ],
   },
   rr: {
-    title: 'Subsidized Housing Housing',
+    title: 'Subsidized Housing',
     body:
       'These properties are subject to a regulatory agreement at the City, State, or Federal level. This includes tax incentives and financing that determines affordability levels. ',
     sources: [

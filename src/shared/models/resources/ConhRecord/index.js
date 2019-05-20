@@ -7,7 +7,7 @@ const ConhRecord = databaseObject => ({
   resourceConstant: 'CONH_RECORD',
   urlPath: 'taxliens',
   label: 'Certificate of No Harassment',
-  sentenceNoun: 'certificate of no harassment',
+  sentenceNoun: 'eligibility for certificate of no harassment',
   ownResourceFilters: {
     initial: {
       generatorFunction: resourceModel => {
