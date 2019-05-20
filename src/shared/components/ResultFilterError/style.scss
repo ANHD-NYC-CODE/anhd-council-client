@@ -5,9 +5,10 @@
   padding: 0;
 
   @media (hover: hover) {
-    &:hover
+    &:hover .amount-result-filter-card__body .amount-result-filter-card__body--inner-wrapper:not(.active),
+    .amount-result-filter-card:not(.disabled):not(.active)
       .amount-result-filter-card__body:not(.disabled)
-      .amount-result-filter-card__body--inner-wrapper:not(.active) {
+      .amount-result-filter-card__body--inner-wrapper:not(.active):not(.disabled):hover {
       background-color: initial;
       box-shadow: none;
       transition: none;
@@ -16,7 +17,7 @@
   }
 
   .amount-result-filter-card__body {
-    background-color: lighten($danger, 30%);
+    background-color: $gray-400;
   }
 
   span.badge {

@@ -10,39 +10,24 @@ const NavigationBar = props => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav.Link as="li">
-            <a
-              className="text-muted"
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://www.displacementalert.org/"
-            >
+            <a className="text-muted" target="" rel="noopener noreferrer" href="https://www.displacementalert.org/">
               Home
             </a>
           </Nav.Link>
           <Nav.Link as="li">
-            <a
-              className="text-muted"
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://map.displacementalert.org/"
-            >
+            <a className="text-muted" target="" rel="noopener noreferrer" href="https://map.displacementalert.org/">
               DAP Map
             </a>
           </Nav.Link>
           <Nav.Link as="li">
-            <a
-              className="text-muted"
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://reports.displacementalert.org/"
-            >
+            <a className="text-muted" target="" rel="noopener noreferrer" href="https://reports.displacementalert.org/">
               District Reports
             </a>
           </Nav.Link>
           <Nav.Link as="li">
             <a
               className="text-muted"
-              target="_blank"
+              target=""
               rel="noopener noreferrer"
               href="https://www.displacementalert.org/watchlist"
             >
@@ -52,7 +37,7 @@ const NavigationBar = props => {
           <Nav.Link as="li">
             <a
               className="text-portal-orange"
-              target="_blank"
+              target=""
               rel="noopener noreferrer"
               href="https://portal.displacementalert.org"
             >
@@ -62,7 +47,7 @@ const NavigationBar = props => {
           <Nav.Link as="li">
             <a
               className="text-muted"
-              target="_blank"
+              target=""
               rel="noopener noreferrer"
               href="https://www.displacementalert.org/about"
             >
@@ -72,7 +57,7 @@ const NavigationBar = props => {
           <Nav.Link as="li">
             <a
               className="text-muted"
-              target="_blank"
+              target=""
               rel="noopener noreferrer"
               href="https://www.displacementalert.org/contact-us"
             >
