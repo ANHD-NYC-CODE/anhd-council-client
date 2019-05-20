@@ -67,6 +67,11 @@ class LookupShow extends React.PureComponent {
     if (this.props.propertyError && this.props.propertyError.status === 404) {
       this.props.trigger404Error(`Property with bbl: ${this.props.bbl} not found.`)
     }
+
+    // Redirect user back to tax lot if landing on page from 1 building address
+    if ((this.props.propertyResult.buildings || []).length == 1 && this.props.bin) {
+      this.props.changeLookup(this.props.propertyResult.bbl, undefined)
+    }
   }
 
   switchTable(request) {
@@ -198,7 +203,7 @@ class LookupShow extends React.PureComponent {
                               bbl={this.props.bbl}
                               bin={this.props.bin}
                               changeLookup={this.props.changeLookup}
-                              request={this.props.profileRequest}
+                              propertyResult={this.props.propertyResult}
                             />
                           </Col>
                         </Row>

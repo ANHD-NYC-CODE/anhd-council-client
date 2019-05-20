@@ -1,9 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { push } from 'connected-react-router'
-import { createLoadingSelector } from 'Store/Loading/selectors'
-import { createErrorSelector } from 'Store/Error/selectors'
 import { getCurrentBuilding } from 'Lookup/utilities'
 import { addressResultToPath } from 'shared/utilities/routeUtils'
 import StandardizedInput from 'shared/classes/StandardizedInput'
@@ -23,7 +19,7 @@ class BuildingSelect extends React.Component {
 
   getBuildingOptions() {
     const empty = { value: -1, isDisabled: true, label: 'Select a building' }
-    const buildings = this.props.buildings.map(building => {
+    const buildings = this.props.propertyResult.buildings.map(building => {
       return { value: building.bin, label: `${building.house_number} ${building.stname}` }
     })
     buildings.unshift(empty)
@@ -31,15 +27,18 @@ class BuildingSelect extends React.Component {
   }
 
   render() {
-    if (this.props.buildings.length <= 1) return null
-    const selectedBuilding = getCurrentBuilding(this.props.buildings, this.props.bin)
+    if (!Object.keys(this.props.propertyResult).length) return null
+    if (this.props.propertyResult.buildings.length <= 1) return null
+    const selectedBuilding = getCurrentBuilding(this.props.propertyResult.buildings, this.props.bin)
     return !this.props.loading ? (
       <Form className="building-select">
         <Row className="mb-2">
           <Col xs={12} className="small">
-            {this.props.buildings.length} building{' '}
-            {this.props.buildings.length > 1 || !this.props.buildings.length ? 'records' : 'record'} found for this tax
-            lot.
+            {this.props.propertyResult.buildings.length} building{' '}
+            {this.props.propertyResult.buildings.length > 1 || !this.props.propertyResult.buildings.length
+              ? 'records'
+              : 'record'}{' '}
+            found for this tax lot.
           </Col>
           <Col xs={12} className="text-muted small">
             Select an address to filter building-specific data.
@@ -95,18 +94,7 @@ BuildingSelect.propTypes = {
   bbl: PropTypes.string,
   bin: PropTypes.string,
   dispatch: PropTypes.func,
-  request: PropTypes.object,
+  propertyResult: PropTypes.object,
 }
 
-const mapStateToProps = (state, ownProps) => {
-  const loadingSelector = createLoadingSelector([ownProps.request.requestConstant])
-  const errorSelector = createErrorSelector([ownProps.request.requestConstant])
-
-  return {
-    loading: loadingSelector(state),
-    error: errorSelector(state),
-    buildings: (state.requests[ownProps.request.requestConstant] || {}).buildings,
-  }
-}
-
-export default connect(mapStateToProps)(BuildingSelect)
+export default BuildingSelect
