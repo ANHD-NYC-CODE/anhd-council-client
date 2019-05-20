@@ -114,3 +114,6 @@
 5/20/19
 
 - fix address search bug where it crashes when 1 single digit is entered
+- open DAP project links in same tab
+- change foreclosure unauthorized cards to \$gray-400 color.
+- hide building select when there's only 1 building or less.
