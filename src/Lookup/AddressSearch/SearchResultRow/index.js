@@ -14,7 +14,9 @@ const SearchResultRow = props => {
         to={addressResultToPath({ bbl: props.result.bbl, bin: props.result.bin })}
       >
         <div className="d-flex">
-          <span>{`${props.result.number} ${props.result.street.trim()}, ${props.result.borough}`}</span>
+          <span>{`${props.result.number} ${props.result.street ? props.result.street.trim() : ''}, ${
+            props.result.borough
+          }`}</span>
         </div>
       </div>
     )

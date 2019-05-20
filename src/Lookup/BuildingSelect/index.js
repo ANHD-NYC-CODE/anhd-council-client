@@ -31,6 +31,7 @@ class BuildingSelect extends React.Component {
   }
 
   render() {
+    if (this.props.buildings.length <= 1) return null
     const selectedBuilding = getCurrentBuilding(this.props.buildings, this.props.bin)
     return !this.props.loading ? (
       <Form className="building-select">

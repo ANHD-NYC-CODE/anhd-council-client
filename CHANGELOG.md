@@ -108,3 +108,9 @@
 - display \$0 instead of blank if table dollar cell has 0
 - end geography changing state when a filter is clicked in district dashboard
 - hide pagination buttons when total results < selected page size
+
+#### 1.0.0b1.0.361
+
+5/20/19
+
+- fix address search bug where it crashes when 1 single digit is entered

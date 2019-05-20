@@ -2,7 +2,7 @@
 
 .result-card-error {
   &.card {
-    background-color: lighten($danger, 30%);
+    background-color: $gray-400;
   }
   margin: 0;
   padding: 0;
