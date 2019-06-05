@@ -85,7 +85,9 @@ describe('LookupProfileSummary', () => {
         const [wrapper] = setupWrapper({ propertyResult: result })
 
         expect(wrapper.find('OwnershipSection').text()).toMatch('No HPD Registrations Found')
-        expect(wrapper.find('ProgramSection').text()).toMatch('Programs / StatusesSubsidy ProgramsNone')
+        expect(wrapper.find('ProgramSection').text()).toMatch(
+          "Programs / StatusesSubsidy Programs (from Furman's CoreData and DOF's 421a and J-51 data)None"
+        )
         expect(wrapper.find('RentStabilizationSection').text()).toMatch('No Rent Stabilization History')
       })
     })
@@ -114,7 +116,7 @@ describe('LookupProfileSummary', () => {
         )
 
         expect(wrapper.find('ProgramSection').text()).toMatch(
-          'Programs / StatusesSubsidy ProgramsJ51This property is a NYCHA development.A building on this property is eligible for the Certificate of No Harassment Pilot Program.'
+          "Programs / StatusesSubsidy Programs (from Furman's CoreData and DOF's 421a and J-51 data)J51This property is a NYCHA development.A building on this property is eligible for the Certificate of No Harassment Pilot Program."
         )
 
         expect(wrapper.find('RentStabilizationSection').text()).toMatch(
