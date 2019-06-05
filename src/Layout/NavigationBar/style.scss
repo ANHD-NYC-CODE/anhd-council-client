@@ -5,6 +5,12 @@
   @include media-breakpoint-up(lg) {
     height: 40px;
   }
+
+  @media (hover: hover) {
+    .nav-link:hover a {
+      color: $secondary !important;
+    }
+  }
   button {
     height: 60px;
   }
@@ -45,4 +51,25 @@
 
 .text-portal-orange:hover {
   color: lighten(#fdaf7e, 10%);
+}
+
+.nav-dropdown-container {
+  position: relative;
+}
+
+.nav-dropdown-box {
+  background-color: #f9f9f9;
+  color: #969696;
+  display: none;
+  position: absolute;
+  min-width: 180px;
+  width: 100%;
+  z-index: 1;
+}
+
+@media (hover: hover) {
+  .nav-dropdown-container:hover .nav-dropdown-box,
+  .nav-dropdown-box:hover {
+    display: block;
+  }
 }

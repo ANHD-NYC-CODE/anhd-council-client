@@ -117,3 +117,9 @@
 - open DAP project links in same tab
 - change foreclosure unauthorized cards to \$gray-400 color.
 - hide building select when there's only 1 building or less.
+
+#### 1.0.0b1.0.362
+
+- Add map & report tutorial links to the navbar as dropdowns
+- disabled date selections when custom search is applied
+- add nyc council attribution to intro text block
