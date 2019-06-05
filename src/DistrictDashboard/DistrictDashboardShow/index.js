@@ -177,17 +177,20 @@ class DistrictDashboardShow extends React.Component {
                         onChange={this.props.toggleDateRange}
                       >
                         <ToggleButton
-                          variant="outline-primary"
                           className="p-1 toggle-link"
+                          disabled={this.props.appState.districtShowCustomView || this.props.loading}
+                          variant="outline-primary"
                           value={c.DISTRICT_REQUEST_DATE_THREE}
                         >{`Last 3 Years (${moment(c.DISTRICT_RESULTS_DATE_THREE).format('MM/DD/YYYY')})`}</ToggleButton>
                         <ToggleButton
                           className="p-1 toggle-link"
+                          disabled={this.props.appState.districtShowCustomView || this.props.loading}
                           variant="outline-primary"
                           value={c.DISTRICT_REQUEST_DATE_TWO}
                         >{`Last Year (${moment(c.DISTRICT_RESULTS_DATE_TWO).format('MM/DD/YYYY')})`}</ToggleButton>
                         <ToggleButton
                           className="p-1 toggle-link"
+                          disabled={this.props.appState.districtShowCustomView || this.props.loading}
                           variant="outline-primary"
                           value={c.DISTRICT_REQUEST_DATE_ONE}
                         >{`Last 30 Days (${moment(c.DISTRICT_RESULTS_DATE_ONE).format('MM/DD/YYYY')})`}</ToggleButton>

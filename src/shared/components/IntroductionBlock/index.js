@@ -51,6 +51,7 @@ const IntroductionBlock = props => {
         The <BaseLink href="/search">Custom Search</BaseLink> allows you to produce custom maps and tables of buildings
         that meet your unique search criteria by querying dozens of housing and displacement-related datasets.
       </p>
+      <p>The DAP Portal is made possible by the support of the New York City Council.</p>
 
       {props.scrollToControls && (
         <div className="d-block d-lg-none my-5">
