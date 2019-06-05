@@ -29,8 +29,10 @@ describe('Landing page', () => {
   it('displays the initial navigation', () => {
     const [wrapper, store] = setupWrapper()
     expect(wrapper.find('NavigationBar')).toHaveLength(1)
-    expect(wrapper.find('NavigationBar li')).toHaveLength(7)
-    expect(wrapper.find('NavigationBar').text()).toMatch(/HomeDAP MapDistrict ReportsWatch ListPortalAboutContact/)
+    expect(wrapper.find('NavigationBar li')).toHaveLength(9)
+    expect(wrapper.find('NavigationBar').text()).toMatch(
+      /HomeDAP MapMap TutorialDistrict ReportsReports TutorialWatch ListPortalAboutContact/
+    )
     expect(wrapper.find('SubHeader')).toHaveLength(1)
     expect(wrapper.find('SubHeader Link')).toHaveLength(4)
     expect(wrapper.find('SubHeader').text()).toMatch(/Property LookupDistrict DashboardCustom Search/)

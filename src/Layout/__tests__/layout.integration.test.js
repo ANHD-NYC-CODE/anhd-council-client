@@ -29,8 +29,10 @@ describe('navigation', () => {
   it('displays the initial navigation', () => {
     const wrapper = setupWrapper()
     expect(wrapper.find('NavigationBar')).toHaveLength(1)
-    expect(wrapper.find('NavigationBar li')).toHaveLength(7)
-    expect(wrapper.find('NavigationBar').text()).toMatch(/HomeDAP MapDistrict ReportsWatch ListPortalAboutContact/)
+    expect(wrapper.find('NavigationBar li')).toHaveLength(9)
+    expect(wrapper.find('NavigationBar').text()).toMatch(
+      /HomeDAP MapMap TutorialDistrict ReportsReports TutorialWatch ListPortalAboutContact/
+    )
     expect(wrapper.find('SubHeader')).toHaveLength(1)
     expect(wrapper.find('SubHeader a')).toHaveLength(7)
     expect(wrapper.find('SubHeader').text()).toMatch(/Property LookupDistrict DashboardCustom Search/)
