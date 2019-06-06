@@ -6,13 +6,17 @@ export const initialState = {
   currentGeographyId: undefined,
   currentProperty: undefined,
   currentBuilding: undefined,
-  changingGeography: false,
-  changingGeographyType: undefined,
-  changingGeographyId: undefined,
+  changingGeography: false, // whether or not the user is in the process of changing the geo
+  changingGeographyType: undefined, // the geography type the user has currently selected for changing.
+  changingGeographyId: undefined, // the ID that the user has currently selected for changing
+  dashboardTableView: false, // Showing the map vs the table in dashboard
+  dashboardTableState: {
+    page: 1,
+  },
   mapFilterDate: c.DISTRICT_REQUEST_DATE_ONE,
   selectedRequests: [],
   selectedFilters: [],
-  selectedRequest: undefined, // DEPRECATED
+  selectedRequest: undefined, // DEPRECATED, still used in lookup however
   housingTypeResultFilter: undefined,
   resultFilters: [], // initialize in Config/index.js
   requests: [],

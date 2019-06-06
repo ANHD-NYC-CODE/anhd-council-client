@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { setAppState } from 'Store/AppState/actions'
 import BootstrapTable from 'react-bootstrap-table-next'
 import BaseTableConfig from 'shared/classes/BaseTableConfig'
 import InnerLoader from 'shared/components/Loaders/InnerLoader'
@@ -31,11 +32,10 @@ class BaseTable extends React.Component {
     this.constructCsvFilename = this.constructCsvFilename.bind(this)
     this.getSpecificTableSize = this.getSpecificTableSize.bind(this)
     this.baseTableConfig = new BaseTableConfig({ component: this })
-
     this.state = {
       expandedRowContent: '',
       displayedRecordsCount: (props.records || {}).length,
-      page: 1,
+      page: props.globalTableState.page || 1,
       defaultSorted: props.tableConfig.defaultSorted,
       expanded: [],
       columns: props.tableConfig.getColumns({
@@ -52,6 +52,7 @@ class BaseTable extends React.Component {
   componentDidUpdate(props, state) {
     if (props.records.length !== state.displayedRecordsCount) {
       this.setState({
+        page: props.globalTableState.page || state.page,
         displayedRecordsCount: props.records.length,
         defaultSorted: props.tableConfig.defaultSorted,
         columns: props.tableConfig.getColumns({
@@ -84,6 +85,17 @@ class BaseTable extends React.Component {
   }
 
   setPage(page) {
+    if (this.props.globalTableState.page) {
+      this.props.dispatch(
+        setAppState({
+          dashboardTableState: {
+            ...this.props.globalTableState,
+            page,
+          },
+        })
+      )
+    }
+
     this.setState({
       page: page,
     })
@@ -197,14 +209,16 @@ class BaseTable extends React.Component {
     const { ExportCSVButton } = CSVExport
     return (
       <PaginationProvider
-        pagination={paginationFactory(
-          this.props.tableConfig.paginationOptions(
-            this.props.records.length,
-            this.state.page,
-            this.setPage,
-            this.node ? this.node.table.props.data : []
-          )
-        )}
+        pagination={paginationFactory({
+          custom: true,
+          totalSize: this.props.records.length,
+          sizePerPageList: [10, 50, 100],
+          page: this.state.page,
+          tableData: this.node ? this.node.table.props.data : [],
+          onPageChange: (page, sizePerPage) => {
+            this.setPage(page)
+          },
+        })}
       >
         {({ paginationProps, paginationTableProps }) => {
           return (
@@ -321,6 +335,7 @@ class BaseTable extends React.Component {
 }
 
 BaseTable.defaultProps = {
+  globalTableState: {},
   expandable: true,
   includeHeader: true,
   nested: false,
@@ -328,8 +343,9 @@ BaseTable.defaultProps = {
 }
 
 BaseTable.propTypes = {
-  expandable: PropTypes.bool,
   caption: PropTypes.string,
+  globalTableState: PropTypes.object,
+  expandable: PropTypes.bool,
   classes: PropTypes.string,
   dispatch: PropTypes.func,
   loading: PropTypes.bool,

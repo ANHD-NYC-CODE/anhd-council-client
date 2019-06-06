@@ -1,8 +1,6 @@
 import BaseTable from 'shared/components/BaseTable'
-import * as c from 'shared/constants'
 import { getTableColumns, getKeyField, getDescriptionKey, getLinkProps } from 'shared/tables/tableColumns'
 import { getDatasetDateField, constantToModelName } from 'shared/utilities/filterUtils'
-import moment from 'moment'
 
 export default class TableConfig {
   constructor({ component = BaseTable, resourceConstant = undefined, datasetModelName = undefined } = {}) {
@@ -62,19 +60,6 @@ export default class TableConfig {
       rowExample,
       annotationStart: annotationStart,
     })
-  }
-
-  paginationOptions(recordsLength, pageNumber, setPage, tableData) {
-    return {
-      custom: true,
-      totalSize: recordsLength,
-      sizePerPageList: [10, 50, 100],
-      page: pageNumber,
-      tableData,
-      onPageChange: (page, sizePerPage) => {
-        setPage(page)
-      },
-    }
   }
 
   get defaultSorted() {
