@@ -32,9 +32,6 @@ class DistrictDashboardShow extends React.Component {
   constructor(props) {
     super(props)
     this.setTableView = this.setTableView.bind(this)
-    this.state = {
-      tableView: false,
-    }
 
     this.getResultRecords = this.getResultRecords.bind(this)
     this.constructBaseCsvFileName = this.constructBaseCsvFileName.bind(this)
@@ -52,9 +49,7 @@ class DistrictDashboardShow extends React.Component {
   }
 
   setTableView(value) {
-    this.setState({
-      tableView: value,
-    })
+    this.props.dispatch(setAppState({ dashboardTableView: value }))
   }
 
   constructBaseCsvFileName() {
@@ -302,7 +297,7 @@ class DistrictDashboardShow extends React.Component {
                         name="view"
                         type="radio"
                         className="view-toggle"
-                        value={this.state.tableView}
+                        value={this.props.appState.dashboardTableView}
                         onChange={this.setTableView}
                       >
                         <ToggleButton className="toggle-link" value={false}>
@@ -317,7 +312,7 @@ class DistrictDashboardShow extends React.Component {
 
                   <Row className="py-2 mb-4 mb-lg-0">
                     <Col>
-                      <div className={classnames({ 'd-none': this.state.tableView })}>
+                      <div className={classnames({ 'd-none': this.props.appState.dashboardTableView })}>
                         <LeafletMap
                           appState={this.props.appState}
                           councilDistricts={this.props.config.councilDistricts}
@@ -338,10 +333,13 @@ class DistrictDashboardShow extends React.Component {
                           switchView={() => this.setViewTable(1)}
                         />
                       </div>
-                      <div className={classnames({ 'd-none': !this.state.tableView })}>
+                      <div className={classnames({ 'd-none': !this.props.appState.dashboardTableView })}>
                         <BaseTable
                           csvBaseFileName={this.constructBaseCsvFileName()}
-                          key={`table-${this.props.appState.mapFilterDate}`}
+                          globalTableState={this.props.appState.dashboardTableState}
+                          key={`table-${this.props.appState.mapFilterDate}-${
+                            this.props.appState.dashboardTableState.page
+                          }`}
                           annotationStart={
                             this.props.appState.districtShowCustomView ? '' : this.props.appState.mapFilterDate
                           }

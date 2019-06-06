@@ -6,7 +6,7 @@ import * as c from 'shared/constants'
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
 import { connect } from 'react-redux'
-import { Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
+import { Events, animateScroll as scroll, scrollSpy } from 'react-scroll'
 
 import AdvancedSearchSentence from 'AdvancedSearch/Sentence'
 import { Jumbotron, Row, Col, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'

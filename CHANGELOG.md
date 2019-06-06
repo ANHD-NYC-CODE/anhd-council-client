@@ -123,3 +123,7 @@
 - Add map & report tutorial links to the navbar as dropdowns
 - disabled date selections when custom search is applied
 - add nyc council attribution to intro text block
+
+#### 1.0.0b1.0.363
+
+- The user's selection of a map vs table view will be saved between pages.

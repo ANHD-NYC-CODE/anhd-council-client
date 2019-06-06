@@ -17,6 +17,11 @@ const DistrictSummarySection = props => {
     props.dispatch(
       setAppState({
         districtShowCustomView: false,
+        dashboardTableState: {
+          ...props.appState.dashboardTableState,
+          page: 1,
+        },
+        selectedResultFilters: amountFilter,
       })
     )
     props.dispatch(toggleSelectedAmountFilter(amountFilter))
@@ -31,12 +36,6 @@ const DistrictSummarySection = props => {
         })
       )
     }
-
-    props.dispatch(
-      setAppState({
-        selectedResultFilters: amountFilter,
-      })
-    )
   }
   return (
     <UserContext.Consumer>
