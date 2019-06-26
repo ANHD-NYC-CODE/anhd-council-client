@@ -33,6 +33,9 @@ class DistrictDashboard extends React.PureComponent {
     this.handleChangeGeographyId = this.handleChangeGeographyId.bind(this)
     this.cancelChangeGeography = this.cancelChangeGeography.bind(this)
     this.scrollToControls = this.scrollToControls.bind(this)
+
+    this.syncGeographyMatch = this.syncGeographyMatch.bind(this)
+
     if (props.geographyType && !isValidGeography(props.geographyType, props.geographyId)) {
       return
     } else if (!(props.geographyType && props.geographyId)) {
@@ -75,6 +78,24 @@ class DistrictDashboard extends React.PureComponent {
       this.setState({
         error404: false,
       })
+    }
+
+    this.syncGeographyMatch()
+  }
+
+  syncGeographyMatch() {
+    if (
+      this.props.geographyType !== this.props.appState.currentGeographyType ||
+      this.props.geographyId !== this.props.appState.currentGeographyId
+    ) {
+      this.props.dispatch(
+        setGeographyAndRequestsAndRedirect({
+          geographyType: this.props.geographyType,
+          geographyId: this.props.geographyId,
+          redirect: false,
+          requests: this.props.config.createMapRequests(this.props.geographyType, this.props.geographyId),
+        })
+      )
     }
   }
 

@@ -62,7 +62,7 @@ class Lookup extends React.Component {
     if (props.router.location.pathname !== '/lookup' && !match) {
       props.dispatch(push('/lookup'))
     } else if (this.needsLookupSync(props, match)) {
-      this.changeLookup(match.params.bbl, match.params.bin)
+      this.changeLookup(match.params.bbl, match.params.bin, true)
     }
   }
 
@@ -85,13 +85,14 @@ class Lookup extends React.Component {
     this.changeLookup(undefined, undefined)
   }
 
-  changeLookup(bbl, bin) {
+  changeLookup(bbl, bin, replaceHistory = false) {
     if (bbl === this.props.appState.currentProperty && bin === this.props.appState.currentBuilding) return
     this.props.dispatch(
       setLookupAndRequestsAndRedirect({
         bbl,
         bin,
         requests: this.props.config.createLookupRequests(bbl, bin),
+        replaceHistory,
       })
     )
 
@@ -107,8 +108,8 @@ class Lookup extends React.Component {
     return (
       <div>
         <Helmet>
-          <title>{`DAP Portal | Property Lookup${
-            match && match.params.bbl ? ' - BBL ' + match.params.bbl : ''
+          <title>{`DAP Portal | Property Lookup${match && match.params.bbl ? ' - BBL ' + match.params.bbl : ''}${
+            match && match.params.bin ? ' - BIN ' + match.params.bin : ''
           }`}</title>
         </Helmet>
         {match && this.props.appState.currentProperty ? (
