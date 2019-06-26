@@ -135,3 +135,4 @@
 - add color highlight to expandable table cells, remove expanding from certain columns.
 - Improve zoom behavior on map - no more zooming in and out on threshold clicks, store zoom level in appState.
 - Adds React-Helmet and page titles
+- improve browser history back & forward behavior
