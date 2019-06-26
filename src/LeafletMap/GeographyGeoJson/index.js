@@ -35,6 +35,7 @@ const GeographyGeoJson = props => {
         data={props.geographies.map(g => g.data)}
         style={g => getStyle(g)}
         onClick={props.onClick}
+        ref={props.geoJsonRef}
       />
     )
   } catch (e) {

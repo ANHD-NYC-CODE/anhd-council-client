@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import * as c from 'shared/constants'
 import L from 'leaflet'
 import { geographySelectionToString } from 'shared/utilities/languageUtils'
+import { setAppState } from 'Store/AppState/actions'
 
 import { Map, TileLayer, Popup } from 'react-leaflet'
 import { Jumbotron, Button, Alert } from 'react-bootstrap'
@@ -19,6 +20,7 @@ export default class LeafletMap extends React.PureComponent {
     super(props)
     this.mapContainerRef = React.createRef()
     this.mapRef = React.createRef()
+    this.geoJsonRef = React.createRef()
     this.state = {
       height: this.props.height,
       hasError: false,
@@ -30,17 +32,12 @@ export default class LeafletMap extends React.PureComponent {
     this.getGeographyBounds = this.getGeographyBounds.bind(this)
     this.getGeographyCenter = this.getGeographyCenter.bind(this)
     this.setAlertMessage = this.setAlertMessage.bind(this)
+    this.onMapZoom = this.onMapZoom.bind(this)
   }
 
   componentDidUpdate() {
-    // Center over selected geography
-
     if (this.mapRef.current) {
       this.mapRef.current.leafletElement.invalidateSize()
-    }
-    if (this.props.communityDistricts.length || this.props.councilDistricts.length) {
-      this.centerMapOnGeography()
-      this.mapRef.current.leafletElement.setZoom(14)
     }
   }
 
@@ -48,6 +45,7 @@ export default class LeafletMap extends React.PureComponent {
     window.addEventListener('resize', this.updateDimensions)
     this.updateDimensions()
     this.centerMapOnGeography()
+    this.mapRef.current.leafletElement.setZoom(this.props.zoom)
   }
 
   componentWillUnmount() {
@@ -75,6 +73,7 @@ export default class LeafletMap extends React.PureComponent {
 
       if (bounds) {
         this.mapRef.current.leafletElement.fitBounds(bounds, { padding: [-100, 0] })
+        // this.mapRef.current.leafletElement.setZoom(this.props.zoom)
       }
     }
   }
@@ -97,6 +96,12 @@ export default class LeafletMap extends React.PureComponent {
     if (this.mapContainerRef.current && this.mapRef.current) {
       this.mapRef.current.leafletElement.invalidateSize()
       this.setState({ height: this.mapContainerRef.current.offsetWidth })
+    }
+  }
+
+  onMapZoom() {
+    if (this.props.dispatch) {
+      this.props.dispatch(setAppState({ dashboardMapZoom: this.mapRef.current.leafletElement.getZoom() }))
     }
   }
 
@@ -148,6 +153,7 @@ export default class LeafletMap extends React.PureComponent {
           scrollWheelZoom={this.props.interactive}
           tap={this.props.interactive}
           touchZoom={this.props.interactive}
+          onZoom={this.onMapZoom}
           zoom={this.props.zoom}
           zoomControl={this.props.interactive}
         >
@@ -177,6 +183,7 @@ export default class LeafletMap extends React.PureComponent {
             this.props.currentGeographyType && (
               <div>
                 <GeographyGeoJson
+                  geoJsonRef={this.geoJsonRef}
                   geographies={this.props.selectGeographyData(
                     this.props.appState.changingGeographyType || this.props.currentGeographyType
                   )}
@@ -260,6 +267,7 @@ LeafletMap.propTypes = {
   communityDistricts: PropTypes.array,
   councilDistricts: PropTypes.array,
   closeGeographyPopup: PropTypes.func,
+  dispatch: PropTypes.func,
   iconConfig: PropTypes.string,
   displayedResultsFilter: PropTypes.object,
   results: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),

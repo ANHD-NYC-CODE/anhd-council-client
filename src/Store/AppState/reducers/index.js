@@ -13,6 +13,7 @@ export const initialState = {
   dashboardTableState: {
     page: 1,
   },
+  dashboardMapZoom: 14,
   mapFilterDate: c.DISTRICT_REQUEST_DATE_ONE,
   selectedRequests: [],
   selectedFilters: [],

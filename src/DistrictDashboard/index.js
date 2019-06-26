@@ -5,7 +5,7 @@ import { push, createMatchSelector } from 'connected-react-router'
 import { setGeographyAndRequestsAndRedirect } from 'Store/AppState/actions'
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
-
+import Helmet from 'react-helmet'
 import DistrictDashboardIndex from 'DistrictDashboard/DistrictDashboardIndex'
 import DistrictDashboardRequestsWrapper from 'DistrictDashboard/DistrictDashboardRequestsWrapper'
 import StandardizedInput from 'shared/classes/StandardizedInput'
@@ -146,33 +146,44 @@ class DistrictDashboard extends React.PureComponent {
   render() {
     if (this.state.error404)
       return <PageError title="Oops! 404 Page Not Found." message={this.state.error404Message} icon={faMapSigns} />
-    return !(this.props.appState.currentGeographyType && this.props.appState.currentGeographyId) ? (
-      <DistrictDashboardIndex
-        appState={this.props.appState}
-        cancelChangeGeography={this.cancelChangeGeography}
-        dispatch={this.props.dispatch}
-        handleChangeGeography={this.submitGeography}
-        handleChangeGeographyType={this.handleChangeGeographyType}
-        handleChangeGeographyId={this.handleChangeGeographyId}
-        scrollToControls={this.scrollToControls}
-      />
-    ) : (
-      <DistrictDashboardRequestsWrapper
-        advancedSearch={this.props.advancedSearch}
-        appState={this.props.appState}
-        dispatch={this.props.dispatch}
-        config={this.props.config}
-        cancelChangeGeography={this.cancelChangeGeography}
-        handleChangeGeography={this.submitGeography}
-        handleChangeGeographyType={this.handleChangeGeographyType}
-        handleChangeGeographyId={this.handleChangeGeographyId}
-        mapRequests={this.props.mapRequests}
-        requests={this.props.requests}
-        loading={this.props.loading}
-        selectedError={this.props.selectedError}
-        totalPropertyResults={this.props.totalPropertyResults}
-        trigger404Error={this.trigger404Error}
-      />
+    return (
+      <div>
+        <Helmet>
+          <title>{`DAP Portal | District Dashboard${
+            this.props.appState.currentGeographyType
+              ? ' - ' + this.props.appState.currentGeographyType + ' ' + this.props.appState.currentGeographyId
+              : ''
+          }`}</title>
+        </Helmet>
+        {!(this.props.appState.currentGeographyType && this.props.appState.currentGeographyId) ? (
+          <DistrictDashboardIndex
+            appState={this.props.appState}
+            cancelChangeGeography={this.cancelChangeGeography}
+            dispatch={this.props.dispatch}
+            handleChangeGeography={this.submitGeography}
+            handleChangeGeographyType={this.handleChangeGeographyType}
+            handleChangeGeographyId={this.handleChangeGeographyId}
+            scrollToControls={this.scrollToControls}
+          />
+        ) : (
+          <DistrictDashboardRequestsWrapper
+            advancedSearch={this.props.advancedSearch}
+            appState={this.props.appState}
+            dispatch={this.props.dispatch}
+            config={this.props.config}
+            cancelChangeGeography={this.cancelChangeGeography}
+            handleChangeGeography={this.submitGeography}
+            handleChangeGeographyType={this.handleChangeGeographyType}
+            handleChangeGeographyId={this.handleChangeGeographyId}
+            mapRequests={this.props.mapRequests}
+            requests={this.props.requests}
+            loading={this.props.loading}
+            selectedError={this.props.selectedError}
+            totalPropertyResults={this.props.totalPropertyResults}
+            trigger404Error={this.trigger404Error}
+          />
+        )}
+      </div>
     )
   }
 }

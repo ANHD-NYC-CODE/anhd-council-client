@@ -9,7 +9,7 @@ import { Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scro
 import { clearSearch } from 'Store/Search/actions'
 
 import { faMapSigns } from '@fortawesome/free-solid-svg-icons'
-
+import Helmet from 'react-helmet'
 import LookupIndex from 'Lookup/LookupIndex'
 import LookupRequestsWrapper from 'Lookup/LookupRequestsWrapper'
 import InnerLoader from 'shared/components/Loaders/InnerLoader'
@@ -104,20 +104,29 @@ class Lookup extends React.Component {
     if (this.state.error404)
       return <PageError title="Oops! 404 Page Not Found." message={this.state.error404Message} icon={faMapSigns} />
     if (this.props.bbl && !this.props.appState.currentProperty) return <InnerLoader />
-    return match && this.props.appState.currentProperty ? (
-      <LookupRequestsWrapper
-        appState={this.props.appState}
-        bbl={match.params.bbl}
-        bin={match.params.bin}
-        key={`${this.props.appState.currentProperty}${this.props.appState.currentBuilding}`}
-        changeLookup={this.changeLookup}
-        dispatch={this.props.dispatch}
-        propertyResult={this.props.propertyResult}
-        propertyError={this.props.propertyError}
-        trigger404Error={this.trigger404Error}
-      />
-    ) : (
-      <LookupIndex appState={this.props.appState} scrollToControls={this.scrollToControls} />
+    return (
+      <div>
+        <Helmet>
+          <title>{`DAP Portal | Property Lookup${
+            match && match.params.bbl ? ' - BBL ' + match.params.bbl : ''
+          }`}</title>
+        </Helmet>
+        {match && this.props.appState.currentProperty ? (
+          <LookupRequestsWrapper
+            appState={this.props.appState}
+            bbl={match.params.bbl}
+            bin={match.params.bin}
+            key={`${this.props.appState.currentProperty}${this.props.appState.currentBuilding}`}
+            changeLookup={this.changeLookup}
+            dispatch={this.props.dispatch}
+            propertyResult={this.props.propertyResult}
+            propertyError={this.props.propertyError}
+            trigger404Error={this.trigger404Error}
+          />
+        ) : (
+          <LookupIndex appState={this.props.appState} scrollToControls={this.scrollToControls} />
+        )}
+      </div>
     )
   }
 }
