@@ -1,4 +1,13 @@
 table {
+  .expandable-cell {
+    @media (hover: hover) {
+      &:hover {
+        background-color: $primary;
+        color: white;
+      }
+    }
+  }
+
   &:not(.fluid-table) {
     border: 0;
     @include media-breakpoint-up(xs) {

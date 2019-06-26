@@ -127,3 +127,11 @@
 #### 1.0.0b1.0.363
 
 - The user's selection of a map vs table view will be saved between pages.
+
+#### 1.0.0b1.0.364
+
+6/25/19
+
+- add color highlight to expandable table cells, remove expanding from certain columns.
+- Improve zoom behavior on map - no more zooming in and out on threshold clicks, store zoom level in appState.
+- Adds React-Helmet and page titles

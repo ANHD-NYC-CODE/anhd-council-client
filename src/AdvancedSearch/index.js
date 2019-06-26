@@ -7,7 +7,7 @@ import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
 import { connect } from 'react-redux'
 import { Events, animateScroll as scroll, scrollSpy } from 'react-scroll'
-
+import Helmet from 'react-helmet'
 import AdvancedSearchSentence from 'AdvancedSearch/Sentence'
 import { Jumbotron, Row, Col, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
 import AdvancedSearchForm from 'AdvancedSearch/AdvancedSearchForm'
@@ -56,6 +56,9 @@ export class AdvancedSearch extends React.Component {
   render() {
     return (
       <div className="advanced-search">
+        <Helmet>
+          <title>DAP Portal | Custom Search</title>
+        </Helmet>
         <Row>
           <Col className="touch-left padding-xs-sm-0" xs={12} lg={c.SIDEBAR_COLUMN_SIZE}>
             <Jumbotron className="layout__left-column advanced-search__left-column">

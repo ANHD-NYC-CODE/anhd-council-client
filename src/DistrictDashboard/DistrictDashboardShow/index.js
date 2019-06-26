@@ -314,11 +314,13 @@ class DistrictDashboardShow extends React.Component {
                     <Col>
                       <div className={classnames({ 'd-none': this.props.appState.dashboardTableView })}>
                         <LeafletMap
+                          key={`${this.props.appState.currentGeographyType}-${this.props.appState.currentGeographyId}`}
                           appState={this.props.appState}
                           councilDistricts={this.props.config.councilDistricts}
                           communityDistricts={this.props.config.communityDistricts}
                           currentGeographyType={this.props.appState.currentGeographyType}
                           closeGeographyPopup={this.props.endChangingState}
+                          dispatch={this.props.dispatch}
                           handleChangeGeography={this.props.handleChangeGeography}
                           handleChangeGeographyId={this.props.handleChangeGeographyId}
                           iconConfig="MULTIPLE"
@@ -331,6 +333,7 @@ class DistrictDashboardShow extends React.Component {
                           }
                           selectGeographyData={this.props.config.selectGeographyData}
                           switchView={() => this.setViewTable(1)}
+                          zoom={this.props.appState.dashboardMapZoom}
                         />
                       </div>
                       <div className={classnames({ 'd-none': !this.props.appState.dashboardTableView })}>

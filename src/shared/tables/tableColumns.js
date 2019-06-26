@@ -553,12 +553,14 @@ export const getTableColumns = ({
       columns = [
         // constructStandardColumn({
         //   columnEvent: expandColumnEvent,
+        // classes: 'expandable-cell',
         //   dataField: 'registrationid',
         //   text: 'ID',
         //   hidden: true,
         // }),
         // constructStandardColumn({
         //   columnEvent: expandColumnEvent,
+        // cla1sses: 'expandable-cell',
         //   dataField: 'lastregistrationdate',
         //   text: 'Last Registration Date',
         //   formatter: dateFormatter,
@@ -584,87 +586,104 @@ export const getTableColumns = ({
       columns = [
         constructStandardColumn({
           columnEvent: expandColumnEvent,
+          classes: 'expandable-cell',
           dataField: 'ucbbl',
           text: 'ID',
           hidden: true,
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
+          classes: 'expandable-cell',
           dataField: 'uc2007',
           text: '2007',
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
+          classes: 'expandable-cell',
           dataField: 'uc2008',
           text: '2008',
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
+          classes: 'expandable-cell',
           dataField: 'uc2009',
           text: '2009',
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
+          classes: 'expandable-cell',
           dataField: 'uc2010',
           text: '2010',
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
+          classes: 'expandable-cell',
           dataField: 'uc2011',
           text: '2011',
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
+          classes: 'expandable-cell',
           dataField: 'uc2012',
           text: '2012',
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
+          classes: 'expandable-cell',
           dataField: 'uc2013',
           text: '2013',
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
+          classes: 'expandable-cell',
           dataField: 'uc2014',
           text: '2014',
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
+          classes: 'expandable-cell',
           dataField: 'uc2015',
           text: '2015',
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
+          classes: 'expandable-cell',
           dataField: 'uc2016',
           text: '2016',
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
+          classes: 'expandable-cell',
           dataField: 'uc2017',
           text: '2017',
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
+          classes: 'expandable-cell',
           dataField: 'uc2018',
           text: '2018',
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
+          classes: 'expandable-cell',
           dataField: 'uc2019',
           text: '2019',
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
+          classes: 'expandable-cell',
           dataField: 'uc2020',
           text: '2020',
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
+          classes: 'expandable-cell',
           dataField: 'uc2021',
           text: '2021',
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
+          classes: 'expandable-cell',
           dataField: 'uc2022',
           text: '2022',
         }),
@@ -695,7 +714,7 @@ export const getTableColumns = ({
           dataField: 'novdescription',
           text: 'Description',
           filter: constructFilter(textFilter),
-          classes: 'table-column--description',
+          classes: 'expandable-cell table-column--description',
         }),
         constructStandardColumn({
           dataField: 'violationstatus',
@@ -814,7 +833,7 @@ export const getTableColumns = ({
           text: 'Status Description',
           formatter: hpdProblemStatusFormatter,
           csvFormatter: hpdProblemStatusFormatter,
-          classes: 'table-column--description',
+          classes: 'expandable-cell table-column--description',
           sort: true,
         }),
         // constructNestedTableColumn({
@@ -846,24 +865,28 @@ export const getTableColumns = ({
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
+          classes: 'expandable-cell',
           dataField: 'spacetype',
           text: 'Space Type',
           sort: true,
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
+          classes: 'expandable-cell',
           dataField: 'majorcategory',
           text: 'Major Category',
           sort: true,
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
+          classes: 'expandable-cell',
           dataField: 'minorcategory',
           text: 'Minor Category',
           sort: true,
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
+          classes: 'expandable-cell',
           dataField: 'code',
           text: 'Descriptor',
           filter: constructFilter(textFilter),
@@ -871,6 +894,7 @@ export const getTableColumns = ({
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
+          classes: 'expandable-cell',
           dataField: 'statusdescription',
           text: 'Full Description',
           filter: constructFilter(textFilter),
@@ -900,6 +924,7 @@ export const getTableColumns = ({
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
+          classes: 'expandable-cell',
           dataField: 'violationtype',
           text: 'Violation Type',
           sort: true,
@@ -909,10 +934,9 @@ export const getTableColumns = ({
           dataField: 'description',
           text: 'Description',
           filter: constructFilter(textFilter),
-          classes: 'table-column--description',
+          classes: 'expandable-cell table-column--description',
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'violationcategory',
           text: 'Status',
           filter: baseTableConfig.filterPrototypes['DOB_VIOLATION_ACTIVE'],
@@ -943,13 +967,11 @@ export const getTableColumns = ({
           sort: true,
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'complaintcategory',
           text: 'Category',
           sort: true,
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'complaintcategory',
           text: 'Priority',
           formatter: dobComplaintCategoryPriorityFormatter,
@@ -962,7 +984,7 @@ export const getTableColumns = ({
           text: 'Description',
           formatter: dobComplaintCategoryDescriptionFormatter,
           csvFormatter: dobComplaintCategoryDescriptionFormatter,
-          classes: 'table-column--description',
+          classes: 'expandable-cell table-column--description',
           filter: constructFilter(textFilter),
           sort: true,
         }),
@@ -1016,6 +1038,7 @@ export const getTableColumns = ({
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
+          classes: 'expandable-cell',
           dataField: 'sectionlawdescription1',
           text: 'Standard Description',
           sort: true,
@@ -1025,7 +1048,7 @@ export const getTableColumns = ({
           dataField: 'violationdescription',
           text: 'Violation Description',
           filter: constructFilter(textFilter),
-          classes: 'table-column--description',
+          classes: 'expandable-cell table-column--description',
         }),
         constructStandardColumn({
           dataField: 'ecbviolationstatus',
@@ -1116,7 +1139,6 @@ export const getTableColumns = ({
           sort: true,
         }),
         constructStandardColumn({
-          columnEvent: expandColumnEvent,
           dataField: 'jobtype',
           text: 'Job Type',
           filter: baseTableConfig.filterPrototypes['DOB_FILED_PERMIT_TYPE'],
@@ -1128,12 +1150,13 @@ export const getTableColumns = ({
           columnEvent: expandColumnEvent,
           dataField: 'jobdescription',
           text: 'Description',
-          classes: 'table-column--description',
+          classes: 'expandable-cell table-column--description',
           filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
+          classes: 'expandable-cell',
           dataField: 'jobstatus',
           text: 'Status',
           sort: true,
@@ -1220,6 +1243,7 @@ export const getTableColumns = ({
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
+          classes: 'expandable-cell',
           dataField: 'acrisrealparties',
           key: 'acrisparties1',
           text: 'Parties-1 (From)',
@@ -1229,6 +1253,7 @@ export const getTableColumns = ({
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
+          classes: 'expandable-cell',
           dataField: 'acrisrealparties',
           key: 'acrisparties2',
           text: 'Parties-2 (To)',
@@ -1267,6 +1292,7 @@ export const getTableColumns = ({
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
+          classes: 'expandable-cell',
           dataField: 'name',
           text: 'Name',
           filter: constructFilter(textFilter),
@@ -1274,6 +1300,7 @@ export const getTableColumns = ({
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
+          classes: 'expandable-cell',
           dataField: 'address1',
           text: 'Address 1',
           filter: constructFilter(textFilter),
@@ -1281,6 +1308,7 @@ export const getTableColumns = ({
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
+          classes: 'expandable-cell',
           dataField: 'address2',
           text: 'Address 2',
           filter: constructFilter(textFilter),
@@ -1331,6 +1359,7 @@ export const getTableColumns = ({
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
+          classes: 'expandable-cell',
           dataField: 'evictionaddress',
           text: 'Address',
           sort: true,
@@ -1353,6 +1382,7 @@ export const getTableColumns = ({
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
+          classes: 'expandable-cell',
           dataField: 'cr',
           text: 'Creditor',
           formatter: lispendenCleanupFormatter,
@@ -1361,6 +1391,7 @@ export const getTableColumns = ({
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
+          classes: 'expandable-cell',
           dataField: 'debtor',
           text: 'Debtor',
           formatter: lispendenCleanupFormatter,
@@ -1369,6 +1400,7 @@ export const getTableColumns = ({
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
+          classes: 'expandable-cell',
           dataField: 'comments',
           text: 'Comments',
           formatter: lispendenCommentFormatter,

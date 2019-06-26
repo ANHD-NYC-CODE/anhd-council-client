@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
+import Helmet from 'react-helmet'
 import AddressSearch from 'Lookup/AddressSearch'
 import GeographySelect from 'shared/components/GeographySelect'
 import { setGeographyAndRequestsAndRedirect } from 'Store/AppState/actions'
@@ -102,6 +103,9 @@ class Main extends React.Component {
   render() {
     return (
       <div id="main" className="main">
+        <Helmet>
+          <title>DAP Portal</title>
+        </Helmet>
         <Row>
           <Col className="layout__left-column touch-left padding-xs-sm-0" xs={12} lg={c.SIDEBAR_COLUMN_SIZE}>
             <IntroductionBlock scrollToControls={this.scrollToControls} />
