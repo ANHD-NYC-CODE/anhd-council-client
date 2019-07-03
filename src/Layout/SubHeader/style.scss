@@ -19,16 +19,9 @@
     justify-content: flex-end;
 
     text-align: right;
-    @include media-breakpoint-up(sm) {
-      height: 40%;
-    }
   }
   .sub-header__wrapper--bottom {
     align-items: flex-end;
-
-    @include media-breakpoint-up(sm) {
-      height: 60%;
-    }
 
     .col-12 {
       @include media-breakpoint-down(xs) {
