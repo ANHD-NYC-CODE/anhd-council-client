@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 
 import HousingTypeResultCard from 'shared/components/ResultCard/HousingTypeResultCard'
 import RequestSummaryWrapper from 'shared/components/RequestSummaryWrapper'
-import BasicResultsHeader from 'shared/components/ResultCard/BasicResultsHeader'
 import ConfigContext from 'Config/ConfigContext'
 import * as c from 'shared/constants'
 import { setAppState } from 'Store/AppState/actions'
@@ -41,18 +40,20 @@ const HousingTypeSection = props => {
                     >
                       <RequestSummaryWrapper
                         key={`housingtype-wrapper-${index}`}
-                        request={props.propertySummaryRequest}
-                        totalRequest={props.propertySummaryRequest}
                         onClick={() => props.switchSelectedFilter(ownResultFilter)}
+                        disabled={props.customView}
+                        infoKey={ownResultFilter.id}
                         label={ownResultFilter.label}
+                        percentageOfWhole={ownResultFilter !== residentialFilter}
                         resultsFilter={ownResultFilter}
                         resultsComponent={HousingTypeResultCard}
-                        infoKey={ownResultFilter.id}
-                        percentageOfWhole={ownResultFilter !== residentialFilter}
-                        unitsLabel={ownResultFilter === residentialFilter ? 'of all properties' : 'of residential'}
-                        totalResultsFilter={ownResultFilter === residentialFilter ? undefined : residentialFilter}
+                        request={props.propertySummaryRequest}
                         selected={props.customView ? undefined : isSelected(props, ownResultFilter)}
-                        disabled={props.customView}
+                        totalResultsFilter={ownResultFilter === residentialFilter ? undefined : residentialFilter}
+                        unitsLabel={
+                          ownResultFilter === residentialFilter ? 'of all properties' : 'of residential units'
+                        }
+                        totalRequest={props.propertySummaryRequest}
                       />
                     </Col>
                   )

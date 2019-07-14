@@ -6,6 +6,12 @@ import SpinnerLoader from 'shared/components/Loaders/SpinnerLoader'
 import classnames from 'classnames'
 import './style.scss'
 const HousingTypeResultCard = props => {
+  const numberOfUnits = props.results.reduce((total, result) => parseInt(total) + parseInt(result['unitsres']), 0)
+  const totalDistrictUnits = props.totalResults.reduce(
+    (total, result) => parseInt(total) + parseInt(result['unitsres']),
+    0
+  )
+
   return (
     <Card
       as={Button}
@@ -31,16 +37,13 @@ const HousingTypeResultCard = props => {
                 <span className="summary-units">properties</span>
               </p>
               <p>
-                <span className="font-weight-bold">
-                  {props.results.reduce((total, result) => parseInt(total) + parseInt(result['unitsres']), 0)}
-                </span>{' '}
-                <span className="summary-units">units</span>
+                <span className="font-weight-bold">{numberOfUnits}</span> <span className="summary-units">units</span>
               </p>
             </div>
-            {props.percentageOfWhole && props.totalResults && !!props.totalResults.length && (
+            {props.percentageOfWhole && !!props.totalResults.length && (
               <div className="d-flex flex-column align-items-flex-end h-100 text-right">
                 <h5 className="text-right font-weight-bold mb-0">
-                  {`${((props.results.length / props.totalResults.length) * 100).toFixed(1)}%`}{' '}
+                  {`${((numberOfUnits / totalDistrictUnits) * 100).toFixed(1)}%`}{' '}
                 </h5>
                 <small className="summary-units small ">{props.unitsLabel}</small>
               </div>

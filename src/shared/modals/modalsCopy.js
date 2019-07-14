@@ -3,8 +3,11 @@ import React from 'react'
 export const infoModals = {
   rs: {
     title: 'Rent Stabilized Housing',
-    body:
-      'An apartment may be regulated under New York State’s system of Rent Stabilization if it is in a property that was built before 1974 and has six or more units. All properties in this report included at least one rent stabilized unit beginning in 2007, the first year for which we have data. We base stabilized unit numbers on property tax bills from the NYC Department of Finance. Missing or fluctuating numbers may be due to missing/incorrect registration by the owner or inconsistencies in property tax documentation.',
+    body: `An apartment may be regulated under New York State’s system of Rent Stabilization if it is in a property that was built before 1974 and has six or more units or if the property has benefitted from certain regulatory programs like 421a or J-51. All properties in this report included at least one rent stabilized unit beginning in 2007, the first year for which we have data. We base stabilized unit numbers on property tax bills from the NYC Department of Finance. Missing or fluctuating numbers may be due to missing/incorrect registration by the owner or inconsistencies in property tax documentation.
+    <br>
+    <br>
+    We display the percentage of properties and units in buildings that have contained <strong>any</strong> rent stabilized units during this time period, even though not all units in those buildings are currently stabilized.`,
+
     sources: [
       {
         text: 'taxbills.nyc',
