@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Modal } from 'react-bootstrap'
 import BaseLink from 'shared/components/BaseLink'
+import ReactMarkdown from 'react-markdown'
+
 import './style.scss'
 
 const BaseModal = props => {
@@ -18,7 +20,7 @@ const BaseModal = props => {
       <Modal.Header closeButton>
         <Modal.Title id={props.labelId}>{props.title}</Modal.Title>
       </Modal.Header>
-      <Modal.Body>{props.body || props.children}</Modal.Body>
+      <Modal.Body>{<ReactMarkdown escapeHtml={false} source={props.body} /> || props.children}</Modal.Body>
       {!!(props.sources || {}).length && (
         <Modal.Body>
           <p>Source(s):</p>

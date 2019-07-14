@@ -313,8 +313,13 @@ class DistrictDashboardShow extends React.Component {
                   <Row className="py-2 mb-4 mb-lg-0">
                     <Col>
                       <div className={classnames({ 'd-none': this.props.appState.dashboardTableView })}>
+                        {
+                          // Regens map when geo type or ID changes, or if map/table toggled
+                        }
                         <LeafletMap
-                          key={`${this.props.appState.currentGeographyType}-${this.props.appState.currentGeographyId}`}
+                          key={`${this.props.appState.currentGeographyType}-${this.props.appState.currentGeographyId}-${
+                            this.props.appState.dashboardTableView ? 'table' : 'map'
+                          }`}
                           appState={this.props.appState}
                           councilDistricts={this.props.config.councilDistricts}
                           communityDistricts={this.props.config.communityDistricts}
