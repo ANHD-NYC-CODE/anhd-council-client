@@ -74,6 +74,7 @@
     "react-ga": "^2.5.7",
     "react-helmet": "^5.2.1",
     "react-leaflet": "^2.2.0",
+    "react-markdown": "^4.1.0",
     "react-pinch-zoom-pan": "^1.4.5",
     "react-redux": "^6.0.0",
     "react-router-bootstrap": "^0.24.4",
