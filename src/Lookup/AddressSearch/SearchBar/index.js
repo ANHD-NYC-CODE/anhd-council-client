@@ -48,7 +48,7 @@ export default class SearchBar extends React.PureComponent {
 
   render() {
     return (
-      <Form autocomplete="off" className="search-bar" onSubmit={this.onFormSubmit}>
+      <Form autoComplete="off" className="search-bar" onSubmit={this.onFormSubmit}>
         <Form.Control
           className={classnames(this.props.inputClass, { valued: !!this.props.searchValue })}
           name="address-search"

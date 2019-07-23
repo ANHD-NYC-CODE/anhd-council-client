@@ -97,7 +97,7 @@ class SubHeader extends React.Component {
                             })
                           }}
                         >
-                          <a className="text-secondary" href="#">
+                          <a className="text-secondary" href="#" id="nav-login-button">
                             Login / Sign up
                           </a>
                         </Nav.Item>

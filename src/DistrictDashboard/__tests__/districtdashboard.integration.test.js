@@ -162,7 +162,7 @@ describe('DistrictDashboard', () => {
         expect(wrapper.find('BaseTable')).toHaveLength(1)
       })
 
-      it('updates the request card summaries when data is received', async () => {
+      it('updates the request card summaries when data is received + calculates units', async () => {
         const results = [
           createPropertyRequestMock({ bbl: 1, unitsres: 1 }),
           createPropertyRequestMock({ bbl: 2, unitsres: 0 }),
@@ -176,7 +176,7 @@ describe('DistrictDashboard', () => {
         await flushAllPromises()
         wrapper.update()
         expect(wrapper.find('.housing-type-section__wrapper').text()).toMatch(
-          'All Residential2 properties11 unitsRent Stabilized0 properties0 units0.0% of residentialSubsidized Housing0 properties0 units0.0% of residentialSmall Homes1 properties1 units50.0% of residentialMarket Rate2 properties11 units100.0% of residentialPublic Housing0 properties0 units0.0% of residential'
+          'All Residential2 properties11 unitsRent Stabilized0 properties0 units0.0% of residential unitsSubsidized Housing0 properties0 units0.0% of residential unitsSmall Homes1 properties1 units9.1% of residential unitsMarket Rate2 properties11 units100.0% of residential unitsPublic Housing0 properties0 units0.0% of residential units'
         )
       })
 

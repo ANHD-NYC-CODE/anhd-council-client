@@ -5,7 +5,6 @@ import { Axios } from 'shared/utilities/Axios'
 import MockAdapter from 'axios-mock-adapter'
 import { setupStore, configuredState, flushAllPromises } from 'shared/testUtilities'
 import { history } from 'Store/configureStore'
-import sinon from 'sinon'
 import { ConnectedRouter } from 'connected-react-router'
 
 import { Provider } from 'react-redux'

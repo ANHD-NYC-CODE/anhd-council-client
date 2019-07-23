@@ -49,7 +49,7 @@ describe('BaseTable', () => {
       wrapper.update()
 
       expect(wrapper.find('tbody tr')).toHaveLength(3)
-      expect(wrapper.find('.expanding-row')).toHaveLength(1)
+      expect(wrapper.find('.expanded-row')).toHaveLength(1)
     })
   })
 
