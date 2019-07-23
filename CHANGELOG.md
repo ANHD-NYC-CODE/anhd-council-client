@@ -136,3 +136,17 @@
 - Improve zoom behavior on map - no more zooming in and out on threshold clicks, store zoom level in appState.
 - Adds React-Helmet and page titles
 - improve browser history back & forward behavior
+
+#### 1.0.0b1.0.37
+
+4/14/19
+
+- Changed the way dashboard housing type percentages are calcualted - now calculates each housing type by % of units from the total number of units in the district.
+- Fix disappearing map bug
+- Add ReactMarkdown support for HTML tags in the info modals
+
+#### 1.0.0b1.0.371
+
+7/23/19
+
+- Fix login form not rendering bug
