@@ -80,6 +80,13 @@ describe('navigation', () => {
     ).toEqual('/search')
   })
 
+  it('opens the login modal', () => {
+    const wrapper = setupWrapper()
+    expect(wrapper.find('LoginForm')).toHaveLength(0)
+    wrapper.find('#nav-login-button').simulate('click')
+    expect(wrapper.find('LoginForm')).toHaveLength(1)
+  })
+
   describe('with current geography app state', () => {
     it('changes district map link to the selected geography', () => {
       const wrapper = setupWrapper({

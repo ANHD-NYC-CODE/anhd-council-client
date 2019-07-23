@@ -20,7 +20,7 @@ const BaseModal = props => {
       <Modal.Header closeButton>
         <Modal.Title id={props.labelId}>{props.title}</Modal.Title>
       </Modal.Header>
-      <Modal.Body>{<ReactMarkdown escapeHtml={false} source={props.body} /> || props.children}</Modal.Body>
+      <Modal.Body>{props.body ? <ReactMarkdown escapeHtml={false} source={props.body} /> : props.children}</Modal.Body>
       {!!(props.sources || {}).length && (
         <Modal.Body>
           <p>Source(s):</p>
