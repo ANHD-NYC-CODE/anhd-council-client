@@ -139,7 +139,7 @@ export const infoModals = {
     sources: [
       {
         text: 'NYC Open Data - DOB Job Application Filings',
-        url: '  https://data.cityofnewyork.us/Housing-Development//ic3t-wcy2/data',
+        url: '  https://data.cityofnewyork.us/Housing-Development/DOB-Job-Application-Filings/ic3t-wcy2',
       },
       {
         text: 'NYC Open Data - DOB NOW Build Job Application Filings',
