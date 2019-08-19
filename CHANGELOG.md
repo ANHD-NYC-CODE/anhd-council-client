@@ -1,3 +1,9 @@
+#### 1.0.0b1.0.4
+
+8/19/19
+
+- Update to support PropertyShark foreclosure API data
+
 #### 1.0.0b1.0.371
 
 7/23/19
