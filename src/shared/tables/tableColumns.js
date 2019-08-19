@@ -1224,7 +1224,14 @@ export const getTableColumns = ({
         }),
         constructStandardColumn({
           dataField: 'docdate',
-          text: 'Date',
+          text: 'Document Date',
+          formatter: dateFormatter,
+          csvFormatter: dateFormatter,
+          sort: true,
+        }),
+        constructStandardColumn({
+          dataField: 'recordedfiled',
+          text: 'Filing Date',
           formatter: dateFormatter,
           csvFormatter: dateFormatter,
           sort: true,
