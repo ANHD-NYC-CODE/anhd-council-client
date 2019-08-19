@@ -58,7 +58,9 @@ const DistrictSummarySection = props => {
                         : undefined
                     }
                   >
-                    {amountFilter.resourceModel.resourceConstant === 'LISPENDEN' && !auth.user ? (
+                    {(amountFilter.resourceModel.resourceConstant === 'FORECLOSURE' ||
+                      amountFilter.resourceModel.resourceConstant === 'LISPENDEN') &&
+                    !auth.user ? (
                       <ModalContext.Consumer>
                         {modal => {
                           return (

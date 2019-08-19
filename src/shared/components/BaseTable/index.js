@@ -142,6 +142,9 @@ class BaseTable extends React.Component {
       )
     }
     return {
+      onExpand: (row, isExpand, rowIndex, e) => {
+        if (!e.currentTarget.classList.contains('expandable-cell')) return
+      },
       renderer: row => {
         if (isNestedTable(this.state.expandedRowComponent)) {
           const NestedTable = this.state.expandedRowComponent
@@ -153,6 +156,8 @@ class BaseTable extends React.Component {
           )
         } else if (this.state.expandedRowProps) {
           return this.state.expandedRowComponent(this.state.expandedRowProps)
+        } else {
+          return null
         }
       },
 

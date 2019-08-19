@@ -51,6 +51,7 @@ export const mockDatasetsResponse = [
   { model_name: 'AcrisRealMaster' },
   { model_name: 'Eviction' },
   { model_name: 'Lispenden' },
+  { model_name: 'Foreclosure' },
   { model_name: 'HousingLitigation' },
   { model_name: 'DOBFiledPermit' },
   { model_name: 'DOBIssuedPermit' },

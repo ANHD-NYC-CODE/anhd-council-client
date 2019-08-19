@@ -188,6 +188,21 @@ export const infoModals = {
       },
     ],
   },
+  FORECLOSURE: {
+    title: 'Foreclosures',
+    body:
+      'Lis pendens, pre-foreclosures, and foreclosures indicate that an owner is in financial distress any may lose the property to the mortgage lender. Data available since Dec, 2018',
+    sources: [
+      {
+        text: 'PropertyShark (August, 2019 - Present)',
+        url: 'https://propertyshark.com',
+      },
+      {
+        text: 'Public Data Corporation (Dec, 2018 - July, 2019)',
+        url: 'http://www.pdcny.com',
+      },
+    ],
+  },
   LISPENDEN: {
     title: 'Foreclosures',
     body:

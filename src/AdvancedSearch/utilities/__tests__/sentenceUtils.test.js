@@ -351,7 +351,7 @@ describe('convertConditionMappingToSentence', () => {
         '0': new Condition({
           key: '0',
           type: 'AND',
-          filters: [filterMocks('LISPENDEN')],
+          filters: [filterMocks('FORECLOSURE')],
         }),
       }
 
