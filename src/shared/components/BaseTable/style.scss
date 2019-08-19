@@ -6,7 +6,6 @@ table.table,
   table {
     background-color: $white;
   }
-
   thead th,
   tbody td {
     font-size: 0.8rem;
@@ -18,6 +17,11 @@ table.table,
   }
   tbody tr {
     cursor: pointer;
+    transition: all 0s linear;
+
+    * {
+      transition: all 0s linear;
+    }
   }
 
   .table-sm td {
@@ -36,6 +40,19 @@ table.table,
   table:not(.no-expand) {
     tr:not(.expanding-row) td:not(.table-column--active):not(.react-bs-table-no-data):not(.nested-table-column):before {
       // content: '(+) ';
+    }
+
+    // Fixes bootstrap table 2 behavior,
+    // do not expand row on all clicks!
+    // only clicks to .expandable-cell
+    td,
+    tr {
+      pointer-events: none;
+    }
+
+    td a,
+    .expandable-cell {
+      pointer-events: all;
     }
   }
 
@@ -79,6 +96,11 @@ table.table,
     overflow-x: hidden;
   }
 
+  .row-expansion-style,
+  .reset-expansion-style {
+    padding: 0;
+  }
+
   .table-row--nested-bumper {
     padding-left: 10px;
     background-color: $gray-700;
@@ -94,6 +116,7 @@ table.table,
     white-space: nowrap;
     text-overflow: ellipsis;
   }
+
   .table-row--expanded .table-column--description:after {
     text-transform: capitalize;
     display: block;

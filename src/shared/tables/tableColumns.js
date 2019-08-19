@@ -67,6 +67,8 @@ export const getKeyField = constant => {
       return 'courtindexnumber'
     case 'LISPENDEN':
       return 'key'
+    case 'FORECLOSURE':
+      return 'key'
     default:
       return 'id'
   }
@@ -415,13 +417,13 @@ export const getTableColumns = ({
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
           dataField: getAnnotatedDataField({
-            annotationKey: getAnnotationKey('lispendens', annotationStart),
+            annotationKey: getAnnotationKey('foreclosures', annotationStart),
             rowExample,
           }),
           text: getAnnotatedLabel({
             annotationLabel: 'Foreclosures',
             rowExample,
-            annotationKey: getAnnotationKey('lispendens', annotationStart),
+            annotationKey: getAnnotationKey('foreclosures', annotationStart),
           }),
           sort: true,
           formatter: annotatedColumnFormatter,
@@ -1406,6 +1408,74 @@ export const getTableColumns = ({
           formatter: lispendenCommentFormatter,
           csvFormatter: lispendenCommentFormatter,
           // sort: true,
+        }),
+      ]
+      break
+    case 'FORECLOSURE':
+      columns = [
+        constructStandardColumn({
+          dataField: 'key',
+          text: 'Key',
+          hidden: true,
+        }),
+        constructStandardColumn({
+          dataField: 'index',
+          text: 'Index #',
+          sort: true,
+        }),
+        constructStandardColumn({
+          dataField: 'date_added',
+          text: 'Date Added',
+          formatter: dateFormatter,
+          csvFormatter: dateFormatter,
+          sort: true,
+        }),
+        constructStandardColumn({
+          columnEvent: expandColumnEvent,
+          classes: 'expandable-cell',
+          dataField: 'creditor',
+          text: 'Creditor',
+          sort: true,
+          formatter: lispendenCleanupFormatter,
+          csvFormatter: lispendenCleanupFormatter,
+        }),
+        constructStandardColumn({
+          columnEvent: expandColumnEvent,
+          classes: 'expandable-cell',
+          dataField: 'debtor',
+          text: 'Debtor',
+          sort: true,
+          formatter: lispendenCleanupFormatter,
+          csvFormatter: lispendenCleanupFormatter,
+        }),
+        constructStandardColumn({
+          dataField: 'document_type',
+          text: 'Document Type',
+          sort: true,
+        }),
+        constructStandardColumn({
+          dataField: 'lien_type',
+          text: 'Lien Type',
+          sort: true,
+        }),
+        constructStandardColumn({
+          dataField: 'mortgage_date',
+          text: 'Mortgage Date',
+          formatter: dateFormatter,
+          csvFormatter: dateFormatter,
+          sort: true,
+        }),
+        constructStandardColumn({
+          dataField: 'mortgage_amount',
+          text: 'Mortgage Amount',
+          formatter: dollarFormatter,
+          csvFormatter: annotatedColumnFormatter,
+          sort: true,
+        }),
+        constructStandardColumn({
+          dataField: 'source',
+          text: 'Source',
+          sort: true,
         }),
       ]
       break

@@ -244,6 +244,7 @@ const Property = databaseObject => {
       HPD_COMPLAINT: 'hpdcomplaints',
       HPD_VIOLATION: 'hpdviolations',
       LISPENDEN: 'lispendens',
+      FORECLOSURE: 'foreclosures',
       TAX_LIEN: 'taxliens',
       CONH_RECORD: 'conhrecords',
     },

@@ -116,9 +116,9 @@ export const newLookupRequests = ({ bbl, bin, resourceModels } = {}) => {
       type: 'LOOKUP_FILTER',
       bbl: bbl,
       level: 'PROPERTY',
-      resourceConstant: 'LISPENDEN',
-      resourceModel: resourceModels['LISPENDEN'],
-      datasetModelName: constantToModelName('LISPENDEN'),
+      resourceConstant: 'FORECLOSURE',
+      resourceModel: resourceModels['FORECLOSURE'],
+      datasetModelName: constantToModelName('FORECLOSURE'),
       isAuthenticated: true,
     }),
     bin
@@ -328,7 +328,7 @@ export const newMapResultFilters = ({ resourceModels } = {}) => {
     generateResultFilter({ resourceModel: resourceModels['HPD_COMPLAINT'], value: 5 }),
     generateResultFilter({ resourceModel: resourceModels['DOB_COMPLAINT'], value: 2 }),
     generateResultFilter({
-      resourceModel: resourceModels['LISPENDEN'],
+      resourceModel: resourceModels['FORECLOSURE'],
       value: 1,
     }),
     generateResultFilter({ resourceModel: resourceModels['HPD_VIOLATION'], value: 10 }),

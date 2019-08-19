@@ -160,14 +160,14 @@ describe('convertConditionMappingToQ', () => {
 
   describe('foreclosure dataset', () => {
     it('converts the object into a field string', () => {
-      const mock = filterMocks('LISPENDEN')
+      const mock = filterMocks('FORECLOSURE')
       let condition0Filters = [mock]
 
       const conditions = {
         '0': new Condition({ type: 'AND', filters: condition0Filters }),
       }
 
-      const result = `*condition_0=AND filter_0=lispendens__count__gte=1,lispendens__fileddate__gte=${rawStartDate},lispendens__type=foreclosure,lispendens__fileddate__lte=${rawEndDate}`
+      const result = `*condition_0=AND filter_0=foreclosures__count__gte=1,foreclosures__date_added__gte=${rawStartDate},foreclosures__date_added__lte=${rawEndDate}`
       expect(a.convertConditionMappingToQ(conditions)).toEqual(result)
     })
   })
