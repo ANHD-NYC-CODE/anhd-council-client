@@ -46,7 +46,7 @@ table.table,
     // do not expand row on all clicks!
     // only clicks to .expandable-cell
     td,
-    tr {
+    tbody tr {
       pointer-events: none;
     }
 

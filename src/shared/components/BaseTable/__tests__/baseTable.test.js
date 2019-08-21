@@ -42,6 +42,7 @@ describe('BaseTable', () => {
   describe('cell click', () => {
     it('expands the row', () => {
       const wrapper = setupWrapper(records, tableConfig)
+      expect(wrapper.find('tbody tr')).toHaveLength(2)
       wrapper
         .find('tbody td.table-column--description')
         .at(1)
@@ -50,6 +51,34 @@ describe('BaseTable', () => {
 
       expect(wrapper.find('tbody tr')).toHaveLength(3)
       expect(wrapper.find('.expanded-row')).toHaveLength(1)
+    })
+
+    it('sorts the columns', () => {
+      const wrapper = setupWrapper(records, tableConfig)
+      wrapper
+        .find('thead th.sortable')
+        .at(0)
+        // .simulate('click')
+        .simulate('click')
+      wrapper.update()
+
+      expect(
+        wrapper
+          .find('tbody tr')
+          .at(0)
+          .find('td')
+          .at(0)
+          .text()
+      ).toMatch('2')
+
+      expect(
+        wrapper
+          .find('tbody tr')
+          .at(1)
+          .find('td')
+          .at(0)
+          .text()
+      ).toMatch('1')
     })
   })
 

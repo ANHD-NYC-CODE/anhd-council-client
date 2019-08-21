@@ -49,6 +49,7 @@ const Property = databaseObject => {
             .reduce((ps, key) => ((ps[key] = paramSets[key]), ps), {})
       }
     },
+    // Used on district dashboard filters
     ownResultFilters: [
       {
         id: c.HOUSING_TYPE_RESIDENTIAL,
@@ -122,7 +123,7 @@ const Property = databaseObject => {
           results.filter(result => paramMaps.every(paramMap => paramMap.evaluate(result))),
       },
     ],
-
+    // Used on Custom Search
     ownResourceFilters: {
       initial: {
         generatorFunction: resourceModel => {
