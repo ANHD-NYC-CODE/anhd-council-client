@@ -1,3 +1,10 @@
+#### 1.0.0b1.0.4.0.2
+
+8/23/19
+
+- Adjusted expanded row background gray to be full width
+- save the setSizePerPage value in dashboard to AppState, save Property lookup tables to table state.
+
 #### 1.0.0b1.0.4.0.1
 
 8/19/19
