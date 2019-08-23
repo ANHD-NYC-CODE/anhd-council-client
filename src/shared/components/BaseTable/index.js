@@ -36,6 +36,7 @@ class BaseTable extends React.Component {
       expandedRowContent: '',
       displayedRecordsCount: (props.records || {}).length,
       page: props.globalTableState.page || 1,
+      sizePerPage: props.globalTableState.sizePerPage || 10,
       defaultSorted: props.tableConfig.defaultSorted,
       expanded: [],
       columns: props.tableConfig.getColumns({
@@ -53,6 +54,7 @@ class BaseTable extends React.Component {
     if (props.records.length !== state.displayedRecordsCount) {
       this.setState({
         page: props.globalTableState.page || state.page,
+        sizePerPage: props.globalTableState.sizePerPage || 10,
         displayedRecordsCount: props.records.length,
         defaultSorted: props.tableConfig.defaultSorted,
         columns: props.tableConfig.getColumns({
@@ -84,12 +86,14 @@ class BaseTable extends React.Component {
     return `${this.props.csvBaseFileName}${filters ? '__' + filters : ''}.csv`.replace(' ', '_').toLowerCase()
   }
 
-  setPage(page) {
+  setPage(page, sizePerPage) {
     if (this.props.globalTableState.page) {
+      const tableState = { ...this.props.globalTableState, sizePerPage }
+      console.log(tableState)
       this.props.dispatch(
         setAppState({
           dashboardTableState: {
-            ...this.props.globalTableState,
+            ...tableState,
             page,
           },
         })
@@ -217,11 +221,12 @@ class BaseTable extends React.Component {
         pagination={paginationFactory({
           custom: true,
           totalSize: this.props.records.length,
+          sizePerPage: this.state.sizePerPage,
           sizePerPageList: [10, 50, 100],
           page: this.state.page,
           tableData: this.node ? this.node.table.props.data : [],
           onPageChange: (page, sizePerPage) => {
-            this.setPage(page)
+            this.setPage(page, sizePerPage)
           },
         })}
       >
