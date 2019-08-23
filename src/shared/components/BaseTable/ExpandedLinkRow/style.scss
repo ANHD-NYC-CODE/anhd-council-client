@@ -1,4 +1,8 @@
 @import 'shared/styles/bootstrap/_variables.scss';
+// expanded row
+.row-expansion-style {
+  background-color: $gray-200;
+}
 
 .expanded-row {
   border: 0;
@@ -7,6 +11,7 @@
   left: 0;
   display: block;
   background-color: $gray-700;
+
   @include media-breakpoint-up(sm) {
     max-width: 500px;
   }
