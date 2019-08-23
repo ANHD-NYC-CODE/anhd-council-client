@@ -1,3 +1,4 @@
+git checkout .
 git pull origin master
 npm install --production --no-optional
 npm run build
