@@ -26,6 +26,7 @@ class BaseTable extends React.Component {
 
     this.setExpandedContent = this.setExpandedContent.bind(this)
     this.setPage = this.setPage.bind(this)
+    this.setSizePerPage = this.setSizePerPage.bind(this)
     this.expandRow = this.expandRow.bind(this)
     this.constructFilter = this.constructFilter.bind(this)
     this.handleCsvClick = this.handleCsvClick.bind(this)
@@ -89,7 +90,6 @@ class BaseTable extends React.Component {
   setPage(page, sizePerPage) {
     if (this.props.globalTableState.page) {
       const tableState = { ...this.props.globalTableState, sizePerPage }
-      console.log(tableState)
       this.props.dispatch(
         setAppState({
           dashboardTableState: {
@@ -101,7 +101,26 @@ class BaseTable extends React.Component {
     }
 
     this.setState({
-      page: page,
+      page,
+      sizePerPage,
+    })
+  }
+
+  setSizePerPage(page, sizePerPage) {
+    if (this.props.globalTableState.page) {
+      const tableState = { ...this.props.globalTableState, sizePerPage }
+      this.props.dispatch(
+        setAppState({
+          dashboardTableState: {
+            ...tableState,
+            page,
+          },
+        })
+      )
+    }
+
+    this.setState({
+      sizePerPage,
     })
   }
 
@@ -227,6 +246,9 @@ class BaseTable extends React.Component {
           tableData: this.node ? this.node.table.props.data : [],
           onPageChange: (page, sizePerPage) => {
             this.setPage(page, sizePerPage)
+          },
+          onSizePerPageChange: (sizePerPage, page) => {
+            this.setSizePerPage(page, sizePerPage)
           },
         })}
       >

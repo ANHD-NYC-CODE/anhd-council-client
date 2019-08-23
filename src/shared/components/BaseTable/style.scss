@@ -186,3 +186,16 @@ table.table,
     }
   }
 }
+
+// Size per page dropdown
+.dropdown-menu {
+  .dropdown-item {
+    padding-left: 0;
+    a {
+      display: block;
+      height: 100%;
+      padding-left: 15px;
+      width: 100%;
+    }
+  }
+}
