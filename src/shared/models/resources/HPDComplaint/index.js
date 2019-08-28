@@ -16,6 +16,17 @@ const HPDComplaint = databaseObject => ({
       },
     },
   },
+  tableResultsConstructor: results => {
+    return [].concat(
+      ...results.map(complaint =>
+        complaint.hpdproblems.map(problem => {
+          problem.receiveddate = complaint.receiveddate
+          problem.apartment = complaint.apartment
+          return problem
+        })
+      )
+    )
+  },
 })
 
 export default HPDComplaint

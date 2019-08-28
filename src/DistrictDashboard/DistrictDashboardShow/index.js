@@ -343,11 +343,9 @@ class DistrictDashboardShow extends React.Component {
                       </div>
                       <div className={classnames({ 'd-none': !this.props.appState.dashboardTableView })}>
                         <BaseTable
+                          key={`table-${this.props.appState.mapFilterDate}`}
                           csvBaseFileName={this.constructBaseCsvFileName()}
                           globalTableState={this.props.appState.dashboardTableState}
-                          key={`table-${this.props.appState.mapFilterDate}-${
-                            this.props.appState.dashboardTableState.page
-                          }`}
                           annotationStart={
                             this.props.appState.districtShowCustomView ? '' : this.props.appState.mapFilterDate
                           }

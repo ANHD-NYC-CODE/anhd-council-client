@@ -15,6 +15,7 @@ class RequestTableWrapper extends React.Component {
 
     this.constructBaseCsvFileName = this.constructBaseCsvFileName.bind(this)
     this.renderSpecificResults = this.renderSpecificResults.bind(this)
+    this.getTableSize = this.getTableSize.bind(this)
     this.getRecords = this.getRecords.bind(this)
   }
 
@@ -44,21 +45,14 @@ class RequestTableWrapper extends React.Component {
       []
     )
   }
-
+  getTableSize(results) {
+    return results.length
+  }
   renderSpecificResults(results) {
-    switch (this.props.request.resourceModel.resourceConstant) {
-      case 'HPD_COMPLAINT':
-        return [].concat(
-          ...results.map(complaint =>
-            complaint.hpdproblems.map(problem => {
-              problem.receiveddate = complaint.receiveddate
-              problem.apartment = complaint.apartment
-              return problem
-            })
-          )
-        )
-      default:
-        return results
+    if (this.props.request.resourceModel.tableResultsConstructor) {
+      return this.props.request.resourceModel.tableResultsConstructor(results)
+    } else {
+      return results
     }
   }
 
@@ -82,7 +76,7 @@ class RequestTableWrapper extends React.Component {
           expandable={this.props.expandable}
           loading={this.props.loading}
           showUpdate={this.props.showUpdate}
-          recordsSize={records.length}
+          recordsSize={this.getTableSize(this.props.results)}
           records={records}
           request={this.props.request}
           tableConfig={this.props.request.tableConfig}
