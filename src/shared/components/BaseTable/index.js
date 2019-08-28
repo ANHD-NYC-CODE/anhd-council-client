@@ -31,7 +31,7 @@ class BaseTable extends React.Component {
     this.constructFilter = this.constructFilter.bind(this)
     this.handleCsvClick = this.handleCsvClick.bind(this)
     this.constructCsvFilename = this.constructCsvFilename.bind(this)
-    this.getSpecificTableSize = this.getSpecificTableSize.bind(this)
+    this.getTableSize = this.getTableSize.bind(this)
     this.baseTableConfig = new BaseTableConfig({ component: this })
     this.state = {
       expandedRowContent: '',
@@ -199,18 +199,29 @@ class BaseTable extends React.Component {
     })
   }
 
-  getSpecificTableSize(paginationProps) {
+  getTableSize(paginationProps, recordsSize = undefined) {
+    const getDefaultSize = () => {
+      if (recordsSize || recordsSize === 0) return String(recordsSize)
+      else {
+        return paginationProps.dataSize === paginationProps.totalSize
+          ? paginationProps.totalSize
+          : `${paginationProps.dataSize}/${paginationProps.totalSize}`
+      }
+    }
+
     switch (this.props.tableConfig.resourceConstant) {
       case 'HPD_COMPLAINT': {
-        const totalComplaints = new Map()
-        for (const item of this.props.records) {
-          if (!totalComplaints.has(item.complaintid)) {
-            totalComplaints.set(item.complaintid, true) // set any value to Map
-          }
-        }
+        // const totalComplaints = new Map()
+        // for (const item of this.props.records) {
+        //   // Ensures uniqueness of complaints by compaintID because
+        //   // records are derived from the HPD problems
+        //   if (!totalComplaints.has(item.complaintid)) {
+        //     totalComplaints.set(item.complaintid, true)
+        //   }
+        // }
         return (
           <span className="text-left">
-            <div>Total Complaints: {totalComplaints.size}</div>
+            <div>Total Complaints: {String(recordsSize)}</div>
             <div>
               Total Problems:{' '}
               {paginationProps.dataSize === paginationProps.totalSize
@@ -222,14 +233,7 @@ class BaseTable extends React.Component {
       }
 
       default:
-        return (
-          <span>
-            Total:{' '}
-            {paginationProps.dataSize === paginationProps.totalSize
-              ? paginationProps.totalSize
-              : `${paginationProps.dataSize}/${paginationProps.totalSize}`}
-          </span>
-        )
+        return <span>Total: {getDefaultSize()}</span>
     }
   }
 
@@ -284,7 +288,7 @@ class BaseTable extends React.Component {
                         </Col>
 
                         <Col xs={4} className="text-right d-flex justify-content-start align-items-center">
-                          {this.getSpecificTableSize(paginationProps, paginationTableProps, toolKitProps)}
+                          {this.getTableSize(paginationProps, this.props.recordsSize)}
                         </Col>
                         <Col
                           xs={4}
@@ -371,21 +375,23 @@ BaseTable.defaultProps = {
   expandable: true,
   includeHeader: true,
   nested: false,
+  recordsSize: 0,
   request: undefined,
 }
 
 BaseTable.propTypes = {
+  annotationStart: PropTypes.string,
   caption: PropTypes.string,
-  globalTableState: PropTypes.object,
-  expandable: PropTypes.bool,
   classes: PropTypes.string,
   dispatch: PropTypes.func,
-  loading: PropTypes.bool,
   error: PropTypes.object,
-  records: PropTypes.array,
-  tableConfig: PropTypes.object,
+  expandable: PropTypes.bool,
+  globalTableState: PropTypes.object,
+  loading: PropTypes.bool,
   nested: PropTypes.bool,
-  annotationStart: PropTypes.string,
+  records: PropTypes.array,
+  recordsSize: PropTypes.string,
+  tableConfig: PropTypes.object,
 }
 
 export default BaseTable

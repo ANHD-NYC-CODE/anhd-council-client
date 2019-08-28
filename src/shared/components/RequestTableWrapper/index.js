@@ -15,6 +15,7 @@ class RequestTableWrapper extends React.Component {
 
     this.constructBaseCsvFileName = this.constructBaseCsvFileName.bind(this)
     this.renderSpecificResults = this.renderSpecificResults.bind(this)
+    this.getRecords = this.getRecords.bind(this)
   }
 
   retryRequest() {
@@ -31,6 +32,17 @@ class RequestTableWrapper extends React.Component {
       resourceWithIdLabel = `${resourceWithId.constant.toLowerCase()}=${resourceWithId.resourceId}`
     }
     return `${this.props.request.resourceModel.label}${'-' + resourceWithIdLabel}`
+  }
+
+  getRecords() {
+    return (
+      this.props.housingTypeResultFilter.internalFilter(
+        this.renderSpecificResults(this.props.results),
+        this.props.housingTypeResultFilter.paramMaps
+      ) ||
+      this.renderSpecificResults(this.props.results) ||
+      []
+    )
   }
 
   renderSpecificResults(results) {
@@ -50,7 +62,10 @@ class RequestTableWrapper extends React.Component {
     }
   }
 
+  // TODO - Create new table for HPD Complaints / Problems from BaseTable
+  // TODO - utilize TableComponent with this new table
   render() {
+    const records = this.getRecords()
     const TableComponent = this.props.request.tableConfig.component
     return this.props.visible ? (
       <div className="request-wrapper">
@@ -67,14 +82,8 @@ class RequestTableWrapper extends React.Component {
           expandable={this.props.expandable}
           loading={this.props.loading}
           showUpdate={this.props.showUpdate}
-          records={
-            this.props.housingTypeResultFilter.internalFilter(
-              this.renderSpecificResults(this.props.results),
-              this.props.housingTypeResultFilter.paramMaps
-            ) ||
-            this.renderSpecificResults(this.props.results) ||
-            []
-          }
+          recordsSize={records.length}
+          records={records}
           request={this.props.request}
           tableConfig={this.props.request.tableConfig}
         />
