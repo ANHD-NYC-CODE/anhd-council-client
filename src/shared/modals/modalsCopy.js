@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactDOMServer from 'react-dom/server'
 
 export const infoModals = {
   rs: {
@@ -71,7 +72,7 @@ export const infoModals = {
   },
   HPD_COMPLAINT: {
     title: 'HPD Complaints & Problems',
-    body: (
+    body: ReactDOMServer.renderToString(
       <div>
         <p>
           Complaints that tenants make about conditions in their apartment or building get sent to Housing Preservation
@@ -160,7 +161,7 @@ export const infoModals = {
   },
   ACRIS_REAL_MASTER: {
     title: 'Sales',
-    body: (
+    body: ReactDOMServer.renderToString(
       <div>
         <p>
           Sales come from the Department of Finance’s ACRIS database and include all deeds recorded. The sale price of a
@@ -227,7 +228,7 @@ export const infoModals = {
   },
   HOUSING_LITIGATION: {
     title: 'Litigations against landlords',
-    body: (
+    body: ReactDOMServer.renderToString(
       <div>
         <p>
           This dataset includes actions in Housing Court initiated by the Department of Housing Preservation and
