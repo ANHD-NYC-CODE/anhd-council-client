@@ -1,3 +1,10 @@
+#### 1.0.0b1.0.4.0.3
+
+8/28/19
+
+- Fix bug where HPD Complaints count was off when a complaint had no problems.
+- Fix Dashboard bug where sorting did not persist between page turns
+
 #### 1.0.0b1.0.4.0.2
 
 8/23/19

@@ -23,7 +23,6 @@ import './style.scss'
 class BaseTable extends React.Component {
   constructor(props) {
     super(props)
-
     this.setExpandedContent = this.setExpandedContent.bind(this)
     this.setPage = this.setPage.bind(this)
     this.setSizePerPage = this.setSizePerPage.bind(this)
@@ -89,11 +88,11 @@ class BaseTable extends React.Component {
 
   setPage(page, sizePerPage) {
     if (this.props.globalTableState.page) {
-      const tableState = { ...this.props.globalTableState, sizePerPage }
       this.props.dispatch(
         setAppState({
           dashboardTableState: {
-            ...tableState,
+            ...this.props.globalStableState,
+            sizePerPage,
             page,
           },
         })
@@ -201,24 +200,14 @@ class BaseTable extends React.Component {
 
   getTableSize(paginationProps, recordsSize = undefined) {
     const getDefaultSize = () => {
-      if (recordsSize || recordsSize === 0) return String(recordsSize)
-      else {
-        return paginationProps.dataSize === paginationProps.totalSize
-          ? paginationProps.totalSize
-          : `${paginationProps.dataSize}/${paginationProps.totalSize}`
-      }
+      const totalSize = recordsSize || paginationProps.totalSize
+      return paginationProps.dataSize === paginationProps.totalSize
+        ? paginationProps.totalSize
+        : `${paginationProps.dataSize}/${totalSize}`
     }
 
     switch (this.props.tableConfig.resourceConstant) {
       case 'HPD_COMPLAINT': {
-        // const totalComplaints = new Map()
-        // for (const item of this.props.records) {
-        //   // Ensures uniqueness of complaints by compaintID because
-        //   // records are derived from the HPD problems
-        //   if (!totalComplaints.has(item.complaintid)) {
-        //     totalComplaints.set(item.complaintid, true)
-        //   }
-        // }
         return (
           <span className="text-left">
             <div>Total Complaints: {String(recordsSize)}</div>
