@@ -1,3 +1,9 @@
+#### 1.0.0b1.0.41
+
+9/20/19
+
+- Added multiple columns to Property, Housing Litigation, ECB Violation, and HPD Violation tables.
+
 #### 1.0.0b1.0.4.0.3
 
 8/28/19
