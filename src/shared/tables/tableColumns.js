@@ -351,6 +351,12 @@ export const getTableColumns = ({
         }),
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
+          dataField: 'zipcode',
+          text: 'Zip Code',
+          sort: true,
+        }),
+        constructPropertyColumn({
+          columnEvent: linkToColumnEvent,
           dataField: 'yearbuilt',
           text: 'Year Built',
           sort: true,
@@ -726,6 +732,16 @@ export const getTableColumns = ({
           formatter: hpdStatusFormatter,
           sort: true,
         }),
+        constructStandardColumn({
+          dataField: 'apartment',
+          text: 'Apartment',
+          sort: true,
+        }),
+        constructStandardColumn({
+          dataField: 'story',
+          text: 'Floor',
+          sort: true,
+        }),
       ]
       break
     case 'HPD_CONTACT':
@@ -1039,6 +1055,13 @@ export const getTableColumns = ({
           sort: true,
         }),
         constructStandardColumn({
+          dataField: 'amountpaid',
+          text: 'Amount Paid',
+          formatter: dollarFormatter,
+          csvFormatter: dollarFormatter,
+          sort: true,
+        }),
+        constructStandardColumn({
           columnEvent: expandColumnEvent,
           classes: 'expandable-cell',
           dataField: 'sectionlawdescription1',
@@ -1060,6 +1083,16 @@ export const getTableColumns = ({
           sort: true,
           formatter: capitalizeFormatter,
           csvFormatter: capitalizeFormatter,
+        }),
+        constructStandardColumn({
+          dataField: 'aggravatedlevel',
+          text: 'Aggravated Level',
+          sort: true,
+        }),
+        constructStandardColumn({
+          dataField: 'hearingstatus',
+          text: 'Hearing Status',
+          sort: true,
         }),
       ]
       break
@@ -1188,6 +1221,11 @@ export const getTableColumns = ({
         constructStandardColumn({
           dataField: 'casetype',
           text: 'Case Type',
+          sort: true,
+        }),
+        constructStandardColumn({
+          dataField: 'respondent',
+          text: 'Respondent',
           sort: true,
         }),
         constructStandardColumn({
