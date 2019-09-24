@@ -1,3 +1,9 @@
+#### 1.0.0b1.0.5
+
+9/24/19
+
+- Add DOBIssuedPermit permit_type and permit_subtype dictionary keys
+
 #### 1.0.0b1.0.41
 
 9/20/19

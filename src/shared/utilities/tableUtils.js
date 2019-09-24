@@ -1198,21 +1198,6 @@ export const dobComplaintCategoryDescriptionFormatter = (cell, row, index) => {
   }
 }
 
-export const dobPermitWorkTypeFormatter = (cell, row, index) => {
-  switch (cell) {
-    case 'NB':
-      return 'Construction of new structures'
-    case 'A1':
-      return `${cell} - ALT1: Major alterations that will change use, egress or occupancy`
-    case 'A2':
-      return `${cell} - ALT2: Multiple types of work, not affecting use, egress or occupancy`
-    case 'A3':
-      return `${cell} - ALT3: One type of minor work, not affecting use, egress or occupancy`
-    default:
-      return cell
-  }
-}
-
 export const acrisDocTypeFormatter = (cell, row, index) => {
   switch (cell) {
     case 'AGMT':
@@ -1254,5 +1239,113 @@ export const dobPermitSourceFormatter = (cell, row, index) => {
       return 'Legacy'
     case 'dobnowfiledpermit':
       return 'DOB NOW'
+  }
+}
+
+export const dobPermitJobTypeFormatter = (cell, row, index) => {
+  switch (cell) {
+    case 'NB':
+      return 'Construction of new structures'
+    case 'A1':
+      return `${cell} - ALT1: Major alterations that will change use, egress or occupancy`
+    case 'A2':
+      return `${cell} - ALT2: Multiple types of work, not affecting use, egress or occupancy`
+    case 'A3':
+      return `${cell} - ALT3: One type of minor work, not affecting use, egress or occupancy`
+    default:
+      return cell
+  }
+}
+
+export const dobPermitWorkTypeFormatter = (cell, row, index) => {
+  switch (cell) {
+    case 'BL':
+      return 'Boiler'
+    case 'CC':
+      return 'Curb Cut'
+    case 'EQ':
+      return 'Construction Equipment'
+    case 'FA':
+      return 'Fire Alarm'
+    case 'FB':
+      return 'Fuel Burning'
+    case 'FP':
+      return 'Fire Suppression'
+    case 'FS':
+      return 'Fuel Storage'
+    case 'MH':
+      return 'Mechanical/HVAC'
+    case 'NB':
+      return 'New Building'
+    case 'OT':
+      return 'Other'
+    case 'PL':
+      return 'Plumbing'
+    case 'SD':
+      return 'Standpipe'
+    case 'SP':
+      return 'Sprinkler'
+    default:
+      return cell
+  }
+}
+
+export const dobPermitTypeFormatter = (cell, row, index) => {
+  switch (cell) {
+    case 'AL':
+      return 'Alteration'
+    case 'DM':
+      return 'Demolition'
+    case 'EQ':
+      return 'Construction Equipment'
+    case 'EW':
+      return 'Equipment Work'
+    case 'FO':
+      return 'Foundation'
+    case 'NB':
+      return 'New Building'
+    case 'PL':
+      return 'Plumbing'
+    case 'SG':
+      return 'Sign'
+    default:
+      return cell
+  }
+}
+
+export const dobPermitSubtypeFormatter = (cell, row, index) => {
+  switch (cell) {
+    case 'BL':
+      return 'Boiler'
+    case 'CH':
+      return 'Chute'
+    case 'EA':
+      return 'Earthwork'
+    case 'FA':
+      return 'Fire Alarm'
+    case 'FB':
+      return 'Fuel Burning'
+    case 'FN':
+      return 'Fence'
+    case 'FP':
+      return 'Fire Suppression'
+    case 'FS':
+      return 'Fuel Storage'
+    case 'MH':
+      return 'Mechanical/HVAC'
+    case 'OT':
+      return 'Other'
+    case 'SC':
+      return 'Scaffold'
+    case 'SD':
+      return 'Standpipe'
+    case 'SF':
+      return 'Scaffold'
+    case 'SH':
+      return 'Sidewalk Shed'
+    case 'SP':
+      return 'Sprinkler'
+    default:
+      return cell
   }
 }

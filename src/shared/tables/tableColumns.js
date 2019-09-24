@@ -6,12 +6,10 @@ import ExpandedLinkRow from 'shared/components/BaseTable/ExpandedLinkRow'
 import { push } from 'connected-react-router'
 import { addressResultToPath } from 'shared/utilities/routeUtils'
 import BaseTable from 'shared/components/BaseTable'
-import moment from 'moment'
 import {
   dateFormatter,
   hpdProblemStatusFormatter,
   annotatedColumnFormatter,
-  bldgClassFormater,
   dobComplaintCategoryPriorityFormatter,
   dobComplaintCategoryDescriptionFormatter,
   dobPermitWorkTypeFormatter,
@@ -20,7 +18,8 @@ import {
   acrisParties2Formatter,
   dollarFormatter,
   dobPermitSourceFormatter,
-  expandTableFormatter,
+  dobPermitTypeFormatter,
+  dobPermitSubtypeFormatter,
   linkFormatter,
   hpdStatusFormatter,
   lispendenCleanupFormatter,
@@ -1129,6 +1128,8 @@ export const getTableColumns = ({
         constructStandardColumn({
           dataField: 'worktype',
           text: 'Work Type',
+          formatter: dobPermitWorkTypeFormatter,
+          csvFormatter: dobPermitWorkTypeFormatter,
           sort: true,
         }),
         constructStandardColumn({
@@ -1136,6 +1137,20 @@ export const getTableColumns = ({
           text: 'Description',
           filter: baseTableConfig.filterPrototypes['DOB_ISSUED_PERMIT_TYPE'],
           headerClasses: 'hide-filter',
+          sort: true,
+        }),
+        constructStandardColumn({
+          dataField: 'permit_type',
+          text: 'Permit Type',
+          formatter: dobPermitTypeFormatter,
+          csvFormatter: dobPermitTypeFormatter,
+          sort: true,
+        }),
+        constructStandardColumn({
+          dataField: 'permit_subtype',
+          text: 'Permit Subtype',
+          formatter: dobPermitSubtypeFormatter,
+          csvFormatter: dobPermitSubtypeFormatter,
           sort: true,
         }),
         constructStandardColumn({
