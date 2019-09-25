@@ -1,3 +1,9 @@
+#### 1.0.0b1.0.51
+
+9/24/19
+
+- Remove public housing subsidy programs from list
+
 #### 1.0.0b1.0.5
 
 9/24/19
