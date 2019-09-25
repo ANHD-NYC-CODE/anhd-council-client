@@ -297,10 +297,12 @@ export const rentRegulatedProgramOptions = () => {
     'Other HUD Financing',
     'Other HUD Project-Based Rental Assistance',
     'Participation Loan Program',
+    'Project-Based Section 8',
     'Project Rental Assistance Contract / 202',
     'Section 202/8',
     'Section 221d(3) and Section 221d(4) Mortgage Insurance',
     'Section 223(f)',
+    'Section 8 - RAD',
     'TPT',
   ]
 
