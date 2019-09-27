@@ -1,5 +1,7 @@
 import React from 'react'
 import { configure, mount } from 'enzyme'
+import * as c from 'shared/constants'
+
 import Adapter from 'enzyme-adapter-react-16'
 import { Axios } from 'shared/utilities/Axios'
 import MockAdapter from 'axios-mock-adapter'
@@ -290,7 +292,7 @@ describe('DistrictDashboard', () => {
         })
 
         const advancedSearchRequest = new DataRequest({
-          type: 'ADVANCED_SEARCH',
+          type: c.ADVANCED_SEARCH,
           apiMaps: [
             new ApiMap({ constant: 'council', resourceId: '1' }),
             new ApiMap({ constant: 'PROPERTY', name: 'Custom Search' }),
@@ -330,7 +332,7 @@ describe('DistrictDashboard', () => {
         })
 
         const advancedRequest = new DataRequest({
-          type: 'ADVANCED_SEARCH',
+          type: c.ADVANCED_SEARCH,
           resourceModel: resourceModels['PROPERTY'],
           tableConfig: new TableConfig({ resourceConstant: 'PROPERTY' }),
         })

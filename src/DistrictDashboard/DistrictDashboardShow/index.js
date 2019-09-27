@@ -101,7 +101,7 @@ class DistrictDashboardShow extends React.Component {
     let propertyResults = this.props.totalPropertyResults
 
     if (this.props.appState.districtShowCustomView) {
-      propertyResults = this.props.requests['ADVANCED_SEARCH'] || []
+      propertyResults = this.props.requests[c.ADVANCED_SEARCH] || []
     } else if (this.props.appState.selectedFilters.length) {
       propertyResults = propertyResults.filter(result =>
         this.props.appState.selectedFilters.some(selectedFilter => selectedFilter.evaluate(result))
@@ -195,7 +195,7 @@ class DistrictDashboardShow extends React.Component {
                   <Row>
                     {// Custom Search
                     this.props.geographyRequests
-                      .filter(r => r.type === 'ADVANCED_SEARCH')
+                      .filter(r => r.type === c.ADVANCED_SEARCH)
                       .map(request => {
                         return (
                           <Col xs={12} key={'rs-col-custom-search'} className="geography-request-summary__container">
@@ -216,7 +216,7 @@ class DistrictDashboardShow extends React.Component {
                           </Col>
                         )
                       })}
-                    {!this.props.geographyRequests.some(r => r.type === 'ADVANCED_SEARCH') && (
+                    {!this.props.geographyRequests.some(r => r.type === c.ADVANCED_SEARCH) && (
                       <Col className="geography-request-summary__container d-flex" xs={12}>
                         <Col className="align-self-center pl-0 pl-lg-2 pr-0" xs={11}>
                           <BaseLink href="/search">
@@ -286,7 +286,7 @@ class DistrictDashboardShow extends React.Component {
                             : undefined
                         }
                         displayedResultsFilter={
-                          this.props.appState.selectedRequests.some(r => r.type === 'ADVANCED_SEARCH')
+                          this.props.appState.selectedRequests.some(r => r.type === c.ADVANCED_SEARCH)
                             ? undefined
                             : this.props.housingTypeResultFilter
                         }
@@ -332,7 +332,7 @@ class DistrictDashboardShow extends React.Component {
                           loading={this.props.loading}
                           results={resultRecords}
                           displayedResultsFilter={
-                            this.props.appState.selectedRequests.some(r => r.type === 'ADVANCED_SEARCH')
+                            this.props.appState.selectedRequests.some(r => r.type === c.ADVANCED_SEARCH)
                               ? undefined
                               : this.getDisplayedResultsFilter()
                           }

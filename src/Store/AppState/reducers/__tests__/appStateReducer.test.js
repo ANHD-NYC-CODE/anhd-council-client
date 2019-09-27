@@ -1,5 +1,6 @@
 import * as r from '../'
 import * as a from '../../actions'
+import * as c from 'shared/constants'
 
 describe('App State reducer', () => {
   it('should return the initial state', () => {
@@ -142,7 +143,7 @@ describe('App State reducer', () => {
     })
 
     describe('if advanced search request is present', () => {
-      const defaultRequest = { type: 'ADVANCED_SEARCH' }
+      const defaultRequest = { type: c.ADVANCED_SEARCH }
       const newRequest = { type: 'B' }
       const requests = [defaultRequest, newRequest]
       it('it removes advanced search request', () => {

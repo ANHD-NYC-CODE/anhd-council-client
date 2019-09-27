@@ -1,4 +1,4 @@
-import * as c from '../constants'
+import * as c from 'shared/constants'
 import { push, replace } from 'connected-react-router'
 import { getGeographyPath, addressResultToPath } from 'shared/utilities/routeUtils'
 import { removeRequest, removeManyRequests } from 'Store/Request/actions'
@@ -72,7 +72,7 @@ export const setGeographyAndRequestsAndRedirect = ({
   dispatch(removeRequestType('MAP_FILTER'))
   dispatch(removeRequestType('MAP_PROFILE'))
   dispatch(removeRequestType('GEOGRAPHY_HOUSING_TYPE'))
-  dispatch(removeRequestType('ADVANCED_SEARCH'))
+  dispatch(removeRequestType(c.ADVANCED_SEARCH))
   dispatch(removeManyRequests(requests.map(r => r.requestConstant)))
   dispatch(setAppState({ selectedRequests: [] }))
   dispatch(handleSetGeographyRequests(geographyType, geographyId, requests))
@@ -116,7 +116,7 @@ export const setAdvancedSearchRequestAndRedirect = ({
 } = {}) => (dispatch, getState) => {
   const appState = getState().appState
 
-  dispatch(removeRequestType('ADVANCED_SEARCH'))
+  dispatch(removeRequestType(c.ADVANCED_SEARCH))
   dispatch(removeRequest(advancedSearchRequest.requestConstant))
   dispatch(handleSetAdvancedSearchRequest(advancedSearchRequest))
 

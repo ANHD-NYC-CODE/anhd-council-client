@@ -1,4 +1,4 @@
-import { grammaticalNoun } from 'shared/utilities/languageUtils'
+import * as c from 'shared/constants'
 
 import { stringifyParamsObject } from 'shared/utilities/routeUtils'
 export default class DataRequest {
@@ -95,7 +95,7 @@ export default class DataRequest {
   }
 
   get csv_filename() {
-    if (this.type === 'ADVANCED_SEARCH') {
+    if (this.type === c.ADVANCED_SEARCH) {
       return `dapportal-${this.path}-custom-search.csv`
         .replace(/\//g, '-')
         .replace(/--/g, '-')
@@ -133,7 +133,7 @@ export default class DataRequest {
   }
 
   get requestConstant() {
-    if (this.type === 'ADVANCED_SEARCH') return this.type
+    if (this.type === c.ADVANCED_SEARCH) return this.type
     return (
       this._requestConstant ||
       []
@@ -155,7 +155,7 @@ export default class DataRequest {
   }
 
   get summaryCardLabel() {
-    if (this.type === 'ADVANCED_SEARCH') return 'Custom Search'
+    if (this.type === c.ADVANCED_SEARCH) return 'Custom Search'
     const amountPm = this._paramMaps.find(pm => pm.type === 'AMOUNT')
 
     return `${amountPm ? `${amountPm.summaryString}` : ''}`
