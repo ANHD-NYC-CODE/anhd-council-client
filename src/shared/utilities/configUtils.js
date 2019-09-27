@@ -343,7 +343,7 @@ export const newAdvancedSearchRequest = ({ geographyType, geographyId, advancedS
   const paramMaps = getUrlFormattedParamMaps(advancedSearch)
   return new DataRequest({
     isAuthenticated: true,
-    type: 'ADVANCED_SEARCH',
+    type: c.ADVANCED_SEARCH,
     resourceModel: resourceModels['PROPERTY'],
     resourceConstant: 'PROPERTY_ADVANCED_SEARCH',
     apiMaps: [

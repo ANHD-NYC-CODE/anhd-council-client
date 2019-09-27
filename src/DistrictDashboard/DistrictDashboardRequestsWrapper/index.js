@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import * as c from 'shared/constants'
 import { setAppState, setMapFilterDate } from 'Store/AppState/actions'
-import moment from 'moment'
 import { getDefaultRequest, getRequestType, getManyRequestTypes, getRequestByConstant } from 'Store/AppState/selectors'
 import { fireMapDateRangeSelectEvent } from 'Store/Analytics/actions'
 import { requestWithAuth } from 'shared/utilities/authUtils'
@@ -9,6 +9,7 @@ import { makeRequest } from 'Store/Request/actions'
 import DistrictDashboardShow from 'DistrictDashboard/DistrictDashboardShow'
 import InnerLoader from 'shared/components/Loaders/InnerLoader'
 import { fireFilterSelectEvent } from 'Store/Analytics/actions'
+
 class DistrictDashboardRequestsWrapper extends React.PureComponent {
   constructor(props) {
     super(props)
@@ -34,8 +35,8 @@ class DistrictDashboardRequestsWrapper extends React.PureComponent {
   }
 
   getInitialRequest() {
-    return getRequestType(this.props.mapRequests, 'ADVANCED_SEARCH').length
-      ? getRequestType(this.props.mapRequests, 'ADVANCED_SEARCH')[0]
+    return getRequestType(this.props.mapRequests, c.ADVANCED_SEARCH).length
+      ? getRequestType(this.props.mapRequests, c.ADVANCED_SEARCH)[0]
       : getDefaultRequest(this.props.mapRequests)
   }
 
@@ -86,7 +87,7 @@ class DistrictDashboardRequestsWrapper extends React.PureComponent {
     return this.props.mapRequests.length ? (
       <DistrictDashboardShow
         endChangingState={this.endChangingState}
-        geographyRequests={getManyRequestTypes(this.props.mapRequests, ['MAP_FILTER', 'ADVANCED_SEARCH'])}
+        geographyRequests={getManyRequestTypes(this.props.mapRequests, ['MAP_FILTER', c.ADVANCED_SEARCH])}
         housingTypeRequests={getRequestType(this.props.mapRequests, 'GEOGRAPHY_HOUSING_TYPE')}
         propertySummaryRequest={getRequestByConstant(this.props.mapRequests, 'GEOGRAPHY_HOUSING_TYPE_ALL')[0]}
         toggleDateRange={this.toggleDateRange}

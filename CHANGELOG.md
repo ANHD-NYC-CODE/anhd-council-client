@@ -1,3 +1,10 @@
+#### 1.0.0b1.0.53
+
+9/26/19
+
+- Display loading indicator on district dashboard table when a custom search is loading
+- Add ADVANCED_SEARCH constant
+
 #### 1.0.0b1.0.52
 
 9/25/19

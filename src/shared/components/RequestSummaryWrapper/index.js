@@ -119,7 +119,7 @@ class RequestSummaryWrapper extends React.Component {
           {!this.props.print && (
             <div className="info-section">
               <InfoModalButton modalConstant={this.props.infoKey || this.getInfoKey()} />
-              {this.props.request.type === 'ADVANCED_SEARCH' && (
+              {this.props.request.type === c.ADVANCED_SEARCH && (
                 <ClearAdvancedSearchButton>
                   <button className="button">
                     <FontAwesomeIcon icon={faTimesCircle} size="lg" />

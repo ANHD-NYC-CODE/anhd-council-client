@@ -1,3 +1,4 @@
+import * as c from 'shared/constants'
 import DataRequest from 'shared/classes/DataRequest'
 import ApiMap from 'shared/classes/ApiMap'
 import ParamMap from 'shared/classes/ParamMap'
@@ -120,7 +121,7 @@ describe('DataRequest', () => {
 
     it('label custom search', () => {
       const dataRequest = new DataRequest({
-        type: 'ADVANCED_SEARCH',
+        type: c.ADVANCED_SEARCH,
         apiMaps: [],
       })
 

@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import * as c from 'shared/constants'
 import { push, createMatchSelector } from 'connected-react-router'
 import { setGeographyAndRequestsAndRedirect } from 'Store/AppState/actions'
 import { createLoadingSelector } from 'Store/Loading/selectors'
@@ -222,6 +223,7 @@ const makeMapStateToProps = () => {
   const mapStateToProps = state => {
     const loadingSelector = createLoadingSelector([
       state.appState.selectedRequests.map(request => request.requestConstant),
+      c.ADVANCED_SEARCH,
     ])
 
     const errorSelector = createErrorSelector([state.appState.selectedRequests.map(request => request.requestConstant)])
@@ -233,6 +235,7 @@ const makeMapStateToProps = () => {
       path: `/${path}/:id`,
     })
     const match = matchSelector(state)
+
     return {
       appState: state.appState,
       advancedSearch: state.advancedSearch,
