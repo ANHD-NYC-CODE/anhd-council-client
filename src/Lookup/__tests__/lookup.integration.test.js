@@ -122,6 +122,19 @@ describe('Lookup', () => {
       expect(wrapper.find('RequestSummaryWrapper')).toHaveLength(11)
     })
 
+    it('renders dataset info sentence', () => {
+      const [wrapper] = setupWrapper({
+        router: { location: { pathname: '/property/1/building/2' }, action: 'POP' },
+      })
+
+      expect(
+        wrapper
+          .find('DatasetInfo')
+          .at(0)
+          .text()
+      ).toEqual("This dataset's range is from 01/01/2018 to 01/01/2019.")
+    })
+
     it('Switches the visible request wrapper', () => {
       const [wrapper] = setupWrapper({
         router: { location: { pathname: '/property/1/building/2' }, action: 'POP' },

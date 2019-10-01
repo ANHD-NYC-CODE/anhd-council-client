@@ -43,12 +43,20 @@ const mockGeography = id => {
 
 export const mockDatasetsResponse = [
   { model_name: 'Property' },
-  { model_name: 'HPDViolation' },
+  {
+    model_name: 'HPDViolation',
+  },
   { model_name: 'DOBViolation' },
   { model_name: 'HPDComplaint' },
   { model_name: 'DOBComplaint' },
   { model_name: 'ECBViolation' },
-  { model_name: 'AcrisRealMaster' },
+  {
+    model_name: 'AcrisRealMaster',
+    records_start: '2018-01-01',
+    records_end: '2019-01-01',
+    automated: true,
+    update_schedule: 'monthly',
+  },
   { model_name: 'Eviction' },
   { model_name: 'Lispenden' },
   { model_name: 'Foreclosure' },
