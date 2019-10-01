@@ -1,3 +1,9 @@
+#### 1.0.0b1.0.6
+
+9/30/19
+
+- Update OwnershipInfo section with dataset ranges
+
 #### 1.0.0b1.0.53
 
 9/26/19

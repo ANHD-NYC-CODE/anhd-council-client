@@ -85,6 +85,12 @@ const OwnershipSection = props => {
   )
 }
 
-OwnershipSection.propTypes = {}
+OwnershipSection.defaultProps = {
+  profile: {},
+}
+
+OwnershipSection.propTypes = {
+  profile: PropTypes.object,
+}
 
 export default OwnershipSection
