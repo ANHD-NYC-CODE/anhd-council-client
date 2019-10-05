@@ -7,6 +7,7 @@ import App from 'App'
 import ReactGA from 'react-ga'
 import * as c from 'shared/constants'
 
+console.log(c.ENABLE_GOOGLE_ANALYTICS, process.env.NODE_ENV)
 if (c.ENABLE_GOOGLE_ANALYTICS) {
   ReactGA.initialize('UA-137162338-1', {
     debug: process.env.NODE_ENV === 'development',
