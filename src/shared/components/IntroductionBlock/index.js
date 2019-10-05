@@ -11,7 +11,7 @@ const IntroductionBlock = props => {
       <h3 className="mb-4">WELCOME TO DAP PORTAL [BETA]!</h3>
       <p className="font-weight-bold">
         DAP Portal is a comprehensive new research tool that includes dozens of datasets indicating harassment and
-        potential displacement from New York City housing.
+        potential displacement from New York City housing!
       </p>
       <ModalContext.Consumer>
         {modal => {
