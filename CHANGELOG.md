@@ -1,3 +1,7 @@
+#### 1.0.0b1.0.61
+
+- fix foreclosure custom search lookup
+
 #### 1.0.0b1.0.6
 
 9/30/19

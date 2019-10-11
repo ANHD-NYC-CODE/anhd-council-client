@@ -74,7 +74,7 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
       resourceModel: resourceModels['HOUSING_LITIGATION'],
     },
     {
-      resourceModel: resourceModels['LISPENDEN'],
+      resourceModel: resourceModels['FORECLOSURE'],
     },
     {
       resourceModel: resourceModels['ACRIS_REAL_MASTER'],
