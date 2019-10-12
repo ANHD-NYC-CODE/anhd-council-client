@@ -9,7 +9,9 @@ const getSubsidiesText = props => {
     return [
       props.profile.subsidyj51 ? 'J-51 Tax Incentive' : undefined,
       props.profile.subsidy421a ? '421a Tax Incentive Program' : '',
-    ].filter(sp => sp)
+    ]
+      .filter(sp => sp)
+      .join(', ')
   } else {
     return 'None'
   }
