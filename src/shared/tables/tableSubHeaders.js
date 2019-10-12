@@ -80,6 +80,11 @@ export const getTableSubheaderLinks = ({ constant = '', property = {} } = {}) =>
     case 'HOUSING_LITIGATION':
       return (
         <ul className="text-muted small">
+          <li>
+            <BaseLink className="lookup-links__link" href="https://hpdonline.hpdnyc.org/HPDonline/GlossaryLMS.aspx">
+              See glossary of terms
+            </BaseLink>
+          </li>
           {!!Object.keys(property).length && (
             <li>
               Visit this property’s{' '}
