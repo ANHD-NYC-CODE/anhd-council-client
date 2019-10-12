@@ -26,7 +26,7 @@ class LookupLinks extends React.Component {
                 className="lookup-links__link"
                 href={`https://hpdonline.hpdnyc.org/HPDonline/Provide_address.aspx?p1=${boroughAbbreviationToCode(
                   this.props.property.borough
-                )}&p2=${this.props.property.address.split(' ')[0]}&p3=${this.props.property.address
+                )}&p2=${this.props.property.original_address.split(' ')[0]}&p3=${this.props.property.original_address
                   .split(' ')
                   .slice(1)
                   .join(' ')}&SearchButton=Search`}
