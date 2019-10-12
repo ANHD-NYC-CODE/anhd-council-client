@@ -73,7 +73,7 @@ class RequestSummaryWrapper extends React.Component {
                     {modal => {
                       return (
                         <RequestErrorCard
-                          ctaText={this.props.error.status === 401 && !auth.user ? 'Login' : 'Retry'}
+                          ctaText={this.props.error.status === 401 && !auth.user ? c.LOGIN_CTA : 'Retry'}
                           error={this.props.error}
                           errorAction={
                             this.props.error.status === 401 && !auth.user
