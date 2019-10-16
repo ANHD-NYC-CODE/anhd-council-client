@@ -78,34 +78,34 @@ const PropertySummaryBody = props => {
       </Col>
       <Col>
         <Row className="lookup-profile-summary__group">
-          <Col>
+          <Col xs={8}>
             <label className="profile-summary-body__label">Total Units</label>
           </Col>
-          <Col>
+          <Col xs={4}>
             <span className="profile-summary-body__value">{props.profile.unitstotal || 0}</span>
           </Col>
         </Row>
         <Row className="lookup-profile-summary__group">
-          <Col>
+          <Col xs={8}>
             <label className="profile-summary-body__label">Residential Units</label>
           </Col>
-          <Col>
+          <Col xs={4}>
             <span className="profile-summary-body__value">{props.profile.unitsres || 0}</span>
           </Col>
         </Row>
         <Row className="lookup-profile-summary__group">
-          <Col>
+          <Col xs={8}>
             <label className="profile-summary-body__label">Year Built</label>
           </Col>
-          <Col>
+          <Col xs={4}>
             <span className="profile-summary-body__value">{props.profile.yearbuilt}</span>
           </Col>
         </Row>
         <Row className="lookup-profile-summary__group">
-          <Col>
+          <Col xs={8}>
             <label className="profile-summary-body__label">Zoning District(s)</label>
           </Col>
-          <Col>
+          <Col xs={4}>
             <span className="profile-summary-body__value">
               {[props.profile.zonedist1, props.profile.zonedist2, props.profile.zonedist3, props.profile.zonedist4]
                 .filter(x => !!x)
@@ -114,54 +114,54 @@ const PropertySummaryBody = props => {
           </Col>
         </Row>
         <Row className="lookup-profile-summary__group">
-          <Col>
+          <Col xs={8}>
             <label className="profile-summary-body__label">Overlay(s)</label>
           </Col>
-          <Col>
+          <Col xs={4}>
             <span className="profile-summary-body__value">
               {[props.profile.overlay1, props.profile.overlay2].filter(x => !!x).join(', ')}
             </span>
           </Col>
         </Row>
         <Row className="lookup-profile-summary__group">
-          <Col>
+          <Col xs={8}>
             <label className="profile-summary-body__label">Special District(s)</label>
           </Col>
-          <Col>
+          <Col xs={4}>
             <span className="profile-summary-body__value">
               {[props.profile.spdist1, props.profile.spdist2, props.profile.spdist3].filter(x => !!x).join(', ')}
             </span>
           </Col>
         </Row>
         <Row className="lookup-profile-summary__group">
-          <Col>
+          <Col xs={8}>
             <label className="profile-summary-body__label">Built Floor Area Ratio (FAR)</label>
           </Col>
-          <Col>
+          <Col xs={4}>
             <span className="profile-summary-body__value">{props.profile.builtfar}</span>
           </Col>
         </Row>
         <Row className="lookup-profile-summary__group">
-          <Col>
+          <Col xs={8}>
             <label className="profile-summary-body__label">Maximum Residential FAR</label>
           </Col>
-          <Col>
+          <Col xs={4}>
             <span className="profile-summary-body__value">{props.profile.residfar}</span>
           </Col>
         </Row>
         <Row className="lookup-profile-summary__group">
-          <Col>
+          <Col xs={8}>
             <label className="profile-summary-body__label">Maximum Commercial FAR</label>
           </Col>
-          <Col>
+          <Col xs={4}>
             <span className="profile-summary-body__value">{props.profile.commfar}</span>
           </Col>
         </Row>
         <Row className="lookup-profile-summary__group">
-          <Col>
+          <Col xs={8}>
             <label className="profile-summary-body__label">Maximum Community Facility FAR</label>
           </Col>
-          <Col>
+          <Col xs={4}>
             <span className="profile-summary-body__value">{props.profile.facilfar}</span>
           </Col>
         </Row>
