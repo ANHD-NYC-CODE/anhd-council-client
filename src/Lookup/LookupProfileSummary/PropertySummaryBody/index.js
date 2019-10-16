@@ -31,7 +31,7 @@ const PropertySummaryBody = props => {
         </Row>
         <hr />
         <Row className="lookup-profile-summary__group">
-          <Col>
+          <Col xs={8}>
             <label className="profile-summary-body__label">BBL </label>
           </Col>
           <Col>
@@ -41,7 +41,7 @@ const PropertySummaryBody = props => {
         {!props.print && (
           <div>
             <Row>
-              <Col>
+              <Col xs={8}>
                 <label className="profile-summary-body__label">Council District</label>
               </Col>
               <Col>
@@ -57,7 +57,7 @@ const PropertySummaryBody = props => {
               </Col>
             </Row>
             <Row>
-              <Col>
+              <Col xs={8}>
                 <label className="profile-summary-body__label">Community District</label>
               </Col>
               <Col>
