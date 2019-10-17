@@ -1,5 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+
+import * as c from 'shared/constants'
+
 import { setAppState, toggleSelectedAmountFilter } from 'Store/AppState/actions'
 import UserContext from 'Auth/UserContext'
 import AnnotatedResultFilterCard from 'DistrictDashboard/AnnotatedResultFilterCard'
@@ -66,7 +69,7 @@ const DistrictSummarySection = props => {
                           return (
                             <ResultFilterError
                               amountFilter={amountFilter}
-                              ctaText="Login"
+                              ctaText={c.LOGIN_CTA}
                               error={{ message: 'Please login to view.' }}
                               errorAction={e => {
                                 e.preventDefault()
