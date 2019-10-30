@@ -710,6 +710,16 @@ export const getTableColumns = ({
           sort: true,
         }),
         constructStandardColumn({
+          dataField: 'apartment',
+          text: 'Apartment',
+          sort: true,
+        }),
+        constructStandardColumn({
+          dataField: 'story',
+          text: 'Floor',
+          sort: true,
+        }),
+        constructStandardColumn({
           dataField: 'class_name',
           text: 'Class',
           filter: baseTableConfig.filterPrototypes['HPD_VIOLATION_CLASS'],
@@ -729,16 +739,6 @@ export const getTableColumns = ({
           filter: baseTableConfig.filterPrototypes['HPD_VIOLATION_OPEN'],
           headerClasses: 'hide-filter',
           formatter: hpdStatusFormatter,
-          sort: true,
-        }),
-        constructStandardColumn({
-          dataField: 'apartment',
-          text: 'Apartment',
-          sort: true,
-        }),
-        constructStandardColumn({
-          dataField: 'story',
-          text: 'Floor',
           sort: true,
         }),
       ]
