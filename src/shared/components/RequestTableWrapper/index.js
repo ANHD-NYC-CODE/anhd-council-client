@@ -48,6 +48,7 @@ class RequestTableWrapper extends React.Component {
   getTableSize(results) {
     return results.length
   }
+
   renderSpecificResults(results) {
     if (this.props.request.resourceModel.tableResultsConstructor) {
       return this.props.request.resourceModel.tableResultsConstructor(results)

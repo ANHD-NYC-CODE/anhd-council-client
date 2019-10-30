@@ -53,6 +53,7 @@ class RequestSummaryWrapper extends React.Component {
   render() {
     const results = this.props.resultsFilter.internalFilter(this.props.results, this.props.resultsFilter.paramMaps)
 
+    // HousingTypeResultCard only
     const totalResults = this.props.totalResultsFilter.internalFilter(
       this.props.results,
       this.props.totalResultsFilter.paramMaps
