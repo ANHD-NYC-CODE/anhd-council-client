@@ -22,6 +22,7 @@ class AddressSearch extends React.PureComponent {
     this.setSearchValue = this.setSearchValue.bind(this)
     this.showSearch = this.showSearch.bind(this)
     this.hideSearch = this.hideSearch.bind(this)
+    this.setResultFocusIndex = this.setResultFocusIndex.bind(this)
     this.searchBarRef = React.createRef()
     this.searchResultsRef = React.createRef()
     this.addressRef = React.createRef()
@@ -66,6 +67,13 @@ class AddressSearch extends React.PureComponent {
   showSearch() {
     this.setState({
       show: true,
+    })
+  }
+
+  setResultFocusIndex(index) {
+    if (this.state.resultFocusIndex === index) return
+    this.setState({
+      resultFocusIndex: index,
     })
   }
 
@@ -160,6 +168,7 @@ class AddressSearch extends React.PureComponent {
           resultFocusIndex={this.state.resultFocusIndex}
           onKeyDown={this.onKeyDown}
           handleRowClick={this.handleRowClick}
+          setResultFocusIndex={this.setResultFocusIndex}
         />
       </div>
     )

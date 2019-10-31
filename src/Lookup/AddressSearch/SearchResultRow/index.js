@@ -12,6 +12,7 @@ const SearchResultRow = props => {
         tabIndex={0}
         className="search-result-row"
         onKeyDown={props.onKeyDown}
+        onFocus={() => props.setResultFocusIndex(props.resultIndex)}
         onClick={e => props.onClick(e, props.result)}
         to={addressResultToPath({ bbl: props.result.bbl, bin: props.result.bin })}
       >
@@ -36,6 +37,8 @@ SearchResultRow.propTypes = {
   dispatch: PropTypes.func,
   onClick: PropTypes.func,
   result: PropTypes.object,
+  resultIndex: PropTypes.number,
+  setResultFocusIndex: PropTypes.func,
 }
 
 export default SearchResultRow
