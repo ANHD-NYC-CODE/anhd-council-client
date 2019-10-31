@@ -23,9 +23,15 @@
   background-color: $gray-200;
 }
 
+.search-result-row:focus {
+  background-color: $gray-500;
+  color: white;
+}
+
 @media (hover: hover) {
   .search-result-row:hover {
-    box-shadow: inset 0px -1px 1px 0 $secondary;
+    background-color: $gray-300;
+    color: $black;
   }
   .search-result-row.no-result {
     box-shadow: none;
