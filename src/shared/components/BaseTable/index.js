@@ -221,6 +221,16 @@ class BaseTable extends React.Component {
         )
       }
 
+      case 'DOB_ISSUED_PERMIT': {
+        const totalInitial = this.props.request.resourceModel.tableRecordsCountFunction(this.props.records)
+        return (
+          <span className="text-left">
+            <div>Total initial: {totalInitial}</div>
+            <div>Total renewed: {recordsSize - totalInitial}</div>
+          </span>
+        )
+      }
+
       default:
         return <span>Total: {getDefaultSize()}</span>
     }
