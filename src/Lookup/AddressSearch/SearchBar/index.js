@@ -29,7 +29,6 @@ export default class SearchBar extends React.PureComponent {
 
   onFormSubmit(e) {
     e.preventDefault()
-    this.props.dispatchSelectedBuildingResult()
   }
 
   dispatchQuery(value) {
@@ -54,6 +53,7 @@ export default class SearchBar extends React.PureComponent {
           name="address-search"
           ref={this.props.searchBarRef}
           onChange={this.onInputChange}
+          onKeyDown={this.props.onKeyDown}
           size="lg"
           placeholder={this.props.searchValue || this.props.placeholder || 'Enter an address'}
           tabIndex={0}
@@ -83,4 +83,5 @@ SearchBar.propTypes = {
   setSearchValue: PropTypes.func,
   selectedResult: PropTypes.object,
   searchValue: PropTypes.string,
+  onKeyDown: PropTypes.func,
 }
