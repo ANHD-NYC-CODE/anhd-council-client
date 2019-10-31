@@ -20,6 +20,8 @@ const SearchResults = props => {
                   key={`result-${index}`}
                   result={result}
                   onKeyDown={props.onKeyDown}
+                  setResultFocusIndex={props.setResultFocusIndex}
+                  resultIndex={index}
                 />
               ))}
           </div>
@@ -37,6 +39,7 @@ SearchResults.propTypes = {
   hideSearch: PropTypes.func,
   currentResultFocusRef: PropTypes.object,
   resultFocusIndex: PropTypes.number,
+  setResultFocusIndex: PropTypes.func,
 }
 
 export default SearchResults
