@@ -389,7 +389,7 @@ BaseTable.propTypes = {
   loading: PropTypes.bool,
   nested: PropTypes.bool,
   records: PropTypes.array,
-  recordsSize: PropTypes.string,
+  recordsSize: PropTypes.number,
   tableConfig: PropTypes.object,
 }
 
