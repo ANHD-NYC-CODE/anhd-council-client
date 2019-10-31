@@ -82,13 +82,14 @@ class AddressSearch extends React.PureComponent {
       e.stopPropagation()
       e.preventDefault()
       this.setState(prevState => ({
+        show: this.state.resultFocusIndex < 0 ? true : prevState.show,
         resultFocusIndex: Math.min(prevState.resultFocusIndex + 1, this.props.search.results.length - 1),
       }))
-    } else if (this.state.resultFocusIndex >= 0 && e.keyCode === 13) {
+    } else if (this.state.show && this.state.resultFocusIndex >= 0 && e.keyCode === 13) {
       // enter
       if (this.state.resultFocusIndex === -1) return
       this.handleRowClick(e, this.props.search.results[this.state.resultFocusIndex])
-    } else if (this.state.resultFocusIndex >= 0 && e.keyCode === 32) {
+    } else if (this.state.show && this.state.resultFocusIndex >= 0 && e.keyCode === 32) {
       this.handleRowClick(e, this.props.search.results[this.state.resultFocusIndex])
     } else if (e.keyCode === 27) {
       this.hideSearch(e, true)
