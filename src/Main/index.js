@@ -11,6 +11,7 @@ import StandardizedInput from 'shared/classes/StandardizedInput'
 import IntroductionBlock from 'shared/components/IntroductionBlock'
 import LoginModal from 'shared/components/modals/LoginModal'
 import LoginModalFooter from 'shared/components/forms/LoginForm/LoginModalFooter'
+import ConfigContext from 'Config/ConfigContext'
 
 import { Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 import * as c from 'shared/constants'
@@ -115,7 +116,11 @@ class Main extends React.Component {
             <Element name="main-controls" />
             <div className="mb-4">
               <div>
-                <AddressSearch inputClass="xl-form-control" placeholder="Enter an address" />
+                <ConfigContext.Consumer>
+                  {config => {
+                    return <AddressSearch config={config} inputClass="xl-form-control" placeholder="Enter an address" />
+                  }}
+                </ConfigContext.Consumer>
               </div>
               <div className="mt-5">
                 <GeographySelect
