@@ -27,6 +27,7 @@ class AddressSearch extends React.PureComponent {
     this.searchResultsRef = React.createRef()
     this.addressRef = React.createRef()
     this.currentResultFocusRef = React.createRef()
+    this.handleRowClick = this.handleRowClick.bind(this)
     this.state = {
       show: false,
       selectedResult: null,
