@@ -4,6 +4,8 @@ import { Row, Col } from 'react-bootstrap'
 import { dateFormatter } from 'shared/utilities/tableUtils'
 import { capitalizeWords } from 'shared/utilities/languageUtils'
 import BaseLink from 'shared/components/BaseLink'
+import ContactExpandableSection from 'Lookup/LookupProfileSummary/OwnershipSection/ContactExpandableSection'
+
 import './style.scss'
 const getLatestHPDRegistration = hpdRegistrations => {
   if (!hpdRegistrations.length) return
@@ -26,6 +28,7 @@ const OwnershipSection = props => {
       contact.type ? contact.type.toLowerCase().replace(' ', '') == 'agent' : null
     )
   }
+
   return (
     <Row className="ownership-section property-section property-summary-body my-4">
       <Col>
@@ -44,25 +47,9 @@ const OwnershipSection = props => {
                 </Col>
               </Row>
               <hr />
-
-              <Row className="ownership-section__hpdcontact-row">
-                <Col xs={5} className="profile-summary-body__label">
-                  Site Manager:
-                </Col>
-                {siteManager && <Col>{capitalizeWords([siteManager.firstname, siteManager.lastname].join(' '))}</Col>}
-              </Row>
-              <Row className="ownership-section__hpdcontact-row">
-                <Col xs={5} className="profile-summary-body__label">
-                  Head Officer:
-                </Col>
-                {headOfficer && <Col>{capitalizeWords([headOfficer.firstname, headOfficer.lastname].join(' '))}</Col>}
-              </Row>
-              <Row className="ownership-section__hpdcontact-row">
-                <Col xs={5} className="profile-summary-body__label">
-                  Agent:
-                </Col>
-                {agent && <Col>{capitalizeWords([agent.firstname, agent.lastname].join(' '))}</Col>}
-              </Row>
+              <ContactExpandableSection contact={siteManager} />
+              <ContactExpandableSection contact={headOfficer} />
+              <ContactExpandableSection contact={agent} />
             </Col>
           </Row>
         ) : (

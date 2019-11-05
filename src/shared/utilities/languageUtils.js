@@ -1,10 +1,20 @@
 export const capitalizeWords = string => {
+  if (!string) return ''
   return string
     .split(' ')
     .map(word => {
       return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
     })
     .join(' ')
+}
+
+export const splitCamelCase = string => {
+  return string.replace(/([a-z])([A-Z])/g, '$1 $2')
+}
+
+export const addStringIfPresent = (primaryString, addedString) => {
+  if (!primaryString) return ''
+  else return `${primaryString}${addedString}`
 }
 
 export const grammaticalNoun = (noun, value) => {
