@@ -1,0 +1,12 @@
+.expandable-section {
+  .expandable-section__above-fold {
+    cursor: pointer;
+    position: relative;
+  }
+
+  .expandable-section__above-fold--icon {
+    position: absolute;
+    top: 0;
+    right: -15px;
+  }
+}
