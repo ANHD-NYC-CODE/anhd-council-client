@@ -59,13 +59,14 @@ const OwnershipSection = props => {
                 </Col>
               </Row>
               <hr />
-              <ContactExpandableSection contact={headOfficer} />
-              <ContactExpandableSection contact={siteManager} />
-              <ContactExpandableSection contact={officer} />
-              <ContactExpandableSection contact={agent} />
+              {headOfficer && <ContactExpandableSection contact={headOfficer} />}
+              {siteManager && <ContactExpandableSection contact={siteManager} />}
+              {officer && <ContactExpandableSection contact={officer} />}
+              {agent && <ContactExpandableSection contact={agent} />}
               {ownershipType && (
                 <div>
-                  This property's ownership type is <strong>{capitalizeWords(ownershipType)}</strong>.
+                  This property's ownership type is{' '}
+                  <strong>{ownershipType === 'LLC' ? ownershipType : capitalizeWords(ownershipType)}</strong>.
                 </div>
               )}
               {props.profile.ownername && (
