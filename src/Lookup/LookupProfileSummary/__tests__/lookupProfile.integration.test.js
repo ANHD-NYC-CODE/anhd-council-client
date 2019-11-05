@@ -8,7 +8,7 @@ import { history } from 'Store/configureStore'
 import ConfigContext from 'Config/ConfigContext'
 import Config from 'Config'
 import LayoutContext from 'Layout/LayoutContext'
-import { createPropertyRequestMock, createHPDRegistrationMock } from 'shared/testUtilities/mocks'
+import { createPropertyRequestMock, createHPDRegistrationMock, createHPDContactMock } from 'shared/testUtilities/mocks'
 import { ConnectedRouter } from 'connected-react-router'
 
 import { Provider } from 'react-redux'
@@ -117,8 +117,10 @@ describe('LookupProfileSummary', () => {
         })
         const [wrapper] = setupWrapper({ propertyResult: result })
 
+        expect(wrapper.find('OwnershipSection').text()).toMatch('HPD Registration (last updated 01/01/2018)')
+
         expect(wrapper.find('OwnershipSection').text()).toMatch(
-          'HPD Registration (01/01/2018)Site Manager:Head Officer:Agent:For more on ownership visit "Who Owns What?"'
+          'The owner on record with the DOF is Test Owner.For more on ownership visit "Who Owns What?"'
         )
 
         expect(wrapper.find('ProgramSection').text()).toMatch(
@@ -127,6 +129,43 @@ describe('LookupProfileSummary', () => {
 
         expect(wrapper.find('RentStabilizationSection').text()).toMatch(
           'Rent StabilizationStabilized Units (most recent): 0Change since 2007+50.0%Rent Stabilization HistoryVersion: 201720071020175'
+        )
+      })
+    })
+
+    describe('with HPD Contacts', () => {
+      it('renders the correct state', () => {
+        const contact1 = createHPDContactMock({
+          businessstreetname: '123 Fake St.',
+          businessapartment: 'Apt #1',
+          businesscity: 'Brooklyn',
+          businessstate: 'NY',
+          businesszip: '12345',
+          type: 'Head Officer',
+          title: 'Member',
+          contactdescription: 'Co-op',
+        })
+        const result = createPropertyRequestMock({
+          hpdregistrations: [
+            createHPDRegistrationMock({ registrationid: 1, lastregistrationdate: '2018-01-01', contacts: [contact1] }),
+          ],
+        })
+        const [wrapper] = setupWrapper({ propertyResult: result })
+
+        wrapper
+          .find('ContactExpandableSection')
+          .at(0)
+          .simulate('click')
+
+        const ownershipSectionText = wrapper.find('OwnershipSection').text()
+        expect(ownershipSectionText).toMatch('HPD Registration (last updated 01/01/2018)')
+
+        expect(ownershipSectionText).toMatch(
+          'This property\'s ownership type is Co-op.The owner on record with the DOF is Test Owner.For more on ownership visit "Who Owns What?"'
+        )
+
+        expect(ownershipSectionText).toMatch(
+          'Head Officer:  -Title:MemberBusiness Address:Apt #1 123 Fake St., Brooklyn NY 12345'
         )
       })
     })

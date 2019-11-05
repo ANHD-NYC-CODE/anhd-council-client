@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 export const createHpdComplaintProblemMock = ({
   complaintid = '1',
   problemid = '1',
@@ -17,6 +19,32 @@ export const createHpdComplaintProblemMock = ({
     receiveddate,
     apartment,
     status,
+  }
+}
+
+export const createHPDContactMock = ({
+  businessstreetname = '',
+  businessapartment = '',
+  businesscity = '',
+  businessstate = '',
+  businesszip = '',
+  title = '',
+  contactdescription = '',
+  type = '',
+  firstname = '',
+  lastname = '',
+} = {}) => {
+  return {
+    businessstreetname,
+    businessapartment,
+    businesscity,
+    businessstate,
+    businesszip,
+    title,
+    contactdescription,
+    type,
+    firstname,
+    lastname,
   }
 }
 

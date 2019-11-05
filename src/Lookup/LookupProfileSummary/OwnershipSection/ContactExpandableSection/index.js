@@ -10,6 +10,7 @@ import './style.scss'
 const constructContactBusinessAddress = contact => {
   if (!contact) return null
   const tokens = [
+    capitalizeWords(contact.corporationname),
     capitalizeWords(contact.businesshousenumber),
     capitalizeWords(contact.businessapartment),
     addStringIfPresent(capitalizeWords(contact.businessstreetname), ','),
@@ -38,7 +39,7 @@ const ContactExpandableSection = props => {
           <Row>
             <Col xs={1} />
             <Col xs={5}>Title:</Col>
-            <Col xs={5}>{capitalizeWords(props.title) || 'n/a'}</Col>
+            <Col xs={5}>{capitalizeWords(props.contact.title) || 'n/a'}</Col>
           </Row>
         </Col>
       </Row>
