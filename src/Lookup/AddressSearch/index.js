@@ -46,7 +46,7 @@ class AddressSearch extends React.PureComponent {
   componentDidUpdate() {
     if (this.currentResultFocusRef.current) {
       this.currentResultFocusRef.current.focus()
-    } else if (this.state.resultFocusIndex < 0 && this.searchBarRef.current) {
+    } else if (!!this.state.show && this.state.resultFocusIndex < 0 && this.searchBarRef.current) {
       this.searchBarRef.current.focus()
     }
   }
@@ -79,26 +79,27 @@ class AddressSearch extends React.PureComponent {
   }
 
   onKeyDown = e => {
-    if (e.keyCode === 38) {
-      // up
+    if (e.keyCode === 38 || (e.shiftKey && e.keyCode == 9)) {
+      // up || shift + tab
       e.stopPropagation()
       e.preventDefault()
       this.setState(prevState => ({
         resultFocusIndex: Math.max(prevState.resultFocusIndex - 1, -1),
       }))
-    } else if (e.keyCode === 40) {
-      // down
+    } else if (e.keyCode === 40 || e.keyCode == 9) {
+      // down || tab
       e.stopPropagation()
       e.preventDefault()
       this.setState(prevState => ({
         show: this.state.resultFocusIndex < 0 ? true : prevState.show,
         resultFocusIndex: Math.min(prevState.resultFocusIndex + 1, this.props.search.results.length - 1),
       }))
-    } else if (this.state.show && this.state.resultFocusIndex >= 0 && e.keyCode === 13) {
+    } else if (!!this.state.show && this.state.resultFocusIndex >= 0 && e.keyCode === 13) {
       // enter
       if (this.state.resultFocusIndex === -1) return
       this.handleRowClick(e, this.props.search.results[this.state.resultFocusIndex])
-    } else if (this.state.show && this.state.resultFocusIndex >= 0 && e.keyCode === 32) {
+    } else if (!!this.state.show && this.state.resultFocusIndex >= 0 && e.keyCode === 32) {
+      // space
       this.handleRowClick(e, this.props.search.results[this.state.resultFocusIndex])
     } else if (e.keyCode === 27) {
       this.hideSearch(e, true)
