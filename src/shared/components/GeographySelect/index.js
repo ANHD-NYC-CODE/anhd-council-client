@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import * as b from 'shared/constants/geographies'
-import { getGeographyIdOptions } from 'shared/utilities/componentUtils'
+import { getGeographyIdOptions } from 'shared/components/GeographySelect/utils'
 import { Row, Col, Form, Button } from 'react-bootstrap'
 import StandardizedInput from 'shared/classes/StandardizedInput'
 import ConfigContext from 'Config/ConfigContext'

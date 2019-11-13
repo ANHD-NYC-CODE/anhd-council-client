@@ -7,27 +7,27 @@ export const initialState = {
   districtPropertySummaries: {},
 }
 
-export const communityReducer = (state = Object.freeze(initialState), action = { data: [] }) => {
+export const stateAssemblyReducer = (state = Object.freeze(initialState), action = { data: [] }) => {
   switch (action.type) {
-    case c.HANDLE_GET_COMMUNITIES: {
+    case c.HANDLE_GET_STATE_ASSEMBLIES: {
       return {
         ...state,
         districts: action.data,
       }
     }
-    case c.HANDLE_GET_COMMUNITY: {
+    case c.HANDLE_GET_STATE_ASSEMBLY: {
       return {
         ...state,
         district: action.data,
       }
     }
-    case c.HANDLE_GET_COMMUNITY_HOUSING: {
+    case c.HANDLE_GET_STATE_ASSEMBLY_HOUSING: {
       return {
         ...state,
         districtHousing: action.data,
       }
     }
-    case c.HANDLE_GET_COMMUNITY_PROPERTY_SUMMARY: {
+    case c.HANDLE_GET_STATE_ASSEMBLY_PROPERTY_SUMMARY: {
       return {
         ...state,
         districtPropertySummaries: {

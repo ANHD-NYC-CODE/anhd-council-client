@@ -4,6 +4,10 @@ export const LOCAL_STORAGE = 'anhd-dap-portal'
 export const USER_STORAGE = 'anhd-dap-portal--user'
 export const COUNCIL_DISTRICTS_INDEX = 'councils'
 export const COMMUNITY_BOARDS_INDEX = 'communities'
+export const STATE_ASSEMBLY_INDEX = 'state-assembly'
+export const STATE_SENATE_INDEX = 'state-senate'
+export const ZIPCODE_INDEX = 'zipcode'
+
 import { logoutUser } from 'Store/Auth/actions'
 import { get, set, del } from 'idb-keyval'
 import { handleActionDispatch } from 'shared/utilities/actionUtils'
@@ -44,6 +48,18 @@ export const getCommunityBoardsData = () => {
   return get(COMMUNITY_BOARDS_INDEX)
 }
 
+export const getStateAssemblyBoardsData = () => {
+  return get(STATE_ASSEMBLY_INDEX)
+}
+
+export const getStateSenateBoardsData = () => {
+  return get(STATE_SENATE_INDEX)
+}
+
+export const getZipCodeBoardsData = () => {
+  return get(ZIPCODE_INDEX)
+}
+
 const addExpirationDate = data => {
   return {
     expires: new Date(moment().add('2', 'day')),
@@ -72,6 +88,18 @@ export const delCouncilDistrictsData = () => {
 
 export const delCommunityBoardsData = () => {
   return del(COMMUNITY_BOARDS_INDEX)
+}
+
+export const delStateAssemblyData = () => {
+  return del(STATE_ASSEMBLY_INDEX)
+}
+
+export const delStateSenateData = () => {
+  return del(STATE_SENATE_INDEX)
+}
+
+export const delZipCodeData = () => {
+  return del(ZIPCODE_INDEX)
 }
 
 const getData = path => {
