@@ -28,33 +28,9 @@ export const geographyToLink = (constant, id) => {
 }
 
 export const getGeographyPath = constant => {
-  return `${getGeographyObject(constant).frontEndPath}`
-  // console.log(b)
-  // type = type.toUpperCase()
-  // switch (type) {
-  //   case 'COUNCIL':
-  //     return 'council'
-  //   case 'COMMUNITY':
-  //     return 'community'
-  //   case 'CD':
-  //     return 'community'
-  //   case 'STATE_ASSEMBLY':
-  //     return 'state-assembly'
-  //   case 'STATE_SENATE':
-  //     return 'state-senate'
-  //   case 'ZIPCODE':
-  //     return 'zipcode'
-  // }
-}
-
-export const pathToGeographyConstant = type => {
-  type = type.toUpperCase()
-  switch (type) {
-    case 'COUNCIL':
-      return 'COUNCIL'
-    case 'COMMUNITY':
-      return 'COMMUNITY'
-  }
+  const geographyObject = getGeographyObject(constant)
+  if (!geographyObject) return ''
+  return `${geographyObject.frontEndPath}`
 }
 
 export const addressResultToPath = ({ bbl, bin } = {}) => {
@@ -65,87 +41,26 @@ export const addressResultToPath = ({ bbl, bin } = {}) => {
   }
 }
 
-export const isValidGeography = (type, id) => {
-  switch (type) {
-    case 'map':
-      return true
+export const isValidGeography = (config, constant, id) => {
+  let configGeographies = []
+  switch (constant) {
     case 'COUNCIL':
-      return id >= 1 && id <= 51
+      configGeographies = config.councilDistricts
+      break
     case 'COMMUNITY':
-      return [
-        101,
-        102,
-        103,
-        104,
-        105,
-        106,
-        107,
-        108,
-        109,
-        110,
-        111,
-        112,
-        164,
-        201,
-        202,
-        203,
-        204,
-        205,
-        206,
-        207,
-        208,
-        209,
-        210,
-        211,
-        212,
-        226,
-        227,
-        228,
-        301,
-        302,
-        303,
-        304,
-        305,
-        306,
-        307,
-        308,
-        309,
-        310,
-        311,
-        312,
-        313,
-        314,
-        315,
-        316,
-        317,
-        318,
-        355,
-        356,
-        401,
-        402,
-        403,
-        404,
-        405,
-        406,
-        407,
-        408,
-        409,
-        410,
-        411,
-        412,
-        413,
-        414,
-        480,
-        481,
-        482,
-        483,
-        484,
-        501,
-        502,
-        503,
-        595,
-      ].includes(parseInt(id))
-    default:
-      return false
+      configGeographies = config.communityDistricts
+      break
+    case 'STATE_ASSEMBLY':
+      configGeographies = config.stateAssemblies
+      break
+    case 'STATE_SENATE':
+      configGeographies = config.stateSenates
+      break
+    case 'ZIPCODE':
+      configGeographies = config.zipCodes
+      break
   }
+  const geographyIds = configGeographies.map(geography => String(geography.id))
+
+  return geographyIds.includes(String(id))
 }
