@@ -1,4 +1,6 @@
 import { boroCodeToName } from 'shared/utilities/languageUtils'
+import * as b from 'shared/constants/geographies'
+
 export const resourceRouteChanged = (oldProps, newProps) => {
   return oldProps.id !== newProps.id
 }
@@ -17,25 +19,32 @@ export const communityToCommunityProfileLink = id => {
     .toLowerCase()}/${id.slice(1)}`
 }
 
-export const geographyToLink = (constant, id) => {
-  switch (constant) {
-    case 'COUNCIL':
-      return `/council/${id}`
-    case 'COMMUNITY':
-      return `/community/${id}`
-  }
+export const getGeographyObject = constant => {
+  return b[`${constant}_GEOGRAPHY`]
 }
 
-export const getGeographyPath = type => {
-  type = type.toUpperCase()
-  switch (type) {
-    case 'COUNCIL':
-      return 'council'
-    case 'COMMUNITY':
-      return 'community'
-    case 'CD':
-      return 'community'
-  }
+export const geographyToLink = (constant, id) => {
+  return `/${getGeographyObject(constant)}/${id}`
+}
+
+export const getGeographyPath = constant => {
+  return `${getGeographyObject(constant).frontEndPath}`
+  // console.log(b)
+  // type = type.toUpperCase()
+  // switch (type) {
+  //   case 'COUNCIL':
+  //     return 'council'
+  //   case 'COMMUNITY':
+  //     return 'community'
+  //   case 'CD':
+  //     return 'community'
+  //   case 'STATE_ASSEMBLY':
+  //     return 'state-assembly'
+  //   case 'STATE_SENATE':
+  //     return 'state-senate'
+  //   case 'ZIPCODE':
+  //     return 'zipcode'
+  // }
 }
 
 export const pathToGeographyConstant = type => {

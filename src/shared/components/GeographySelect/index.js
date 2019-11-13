@@ -56,8 +56,11 @@ class GeographySelect extends React.Component {
                   <option disabled value={-1} key={-1}>
                     {this.props.placeholder || 'Select a geography'}
                   </option>
-                  <option value={b.COUNCILGEOGRAPHY.constant}>{b.COUNCILGEOGRAPHY.name}</option>
-                  <option value={b.COMMUNITYGEOGRAPHY.constant}>{b.COMMUNITYGEOGRAPHY.name}</option>
+                  <option value={b.COUNCIL_GEOGRAPHY.constant}>{b.COUNCIL_GEOGRAPHY.name}</option>
+                  <option value={b.COMMUNITY_GEOGRAPHY.constant}>{b.COMMUNITY_GEOGRAPHY.name}</option>
+                  <option value={b.STATE_ASSEMBLY_GEOGRAPHY.constant}>{b.STATE_ASSEMBLY_GEOGRAPHY.name}</option>
+                  <option value={b.STATE_SENATE_GEOGRAPHY.constant}>{b.STATE_SENATE_GEOGRAPHY.name}</option>
+                  <option value={b.ZIPCODE_GEOGRAPHY.constant}>{b.ZIPCODE_GEOGRAPHY.name}</option>
                 </Form.Control>
                 <FormError
                   show={
@@ -92,6 +95,9 @@ class GeographySelect extends React.Component {
                     {getGeographyIdOptions(
                       config.councilDistricts,
                       config.communityDistricts,
+                      config.stateAssemblies,
+                      config.stateSenates,
+                      config.zipCodes,
                       this.props.changingGeographyType || this.props.currentGeographyType
                     )}
                   </Form.Control>
