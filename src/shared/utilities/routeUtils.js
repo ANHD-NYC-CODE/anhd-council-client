@@ -43,6 +43,7 @@ export const addressResultToPath = ({ bbl, bin } = {}) => {
 
 export const isValidGeography = (config, constant, id) => {
   let configGeographies = []
+  console.log(config, constant, id)
   switch (constant) {
     case 'COUNCIL':
       configGeographies = config.councilDistricts
@@ -61,6 +62,6 @@ export const isValidGeography = (config, constant, id) => {
       break
   }
   const geographyIds = configGeographies.map(geography => String(geography.id))
-
+  console.log(configGeographies)
   return geographyIds.includes(String(id))
 }
