@@ -147,6 +147,12 @@ class Config extends React.PureComponent {
         return this.props.councilDistricts
       case 'COMMUNITY':
         return this.props.communityDistricts
+      case 'STATE_ASSEMBLY':
+        return this.props.stateAssemblies
+      case 'STATE_SENATE':
+        return this.props.stateSenates
+      case 'ZIPCODE':
+        return this.props.zipCodes
     }
   }
 
@@ -185,6 +191,9 @@ class Config extends React.PureComponent {
           resourceModels: this.props.resourceModels,
           communityDistricts: this.props.communityDistricts,
           councilDistricts: this.props.councilDistricts,
+          stateAssemblies: this.props.stateAssemblies,
+          stateSenates: this.props.stateSenates,
+          zipCodes: this.props.zipCodes,
           selectGeographyData: this.selectGeographyData,
           infoModals: infoModals,
           advancedSearchFilters: createAdvancedSearchFilters({

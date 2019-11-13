@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import * as b from 'shared/constants/geographies'
 
 import { history } from 'Store/configureStore'
 import ModalContext from 'Modal/ModalContext'
@@ -24,7 +25,6 @@ class Router extends React.Component {
       ReactGA.pageview(window.location.pathname + window.location.search)
     })
   }
-
   render() {
     return (
       <ConnectedRouter history={history}>
@@ -62,8 +62,17 @@ class Router extends React.Component {
                   <Route exact path="/property/:bbl" render={() => <Lookup config={config} />} />
                   <Route exact path="/building/:bin" render={() => <Lookup config={config} />} />
                   <Route exact path="/map" render={() => <DistrictDashboard config={config} />} />
-                  <Route exact path="/council/:id" render={() => <DistrictDashboard config={config} />} />
-                  <Route exact path="/community/:id" render={() => <DistrictDashboard config={config} />} />
+                  {Object.keys(b).map((gKey, index) => {
+                    const geography = b[gKey]
+                    return (
+                      <Route
+                        key={`geography-route-${index}`}
+                        exact
+                        path={`/${geography.frontEndPath}/:id`}
+                        render={() => <DistrictDashboard config={config} />}
+                      />
+                    )
+                  })}
                   <Route exact path="/search" render={() => <AdvancedSearch config={config} />} />
                   <Route
                     render={() => (
