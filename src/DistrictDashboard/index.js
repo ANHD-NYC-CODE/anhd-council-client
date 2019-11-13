@@ -229,18 +229,17 @@ const makeMapStateToProps = () => {
     const errorSelector = createErrorSelector([state.appState.selectedRequests.map(request => request.requestConstant)])
 
     const selectRequests = makeSelectRequests
-    const pathMatch = state.router.location.pathname.match(/(council|community)/)
+    const pathMatch = state.router.location.pathname.match(/(council|community|state-assembly|state-senate|zipcode)/)
     const path = pathMatch ? pathMatch[0] : undefined
     const matchSelector = createMatchSelector({
       path: `/${path}/:id`,
     })
     const match = matchSelector(state)
-
     return {
       appState: state.appState,
       advancedSearch: state.advancedSearch,
       geographyId: match ? match.params.id : undefined,
-      geographyType: path ? path.toUpperCase() : undefined,
+      geographyType: path ? path.toUpperCase().replace('-', '_') : undefined,
       mapRequests: selectRequests(state),
       loading: loadingSelector(state),
       selectedError: errorSelector(state),
