@@ -22,7 +22,7 @@ class DistrictDashboard extends React.PureComponent {
     super(props)
 
     this.state = {
-      error404: props.geographyType && !isValidGeography(props.geographyType, props.geographyId),
+      error404: props.geographyType && !isValidGeography(props.config, props.geographyType, props.geographyId),
       error404Message: props.geographyType
         ? `Geography "${props.geographyType.toLowerCase()}" with id "${props.geographyId}" does not exist.`
         : '',
@@ -37,7 +37,7 @@ class DistrictDashboard extends React.PureComponent {
 
     this.syncGeographyMatch = this.syncGeographyMatch.bind(this)
 
-    if (props.geographyType && !isValidGeography(props.geographyType, props.geographyId)) {
+    if (props.geographyType && !isValidGeography(props.config, props.geographyType, props.geographyId)) {
       return
     } else if (!(props.geographyType && props.geographyId)) {
       props.dispatch(push('/map'))
@@ -70,7 +70,7 @@ class DistrictDashboard extends React.PureComponent {
     if (
       this.props.geographyType &&
       !this.state.error404 &&
-      !isValidGeography(this.props.geographyType, this.props.geographyId)
+      !isValidGeography(this.props.config, this.props.geographyType, this.props.geographyId)
     ) {
       this.trigger404Error(
         `Geography "${this.props.geographyType.toLowerCase()}" with id "${this.props.geographyId}" does not exist.`
