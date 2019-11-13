@@ -6,13 +6,13 @@ import * as c from 'shared/constants'
 import { createErrorSelector } from 'Store/Error/selectors'
 import { createLoadingSelector } from 'Store/Loading/selectors'
 
-import { GET_DATASETS } from 'Store/Dataset/constants'
-import { GET_COUNCILS } from 'Store/Council/constants'
-import { GET_COMMUNITIES } from 'Store/Community/constants'
 import ConfigContext from 'Config/ConfigContext'
 import { getDatasets } from 'Store/Dataset/actions'
 import { getCouncils } from 'Store/Council/actions'
 import { getCommunities } from 'Store/Community/actions'
+import { getStateAssemblies } from 'Store/StateAssembly/actions'
+import { getStateSenates } from 'Store/StateSenate/actions'
+import { getZipCodes } from 'Store/ZipCode/actions'
 import { infoModals } from 'shared/modals/modalsCopy'
 import ConfigLoader from 'shared/components/Loaders/ConfigLoader'
 import PageError from 'shared/components/PageError'
@@ -28,9 +28,22 @@ import {
 import { setupResourceModels } from 'shared/utilities/configUtils'
 import { createAdvancedSearchFilters } from 'shared/utilities/filterUtils'
 import { resetAdvancedSearchReducer, replacePropertyFilter } from 'Store/AdvancedSearch/actions'
+
 class Config extends React.PureComponent {
+  static get MonitoredRequests() {
+    return [
+      c.GET_DATASETS,
+      c.GET_COUNCILS,
+      c.GET_COMMUNITIES,
+      c.GET_STATE_ASSEMBLIES,
+      c.GET_STATE_SENATES,
+      c.GET_ZIPCODES,
+    ]
+  }
+
   constructor(props) {
     super(props)
+
     if (!props.datasets.length) {
       this.props.dispatch(getDatasets())
     }
@@ -40,6 +53,18 @@ class Config extends React.PureComponent {
 
     if (!props.communityDistricts.length) {
       this.props.dispatch(getCommunities())
+    }
+
+    if (!props.stateAssemblies.length) {
+      this.props.dispatch(getStateAssemblies())
+    }
+
+    if (!props.stateSenates.length) {
+      this.props.dispatch(getStateSenates())
+    }
+
+    if (!props.zipCodes.length) {
+      this.props.dispatch(getZipCodes())
     }
 
     this.selectGeographyData = this.selectGeographyData.bind(this)
@@ -57,16 +82,25 @@ class Config extends React.PureComponent {
   }
 
   componentWillReceiveProps(nextProps, nextState) {
-    if (!nextProps.error && !nextProps.loading && !nextProps.error) {
+    if (!nextProps.error && !nextProps.loading) {
       if (!nextProps.datasets.length) {
         this.props.dispatch(getDatasets())
       }
 
-      if (!nextProps.error && !nextProps.councilDistricts.length) {
+      if (!nextProps.councilDistricts.length) {
         this.props.dispatch(getCouncils())
       }
-      if (!nextProps.error && !nextProps.communityDistricts.length) {
+      if (!nextProps.communityDistricts.length) {
         this.props.dispatch(getCommunities())
+      }
+      if (!nextProps.stateAssemblies.length) {
+        this.props.dispatch(getStateAssemblies())
+      }
+      if (!nextProps.stateSenates.length) {
+        this.props.dispatch(getStateSenates())
+      }
+      if (!nextProps.zipCodes.length) {
+        this.props.dispatch(getZipCodes())
       }
     }
 
@@ -164,7 +198,7 @@ class Config extends React.PureComponent {
           !!this.props.councilDistricts.length &&
           !!this.props.communityDistricts.length
         ) ? (
-          <ConfigLoader monitoredRequests={[GET_DATASETS, GET_COUNCILS, GET_COMMUNITIES]} />
+          <ConfigLoader monitoredRequests={Config.MonitoredRequests} />
         ) : (
           this.props.children
         )}
@@ -173,15 +207,29 @@ class Config extends React.PureComponent {
   }
 }
 
+Config.defaultProps = {
+  datasets: [],
+  councils: [],
+  communities: [],
+  stateassemblies: [],
+  statesenates: [],
+  zipcodes: [],
+}
+
 Config.propTypes = {
   datasets: PropTypes.array,
   dispatch: PropTypes.func,
   error: PropTypes.object,
   loading: PropTypes.bool,
+  councils: PropTypes.array,
+  communities: PropTypes.array,
+  stateAssemblies: PropTypes.array,
+  stateSenates: PropTypes.array,
+  zipCodes: PropTypes.array,
 }
 
-const errorSelector = createErrorSelector([GET_DATASETS, GET_COUNCILS, GET_COMMUNITIES])
-const loadingSelector = createLoadingSelector([GET_DATASETS, GET_COUNCILS, GET_COMMUNITIES])
+const errorSelector = createErrorSelector(Config.MonitoredRequests)
+const loadingSelector = createLoadingSelector(Config.MonitoredRequests)
 
 const mapStateToProps = state => {
   return {
@@ -191,7 +239,10 @@ const mapStateToProps = state => {
     datasets: state.dataset.datasets,
     resourceModels: setupResourceModels(state.dataset.datasets),
     councilDistricts: state.council.districts,
-    communityDistricts: state.community.boards,
+    communityDistricts: state.community.districts,
+    stateAssemblies: state.stateAssembly.districts,
+    stateSenates: state.stateSenate.districts,
+    zipCodes: state.zipCode.districts,
     error: errorSelector(state),
     loading: loadingSelector(state),
   }
