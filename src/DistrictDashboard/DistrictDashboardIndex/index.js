@@ -47,6 +47,9 @@ const DistrictDashboardIndex = props => {
                       currentGeographyType={props.appState.changingGeographyType}
                       councilDistricts={config.councilDistricts}
                       communityDistricts={config.communityDistricts}
+                      stateAssemblies={config.stateAssemblies}
+                      stateSenates={config.stateSenates}
+                      zipCodes={config.zipCodes}
                       handleChangeGeography={props.handleChangeGeography}
                       handleChangeGeographyId={props.handleChangeGeographyId}
                       selectGeographyData={config.selectGeographyData}
