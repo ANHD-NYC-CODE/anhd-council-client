@@ -1,12 +1,12 @@
 .expandable-section {
   .expandable-section__above-fold {
     cursor: pointer;
-    display: flex;
-    justify-content: space-between;
+    position: relative;
   }
 
-  .expandable-section__above-fold--element,
   .expandable-section__above-fold--icon {
-    display: inline-block;
+    position: absolute;
+    top: 0;
+    right: -15px;
   }
 }

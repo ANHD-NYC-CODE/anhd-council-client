@@ -1,10 +1,27 @@
 export const capitalizeWords = string => {
-  return string
-    .split(' ')
-    .map(word => {
-      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-    })
-    .join(' ')
+  if (!string) return ''
+  return preserveUppercaseTerms(
+    string
+      .split(' ')
+      .map(word => {
+        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+      })
+      .join(' ')
+  )
+}
+
+export const preserveUppercaseTerms = string => {
+  return string.replace(/\bllc\b/i, 'LLC')
+}
+
+export const splitCamelCase = string => {
+  if (!string) return ''
+  return string.replace(/([a-z])([A-Z])/g, '$1 $2')
+}
+
+export const addStringIfPresent = (primaryString, addedString) => {
+  if (!primaryString) return ''
+  else return `${primaryString}${addedString}`
 }
 
 export const grammaticalNoun = (noun, value) => {
