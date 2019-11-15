@@ -33,6 +33,7 @@ export default class LeafletMap extends React.PureComponent {
     this.getGeographyCenter = this.getGeographyCenter.bind(this)
     this.setAlertMessage = this.setAlertMessage.bind(this)
     this.onMapZoom = this.onMapZoom.bind(this)
+    this.allGeographiesLoaded = this.allGeographiesLoaded.bind(this)
   }
 
   componentDidUpdate() {
@@ -79,9 +80,9 @@ export default class LeafletMap extends React.PureComponent {
   }
 
   getGeographyBounds(type, id) {
-    if (!this.props.councilDistricts.length || !this.props.communityDistricts.length) return null
+    if (!this.allGeographiesLoaded()) return null
     const geographyDataset = this.props.selectGeographyData(type)
-    const selectedGeography = geographyDataset.find(geography => geography.id === parseInt(id))
+    const selectedGeography = geographyDataset.find(geography => String(geography.id) === String(id))
     if (selectedGeography) return new L.geoJSON(selectedGeography.data.geometry).getBounds()
   }
 
@@ -103,6 +104,16 @@ export default class LeafletMap extends React.PureComponent {
     if (this.props.dispatch) {
       this.props.dispatch(setAppState({ dashboardMapZoom: this.mapRef.current.leafletElement.getZoom() }))
     }
+  }
+
+  allGeographiesLoaded() {
+    return (
+      !!this.props.communityDistricts.length &&
+      !!this.props.councilDistricts.length &&
+      !!this.props.stateAssemblies &&
+      !!this.props.stateSenates &&
+      !!this.props.zipCodes
+    )
   }
 
   render() {
@@ -178,31 +189,46 @@ export default class LeafletMap extends React.PureComponent {
               url="https://api.mapbox.com/styles/v1/anhdnyc/cjtgmvhfl6nw01fs8sqjifqni/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYW5oZG55YyIsImEiOiJjanQ0ZWRqaDcxMmRxNDlsbHV1OXN0aGx6In0.i07oerfvXtcRfm3npws7mA"
             />
           )}
-          {!!this.props.communityDistricts.length &&
-            !!this.props.councilDistricts.length &&
-            this.props.currentGeographyType && (
-              <div>
-                <GeographyGeoJson
-                  geoJsonRef={this.geoJsonRef}
-                  geographies={this.props.selectGeographyData(
-                    this.props.appState.changingGeographyType || this.props.currentGeographyType
-                  )}
-                  currentGeographyId={this.props.appState.currentGeographyId}
-                  currentGeographyType={this.props.currentGeographyType}
-                  changingGeographyId={this.props.appState.changingGeographyId}
-                  changingGeographyType={this.props.appState.changingGeographyType}
-                  onClick={this.props.handleChangeGeographyId}
-                />
-                <GeographyMarkerLabels
-                  currentGeographyType={this.props.currentGeographyType}
-                  geographies={this.props.selectGeographyData(
-                    this.props.appState.changingGeographyType || this.props.currentGeographyType
-                  )}
-                />
-              </div>
-            )}
-          {!!this.props.communityDistricts.length &&
-            !!this.props.councilDistricts.length &&
+          {this.props.currentGeographyType === 'STATE_ASSEMBLY' && (
+            <TileLayer
+              attribution="mapbox"
+              url="https://api.mapbox.com/styles/v1/anhdnyc/ck30ai0u70fol1co74j7lql1g/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYW5oZG55YyIsImEiOiJjanQ0ZWRqaDcxMmRxNDlsbHV1OXN0aGx6In0.i07oerfvXtcRfm3npws7mA"
+            />
+          )}
+          {this.props.currentGeographyType === 'STATE_SENATE' && (
+            <TileLayer
+              attribution="mapbox"
+              url="https://api.mapbox.com/styles/v1/anhdnyc/ck30asbr30tk91cmmortl5u4e/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYW5oZG55YyIsImEiOiJjanQ0ZWRqaDcxMmRxNDlsbHV1OXN0aGx6In0.i07oerfvXtcRfm3npws7mA"
+            />
+          )}
+          {this.props.currentGeographyType === 'ZIPCODE' && (
+            <TileLayer
+              attribution="mapbox"
+              url="https://api.mapbox.com/styles/v1/anhdnyc/ck3093t330s3e1cnvcair3d0n/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYW5oZG55YyIsImEiOiJjanQ0ZWRqaDcxMmRxNDlsbHV1OXN0aGx6In0.i07oerfvXtcRfm3npws7mA"
+            />
+          )}
+          {this.allGeographiesLoaded() && this.props.currentGeographyType && (
+            <div>
+              <GeographyGeoJson
+                geoJsonRef={this.geoJsonRef}
+                geographies={this.props.selectGeographyData(
+                  this.props.appState.changingGeographyType || this.props.currentGeographyType
+                )}
+                currentGeographyId={this.props.appState.currentGeographyId}
+                currentGeographyType={this.props.currentGeographyType}
+                changingGeographyId={this.props.appState.changingGeographyId}
+                changingGeographyType={this.props.appState.changingGeographyType}
+                onClick={this.props.handleChangeGeographyId}
+              />
+              <GeographyMarkerLabels
+                currentGeographyType={this.props.currentGeographyType}
+                geographies={this.props.selectGeographyData(
+                  this.props.appState.changingGeographyType || this.props.currentGeographyType
+                )}
+              />
+            </div>
+          )}
+          {this.allGeographiesLoaded() &&
             this.props.appState.changingGeographyType &&
             (this.props.appState.currentGeographyId !== this.props.appState.changingGeographyId &&
               this.props.appState.changingGeographyId > 0) && (
@@ -250,6 +276,9 @@ LeafletMap.defaultProps = {
   center: [40.71, -73.98],
   councilDistricts: [],
   communityDistricts: [],
+  stateAssemblies: [],
+  stateSenates: [],
+  zipCodes: [],
   iconConfig: 'MULTIPLE',
   interactive: true,
   loading: false,
@@ -266,6 +295,9 @@ LeafletMap.propTypes = {
   appState: PropTypes.object,
   communityDistricts: PropTypes.array,
   councilDistricts: PropTypes.array,
+  stateAssemblies: PropTypes.array,
+  stateSenates: PropTypes.array,
+  zipCodes: PropTypes.array,
   closeGeographyPopup: PropTypes.func,
   dispatch: PropTypes.func,
   iconConfig: PropTypes.string,
