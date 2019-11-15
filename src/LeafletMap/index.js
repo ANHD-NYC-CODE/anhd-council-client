@@ -189,6 +189,24 @@ export default class LeafletMap extends React.PureComponent {
               url="https://api.mapbox.com/styles/v1/anhdnyc/cjtgmvhfl6nw01fs8sqjifqni/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYW5oZG55YyIsImEiOiJjanQ0ZWRqaDcxMmRxNDlsbHV1OXN0aGx6In0.i07oerfvXtcRfm3npws7mA"
             />
           )}
+          {this.props.currentGeographyType === 'STATE_ASSEMBLY' && (
+            <TileLayer
+              attribution="mapbox"
+              url="https://api.mapbox.com/styles/v1/anhdnyc/ck30ai0u70fol1co74j7lql1g/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYW5oZG55YyIsImEiOiJjanQ0ZWRqaDcxMmRxNDlsbHV1OXN0aGx6In0.i07oerfvXtcRfm3npws7mA"
+            />
+          )}
+          {this.props.currentGeographyType === 'STATE_SENATE' && (
+            <TileLayer
+              attribution="mapbox"
+              url="https://api.mapbox.com/styles/v1/anhdnyc/ck30asbr30tk91cmmortl5u4e/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYW5oZG55YyIsImEiOiJjanQ0ZWRqaDcxMmRxNDlsbHV1OXN0aGx6In0.i07oerfvXtcRfm3npws7mA"
+            />
+          )}
+          {this.props.currentGeographyType === 'ZIPCODE' && (
+            <TileLayer
+              attribution="mapbox"
+              url="https://api.mapbox.com/styles/v1/anhdnyc/ck3093t330s3e1cnvcair3d0n/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYW5oZG55YyIsImEiOiJjanQ0ZWRqaDcxMmRxNDlsbHV1OXN0aGx6In0.i07oerfvXtcRfm3npws7mA"
+            />
+          )}
           {this.allGeographiesLoaded() && this.props.currentGeographyType && (
             <div>
               <GeographyGeoJson

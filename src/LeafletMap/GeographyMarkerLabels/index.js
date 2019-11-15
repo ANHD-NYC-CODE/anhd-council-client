@@ -18,7 +18,7 @@ const GeographyMarkerLabels = props => {
           permanent
           direction="top"
           offset={[0, 35]}
-          className={`geography-marker__tooltip--${props.currentGeographyType}`}
+          className={`geography-marker__tooltip geography-marker__tooltip--${props.currentGeographyType}`}
         >
           <span className="geography-marker-label">{String(geography.data.properties.id)}</span>
         </Tooltip>
