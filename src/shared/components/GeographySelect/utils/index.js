@@ -1,5 +1,6 @@
 import React from 'react'
 import { communityIdToString } from 'shared/utilities/languageUtils'
+import { getGeographyObject } from 'shared/utilities/routeUtils'
 
 export const getGeographyIdOptions = (
   districts = [],
@@ -9,6 +10,7 @@ export const getGeographyIdOptions = (
   zipCodes = [],
   type
 ) => {
+  const zipCodeObject = getGeographyObject('ZIPCODE')
   type = type.toUpperCase()
   switch (type) {
     case 'COUNCIL':
@@ -71,11 +73,13 @@ export const getGeographyIdOptions = (
         <option disabled value={-1} key={-1}>
           #
         </option>,
-        ...zipCodes.map(d => (
-          <option key={`geography-id-option-${d.id}`} value={d.id}>
-            {d.id}
-          </option>
-        )),
+        ...zipCodes
+          .filter(geography => zipCodeObject.hidden && !zipCodeObject.hidden.includes(geography.id))
+          .map(d => (
+            <option key={`geography-id-option-${d.id}`} value={d.id}>
+              {d.id}
+            </option>
+          )),
       ]
   }
 }
