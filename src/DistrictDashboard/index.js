@@ -191,6 +191,7 @@ class DistrictDashboard extends React.PureComponent {
           <DistrictDashboardRequestsWrapper
             advancedSearch={this.props.advancedSearch}
             appState={this.props.appState}
+            dashboardState={this.props.dashboardState}
             dispatch={this.props.dispatch}
             config={this.props.config}
             cancelChangeGeography={this.cancelChangeGeography}
@@ -239,6 +240,7 @@ const makeMapStateToProps = () => {
     return {
       appState: state.appState,
       advancedSearch: state.advancedSearch,
+      dashboardState: state.dashboardState,
       geographyId: match ? match.params.id : undefined,
       geographyType: path ? path.toUpperCase() : undefined,
       mapRequests: selectRequests(state),
