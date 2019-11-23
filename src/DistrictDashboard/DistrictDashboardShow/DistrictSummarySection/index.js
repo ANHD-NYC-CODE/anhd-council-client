@@ -8,6 +8,7 @@ import UserContext from 'Auth/UserContext'
 import AnnotatedResultFilterCard from 'DistrictDashboard/AnnotatedResultFilterCard'
 import { Row, Col } from 'react-bootstrap'
 import ResultFilterError from 'shared/components/ResultFilterError'
+import { setHousingTypeResultFilter } from 'Store/DashboardState/actions'
 
 import ModalContext from 'Modal/ModalContext'
 
@@ -29,15 +30,16 @@ const DistrictSummarySection = props => {
     )
     props.dispatch(toggleSelectedAmountFilter(amountFilter))
     props.dispatch(fireFilterSelectEvent(amountFilter))
-    if (!props.appState.housingTypeResultFilter) {
+    if (!props.dashboardState.housingTypeResultFilter) {
       props.dispatch(
         setAppState({
-          housingTypeResultFilter: props.appState.resultFilters[0],
           changingGeography: false, // End changing state
           changingGeographyId: undefined,
           changingGeographyType: undefined,
         })
       )
+
+      props.dispatch(setHousingTypeResultFilter(props.dashboardState.resultFilters[0]))
     }
   }
   return (
@@ -45,7 +47,7 @@ const DistrictSummarySection = props => {
       {auth => {
         return (
           <Row className="district-summary-section">
-            {props.appState.resultFilters
+            {props.dashboardState.resultFilters
               .filter(f => f.category === 'AMOUNT')
               .map((amountFilter, index) => {
                 return (
@@ -116,6 +118,8 @@ DistrictSummarySection.defaultProps = {
   customView: false,
 }
 DistrictSummarySection.propTypes = {
+  appState: PropTypes.object,
+  dashboardState: PropTypes.object,
   customView: PropTypes.bool,
   loading: PropTypes.bool,
 }

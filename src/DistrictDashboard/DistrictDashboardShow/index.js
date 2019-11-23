@@ -90,11 +90,11 @@ class DistrictDashboardShow extends React.Component {
 
   getResultRecords() {
     const housingTypeFilter =
-      !this.props.appState.districtShowCustomView && this.props.appState.housingTypeResultFilter
+      !this.props.appState.districtShowCustomView && this.props.dashboardState.housingTypeResultFilter
         ? results =>
-            this.props.appState.housingTypeResultFilter.internalFilter(
+            this.props.dashboardState.housingTypeResultFilter.internalFilter(
               results,
-              this.props.appState.housingTypeResultFilter.paramMaps
+              this.props.dashboardState.housingTypeResultFilter.paramMaps
             )
         : results => results
 
@@ -246,6 +246,7 @@ class DistrictDashboardShow extends React.Component {
                   </Row>
                   <DistrictSummarySection
                     appState={this.props.appState}
+                    dashboardState={this.props.dashboardState}
                     customView={this.props.appState.districtShowCustomView}
                     dispatch={this.props.dispatch}
                     endChangingState={this.props.endChangingState}
@@ -278,19 +279,7 @@ class DistrictDashboardShow extends React.Component {
                 <Col xs={12} lg={5} xl={6}>
                   <Row className="mb-2 mb-lg-0 district-dashboard-show__results-container">
                     <Col xs={12} xl={7}>
-                      <DistrictResultsTitle
-                        records={resultRecords}
-                        displayedRequest={
-                          this.props.selectedRequest !== this.props.propertySummaryRequest
-                            ? this.props.selectedRequest
-                            : undefined
-                        }
-                        displayedResultsFilter={
-                          this.props.appState.selectedRequests.some(r => r.type === c.ADVANCED_SEARCH)
-                            ? undefined
-                            : this.props.housingTypeResultFilter
-                        }
-                      />
+                      <DistrictResultsTitle records={resultRecords} />
                     </Col>
                     <Col className="d-flex view-toggle__container" xs={12} xl={5}>
                       <ToggleButtonGroup

@@ -15,4 +15,24 @@ describe('DashboardState reducer', () => {
       })
     })
   })
+
+  describe('LOAD_RESULT_FILTERS', () => {
+    it('sets resultFilters and housingTypeResultFilter', () => {
+      const filters = [1, 2]
+      expect(r.dashboardStateReducer(undefined, a.loadResultFilters(filters))).toEqual({
+        ...r.initialState,
+        resultFilters: filters,
+        housingTypeResultFilter: 1,
+      })
+    })
+  })
+
+  describe('SET_HOUSING_TYPE_RESULT_FILTER', () => {
+    it('sets housingTypeResultFilter', () => {
+      expect(r.dashboardStateReducer(undefined, a.setHousingTypeResultFilter(1))).toEqual({
+        ...r.initialState,
+        housingTypeResultFilter: 1,
+      })
+    })
+  })
 })

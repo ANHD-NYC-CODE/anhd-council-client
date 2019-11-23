@@ -9,6 +9,7 @@ import { makeRequest } from 'Store/Request/actions'
 import DistrictDashboardShow from 'DistrictDashboard/DistrictDashboardShow'
 import InnerLoader from 'shared/components/Loaders/InnerLoader'
 import { fireFilterSelectEvent } from 'Store/Analytics/actions'
+import { setHousingTypeResultFilter } from 'Store/DashboardState/actions'
 
 class DistrictDashboardRequestsWrapper extends React.PureComponent {
   constructor(props) {
@@ -46,14 +47,14 @@ class DistrictDashboardRequestsWrapper extends React.PureComponent {
     })
 
     this.props.dispatch(
-      setAppState({
-        housingTypeResultFilter: this.props.appState.housingTypeResultFilter || this.props.appState.resultFilters[0],
-      })
+      setHousingTypeResultFilter(
+        this.props.dashboardState.housingTypeResultFilter || this.props.dashboardState.resultFilters[0]
+      )
     )
   }
 
   toggleDateRange(value) {
-    this.props.appState.resultFilters
+    this.props.dashboardState.resultFilters
       .filter(rf => rf.category === 'AMOUNT')
       .forEach(rf => {
         rf.annotationStart = value
@@ -75,11 +76,7 @@ class DistrictDashboardRequestsWrapper extends React.PureComponent {
 
   switchSelectedFilter(filter) {
     this.endChangingState()
-    this.props.dispatch(
-      setAppState({
-        housingTypeResultFilter: filter,
-      })
-    )
+    this.props.dispatch(setHousingTypeResultFilter(filter))
     this.props.dispatch(fireFilterSelectEvent(filter))
   }
 
@@ -92,7 +89,7 @@ class DistrictDashboardRequestsWrapper extends React.PureComponent {
         propertySummaryRequest={getRequestByConstant(this.props.mapRequests, 'GEOGRAPHY_HOUSING_TYPE_ALL')[0]}
         toggleDateRange={this.toggleDateRange}
         switchSelectedFilter={this.switchSelectedFilter}
-        housingTypeResultFilter={this.props.appState.housingTypeResultFilter}
+        housingTypeResultFilter={this.props.dashboardState.housingTypeResultFilter}
         {...this.props}
       />
     ) : (
