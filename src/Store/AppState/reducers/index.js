@@ -17,7 +17,6 @@ export const initialState = {
   selectedFilters: [],
   selectedRequest: undefined, // DEPRECATED, still used in lookup however
   requests: [],
-  districtShowCustomView: false,
 }
 
 export const appStateReducer = (state = Object.freeze(initialState), action = { data: [] }) => {
@@ -98,7 +97,6 @@ export const appStateReducer = (state = Object.freeze(initialState), action = { 
     case c.SET_ADVANCED_SEARCH_REQUEST: {
       return {
         ...state,
-        districtShowCustomView: true,
         requests: [...state.requests, action.advancedSearchRequest],
       }
     }
@@ -106,12 +104,6 @@ export const appStateReducer = (state = Object.freeze(initialState), action = { 
       return {
         ...state,
         requests: state.requests.filter(request => request.type !== action.requestType),
-      }
-    }
-    case c.SET_MAP_FILTER_DATE: {
-      return {
-        ...state,
-        mapFilterDate: action.date,
       }
     }
     default:

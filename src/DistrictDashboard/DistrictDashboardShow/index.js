@@ -69,7 +69,7 @@ class DistrictDashboardShow extends React.Component {
       }
     }
 
-    if (this.props.appState.districtShowCustomView) {
+    if (this.props.dashboardState.districtShowCustomView) {
       return constructCsvFileName(this.props.advancedSearch)
     } else {
       return `${
@@ -90,7 +90,7 @@ class DistrictDashboardShow extends React.Component {
 
   getResultRecords() {
     const housingTypeFilter =
-      !this.props.appState.districtShowCustomView && this.props.dashboardState.housingTypeResultFilter
+      !this.props.dashboardState.districtShowCustomView && this.props.dashboardState.housingTypeResultFilter
         ? results =>
             this.props.dashboardState.housingTypeResultFilter.internalFilter(
               results,
@@ -100,7 +100,7 @@ class DistrictDashboardShow extends React.Component {
 
     let propertyResults = this.props.totalPropertyResults
 
-    if (this.props.appState.districtShowCustomView) {
+    if (this.props.dashboardState.districtShowCustomView) {
       propertyResults = this.props.requests[c.ADVANCED_SEARCH] || []
     } else if (this.props.appState.selectedFilters.length) {
       propertyResults = propertyResults.filter(result =>
@@ -174,19 +174,19 @@ class DistrictDashboardShow extends React.Component {
                       >
                         <ToggleButton
                           className="p-1 toggle-link"
-                          disabled={this.props.appState.districtShowCustomView || this.props.loading}
+                          disabled={this.props.dashboardState.districtShowCustomView || this.props.loading}
                           variant="outline-primary"
                           value={c.DISTRICT_REQUEST_DATE_THREE}
                         >{`Last 3 Years (${moment(c.DISTRICT_RESULTS_DATE_THREE).format('MM/DD/YYYY')})`}</ToggleButton>
                         <ToggleButton
                           className="p-1 toggle-link"
-                          disabled={this.props.appState.districtShowCustomView || this.props.loading}
+                          disabled={this.props.dashboardState.districtShowCustomView || this.props.loading}
                           variant="outline-primary"
                           value={c.DISTRICT_REQUEST_DATE_TWO}
                         >{`Last Year (${moment(c.DISTRICT_RESULTS_DATE_TWO).format('MM/DD/YYYY')})`}</ToggleButton>
                         <ToggleButton
                           className="p-1 toggle-link"
-                          disabled={this.props.appState.districtShowCustomView || this.props.loading}
+                          disabled={this.props.dashboardState.districtShowCustomView || this.props.loading}
                           variant="outline-primary"
                           value={c.DISTRICT_REQUEST_DATE_ONE}
                         >{`Last 30 Days (${moment(c.DISTRICT_RESULTS_DATE_ONE).format('MM/DD/YYYY')})`}</ToggleButton>
@@ -208,11 +208,13 @@ class DistrictDashboardShow extends React.Component {
                               label={'Custom Search'}
                               onClick={() =>
                                 this.props.dispatch(
-                                  setAppState({ districtShowCustomView: !this.props.appState.districtShowCustomView })
+                                  setAppState({
+                                    districtShowCustomView: !this.props.dashboardState.districtShowCustomView,
+                                  })
                                 )
                               }
                               resultsComponent={SummaryResultCard}
-                              selected={this.props.appState.districtShowCustomView}
+                              selected={this.props.dashboardState.districtShowCustomView}
                             />
                           </Col>
                         )
@@ -231,7 +233,7 @@ class DistrictDashboardShow extends React.Component {
                     )}
                   </Row>
                   <Row className="py-2 mb-4 mb-lg-0">
-                    {this.props.appState.districtShowCustomView ? (
+                    {this.props.dashboardState.districtShowCustomView ? (
                       <Col>
                         <h5 className="text-primary font-weight-bold">Description:</h5>
                         <AdvancedSearchSentence advancedSearch={this.props.advancedSearch} />
@@ -248,7 +250,7 @@ class DistrictDashboardShow extends React.Component {
                   <DistrictSummarySection
                     appState={this.props.appState}
                     dashboardState={this.props.dashboardState}
-                    customView={this.props.appState.districtShowCustomView}
+                    customView={this.props.dashboardState.districtShowCustomView}
                     dispatch={this.props.dispatch}
                     endChangingState={this.props.endChangingState}
                     geographyRequests={this.props.geographyRequests}
@@ -269,7 +271,7 @@ class DistrictDashboardShow extends React.Component {
 
                   <Row className="housingtype-section py-2 mb-4 mb-lg-0">
                     <HousingTypeSection
-                      customView={this.props.appState.districtShowCustomView}
+                      customView={this.props.dashboardState.districtShowCustomView}
                       dispatch={this.props.dispatch}
                       propertySummaryRequest={this.props.propertySummaryRequest}
                       switchSelectedFilter={this.props.switchSelectedFilter}
@@ -337,7 +339,9 @@ class DistrictDashboardShow extends React.Component {
                           csvBaseFileName={this.constructBaseCsvFileName()}
                           globalTableState={this.props.appState.dashboardTableState}
                           annotationStart={
-                            this.props.appState.districtShowCustomView ? '' : this.props.dashboardState.mapFilterDate
+                            this.props.dashboardState.districtShowCustomView
+                              ? ''
+                              : this.props.dashboardState.mapFilterDate
                           }
                           datasetModelName={this.props.propertySummaryRequest.tableConfig.datasetModelName}
                           dispatch={this.props.dispatch}

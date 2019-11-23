@@ -19,3 +19,8 @@ export const setMapFilterDate = date => ({
   type: c.SET_MAP_FILTER_DATE,
   date,
 })
+
+export const setDashboardCustomView = districtShowCustomView => ({
+  type: c.SET_DASHBOARD_CUSTOM_VIEW,
+  districtShowCustomView,
+})

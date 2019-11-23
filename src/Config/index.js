@@ -17,8 +17,8 @@ import { infoModals } from 'shared/modals/modalsCopy'
 import ConfigLoader from 'shared/components/Loaders/ConfigLoader'
 import PageError from 'shared/components/PageError'
 import Filter from 'shared/classes/Filter'
-import { setAppState, removeRequestType } from 'Store/AppState/actions'
-import { loadResultFilters } from 'Store/DashboardState/actions'
+import { removeRequestType } from 'Store/AppState/actions'
+import { loadResultFilters, setDashboardCustomView } from 'Store/DashboardState/actions'
 
 import {
   newMapRequests,
@@ -103,7 +103,7 @@ class Config extends React.PureComponent {
   }
 
   clearAdvancedSearch() {
-    this.props.dispatch(setAppState({ districtShowCustomView: false }))
+    this.props.dispatch(setDashboardCustomView(false))
     this.props.dispatch(removeRequestType(c.ADVANCED_SEARCH))
     this.props.dispatch(resetAdvancedSearchReducer(this.newPropertyFilter()))
   }
