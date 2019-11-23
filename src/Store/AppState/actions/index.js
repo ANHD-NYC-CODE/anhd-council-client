@@ -8,11 +8,6 @@ export const setAppState = state => ({
   state,
 })
 
-export const loadResultFilters = resultFilters => ({
-  type: c.LOAD_RESULT_FILTERS,
-  resultFilters,
-})
-
 export const toggleSelectedRequest = request => ({
   type: c.TOGGLE_SELECTED_REQUEST,
   toggledRequest: request,
@@ -26,11 +21,6 @@ export const toggleSelectedAmountFilter = amountFilter => ({
 export const updateAmountFilter = amountFilter => ({
   type: c.UPDATE_AMOUNT_FILTER,
   amountFilter,
-})
-
-export const setDefaultSelections = model => ({
-  type: c.SET_DEFAULT_SELECTED_REQUEST,
-  model,
 })
 
 export const removeRequestType = requestType => ({

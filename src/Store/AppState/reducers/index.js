@@ -17,8 +17,6 @@ export const initialState = {
   selectedRequests: [],
   selectedFilters: [],
   selectedRequest: undefined, // DEPRECATED, still used in lookup however
-  housingTypeResultFilter: undefined,
-  resultFilters: [], // initialize in Config/index.js
   requests: [],
   districtShowCustomView: false,
 }
@@ -31,16 +29,7 @@ export const appStateReducer = (state = Object.freeze(initialState), action = { 
         ...action.state,
       }
     }
-    case c.LOAD_RESULT_FILTERS: {
-      return {
-        ...state,
-        resultFilters: action.resultFilters,
-        housingTypeResultFilter: action.resultFilters[0],
-      }
-    }
     case c.TOGGLE_SELECTED_AMOUNT_FILTER: {
-      const defaultAmountFilter = getDefaultAmountFilter(state.resultFilters.filter(fil => fil.category === 'AMOUNT'))
-
       let selectedFilters = [...state.selectedFilters]
 
       if (selectedFilters.includes(action.toggledFilter)) {
@@ -48,11 +37,6 @@ export const appStateReducer = (state = Object.freeze(initialState), action = { 
       } else {
         selectedFilters.push(action.toggledFilter)
       }
-
-      // Add default request if empty
-      // if (!selectedFilters.length) {
-      //   selectedFilters.push(defaultAmountFilter)
-      // }
 
       return {
         ...state,
@@ -129,15 +113,6 @@ export const appStateReducer = (state = Object.freeze(initialState), action = { 
       return {
         ...state,
         mapFilterDate: action.date,
-      }
-    }
-
-    case c.SET_DEFAULT_SELECTED_REQUEST: {
-      return {
-        ...state,
-        selectedRequests: [getDefaultRequest(state.requests)],
-        selectedRequest: getDefaultRequest(state.requests),
-        housingTypeResultFilter: state.resultFilters[0],
       }
     }
     default:

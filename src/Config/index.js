@@ -17,7 +17,8 @@ import { infoModals } from 'shared/modals/modalsCopy'
 import ConfigLoader from 'shared/components/Loaders/ConfigLoader'
 import PageError from 'shared/components/PageError'
 import Filter from 'shared/classes/Filter'
-import { setAppState, loadResultFilters, removeRequestType } from 'Store/AppState/actions'
+import { setAppState, removeRequestType } from 'Store/AppState/actions'
+import { loadResultFilters } from 'Store/DashboardState/actions'
 
 import {
   newMapRequests,
@@ -187,7 +188,7 @@ const mapStateToProps = state => {
   return {
     advancedSearch: state.advancedSearch,
     appStateMapFilterDate: state.appState.mapFilterDate,
-    appStateResultFilters: state.appState.resultFilters,
+    appStateResultFilters: state.dashboardState.resultFilters,
     datasets: state.dataset.datasets,
     resourceModels: setupResourceModels(state.dataset.datasets),
     councilDistricts: state.council.districts,
