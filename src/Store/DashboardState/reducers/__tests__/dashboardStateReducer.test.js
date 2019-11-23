@@ -53,4 +53,24 @@ describe('DashboardState reducer', () => {
       })
     })
   })
+
+  describe('TOGGLE_SELECTED_AMOUNT_FILTER', () => {
+    it('sets selectedFilters', () => {
+      const filter = 1
+      expect(r.dashboardStateReducer(undefined, a.toggleSelectedAmountFilter(filter))).toEqual({
+        ...r.initialState,
+        selectedFilters: [1],
+      })
+    })
+
+    it('removes a filter from  selectedFilters', () => {
+      const filter = 1
+      expect(
+        r.dashboardStateReducer({ ...r.initialState, selectedFilters: [1] }, a.toggleSelectedAmountFilter(filter))
+      ).toEqual({
+        ...r.initialState,
+        selectedFilters: [],
+      })
+    })
+  })
 })

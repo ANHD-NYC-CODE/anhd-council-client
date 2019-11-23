@@ -6,6 +6,7 @@ export const initialState = {
   mapFilterDate: c.DISTRICT_REQUEST_DATE_ONE,
   resultFilters: [], // initialize in Config/index.js
   districtShowCustomView: false,
+  selectedFilters: [],
 }
 
 export const dashboardStateReducer = (state = Object.freeze(initialState), action = { data: [] }) => {
@@ -39,6 +40,28 @@ export const dashboardStateReducer = (state = Object.freeze(initialState), actio
       return {
         ...state,
         districtShowCustomView: action.districtShowCustomView,
+      }
+    }
+    case c.TOGGLE_SELECTED_AMOUNT_FILTER: {
+      let selectedFilters = [...state.selectedFilters]
+
+      if (selectedFilters.includes(action.toggledFilter)) {
+        selectedFilters = selectedFilters.filter(request => request !== action.toggledFilter)
+      } else {
+        selectedFilters.push(action.toggledFilter)
+      }
+
+      return {
+        ...state,
+        selectedFilters: [...selectedFilters],
+      }
+    }
+    case c.UPDATE_AMOUNT_FILTER: {
+      const selectedFilters = [...state.selectedFilters]
+      selectedFilters[selectedFilters.indexOf(action.amountFilter)] = action.amountFilter
+      return {
+        ...state,
+        selectedFilters,
       }
     }
 

@@ -24,3 +24,13 @@ export const setDashboardCustomView = districtShowCustomView => ({
   type: c.SET_DASHBOARD_CUSTOM_VIEW,
   districtShowCustomView,
 })
+
+export const toggleSelectedAmountFilter = amountFilter => ({
+  type: c.TOGGLE_SELECTED_AMOUNT_FILTER,
+  toggledFilter: amountFilter,
+})
+
+export const updateAmountFilter = amountFilter => ({
+  type: c.UPDATE_AMOUNT_FILTER,
+  amountFilter,
+})
