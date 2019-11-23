@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import * as c from 'shared/constants'
-import { setAppState, setMapFilterDate } from 'Store/AppState/actions'
+import { setAppState } from 'Store/AppState/actions'
 import { getDefaultRequest, getRequestType, getManyRequestTypes, getRequestByConstant } from 'Store/AppState/selectors'
 import { fireMapDateRangeSelectEvent } from 'Store/Analytics/actions'
 import { requestWithAuth } from 'shared/utilities/authUtils'
@@ -9,7 +9,7 @@ import { makeRequest } from 'Store/Request/actions'
 import DistrictDashboardShow from 'DistrictDashboard/DistrictDashboardShow'
 import InnerLoader from 'shared/components/Loaders/InnerLoader'
 import { fireFilterSelectEvent } from 'Store/Analytics/actions'
-import { setHousingTypeResultFilter } from 'Store/DashboardState/actions'
+import { setHousingTypeResultFilter, setMapFilterDate } from 'Store/DashboardState/actions'
 
 class DistrictDashboardRequestsWrapper extends React.PureComponent {
   constructor(props) {

@@ -187,7 +187,6 @@ const loadingSelector = createLoadingSelector([GET_DATASETS, GET_COUNCILS, GET_C
 const mapStateToProps = state => {
   return {
     advancedSearch: state.advancedSearch,
-    appStateMapFilterDate: state.appState.mapFilterDate,
     appStateResultFilters: state.dashboardState.resultFilters,
     datasets: state.dataset.datasets,
     resourceModels: setupResourceModels(state.dataset.datasets),

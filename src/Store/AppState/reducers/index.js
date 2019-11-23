@@ -13,7 +13,6 @@ export const initialState = {
   dashboardTableState: {
     page: 1,
   },
-  mapFilterDate: c.DISTRICT_REQUEST_DATE_ONE,
   selectedRequests: [],
   selectedFilters: [],
   selectedRequest: undefined, // DEPRECATED, still used in lookup however
