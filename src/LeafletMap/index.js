@@ -4,6 +4,7 @@ import * as c from 'shared/constants'
 import L from 'leaflet'
 import { geographySelectionToString } from 'shared/utilities/languageUtils'
 import { setAppState } from 'Store/AppState/actions'
+import { setDashboardMapZoom } from 'Store/DashboardState/actions'
 
 import { Map, TileLayer, Popup } from 'react-leaflet'
 import { Jumbotron, Button, Alert } from 'react-bootstrap'
@@ -101,7 +102,7 @@ export default class LeafletMap extends React.PureComponent {
 
   onMapZoom() {
     if (this.props.dispatch) {
-      this.props.dispatch(setAppState({ dashboardMapZoom: this.mapRef.current.leafletElement.getZoom() }))
+      this.props.dispatch(setDashboardMapZoom(this.mapRef.current.leafletElement.getZoom()))
     }
   }
 

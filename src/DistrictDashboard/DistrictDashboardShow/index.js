@@ -112,7 +112,7 @@ class DistrictDashboardShow extends React.Component {
   }
 
   render() {
-    const resultRecords = this.getResultRecords()
+    const resultRecords = this.getResultRecords() // SLOW!
     return (
       <LayoutContext.Consumer>
         {layout =>
@@ -338,7 +338,7 @@ class DistrictDashboardShow extends React.Component {
                           }
                           selectGeographyData={this.props.config.selectGeographyData}
                           switchView={() => this.setViewTable(1)}
-                          zoom={this.props.appState.dashboardMapZoom}
+                          zoom={this.props.dashboardState.dashboardMapZoom}
                         />
                       </div>
                       <div className={classnames({ 'd-none': !this.props.appState.dashboardTableView })}>
@@ -389,6 +389,7 @@ DistrictDashboardShow.defaultProps = {
 
 DistrictDashboardShow.propTypes = {
   appState: PropTypes.object,
+  dashboardState: PropTypes.object,
   config: PropTypes.object,
   dispatch: PropTypes.func,
   endChangingState: PropTypes.func,
