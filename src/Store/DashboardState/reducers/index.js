@@ -3,6 +3,7 @@ import * as c from 'shared/constants'
 export const initialState = {
   dashboardMapZoom: 14,
   housingTypeResultFilter: undefined,
+  mapFilterDate: c.DISTRICT_REQUEST_DATE_ONE,
   resultFilters: [], // initialize in Config/index.js
 }
 
@@ -25,6 +26,12 @@ export const dashboardStateReducer = (state = Object.freeze(initialState), actio
         ...state,
         resultFilters: action.resultFilters,
         housingTypeResultFilter: action.resultFilters[0],
+      }
+    }
+    case c.SET_MAP_FILTER_DATE: {
+      return {
+        ...state,
+        mapFilterDate: action.date,
       }
     }
 

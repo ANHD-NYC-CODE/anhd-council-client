@@ -14,3 +14,8 @@ export const setHousingTypeResultFilter = housingTypeResultFilter => ({
   type: c.SET_HOUSING_TYPE_RESULT_FILTER,
   housingTypeResultFilter,
 })
+
+export const setMapFilterDate = date => ({
+  type: c.SET_MAP_FILTER_DATE,
+  date,
+})

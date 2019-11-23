@@ -59,7 +59,7 @@ class DistrictDashboardShow extends React.Component {
     const geographyId = this.props.appState.currentGeographyId
     const selectedFilters = this.props.appState.selectedFilters
     const mapFilterDate = () => {
-      switch (this.props.appState.mapFilterDate) {
+      switch (this.props.dashboardState.mapFilterDate) {
         case c.DISTRICT_REQUEST_DATE_ONE:
           return moment(c.DISTRICT_RESULTS_DATE_ONE).format('MM/DD/YYYY')
         case c.DISTRICT_REQUEST_DATE_TWO:
@@ -119,6 +119,7 @@ class DistrictDashboardShow extends React.Component {
           layout.print ? (
             <PrintDistrictDashboard
               appState={this.props.appState}
+              dashboardState={this.props.dashboardState}
               layout={layout}
               config={this.props.config}
               propertySummaryRequest={this.props.propertySummaryRequest}
@@ -168,7 +169,7 @@ class DistrictDashboardShow extends React.Component {
                       <ToggleButtonGroup
                         name="dateRange"
                         type="radio"
-                        value={this.props.appState.mapFilterDate}
+                        value={this.props.dashboardState.mapFilterDate}
                         onChange={this.props.toggleDateRange}
                       >
                         <ToggleButton
@@ -332,11 +333,11 @@ class DistrictDashboardShow extends React.Component {
                       </div>
                       <div className={classnames({ 'd-none': !this.props.appState.dashboardTableView })}>
                         <BaseTable
-                          key={`table-${this.props.appState.mapFilterDate}`}
+                          key={`table-${this.props.dashboardState.mapFilterDate}`}
                           csvBaseFileName={this.constructBaseCsvFileName()}
                           globalTableState={this.props.appState.dashboardTableState}
                           annotationStart={
-                            this.props.appState.districtShowCustomView ? '' : this.props.appState.mapFilterDate
+                            this.props.appState.districtShowCustomView ? '' : this.props.dashboardState.mapFilterDate
                           }
                           datasetModelName={this.props.propertySummaryRequest.tableConfig.datasetModelName}
                           dispatch={this.props.dispatch}

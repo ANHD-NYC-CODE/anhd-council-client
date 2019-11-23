@@ -35,4 +35,13 @@ describe('DashboardState reducer', () => {
       })
     })
   })
+
+  describe('SET_MAP_FILTER_DATE', () => {
+    it('sets mapFilterDate', () => {
+      expect(r.dashboardStateReducer(undefined, a.setMapFilterDate(1))).toEqual({
+        ...r.initialState,
+        mapFilterDate: 1,
+      })
+    })
+  })
 })

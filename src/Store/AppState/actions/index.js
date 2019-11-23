@@ -28,11 +28,6 @@ export const removeRequestType = requestType => ({
   requestType,
 })
 
-export const setMapFilterDate = date => ({
-  type: c.SET_MAP_FILTER_DATE,
-  date,
-})
-
 export const handleSetGeographyRequests = (geographyType, geographyId, requests) => ({
   type: c.SET_GEOGRAPHY_REQUESTS,
   geographyType,
