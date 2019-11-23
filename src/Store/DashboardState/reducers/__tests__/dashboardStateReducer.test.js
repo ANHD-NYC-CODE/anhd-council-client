@@ -44,4 +44,13 @@ describe('DashboardState reducer', () => {
       })
     })
   })
+
+  describe('SET_DASHBOARD_CUSTOM_VIEW', () => {
+    it('sets mapFilterDate', () => {
+      expect(r.dashboardStateReducer(undefined, a.setDashboardCustomView(true))).toEqual({
+        ...r.initialState,
+        districtShowCustomView: true,
+      })
+    })
+  })
 })

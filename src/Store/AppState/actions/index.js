@@ -2,6 +2,7 @@ import * as c from 'shared/constants'
 import { push, replace } from 'connected-react-router'
 import { getGeographyPath, addressResultToPath } from 'shared/utilities/routeUtils'
 import { removeRequest, removeManyRequests } from 'Store/Request/actions'
+import { setDashboardCustomView } from 'Store/DashboardState/actions'
 
 export const setAppState = state => ({
   type: c.SET_APP_STATE,
@@ -104,6 +105,7 @@ export const setAdvancedSearchRequestAndRedirect = ({
   dispatch(removeRequestType(c.ADVANCED_SEARCH))
   dispatch(removeRequest(advancedSearchRequest.requestConstant))
   dispatch(handleSetAdvancedSearchRequest(advancedSearchRequest))
+  dispatch(setDashboardCustomView(true))
 
   if (redirect) {
     const path = getGeographyPath(appState.currentGeographyType)

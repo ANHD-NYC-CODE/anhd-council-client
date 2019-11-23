@@ -5,6 +5,7 @@ export const initialState = {
   housingTypeResultFilter: undefined,
   mapFilterDate: c.DISTRICT_REQUEST_DATE_ONE,
   resultFilters: [], // initialize in Config/index.js
+  districtShowCustomView: false,
 }
 
 export const dashboardStateReducer = (state = Object.freeze(initialState), action = { data: [] }) => {
@@ -32,6 +33,12 @@ export const dashboardStateReducer = (state = Object.freeze(initialState), actio
       return {
         ...state,
         mapFilterDate: action.date,
+      }
+    }
+    case c.SET_DASHBOARD_CUSTOM_VIEW: {
+      return {
+        ...state,
+        districtShowCustomView: action.districtShowCustomView,
       }
     }
 

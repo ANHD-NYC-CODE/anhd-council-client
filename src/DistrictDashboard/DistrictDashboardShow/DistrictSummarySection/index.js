@@ -15,12 +15,14 @@ import ModalContext from 'Modal/ModalContext'
 import LoginModal from 'shared/components/modals/LoginModal'
 import LoginModalFooter from 'shared/components/forms/LoginForm/LoginModalFooter'
 import { fireFilterSelectEvent } from 'Store/Analytics/actions'
+import { setDashboardCustomView } from 'Store/DashboardState/actions'
+
 const DistrictSummarySection = props => {
   const handleResultFilterClick = amountFilter => {
     props.endChangingState()
+    props.dispatch(setDashboardCustomView(false))
     props.dispatch(
       setAppState({
-        districtShowCustomView: false,
         dashboardTableState: {
           ...props.appState.dashboardTableState,
           page: 1,
@@ -57,11 +59,7 @@ const DistrictSummarySection = props => {
                     xl={4}
                     key={`rs-col-${index}`}
                     className="geography-request-summary__container"
-                    onClick={
-                      props.customView
-                        ? () => props.dispatch(setAppState({ districtShowCustomView: false }))
-                        : undefined
-                    }
+                    onClick={props.customView ? () => props.dispatch(setDashboardCustomView(false)) : undefined}
                   >
                     {(amountFilter.resourceModel.resourceConstant === 'FORECLOSURE' ||
                       amountFilter.resourceModel.resourceConstant === 'LISPENDEN') &&
