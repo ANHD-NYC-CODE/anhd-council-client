@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 
 import * as c from 'shared/constants'
 
-import { setAppState, toggleSelectedAmountFilter } from 'Store/AppState/actions'
+import { setAppState } from 'Store/AppState/actions'
+import { setDashboardCustomView, toggleSelectedAmountFilter } from 'Store/DashboardState/actions'
 import UserContext from 'Auth/UserContext'
 import AnnotatedResultFilterCard from 'DistrictDashboard/AnnotatedResultFilterCard'
 import { Row, Col } from 'react-bootstrap'
@@ -15,7 +16,6 @@ import ModalContext from 'Modal/ModalContext'
 import LoginModal from 'shared/components/modals/LoginModal'
 import LoginModalFooter from 'shared/components/forms/LoginForm/LoginModalFooter'
 import { fireFilterSelectEvent } from 'Store/Analytics/actions'
-import { setDashboardCustomView } from 'Store/DashboardState/actions'
 
 const DistrictSummarySection = props => {
   const handleResultFilterClick = amountFilter => {
@@ -98,7 +98,7 @@ const DistrictSummarySection = props => {
                         }
                         disabled={props.customView || props.loading}
                         dispatch={props.dispatch}
-                        selected={!props.customView && props.appState.selectedFilters.includes(amountFilter)}
+                        selected={!props.customView && props.dashboardState.selectedFilters.includes(amountFilter)}
                         handleClick={() => handleResultFilterClick(amountFilter)}
                       />
                     )}

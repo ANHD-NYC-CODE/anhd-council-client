@@ -57,7 +57,7 @@ class DistrictDashboardShow extends React.Component {
     const housingFilter = this.props.appState.housingTypeFilter
     const geographyType = this.props.appState.currentGeographyType
     const geographyId = this.props.appState.currentGeographyId
-    const selectedFilters = this.props.appState.selectedFilters
+    const selectedFilters = this.props.dashboardState.selectedFilters
     const mapFilterDate = () => {
       switch (this.props.dashboardState.mapFilterDate) {
         case c.DISTRICT_REQUEST_DATE_ONE:
@@ -102,9 +102,9 @@ class DistrictDashboardShow extends React.Component {
 
     if (this.props.dashboardState.districtShowCustomView) {
       propertyResults = this.props.requests[c.ADVANCED_SEARCH] || []
-    } else if (this.props.appState.selectedFilters.length) {
+    } else if (this.props.dashboardState.selectedFilters.length) {
       propertyResults = propertyResults.filter(result =>
-        this.props.appState.selectedFilters.some(selectedFilter => selectedFilter.evaluate(result))
+        this.props.dashboardState.selectedFilters.some(selectedFilter => selectedFilter.evaluate(result))
       )
     }
 

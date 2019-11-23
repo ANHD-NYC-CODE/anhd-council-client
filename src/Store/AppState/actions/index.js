@@ -14,16 +14,6 @@ export const toggleSelectedRequest = request => ({
   toggledRequest: request,
 })
 
-export const toggleSelectedAmountFilter = amountFilter => ({
-  type: c.TOGGLE_SELECTED_AMOUNT_FILTER,
-  toggledFilter: amountFilter,
-})
-
-export const updateAmountFilter = amountFilter => ({
-  type: c.UPDATE_AMOUNT_FILTER,
-  amountFilter,
-})
-
 export const removeRequestType = requestType => ({
   type: c.REMOVE_REQUEST_TYPE,
   requestType,

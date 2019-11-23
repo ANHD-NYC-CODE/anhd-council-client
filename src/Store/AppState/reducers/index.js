@@ -14,7 +14,6 @@ export const initialState = {
     page: 1,
   },
   selectedRequests: [],
-  selectedFilters: [],
   selectedRequest: undefined, // DEPRECATED, still used in lookup however
   requests: [],
 }
@@ -27,28 +26,7 @@ export const appStateReducer = (state = Object.freeze(initialState), action = { 
         ...action.state,
       }
     }
-    case c.TOGGLE_SELECTED_AMOUNT_FILTER: {
-      let selectedFilters = [...state.selectedFilters]
 
-      if (selectedFilters.includes(action.toggledFilter)) {
-        selectedFilters = selectedFilters.filter(request => request !== action.toggledFilter)
-      } else {
-        selectedFilters.push(action.toggledFilter)
-      }
-
-      return {
-        ...state,
-        selectedFilters: [...selectedFilters],
-      }
-    }
-    case c.UPDATE_AMOUNT_FILTER: {
-      const selectedFilters = [...state.selectedFilters]
-      selectedFilters[selectedFilters.indexOf(action.amountFilter)] = action.amountFilter
-      return {
-        ...state,
-        selectedFilters,
-      }
-    }
     case c.TOGGLE_SELECTED_REQUEST: {
       const defaultRequest = getDefaultRequest(state.requests)
       const exclusiveRequests = [defaultRequest, { type: c.ADVANCED_SEARCH }].filter(r => r)
