@@ -20,11 +20,11 @@ const getResultRecords = ({
   totalPropertyResults = undefined,
   customSearchResults = undefined,
 } = {}) => {
-  if (!housingTypeResultFilter) housingTypeResultFilter = state.housingTypeResultFilter
-  if (!districtShowCustomView) districtShowCustomView = state.districtShowCustomView
-  if (!selectedFilters) selectedFilters = state.selectedFilters
-  if (!totalPropertyResults) totalPropertyResults = state.totalPropertyResults
-  if (!customSearchResults) customSearchResults = state.customSearchResults
+  if (housingTypeResultFilter === undefined) housingTypeResultFilter = state.housingTypeResultFilter
+  if (districtShowCustomView === undefined) districtShowCustomView = state.districtShowCustomView
+  if (selectedFilters === undefined) selectedFilters = state.selectedFilters
+  if (totalPropertyResults === undefined) totalPropertyResults = state.totalPropertyResults
+  if (customSearchResults === undefined) customSearchResults = state.customSearchResults
 
   const housingTypeFilter =
     !districtShowCustomView && housingTypeResultFilter
