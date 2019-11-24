@@ -18,20 +18,40 @@ describe('DashboardState reducer', () => {
 
   describe('LOAD_RESULT_FILTERS', () => {
     it('sets resultFilters and housingTypeResultFilter', () => {
-      const filters = [1, 2]
+      const filter1 = {
+        id: 1,
+        internalFilter: e => {
+          return e
+        },
+      }
+      const filters = [
+        filter1,
+        {
+          id: 2,
+          internalFilter: e => {
+            return e
+          },
+        },
+      ]
       expect(r.dashboardStateReducer(undefined, a.loadResultFilters(filters))).toEqual({
         ...r.initialState,
         resultFilters: filters,
-        housingTypeResultFilter: 1,
+        housingTypeResultFilter: filter1,
       })
     })
   })
 
   describe('SET_HOUSING_TYPE_RESULT_FILTER', () => {
+    const filter1 = {
+      id: 1,
+      internalFilter: e => {
+        return e
+      },
+    }
     it('sets housingTypeResultFilter', () => {
-      expect(r.dashboardStateReducer(undefined, a.setHousingTypeResultFilter(1))).toEqual({
+      expect(r.dashboardStateReducer(undefined, a.setHousingTypeResultFilter(filter1))).toEqual({
         ...r.initialState,
-        housingTypeResultFilter: 1,
+        housingTypeResultFilter: filter1,
       })
     })
   })

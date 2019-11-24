@@ -36,7 +36,6 @@ class RequestTableWrapper extends React.Component {
   }
 
   getRecords() {
-    console.log('OK', this.props.housingTypeResultFilter)
     return (
       this.props.housingTypeResultFilter.internalFilter(
         this.renderSpecificResults(this.props.results),
