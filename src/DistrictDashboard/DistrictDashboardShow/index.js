@@ -20,8 +20,9 @@ import { geographySelectionToString, shortAmountComparisonString } from 'shared/
 import GeographyProfile from 'DistrictDashboard/GeographyProfile'
 import PrintDistrictDashboard from 'DistrictDashboard/PrintDistrictDashboard'
 import BaseTable from 'shared/components/BaseTable'
+
 import { setAppState } from 'Store/AppState/actions'
-import { setDashboardCustomView } from 'Store/DashboardState/actions'
+import { setDashboardCustomView, setDashboardTableView } from 'Store/DashboardState/actions'
 
 import RequestSummaryWrapper from 'shared/components/RequestSummaryWrapper'
 
@@ -49,7 +50,7 @@ class DistrictDashboardShow extends React.Component {
   }
 
   setTableView(value) {
-    this.props.dispatch(setAppState({ dashboardTableView: value }))
+    this.props.dispatch(setDashboardTableView(value))
   }
 
   constructBaseCsvFileName() {
@@ -264,7 +265,7 @@ class DistrictDashboardShow extends React.Component {
                         name="view"
                         type="radio"
                         className="view-toggle"
-                        value={this.props.appState.dashboardTableView}
+                        value={this.props.dashboardState.dashboardTableView}
                         onChange={this.setTableView}
                       >
                         <ToggleButton className="toggle-link" value={false}>
@@ -279,12 +280,14 @@ class DistrictDashboardShow extends React.Component {
 
                   <Row className="py-2 mb-4 mb-lg-0">
                     <Col>
-                      <div className={classnames({ 'd-none': this.props.appState.dashboardTableView })}>
+                      <div className={classnames({ 'd-none': this.props.dashboardState.dashboardTableView })}>
                         {
                           // Regens map when geo type or ID changes, or if map/table toggled
                         }
                         <LeafletMap
-                          key={`${this.props.appState.currentGeographyType}-${this.props.appState.currentGeographyId}`}
+                          key={`${this.props.appState.currentGeographyType}-${this.props.appState.currentGeographyId}-${
+                            this.props.dashboardState.dashboardTableView
+                          }`}
                           appState={this.props.appState}
                           councilDistricts={this.props.config.councilDistricts}
                           communityDistricts={this.props.config.communityDistricts}
@@ -306,11 +309,11 @@ class DistrictDashboardShow extends React.Component {
                           zoom={this.props.dashboardState.dashboardMapZoom}
                         />
                       </div>
-                      <div className={classnames({ 'd-none': !this.props.appState.dashboardTableView })}>
+                      <div className={classnames({ 'd-none': !this.props.dashboardState.dashboardTableView })}>
                         <BaseTable
                           key={`table-${this.props.dashboardState.mapFilterDate}`}
                           csvBaseFileName={this.constructBaseCsvFileName()}
-                          globalTableState={this.props.appState.dashboardTableState}
+                          globalTableState={this.props.dashboardState.dashboardTableState}
                           annotationStart={
                             this.props.dashboardState.districtShowCustomView
                               ? ''

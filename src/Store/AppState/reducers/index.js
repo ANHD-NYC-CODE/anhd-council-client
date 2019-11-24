@@ -1,5 +1,5 @@
 import * as c from 'shared/constants'
-import { getDefaultRequest, getDefaultAmountFilter } from 'Store/AppState/selectors'
+import { getDefaultRequest } from 'Store/AppState/selectors'
 
 export const initialState = {
   currentGeographyType: undefined,
@@ -9,10 +9,6 @@ export const initialState = {
   changingGeography: false, // whether or not the user is in the process of changing the geo
   changingGeographyType: undefined, // the geography type the user has currently selected for changing.
   changingGeographyId: undefined, // the ID that the user has currently selected for changing
-  dashboardTableView: false, // Showing the map vs the table in dashboard
-  dashboardTableState: {
-    page: 1,
-  },
   selectedRequests: [],
   selectedRequest: undefined, // DEPRECATED, still used in lookup however
   requests: [],

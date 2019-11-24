@@ -58,6 +58,8 @@ class RequestSummaryWrapper extends React.Component {
       this.props.totalResultsFilter.paramMaps
     )
 
+    console.log('CALC')
+
     return (
       <Row className="request-summary">
         <Col
