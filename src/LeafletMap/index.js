@@ -264,7 +264,6 @@ export default class LeafletMap extends React.PureComponent {
             iconConfig={this.props.iconConfig}
             setAlertMessage={this.setAlertMessage}
             switchView={this.props.switchView}
-            displayedResultsFilter={this.props.displayedResultsFilter}
             visible={!(this.props.appState.changingGeographyType && this.props.appState.changingGeographyId)}
           />
         </Map>
@@ -285,10 +284,6 @@ LeafletMap.defaultProps = {
   loading: false,
   results: [],
   height: 0,
-  displayedResultsFilter: {
-    internalFilter: results => results,
-    paramMaps: [],
-  },
   zoom: 12,
 }
 
@@ -302,7 +297,6 @@ LeafletMap.propTypes = {
   closeGeographyPopup: PropTypes.func,
   dispatch: PropTypes.func,
   iconConfig: PropTypes.string,
-  displayedResultsFilter: PropTypes.object,
   results: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   interactive: PropTypes.bool,
   loading: PropTypes.bool,

@@ -9,7 +9,7 @@ import UserContext from 'Auth/UserContext'
 import AnnotatedResultFilterCard from 'DistrictDashboard/AnnotatedResultFilterCard'
 import { Row, Col } from 'react-bootstrap'
 import ResultFilterError from 'shared/components/ResultFilterError'
-import { setHousingTypeResultFilter } from 'Store/DashboardState/actions'
+import { setHousingTypeResultFilter, setDashboardTableState } from 'Store/DashboardState/actions'
 
 import ModalContext from 'Modal/ModalContext'
 
@@ -25,13 +25,17 @@ const DistrictSummarySection = props => {
     }
     props.dispatch(
       setAppState({
-        dashboardTableState: {
-          ...props.appState.dashboardTableState,
-          page: 1,
-        },
         selectedResultFilters: amountFilter,
       })
     )
+
+    props.dispatch(
+      setDashboardTableState({
+        ...props.dashboardState.dashboardTableState,
+        page: 1,
+      })
+    )
+
     props.dispatch(toggleSelectedAmountFilter(amountFilter))
     props.dispatch(fireFilterSelectEvent(amountFilter))
     if (!props.dashboardState.housingTypeResultFilter) {
