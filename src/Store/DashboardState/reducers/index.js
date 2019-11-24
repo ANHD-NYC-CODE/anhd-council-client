@@ -11,6 +11,10 @@ export const initialState = {
   resultRecords: [],
   totalPropertyResults: [],
   customSearchResults: [],
+  dashboardTableView: false, // Showing the map vs the table in dashboard
+  dashboardTableState: {
+    page: 1,
+  },
 }
 
 const getResultRecords = ({
@@ -66,6 +70,18 @@ export const dashboardStateReducer = (state = Object.freeze(initialState), actio
       return {
         ...state,
         dashboardMapZoom: action.dashboardMapZoom,
+      }
+    }
+    case c.SET_DASHBOARD_TABLE_VIEW: {
+      return {
+        ...state,
+        dashboardTableView: action.dashboardTableView,
+      }
+    }
+    case c.SET_DASHBOARD_TABLE_STATE: {
+      return {
+        ...state,
+        dashboardTableState: action.dashboardTableState,
       }
     }
     case c.SET_HOUSING_TYPE_RESULT_FILTER: {
