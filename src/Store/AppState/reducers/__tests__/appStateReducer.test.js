@@ -51,7 +51,6 @@ describe('App State reducer', () => {
         ...r.initialState,
         requests: [...requests, advancedSearchRequest],
         selectedRequests: selectedRequests,
-        districtShowCustomView: true,
       })
     })
   })
