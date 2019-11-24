@@ -20,7 +20,9 @@ import { fireFilterSelectEvent } from 'Store/Analytics/actions'
 const DistrictSummarySection = props => {
   const handleResultFilterClick = amountFilter => {
     props.endChangingState()
-    props.dispatch(setDashboardCustomView(false))
+    if (props.customView) {
+      props.dispatch(setDashboardCustomView(false))
+    }
     props.dispatch(
       setAppState({
         dashboardTableState: {
@@ -44,6 +46,7 @@ const DistrictSummarySection = props => {
       props.dispatch(setHousingTypeResultFilter(props.dashboardState.resultFilters[0]))
     }
   }
+
   return (
     <UserContext.Consumer>
       {auth => {
@@ -90,12 +93,7 @@ const DistrictSummarySection = props => {
                         auth={auth}
                         key={`request-summary-${amountFilter.category}-${index}`}
                         amountFilter={amountFilter}
-                        calculatedTotal={
-                          props.housingTypeResultFilter.internalFilter(
-                            amountFilter.internalFilter(props.totalPropertyResults),
-                            props.housingTypeResultFilter.paramMaps
-                          ).length
-                        }
+                        calculatedTotal={(props.dashboardState.resultFilterCalculations[index] || {}).length}
                         disabled={props.customView || props.loading}
                         dispatch={props.dispatch}
                         selected={!props.customView && props.dashboardState.selectedFilters.includes(amountFilter)}

@@ -4,9 +4,10 @@ export const initialState = {
   dashboardMapZoom: 14,
   housingTypeResultFilter: undefined,
   mapFilterDate: c.DISTRICT_REQUEST_DATE_ONE,
+  resultFilterCalculations: [],
   resultFilters: [], // initialize in Config/index.js
-  districtShowCustomView: false,
   selectedFilters: [],
+  districtShowCustomView: false,
   resultRecords: [],
   totalPropertyResults: [],
   customSearchResults: [],
@@ -20,11 +21,11 @@ const getResultRecords = ({
   totalPropertyResults = undefined,
   customSearchResults = undefined,
 } = {}) => {
-  if (!housingTypeResultFilter) housingTypeResultFilter = state.housingTypeResultFilter
-  if (!districtShowCustomView) districtShowCustomView = state.districtShowCustomView
-  if (!selectedFilters) selectedFilters = state.selectedFilters
-  if (!totalPropertyResults) totalPropertyResults = state.totalPropertyResults
-  if (!customSearchResults) customSearchResults = state.customSearchResults
+  if (housingTypeResultFilter === undefined) housingTypeResultFilter = state.housingTypeResultFilter
+  if (districtShowCustomView === undefined) districtShowCustomView = state.districtShowCustomView
+  if (selectedFilters === undefined) selectedFilters = state.selectedFilters
+  if (totalPropertyResults === undefined) totalPropertyResults = state.totalPropertyResults
+  if (customSearchResults === undefined) customSearchResults = state.customSearchResults
 
   const housingTypeFilter =
     !districtShowCustomView && housingTypeResultFilter
@@ -44,6 +45,21 @@ const getResultRecords = ({
   return housingTypeFilter(propertyResults)
 }
 
+const calculateAmountTotals = ({ state, housingTypeResultFilter, selectedFilters, totalPropertyResults }) => {
+  if (housingTypeResultFilter === undefined) housingTypeResultFilter = state.housingTypeResultFilter
+  if (selectedFilters === undefined) selectedFilters = state.selectedFilters
+  if (totalPropertyResults === undefined) totalPropertyResults = state.totalPropertyResults
+
+  return state.resultFilters
+    .filter(f => f.category === 'AMOUNT')
+    .map(amountFilter => {
+      return housingTypeResultFilter.internalFilter(
+        amountFilter.internalFilter(totalPropertyResults),
+        housingTypeResultFilter.paramMaps
+      )
+    })
+}
+
 export const dashboardStateReducer = (state = Object.freeze(initialState), action = { data: [] }) => {
   switch (action.type) {
     case c.SET_DASHBOARD_MAP_ZOOM: {
@@ -57,6 +73,10 @@ export const dashboardStateReducer = (state = Object.freeze(initialState), actio
         ...state,
         housingTypeResultFilter: action.housingTypeResultFilter,
         resultRecords: getResultRecords({ state, housingTypeResultFilter: action.housingTypeResultFilter }),
+        resultFilterCalculations: calculateAmountTotals({
+          state,
+          housingTypeResultFilter: action.housingTypeResultFilter,
+        }),
       }
     }
     case c.LOAD_RESULT_FILTERS: {
@@ -65,12 +85,15 @@ export const dashboardStateReducer = (state = Object.freeze(initialState), actio
         resultFilters: action.resultFilters,
         housingTypeResultFilter: action.resultFilters[0],
         resultRecords: getResultRecords({ state, housingTypeResultFilter: action.resultFilters[0] }),
+        resultFilterCalculations: calculateAmountTotals({ state, housingTypeResultFilter: action.resultFilters[0] }),
       }
     }
     case c.SET_MAP_FILTER_DATE: {
       return {
         ...state,
         mapFilterDate: action.date,
+        resultRecords: getResultRecords({ state }),
+        resultFilterCalculations: calculateAmountTotals({ state }),
       }
     }
     case c.SET_DASHBOARD_CUSTOM_VIEW: {
@@ -103,6 +126,7 @@ export const dashboardStateReducer = (state = Object.freeze(initialState), actio
         ...state,
         selectedFilters,
         resultRecords: getResultRecords({ state, selectedFilters }),
+        resultFilterCalculations: calculateAmountTotals({ state, selectedFilters }),
       }
     }
 
@@ -111,6 +135,7 @@ export const dashboardStateReducer = (state = Object.freeze(initialState), actio
         ...state,
         totalPropertyResults: action.totalPropertyResults,
         resultRecords: getResultRecords({ state, totalPropertyResults: action.totalPropertyResults }),
+        resultFilterCalculations: calculateAmountTotals({ state, totalPropertyResults: action.totalPropertyResults }),
       }
     }
 
@@ -119,6 +144,7 @@ export const dashboardStateReducer = (state = Object.freeze(initialState), actio
         ...state,
         customSearchResults: action.customSearchResults,
         resultRecords: getResultRecords({ state, customSearchResults: action.customSearchResults }),
+        resultFilterCalculations: calculateAmountTotals({ state, customSearchResults: action.customSearchResults }),
       }
     }
 
