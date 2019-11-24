@@ -20,8 +20,8 @@ import { geographySelectionToString, shortAmountComparisonString } from 'shared/
 import GeographyProfile from 'DistrictDashboard/GeographyProfile'
 import PrintDistrictDashboard from 'DistrictDashboard/PrintDistrictDashboard'
 import BaseTable from 'shared/components/BaseTable'
-import { setAppState } from 'Store/AppState/actions'
-import { setDashboardCustomView } from 'Store/DashboardState/actions'
+
+import { setDashboardCustomView, setDashboardTableView } from 'Store/DashboardState/actions'
 
 import RequestSummaryWrapper from 'shared/components/RequestSummaryWrapper'
 
@@ -36,7 +36,6 @@ class DistrictDashboardShow extends React.Component {
 
     this.constructBaseCsvFileName = this.constructBaseCsvFileName.bind(this)
     this.getGeographySummaryResultsFilter = this.getGeographySummaryResultsFilter.bind(this)
-    this.getDisplayedResultsFilter = this.getDisplayedResultsFilter.bind(this)
   }
 
   componentDidUpdate() {
@@ -49,11 +48,10 @@ class DistrictDashboardShow extends React.Component {
   }
 
   setTableView(value) {
-    this.props.dispatch(setAppState({ dashboardTableView: value }))
+    this.props.dispatch(setDashboardTableView(value))
   }
 
   constructBaseCsvFileName() {
-    // TODO: add date, housing filter, dataset filters
     const housingFilter = this.props.appState.housingTypeFilter
     const geographyType = this.props.appState.currentGeographyType
     const geographyId = this.props.appState.currentGeographyId
@@ -81,10 +79,6 @@ class DistrictDashboardShow extends React.Component {
   }
 
   getGeographySummaryResultsFilter() {
-    return this.props.housingTypeResultFilter
-  }
-
-  getDisplayedResultsFilter() {
     return this.props.housingTypeResultFilter
   }
 
@@ -250,7 +244,9 @@ class DistrictDashboardShow extends React.Component {
                       dispatch={this.props.dispatch}
                       propertySummaryRequest={this.props.propertySummaryRequest}
                       switchSelectedFilter={this.props.switchSelectedFilter}
+                      housingTypeResults={this.props.dashboardState.housingTypeResults}
                       housingTypeResultFilter={this.props.housingTypeResultFilter}
+                      results={this.props.dashboardState.totalPropertyResults}
                     />
                   </Row>
                 </Col>
@@ -264,7 +260,7 @@ class DistrictDashboardShow extends React.Component {
                         name="view"
                         type="radio"
                         className="view-toggle"
-                        value={this.props.appState.dashboardTableView}
+                        value={this.props.dashboardState.dashboardTableView}
                         onChange={this.setTableView}
                       >
                         <ToggleButton className="toggle-link" value={false}>
@@ -279,12 +275,14 @@ class DistrictDashboardShow extends React.Component {
 
                   <Row className="py-2 mb-4 mb-lg-0">
                     <Col>
-                      <div className={classnames({ 'd-none': this.props.appState.dashboardTableView })}>
+                      <div className={classnames({ 'd-none': this.props.dashboardState.dashboardTableView })}>
                         {
                           // Regens map when geo type or ID changes, or if map/table toggled
                         }
                         <LeafletMap
-                          key={`${this.props.appState.currentGeographyType}-${this.props.appState.currentGeographyId}`}
+                          key={`${this.props.appState.currentGeographyType}-${this.props.appState.currentGeographyId}-${
+                            this.props.dashboardState.dashboardTableView
+                          }`}
                           appState={this.props.appState}
                           councilDistricts={this.props.config.councilDistricts}
                           communityDistricts={this.props.config.communityDistricts}
@@ -299,21 +297,16 @@ class DistrictDashboardShow extends React.Component {
                           iconConfig="MULTIPLE"
                           loading={this.props.loading}
                           results={resultRecords}
-                          displayedResultsFilter={
-                            this.props.appState.selectedRequests.some(r => r.type === c.ADVANCED_SEARCH)
-                              ? undefined
-                              : this.getDisplayedResultsFilter()
-                          }
                           selectGeographyData={this.props.config.selectGeographyData}
                           switchView={() => this.setViewTable(1)}
                           zoom={this.props.dashboardState.dashboardMapZoom}
                         />
                       </div>
-                      <div className={classnames({ 'd-none': !this.props.appState.dashboardTableView })}>
+                      <div className={classnames({ 'd-none': !this.props.dashboardState.dashboardTableView })}>
                         <BaseTable
                           key={`table-${this.props.dashboardState.mapFilterDate}`}
                           csvBaseFileName={this.constructBaseCsvFileName()}
-                          globalTableState={this.props.appState.dashboardTableState}
+                          globalTableState={this.props.dashboardState.dashboardTableState}
                           annotationStart={
                             this.props.dashboardState.districtShowCustomView
                               ? ''

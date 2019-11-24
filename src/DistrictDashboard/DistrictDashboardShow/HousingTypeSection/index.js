@@ -5,7 +5,6 @@ import HousingTypeResultCard from 'shared/components/ResultCard/HousingTypeResul
 import RequestSummaryWrapper from 'shared/components/RequestSummaryWrapper'
 import ConfigContext from 'Config/ConfigContext'
 import * as c from 'shared/constants'
-import { setAppState } from 'Store/AppState/actions'
 import { setDashboardCustomView } from 'Store/DashboardState/actions'
 
 import { Row, Col } from 'react-bootstrap'
@@ -46,7 +45,8 @@ const HousingTypeSection = props => {
                         resultsComponent={HousingTypeResultCard}
                         request={props.propertySummaryRequest}
                         selected={props.customView ? undefined : isSelected(props, ownResultFilter)}
-                        totalResultsFilter={ownResultFilter === residentialFilter ? undefined : residentialFilter}
+                        results={props.housingTypeResults[index]}
+                        totalResults={props.results}
                         unitsLabel={
                           ownResultFilter === residentialFilter ? 'of all properties' : 'of residential units'
                         }
@@ -70,6 +70,7 @@ HousingTypeSection.propTypes = {
   propertyResource: PropTypes.object,
   housingTypeResultFilter: PropTypes.object,
   switchSelectedFilter: PropTypes.func,
+  results: PropTypes.array,
 }
 
 export default HousingTypeSection
