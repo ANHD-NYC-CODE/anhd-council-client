@@ -315,6 +315,7 @@ describe('DistrictDashboard', () => {
           .find('button.summary-result-card')
           .simulate('click')
         newWrapper.update()
+
         expect(newWrapper.findWhere(node => node.key() === 'request-summary-custom-search').props().selected).toEqual(
           true
         )

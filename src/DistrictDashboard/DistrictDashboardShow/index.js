@@ -21,6 +21,7 @@ import GeographyProfile from 'DistrictDashboard/GeographyProfile'
 import PrintDistrictDashboard from 'DistrictDashboard/PrintDistrictDashboard'
 import BaseTable from 'shared/components/BaseTable'
 import { setAppState } from 'Store/AppState/actions'
+import { setDashboardCustomView } from 'Store/DashboardState/actions'
 
 import RequestSummaryWrapper from 'shared/components/RequestSummaryWrapper'
 
@@ -184,9 +185,7 @@ class DistrictDashboardShow extends React.Component {
                               label={'Custom Search'}
                               onClick={() =>
                                 this.props.dispatch(
-                                  setAppState({
-                                    districtShowCustomView: !this.props.dashboardState.districtShowCustomView,
-                                  })
+                                  setDashboardCustomView(!this.props.dashboardState.districtShowCustomView)
                                 )
                               }
                               resultsComponent={SummaryResultCard}
@@ -285,9 +284,7 @@ class DistrictDashboardShow extends React.Component {
                           // Regens map when geo type or ID changes, or if map/table toggled
                         }
                         <LeafletMap
-                          key={`${this.props.appState.currentGeographyType}-${this.props.appState.currentGeographyId}-${
-                            this.props.appState.dashboardTableView ? 'table' : 'map'
-                          }`}
+                          key={`${this.props.appState.currentGeographyType}-${this.props.appState.currentGeographyId}`}
                           appState={this.props.appState}
                           councilDistricts={this.props.config.councilDistricts}
                           communityDistricts={this.props.config.communityDistricts}
