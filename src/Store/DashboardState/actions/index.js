@@ -44,3 +44,13 @@ export const setCustomSearchResults = (customSearchResults = []) => ({
   type: c.SET_CUSTOM_SEARCH_RESULTS,
   customSearchResults,
 })
+
+export const setDashboardTableView = dashboardTableView => ({
+  type: c.SET_DASHBOARD_TABLE_VIEW,
+  dashboardTableView,
+})
+
+export const setDashboardTableState = (dashboardTableState = {}) => ({
+  type: c.SET_DASHBOARD_TABLE_STATE,
+  dashboardTableState,
+})
