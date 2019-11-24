@@ -72,6 +72,38 @@ const PropertySummaryBody = props => {
                 </span>
               </Col>
             </Row>
+            <Row>
+              <Col xs={8}>
+                <label className="profile-summary-body__label">State Assembly</label>
+              </Col>
+              <Col>
+                <span className="d-flex profile-summary__geography">
+                  <BaseLink
+                    className="profile-summary-body__value "
+                    href={geographyToLink('STATE_ASSEMBLY', props.profile.stateassembly)}
+                  >
+                    {props.profile.stateassembly}
+                    <FontAwesomeIcon className="ml-2" icon={faLocationArrow} size="xs" />
+                  </BaseLink>
+                </span>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={8}>
+                <label className="profile-summary-body__label">State Senate</label>
+              </Col>
+              <Col>
+                <span className="d-flex profile-summary__geography">
+                  <BaseLink
+                    className="profile-summary-body__value "
+                    href={geographyToLink('STATE_SENATE', props.profile.statesenate)}
+                  >
+                    {props.profile.statesenate}
+                    <FontAwesomeIcon className="ml-2" icon={faLocationArrow} size="xs" />
+                  </BaseLink>
+                </span>
+              </Col>
+            </Row>
             <hr />
           </div>
         )}

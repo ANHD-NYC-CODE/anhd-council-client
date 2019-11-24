@@ -121,6 +121,98 @@ const customStyle = size => {
           height: '60px',
         }),
       }
+    case 'xl-form-control':
+      return {
+        control: base => ({
+          ...base,
+          minHeight: '1px',
+          height: '58px',
+          boxShadow: 'none',
+          outline: 'none',
+          border: 'none',
+          borderBottom: '4px dotted #b9b8b8',
+          borderRadius: 'none',
+          fontSize: '2rem',
+          lineHeight: '2.25',
+        }),
+        dropdownIndicator: base => ({
+          ...base,
+          paddingTop: 0,
+          paddingBottom: 0,
+        }),
+        clearIndicator: base => ({
+          ...base,
+          paddingTop: 0,
+          paddingBottom: 0,
+        }),
+        container: base => ({
+          ...base,
+          marginTop: '0px',
+          minHeight: '1px',
+          height: '60px',
+          fontSize: '2rem',
+        }),
+        menu: base => ({
+          ...base,
+          marginTop: '0px',
+          zIndex: '10',
+        }),
+        menuList: base => ({
+          ...base,
+          marginTop: '0px',
+        }),
+        valueContainer: base => ({
+          ...base,
+          marginTop: '0px',
+          minHeight: '1px',
+          height: '60px',
+        }),
+      }
+    case 'navbar-select':
+      return {
+        control: base => ({
+          ...base,
+          minHeight: '1px',
+          height: '48px',
+          boxShadow: 'none',
+          outline: 'none',
+          border: 'none',
+          borderRadius: 'none',
+          fontSize: '1.25rem',
+        }),
+        dropdownIndicator: base => ({
+          ...base,
+          paddingTop: 0,
+          paddingBottom: 0,
+        }),
+        clearIndicator: base => ({
+          ...base,
+          paddingTop: 0,
+          paddingBottom: 0,
+        }),
+        container: base => ({
+          ...base,
+          marginTop: '0px',
+          minHeight: '1px',
+          height: '48px',
+        }),
+        menu: base => ({
+          ...base,
+          marginTop: '0px',
+          zIndex: '10',
+          fontSize: '1.25rem',
+        }),
+        menuList: base => ({
+          ...base,
+          marginTop: '0px',
+        }),
+        valueContainer: base => ({
+          ...base,
+          marginTop: '0px',
+          minHeight: '1px',
+          height: '60px',
+        }),
+      }
     default:
       return {
         control: base => ({
