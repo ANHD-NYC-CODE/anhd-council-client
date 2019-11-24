@@ -101,10 +101,6 @@ export const dashboardStateReducer = (state = Object.freeze(initialState), actio
         ...state,
         districtShowCustomView: action.districtShowCustomView,
         resultRecords: getResultRecords({ state, districtShowCustomView: action.districtShowCustomView }),
-        resultFilterCalculations: calculateAmountTotals({
-          state,
-          districtShowCustomView: action.districtShowCustomView,
-        }),
       }
     }
     case c.TOGGLE_SELECTED_AMOUNT_FILTER: {
