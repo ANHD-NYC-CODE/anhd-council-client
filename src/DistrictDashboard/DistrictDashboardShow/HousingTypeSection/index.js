@@ -6,6 +6,7 @@ import RequestSummaryWrapper from 'shared/components/RequestSummaryWrapper'
 import ConfigContext from 'Config/ConfigContext'
 import * as c from 'shared/constants'
 import { setAppState } from 'Store/AppState/actions'
+import { setDashboardCustomView } from 'Store/DashboardState/actions'
 
 import { Row, Col } from 'react-bootstrap'
 
@@ -32,11 +33,7 @@ const HousingTypeSection = props => {
                       sm={6}
                       lg={12}
                       key={`housingtype-summary-${index}`}
-                      onClick={
-                        props.customView
-                          ? () => props.dispatch(setAppState({ districtShowCustomView: false }))
-                          : undefined
-                      }
+                      onClick={props.customView ? () => props.dispatch(setDashboardCustomView(false)) : undefined}
                     >
                       <RequestSummaryWrapper
                         key={`housingtype-wrapper-${index}`}

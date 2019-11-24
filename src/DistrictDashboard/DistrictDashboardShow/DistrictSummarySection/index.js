@@ -3,23 +3,26 @@ import PropTypes from 'prop-types'
 
 import * as c from 'shared/constants'
 
-import { setAppState, toggleSelectedAmountFilter } from 'Store/AppState/actions'
+import { setAppState } from 'Store/AppState/actions'
+import { setDashboardCustomView, toggleSelectedAmountFilter } from 'Store/DashboardState/actions'
 import UserContext from 'Auth/UserContext'
 import AnnotatedResultFilterCard from 'DistrictDashboard/AnnotatedResultFilterCard'
 import { Row, Col } from 'react-bootstrap'
 import ResultFilterError from 'shared/components/ResultFilterError'
+import { setHousingTypeResultFilter } from 'Store/DashboardState/actions'
 
 import ModalContext from 'Modal/ModalContext'
 
 import LoginModal from 'shared/components/modals/LoginModal'
 import LoginModalFooter from 'shared/components/forms/LoginForm/LoginModalFooter'
 import { fireFilterSelectEvent } from 'Store/Analytics/actions'
+
 const DistrictSummarySection = props => {
   const handleResultFilterClick = amountFilter => {
     props.endChangingState()
+    props.dispatch(setDashboardCustomView(false))
     props.dispatch(
       setAppState({
-        districtShowCustomView: false,
         dashboardTableState: {
           ...props.appState.dashboardTableState,
           page: 1,
@@ -29,15 +32,16 @@ const DistrictSummarySection = props => {
     )
     props.dispatch(toggleSelectedAmountFilter(amountFilter))
     props.dispatch(fireFilterSelectEvent(amountFilter))
-    if (!props.appState.housingTypeResultFilter) {
+    if (!props.dashboardState.housingTypeResultFilter) {
       props.dispatch(
         setAppState({
-          housingTypeResultFilter: props.appState.resultFilters[0],
           changingGeography: false, // End changing state
           changingGeographyId: undefined,
           changingGeographyType: undefined,
         })
       )
+
+      props.dispatch(setHousingTypeResultFilter(props.dashboardState.resultFilters[0]))
     }
   }
   return (
@@ -45,7 +49,7 @@ const DistrictSummarySection = props => {
       {auth => {
         return (
           <Row className="district-summary-section">
-            {props.appState.resultFilters
+            {props.dashboardState.resultFilters
               .filter(f => f.category === 'AMOUNT')
               .map((amountFilter, index) => {
                 return (
@@ -55,11 +59,7 @@ const DistrictSummarySection = props => {
                     xl={4}
                     key={`rs-col-${index}`}
                     className="geography-request-summary__container"
-                    onClick={
-                      props.customView
-                        ? () => props.dispatch(setAppState({ districtShowCustomView: false }))
-                        : undefined
-                    }
+                    onClick={props.customView ? () => props.dispatch(setDashboardCustomView(false)) : undefined}
                   >
                     {(amountFilter.resourceModel.resourceConstant === 'FORECLOSURE' ||
                       amountFilter.resourceModel.resourceConstant === 'LISPENDEN') &&
@@ -98,7 +98,7 @@ const DistrictSummarySection = props => {
                         }
                         disabled={props.customView || props.loading}
                         dispatch={props.dispatch}
-                        selected={!props.customView && props.appState.selectedFilters.includes(amountFilter)}
+                        selected={!props.customView && props.dashboardState.selectedFilters.includes(amountFilter)}
                         handleClick={() => handleResultFilterClick(amountFilter)}
                       />
                     )}
@@ -116,6 +116,8 @@ DistrictSummarySection.defaultProps = {
   customView: false,
 }
 DistrictSummarySection.propTypes = {
+  appState: PropTypes.object,
+  dashboardState: PropTypes.object,
   customView: PropTypes.bool,
   loading: PropTypes.bool,
 }
