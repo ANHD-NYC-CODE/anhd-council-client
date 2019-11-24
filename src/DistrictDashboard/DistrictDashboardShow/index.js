@@ -21,7 +21,6 @@ import GeographyProfile from 'DistrictDashboard/GeographyProfile'
 import PrintDistrictDashboard from 'DistrictDashboard/PrintDistrictDashboard'
 import BaseTable from 'shared/components/BaseTable'
 
-import { setAppState } from 'Store/AppState/actions'
 import { setDashboardCustomView, setDashboardTableView } from 'Store/DashboardState/actions'
 
 import RequestSummaryWrapper from 'shared/components/RequestSummaryWrapper'
@@ -37,7 +36,6 @@ class DistrictDashboardShow extends React.Component {
 
     this.constructBaseCsvFileName = this.constructBaseCsvFileName.bind(this)
     this.getGeographySummaryResultsFilter = this.getGeographySummaryResultsFilter.bind(this)
-    this.getDisplayedResultsFilter = this.getDisplayedResultsFilter.bind(this)
   }
 
   componentDidUpdate() {
@@ -54,7 +52,6 @@ class DistrictDashboardShow extends React.Component {
   }
 
   constructBaseCsvFileName() {
-    // TODO: add date, housing filter, dataset filters
     const housingFilter = this.props.appState.housingTypeFilter
     const geographyType = this.props.appState.currentGeographyType
     const geographyId = this.props.appState.currentGeographyId
@@ -82,10 +79,6 @@ class DistrictDashboardShow extends React.Component {
   }
 
   getGeographySummaryResultsFilter() {
-    return this.props.housingTypeResultFilter
-  }
-
-  getDisplayedResultsFilter() {
     return this.props.housingTypeResultFilter
   }
 
@@ -251,7 +244,9 @@ class DistrictDashboardShow extends React.Component {
                       dispatch={this.props.dispatch}
                       propertySummaryRequest={this.props.propertySummaryRequest}
                       switchSelectedFilter={this.props.switchSelectedFilter}
+                      housingTypeResults={this.props.dashboardState.housingTypeResults}
                       housingTypeResultFilter={this.props.housingTypeResultFilter}
+                      results={this.props.dashboardState.totalPropertyResults}
                     />
                   </Row>
                 </Col>
@@ -299,11 +294,6 @@ class DistrictDashboardShow extends React.Component {
                           iconConfig="MULTIPLE"
                           loading={this.props.loading}
                           results={resultRecords}
-                          displayedResultsFilter={
-                            this.props.appState.selectedRequests.some(r => r.type === c.ADVANCED_SEARCH)
-                              ? undefined
-                              : this.getDisplayedResultsFilter()
-                          }
                           selectGeographyData={this.props.config.selectGeographyData}
                           switchView={() => this.setViewTable(1)}
                           zoom={this.props.dashboardState.dashboardMapZoom}
