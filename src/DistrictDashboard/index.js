@@ -247,7 +247,7 @@ const makeMapStateToProps = () => {
       loading: loadingSelector(state),
       selectedError: errorSelector(state),
       requests: state.requests,
-      totalPropertyResults: state.requests['GEOGRAPHY_HOUSING_TYPE_ALL'],
+      totalPropertyResults: state.requests[c.GEOGRAPHY_HOUSING_TYPE_ALL],
     }
   }
   return mapStateToProps

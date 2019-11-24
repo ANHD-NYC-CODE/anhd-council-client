@@ -33,7 +33,6 @@ class DistrictDashboardShow extends React.Component {
     super(props)
     this.setTableView = this.setTableView.bind(this)
 
-    this.getResultRecords = this.getResultRecords.bind(this)
     this.constructBaseCsvFileName = this.constructBaseCsvFileName.bind(this)
     this.getGeographySummaryResultsFilter = this.getGeographySummaryResultsFilter.bind(this)
     this.getDisplayedResultsFilter = this.getDisplayedResultsFilter.bind(this)
@@ -88,31 +87,8 @@ class DistrictDashboardShow extends React.Component {
     return this.props.housingTypeResultFilter
   }
 
-  getResultRecords() {
-    const housingTypeFilter =
-      !this.props.dashboardState.districtShowCustomView && this.props.dashboardState.housingTypeResultFilter
-        ? results =>
-            this.props.dashboardState.housingTypeResultFilter.internalFilter(
-              results,
-              this.props.dashboardState.housingTypeResultFilter.paramMaps
-            )
-        : results => results
-
-    let propertyResults = this.props.totalPropertyResults
-
-    if (this.props.dashboardState.districtShowCustomView) {
-      propertyResults = this.props.requests[c.ADVANCED_SEARCH] || []
-    } else if (this.props.dashboardState.selectedFilters.length) {
-      propertyResults = propertyResults.filter(result =>
-        this.props.dashboardState.selectedFilters.some(selectedFilter => selectedFilter.evaluate(result))
-      )
-    }
-
-    return housingTypeFilter(propertyResults)
-  }
-
   render() {
-    const resultRecords = this.getResultRecords() // SLOW!
+    const resultRecords = this.props.dashboardState.resultRecords
     return (
       <LayoutContext.Consumer>
         {layout =>

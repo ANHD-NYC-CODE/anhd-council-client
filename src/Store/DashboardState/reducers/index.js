@@ -7,6 +7,41 @@ export const initialState = {
   resultFilters: [], // initialize in Config/index.js
   districtShowCustomView: false,
   selectedFilters: [],
+  resultRecords: [],
+  totalPropertyResults: [],
+  customSearchResults: [],
+}
+
+const getResultRecords = ({
+  state,
+  housingTypeResultFilter = undefined,
+  districtShowCustomView = undefined,
+  selectedFilters = undefined,
+  totalPropertyResults = undefined,
+  customSearchResults = undefined,
+} = {}) => {
+  if (!housingTypeResultFilter) housingTypeResultFilter = state.housingTypeResultFilter
+  if (!districtShowCustomView) districtShowCustomView = state.districtShowCustomView
+  if (!selectedFilters) selectedFilters = state.selectedFilters
+  if (!totalPropertyResults) totalPropertyResults = state.totalPropertyResults
+  if (!customSearchResults) customSearchResults = state.customSearchResults
+
+  const housingTypeFilter =
+    !districtShowCustomView && housingTypeResultFilter
+      ? results => housingTypeResultFilter.internalFilter(results, housingTypeResultFilter.paramMaps)
+      : results => results
+
+  let propertyResults = totalPropertyResults
+
+  if (districtShowCustomView) {
+    propertyResults = customSearchResults
+  } else if (selectedFilters.length) {
+    propertyResults = propertyResults.filter(result =>
+      selectedFilters.some(selectedFilter => selectedFilter.evaluate(result))
+    )
+  }
+
+  return housingTypeFilter(propertyResults)
 }
 
 export const dashboardStateReducer = (state = Object.freeze(initialState), action = { data: [] }) => {
@@ -21,6 +56,7 @@ export const dashboardStateReducer = (state = Object.freeze(initialState), actio
       return {
         ...state,
         housingTypeResultFilter: action.housingTypeResultFilter,
+        resultRecords: getResultRecords({ state, housingTypeResultFilter: action.housingTypeResultFilter }),
       }
     }
     case c.LOAD_RESULT_FILTERS: {
@@ -28,6 +64,7 @@ export const dashboardStateReducer = (state = Object.freeze(initialState), actio
         ...state,
         resultFilters: action.resultFilters,
         housingTypeResultFilter: action.resultFilters[0],
+        resultRecords: getResultRecords({ state, housingTypeResultFilter: action.resultFilters[0] }),
       }
     }
     case c.SET_MAP_FILTER_DATE: {
@@ -40,6 +77,7 @@ export const dashboardStateReducer = (state = Object.freeze(initialState), actio
       return {
         ...state,
         districtShowCustomView: action.districtShowCustomView,
+        resultRecords: getResultRecords({ state, districtShowCustomView: action.districtShowCustomView }),
       }
     }
     case c.TOGGLE_SELECTED_AMOUNT_FILTER: {
@@ -51,9 +89,11 @@ export const dashboardStateReducer = (state = Object.freeze(initialState), actio
         selectedFilters.push(action.toggledFilter)
       }
 
+      selectedFilters = [...selectedFilters]
       return {
         ...state,
-        selectedFilters: [...selectedFilters],
+        selectedFilters,
+        resultRecords: getResultRecords({ state, selectedFilters }),
       }
     }
     case c.UPDATE_AMOUNT_FILTER: {
@@ -62,6 +102,23 @@ export const dashboardStateReducer = (state = Object.freeze(initialState), actio
       return {
         ...state,
         selectedFilters,
+        resultRecords: getResultRecords({ state, selectedFilters }),
+      }
+    }
+
+    case c.SET_TOTAL_PROPERTY_RESULTS: {
+      return {
+        ...state,
+        totalPropertyResults: action.totalPropertyResults,
+        resultRecords: getResultRecords({ state, totalPropertyResults: action.totalPropertyResults }),
+      }
+    }
+
+    case c.SET_CUSTOM_SEARCH_RESULTS: {
+      return {
+        ...state,
+        customSearchResults: action.customSearchResults,
+        resultRecords: getResultRecords({ state, customSearchResults: action.customSearchResults }),
       }
     }
 
