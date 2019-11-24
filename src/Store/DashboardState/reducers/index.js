@@ -1,4 +1,5 @@
 import * as c from 'shared/constants'
+import Property from 'shared/models/resources/Property'
 
 export const initialState = {
   dashboardMapZoom: 14,
@@ -9,8 +10,21 @@ export const initialState = {
   selectedFilters: [],
   districtShowCustomView: false,
   resultRecords: [],
+  housingTypeResults: [],
   totalPropertyResults: [],
   customSearchResults: [],
+  dashboardTableView: false, // Showing the map vs the table in dashboard
+  dashboardTableState: {
+    page: 1,
+  },
+}
+
+const calculateHousingTypeResults = ({ state, totalPropertyResults = undefined }) => {
+  if (totalPropertyResults === undefined) totalPropertyResults = state.totalPropertyResults
+
+  return Property().ownResultFilters.map(ownResultFilter => {
+    return ownResultFilter.internalFilter(totalPropertyResults, ownResultFilter.paramMaps)
+  })
 }
 
 const getResultRecords = ({
@@ -66,6 +80,18 @@ export const dashboardStateReducer = (state = Object.freeze(initialState), actio
       return {
         ...state,
         dashboardMapZoom: action.dashboardMapZoom,
+      }
+    }
+    case c.SET_DASHBOARD_TABLE_VIEW: {
+      return {
+        ...state,
+        dashboardTableView: action.dashboardTableView,
+      }
+    }
+    case c.SET_DASHBOARD_TABLE_STATE: {
+      return {
+        ...state,
+        dashboardTableState: action.dashboardTableState,
       }
     }
     case c.SET_HOUSING_TYPE_RESULT_FILTER: {
@@ -135,6 +161,7 @@ export const dashboardStateReducer = (state = Object.freeze(initialState), actio
         ...state,
         totalPropertyResults: action.totalPropertyResults,
         resultRecords: getResultRecords({ state, totalPropertyResults: action.totalPropertyResults }),
+        housingTypeResults: calculateHousingTypeResults({ state, totalPropertyResults: action.totalPropertyResults }),
         resultFilterCalculations: calculateAmountTotals({ state, totalPropertyResults: action.totalPropertyResults }),
       }
     }

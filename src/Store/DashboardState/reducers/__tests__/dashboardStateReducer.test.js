@@ -16,6 +16,24 @@ describe('DashboardState reducer', () => {
     })
   })
 
+  describe('SET_DASHBOARD_TABLE_VIEW', () => {
+    it('sets dashboardTableView', () => {
+      expect(r.dashboardStateReducer(undefined, a.setDashboardTableView(true))).toEqual({
+        ...r.initialState,
+        dashboardTableView: true,
+      })
+    })
+  })
+
+  describe('SET_DASHBOARD_TABLE_STATE', () => {
+    it('sets dashboardTableView', () => {
+      expect(r.dashboardStateReducer(undefined, a.setDashboardTableState({ page: 2 }))).toEqual({
+        ...r.initialState,
+        dashboardTableState: { page: 2 },
+      })
+    })
+  })
+
   describe('LOAD_RESULT_FILTERS', () => {
     it('sets resultFilters and housingTypeResultFilter', () => {
       const filter1 = {
