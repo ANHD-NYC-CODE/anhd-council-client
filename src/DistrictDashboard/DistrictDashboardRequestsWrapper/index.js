@@ -86,7 +86,7 @@ class DistrictDashboardRequestsWrapper extends React.PureComponent {
         endChangingState={this.endChangingState}
         geographyRequests={getManyRequestTypes(this.props.mapRequests, ['MAP_FILTER', c.ADVANCED_SEARCH])}
         housingTypeRequests={getRequestType(this.props.mapRequests, 'GEOGRAPHY_HOUSING_TYPE')}
-        propertySummaryRequest={getRequestByConstant(this.props.mapRequests, 'GEOGRAPHY_HOUSING_TYPE_ALL')[0]}
+        propertySummaryRequest={getRequestByConstant(this.props.mapRequests, c.GEOGRAPHY_HOUSING_TYPE_ALL)[0]}
         toggleDateRange={this.toggleDateRange}
         switchSelectedFilter={this.switchSelectedFilter}
         housingTypeResultFilter={this.props.dashboardState.housingTypeResultFilter}

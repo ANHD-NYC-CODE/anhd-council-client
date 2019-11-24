@@ -34,3 +34,13 @@ export const updateAmountFilter = amountFilter => ({
   type: c.UPDATE_AMOUNT_FILTER,
   amountFilter,
 })
+
+export const setTotalPropertyResults = (totalPropertyResults = []) => ({
+  type: c.SET_TOTAL_PROPERTY_RESULTS,
+  totalPropertyResults,
+})
+
+export const setCustomSearchResults = (customSearchResults = []) => ({
+  type: c.SET_CUSTOM_SEARCH_RESULTS,
+  customSearchResults,
+})
