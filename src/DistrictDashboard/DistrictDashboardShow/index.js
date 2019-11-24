@@ -103,7 +103,6 @@ class DistrictDashboardShow extends React.Component {
                 </Col>
                 <Col xs={12} md={8} lg={7}>
                   <GeographySelect
-                    selectClass=""
                     currentGeographyType={this.props.appState.currentGeographyType}
                     currentGeographyId={this.props.appState.currentGeographyId}
                     dispatch={this.props.dispatch}
