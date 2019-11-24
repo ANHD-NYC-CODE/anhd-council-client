@@ -2,6 +2,13 @@ import React from 'react'
 import { communityIdToString } from 'shared/utilities/languageUtils'
 import { getGeographyObject } from 'shared/utilities/routeUtils'
 
+export const getZipCodeSelectOptions = (zipCodes = []) => {
+  const zipCodeObject = getGeographyObject('ZIPCODE')
+  return zipCodes
+    .filter(geography => zipCodeObject.hidden && !zipCodeObject.hidden.includes(geography.id))
+    .map(geography => ({ value: geography.id, label: geography.id }))
+}
+
 export const getGeographyIdOptions = (
   districts = [],
   boards = [],

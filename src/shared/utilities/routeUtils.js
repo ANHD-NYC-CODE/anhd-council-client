@@ -24,7 +24,7 @@ export const getGeographyObject = constant => {
 }
 
 export const geographyToLink = (constant, id) => {
-  return `/${getGeographyObject(constant)}/${id}`
+  return `/${getGeographyPath(constant)}/${id}`
 }
 
 export const getGeographyPath = constant => {
