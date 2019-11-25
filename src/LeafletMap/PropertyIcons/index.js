@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 import * as c from 'shared/constants'
 
 import PropertyIcon from 'LeafletMap/PropertyIcon'
@@ -72,7 +71,6 @@ PropertyIcons.propTypes = {
   handlePropertyAction: PropTypes.func,
   dispatch: PropTypes.func,
   results: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
-  displayedResultsFilter: PropTypes.object,
   visible: PropTypes.bool,
 }
 

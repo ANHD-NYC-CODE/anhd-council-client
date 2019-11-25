@@ -24,7 +24,8 @@ const PrintDistrictDashboard = props => {
       <Row className="pb-4">
         <Col xs={4}>
           <h6>
-            From {`${moment(props.appState.mapFilterDate).format('MM/DD/YYYY')}`} to {moment().format('MM/DD/YYYY')}
+            From {`${moment(props.dashboardState.mapFilterDate).format('MM/DD/YYYY')}`} to{' '}
+            {moment().format('MM/DD/YYYY')}
           </h6>
         </Col>
 
@@ -98,6 +99,7 @@ const PrintDistrictDashboard = props => {
 
 PrintDistrictDashboard.propTypes = {
   appState: PropTypes.object,
+  dashboardState: PropTypes.object,
   propertySummaryRequest: PropTypes.object,
   layout: PropTypes.object,
 }

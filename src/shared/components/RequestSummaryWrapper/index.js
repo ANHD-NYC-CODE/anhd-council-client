@@ -51,14 +51,6 @@ class RequestSummaryWrapper extends React.Component {
   }
 
   render() {
-    const results = this.props.resultsFilter.internalFilter(this.props.results, this.props.resultsFilter.paramMaps)
-
-    // HousingTypeResultCard only
-    const totalResults = this.props.totalResultsFilter.internalFilter(
-      this.props.results,
-      this.props.totalResultsFilter.paramMaps
-    )
-
     return (
       <Row className="request-summary">
         <Col
@@ -111,8 +103,8 @@ class RequestSummaryWrapper extends React.Component {
               request: this.props.request,
               resultsFilter: this.props.resultsFilter,
               percentageOfWhole: this.props.percentageOfWhole,
-              results: results,
-              totalResults: totalResults,
+              results: this.props.results,
+              totalResults: this.props.totalResults,
               loading: this.props.loading,
               className: this.props.className,
             })
@@ -144,10 +136,6 @@ RequestSummaryWrapper.defaultProps = {
     internalFilter: results => results,
     paramMaps: [],
   },
-  totalResultsFilter: {
-    internalFilter: results => results,
-    paramMaps: [],
-  },
 }
 
 RequestSummaryWrapper.propTypes = {
@@ -155,9 +143,10 @@ RequestSummaryWrapper.propTypes = {
   onClick: PropTypes.func,
   resultsComponent: PropTypes.func,
   resultsFilter: PropTypes.object,
-  totalResultsFilter: PropTypes.object,
   request: PropTypes.object,
   print: PropTypes.bool,
+  results: PropTypes.array,
+  totalResults: PropTypes.array,
 }
 
 export const mapStateToProps = (state, ownProps) => {
@@ -167,8 +156,6 @@ export const mapStateToProps = (state, ownProps) => {
   return {
     loading: loadingSelector(state),
     error: errorSelector(state),
-    results: state.requests[ownProps.request.requestConstant],
-    totalResults: state.requests[(ownProps.totalRequest || {}).requestConstant],
   }
 }
 
