@@ -20,7 +20,8 @@ import { geographySelectionToString, shortAmountComparisonString } from 'shared/
 import GeographyProfile from 'DistrictDashboard/GeographyProfile'
 import PrintDistrictDashboard from 'DistrictDashboard/PrintDistrictDashboard'
 import BaseTable from 'shared/components/BaseTable'
-import { setAppState } from 'Store/AppState/actions'
+
+import { setDashboardCustomView, setDashboardTableView } from 'Store/DashboardState/actions'
 
 import RequestSummaryWrapper from 'shared/components/RequestSummaryWrapper'
 
@@ -33,10 +34,8 @@ class DistrictDashboardShow extends React.Component {
     super(props)
     this.setTableView = this.setTableView.bind(this)
 
-    this.getResultRecords = this.getResultRecords.bind(this)
     this.constructBaseCsvFileName = this.constructBaseCsvFileName.bind(this)
     this.getGeographySummaryResultsFilter = this.getGeographySummaryResultsFilter.bind(this)
-    this.getDisplayedResultsFilter = this.getDisplayedResultsFilter.bind(this)
   }
 
   componentDidUpdate() {
@@ -49,17 +48,16 @@ class DistrictDashboardShow extends React.Component {
   }
 
   setTableView(value) {
-    this.props.dispatch(setAppState({ dashboardTableView: value }))
+    this.props.dispatch(setDashboardTableView(value))
   }
 
   constructBaseCsvFileName() {
-    // TODO: add date, housing filter, dataset filters
     const housingFilter = this.props.appState.housingTypeFilter
     const geographyType = this.props.appState.currentGeographyType
     const geographyId = this.props.appState.currentGeographyId
-    const selectedFilters = this.props.appState.selectedFilters
+    const selectedFilters = this.props.dashboardState.selectedFilters
     const mapFilterDate = () => {
-      switch (this.props.appState.mapFilterDate) {
+      switch (this.props.dashboardState.mapFilterDate) {
         case c.DISTRICT_REQUEST_DATE_ONE:
           return moment(c.DISTRICT_RESULTS_DATE_ONE).format('MM/DD/YYYY')
         case c.DISTRICT_REQUEST_DATE_TWO:
@@ -69,7 +67,7 @@ class DistrictDashboardShow extends React.Component {
       }
     }
 
-    if (this.props.appState.districtShowCustomView) {
+    if (this.props.dashboardState.districtShowCustomView) {
       return constructCsvFileName(this.props.advancedSearch)
     } else {
       return `${
@@ -84,41 +82,15 @@ class DistrictDashboardShow extends React.Component {
     return this.props.housingTypeResultFilter
   }
 
-  getDisplayedResultsFilter() {
-    return this.props.housingTypeResultFilter
-  }
-
-  getResultRecords() {
-    const housingTypeFilter =
-      !this.props.appState.districtShowCustomView && this.props.appState.housingTypeResultFilter
-        ? results =>
-            this.props.appState.housingTypeResultFilter.internalFilter(
-              results,
-              this.props.appState.housingTypeResultFilter.paramMaps
-            )
-        : results => results
-
-    let propertyResults = this.props.totalPropertyResults
-
-    if (this.props.appState.districtShowCustomView) {
-      propertyResults = this.props.requests[c.ADVANCED_SEARCH] || []
-    } else if (this.props.appState.selectedFilters.length) {
-      propertyResults = propertyResults.filter(result =>
-        this.props.appState.selectedFilters.some(selectedFilter => selectedFilter.evaluate(result))
-      )
-    }
-
-    return housingTypeFilter(propertyResults)
-  }
-
   render() {
-    const resultRecords = this.getResultRecords()
+    const resultRecords = this.props.dashboardState.resultRecords
     return (
       <LayoutContext.Consumer>
         {layout =>
           layout.print ? (
             <PrintDistrictDashboard
               appState={this.props.appState}
+              dashboardState={this.props.dashboardState}
               layout={layout}
               config={this.props.config}
               propertySummaryRequest={this.props.propertySummaryRequest}
@@ -167,24 +139,24 @@ class DistrictDashboardShow extends React.Component {
                       <ToggleButtonGroup
                         name="dateRange"
                         type="radio"
-                        value={this.props.appState.mapFilterDate}
+                        value={this.props.dashboardState.mapFilterDate}
                         onChange={this.props.toggleDateRange}
                       >
                         <ToggleButton
                           className="p-1 toggle-link"
-                          disabled={this.props.appState.districtShowCustomView || this.props.loading}
+                          disabled={this.props.dashboardState.districtShowCustomView || this.props.loading}
                           variant="outline-primary"
                           value={c.DISTRICT_REQUEST_DATE_THREE}
                         >{`Last 3 Years (${moment(c.DISTRICT_RESULTS_DATE_THREE).format('MM/DD/YYYY')})`}</ToggleButton>
                         <ToggleButton
                           className="p-1 toggle-link"
-                          disabled={this.props.appState.districtShowCustomView || this.props.loading}
+                          disabled={this.props.dashboardState.districtShowCustomView || this.props.loading}
                           variant="outline-primary"
                           value={c.DISTRICT_REQUEST_DATE_TWO}
                         >{`Last Year (${moment(c.DISTRICT_RESULTS_DATE_TWO).format('MM/DD/YYYY')})`}</ToggleButton>
                         <ToggleButton
                           className="p-1 toggle-link"
-                          disabled={this.props.appState.districtShowCustomView || this.props.loading}
+                          disabled={this.props.dashboardState.districtShowCustomView || this.props.loading}
                           variant="outline-primary"
                           value={c.DISTRICT_REQUEST_DATE_ONE}
                         >{`Last 30 Days (${moment(c.DISTRICT_RESULTS_DATE_ONE).format('MM/DD/YYYY')})`}</ToggleButton>
@@ -206,11 +178,11 @@ class DistrictDashboardShow extends React.Component {
                               label={'Custom Search'}
                               onClick={() =>
                                 this.props.dispatch(
-                                  setAppState({ districtShowCustomView: !this.props.appState.districtShowCustomView })
+                                  setDashboardCustomView(!this.props.dashboardState.districtShowCustomView)
                                 )
                               }
                               resultsComponent={SummaryResultCard}
-                              selected={this.props.appState.districtShowCustomView}
+                              selected={this.props.dashboardState.districtShowCustomView}
                             />
                           </Col>
                         )
@@ -229,7 +201,7 @@ class DistrictDashboardShow extends React.Component {
                     )}
                   </Row>
                   <Row className="py-2 mb-4 mb-lg-0">
-                    {this.props.appState.districtShowCustomView ? (
+                    {this.props.dashboardState.districtShowCustomView ? (
                       <Col>
                         <h5 className="text-primary font-weight-bold">Description:</h5>
                         <AdvancedSearchSentence advancedSearch={this.props.advancedSearch} />
@@ -245,7 +217,8 @@ class DistrictDashboardShow extends React.Component {
                   </Row>
                   <DistrictSummarySection
                     appState={this.props.appState}
-                    customView={this.props.appState.districtShowCustomView}
+                    dashboardState={this.props.dashboardState}
+                    customView={this.props.dashboardState.districtShowCustomView}
                     dispatch={this.props.dispatch}
                     endChangingState={this.props.endChangingState}
                     geographyRequests={this.props.geographyRequests}
@@ -266,37 +239,27 @@ class DistrictDashboardShow extends React.Component {
 
                   <Row className="housingtype-section py-2 mb-4 mb-lg-0">
                     <HousingTypeSection
-                      customView={this.props.appState.districtShowCustomView}
+                      customView={this.props.dashboardState.districtShowCustomView}
                       dispatch={this.props.dispatch}
                       propertySummaryRequest={this.props.propertySummaryRequest}
                       switchSelectedFilter={this.props.switchSelectedFilter}
+                      housingTypeResults={this.props.dashboardState.housingTypeResults}
                       housingTypeResultFilter={this.props.housingTypeResultFilter}
+                      results={this.props.dashboardState.totalPropertyResults}
                     />
                   </Row>
                 </Col>
                 <Col xs={12} lg={5} xl={6}>
                   <Row className="mb-2 mb-lg-0 district-dashboard-show__results-container">
                     <Col xs={12} xl={7}>
-                      <DistrictResultsTitle
-                        records={resultRecords}
-                        displayedRequest={
-                          this.props.selectedRequest !== this.props.propertySummaryRequest
-                            ? this.props.selectedRequest
-                            : undefined
-                        }
-                        displayedResultsFilter={
-                          this.props.appState.selectedRequests.some(r => r.type === c.ADVANCED_SEARCH)
-                            ? undefined
-                            : this.props.housingTypeResultFilter
-                        }
-                      />
+                      <DistrictResultsTitle records={resultRecords} />
                     </Col>
                     <Col className="d-flex view-toggle__container" xs={12} xl={5}>
                       <ToggleButtonGroup
                         name="view"
                         type="radio"
                         className="view-toggle"
-                        value={this.props.appState.dashboardTableView}
+                        value={this.props.dashboardState.dashboardTableView}
                         onChange={this.setTableView}
                       >
                         <ToggleButton className="toggle-link" value={false}>
@@ -311,13 +274,13 @@ class DistrictDashboardShow extends React.Component {
 
                   <Row className="py-2 mb-4 mb-lg-0">
                     <Col>
-                      <div className={classnames({ 'd-none': this.props.appState.dashboardTableView })}>
+                      <div className={classnames({ 'd-none': this.props.dashboardState.dashboardTableView })}>
                         {
                           // Regens map when geo type or ID changes, or if map/table toggled
                         }
                         <LeafletMap
                           key={`${this.props.appState.currentGeographyType}-${this.props.appState.currentGeographyId}-${
-                            this.props.appState.dashboardTableView ? 'table' : 'map'
+                            this.props.dashboardState.dashboardTableView
                           }`}
                           appState={this.props.appState}
                           councilDistricts={this.props.config.councilDistricts}
@@ -333,23 +296,20 @@ class DistrictDashboardShow extends React.Component {
                           iconConfig="MULTIPLE"
                           loading={this.props.loading}
                           results={resultRecords}
-                          displayedResultsFilter={
-                            this.props.appState.selectedRequests.some(r => r.type === c.ADVANCED_SEARCH)
-                              ? undefined
-                              : this.getDisplayedResultsFilter()
-                          }
                           selectGeographyData={this.props.config.selectGeographyData}
                           switchView={() => this.setViewTable(1)}
-                          zoom={this.props.appState.dashboardMapZoom}
+                          zoom={this.props.dashboardState.dashboardMapZoom}
                         />
                       </div>
-                      <div className={classnames({ 'd-none': !this.props.appState.dashboardTableView })}>
+                      <div className={classnames({ 'd-none': !this.props.dashboardState.dashboardTableView })}>
                         <BaseTable
-                          key={`table-${this.props.appState.mapFilterDate}`}
+                          key={`table-${this.props.dashboardState.mapFilterDate}`}
                           csvBaseFileName={this.constructBaseCsvFileName()}
-                          globalTableState={this.props.appState.dashboardTableState}
+                          globalTableState={this.props.dashboardState.dashboardTableState}
                           annotationStart={
-                            this.props.appState.districtShowCustomView ? '' : this.props.appState.mapFilterDate
+                            this.props.dashboardState.districtShowCustomView
+                              ? ''
+                              : this.props.dashboardState.mapFilterDate
                           }
                           datasetModelName={this.props.propertySummaryRequest.tableConfig.datasetModelName}
                           dispatch={this.props.dispatch}
@@ -391,6 +351,7 @@ DistrictDashboardShow.defaultProps = {
 
 DistrictDashboardShow.propTypes = {
   appState: PropTypes.object,
+  dashboardState: PropTypes.object,
   config: PropTypes.object,
   dispatch: PropTypes.func,
   endChangingState: PropTypes.func,

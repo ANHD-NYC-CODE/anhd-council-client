@@ -1,17 +1,21 @@
-import * as c from '../constants'
+import * as c from 'shared/constants'
 import { constructAxiosGet, constructAxiosPost } from 'shared/utilities/Axios'
 import { requestWithAuth } from 'shared/utilities/authUtils'
+import { setTotalPropertyResults, setCustomSearchResults } from 'Store/DashboardState/actions'
 
 export const addRequest = requestConstant => ({
   type: c.ADD_REQUEST,
   requestConstant,
 })
 
-export const handleRequestResults = (response, requestConstant) => ({
-  type: c.HANDLE_REQUEST_RESULTS,
-  requestConstant: requestConstant,
-  results: response.data,
-})
+export const handleRequestResults = (response, requestConstant, dispatch) => {
+  if (requestConstant === c.GEOGRAPHY_HOUSING_TYPE_ALL) {
+    dispatch(setTotalPropertyResults(response.data))
+  } else if (requestConstant === c.ADVANCED_SEARCH) {
+    dispatch(setCustomSearchResults(response.data))
+  }
+  return { type: c.HANDLE_REQUEST_RESULTS, requestConstant: requestConstant, results: response.data }
+}
 
 export const removeRequest = requestConstant => ({
   type: c.REMOVE_REQUEST,
