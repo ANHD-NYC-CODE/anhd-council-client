@@ -9,7 +9,7 @@ const GeographyMarkerLabels = props => {
   const geographyObject = getGeographyObject(props.currentGeographyType)
   if (!props.geographies.length) return null
   return props.geographies
-    .filter(geography => geographyObject.hidden && !geographyObject.hidden.includes(geography.id))
+    .filter(geography => (geographyObject.hidden && !geographyObject.hidden.includes(geography.id)) || geographyObject)
     .map((geography, index) => {
       return (
         <Marker
