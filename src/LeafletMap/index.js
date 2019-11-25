@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import * as c from 'shared/constants'
 import L from 'leaflet'
 import { geographySelectionToString } from 'shared/utilities/languageUtils'
-import { setAppState } from 'Store/AppState/actions'
 import { setDashboardMapZoom } from 'Store/DashboardState/actions'
 
 import { Map, TileLayer, Popup } from 'react-leaflet'
@@ -35,6 +34,7 @@ export default class LeafletMap extends React.PureComponent {
     this.setAlertMessage = this.setAlertMessage.bind(this)
     this.onMapZoom = this.onMapZoom.bind(this)
     this.allGeographiesLoaded = this.allGeographiesLoaded.bind(this)
+    this.handleMapClick = this.handleMapClick.bind(this)
   }
 
   componentDidUpdate() {
@@ -64,6 +64,10 @@ export default class LeafletMap extends React.PureComponent {
   }
   setAlertMessage(message) {
     this.setState({ alertMessage: message })
+  }
+
+  handleMapClick(e) {
+    this.props.closeGeographyPopup()
   }
 
   centerMapOnGeography() {
@@ -162,6 +166,7 @@ export default class LeafletMap extends React.PureComponent {
           minZoom={10}
           maxZoom={20}
           ref={this.mapRef}
+          onClick={this.handleMapClick}
           scrollWheelZoom={this.props.interactive}
           tap={this.props.interactive}
           touchZoom={this.props.interactive}
@@ -236,6 +241,7 @@ export default class LeafletMap extends React.PureComponent {
               <Popup
                 key={`${this.changingGeographyType}-${this.changingGeographyId}`}
                 onClose={this.props.closeGeographyPopup}
+                closeOnClick={false}
                 position={
                   this.getGeographyCenter(
                     this.props.appState.changingGeographyType,
