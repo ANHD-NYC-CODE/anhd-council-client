@@ -122,6 +122,12 @@ export const geographySelectionToString = ({ type, id } = {}) => {
       return `Council District ${String(id)}`
     case 'COMMUNITY':
       return `Community District ${communityIdToString(String(id))}`
+    case 'STATE_ASSEMBLY':
+      return `State Assembly ${String(id)}`
+    case 'STATE_SENATE':
+      return `State Senate ${String(id)}`
+    case 'ZIPCODE':
+      return `Zip Code ${String(id)}`
   }
 }
 
