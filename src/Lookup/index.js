@@ -123,6 +123,7 @@ class Lookup extends React.Component {
             propertyResult={this.props.propertyResult}
             propertyError={this.props.propertyError}
             trigger404Error={this.trigger404Error}
+            requests={this.props.requests}
           />
         ) : (
           <LookupIndex appState={this.props.appState} scrollToControls={this.scrollToControls} />
@@ -149,6 +150,7 @@ const mapStateToProps = (state, ownProps) => {
       state.requests[(getRequestType(state.appState.requests, 'LOOKUP_PROFILE')[0] || {}).requestConstant],
     propertyError: state.error[(getRequestType(state.appState.requests, 'LOOKUP_PROFILE')[0] || {}).requestConstant],
     router: state.router,
+    requests: state.requests,
   }
 }
 
