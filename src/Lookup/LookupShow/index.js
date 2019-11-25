@@ -238,6 +238,8 @@ class LookupShow extends React.PureComponent {
                                     onClick={() => this.switchTable(request)}
                                     selected={this.props.appState.selectedRequest === request}
                                     request={request}
+                                    results={this.props.requests[request.requestConstant]}
+                                    totalResults={this.props.requests[request.requestConstant]}
                                     label={request.resourceModel.label}
                                     resultsComponent={SummaryResultCard}
                                   />
@@ -277,6 +279,8 @@ class LookupShow extends React.PureComponent {
                                     onClick={() => this.switchTable(request)}
                                     selected={this.props.appState.selectedRequest === request}
                                     request={request}
+                                    results={this.props.requests[request.requestConstant]}
+                                    totalResults={this.props.requests[request.requestConstant]}
                                     label={request.resourceModel.label}
                                     resultsComponent={SummaryResultCard}
                                   />

@@ -143,8 +143,12 @@ class DistrictDashboard extends React.PureComponent {
   }
 
   handleChangeGeographyId(e) {
+    if (e.originalEvent) {
+      e.originalEvent.view.L.DomEvent.stopPropagation(e)
+    } else {
+      e.stopPropagation(e)
+    }
     const geographyId = new StandardizedInput(e).value
-
     if (parseInt(geographyId) <= 0) return
     this.props.dispatch(
       setAppState({
