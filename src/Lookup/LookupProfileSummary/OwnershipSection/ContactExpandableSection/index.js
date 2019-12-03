@@ -1,6 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { addStringIfPresent, splitCamelCase, capitalizeWords } from 'shared/utilities/languageUtils'
+import {
+  addStringIfPresent,
+  splitCamelCase,
+  capitalizeWords,
+  expandHpdRegistrationAbbreviations,
+} from 'shared/utilities/languageUtils'
 
 import { Row, Col } from 'react-bootstrap'
 import ExpandableSection from 'shared/components/ExpandableSection'
@@ -39,7 +44,7 @@ const ContactExpandableSection = props => {
           <Row>
             <Col xs={1} />
             <Col xs={5}>Title:</Col>
-            <Col xs={5}>{capitalizeWords(props.contact.title) || 'n/a'}</Col>
+            <Col xs={5}>{capitalizeWords(expandHpdRegistrationAbbreviations(props.contact.title)) || 'n/a'}</Col>
           </Row>
         </Col>
       </Row>
