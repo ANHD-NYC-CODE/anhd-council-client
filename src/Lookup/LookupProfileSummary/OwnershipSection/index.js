@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Row, Col } from 'react-bootstrap'
 import { dateFormatter } from 'shared/utilities/tableUtils'
-import { capitalizeWords, expandHpdOwnershipAbbreviations } from 'shared/utilities/languageUtils'
+import { capitalizeWords, expandHpdRegistrationAbbreviations } from 'shared/utilities/languageUtils'
 import BaseLink from 'shared/components/BaseLink'
 import ContactExpandableSection from 'Lookup/LookupProfileSummary/OwnershipSection/ContactExpandableSection'
 
@@ -66,7 +66,7 @@ const OwnershipSection = props => {
               {ownershipType && (
                 <div>
                   This property's ownership type is{' '}
-                  <strong>{capitalizeWords(expandHpdOwnershipAbbreviations(ownershipType))}</strong>.
+                  <strong>{capitalizeWords(expandHpdRegistrationAbbreviations(ownershipType))}</strong>.
                 </div>
               )}
               {props.profile.ownername && (
