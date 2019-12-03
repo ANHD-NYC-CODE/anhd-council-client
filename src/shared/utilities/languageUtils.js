@@ -99,11 +99,12 @@ export const constructDateComparisonString = comparison => {
   }
 }
 
-export const expandHpdOwnershipAbbreviations = ownershipTypeString => {
-  return ownershipTypeString
+export const expandHpdRegistrationAbbreviations = string => {
+  if (!string) return
+  return string
     .toLowerCase()
     .replace(/\bgen.part\b/, 'general partnership')
-    .replace(/\bmgr\b/, 'manager (title')
+    .replace(/\bmgr\b/, 'manager')
     .replace(/\bindiv\b/, 'individual')
     .replace(/\bcorp\b/, 'corporation')
     .replace(/\bjoint\b/, 'joint partnership')
