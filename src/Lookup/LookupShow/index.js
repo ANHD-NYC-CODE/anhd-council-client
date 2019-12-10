@@ -22,6 +22,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { faBuilding } from '@fortawesome/free-solid-svg-icons'
 import { faLayerGroup } from '@fortawesome/free-solid-svg-icons'
+
+import ConfigContext from 'Config/ConfigContext'
+
 import classnames from 'classnames'
 import './style.scss'
 class LookupShow extends React.PureComponent {
@@ -133,7 +136,11 @@ class LookupShow extends React.PureComponent {
                       <InputGroup.Append className="flex-column justify-content-center">
                         <FontAwesomeIcon className=" mr-2 text-white" size="2x" icon={faSearch} />
                       </InputGroup.Append>
-                      <AddressSearch />
+                      <ConfigContext.Consumer>
+                        {config => {
+                          return <AddressSearch config={config} />
+                        }}
+                      </ConfigContext.Consumer>
                     </InputGroup>
                   </Col>
                 </Row>
@@ -231,6 +238,8 @@ class LookupShow extends React.PureComponent {
                                     onClick={() => this.switchTable(request)}
                                     selected={this.props.appState.selectedRequest === request}
                                     request={request}
+                                    results={this.props.requests[request.requestConstant]}
+                                    totalResults={this.props.requests[request.requestConstant]}
                                     label={request.resourceModel.label}
                                     resultsComponent={SummaryResultCard}
                                   />
@@ -270,6 +279,8 @@ class LookupShow extends React.PureComponent {
                                     onClick={() => this.switchTable(request)}
                                     selected={this.props.appState.selectedRequest === request}
                                     request={request}
+                                    results={this.props.requests[request.requestConstant]}
+                                    totalResults={this.props.requests[request.requestConstant]}
                                     label={request.resourceModel.label}
                                     resultsComponent={SummaryResultCard}
                                   />

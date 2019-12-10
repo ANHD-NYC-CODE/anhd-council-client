@@ -1,30 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import SearchResultRow from 'Lookup/AddressSearch/SearchResultRow'
-import { setSearchValue } from 'Store/Search/actions'
-
-import { setLookupAndRequestsAndRedirect } from 'Store/AppState/actions'
 
 import './style.scss'
 
 const SearchResults = props => {
-  const handleRowClick = (e, result) => {
-    e.preventDefault()
-    const searchString = `${result.number ? result.number : ''} ${
-      result.street ? result.street.trim() : ''
-    }, ${result.borough.trim()}`
-
-    props.dispatch(setSearchValue(searchString))
-    props.hideSearch(e, true)
-    props.dispatch(
-      setLookupAndRequestsAndRedirect({
-        bbl: result.bbl,
-        bin: result.bin,
-        requests: props.config.createLookupRequests(result.bbl, result.bin),
-      })
-    )
-  }
-
   return (
     <div ref={props.searchResultsRef} className="search-results">
       {props.error && <div className="text-danger">{props.error.message}</div>}
@@ -34,10 +14,14 @@ const SearchResults = props => {
             {!!props.results.length &&
               props.results.map((result, index) => (
                 <SearchResultRow
-                  onClick={handleRowClick}
+                  currentResultFocusRef={index === props.resultFocusIndex ? props.currentResultFocusRef : null}
+                  onClick={props.handleRowClick}
                   selectBuildingResult={props.selectBuildingResult}
                   key={`result-${index}`}
                   result={result}
+                  onKeyDown={props.onKeyDown}
+                  setResultFocusIndex={props.setResultFocusIndex}
+                  resultIndex={index}
                 />
               ))}
           </div>
@@ -53,6 +37,9 @@ SearchResults.propTypes = {
   results: PropTypes.array,
   dispatch: PropTypes.func,
   hideSearch: PropTypes.func,
+  currentResultFocusRef: PropTypes.object,
+  resultFocusIndex: PropTypes.number,
+  setResultFocusIndex: PropTypes.func,
 }
 
 export default SearchResults

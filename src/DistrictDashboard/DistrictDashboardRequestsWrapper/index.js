@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import * as c from 'shared/constants'
-import { setAppState, setMapFilterDate } from 'Store/AppState/actions'
+import { setAppState } from 'Store/AppState/actions'
 import { getDefaultRequest, getRequestType, getManyRequestTypes, getRequestByConstant } from 'Store/AppState/selectors'
 import { fireMapDateRangeSelectEvent } from 'Store/Analytics/actions'
 import { requestWithAuth } from 'shared/utilities/authUtils'
@@ -9,6 +9,7 @@ import { makeRequest } from 'Store/Request/actions'
 import DistrictDashboardShow from 'DistrictDashboard/DistrictDashboardShow'
 import InnerLoader from 'shared/components/Loaders/InnerLoader'
 import { fireFilterSelectEvent } from 'Store/Analytics/actions'
+import { setHousingTypeResultFilter, setMapFilterDate } from 'Store/DashboardState/actions'
 
 class DistrictDashboardRequestsWrapper extends React.PureComponent {
   constructor(props) {
@@ -46,14 +47,14 @@ class DistrictDashboardRequestsWrapper extends React.PureComponent {
     })
 
     this.props.dispatch(
-      setAppState({
-        housingTypeResultFilter: this.props.appState.housingTypeResultFilter || this.props.appState.resultFilters[0],
-      })
+      setHousingTypeResultFilter(
+        this.props.dashboardState.housingTypeResultFilter || this.props.dashboardState.resultFilters[0]
+      )
     )
   }
 
   toggleDateRange(value) {
-    this.props.appState.resultFilters
+    this.props.dashboardState.resultFilters
       .filter(rf => rf.category === 'AMOUNT')
       .forEach(rf => {
         rf.annotationStart = value
@@ -75,11 +76,7 @@ class DistrictDashboardRequestsWrapper extends React.PureComponent {
 
   switchSelectedFilter(filter) {
     this.endChangingState()
-    this.props.dispatch(
-      setAppState({
-        housingTypeResultFilter: filter,
-      })
-    )
+    this.props.dispatch(setHousingTypeResultFilter(filter))
     this.props.dispatch(fireFilterSelectEvent(filter))
   }
 
@@ -89,10 +86,10 @@ class DistrictDashboardRequestsWrapper extends React.PureComponent {
         endChangingState={this.endChangingState}
         geographyRequests={getManyRequestTypes(this.props.mapRequests, ['MAP_FILTER', c.ADVANCED_SEARCH])}
         housingTypeRequests={getRequestType(this.props.mapRequests, 'GEOGRAPHY_HOUSING_TYPE')}
-        propertySummaryRequest={getRequestByConstant(this.props.mapRequests, 'GEOGRAPHY_HOUSING_TYPE_ALL')[0]}
+        propertySummaryRequest={getRequestByConstant(this.props.mapRequests, c.GEOGRAPHY_HOUSING_TYPE_ALL)[0]}
         toggleDateRange={this.toggleDateRange}
         switchSelectedFilter={this.switchSelectedFilter}
-        housingTypeResultFilter={this.props.appState.housingTypeResultFilter}
+        housingTypeResultFilter={this.props.dashboardState.housingTypeResultFilter}
         {...this.props}
       />
     ) : (

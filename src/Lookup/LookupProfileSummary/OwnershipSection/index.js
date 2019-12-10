@@ -4,6 +4,8 @@ import { Row, Col } from 'react-bootstrap'
 import { dateFormatter } from 'shared/utilities/tableUtils'
 import { capitalizeWords } from 'shared/utilities/languageUtils'
 import BaseLink from 'shared/components/BaseLink'
+import ContactExpandableSection from 'Lookup/LookupProfileSummary/OwnershipSection/ContactExpandableSection'
+
 import './style.scss'
 const getLatestHPDRegistration = hpdRegistrations => {
   if (!hpdRegistrations.length) return
@@ -12,20 +14,33 @@ const getLatestHPDRegistration = hpdRegistrations => {
 
 const OwnershipSection = props => {
   const latestHPDRegistration = getLatestHPDRegistration(props.profile.hpdregistrations)
-  let siteManager
   let headOfficer
+  let siteManager
+  let officer
   let agent
+  let ownershipType
+
   if (latestHPDRegistration) {
+    headOfficer = latestHPDRegistration.contacts.find(contact =>
+      contact.type ? contact.type.toLowerCase().replace(' ', '') == 'headofficer' : null
+    )
     siteManager = latestHPDRegistration.contacts.find(contact =>
       contact.type ? contact.type.toLowerCase().replace(' ', '') == 'sitemanager' : null
     )
-    headOfficer = latestHPDRegistration.contacts.find(contact =>
-      contact.type ? contact.type.toLowerCase().replace(' ', '') == 'headofficer' : null
+    officer = latestHPDRegistration.contacts.find(contact =>
+      contact.type ? contact.type.toLowerCase().replace(' ', '') == 'officer' : null
     )
     agent = latestHPDRegistration.contacts.find(contact =>
       contact.type ? contact.type.toLowerCase().replace(' ', '') == 'agent' : null
     )
+
+    ownershipType =
+      (siteManager || {}).contactdescription ||
+      (headOfficer || {}).contactdescription ||
+      (officer || {}).contactdescription ||
+      (agent || {}).contactdescription
   }
+
   return (
     <Row className="ownership-section property-section property-summary-body my-4">
       <Col>
@@ -36,33 +51,28 @@ const OwnershipSection = props => {
                 <Col>
                   <span className="d-block">
                     <h5 className="property-summary__table-header  font-weight-bold d-inline">HPD Registration</h5>
-                    <span className="font-weight-bold text-muted">
+                    <span className="">
                       {' '}
-                      ({dateFormatter(latestHPDRegistration.lastregistrationdate)})
+                      (last updated {dateFormatter(latestHPDRegistration.lastregistrationdate)})
                     </span>
                   </span>
                 </Col>
               </Row>
               <hr />
-
-              <Row className="ownership-section__hpdcontact-row">
-                <Col xs={5} className="profile-summary-body__label">
-                  Site Manager:
-                </Col>
-                {siteManager && <Col>{capitalizeWords([siteManager.firstname, siteManager.lastname].join(' '))}</Col>}
-              </Row>
-              <Row className="ownership-section__hpdcontact-row">
-                <Col xs={5} className="profile-summary-body__label">
-                  Head Officer:
-                </Col>
-                {headOfficer && <Col>{capitalizeWords([headOfficer.firstname, headOfficer.lastname].join(' '))}</Col>}
-              </Row>
-              <Row className="ownership-section__hpdcontact-row">
-                <Col xs={5} className="profile-summary-body__label">
-                  Agent:
-                </Col>
-                {agent && <Col>{capitalizeWords([agent.firstname, agent.lastname].join(' '))}</Col>}
-              </Row>
+              {headOfficer && <ContactExpandableSection contact={headOfficer} />}
+              {siteManager && <ContactExpandableSection contact={siteManager} />}
+              {officer && <ContactExpandableSection contact={officer} />}
+              {agent && <ContactExpandableSection contact={agent} />}
+              {ownershipType && (
+                <div>
+                  This property's ownership type is <strong>{capitalizeWords(ownershipType)}</strong>.
+                </div>
+              )}
+              {props.profile.ownername && (
+                <div>
+                  The owner on record with the DOF is <strong>{capitalizeWords(props.profile.ownername)}</strong>.
+                </div>
+              )}
             </Col>
           </Row>
         ) : (

@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { setAppState } from 'Store/AppState/actions'
+import { setDashboardTableState } from 'Store/DashboardState/actions'
+
 import BootstrapTable from 'react-bootstrap-table-next'
 import BaseTableConfig from 'shared/classes/BaseTableConfig'
 import InnerLoader from 'shared/components/Loaders/InnerLoader'
@@ -89,12 +90,10 @@ class BaseTable extends React.Component {
   setPage(page, sizePerPage) {
     if (this.props.globalTableState.page) {
       this.props.dispatch(
-        setAppState({
-          dashboardTableState: {
-            ...this.props.globalStableState,
-            sizePerPage,
-            page,
-          },
+        setDashboardTableState({
+          ...this.props.globalStableState,
+          sizePerPage,
+          page,
         })
       )
     }
@@ -109,11 +108,9 @@ class BaseTable extends React.Component {
     if (this.props.globalTableState.page) {
       const tableState = { ...this.props.globalTableState, sizePerPage }
       this.props.dispatch(
-        setAppState({
-          dashboardTableState: {
-            ...tableState,
-            page,
-          },
+        setDashboardTableState({
+          ...tableState,
+          page,
         })
       )
     }
