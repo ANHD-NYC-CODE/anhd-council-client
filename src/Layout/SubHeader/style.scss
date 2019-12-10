@@ -54,7 +54,7 @@ $sub-header-padding-top: 12px;
 
     .nav-item {
       padding: $sub-header-padding-top 10px;
-
+      white-space: pre;
       @include media-breakpoint-up(md) {
         padding: $sub-header-padding-top 20px 10px;
       }

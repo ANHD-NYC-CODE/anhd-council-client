@@ -1,21 +1,30 @@
 @import 'shared/styles/bootstrap/_variables.scss';
 
 .search-bar {
+  max-width: 440px;
+  margin: 0 auto;
   z-index: 501;
+
+  .input-group input {
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    overflow: hidden;
+  }
+
+  .input-group button {
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    overflow: hidden;
+  }
 
   input.form-control {
     padding-right: 50px;
-    border-bottom: 2px solid $info;
-  }
-  input.form-control.valued {
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
   }
 
   .search-bar__close,
   .search-bar__loading {
     position: absolute;
-    right: 5px;
+    right: 72px;
     top: 0;
     height: 100%;
     width: 50px;
@@ -31,5 +40,9 @@
     svg {
       background-color: transparent;
     }
+  }
+
+  .home-search-bar {
+    // Home Page search bar
   }
 }

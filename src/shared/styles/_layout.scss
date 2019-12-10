@@ -27,6 +27,11 @@ body {
   @include media-breakpoint-up(md) {
     padding: 0 !important;
   }
+
+  .row {
+    margin-left: 0;
+    margin-right: 0;
+  }
 }
 
 .layout-width-wrapper {
