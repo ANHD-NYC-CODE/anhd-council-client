@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Row, Col } from 'react-bootstrap'
 import { dateFormatter } from 'shared/utilities/tableUtils'
-import { capitalizeWords } from 'shared/utilities/languageUtils'
+import { capitalizeWords, expandHpdRegistrationAbbreviations } from 'shared/utilities/languageUtils'
 import BaseLink from 'shared/components/BaseLink'
 import ContactExpandableSection from 'Lookup/LookupProfileSummary/OwnershipSection/ContactExpandableSection'
 
@@ -65,7 +65,8 @@ const OwnershipSection = props => {
               {agent && <ContactExpandableSection contact={agent} />}
               {ownershipType && (
                 <div>
-                  This property's ownership type is <strong>{capitalizeWords(ownershipType)}</strong>.
+                  This property's ownership type is{' '}
+                  <strong>{capitalizeWords(expandHpdRegistrationAbbreviations(ownershipType))}</strong>.
                 </div>
               )}
               {props.profile.ownername && (
@@ -77,7 +78,17 @@ const OwnershipSection = props => {
           </Row>
         ) : (
           <Row>
-            <Col className="text-dark text-center font-weight-bold my-4">No HPD Registrations Found</Col>
+            <Col xs={12} className="text-center font-weight-bold mt-4">
+              No HPD Registrations Found
+              <hr />
+            </Col>
+            <Col xs={12}>
+              {props.profile.ownername && (
+                <div>
+                  The owner on record with the DOF is <strong>{capitalizeWords(props.profile.ownername)}</strong>.
+                </div>
+              )}
+            </Col>
           </Row>
         )}
         <hr />

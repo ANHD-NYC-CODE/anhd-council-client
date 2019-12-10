@@ -99,6 +99,18 @@ export const constructDateComparisonString = comparison => {
   }
 }
 
+export const expandHpdRegistrationAbbreviations = string => {
+  if (!string) return
+  return string
+    .toLowerCase()
+    .replace(/\bgen.part\b/, 'general partnership')
+    .replace(/\bmgr\b/, 'manager')
+    .replace(/\bindiv\b/, 'individual')
+    .replace(/\bcorp\b/, 'corporation')
+    .replace(/\bjoint\b/, 'joint partnership')
+    .replace(/\blp\b/, 'limited partnership')
+}
+
 export const housingTypeCodeToName = code => {
   switch (code) {
     case 'all':
