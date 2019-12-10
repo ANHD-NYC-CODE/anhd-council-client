@@ -16,6 +16,9 @@ const DOBIssuedPermit = databaseObject => ({
       },
     },
   },
+  tableRecordsCountFunction: results => {
+    return results.filter(result => result.filing_status === 'INITIAL').length
+  },
 })
 
 export default DOBIssuedPermit

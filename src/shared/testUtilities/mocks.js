@@ -98,6 +98,7 @@ export const createPropertyRequestMock = ({
   ownername = 'test owner',
   lat = '40.0',
   lng = '-73.0',
+  original_address = '123 Fake St',
 } = {}) => {
   return {
     bbl: bbl,
@@ -137,6 +138,7 @@ export const createPropertyRequestMock = ({
     ownertype: ownertype,
     lat: lat,
     lng: lng,
+    original_address: original_address,
     'hpdviolations__01/01/2010-01/01/2019': 0,
     'dobviolations__01/01/2010-01/01/2019': 0,
     'ecbviolations__01/01/2010-01/01/2019': 0,
