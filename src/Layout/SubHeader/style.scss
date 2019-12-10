@@ -66,6 +66,10 @@ $sub-header-padding-top: 12px;
         flex-wrap: nowrap;
       }
     }
+
+    .nav-tabs {
+      border: 0;
+    }
   }
 
   .sub-header__auth-row {
@@ -92,9 +96,8 @@ $sub-header-padding-top: 12px;
   }
 
   .sub-header__nav-tab {
-    color: $black;
+    color: $gray-900;
     background-color: $tab-blue;
-    font-weight: bold;
     padding: 15px;
     text-decoration: none;
     flex: 0 0 100%;
