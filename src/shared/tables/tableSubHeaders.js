@@ -186,6 +186,10 @@ export const getTableSubheaderLinks = ({ constant = '', property = {} } = {}) =>
             Permits filed electronically through the DOB NOW system need to be searched via the{' '}
             <BaseLink href="https://a810-dobnow.nyc.gov/publish/#!/">DOB NOW portal</BaseLink>.{' '}
           </li>
+          <li>
+            If a permit is renewed, it will show up as a separate record in the table with a Filing Status of{' '}
+            <b>Renewed</b>. It will only be counted once in the total DOB Permits Issued.
+          </li>
         </ul>
       )
     case 'DOB_FILED_PERMIT':
