@@ -55,7 +55,9 @@ class Layout extends React.Component {
                   </div>
                 )}
               </UserContext.Consumer>
-              <Container fluid={true}>{this.props.children}</Container>
+              <Container className="layout-width-wrapper" fluid={true}>
+                {this.props.children}
+              </Container>
             </div>
             <Footer />
           </div>
