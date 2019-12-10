@@ -1,48 +1,38 @@
 @import 'shared/styles/bootstrap/_variables.scss';
 
 .search-bar {
-  max-width: 440px;
-  margin: 0 auto;
   z-index: 501;
 
-  .input-group input {
-    border-top-left-radius: 20px;
-    border-bottom-left-radius: 20px;
-    overflow: hidden;
-  }
+  .home-search-bar {
+    .input-group input {
+      border-top-left-radius: 20px;
+      border-bottom-left-radius: 20px;
+      overflow: hidden;
+    }
 
-  .input-group button {
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
-    overflow: hidden;
-  }
+    .input-group button {
+      border-top-right-radius: 20px;
+      border-bottom-right-radius: 20px;
+      overflow: hidden;
+    }
 
-  input.form-control {
-    padding-right: 50px;
-  }
+    &.form-control:focus,
+    &.form-control:focus-within {
+      border-bottom: initial;
+    }
 
-  .search-bar__close,
-  .search-bar__loading {
-    position: absolute;
-    right: 72px;
-    top: 0;
-    height: 100%;
-    width: 50px;
-    z-index: 999;
-  }
-
-  .search-bar__close {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    svg {
-      background-color: transparent;
+    input.form-control {
+      padding-right: 50px;
     }
   }
 
-  .home-search-bar {
-    // Home Page search bar
+  // Legacy style
+  .xl-form-control {
+    border-bottom: 2px solid #95bae8;
+
+    &.form-control:focus,
+    .form-control:focus-within {
+      border-bottom: 2px solid #95bae8;
+    }
   }
 }

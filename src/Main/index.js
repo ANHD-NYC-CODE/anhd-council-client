@@ -103,19 +103,26 @@ class Main extends React.Component {
 
   render() {
     return (
-      <div id="main" className="main">
+      <div id="main" className="main layout-width-wrapper">
         <Helmet>
           <title>DAP Portal</title>
         </Helmet>
         <Row>
-          <Col className="px-md-4 py-3 py-lg-6" xs={12}>
+          <Col className="px-md-4 px-0 py-3 py-lg-6" xs={12}>
             <p className="text-black text-center">Enter an address to find information about a building:</p>
             <Element name="main-controls" />
             <div className="mb-4">
               <div>
                 <ConfigContext.Consumer>
                   {config => {
-                    return <AddressSearch config={config} inputClass="home-search-bar" placeholder="Enter an address" />
+                    return (
+                      <AddressSearch
+                        config={config}
+                        inputClass="home-search-bar"
+                        containerClass="main-address-search"
+                        placeholder="Enter an address"
+                      />
+                    )
                   }}
                 </ConfigContext.Consumer>
               </div>

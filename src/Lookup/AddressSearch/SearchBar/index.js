@@ -65,9 +65,12 @@ export default class SearchBar extends React.PureComponent {
               <FontAwesomeIcon className="text-secondary" size="lg" icon={faTimesCircle} />
             </div>
           )}
-          <InputGroup.Append>
-            <Button variant="dark">Search</Button>
-          </InputGroup.Append>
+          {// only include button on legacy config
+          this.props.inputClass !== 'xl-form-control' && (
+            <InputGroup.Append>
+              <Button variant="dark">Search</Button>
+            </InputGroup.Append>
+          )}
         </InputGroup>
         <div className="search-bar__loading">{this.props.loading && <SpinnerLoader size="40px" />}</div>
       </Form>
