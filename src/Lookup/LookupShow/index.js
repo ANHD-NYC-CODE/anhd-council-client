@@ -138,7 +138,7 @@ class LookupShow extends React.PureComponent {
                       </InputGroup.Append>
                       <ConfigContext.Consumer>
                         {config => {
-                          return <AddressSearch config={config} />
+                          return <AddressSearch config={config} inputClass="xl-form-control" />
                         }}
                       </ConfigContext.Consumer>
                     </InputGroup>

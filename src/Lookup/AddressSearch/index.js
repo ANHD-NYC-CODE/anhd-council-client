@@ -9,7 +9,7 @@ import { createErrorSelector } from 'Store/Error/selectors'
 import { GET_BUILDING_SEARCH } from 'shared/constants/actions'
 import { handleClearErrors } from 'Store/Error/actions'
 import { setSearchValue } from 'Store/Search/actions'
-
+import classnames from 'classnames'
 import { setLookupAndRequestsAndRedirect } from 'Store/AppState/actions'
 
 import './style.scss'
@@ -141,7 +141,7 @@ class AddressSearch extends React.PureComponent {
 
   render() {
     return (
-      <div className="address-search mb-2" ref={this.addressRef}>
+      <div className={classnames('address-search mb-2', this.props.containerClass)} ref={this.addressRef}>
         <SearchBar
           onKeyDown={this.onKeyDown}
           loading={this.props.loading}
@@ -179,10 +179,12 @@ class AddressSearch extends React.PureComponent {
 
 AddressSearch.defaultProps = {
   inputClass: '',
+  containerClass: '',
 }
 
 AddressSearch.propTypes = {
   inputClass: PropTypes.string,
+  containerClass: PropTypes.string,
   config: PropTypes.object,
   setViewCoordinates: PropTypes.func,
   search: PropTypes.object,
