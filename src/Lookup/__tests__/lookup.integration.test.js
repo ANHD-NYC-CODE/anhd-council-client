@@ -79,6 +79,7 @@ describe('Lookup', () => {
       })
       await flushAllPromises()
       wrapper.update()
+
       expect(wrapper.find('RequestTableWrapper')).toHaveLength(12)
     })
   })

@@ -1099,7 +1099,7 @@ export const getTableColumns = ({
       columns = [
         constructStandardColumn({
           dataField: 'id',
-          text: 'Job Filing #',
+          text: 'Job #',
           formatter: (cell, row, index) => linkFormatter(cell, row, index, 'DOB_ISSUED_PERMIT', 'jobfilingnumber'),
           csvExport: false,
         }),
@@ -1152,6 +1152,13 @@ export const getTableColumns = ({
           formatter: dobPermitSubtypeFormatter,
           csvFormatter: dobPermitSubtypeFormatter,
           sort: true,
+        }),
+        constructStandardColumn({
+          dataField: 'filing_status',
+          text: 'Filing Status',
+          sort: true,
+          formatter: capitalizeFormatter,
+          csvFormatter: capitalizeFormatter,
         }),
         constructStandardColumn({
           dataField: 'type',

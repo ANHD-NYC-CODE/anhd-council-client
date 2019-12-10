@@ -31,6 +31,14 @@ const getLabel = props => {
   }
 }
 
+const getRecordsCount = (request, results) => {
+  if (request.resourceModel.tableRecordsCountFunction) {
+    return request.resourceModel.tableRecordsCountFunction(results)
+  } else {
+    return results.length
+  }
+}
+
 const SummaryResultCard = props => {
   return (
     <Card
@@ -58,7 +66,9 @@ const SummaryResultCard = props => {
           {props.loading ? (
             <SpinnerLoader />
           ) : (
-            <h2 className={classnames('m-0', props.summaryTextColorClass)}>{props.results.length}</h2>
+            <h2 className={classnames('m-0', props.summaryTextColorClass)}>
+              {getRecordsCount(props.request, props.results)}
+            </h2>
           )}
         </div>
       </Card.Body>
