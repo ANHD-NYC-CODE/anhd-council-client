@@ -1,0 +1,7 @@
+@import 'shared/styles/_variables.scss';
+
+/* globals */
+
+p {
+  @extend %p1-font-size;
+}

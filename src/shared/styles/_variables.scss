@@ -4,3 +4,13 @@ $input-border-focus-mobile: 2px dotted $primary;
 
 $input-border: 4px dotted $gray-400;
 $input-border-mobile: 2px dotted $gray-400;
+
+/* typography */
+
+%p1-font-size {
+  font-size: 16px;
+
+  @include media-breakpoint-up(md) {
+    font-size: 18px;
+  }
+}

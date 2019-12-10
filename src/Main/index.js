@@ -108,17 +108,14 @@ class Main extends React.Component {
           <title>DAP Portal</title>
         </Helmet>
         <Row>
-          <Col className="layout__left-column touch-left padding-xs-sm-0" xs={12} lg={c.SIDEBAR_COLUMN_SIZE}>
-            <IntroductionBlock scrollToControls={this.scrollToControls} />
-          </Col>
-          <Col className="px-md-4 py-3 py-lg-6" xs={12} lg={12 - c.SIDEBAR_COLUMN_SIZE}>
-            <p className="text-muted font-weight-bold">Select a district or enter a building address to begin.</p>
+          <Col className="px-md-4 py-3 py-lg-6" xs={12}>
+            <p className="text-black text-center">Enter an address to find information about a building:</p>
             <Element name="main-controls" />
             <div className="mb-4">
               <div>
                 <ConfigContext.Consumer>
                   {config => {
-                    return <AddressSearch config={config} inputClass="xl-form-control" placeholder="Enter an address" />
+                    return <AddressSearch config={config} inputClass="home-search-bar" placeholder="Enter an address" />
                   }}
                 </ConfigContext.Consumer>
               </div>
@@ -144,6 +141,9 @@ class Main extends React.Component {
                 />
               </div>
             </div>
+          </Col>
+          <Col className="layout__left-column padding-xs-sm-0" xs={12}>
+            <IntroductionBlock scrollToControls={this.scrollToControls} />
           </Col>
         </Row>
       </div>

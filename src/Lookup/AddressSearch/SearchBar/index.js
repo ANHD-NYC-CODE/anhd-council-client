@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { setSearchTimeout, queryAddress } from 'Store/Search/actions'
 import { requestWithAuth } from 'shared/utilities/authUtils'
-import { Form } from 'react-bootstrap'
+import { Form, InputGroup, Button } from 'react-bootstrap'
 import StandardizedInput from 'shared/classes/StandardizedInput'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimesCircle } from '@fortawesome/free-regular-svg-icons'
@@ -48,22 +48,27 @@ export default class SearchBar extends React.PureComponent {
   render() {
     return (
       <Form autoComplete="off" className="search-bar" onSubmit={this.onFormSubmit}>
-        <Form.Control
-          className={classnames(this.props.inputClass, { valued: !!this.props.searchValue })}
-          name="address-search"
-          ref={this.props.searchBarRef}
-          onChange={this.onInputChange}
-          onKeyDown={this.props.onKeyDown}
-          size="lg"
-          placeholder={this.props.searchValue || this.props.placeholder || 'Enter an address'}
-          tabIndex={0}
-          type="text"
-        />
-        {this.props.show && (
-          <div className="search-bar__close" onClick={e => this.props.hideSearch(e, true)}>
-            <FontAwesomeIcon className="text-secondary" size="lg" icon={faTimesCircle} />
-          </div>
-        )}
+        <InputGroup>
+          <Form.Control
+            className={classnames(this.props.inputClass, { valued: !!this.props.searchValue })}
+            name="address-search"
+            ref={this.props.searchBarRef}
+            onChange={this.onInputChange}
+            onKeyDown={this.props.onKeyDown}
+            size="lg"
+            placeholder={this.props.searchValue || this.props.placeholder || 'Enter an address'}
+            tabIndex={0}
+            type="text"
+          />
+          {this.props.show && (
+            <div className="search-bar__close" onClick={e => this.props.hideSearch(e, true)}>
+              <FontAwesomeIcon className="text-secondary" size="lg" icon={faTimesCircle} />
+            </div>
+          )}
+          <InputGroup.Append>
+            <Button variant="dark">Search</Button>
+          </InputGroup.Append>
+        </InputGroup>
         <div className="search-bar__loading">{this.props.loading && <SpinnerLoader size="40px" />}</div>
       </Form>
     )
