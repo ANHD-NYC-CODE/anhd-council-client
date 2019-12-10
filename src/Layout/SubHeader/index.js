@@ -83,6 +83,61 @@ class SubHeader extends React.Component {
             )}
           </Nav>
         </Navbar>
+        <Navbar className="sub-header__wrapper--bottom">
+          <Nav className="" variant="tabs" activeKey={this.state.key} onSelect={key => this.setState({ key })}>
+            <Link
+              className={classnames('sub-header__nav-tab', {
+                active: this.props.pathname.match(/^\/$/),
+              })}
+              to={'/'}
+            >
+              <div className="sub-header__nav-tab--inner">
+                <Nav.Item>Home</Nav.Item>
+              </div>
+            </Link>
+            <Link
+              className={classnames('sub-header__nav-tab', {
+                active: this.props.pathname.match(/(lookup|property)/),
+              })}
+              to={
+                this.props.currentProperty
+                  ? addressResultToPath({
+                      bbl: this.props.currentProperty,
+                      bin: this.props.currentBuilding,
+                    })
+                  : '/lookup'
+              }
+            >
+              <div className="sub-header__nav-tab--inner">
+                <Nav.Item>Property Lookup</Nav.Item>
+              </div>
+            </Link>
+            <Link
+              className={classnames('sub-header__nav-tab', {
+                active: this.props.pathname.match(/(map|council|community)/),
+              })}
+              to={`${
+                this.props.currentGeographyType && this.props.currentGeographyId
+                  ? '/' + getGeographyPath(this.props.currentGeographyType) + '/' + this.props.currentGeographyId
+                  : '/map'
+              }`}
+            >
+              <div className="sub-header__nav-tab--inner">
+                <Nav.Item>District Dashboard</Nav.Item>
+              </div>
+            </Link>
+            <Link
+              to="/search"
+              className={classnames('sub-header__nav-tab', {
+                active: this.props.pathname.match(/(search)/),
+              })}
+            >
+              <div className="sub-header__nav-tab--inner">
+                <Nav.Item>Custom Search</Nav.Item>
+              </div>
+            </Link>
+          </Nav>
+        </Navbar>
       </Nav>
     )
     // return (
