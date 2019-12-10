@@ -3,6 +3,14 @@ $sub-header-padding-top: 12px;
 .sub-header {
   background-color: $white;
 
+  .navbar {
+    padding: 0;
+
+    @include media-breakpoint-up(sm) {
+      padding: 0 1rem;
+    }
+  }
+
   .sub-header__wrapper--top {
     align-items: center;
     flex-wrap: wrap;
@@ -49,11 +57,13 @@ $sub-header-padding-top: 12px;
 
   .sub-header__wrapper--bottom {
     align-items: flex-end;
+    width: 100%;
 
-    .col-12 {
-      @include media-breakpoint-down(xs) {
-        padding-left: 0px;
-        padding-right: 0px;
+    .navbar-nav {
+      flex-wrap: wrap;
+
+      @include media-breakpoint-up(sm) {
+        flex-wrap: nowrap;
       }
     }
   }
@@ -79,71 +89,35 @@ $sub-header-padding-top: 12px;
     @include media-breakpoint-up(sm) {
       justify-content: flex-end;
     }
-
-    @include media-breakpoint-up(xl) {
-      margin-right: 40px;
-    }
   }
 
   .sub-header__nav-tab {
-    background-color: $white;
-    box-shadow: inset 0px 0px 3px $info;
-    color: $info;
+    color: $black;
+    background-color: $tab-blue;
     font-weight: bold;
     padding: 15px;
     text-decoration: none;
+    flex: 0 0 100%;
+    white-space: pre;
 
     @include media-breakpoint-up(sm) {
-      flex: 0 0 31%;
       align-items: center;
-      border-top-right-radius: 30px;
-
       display: flex;
+      flex-shrink: 1;
       margin-right: 4px;
-      height: 70px;
       justify-content: center;
-    }
-    @include media-breakpoint-up(lg) {
-      flex: 0 0 200px;
-      height: 70px;
-    }
-    @include media-breakpoint-up(xl) {
-      flex: 0 0 240px;
-      height: 80px;
     }
   }
 
   @media (hover: hover) {
     .sub-header__nav-tab:hover {
-      background-color: $info;
-      color: $white;
+      background-color: $blizzard;
+      color: $black;
     }
   }
+
   .sub-header__nav-tab.active {
-    background-color: $info;
-    box-shadow: none;
-    color: $white;
-  }
-
-  .sub-header__nav-tab--inner {
-    align-items: center;
-    height: 100%;
-    padding: 0 5px;
-    display: flex;
-    width: 100%;
-
-    .nav-item {
-      align-items: center;
-      display: flex;
-      height: 100%;
-      justify-content: center;
-      text-align: center;
-      padding: 0 5px;
-      width: 100%;
-    }
-  }
-
-  .sub-header__nav-tab.active .nav-item {
-    border-left: 3px solid $nyc-orange;
+    background-color: $blizzard;
+    color: $black;
   }
 }
