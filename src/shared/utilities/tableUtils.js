@@ -599,207 +599,6 @@ export const bldgClassFormater = (cell, row, index) => {
   }
 }
 
-export const dobComplaintCategoryFormatter = (cell, row, index) => {
-  switch (cell) {
-    case '01':
-      return `${cell} - Priority: A - Accident – Construction/Plumbing `
-    case '03':
-      return `${cell} - Priority: A - Adjacent Buildings - Not Protected `
-    case '04':
-      return `${cell} - Priority: B - After Hours Work – Illegal `
-    case '05':
-      return `${cell} - Priority: B - Permit – None (Building/PA/Demo etc.) `
-    case '06':
-      return `${cell} - Priority: B - Construction – Change Grade/Change Watercourse `
-    case '09':
-      return `${cell} - Priority: B - Debris – Excessive `
-    case '10':
-      return `${cell} - Priority: A - Debris/Building -Falling or In Danger of Falling `
-    case '12':
-      return `${cell} - Priority: A - Demolition-Unsafe/Illegal/Mechanical Demo `
-    case '13':
-      return `${cell} - Priority: A - Elevator In (FDNY) Readiness-None `
-    case '14':
-      return `${cell} - Priority: A - Excavation - Undermining Adjacent Building `
-    case '15':
-      return `${cell} - Priority: B - Fence - None/Inadequate/Illegal `
-    case '16':
-      return `${cell} - Priority: A - Inadequate Support/Shoring `
-    case '18':
-      return `${cell} - Priority: A - Material Storage – Unsafe `
-    case '20':
-      return `${cell} - Priority: A - Landmark Building – Illegal Work `
-    case '21':
-      return `${cell} - Priority: B - Safety Net/Guardrail-Damaged/Inadequate/None (over 6 Story/75 ft.) `
-    case '23':
-      return `${cell} - Priority: B - Sidewalk Shed/Supported Scaffold/Inadequate/Defective/None/No Permit/No Cert `
-    case '29':
-      return `${cell} - Priority: C - Building – Vacant, Open and Unguarded `
-    case '30':
-      return `${cell} - Priority: A - Building Shaking/Vibrating/Structural Stability Affected `
-    case '31':
-      return `${cell} - Priority: C - Certificate of Occupancy – None/Illegal/Contrary to Co `
-    case '35':
-      return `${cell} - Priority: D - Curb Cut/Driveway/Carport – Illegal `
-    case '37':
-      return `${cell} - Priority: A - Egress – Locked/Blocked/Improper/No Secondary Means `
-    case '45':
-      return `${cell} - Priority: B - Illegal Conversion `
-    case '49':
-      return `${cell} - Priority: C - Storefront or Business Sign/Awning/Marquee/Canopy – Illegal `
-    case '50':
-      return `${cell} - Priority: A - Sign Falling - Danger/Sign Erection or Display In Progress – Illegal `
-    case '52':
-      return `${cell} - Priority: B - Sprinkler System – Inadequate `
-    case '53':
-      return `${cell} - Priority: D - Vent/Exhaust – Illegal/Improper `
-    case '54':
-      return `${cell} - Priority: B - Wall/Retaining Wall – Bulging/Cracked `
-    case '55':
-      return `${cell} - Priority: D - Zoning – Non-conforming `
-    case '56':
-      return `${cell} - Priority: A - Boiler – Fumes/Smoke/Carbon Monoxide `
-    case '58':
-      return `${cell} - Priority: B - Boiler – Defective/Non-operative/No Permit `
-    case '59':
-      return `${cell} - Priority: B - Electrical Wiring – Defective/Exposed, In Progress `
-    case '62':
-      return `${cell} - Priority: A - Elevator-Danger Condition/Shaft Open/Unguarded `
-    case '63':
-      return `${cell} - Priority: B - Elevator-Danger Condition/Shaft Open/Unguarded `
-    case '65':
-      return `${cell} - Priority: A - Gas Hook-Up/Piping – Illegal or Defective `
-    case '66':
-      return `${cell} - Priority: B - Plumbing Work – Illegal/No Permit(Also Sprinkler/Standpipe) `
-    case '67':
-      return `${cell} - Priority: A - Crane – No Permit/License/Cert/Unsafe/Illegal `
-    case '71':
-      return `${cell} - Priority: B - SRO – Illegal Work/No Permit/Change In Occupancy Use `
-    case '73':
-      return `${cell} - Priority: C - Failure to Maintain `
-    case '74':
-      return `${cell} - Priority: C - Illegal Commercial/Manufacturing Use In Residential Zone `
-    case '75':
-      return `${cell} - Priority: B - Adult Establishment `
-    case '76':
-      return `${cell} - Priority: A - Unlicensed/Illegal/Improper Plumbing Work In Progress `
-    case '77':
-      return `${cell} - Priority: C - Contrary To Ll58/87 (Handicap Access) `
-    case '78':
-      return `${cell} - Priority: B - Privately Owned Public Space/Non-Compliance `
-    case '79':
-      return `${cell} - Priority: C - Lights from Parking Lot Shining on Building `
-    case '80':
-      return `${cell} - Priority: D - Elevator Not Inspected/Illegal/No Permit `
-    case '81':
-      return `${cell} - Priority: A - Elevator – Accident `
-    case '82':
-      return `${cell} - Priority: A - Boiler – Accident/Explosion `
-    case '83':
-      return `${cell} - Priority: B - Construction – Contrary/Beyond Approved Plans/Permits `
-    case '85':
-      return `${cell} - Priority: C - Failure to Retain Water/Improper Drainage (LL103/89) `
-    case '86':
-      return `${cell} - Priority: A - Work Contrary to Stop Work Order `
-    case '88':
-      return `${cell} - Priority: B - Safety Net/Guard Rail-Dam/Inadequate/None(6fl.75ft. or less) `
-    case '89':
-      return `${cell} - Priority: A - Accident – Cranes/Derricks/Suspension `
-    case '90':
-      return `${cell} - Priority: C - Unlicensed/Illegal Activity `
-    case '91':
-      return `${cell} - Priority: A - Site Conditions Endangering Workers `
-    case '92':
-      return `${cell} - Priority: B - Illegal Conversion of Manufacturing/Industrial Space `
-    case '93':
-      return `${cell} - Priority: B - Request for Retaining Wall Safety Inspection `
-    case '94':
-      return `${cell} - Priority: C - Plumbing-Defective/Leaking/Not Maintained `
-    case '1A':
-      return `${cell} - Priority: B - Illegal Conversion Commercial Building/Space to Dwelling Units `
-    case '1B':
-      return `${cell} - Priority: B - Illegal Tree Removal/Topo. Change In SNAD `
-    case '1D':
-      return `${cell} - Priority: B - Con Edison Referral `
-    case '1E':
-      return `${cell} - Priority: A - Suspended (Hanging) Scaffolds- No Permit/License/Dangerous/Accident `
-    case '1G':
-      return `${cell} - Priority: B - Stalled Construction Site `
-    case '1K':
-      return `${cell} - Priority: D - Bowstring Truss Tracking Complaint `
-    case '1Z':
-      return `${cell} - Priority: D - Enforcement Work Order (DOB) `
-    case '2A':
-      return `${cell} - Priority: B - Posted Notice or Order Removed/Tampered With `
-    case '2B':
-      return `${cell} - Priority: A - Failure to Comply with Vacate Order `
-    case '2C':
-      return `${cell} - Priority: B - Smoking Ban – Smoking on Construction Site `
-    case '2D':
-      return `${cell} - Priority: B - Smoking Signs – ‘No Smoking Signs’ Not Observed on Construction Site `
-    case '2E':
-      return `${cell} - Priority: A - Demolition Notification Received `
-    case '2F':
-      return `${cell} - Priority: D - Building Under Structural Monitoring `
-    case '2G':
-      return `${cell} - Priority: C - Advertising Sign/Billboard/Posters/Flexible Fabric – Illegal `
-    case '2H':
-      return `${cell} - Priority: D - Second Avenue Subway Construction `
-    case '2J':
-      return `${cell} - Priority: D - Sandy: Building Destroyed `
-    case '2K':
-      return `${cell} - Priority: D - Structurally Compromised Building (LL33/08) `
-    case '2L':
-      return `${cell} - Priority: D - Façade (LL11/98) – Unsafe Notification `
-    case '2M':
-      return `${cell} - Priority: D - Monopole Tracking Complaint `
-    case '3A':
-      return `${cell} - Priority: B - Unlicensed/Illegal/Improper Electrical Work In Progress `
-    case '4A':
-      return `${cell} - Priority: B - Illegal Hotel Rooms In Residential Buildings `
-    case '4B':
-      return `${cell} - Priority: B - SEP – Professional Certification Compliance Audit `
-    case '4C':
-      return `${cell} - Priority: D - Excavation Tracking Complaint `
-    case '4D':
-      return `${cell} - Priority: D - Interior Demo Tracking Complaint `
-    case '4F':
-      return `${cell} - Priority: D - SST Tracking Complaint `
-    case '4G':
-      return `${cell} - Priority: B - Illegal Conversion No Access Follow-Up `
-    case '4J':
-      return `${cell} - Priority: D - M.A.R.C.H. Program (Interagency) `
-    case '4K':
-      return `${cell} - Priority: D - CSC – DM Tracking Complaint `
-    case '4L':
-      return `${cell} - Priority: D - CSC – High-Rise Tracking Complaint `
-    case '4M':
-      return `${cell} - Priority: D - CSC – Low-Rise Tracking Complaint `
-    case '4N':
-      return `${cell} - Priority: D - Retaining Wall Tracking Complaint `
-    case '4P':
-      return `${cell} - Priority: D - Legal/Padlock Tracking Complaint `
-    case '4W':
-      return `${cell} - Priority: C - Woodside Settlement Project `
-    case '5A':
-      return `${cell} - Priority: B - Request for Joint FDNY/DOB Inspection `
-    case '5B':
-      return `${cell} - Priority: A - Non-Compliance with Lightweight Materials `
-    case '5C':
-      return `${cell} - Priority: A - Structural Stability Impacted – New Building Under Construction `
-    case '5E':
-      return `${cell} - Priority: A - Amusement Ride Accident/Incident `
-    case '5F':
-      return `${cell} - Priority: B - Compliance Inspection `
-    case '5G':
-      return `${cell} - Priority: B - Unlicensed/Illegal/Improper Work In Progress `
-    case '6A':
-      return `${cell} - Priority: C - Vesting Inspection `
-    default:
-      return cell
-  }
-}
-
 export const dobComplaintCategoryPriorityFormatter = (cell, row, index) => {
   switch (cell) {
     case '01':
@@ -999,10 +798,14 @@ export const dobComplaintCategoryPriorityFormatter = (cell, row, index) => {
   }
 }
 
+// OLD - https://www1.nyc.gov/assets/buildings/pdf/complaint_category.pdf
+// NEW -  https://data.cityofnewyork.us/api/views/eabe-havv/files/e19c463a-69dd-4810-ae72-3c7c7fc657f8?download=true&filename=DD_DOB_Complaints_Received_2019-08-21.xlsx
 export const dobComplaintCategoryDescriptionFormatter = (cell, row, index) => {
   switch (cell) {
     case '01':
       return 'Accident – Construction/Plumbing '
+    case '02':
+      return 'Accident – To Public '
     case '03':
       return 'Adjacent Buildings - Not Protected '
     case '04':
@@ -1011,10 +814,16 @@ export const dobComplaintCategoryDescriptionFormatter = (cell, row, index) => {
       return 'Permit – None (Building/PA/Demo etc.) '
     case '06':
       return 'Construction – Change Grade/Change Watercourse '
+    case '07':
+      return 'Construction - Change Watercourse '
+    case '08':
+      return "Contractor's Sign - None "
     case '09':
       return 'Debris – Excessive '
     case '10':
       return 'Debris/Building -Falling or In Danger of Falling '
+    case '11':
+      return 'Demolition - No Permit '
     case '12':
       return 'Demolition-Unsafe/Illegal/Mechanical Demo '
     case '13':
@@ -1025,30 +834,76 @@ export const dobComplaintCategoryDescriptionFormatter = (cell, row, index) => {
       return 'Fence - None/Inadequate/Illegal '
     case '16':
       return 'Inadequate Support/Shoring '
+    case '17':
+      return 'Material/Personnel Hoist - No Permit '
     case '18':
       return 'Material Storage – Unsafe '
+    case '19':
+      return 'Mechanical Demolition - Illegal '
     case '20':
       return 'Landmark Building – Illegal Work '
     case '21':
       return 'Safety Net/Guardrail-Damaged/Inadequate/None (over 6 Story/75 ft.) '
+    case '22':
+      return 'Safety Netting - None '
     case '23':
       return 'Sidewalk Shed/Supported Scaffold/Inadequate/Defective/None/No Permit/No Cert '
+    case '24':
+      return 'Sidewalk Shed - None '
+    case '25':
+      return 'Warning Signs/Lights - None '
+    case '26':
+      return 'Watchman - None '
+    case '27':
+      return 'Auto Repair - Illegal '
+    case '28':
+      return 'Building - In Danger Of Collapse '
     case '29':
       return 'Building – Vacant, Open and Unguarded '
     case '30':
       return 'Building Shaking/Vibrating/Structural Stability Affected '
     case '31':
       return 'Certificate of Occupancy – None/Illegal/Contrary to Co '
+    case '32':
+      return 'C Of O - Not Being Complied With '
+    case '33':
+      return 'Commercial Use - Illegal '
+    case '34':
+      return 'Compactor Room/Refuse Chute - Illegal '
     case '35':
       return 'Curb Cut/Driveway/Carport – Illegal '
+    case '36':
+      return 'Driveway/Carport - Illegal '
     case '37':
       return 'Egress – Locked/Blocked/Improper/No Secondary Means '
+    case '38':
+      return 'Egress - Exit Door Not Proper '
+    case '39':
+      return 'Egress - No Secondary Means '
+    case '40':
+      return 'Falling - Part Of Building '
+    case '41':
+      return 'falling - Part Of Building In Danger Of '
+    case '42':
+      return 'Fence - Illegal '
+    case '43':
+      return 'Structural Stability Affected '
+    case '44':
+      return 'Fireplace/Wood Stove - Illegal '
     case '45':
       return 'Illegal Conversion '
+    case '46':
+      return 'PA Permit - None '
+    case '47':
+      return 'PA Permit - Not Being Complied With '
+    case '48':
+      return 'Residential Use - Illegal '
     case '49':
       return 'Storefront or Business Sign/Awning/Marquee/Canopy – Illegal '
     case '50':
       return 'Sign Falling - Danger/Sign Erection or Display In Progress – Illegal '
+    case '51':
+      return 'Illegal Social Club '
     case '52':
       return 'Sprinkler System – Inadequate '
     case '53':
@@ -1059,22 +914,38 @@ export const dobComplaintCategoryDescriptionFormatter = (cell, row, index) => {
       return 'Zoning – Non-conforming '
     case '56':
       return 'Boiler – Fumes/Smoke/Carbon Monoxide '
+    case '57':
+      return 'Boiler - Illegal '
     case '58':
       return 'Boiler – Defective/Non-operative/No Permit '
     case '59':
       return 'Electrical Wiring – Defective/Exposed, In Progress '
+    case '60':
+      return 'Electrical Work - Improper '
+    case '61':
+      return 'Electrical Work - Unlicensed, In Progress '
     case '62':
       return 'Elevator-Danger Condition/Shaft Open/Unguarded '
     case '63':
       return 'Elevator-Danger Condition/Shaft Open/Unguarded '
+    case '64':
+      return 'Elevator Shaft - Open And Unguarded '
     case '65':
       return 'Gas Hook-Up/Piping – Illegal or Defective '
     case '66':
       return 'Plumbing Work – Illegal/No Permit(Also Sprinkler/Standpipe) '
     case '67':
       return 'Crane – No Permit/License/Cert/Unsafe/Illegal '
+    case '68':
+      return 'Crane/Scaffold - Unsafe/Illegal Operations '
+    case '69':
+      return 'Crane/Scaffold - Unsafe Installation/Equipment '
+    case '70':
+      return 'Suspension Scaffold Hanging - No Work In Progress '
     case '71':
       return 'SRO – Illegal Work/No Permit/Change In Occupancy Use '
+    case '72':
+      return 'SRO - Change in Occupancy/Use '
     case '73':
       return 'Failure to Maintain '
     case '74':
@@ -1097,10 +968,14 @@ export const dobComplaintCategoryDescriptionFormatter = (cell, row, index) => {
       return 'Boiler – Accident/Explosion '
     case '83':
       return 'Construction – Contrary/Beyond Approved Plans/Permits '
+    case '84':
+      return 'Facade - Defective/Cracking '
     case '85':
       return 'Failure to Retain Water/Improper Drainage (LL103/89) '
     case '86':
       return 'Work Contrary to Stop Work Order '
+    case '87':
+      return 'Request For Deck Safety Inspection '
     case '88':
       return 'Safety Net/Guard Rail-Dam/Inadequate/None(6fl.75ft. or less) '
     case '89':
@@ -1115,18 +990,48 @@ export const dobComplaintCategoryDescriptionFormatter = (cell, row, index) => {
       return 'Request for Retaining Wall Safety Inspection '
     case '94':
       return 'Plumbing-Defective/Leaking/Not Maintained '
+    case '95':
+      return 'Bronx 2nd Offense Pilot Project '
+    case '96':
+      return 'Unlicensed Boiler, Electrical, Plumbing, Or Sign Work Completed '
+    case '97':
+      return 'Other Agency Jurisdiction '
+    case '98':
+      return 'Refer to Operations for Determination '
+    case '99':
+      return 'Other '
     case '1A':
       return 'Illegal Conversion Commercial Building/Space to Dwelling Units '
     case '1B':
       return 'Illegal Tree Removal/Topo. Change In SNAD '
+    case '1C':
+      return 'Damange Assessment Request Or Report (Disaster) '
     case '1D':
       return 'Con Edison Referral '
     case '1E':
       return 'Suspended (Hanging) Scaffolds- No Permit/License/Dangerous/Accident '
+    case '1F':
+      return 'Failure to Comply With Annual Crane Inspection '
     case '1G':
       return 'Stalled Construction Site '
+    case '1H':
+      return 'Emergency Asbestos Response Inspection '
+    case '1J':
+      return 'Jewelry/Dentistry Torch: Gas Piping Removed W/O Permit '
     case '1K':
       return 'Bowstring Truss Tracking Complaint '
+    case '1L':
+      return 'Gas Utility Referral '
+    case '1U':
+      return 'Special Operations Compliance Inspection '
+    case '1V':
+      return 'Electrical Enforcement Work Order (DOB) '
+    case '1W':
+      return 'Plumbing Enforcement Work Order (DOB) '
+    case '1X':
+      return 'Construction enforcement Work Order (DOB) '
+    case '1Y':
+      return 'Enforcement Work Order (DOB) '
     case '1Z':
       return 'Enforcement Work Order (DOB) '
     case '2A':
@@ -1155,6 +1060,18 @@ export const dobComplaintCategoryDescriptionFormatter = (cell, row, index) => {
       return 'Monopole Tracking Complaint '
     case '3A':
       return 'Unlicensed/Illegal/Improper Electrical Work In Progress '
+    case '3B':
+      return 'Routine Inspection '
+    case '3C':
+      return 'Plan Compliance Inspection '
+    case '3D':
+      return 'Bicycle Access Waiver Request - Elevator Safety '
+    case '3E':
+      return 'Bicycle Access Waiver Request - Alternate Parking '
+    case '3G':
+      return 'Restroom Non-Compliance With Local Law 79/16 '
+    case '3H':
+      return 'DCP/BSA Compliance Inspection '
     case '4A':
       return 'Illegal Hotel Rooms In Residential Buildings '
     case '4B':
@@ -1163,10 +1080,14 @@ export const dobComplaintCategoryDescriptionFormatter = (cell, row, index) => {
       return 'Excavation Tracking Complaint '
     case '4D':
       return 'Interior Demo Tracking Complaint '
+    case '4E':
+      return 'Stalled sites Tracking Complaint '
     case '4F':
       return 'SST Tracking Complaint '
     case '4G':
       return 'Illegal Conversion No Access Follow-Up '
+    case '4H':
+      return 'V.E.S.T. Program (DOB & NYPD) '
     case '4J':
       return 'M.A.R.C.H. Program (Interagency) '
     case '4K':
@@ -1179,6 +1100,8 @@ export const dobComplaintCategoryDescriptionFormatter = (cell, row, index) => {
       return 'Retaining Wall Tracking Complaint '
     case '4P':
       return 'Legal/Padlock Tracking Complaint '
+    case '4S':
+      return 'Sustainability Enforcement Work Order '
     case '4W':
       return 'Woodside Settlement Project '
     case '5A':
@@ -1195,6 +1118,22 @@ export const dobComplaintCategoryDescriptionFormatter = (cell, row, index) => {
       return 'Unlicensed/Illegal/Improper Work In Progress '
     case '6A':
       return 'Vesting Inspection '
+    case '6B':
+      return 'Semi-Annual Homeless Shelter Inspection: Plumbing '
+    case '6C':
+      return 'Semi-Annual Homeless Shelter Inspection: Construction '
+    case '6D':
+      return 'Semi-Annual Homeless Shelter Inspection: Electrical '
+    case '6M':
+      return 'Elevator - Multiple Devices On Property '
+    case '6S':
+      return 'Elevator - Single Device On Property/No Alternate Service '
+    case '7F':
+      return 'CSE - Tracking Compliance '
+    case '7G':
+      return 'CSE - Sweep '
+    case '8A':
+      return 'Construction Safety Compliance Action '
   }
 }
 
