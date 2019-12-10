@@ -20,12 +20,12 @@ body {
 }
 
 %layout-width-wrapper {
-  max-width: 1120px;
-  margin: 0 auto;
-  width: 100%;
+  max-width: 1120px !important;
+  margin: 0 auto !important;
+  width: 100% !important;
 
   @include media-breakpoint-up(md) {
-    padding: 0;
+    padding: 0 !important;
   }
 }
 
@@ -35,7 +35,7 @@ body {
 
 .layout-width-wrapper--padded {
   @extend %layout-width-wrapper;
-  padding: 0 1rem;
+  padding: 0 1rem !important;
 }
 
 .touch-left {
