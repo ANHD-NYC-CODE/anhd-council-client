@@ -6,6 +6,7 @@ import AddressSearch from 'Lookup/AddressSearch'
 import LeafletMap from 'LeafletMap'
 import { Element } from 'react-scroll'
 import * as c from 'shared/constants'
+import ConfigContext from 'Config/ConfigContext'
 
 import IntroductionBlock from 'shared/components/IntroductionBlock'
 
@@ -20,7 +21,11 @@ const LookupIndex = props => {
         <Row className="mb-4">
           <Col>
             <h5 className="font-weight-bold text-muted text-uppercase">Enter a building address to begin.</h5>
-            <AddressSearch />
+            <ConfigContext.Consumer>
+              {config => {
+                return <AddressSearch config={config} />
+              }}
+            </ConfigContext.Consumer>
           </Col>
         </Row>
         <Row>

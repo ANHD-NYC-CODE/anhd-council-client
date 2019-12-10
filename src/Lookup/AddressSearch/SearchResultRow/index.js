@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import BuildingIcon from 'shared/styles/icons/BuildingIcon'
 import { addressResultToPath } from 'shared/utilities/routeUtils'
 
 import './style.scss'
@@ -9,7 +8,11 @@ const SearchResultRow = props => {
   if (props.result.number) {
     return (
       <div
+        ref={props.currentResultFocusRef}
+        tabIndex={0}
         className="search-result-row"
+        onKeyDown={props.onKeyDown}
+        onFocus={() => props.setResultFocusIndex(props.resultIndex)}
         onClick={e => props.onClick(e, props.result)}
         to={addressResultToPath({ bbl: props.result.bbl, bin: props.result.bin })}
       >
@@ -34,6 +37,8 @@ SearchResultRow.propTypes = {
   dispatch: PropTypes.func,
   onClick: PropTypes.func,
   result: PropTypes.object,
+  resultIndex: PropTypes.number,
+  setResultFocusIndex: PropTypes.func,
 }
 
 export default SearchResultRow
