@@ -11,6 +11,13 @@ $sub-header-padding-top: 12px;
     }
   }
 
+  .sub-header__wrapper--top,
+  .sub-header__wrapper--bottom {
+    @include media-breakpoint-up(xl) {
+      padding: 0;
+    }
+  }
+
   .sub-header__wrapper--top {
     align-items: center;
     flex-wrap: wrap;
@@ -23,13 +30,16 @@ $sub-header-padding-top: 12px;
       box-sizing: border-box;
       display: flex;
       justify-content: center;
-      padding: 20px;
       width: 100%;
 
       @include media-breakpoint-up(md) {
         padding: $sub-header-padding-top 40px 40px;
-        padding-left: 1rem;
+        padding-left: 0;
         width: 300px;
+      }
+
+      @include media-breakpoint-up(xl) {
+        margin-left: -1rem;
       }
     }
 
@@ -69,6 +79,7 @@ $sub-header-padding-top: 12px;
 
     .nav-tabs {
       border: 0;
+      width: 100%;
     }
   }
 
@@ -98,7 +109,7 @@ $sub-header-padding-top: 12px;
   .sub-header__nav-tab {
     color: $gray-900;
     background-color: $tab-blue;
-    padding: 15px;
+    padding: 1rem 15px;
     text-decoration: none;
     flex: 0 0 100%;
     white-space: pre;
@@ -106,9 +117,13 @@ $sub-header-padding-top: 12px;
     @include media-breakpoint-up(sm) {
       align-items: center;
       display: flex;
-      flex-shrink: 1;
+      flex: 0 1 20%;
       margin-right: 4px;
       justify-content: center;
+    }
+
+    @include media-breakpoint-up(md) {
+      padding: 1rem 1.5rem;
     }
   }
 

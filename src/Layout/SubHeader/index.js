@@ -22,8 +22,8 @@ class SubHeader extends React.Component {
 
   render() {
     return (
-      <Nav className="sub-header layout-width-wrapper">
-        <Navbar className="sub-header__wrapper--top touch-left">
+      <Nav className="sub-header">
+        <Navbar className="sub-header__wrapper--top layout-width-wrapper--padded touch-left">
           <Nav className="mr-auto">
             <Navbar.Brand className="mr-auto">
               <Link to="/">
@@ -83,7 +83,7 @@ class SubHeader extends React.Component {
             )}
           </Nav>
         </Navbar>
-        <Navbar className="sub-header__wrapper--bottom">
+        <Navbar className="sub-header__wrapper--bottom layout-width-wrapper">
           <Nav className="" variant="tabs" activeKey={this.state.key} onSelect={key => this.setState({ key })}>
             <Link
               className={classnames('sub-header__nav-tab', {
