@@ -1,4 +1,4 @@
-@import 'shared/styles/bootstrap/_variables.scss';
+@import 'shared/styles/_variables.scss';
 
 .lookup-table-tab {
   border: 1px dashed $gray-600;
@@ -9,13 +9,19 @@
   width: 100%;
 
   &.btn {
+    @extend %p3-font-size;
     border-radius: 6px;
-    padding: 4px;
+    padding: 4px 8px;
     text-align: left;
   }
 
   &.btn:not(.active) {
     color: $black;
+  }
+
+  p,
+  span {
+    @extend %p3-font-size;
   }
 }
 
