@@ -1,17 +1,23 @@
 @import 'shared/styles/_variables.scss';
 
 .lookup-show {
-  .lookup-show__top-row {
-    display: flex;
+  .lookup-show__row-wrapper {
     margin-top: 1rem;
     margin-bottom: 2rem;
-    align-items: center;
+    @include media-breakpoint-up(md) {
+      margin-left: 20px;
+      margin-right: 20px;
+    }
+  }
 
+  .lookup-show__top-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
     // AddressDisplay
     > div:first-child {
-      @include media-breakpoint-up(md) {
-        margin-left: 20px;
-      }
+      max-width: 660px;
+      width: 100%;
     }
 
     // Back to dashboard button

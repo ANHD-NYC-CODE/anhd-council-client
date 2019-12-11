@@ -1,11 +1,59 @@
-@import 'shared/styles/bootstrap/_variables.scss';
+@import 'shared/styles/_variables.scss';
 
 .building-select {
-  // .building-select__select {
-  //   width: 100%;
-  //
-  //   @include media-breakpoint-up(xl) {
-  //     width: 70%;
-  //   }
-  // }
+  .building-select__wrapper {
+    display: flex;
+    align-content: center;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    width: 100%;
+
+    @include media-breakpoint-up(sm) {
+      flex-wrap: nowrap;
+      justify-content: center;
+    }
+
+    .building-select__text,
+    .building-select__text span {
+      @extend %p2-font-size;
+    }
+
+    .building-select__text,
+    .building-select__select {
+      margin-bottom: 0;
+    }
+
+    .building-select__text {
+      margin-bottom: 0.5rem;
+      @include media-breakpoint-up(sm) {
+        margin-bottom: 0;
+      }
+    }
+
+    .building-select__select-group {
+      display: flex;
+      width: 100%;
+      @include media-breakpoint-up(sm) {
+        margin-left: auto;
+        max-width: 333px;
+      }
+    }
+
+    .building-select__select {
+      width: 100%;
+
+      @include media-breakpoint-up(sm) {
+        margin-right: 10px;
+      }
+
+      // Control component
+      &.valued > div:first-child {
+        background-color: $light-orange;
+      }
+    }
+
+    button {
+      max-height: 32px;
+    }
+  }
 }

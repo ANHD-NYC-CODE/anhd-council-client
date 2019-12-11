@@ -8,6 +8,8 @@ import { Badge, Form, InputGroup, Row, Col, Button } from 'react-bootstrap'
 import CustomSelect from 'shared/components/CustomSelect'
 import BaseLink from 'shared/components/BaseLink'
 
+import classnames from 'classnames'
+
 import './style.scss'
 
 class BuildingSelect extends React.Component {
@@ -32,22 +34,17 @@ class BuildingSelect extends React.Component {
     const selectedBuilding = getCurrentBuilding(this.props.propertyResult.buildings, this.props.bin)
     return !this.props.loading ? (
       <Form className="building-select">
-        <Row className="mb-2">
-          <Col xs={12} className="small">
-            {this.props.propertyResult.buildings.length} building{' '}
+        <div className="building-select__wrapper">
+          <p className="building-select__text">
+            <span className="font-weight-bold">{this.props.propertyResult.buildings.length}</span>{' '}
             {this.props.propertyResult.buildings.length > 1 || !this.props.propertyResult.buildings.length
-              ? 'records'
-              : 'record'}{' '}
-            found for this tax lot.
-          </Col>
-          <Col xs={12} className="text-muted small">
-            Select an address to filter building-specific data.
-          </Col>
-        </Row>
-        <Row className="mb-2">
-          <Col>
+              ? ' buildings'
+              : ' building'}{' '}
+            found for this lot. Select another address to filter for building-specific data.
+          </p>
+          <div className="building-select__select-group">
             <CustomSelect
-              className="building-select__select mb-2"
+              className={classnames('building-select__select', { valued: this.props.bin })}
               size="sm"
               onChange={e => this.props.changeLookup(this.props.bbl, new StandardizedInput(e).value, false)}
               options={this.getBuildingOptions()}
@@ -60,23 +57,11 @@ class BuildingSelect extends React.Component {
                   : -1
               }
             />
-          </Col>
-        </Row>
-        <Row>
-          {this.props.bin && (
-            <Col>
-              <BaseLink
-                className="d-inline-block mb-2 w-100"
-                href={`${addressResultToPath({ bbl: this.props.bbl })}`}
-                onClick={() => this.props.changeLookup(this.props.bbl, null, false)}
-              >
-                <Button variant="secondary" size="sm" block>
-                  View entire tax lot
-                </Button>
-              </BaseLink>
-            </Col>
-          )}
-        </Row>
+            <Button onClick={() => this.props.changeLookup(this.props.bbl, this.props.bin, false)} variant="dark">
+              Go
+            </Button>
+          </div>
+        </div>
       </Form>
     ) : (
       <div className="my-4">
