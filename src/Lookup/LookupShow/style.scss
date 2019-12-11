@@ -67,12 +67,6 @@
     height: 40px;
     flex: 0 0 140px;
     width: 140px;
-
-    p,
-    span {
-      @extend %p2-font-size;
-      margin: 0;
-    }
   }
 
   .lookup-show__data-address {
