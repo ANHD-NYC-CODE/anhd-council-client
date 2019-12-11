@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Navbar, Nav, Row, Col } from 'react-bootstrap'
+import { Navbar } from 'react-bootstrap'
 // We hope this will lead to better decisions on what to
 // prioritize and how to improve the site.
 import PrivacyPolicyModal from 'shared/components/modals/PrivacyPolicyModal'
@@ -23,34 +23,32 @@ class Footer extends React.Component {
             <footer className="footer">
               <Navbar className="footer-nav" expand="lg">
                 <div className="layout-width-wrapper">
-                  <Row>
-                    <Col className="footer-text">
-                      <p className="text-black">
-                        This site uses{' '}
-                        <a href="https://analytics.google.com" target="_blank" rel="noopener noreferrer">
-                          Google Analytics
-                        </a>{' '}
-                        to help us better understand how it's used.
-                        <a
-                          href="#"
-                          onClick={() => {
-                            this.props.dispatch(fireAnalyticsModalOpenEvent())
+                  <div className="footer-text">
+                    <p className="text-black">
+                      This site uses{' '}
+                      <a href="https://analytics.google.com" target="_blank" rel="noopener noreferrer">
+                        Google Analytics
+                      </a>{' '}
+                      to help us better understand how it's used.
+                      <a
+                        href="#"
+                        onClick={() => {
+                          this.props.dispatch(fireAnalyticsModalOpenEvent())
 
-                            modal.setModal({
-                              modalComponent: PrivacyPolicyModal,
-                              modalProps: {
-                                size: 'lg',
-                              },
-                            })
-                          }}
-                        >
-                          {' '}
-                          Read more
-                        </a>{' '}
-                        about how we collect analytics.
-                      </p>
-                    </Col>
-                  </Row>
+                          modal.setModal({
+                            modalComponent: PrivacyPolicyModal,
+                            modalProps: {
+                              size: 'lg',
+                            },
+                          })
+                        }}
+                      >
+                        {' '}
+                        Read more
+                      </a>{' '}
+                      about how we collect analytics.
+                    </p>
+                  </div>
                 </div>
               </Navbar>
             </footer>

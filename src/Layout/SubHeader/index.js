@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Container, Navbar, Nav, Col, Row } from 'react-bootstrap'
+import { Navbar, Nav } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { getGeographyPath, addressResultToPath } from 'shared/utilities/routeUtils'
 import logo from 'shared/images/dapportal_beta.png'
@@ -22,8 +22,8 @@ class SubHeader extends React.Component {
 
   render() {
     return (
-      <Nav className="sub-header">
-        <Navbar className="sub-header__wrapper--top layout-width-wrapper--padded">
+      <Nav className="sub-header layout-width-wrapper">
+        <Navbar className="sub-header__wrapper--top">
           <Nav className="mr-auto">
             <Navbar.Brand className="mr-auto">
               <Link to="/">
@@ -83,7 +83,7 @@ class SubHeader extends React.Component {
             )}
           </Nav>
         </Navbar>
-        <Navbar className="sub-header__wrapper--bottom layout-width-wrapper">
+        <Navbar className="sub-header__wrapper--bottom full-bleed--mobile">
           <Nav className="" variant="tabs" activeKey={this.state.key} onSelect={key => this.setState({ key })}>
             <Link
               className={classnames('sub-header__nav-tab', {

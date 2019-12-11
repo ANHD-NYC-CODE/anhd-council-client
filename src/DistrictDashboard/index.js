@@ -181,6 +181,7 @@ class DistrictDashboard extends React.PureComponent {
           <DistrictDashboardIndex
             appState={this.props.appState}
             cancelChangeGeography={this.cancelChangeGeography}
+            config={this.props.config}
             dispatch={this.props.dispatch}
             handleChangeGeography={this.submitGeography}
             handleChangeGeographyType={this.handleChangeGeographyType}

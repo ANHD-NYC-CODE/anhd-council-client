@@ -20,8 +20,10 @@ body {
 }
 
 %layout-width-wrapper {
+  box-sizing: border-box;
   max-width: 1120px !important;
   margin: 0 auto !important;
+  padding: 0 1rem !important;
   width: 100% !important;
 
   @include media-breakpoint-up(md) {
@@ -31,6 +33,14 @@ body {
   .row {
     margin-left: 0;
     margin-right: 0;
+  }
+
+  .full-bleed--mobile {
+    margin-left: -1rem !important;
+    margin-right: -1rem !important;
+    flex: none;
+    max-width: none;
+    width: calc(100% + 2rem) !important;
   }
 }
 
