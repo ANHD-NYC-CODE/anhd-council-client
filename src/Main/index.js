@@ -162,7 +162,7 @@ class Main extends React.Component {
               </BaseLink>
             </p>
           </Col>
-          <Col className="layout__left-column padding-xs-sm-0" xs={12}>
+          <Col className="layout__left-column padding-xs-sm-0 full-bleed--mobile" xs={12}>
             <IntroductionBlock scrollToControls={this.scrollToControls} />
           </Col>
         </Row>
