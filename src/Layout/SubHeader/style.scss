@@ -5,10 +5,6 @@ $sub-header-padding-top: 12px;
 
   .navbar {
     padding: 0;
-
-    @include media-breakpoint-up(sm) {
-      padding: 0 1rem;
-    }
   }
 
   .sub-header__wrapper--top,
@@ -36,10 +32,6 @@ $sub-header-padding-top: 12px;
         padding: $sub-header-padding-top 40px 40px;
         padding-left: 0;
         width: 300px;
-      }
-
-      @include media-breakpoint-up(xl) {
-        margin-left: -1rem;
       }
     }
 

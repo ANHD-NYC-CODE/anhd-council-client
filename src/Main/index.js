@@ -157,7 +157,7 @@ class Main extends React.Component {
             </div>
             <p className="text-black text-center my-5">
               You can also{' '}
-              <BaseLink className="font-weight-bold" href="/search">
+              <BaseLink className="text-link" href="/search">
                 create a Custom Search
               </BaseLink>
             </p>

@@ -36,11 +36,13 @@ body {
   }
 
   .full-bleed--mobile {
-    margin-left: -1rem !important;
-    margin-right: -1rem !important;
-    flex: none;
-    max-width: none;
-    width: calc(100% + 2rem) !important;
+    @include media-breakpoint-down(sm) {
+      margin-left: -1rem !important;
+      margin-right: -1rem !important;
+      flex: none;
+      max-width: none;
+      width: calc(100% + 2rem) !important;
+    }
   }
 }
 

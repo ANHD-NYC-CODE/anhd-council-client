@@ -1,15 +1,24 @@
-@import 'shared/styles/bootstrap/_variables.scss';
+@import 'shared/styles/_variables.scss';
 
 .lookup-show {
+  .lookup-address-search {
+    @extend %address-search;
+  }
+  .lookup-show__content-wrapper {
+    display: block;
+    @include media-breakpoint-up(md) {
+      display: flex;
+    }
+  }
+
+  .lookup-show__content {
+    flex: 0 1 auto;
+  }
+
   .summary-result-card {
     min-height: 80px;
     height: 80px;
   }
-  //
-  // .building-card,
-  // .building-card * {
-  //   color: white;
-  // }
 
   .lookup-show__data-address {
     border-bottom: 1px dotted $black;

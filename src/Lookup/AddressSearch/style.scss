@@ -13,48 +13,8 @@
 
 .address-search {
   &.main-address-search {
+    @extend %address-search;
     max-width: $main-input-max-width;
-    margin: 0 auto;
-
-    & input {
-      @extend %p2-font-size;
-      border-top-left-radius: 20px;
-      border-bottom-left-radius: 20px;
-      overflow: hidden;
-    }
-
-    & button {
-      @extend %p2-font-size;
-      border-top-right-radius: 20px;
-      border-bottom-right-radius: 20px;
-      overflow: hidden;
-    }
-
-    .search-results__wrapper {
-      margin-left: 15px;
-      width: calc(100% - 30px);
-    }
-
-    .search-bar__close,
-    .search-bar__loading {
-      position: absolute;
-      right: 80px;
-      top: 0;
-      height: 100%;
-      width: 25px;
-      z-index: 999;
-    }
-
-    .search-bar__close {
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-      svg {
-        background-color: transparent;
-      }
-    }
   }
 
   &:not(.main-address-search) {

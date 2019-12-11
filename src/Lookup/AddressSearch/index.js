@@ -141,7 +141,7 @@ class AddressSearch extends React.PureComponent {
 
   render() {
     return (
-      <div className={classnames('address-search mb-2', this.props.containerClass)} ref={this.addressRef}>
+      <div className={classnames('address-search', this.props.containerClass)} ref={this.addressRef}>
         <SearchBar
           onKeyDown={this.onKeyDown}
           loading={this.props.loading}
