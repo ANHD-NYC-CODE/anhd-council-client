@@ -13,22 +13,6 @@ const PropertySummaryBody = props => {
   return (
     <Row className="property-summary-body property-section">
       <Col xs={12}>
-        <Row>
-          <Col>
-            <Row>
-              <Col>
-                <h6 className="font-weight-bold text-muted">Primary tax lot address</h6>
-              </Col>
-            </Row>
-            <h5>
-              {constructAddressString({
-                street: props.profile.address,
-                borough: boroCodeToName(props.profile.borough),
-                zip: props.profile.zipcode,
-              })}
-            </h5>
-          </Col>
-        </Row>
         <hr />
         <Row className="lookup-profile-summary__group">
           <Col xs={8}>

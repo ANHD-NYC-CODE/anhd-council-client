@@ -27,6 +27,10 @@
     }
   }
 
+  .lookup-sidebar__body {
+    overflow: hidden;
+  }
+
   .lookup-sidebar__toggle {
     background-color: $rhino;
     color: white;
