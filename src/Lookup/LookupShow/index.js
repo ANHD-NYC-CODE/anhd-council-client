@@ -118,23 +118,33 @@ class LookupShow extends React.PureComponent {
             />
           ) : (
             <div className="lookup-show layout-width-wrapper">
-              <div className="lookup-show__top-row">
-                <div>
-                  <LookupAddressDisplay profile={this.props.propertyResult} />
+              <div className="lookup-show__row-wrapper">
+                <div className="lookup-show__top-row">
+                  <div>
+                    <LookupAddressDisplay profile={this.props.propertyResult} />
+                  </div>
+                  <div>
+                    {this.props.appState.currentGeographyType && this.props.appState.currentGeographyId && (
+                      <BaseLink
+                        href={geographyToLink(
+                          this.props.appState.currentGeographyType,
+                          this.props.appState.currentGeographyId
+                        )}
+                      >
+                        <Button className="icon-button--right" variant="dark">
+                          Back to dashboard <FontAwesomeIcon icon={faChevronRight} size="sm" />
+                        </Button>
+                      </BaseLink>
+                    )}
+                  </div>
                 </div>
-                <div>
-                  {this.props.appState.currentGeographyType && this.props.appState.currentGeographyId && (
-                    <BaseLink
-                      href={geographyToLink(
-                        this.props.appState.currentGeographyType,
-                        this.props.appState.currentGeographyId
-                      )}
-                    >
-                      <Button className="icon-button--right" variant="dark">
-                        Back to dashboard <FontAwesomeIcon icon={faChevronRight} size="sm" />
-                      </Button>
-                    </BaseLink>
-                  )}
+                <div className="lookup-show__building-row">
+                  <BuildingSelect
+                    bbl={this.props.bbl}
+                    bin={this.props.bin}
+                    changeLookup={this.props.changeLookup}
+                    propertyResult={this.props.propertyResult}
+                  />
                 </div>
               </div>
               <div className="lookup-show__content-wrapper full-bleed--mobile">
@@ -147,43 +157,7 @@ class LookupShow extends React.PureComponent {
                   <Row className="mt-2 mb-4 mt-lg-4 mb-lg-2 px-xl-3">
                     <Col>
                       <Row>
-                        <Col />
-                      </Row>
-
-                      <Row className="mb-2">
-                        <Col>
-                          <h6 className="lookup-show__datatype-header mb-0">
-                            {this.props.bin && !!Object.keys(this.props.propertyResult).length
-                              ? 'Building Address'
-                              : 'Tax Lot Address'}
-                          </h6>
-                          {this.props.bin && (
-                            <small className="text-muted">* buildings may have alternate addresses</small>
-                          )}
-                          <h4 className="lookup-show__data-address font-weight-bold">
-                            {this.props.bin && !!Object.keys(this.props.propertyResult).length
-                              ? `${
-                                  getCurrentBuilding(this.props.propertyResult.buildings, this.props.bin).house_number
-                                } ${getCurrentBuilding(this.props.propertyResult.buildings, this.props.bin).stname}`
-                              : this.props.propertyResult.address}
-                            {!!Object.keys(this.props.propertyResult).length &&
-                              `, ${boroCodeToName(this.props.propertyResult.borough)}`}{' '}
-                          </h4>
-                        </Col>
-                      </Row>
-
-                      <Row>
                         <Col xs={12} lg={4}>
-                          <Row className="mb-4">
-                            <Col>
-                              <BuildingSelect
-                                bbl={this.props.bbl}
-                                bin={this.props.bin}
-                                changeLookup={this.props.changeLookup}
-                                propertyResult={this.props.propertyResult}
-                              />
-                            </Col>
-                          </Row>
                           <Row className={classnames({ 'mb-4': this.props.bin })}>
                             {
                               // Property level requests

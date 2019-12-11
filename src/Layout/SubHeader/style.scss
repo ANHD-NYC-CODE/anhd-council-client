@@ -121,14 +121,16 @@ $sub-header-padding-top: 12px;
 
     @include media-breakpoint-up(sm) {
       align-items: center;
+      border-radius: 6px;
       display: flex;
-      flex: 0 1 20%;
+      flex: 0 1 auto;
       margin-right: 4px;
       justify-content: center;
+      padding: 1rem 1rem;
     }
 
-    @include media-breakpoint-up(md) {
-      padding: 1rem 1.5rem;
+    @include media-breakpoint-up(lg) {
+      padding: 1rem 3rem;
     }
   }
 

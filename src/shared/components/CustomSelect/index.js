@@ -9,7 +9,7 @@ const customStyle = size => {
         control: base => ({
           ...base,
           minHeight: '1px',
-          height: '38px',
+          height: '32px',
           boxShadow: 'none',
           outline: 'none',
         }),
@@ -27,7 +27,7 @@ const customStyle = size => {
           ...base,
           marginTop: '0px',
           minHeight: '1px',
-          height: '38px',
+          height: '32px',
         }),
         menu: base => ({
           ...base,
@@ -42,7 +42,7 @@ const customStyle = size => {
           ...base,
           marginTop: '0px',
           minHeight: '1px',
-          height: '38px',
+          height: '32px',
         }),
       }
     case 'multi-sm':
