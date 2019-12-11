@@ -24,4 +24,5 @@ h6 {
 button,
 button.btn {
   @extend %p3-font-size;
+  font-family: $font-family-secondary;
 }

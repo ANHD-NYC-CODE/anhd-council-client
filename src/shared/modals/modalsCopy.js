@@ -227,7 +227,7 @@ export const infoModals = {
     ],
   },
   HOUSING_LITIGATION: {
-    title: 'Litigations against landlords',
+    title: 'Litigations against landlord',
     body: ReactDOMServer.renderToString(
       <div>
         <p>

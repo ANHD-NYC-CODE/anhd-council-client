@@ -39,40 +39,32 @@ const getRecordsCount = (request, results) => {
   }
 }
 
-const SummaryResultCard = props => {
+const LookupTableTab = props => {
   return (
-    <Card
-      as={Button}
-      bg={classnames({ primary: props.selected })}
-      disabled={props.disabled}
-      text={classnames({ light: props.selected, dark: !props.selected })}
+    <Button
       className={classnames(
-        'summary-result-card',
-        'result-card flex-row',
+        'lookup-table-tab',
         { 'building-link': props.request.level === 'BUILDING' },
         props.summaryBackgroundColorClass,
-        'mb-2',
         {
           active: props.selected,
         }
       )}
       onClick={props.handleClick}
     >
-      <Card.Body className="d-flex flex-row p-0">
-        <div className="summary-result-card__label">
-          <p>
-            {getLabel(props)}{' '}
-            <span className="summary-result-card__result">
-              {props.loading ? <SpinnerLoader /> : `(${getRecordsCount(props.request, props.results)})`}
-            </span>
-          </p>
-        </div>
-      </Card.Body>
-    </Card>
+      <div className="summary-result-card__label">
+        <p>
+          {getLabel(props)}{' '}
+          <span className="summary-result-card__result">
+            {props.loading ? <SpinnerLoader /> : `(${getRecordsCount(props.request, props.results)})`}
+          </span>
+        </p>
+      </div>
+    </Button>
   )
 }
 
-SummaryResultCard.defaultProps = {
+LookupTableTab.defaultProps = {
   loading: false,
   error: undefined,
   results: [],
@@ -80,7 +72,7 @@ SummaryResultCard.defaultProps = {
   resultsFilter: undefined,
 }
 
-SummaryResultCard.propTypes = {
+LookupTableTab.propTypes = {
   handleClick: PropTypes.func,
   onClick: PropTypes.func,
   resultsComponent: PropTypes.func,
@@ -89,4 +81,4 @@ SummaryResultCard.propTypes = {
   summaryBackgroundColorClass: PropTypes.string,
   results: PropTypes.array,
 }
-export default SummaryResultCard
+export default LookupTableTab

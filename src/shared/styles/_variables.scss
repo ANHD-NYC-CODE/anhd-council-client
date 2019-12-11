@@ -58,6 +58,7 @@ $main-input-max-width: 440px;
 
 %p1-font-size {
   font-size: 16px;
+  line-height: 21px;
 
   @include media-breakpoint-up(md) {
     font-size: 18px;
@@ -66,6 +67,7 @@ $main-input-max-width: 440px;
 
 %p2-font-size {
   font-size: 12px;
+  line-height: 18px;
 
   @include media-breakpoint-up(md) {
     font-size: 14px;
@@ -74,4 +76,5 @@ $main-input-max-width: 440px;
 
 %p3-font-size {
   font-size: 12px;
+  line-height: 16px;
 }
