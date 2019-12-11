@@ -16,6 +16,7 @@ import { isValidGeography } from 'shared/utilities/routeUtils'
 import PageError from 'shared/components/PageError'
 import { faMapSigns } from '@fortawesome/free-solid-svg-icons'
 import { Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
+import { Container } from 'react-bootstrap'
 
 class DistrictDashboard extends React.PureComponent {
   constructor(props) {
@@ -189,23 +190,25 @@ class DistrictDashboard extends React.PureComponent {
             scrollToControls={this.scrollToControls}
           />
         ) : (
-          <DistrictDashboardRequestsWrapper
-            advancedSearch={this.props.advancedSearch}
-            appState={this.props.appState}
-            dashboardState={this.props.dashboardState}
-            dispatch={this.props.dispatch}
-            config={this.props.config}
-            cancelChangeGeography={this.cancelChangeGeography}
-            handleChangeGeography={this.submitGeography}
-            handleChangeGeographyType={this.handleChangeGeographyType}
-            handleChangeGeographyId={this.handleChangeGeographyId}
-            mapRequests={this.props.mapRequests}
-            requests={this.props.requests}
-            loading={this.props.loading}
-            selectedError={this.props.selectedError}
-            totalPropertyResults={this.props.totalPropertyResults}
-            trigger404Error={this.trigger404Error}
-          />
+          <Container fluid>
+            <DistrictDashboardRequestsWrapper
+              advancedSearch={this.props.advancedSearch}
+              appState={this.props.appState}
+              dashboardState={this.props.dashboardState}
+              dispatch={this.props.dispatch}
+              config={this.props.config}
+              cancelChangeGeography={this.cancelChangeGeography}
+              handleChangeGeography={this.submitGeography}
+              handleChangeGeographyType={this.handleChangeGeographyType}
+              handleChangeGeographyId={this.handleChangeGeographyId}
+              mapRequests={this.props.mapRequests}
+              requests={this.props.requests}
+              loading={this.props.loading}
+              selectedError={this.props.selectedError}
+              totalPropertyResults={this.props.totalPropertyResults}
+              trigger404Error={this.trigger404Error}
+            />
+          </Container>
         )}
       </div>
     )
