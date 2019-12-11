@@ -1,0 +1,13 @@
+@import 'shared/styles/_variables.scss';
+
+.footer {
+  .footer-nav {
+    background-color: #c4c4c4;
+  }
+
+  .footer-text {
+    @include media-breakpoint-up(md) {
+      padding: 0 2rem;
+    }
+  }
+}
