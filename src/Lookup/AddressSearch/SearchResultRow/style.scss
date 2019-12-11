@@ -1,9 +1,9 @@
-@import 'shared/styles/bootstrap/_variables.scss';
+@import 'shared/styles/_variables.scss';
 
 .search-result-row {
+  @extend %p2-font-size;
   background-color: $white;
   cursor: pointer;
-  font-size: $font-size-base;
   padding: 10px;
   padding-left: 30px;
   z-index: 501;

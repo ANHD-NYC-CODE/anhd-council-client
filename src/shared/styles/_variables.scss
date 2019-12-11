@@ -1,9 +1,12 @@
 @import 'shared/styles/bootstrap/_variables.scss';
 $input-border-focus: 4px dotted $primary;
 $input-border-focus-mobile: 2px dotted $primary;
-
+$input-border-focus-default: 1px solid #95bae8;
 $input-border: 4px dotted $gray-400;
 $input-border-mobile: 2px dotted $gray-400;
+
+// Main landing page variables
+$main-input-max-width: 440px;
 
 /* typography */
 
@@ -12,5 +15,13 @@ $input-border-mobile: 2px dotted $gray-400;
 
   @include media-breakpoint-up(md) {
     font-size: 18px;
+  }
+}
+
+%p2-font-size {
+  font-size: 12px;
+
+  @include media-breakpoint-up(md) {
+    font-size: 14px;
   }
 }
