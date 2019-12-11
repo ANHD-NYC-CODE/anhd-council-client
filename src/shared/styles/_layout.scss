@@ -19,6 +19,16 @@ body {
   border-radius: 20px;
 }
 
+// Bootstrap
+
+.no-gutter > [class*='col-'],
+.no-gutter > [class*='col'] {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+// Layout
+
 %layout-width-wrapper {
   box-sizing: border-box;
   max-width: 1024px !important;
@@ -37,11 +47,11 @@ body {
 
   .full-bleed--mobile {
     @include media-breakpoint-down(md) {
-      margin-left: -1rem !important;
-      margin-right: -1rem !important;
+      margin-left: -1rem;
+      margin-right: -1rem;
       flex: none;
       max-width: none;
-      width: calc(100% + 2rem) !important;
+      width: calc(100% + 2rem);
     }
   }
 }

@@ -143,7 +143,20 @@ label.toggle-link.active.btn-primary:not(:disabled).light.active {
 .text-link {
   @extend %p1-font-size;
   color: $primary;
+  cursor: pointer;
   font-weight: bold;
+  box-shadow: none;
+  border: none;
+  background: transparent;
+  outline: none;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .icon-button--right {

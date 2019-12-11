@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import LayoutContext from 'Layout/LayoutContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPrint } from '@fortawesome/free-solid-svg-icons'
+import { spaceEnterKeyDownHandler } from 'shared/utilities/accessibilityUtils'
 
 import { Button } from 'react-bootstrap'
 
@@ -13,9 +14,11 @@ const PrintButton = props => {
     <div className="print-button">
       <LayoutContext.Consumer>
         {layout => (
-          <a
+          <button
+            tabIndex="-1"
             className={props.textClass}
             href="#"
+            onKeyDown={e => spaceEnterKeyDownHandler(e, () => layout.togglePrint(props.title))}
             onClick={e => {
               e.preventDefault()
               layout.togglePrint(props.title)
@@ -23,7 +26,7 @@ const PrintButton = props => {
           >
             <FontAwesomeIcon size="sm" icon={faPrint} />
             <h5 className="d-inline"> Print</h5>
-          </a>
+          </button>
         )}
       </LayoutContext.Consumer>
     </div>

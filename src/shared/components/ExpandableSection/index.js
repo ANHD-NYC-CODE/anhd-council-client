@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import classnames from 'classnames'
+import { spaceEnterKeyDownHandler } from 'shared/utilities/accessibilityUtils'
 
 import './style.scss'
 
@@ -12,7 +13,13 @@ const ExpandableSection = props => {
   }
 
   return (
-    <div className={classnames('expandable-section', props.className)} onClick={() => toggleExpansion(!isExpanded)}>
+    <div
+      tabIndex="-1"
+      role="button"
+      className={classnames('expandable-section', props.className)}
+      onKeyDown={e => spaceEnterKeyDownHandler(e, () => toggleExpansion(!isExpanded))}
+      onClick={() => toggleExpansion(!isExpanded)}
+    >
       <div className="expandable-section__above-fold">
         <div className="expandable-section__above-fold--element">{props.aboveFoldElement}</div>
         <div className="expandable-section__above-fold--icon">&nbsp;{renderIcon()}</div>

@@ -29,7 +29,7 @@ const ProgramSection = props => {
         </Row>
         <Row className="lookup-profile-summary__group">
           <Col>
-            <label className="profile-summary-body__label">Subsidy Programs </label>
+            <span className="profile-summary-body__label">Subsidy Programs </span>
             <small>
               (from <BaseLink href="http://app.coredata.nyc">Furman's CoreData</BaseLink> and DOF's{' '}
               <BaseLink href="https://www1.nyc.gov/site/finance/benefits/benefits-421a.page">421a</BaseLink> and{' '}

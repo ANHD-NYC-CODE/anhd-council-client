@@ -5,7 +5,7 @@
     margin-top: 1rem;
     margin-bottom: 2rem;
     @include media-breakpoint-up(md) {
-      margin-left: 20px;
+      margin-left: $lookup-padding-size;
       margin-right: 20px;
     }
   }
@@ -22,7 +22,7 @@
 
     // Back to dashboard button
     > div:last-child {
-      margin-left: 20px;
+      margin-left: $lookup-padding-size;
       @include media-breakpoint-up(md) {
         margin-left: auto;
       }
@@ -32,6 +32,7 @@
   .lookup-address-search {
     @extend %address-search;
   }
+
   .lookup-show__content-wrapper {
     display: block;
     @include media-breakpoint-up(sm) {
@@ -40,7 +41,14 @@
   }
 
   .lookup-show__content {
-    flex: 0 1 auto;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow-x: scroll;
+
+    @include media-breakpoint-up(sm) {
+      padding: 0 $lookup-padding-size;
+    }
   }
 
   .lookup-show__tabs {

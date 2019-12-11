@@ -8,7 +8,7 @@ import { Row, Col } from 'react-bootstrap'
 const TableHeader = props => {
   return (
     <div className={classnames('table-header', props.className)}>
-      <Row>
+      <Row className={classnames({ 'no-gutter': props.hideHeaderGutters })}>
         <Col xs={props.badge ? 8 : 12}>
           {props.size === 'sm' ? (
             <h5 className={props.headerClass + ' mb-0'}>{props.title}</h5>
@@ -18,12 +18,16 @@ const TableHeader = props => {
         </Col>
         {props.badge && <Col xs={4}>{props.badge}</Col>}
       </Row>
-      <Row>
+      <Row className={classnames({ 'no-gutter': props.hideHeaderGutters })}>
         <Col>
           <DatasetInfo datasetModelName={props.datasetModelName} showUpdate={props.showUpdate} />
         </Col>
       </Row>
-      {getTableSubheaders({ constant: props.resourceConstant, property: props.property })}
+      {getTableSubheaders({
+        constant: props.resourceConstant,
+        property: props.property,
+        hideGutters: props.hideHeaderGutters,
+      })}
     </div>
   )
 }
@@ -34,6 +38,7 @@ TableHeader.defaultProps = {
 }
 
 TableHeader.propTypes = {
+  hideHeaderGutters: PropTypes.bool,
   datasetModelName: PropTypes.string,
   headerClass: PropTypes.string,
   showUpdate: PropTypes.bool,

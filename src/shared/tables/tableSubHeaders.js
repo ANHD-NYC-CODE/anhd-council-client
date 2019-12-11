@@ -2,9 +2,10 @@ import React from 'react'
 import BaseLink from 'shared/components/BaseLink'
 import { Col, Row } from 'react-bootstrap'
 import { boroughAbbreviationToCode } from 'shared/utilities/languageUtils'
-export const getTableSubheaders = ({ constant, property } = {}) => {
+import classnames from 'classnames'
+export const getTableSubheaders = ({ constant, property, hideGutters = false } = {}) => {
   return (
-    <Row>
+    <Row className={classnames({ 'no-gutter': hideGutters })}>
       <Col>{getTableSubheaderLinks({ constant, property })}</Col>
     </Row>
   )
