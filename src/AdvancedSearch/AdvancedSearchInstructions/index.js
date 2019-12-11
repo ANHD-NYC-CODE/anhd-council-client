@@ -16,14 +16,14 @@ const AdvancedSearchInstructions = props => {
         <h4 className="font-weight-bold">Logical Conditions</h4>
         <span className="d-flex align-items-center">
           <h5>AND&nbsp;</h5>
-          <Button size="lg" role="header" variant="success">
+          <Button size="lg" variant="success">
             And
           </Button>
         </span>
         <p>Returns results where every single applied filter is true for each property.</p>
         <span className="d-flex align-items-center">
           <h5>OR&nbsp;</h5>
-          <Button size="lg" role="header" variant="success">
+          <Button size="lg" variant="success">
             Or
           </Button>
         </span>

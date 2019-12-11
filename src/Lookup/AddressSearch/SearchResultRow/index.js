@@ -8,6 +8,7 @@ const SearchResultRow = props => {
   if (props.result.number) {
     return (
       <div
+        role="button"
         ref={props.currentResultFocusRef}
         tabIndex={0}
         className="search-result-row"

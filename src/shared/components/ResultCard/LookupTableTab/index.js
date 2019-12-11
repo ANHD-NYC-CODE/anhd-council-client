@@ -50,13 +50,13 @@ const LookupTableTab = props => {
           active: props.selected,
         }
       )}
-      onClick={props.handleClick}
+      onClick={props.onClick}
     >
       <div className="summary-result-card__label">
         <p>
           {getLabel(props)}{' '}
           <span className="summary-result-card__result">
-            {props.loading ? <SpinnerLoader /> : `(${getRecordsCount(props.request, props.results)})`}
+            {props.loading ? <SpinnerLoader size="14px" /> : `(${getRecordsCount(props.request, props.results)})`}
           </span>
         </p>
       </div>
@@ -73,7 +73,6 @@ LookupTableTab.defaultProps = {
 }
 
 LookupTableTab.propTypes = {
-  handleClick: PropTypes.func,
   onClick: PropTypes.func,
   resultsComponent: PropTypes.func,
   selected: PropTypes.bool,

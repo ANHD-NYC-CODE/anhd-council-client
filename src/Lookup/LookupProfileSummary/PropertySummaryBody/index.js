@@ -32,7 +32,7 @@ const PropertySummaryBody = props => {
         <hr />
         <Row className="lookup-profile-summary__group">
           <Col xs={8}>
-            <label className="profile-summary-body__label">BBL </label>
+            <span className="profile-summary-body__label">BBL </span>
           </Col>
           <Col>
             <span className="profile-summary-body__value">{props.profile.bbl}</span>
@@ -42,7 +42,7 @@ const PropertySummaryBody = props => {
           <div>
             <Row>
               <Col xs={8}>
-                <label className="profile-summary-body__label">Council District</label>
+                <span className="profile-summary-body__label">Council District</span>
               </Col>
               <Col>
                 <span className="d-flex profile-summary__geography">
@@ -58,7 +58,7 @@ const PropertySummaryBody = props => {
             </Row>
             <Row>
               <Col xs={8}>
-                <label className="profile-summary-body__label">Community District</label>
+                <span className="profile-summary-body__label">Community District</span>
               </Col>
               <Col>
                 <span className="d-flex  profile-summary__geography">
@@ -79,7 +79,7 @@ const PropertySummaryBody = props => {
       <Col>
         <Row className="lookup-profile-summary__group">
           <Col xs={8}>
-            <label className="profile-summary-body__label">Total Units</label>
+            <span className="profile-summary-body__label">Total Units</span>
           </Col>
           <Col xs={4}>
             <span className="profile-summary-body__value">{props.profile.unitstotal || 0}</span>
@@ -87,7 +87,7 @@ const PropertySummaryBody = props => {
         </Row>
         <Row className="lookup-profile-summary__group">
           <Col xs={8}>
-            <label className="profile-summary-body__label">Residential Units</label>
+            <span className="profile-summary-body__label">Residential Units</span>
           </Col>
           <Col xs={4}>
             <span className="profile-summary-body__value">{props.profile.unitsres || 0}</span>
@@ -95,7 +95,7 @@ const PropertySummaryBody = props => {
         </Row>
         <Row className="lookup-profile-summary__group">
           <Col xs={8}>
-            <label className="profile-summary-body__label">Year Built</label>
+            <span className="profile-summary-body__label">Year Built</span>
           </Col>
           <Col xs={4}>
             <span className="profile-summary-body__value">{props.profile.yearbuilt}</span>
@@ -103,7 +103,7 @@ const PropertySummaryBody = props => {
         </Row>
         <Row className="lookup-profile-summary__group">
           <Col xs={8}>
-            <label className="profile-summary-body__label">Zoning District(s)</label>
+            <span className="profile-summary-body__label">Zoning District(s)</span>
           </Col>
           <Col xs={4}>
             <span className="profile-summary-body__value">
@@ -115,7 +115,7 @@ const PropertySummaryBody = props => {
         </Row>
         <Row className="lookup-profile-summary__group">
           <Col xs={8}>
-            <label className="profile-summary-body__label">Overlay(s)</label>
+            <span className="profile-summary-body__label">Overlay(s)</span>
           </Col>
           <Col xs={4}>
             <span className="profile-summary-body__value">
@@ -125,7 +125,7 @@ const PropertySummaryBody = props => {
         </Row>
         <Row className="lookup-profile-summary__group">
           <Col xs={8}>
-            <label className="profile-summary-body__label">Special District(s)</label>
+            <span className="profile-summary-body__label">Special District(s)</span>
           </Col>
           <Col xs={4}>
             <span className="profile-summary-body__value">
@@ -135,7 +135,7 @@ const PropertySummaryBody = props => {
         </Row>
         <Row className="lookup-profile-summary__group">
           <Col xs={8}>
-            <label className="profile-summary-body__label">Built Floor Area Ratio (FAR)</label>
+            <span className="profile-summary-body__label">Built Floor Area Ratio (FAR)</span>
           </Col>
           <Col xs={4}>
             <span className="profile-summary-body__value">{props.profile.builtfar}</span>
@@ -143,7 +143,7 @@ const PropertySummaryBody = props => {
         </Row>
         <Row className="lookup-profile-summary__group">
           <Col xs={8}>
-            <label className="profile-summary-body__label">Maximum Residential FAR</label>
+            <span className="profile-summary-body__label">Maximum Residential FAR</span>
           </Col>
           <Col xs={4}>
             <span className="profile-summary-body__value">{props.profile.residfar}</span>
@@ -151,7 +151,7 @@ const PropertySummaryBody = props => {
         </Row>
         <Row className="lookup-profile-summary__group">
           <Col xs={8}>
-            <label className="profile-summary-body__label">Maximum Commercial FAR</label>
+            <span className="profile-summary-body__label">Maximum Commercial FAR</span>
           </Col>
           <Col xs={4}>
             <span className="profile-summary-body__value">{props.profile.commfar}</span>
@@ -159,7 +159,7 @@ const PropertySummaryBody = props => {
         </Row>
         <Row className="lookup-profile-summary__group">
           <Col xs={8}>
-            <label className="profile-summary-body__label">Maximum Community Facility FAR</label>
+            <span className="profile-summary-body__label">Maximum Community Facility FAR</span>
           </Col>
           <Col xs={4}>
             <span className="profile-summary-body__value">{props.profile.facilfar}</span>

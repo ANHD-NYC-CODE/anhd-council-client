@@ -8,7 +8,9 @@ $input-border-mobile: 2px dotted $gray-400;
 // Main landing page variables
 $main-input-max-width: 440px;
 
-// Lookup Patterns
+// Lookup Variables & Patterns
+
+$lookup-padding-size: 40px;
 
 %address-search {
   margin: 0 auto;

@@ -270,10 +270,11 @@ class BaseTable extends React.Component {
                     key={`table-${this.props.tableConfig.keyField}`}
                   >
                     {!this.props.nested && !!this.props.includeHeader && (
-                      <Row>
+                      <Row className={classnames({ 'no-gutter': this.props.hideHeaderGutters })}>
                         <Col xs={12}>
                           <TableHeader
                             badge={this.props.badge}
+                            hideHeaderGutters={this.props.hideHeaderGutters}
                             property={this.props.property}
                             resourceConstant={this.props.tableConfig.resourceConstant}
                             datasetModelName={this.props.datasetModelName}
@@ -368,6 +369,7 @@ class BaseTable extends React.Component {
 
 BaseTable.defaultProps = {
   globalTableState: {},
+  hideHeaderGutters: false,
   expandable: true,
   includeHeader: true,
   nested: false,
@@ -377,6 +379,7 @@ BaseTable.defaultProps = {
 
 BaseTable.propTypes = {
   annotationStart: PropTypes.string,
+  hideHeaderGutters: PropTypes.bool,
   caption: PropTypes.string,
   classes: PropTypes.string,
   dispatch: PropTypes.func,

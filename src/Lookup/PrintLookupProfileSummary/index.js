@@ -11,7 +11,13 @@ import PropertySummaryBody from 'Lookup/LookupProfileSummary/PropertySummaryBody
 import './style.scss'
 const PrintLookupProfileSummary = props => {
   return (
-    <div className="print-lookup-profile-summary" onClick={e => e.preventDefault()}>
+    <div
+      tabIndex="-1"
+      role="button"
+      className="print-lookup-profile-summary"
+      onKeyDown={e => e.preventDefault()}
+      onClick={e => e.preventDefault()}
+    >
       <PropertySummaryBody print={true} onClick={e => e.preventDefault()} profile={props.profile} />
       <ConfigContext.Consumer>
         {config => {

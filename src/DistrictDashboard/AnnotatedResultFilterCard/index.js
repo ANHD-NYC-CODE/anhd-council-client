@@ -11,7 +11,8 @@ import { faArrowDown } from '@fortawesome/free-solid-svg-icons'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import InfoModalButton from 'shared/components/InfoModalButton'
-import WhyLoginButton from 'shared/components/WhyLoginButton'
+
+import { spaceEnterKeyDownHandler } from 'shared/utilities/accessibilityUtils'
 
 class AnnotatedResultFilterCard extends React.Component {
   constructor(props) {
@@ -50,6 +51,9 @@ class AnnotatedResultFilterCard extends React.Component {
             disabled={this.props.disabled}
           >
             <div
+              tabIndex="-1"
+              role="button"
+              onKeyDown={e => spaceEnterKeyDownHandler(e, this.props.handleClick)}
               onClick={this.props.handleClick}
               className={classnames('amount-result-filter-card__body--inner-wrapper')}
             >
@@ -77,10 +81,22 @@ class AnnotatedResultFilterCard extends React.Component {
             </div>
           </Card>
           <div className="amount-result-filter-card__controls">
-            <div className="amount-result-filter-card__arrow" onClick={this.increaseAmount}>
+            <div
+              className="amount-result-filter-card__arrow"
+              tabIndex="-1"
+              role="button"
+              onKeyDown={e => spaceEnterKeyDownHandler(e, this.increaseAmount)}
+              onClick={this.increaseAmount}
+            >
               <FontAwesomeIcon icon={faArrowUp} />
             </div>
-            <div className="amount-result-filter-card__arrow" onClick={this.decreaseAmount}>
+            <div
+              className="amount-result-filter-card__arrow"
+              tabIndex="-1"
+              role="button"
+              onKeyDown={e => spaceEnterKeyDownHandler(e, this.decreaseAmount)}
+              onClick={this.decreaseAmount}
+            >
               <FontAwesomeIcon icon={faArrowDown} />
             </div>
           </div>

@@ -29,7 +29,9 @@ class LookupRequestsWrapper extends React.Component {
     return this.props.appState.requests.length ? (
       <LookupShow
         appState={this.props.appState}
+        loadingState={this.props.loadingState}
         lookupRequests={getRequestType(this.props.appState.requests, 'LOOKUP_FILTER')}
+        loadingRequests={this.props.loading}
         profileRequest={getRequestType(this.props.appState.requests, 'LOOKUP_PROFILE')[0]}
         propertyResult={this.props.propertyResult}
         {...this.props}
@@ -43,6 +45,7 @@ class LookupRequestsWrapper extends React.Component {
 
 LookupRequestsWrapper.propTypes = {
   appState: PropTypes.object,
+  loadingState: PropTypes.object,
 }
 
 export default LookupRequestsWrapper

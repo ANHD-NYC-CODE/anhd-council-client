@@ -33,9 +33,9 @@ const LookupAddressDisplay = props => {
               )
             }}
           </ConfigContext.Consumer>
-          <a href="#" className="lookup-address-display__cancel-button text-link" onClick={handleEditClick}>
+          <button href="#" className="lookup-address-display__cancel-button text-link" onClick={handleEditClick}>
             cancel
-          </a>
+          </button>
         </div>
       )}
       {!isEditing && (
@@ -50,9 +50,9 @@ const LookupAddressDisplay = props => {
               borough: boroCodeToName(props.profile.borough),
               zip: props.profile.zipcode,
             })}
-            <a href="#" className="lookup-address-display__edit-button text-link" onClick={handleEditClick}>
+            <button href="#" className="lookup-address-display__edit-button text-link" onClick={handleEditClick}>
               edit
-            </a>
+            </button>
           </h5>
         </div>
       )}

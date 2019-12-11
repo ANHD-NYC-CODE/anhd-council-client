@@ -1,20 +1,29 @@
 @import 'shared/styles/_variables.scss';
 
 .lookup-sidebar {
-  background-color: $rhino;
-  overflow: visible;
-  position: relative;
-  transition: width 0.4s ease-in-out, flex-basis 0.4s ease-in-out;
-  flex-basis: 0px;
-  width: 0px;
+  @include media-breakpoint-down(xs) {
+    margin-bottom: 2rem;
+  }
 
-  &.open {
-    flex: 0 0 100%;
-    width: 100%;
+  &.full-bleed--mobile {
+    background-color: $rhino;
+    overflow: visible;
+    position: relative;
+    transition: width 0.4s ease-in-out, flex-basis 0.4s ease-in-out;
+    flex-basis: 0px;
 
     @include media-breakpoint-up(sm) {
-      flex: 0 0 333px;
-      width: 333px;
+      width: 0px !important;
+    }
+
+    &.open {
+      flex: 0 0 100%;
+      width: calc(100% + 2rem);
+
+      @include media-breakpoint-up(sm) {
+        flex: 0 0 333px;
+        width: 333px;
+      }
     }
   }
 

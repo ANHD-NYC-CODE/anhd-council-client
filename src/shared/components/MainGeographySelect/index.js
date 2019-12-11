@@ -146,13 +146,9 @@ class MainGeographySelect extends React.Component {
                 )}
               </div>
               {(!!this.props.changingGeographyType || !!this.props.currentGeographyType) && (
-                <a
-                  href="#"
-                  className="text-primary text-center font-weight-bold my-2"
-                  onClick={this.handleShowMapClick}
-                >
+                <button href="#" className="text-link text-center my-2" onClick={this.handleShowMapClick}>
                   I don't know my district
-                </a>
+                </button>
               )}
               {this.state.showMap && (
                 <LeafletMap

@@ -190,9 +190,9 @@ class AdvancedSearchForm extends React.PureComponent {
               </Col>
               <Col xs={12} md={6} className="mb-4 mb-md-0">
                 <ClearAdvancedSearchButton className="d-inline">
-                  <label className="border-danger text-danger toggle-link btn">
+                  <span className="border-danger text-danger toggle-link btn">
                     <FontAwesomeIcon icon={faTimes} /> Clear Search
-                  </label>
+                  </span>
                 </ClearAdvancedSearchButton>
               </Col>
             </Row>

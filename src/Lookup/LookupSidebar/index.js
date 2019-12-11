@@ -24,7 +24,7 @@ const LookupSidebar = props => {
   }
 
   return (
-    <div className={classnames('lookup-sidebar', { open })}>
+    <div className={classnames('lookup-sidebar full-bleed--mobile', { open })}>
       <div
         tabIndex="0"
         role="button"

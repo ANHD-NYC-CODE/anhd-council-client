@@ -44,13 +44,13 @@ const RentStabilizationSection = props => {
               </Row>
               <Row className="lookup-profile-summary__group">
                 <Col>
-                  <label className="profile-summary-body__label">Stabilized Units (most recent): </label>
+                  <span className="profile-summary-body__label">Stabilized Units (most recent): </span>
                   <span className="profile-summary-body__value">{props.profile.unitsrentstabilized || 0}</span>
                 </Col>
               </Row>
               <Row className="lookup-profile-summary__group">
                 <Col>
-                  <label className="profile-summary-body__label">Change since 2007</label>
+                  <span className="profile-summary-body__label">Change since 2007</span>
                   <span className="profile-summary-body__value">
                     {props.profile.rsunits_percent_lost > 0 ? '+' : ''}
                     {(props.profile.rsunits_percent_lost * 100).toFixed(1) || 0}%

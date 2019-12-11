@@ -8,6 +8,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimesCircle } from '@fortawesome/free-regular-svg-icons'
 import classnames from 'classnames'
 import SpinnerLoader from 'shared/components/Loaders/SpinnerLoader'
+import { spaceEnterKeyDownHandler } from 'shared/utilities/accessibilityUtils'
+
 import './style.scss'
 
 export default class SearchBar extends React.PureComponent {
@@ -72,7 +74,13 @@ export default class SearchBar extends React.PureComponent {
             value={this.props.searchValue}
           />
           {this.props.show && (
-            <div className="search-bar__close" onClick={e => this.props.hideSearch(e, true)}>
+            <div
+              className="search-bar__close"
+              tabIndex="-1"
+              role="button"
+              onKeyDown={e => spaceEnterKeyDownHandler(e, e => this.props.hideSearch(e, true))}
+              onClick={e => this.props.hideSearch(e, true)}
+            >
               <FontAwesomeIcon className="text-secondary" size="lg" icon={faTimesCircle} />
             </div>
           )}
