@@ -1,6 +1,28 @@
 @import 'shared/styles/_variables.scss';
 
 .lookup-show {
+  .lookup-show__top-row {
+    display: flex;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    align-items: center;
+
+    // AddressDisplay
+    > div:first-child {
+      @include media-breakpoint-up(md) {
+        margin-left: 20px;
+      }
+    }
+
+    // Back to dashboard button
+    > div:last-child {
+      margin-left: 20px;
+      @include media-breakpoint-up(md) {
+        margin-left: auto;
+      }
+    }
+  }
+
   .lookup-address-search {
     @extend %address-search;
   }
