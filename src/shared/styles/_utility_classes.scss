@@ -139,3 +139,9 @@ label.toggle-link.active.btn-primary:not(:disabled).light.active {
 .w-0 {
   width: 0% !important;
 }
+
+.text-link {
+  @extend %p1-font-size;
+  color: $primary;
+  font-weight: bold;
+}

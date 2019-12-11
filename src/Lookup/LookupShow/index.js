@@ -3,12 +3,13 @@ import PropTypes from 'prop-types'
 import SummaryResultCard from 'shared/components/ResultCard/SummaryResultCard'
 import { getCurrentBuilding } from 'Lookup/utilities'
 import * as c from 'shared/constants'
+import LookupAddressDisplay from 'Lookup/LookupAddressDisplay'
 
 import LayoutContext from 'Layout/LayoutContext'
 import { boroCodeToName } from 'shared/utilities/languageUtils'
 import { Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 import { fireSwitchLookupTableEvent } from 'Store/Analytics/actions'
-import { Badge, Row, Col } from 'react-bootstrap'
+import { Badge, Row, Col, InputGroup } from 'react-bootstrap'
 import { setAppState } from 'Store/AppState/actions'
 import RequestTableWrapper from 'shared/components/RequestTableWrapper'
 import BuildingSelect from 'Lookup/BuildingSelect'
@@ -111,162 +112,169 @@ class LookupShow extends React.PureComponent {
               profileRequest={this.props.profileRequest}
             />
           ) : (
-            <Row className="lookup-show">
-              <LookupSidebar
-                appState={this.props.appState}
-                profileRequest={this.props.profileRequest}
-                propertyResult={this.props.propertyResult}
-              />
-              <Col xs={12} md={12 - c.SIDEBAR_COLUMN_SIZE}>
-                <Row className="mt-2 mb-4 mt-lg-4 mb-lg-2 px-xl-3">
-                  <Col>
-                    <Row>
-                      <Col />
-                    </Row>
+            <div className="lookup-show layout-width-wrapper">
+              <Row className="mt-2 mb-4">
+                <Col>
+                  <LookupAddressDisplay profile={this.props.propertyResult} />
+                </Col>
+              </Row>
+              <div className="lookup-show__content-wrapper">
+                <LookupSidebar
+                  appState={this.props.appState}
+                  profileRequest={this.props.profileRequest}
+                  propertyResult={this.props.propertyResult}
+                />
+                <div className="lookup-show__content">
+                  <Row className="mt-2 mb-4 mt-lg-4 mb-lg-2 px-xl-3">
+                    <Col>
+                      <Row>
+                        <Col />
+                      </Row>
 
-                    <Row className="mb-2">
-                      <Col>
-                        <h6 className="lookup-show__datatype-header mb-0">
-                          {this.props.bin && !!Object.keys(this.props.propertyResult).length
-                            ? 'Building Address'
-                            : 'Tax Lot Address'}
-                        </h6>
-                        {this.props.bin && (
-                          <small className="text-muted">* buildings may have alternate addresses</small>
-                        )}
-                        <h4 className="lookup-show__data-address font-weight-bold">
-                          {this.props.bin && !!Object.keys(this.props.propertyResult).length
-                            ? `${
-                                getCurrentBuilding(this.props.propertyResult.buildings, this.props.bin).house_number
-                              } ${getCurrentBuilding(this.props.propertyResult.buildings, this.props.bin).stname}`
-                            : this.props.propertyResult.address}
-                          {!!Object.keys(this.props.propertyResult).length &&
-                            `, ${boroCodeToName(this.props.propertyResult.borough)}`}{' '}
-                        </h4>
-                      </Col>
-                    </Row>
-
-                    <Row>
-                      <Col xs={12} lg={4}>
-                        <Row className="mb-4">
-                          <Col>
-                            <BuildingSelect
-                              bbl={this.props.bbl}
-                              bin={this.props.bin}
-                              changeLookup={this.props.changeLookup}
-                              propertyResult={this.props.propertyResult}
-                            />
-                          </Col>
-                        </Row>
-                        <Row className={classnames({ 'mb-4': this.props.bin })}>
-                          {
-                            // Property level requests
-                          }
-                          <Col xs={12}>
-                            <h6 className="lookup-show__datatype-header">Tax Lot Level Data</h6>
-                          </Col>
-                          {this.props.lookupRequests
-                            .filter(r => r.level === 'PROPERTY')
-                            .map((request, index) => {
-                              return (
-                                <Col
-                                  xs={12}
-                                  sm={6}
-                                  md={4}
-                                  lg={12}
-                                  key={`rs-col-${index}-${request.resourceModel.resourceConstant}`}
-                                >
-                                  <RequestSummaryWrapper
-                                    key={`request-summary-${this.props.appState.requests.indexOf(request)}`}
-                                    summaryBackgroundColorClass={'acris-yellow property-card'}
-                                    onClick={() => this.switchTable(request)}
-                                    selected={this.props.appState.selectedRequest === request}
-                                    request={request}
-                                    results={this.props.requests[request.requestConstant]}
-                                    totalResults={this.props.requests[request.requestConstant]}
-                                    label={request.resourceModel.label}
-                                    resultsComponent={SummaryResultCard}
-                                  />
-                                </Col>
-                              )
-                            })}
-                        </Row>
-
-                        <Row>
-                          {
-                            // Building level requests
-                          }
+                      <Row className="mb-2">
+                        <Col>
+                          <h6 className="lookup-show__datatype-header mb-0">
+                            {this.props.bin && !!Object.keys(this.props.propertyResult).length
+                              ? 'Building Address'
+                              : 'Tax Lot Address'}
+                          </h6>
                           {this.props.bin && (
-                            <Col>
-                              <h6 className="lookup-show__datatype-header">Building Level Data</h6>
-                            </Col>
+                            <small className="text-muted">* buildings may have alternate addresses</small>
                           )}
+                          <h4 className="lookup-show__data-address font-weight-bold">
+                            {this.props.bin && !!Object.keys(this.props.propertyResult).length
+                              ? `${
+                                  getCurrentBuilding(this.props.propertyResult.buildings, this.props.bin).house_number
+                                } ${getCurrentBuilding(this.props.propertyResult.buildings, this.props.bin).stname}`
+                              : this.props.propertyResult.address}
+                            {!!Object.keys(this.props.propertyResult).length &&
+                              `, ${boroCodeToName(this.props.propertyResult.borough)}`}{' '}
+                          </h4>
+                        </Col>
+                      </Row>
 
-                          {this.props.lookupRequests
-                            .filter(r => r.level === 'BUILDING')
-                            .map((request, index) => {
+                      <Row>
+                        <Col xs={12} lg={4}>
+                          <Row className="mb-4">
+                            <Col>
+                              <BuildingSelect
+                                bbl={this.props.bbl}
+                                bin={this.props.bin}
+                                changeLookup={this.props.changeLookup}
+                                propertyResult={this.props.propertyResult}
+                              />
+                            </Col>
+                          </Row>
+                          <Row className={classnames({ 'mb-4': this.props.bin })}>
+                            {
+                              // Property level requests
+                            }
+                            <Col xs={12}>
+                              <h6 className="lookup-show__datatype-header">Tax Lot Level Data</h6>
+                            </Col>
+                            {this.props.lookupRequests
+                              .filter(r => r.level === 'PROPERTY')
+                              .map((request, index) => {
+                                return (
+                                  <Col
+                                    xs={12}
+                                    sm={6}
+                                    md={4}
+                                    lg={12}
+                                    key={`rs-col-${index}-${request.resourceModel.resourceConstant}`}
+                                  >
+                                    <RequestSummaryWrapper
+                                      key={`request-summary-${this.props.appState.requests.indexOf(request)}`}
+                                      summaryBackgroundColorClass={'acris-yellow property-card'}
+                                      onClick={() => this.switchTable(request)}
+                                      selected={this.props.appState.selectedRequest === request}
+                                      request={request}
+                                      results={this.props.requests[request.requestConstant]}
+                                      totalResults={this.props.requests[request.requestConstant]}
+                                      label={request.resourceModel.label}
+                                      resultsComponent={SummaryResultCard}
+                                    />
+                                  </Col>
+                                )
+                              })}
+                          </Row>
+
+                          <Row>
+                            {
+                              // Building level requests
+                            }
+                            {this.props.bin && (
+                              <Col>
+                                <h6 className="lookup-show__datatype-header">Building Level Data</h6>
+                              </Col>
+                            )}
+
+                            {this.props.lookupRequests
+                              .filter(r => r.level === 'BUILDING')
+                              .map((request, index) => {
+                                return (
+                                  <Col
+                                    xs={12}
+                                    sm={6}
+                                    md={4}
+                                    lg={12}
+                                    key={`rs-col-${index}-${request.resourceModel.resourceConstant}`}
+                                  >
+                                    <RequestSummaryWrapper
+                                      summaryBackgroundColorClass={
+                                        request.level === 'PROPERTY' || !this.props.bin
+                                          ? 'acris-yellow property-card'
+                                          : 'building-pink building-card'
+                                      }
+                                      key={`request-summary-${this.props.appState.requests.indexOf(request)}`}
+                                      onClick={() => this.switchTable(request)}
+                                      selected={this.props.appState.selectedRequest === request}
+                                      request={request}
+                                      results={this.props.requests[request.requestConstant]}
+                                      totalResults={this.props.requests[request.requestConstant]}
+                                      label={request.resourceModel.label}
+                                      resultsComponent={SummaryResultCard}
+                                    />
+                                  </Col>
+                                )
+                              })}
+                          </Row>
+                        </Col>
+                        <Col xs={12} lg={8}>
+                          <Row>
+                            {this.props.lookupRequests.map((request, index) => {
                               return (
                                 <Col
                                   xs={12}
-                                  sm={6}
-                                  md={4}
-                                  lg={12}
-                                  key={`rs-col-${index}-${request.resourceModel.resourceConstant}`}
+                                  key={`rw-col-${index}-${request.resourceModel.resourceConstant}`}
+                                  className="request-wrapper-container"
                                 >
-                                  <RequestSummaryWrapper
-                                    summaryBackgroundColorClass={
-                                      request.level === 'PROPERTY' || !this.props.bin
-                                        ? 'acris-yellow property-card'
-                                        : 'building-pink building-card'
+                                  <RequestTableWrapper
+                                    badge={
+                                      request.level === 'PROPERTY' || !this.props.bin ? (
+                                        <Badge className="acris-yellow">Tax Lot Data</Badge>
+                                      ) : (
+                                        <Badge className="building-pink building-card">Building Data</Badge>
+                                      )
                                     }
-                                    key={`request-summary-${this.props.appState.requests.indexOf(request)}`}
-                                    onClick={() => this.switchTable(request)}
-                                    selected={this.props.appState.selectedRequest === request}
+                                    showUpdate={true}
+                                    property={this.props.propertyResult}
+                                    caption={request.resourceModel.label}
+                                    key={`request-wrapper-${this.props.appState.requests.indexOf(request)}`}
+                                    visible={this.props.appState.selectedRequest === request}
                                     request={request}
-                                    results={this.props.requests[request.requestConstant]}
-                                    totalResults={this.props.requests[request.requestConstant]}
-                                    label={request.resourceModel.label}
-                                    resultsComponent={SummaryResultCard}
                                   />
                                 </Col>
                               )
                             })}
-                        </Row>
-                      </Col>
-                      <Col xs={12} lg={8}>
-                        <Row>
-                          {this.props.lookupRequests.map((request, index) => {
-                            return (
-                              <Col
-                                xs={12}
-                                key={`rw-col-${index}-${request.resourceModel.resourceConstant}`}
-                                className="request-wrapper-container"
-                              >
-                                <RequestTableWrapper
-                                  badge={
-                                    request.level === 'PROPERTY' || !this.props.bin ? (
-                                      <Badge className="acris-yellow">Tax Lot Data</Badge>
-                                    ) : (
-                                      <Badge className="building-pink building-card">Building Data</Badge>
-                                    )
-                                  }
-                                  showUpdate={true}
-                                  property={this.props.propertyResult}
-                                  caption={request.resourceModel.label}
-                                  key={`request-wrapper-${this.props.appState.requests.indexOf(request)}`}
-                                  visible={this.props.appState.selectedRequest === request}
-                                  request={request}
-                                />
-                              </Col>
-                            )
-                          })}
-                        </Row>
-                      </Col>
-                    </Row>
-                  </Col>
-                </Row>
-              </Col>
-            </Row>
+                          </Row>
+                        </Col>
+                      </Row>
+                    </Col>
+                  </Row>
+                </div>
+              </div>
+            </div>
           )
         }
       </LayoutContext.Consumer>

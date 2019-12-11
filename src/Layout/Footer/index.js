@@ -27,7 +27,7 @@ class Footer extends React.Component {
                     <p className="text-black">
                       This site uses{' '}
                       <a
-                        className="font-weight-bold"
+                        className="text-link"
                         href="https://analytics.google.com"
                         target="_blank"
                         rel="noopener noreferrer"
@@ -36,7 +36,7 @@ class Footer extends React.Component {
                       </a>{' '}
                       to help us better understand how it's used.
                       <a
-                        className="font-weight-bold"
+                        className="text-link"
                         href="#"
                         onClick={() => {
                           this.props.dispatch(fireAnalyticsModalOpenEvent())
