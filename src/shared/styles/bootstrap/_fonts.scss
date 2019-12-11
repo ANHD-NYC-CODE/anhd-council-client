@@ -6,6 +6,8 @@
 // stylelint-disable value-keyword-case
 $font-family-sans-serif: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
   'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji' !default;
+
+$font-family-primary: $font-family-sans-serif;
 $font-family-secondary: 'Open Sans', Arial, sans-serif;
 $font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace !default;
 $font-family-base: $font-family-sans-serif !default;

@@ -4,17 +4,22 @@ import SummaryResultCard from 'shared/components/ResultCard/SummaryResultCard'
 import { getCurrentBuilding } from 'Lookup/utilities'
 import * as c from 'shared/constants'
 import LookupAddressDisplay from 'Lookup/LookupAddressDisplay'
+import BaseLink from 'shared/components/BaseLink'
+import { geographyToLink } from 'shared/utilities/routeUtils'
 
 import LayoutContext from 'Layout/LayoutContext'
 import { boroCodeToName } from 'shared/utilities/languageUtils'
 import { Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 import { fireSwitchLookupTableEvent } from 'Store/Analytics/actions'
-import { Badge, Row, Col, InputGroup } from 'react-bootstrap'
+import { Badge, Row, Col, Button } from 'react-bootstrap'
 import { setAppState } from 'Store/AppState/actions'
 import RequestTableWrapper from 'shared/components/RequestTableWrapper'
 import BuildingSelect from 'Lookup/BuildingSelect'
 import RequestSummaryWrapper from 'shared/components/RequestSummaryWrapper'
 import PrintLookup from 'Lookup/PrintLookup'
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
 
 import LookupSidebar from 'Lookup/LookupSidebar'
 
@@ -113,11 +118,25 @@ class LookupShow extends React.PureComponent {
             />
           ) : (
             <div className="lookup-show layout-width-wrapper">
-              <Row className="mt-2 mb-4">
-                <Col>
+              <div className="lookup-show__top-row">
+                <div>
                   <LookupAddressDisplay profile={this.props.propertyResult} />
-                </Col>
-              </Row>
+                </div>
+                <div>
+                  {this.props.appState.currentGeographyType && this.props.appState.currentGeographyId && (
+                    <BaseLink
+                      href={geographyToLink(
+                        this.props.appState.currentGeographyType,
+                        this.props.appState.currentGeographyId
+                      )}
+                    >
+                      <Button className="icon-button--right" variant="dark">
+                        Back to dashboard <FontAwesomeIcon icon={faChevronRight} size="sm" />
+                      </Button>
+                    </BaseLink>
+                  )}
+                </div>
+              </div>
               <div className="lookup-show__content-wrapper">
                 <LookupSidebar
                   appState={this.props.appState}
