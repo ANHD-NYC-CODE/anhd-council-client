@@ -15,6 +15,7 @@ import { setAppState } from 'Store/AppState/actions'
 import LookupTable from 'Lookup/LookupTable'
 import BuildingSelect from 'Lookup/BuildingSelect'
 import PrintLookup from 'Lookup/PrintLookup'
+import LookupLinks from 'Lookup/LookupLinks'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
@@ -189,6 +190,9 @@ class LookupShow extends React.PureComponent {
                         />
                       )
                     })}
+                  </div>
+                  <div className="lookup-show__links">
+                    <LookupLinks request={this.props.profileRequest} />
                   </div>
                 </div>
               </div>
