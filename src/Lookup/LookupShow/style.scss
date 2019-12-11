@@ -28,7 +28,7 @@
   }
   .lookup-show__content-wrapper {
     display: block;
-    @include media-breakpoint-up(md) {
+    @include media-breakpoint-up(sm) {
       display: flex;
     }
   }

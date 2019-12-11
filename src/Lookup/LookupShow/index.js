@@ -137,7 +137,7 @@ class LookupShow extends React.PureComponent {
                   )}
                 </div>
               </div>
-              <div className="lookup-show__content-wrapper">
+              <div className="lookup-show__content-wrapper full-bleed--mobile">
                 <LookupSidebar
                   appState={this.props.appState}
                   profileRequest={this.props.profileRequest}
