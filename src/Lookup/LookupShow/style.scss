@@ -43,9 +43,28 @@
     flex: 0 1 auto;
   }
 
-  .summary-result-card {
-    min-height: 80px;
-    height: 80px;
+  .lookup-show__tabs {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .lookup-table-tab,
+  .result-card {
+    border-radius: 6px;
+    max-height: 40px;
+    min-height: 0;
+    height: 40px;
+    flex: 0 0 140px;
+    width: 140px;
+
+    p,
+    span {
+      @extend %p2-font-size;
+      margin: 0;
+    }
   }
 
   .lookup-show__data-address {

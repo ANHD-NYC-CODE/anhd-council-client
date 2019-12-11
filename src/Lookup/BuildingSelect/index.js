@@ -61,6 +61,17 @@ class BuildingSelect extends React.Component {
               Go
             </Button>
           </div>
+          {
+            //   <BaseLink
+            //   className="d-inline-block w-100"
+            //   href={`${addressResultToPath({ bbl: this.props.bbl })}`}
+            //   onClick={() => this.props.changeLookup(this.props.bbl, null, false)}
+            // >
+            //   <Button variant="secondary" size="sm" block>
+            //     View entire tax lot
+            //   </Button>
+            // </BaseLink>
+          }
         </div>
       </Form>
     ) : (
