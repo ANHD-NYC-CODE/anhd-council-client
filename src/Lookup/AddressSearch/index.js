@@ -147,6 +147,7 @@ class AddressSearch extends React.PureComponent {
           loading={this.props.loading}
           searchBarRef={this.searchBarRef}
           inputClass={this.props.inputClass}
+          inputSize={this.props.inputSize}
           clearSelectedSearch={this.clearSelectedSearch}
           dispatch={this.props.dispatch}
           placeholder={this.props.placeholder}
@@ -179,11 +180,13 @@ class AddressSearch extends React.PureComponent {
 
 AddressSearch.defaultProps = {
   inputClass: '',
+  inputSize: 'lg',
   containerClass: '',
 }
 
 AddressSearch.propTypes = {
   inputClass: PropTypes.string,
+  inputSize: PropTypes.string,
   containerClass: PropTypes.string,
   config: PropTypes.object,
   setViewCoordinates: PropTypes.func,

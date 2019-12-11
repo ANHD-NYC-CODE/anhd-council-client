@@ -13,7 +13,9 @@ export default class StandardizedInput {
       }
     }
     // Convert form event into standardized input
-    if (e.target) {
+    if (e.layer) {
+      e.value = e.layer.feature.properties.id
+    } else if (e.target) {
       const target = e.target
       e.name = target.name
       e.value = target.value
@@ -21,10 +23,6 @@ export default class StandardizedInput {
       e.key = target.dataset ? target.dataset.key : undefined
       e.type = target.type
       this.target = e.target
-    }
-
-    if (e.layer) {
-      e.value = e.layer.feature.properties.id
     }
 
     this.name = e.name

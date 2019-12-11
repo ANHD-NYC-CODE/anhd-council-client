@@ -17,6 +17,7 @@ export default class SearchBar extends React.PureComponent {
     this.onFormSubmit = this.onFormSubmit.bind(this)
     this.dispatchQuery = this.dispatchQuery.bind(this)
     this.onInputChange = this.onInputChange.bind(this)
+    this.onSearchClick = this.onSearchClick.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
@@ -45,6 +46,15 @@ export default class SearchBar extends React.PureComponent {
     }
   }
 
+  onSearchClick() {
+    this.props.clearSelectedSearch()
+    this.props.setSearchValue(this.props.searchValue)
+    clearTimeout(this.props.searchTimeout)
+    if (this.props.searchValue) {
+      this.props.dispatch(setSearchTimeout(setTimeout(this.dispatchQuery, 250, this.props.searchValue)))
+    }
+  }
+
   render() {
     return (
       <Form autoComplete="off" className="search-bar" onSubmit={this.onFormSubmit}>
@@ -55,10 +65,11 @@ export default class SearchBar extends React.PureComponent {
             ref={this.props.searchBarRef}
             onChange={this.onInputChange}
             onKeyDown={this.props.onKeyDown}
-            size="lg"
+            size={this.props.inputSize}
             placeholder={this.props.searchValue || this.props.placeholder || 'Enter an address'}
             tabIndex={0}
             type="text"
+            value={this.props.searchValue}
           />
           {this.props.show && (
             <div className="search-bar__close" onClick={e => this.props.hideSearch(e, true)}>
@@ -68,11 +79,13 @@ export default class SearchBar extends React.PureComponent {
           {// only include button on legacy config
           this.props.inputClass !== 'xl-form-control' && (
             <InputGroup.Append>
-              <Button variant="dark">Search</Button>
+              <Button onClick={this.onSearchClick} variant="dark">
+                Search
+              </Button>
             </InputGroup.Append>
           )}
         </InputGroup>
-        <div className="search-bar__loading">{this.props.loading && <SpinnerLoader size="40px" />}</div>
+        <div className="search-bar__loading">{this.props.loading && <SpinnerLoader size="25px" />}</div>
       </Form>
     )
   }
@@ -80,6 +93,7 @@ export default class SearchBar extends React.PureComponent {
 
 SearchBar.defaultProps = {
   inputClass: '',
+  inputSize: 'lg',
 }
 
 SearchBar.propTypes = {
@@ -87,6 +101,7 @@ SearchBar.propTypes = {
   dispatch: PropTypes.func,
   placeholder: PropTypes.string,
   inputClass: PropTypes.string,
+  inputSize: PropTypes.string,
   searchTimeout: PropTypes.number,
   setSearchValue: PropTypes.func,
   selectedResult: PropTypes.object,

@@ -121,6 +121,7 @@ export default class LeafletMap extends React.PureComponent {
       <div
         id="map"
         ref={this.mapContainerRef}
+        className={this.props.className}
         style={{ height: this.props.height || this.state.height, width: this.props.width || '100%' }}
       >
         {this.state.alertMessage && (
@@ -260,6 +261,7 @@ LeafletMap.defaultProps = {
 
 LeafletMap.propTypes = {
   appState: PropTypes.object,
+  className: PropTypes.string,
   communityDistricts: PropTypes.array,
   councilDistricts: PropTypes.array,
   closeGeographyPopup: PropTypes.func,

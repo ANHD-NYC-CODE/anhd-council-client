@@ -1,4 +1,4 @@
-@import 'shared/styles/bootstrap/_variables.scss';
+@import 'shared/styles/_variables.scss';
 
 .address-search,
 .address-search .table-hover tbody tr:hover {
@@ -13,16 +13,35 @@
 
 .address-search {
   &.main-address-search {
-    max-width: 440px;
+    max-width: $main-input-max-width;
     margin: 0 auto;
+
+    & input {
+      @extend %p2-font-size;
+      border-top-left-radius: 20px;
+      border-bottom-left-radius: 20px;
+      overflow: hidden;
+    }
+
+    & button {
+      @extend %p2-font-size;
+      border-top-right-radius: 20px;
+      border-bottom-right-radius: 20px;
+      overflow: hidden;
+    }
+
+    .search-results__wrapper {
+      margin-left: 15px;
+      width: calc(100% - 30px);
+    }
 
     .search-bar__close,
     .search-bar__loading {
       position: absolute;
-      right: 72px;
+      right: 80px;
       top: 0;
       height: 100%;
-      width: 50px;
+      width: 25px;
       z-index: 999;
     }
 
