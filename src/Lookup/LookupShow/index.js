@@ -4,26 +4,18 @@ import SummaryResultCard from 'shared/components/ResultCard/SummaryResultCard'
 import { getCurrentBuilding } from 'Lookup/utilities'
 import * as c from 'shared/constants'
 
-import LeafletMap from 'LeafletMap'
-import AddressSearch from 'Lookup/AddressSearch'
 import LayoutContext from 'Layout/LayoutContext'
 import { boroCodeToName } from 'shared/utilities/languageUtils'
 import { Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 import { fireSwitchLookupTableEvent } from 'Store/Analytics/actions'
-import { Badge, Row, Col, InputGroup } from 'react-bootstrap'
+import { Badge, Row, Col } from 'react-bootstrap'
 import { setAppState } from 'Store/AppState/actions'
 import RequestTableWrapper from 'shared/components/RequestTableWrapper'
 import BuildingSelect from 'Lookup/BuildingSelect'
 import RequestSummaryWrapper from 'shared/components/RequestSummaryWrapper'
-import LookupLinks from 'Lookup/LookupLinks'
 import PrintLookup from 'Lookup/PrintLookup'
-import PrintButton from 'shared/components/PrintButton'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
-import { faBuilding } from '@fortawesome/free-solid-svg-icons'
-import { faLayerGroup } from '@fortawesome/free-solid-svg-icons'
 
-import ConfigContext from 'Config/ConfigContext'
+import LookupSidebar from 'Lookup/LookupSidebar'
 
 import classnames from 'classnames'
 import './style.scss'
@@ -120,59 +112,11 @@ class LookupShow extends React.PureComponent {
             />
           ) : (
             <Row className="lookup-show">
-              <Col
-                className="layout__left-column touch-left lookup-show__property-column px-lg-2 px-xl-5"
-                xs={12}
-                md={c.SIDEBAR_COLUMN_SIZE}
-              >
-                <Row className="mt-4">
-                  <Col xs={12}>
-                    <h3 className="text-light-gray font-weight-bold text-uppercase">Property Info</h3>
-                  </Col>
-                </Row>
-                <Row className="mt-2 mb-4">
-                  <Col>
-                    <InputGroup className="lookup-show__address-group flex-nowrap">
-                      <InputGroup.Append className="flex-column justify-content-center">
-                        <FontAwesomeIcon className=" mr-2 text-white" size="2x" icon={faSearch} />
-                      </InputGroup.Append>
-                      <ConfigContext.Consumer>
-                        {config => {
-                          return <AddressSearch config={config} inputClass="xl-form-control" />
-                        }}
-                      </ConfigContext.Consumer>
-                    </InputGroup>
-                  </Col>
-                </Row>
-                <Row>
-                  <Col>
-                    <RequestTableWrapper
-                      caption={this.props.profileRequest.resourceModel.label}
-                      request={this.props.profileRequest}
-                      visible={true}
-                    />
-                  </Col>
-                </Row>
-                <hr />
-                <Row className="mb-4">
-                  <Col col={12}>
-                    <LeafletMap
-                      appState={this.props.appState}
-                      currentGeographyType={this.props.appState.currentGeographyType}
-                      center={
-                        this.props.propertyResult.lat
-                          ? [this.props.propertyResult.lat, this.props.propertyResult.lng]
-                          : undefined
-                      }
-                      results={this.props.propertyResult}
-                      displayedRequest={this.props.appState.requests.find(request => request.type === 'LOOKUP_PROFILE')}
-                      iconConfig="SINGLE"
-                      zoom={17}
-                    />
-                  </Col>
-                </Row>
-                <LookupLinks request={this.props.profileRequest} />
-              </Col>
+              <LookupSidebar
+                appState={this.props.appState}
+                profileRequest={this.props.profileRequest}
+                propertyResult={this.props.propertyResult}
+              />
               <Col xs={12} md={12 - c.SIDEBAR_COLUMN_SIZE}>
                 <Row className="mt-2 mb-4 mt-lg-4 mb-lg-2 px-xl-3">
                   <Col>
@@ -340,6 +284,7 @@ LookupShow.propTypes = {
   requests: PropTypes.array,
   changeLookup: PropTypes.func,
   propertyResult: PropTypes.object,
+  profileRequest: PropTypes.object,
 }
 
 export default LookupShow
