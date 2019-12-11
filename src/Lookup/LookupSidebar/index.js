@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import * as c from 'shared/constants'
 
 import LeafletMap from 'LeafletMap'
 import LookupLinks from 'Lookup/LookupLinks'
@@ -16,9 +15,24 @@ import './style.scss'
 const LookupSidebar = props => {
   const [open, toggleOpen] = useState(true)
 
+  const handleToggleKeyDown = e => {
+    // space or enter or escape
+    if (e.keyCode === 13 || e.keyCode === 32 || (open && e.keyCode === 27)) {
+      e.preventDefault()
+      toggleOpen(!open)
+    }
+  }
+
   return (
     <div className={classnames('lookup-sidebar', { open })}>
-      <div className="lookup-sidebar__toggle" onClick={() => toggleOpen(!open)}>
+      <div
+        tabIndex="0"
+        role="button"
+        aria-label="Toggle Sidebar"
+        className="lookup-sidebar__toggle"
+        onKeyDown={handleToggleKeyDown}
+        onClick={() => toggleOpen(!open)}
+      >
         <FontAwesomeIcon icon={open ? faChevronLeft : faChevronRight} size="1x" />
       </div>
       <Row className="mt-4">
