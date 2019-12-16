@@ -246,7 +246,7 @@ const Property = databaseObject => {
             paramMapField: 'unitsres',
             paramMapRole: 'MODIFIER',
             lowValue: '1',
-            highValue: '10',
+            highValue: '5',
             paramMapComparison: 'lte',
             paramNoun: 'units',
             validations: {
