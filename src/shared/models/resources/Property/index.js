@@ -245,13 +245,12 @@ const Property = databaseObject => {
             paramSetLabel: 'Residential Units',
             paramMapField: 'unitsres',
             paramMapRole: 'MODIFIER',
-            lowValue: '5',
+            lowValue: '1',
             highValue: '10',
             paramMapComparison: 'lte',
             paramNoun: 'units',
             validations: {
               min: 1,
-              max: 2000,
             },
           })
         },
