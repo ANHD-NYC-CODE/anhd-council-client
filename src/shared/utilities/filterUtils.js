@@ -109,12 +109,11 @@ export const constructCountDateParamSet = ({
   dateHighComparison = 'lte',
   dateLowValue = c.CUSTOM_DEFAULT_START_DATE,
   dateHighValue = c.CUSTOM_DEFAULT_END_DATE,
-  dateOptions = dateComparisonOptions(
-    ['gte', 'between', 'lte'],
-    ['After', 'Range', 'Before'],
-    'DATE',
-    `${resourceModel.urlPath}Range`
-  ),
+  dateOptions = rangeComparisonOptions({
+    comparisonValues: ['gte', 'between', 'lte'],
+    labels: ['After', 'Between', 'Before'],
+    rangeKey: 'DATE',
+  }),
   dateValidations = {},
   hiddenParamMap = undefined,
   extraParamMap = undefined,
@@ -224,12 +223,11 @@ export const constructDateRangeParamSet = ({
   dateHighComparison = 'lte',
   dateLowValue = c.CUSTOM_DEFAULT_START_DATE,
   dateHighValue = c.CUSTOM_DEFAULT_END_DATE,
-  dateOptions = dateComparisonOptions(
-    ['gte', 'between', 'lte'],
-    ['After', 'Range', 'Before'],
-    'DATE',
-    `${resourceModel.urlPath}Range`
-  ),
+  dateOptions = rangeComparisonOptions({
+    comparisonValues: ['gte', 'between', 'lte'],
+    labels: ['After', 'Between', 'Before'],
+    rangeKey: 'DATE',
+  }),
   dateValidations = {},
   comparisonPrefix = '',
   dateValuePrefix = '',
@@ -270,6 +268,70 @@ export const constructDateRangeParamSet = ({
         comparisonPrefix,
         value: dateHighValue,
         valuePrefix: dateValuePrefix,
+      }),
+    ].filter(m => m),
+  })
+}
+
+export const constructRangeParamSet = ({
+  resourceModel,
+  paramSetLabel = '',
+  paramNoun = '',
+  paramMapRole = 'LIMITER',
+  paramMapField = undefined,
+  lowComparison = 'gte',
+  highComparison = 'lte',
+  lowValue = c.CUSTOM_DEFAULT_START_DATE,
+  highValue = c.CUSTOM_DEFAULT_END_DATE,
+  defaultOptions = rangeComparisonOptions({
+    comparisonValues: ['gte', 'between', 'lte'],
+    labels: ['At least', 'Between', 'At most'],
+    rangeKey: 'RANGE',
+  }),
+  comparisonPrefix = '',
+  valuePrefix = '',
+  validations = {},
+} = {}) => {
+  return new ParamSet({
+    component: MultiTypeFieldGroup,
+    createType: 'ALL_RANGE_ONE',
+    label: paramSetLabel,
+    defaults: [
+      new ParamMap({
+        resourceModel,
+        type: 'AMOUNT',
+        role: paramMapRole,
+        field: paramMapField,
+        component: ComparisonFieldSet,
+        baseComponent: IntegerField,
+        rangeKey: `${paramSetLabel}-${resourceModel.urlPath}-Range`,
+        rangePosition: 1,
+        defaultOptions,
+        paramMapField,
+        paramNoun,
+        comparison: lowComparison,
+        comparisonPrefix,
+        value: lowValue,
+        valuePrefix,
+        validations,
+      }),
+      new ParamMap({
+        resourceModel,
+        type: 'AMOUNT',
+        role: paramMapRole,
+        field: paramMapField,
+        component: ComparisonFieldSet,
+        baseComponent: IntegerField,
+        rangeKey: `${paramSetLabel}-${resourceModel.urlPath}-Range`,
+        rangePosition: 2,
+        defaultOptions,
+        paramMapField,
+        paramNoun,
+        comparison: highComparison,
+        comparisonPrefix,
+        value: highValue,
+        valuePrefix,
+        validations,
       }),
     ].filter(m => m),
   })
@@ -318,7 +380,7 @@ export const comparisonOptions = ({ comparisonValues = [], labels = [], name = '
   }))
 }
 
-export const dateComparisonOptions = ({
+export const rangeComparisonOptions = ({
   comparisonValues = ['gte', 'between', 'lte'],
   labels = ['After', 'Between', 'Before'],
   rangeKey,
@@ -327,7 +389,7 @@ export const dateComparisonOptions = ({
     name: 'comparison',
     value,
     label: labels[index],
-    rangeKey: rangeKey,
+    rangeKey,
   }))
 }
 
