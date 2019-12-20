@@ -64,6 +64,7 @@ const RangeFieldSet = props => {
       {props.paramMapRangeGroup
         .sort((a, b) => a.rangePosition - b.rangePosition)
         .map((paramMap, paramMapIndex) => {
+          console.log(paramMap)
           return (
             <InputGroup
               as={Col}
@@ -77,6 +78,7 @@ const RangeFieldSet = props => {
               </InputGroup.Prepend>
               {paramMap.baseComponent({
                 key: `rangeGroup-paramMap-${paramMapIndex}`,
+                dispatchAction: props.dispatchAction,
                 onChange: e => paramMap.update({ dispatchAction: props.dispatchAction, e: new StandardizedInput(e) }),
                 paramMap: paramMap,
               })}
