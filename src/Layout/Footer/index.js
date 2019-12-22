@@ -26,14 +26,14 @@ class Footer extends React.Component {
                   <div className="footer-text">
                     <p className="text-black">
                       This site uses{' '}
-                      <button
+                      <a
                         className="text-link"
                         href="https://analytics.google.com"
                         target="_blank"
                         rel="noopener noreferrer"
                       >
                         Google Analytics
-                      </button>{' '}
+                      </a>{' '}
                       to help us better understand how it's used.
                       <button
                         className="text-link"

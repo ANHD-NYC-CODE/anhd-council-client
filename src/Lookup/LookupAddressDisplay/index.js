@@ -44,7 +44,11 @@ const LookupAddressDisplay = props => {
       )}
       {!isEditing && (
         <div className="lookup-address-display__displaying">
-          <Button className="lookup-address-display__search-button" variant="outline-dark" onClick={handleEditClick}>
+          <Button
+            className="lookup-address-display__search-button btn--small"
+            variant="outline-dark"
+            onClick={handleEditClick}
+          >
             <FontAwesomeIcon className="" size="2x" icon={faSearch} />
           </Button>
           <h5 className="lookup-address-display__title">

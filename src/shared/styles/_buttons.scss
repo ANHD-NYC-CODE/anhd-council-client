@@ -20,6 +20,10 @@ button.btn-primary:disabled {
   position: relative;
 }
 
+.btn--small {
+  @extend %small-font-size;
+}
+
 .button-loader__container {
   position: absolute;
   top: 0;

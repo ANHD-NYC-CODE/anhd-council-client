@@ -23,6 +23,5 @@ h6 {
 
 button,
 button.btn {
-  @extend %small-font-size;
   font-family: $font-family-secondary;
 }
