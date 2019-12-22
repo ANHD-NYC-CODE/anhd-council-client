@@ -17,6 +17,7 @@ const HPDComplaint = databaseObject => ({
     },
   },
   tableResultsConstructor: results => {
+    // Counts all the HPD complaints + Problems together
     return [].concat(
       ...results.map(complaint =>
         complaint.hpdproblems.map(problem => {
@@ -26,6 +27,18 @@ const HPDComplaint = databaseObject => ({
         })
       )
     )
+  },
+
+  tableRecordsCountFunction2: results => {
+    const problems = [].concat(
+      ...results.map(complaint => {
+        return complaint.hpdproblems.map(problem => {
+          return problem
+        })
+      })
+    )
+
+    return problems.length
   },
 })
 

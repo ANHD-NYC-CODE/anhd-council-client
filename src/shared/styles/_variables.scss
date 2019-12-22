@@ -16,14 +16,14 @@ $lookup-padding-size: 40px;
   margin: 0 auto;
 
   & input {
-    @extend %p2-font-size;
+    @extend %p3-font-size;
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
     overflow: hidden;
   }
 
   & button {
-    @extend %p2-font-size;
+    @extend %p3-font-size;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
     overflow: hidden;
@@ -60,7 +60,7 @@ $lookup-padding-size: 40px;
 
 %p1-font-size {
   font-size: 16px;
-  line-height: 21px;
+  line-height: 22px;
 
   @include media-breakpoint-up(md) {
     font-size: 18px;
@@ -68,6 +68,15 @@ $lookup-padding-size: 40px;
 }
 
 %p2-font-size {
+  font-size: 14px;
+  line-height: 20px;
+
+  @include media-breakpoint-up(md) {
+    font-size: 16px;
+  }
+}
+
+%p3-font-size {
   font-size: 12px;
   line-height: 18px;
 
@@ -76,7 +85,7 @@ $lookup-padding-size: 40px;
   }
 }
 
-%p3-font-size {
+%small-font-size {
   font-size: 12px;
   line-height: 16px;
 }

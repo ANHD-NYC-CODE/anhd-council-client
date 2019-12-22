@@ -112,8 +112,6 @@ $sub-header-padding-top: 12px;
   }
 
   .sub-header__nav-tab {
-    color: $gray-900;
-    background-color: $tab-blue;
     padding: 1rem 15px;
     text-decoration: none;
     flex: 0 0 100%;
@@ -132,17 +130,5 @@ $sub-header-padding-top: 12px;
     @include media-breakpoint-up(lg) {
       padding: 1rem 3rem;
     }
-  }
-
-  @media (hover: hover) {
-    .sub-header__nav-tab:hover {
-      background-color: $blizzard;
-      color: $black;
-    }
-  }
-
-  .sub-header__nav-tab.active {
-    background-color: $blizzard;
-    color: $black;
   }
 }

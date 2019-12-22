@@ -1,17 +1,18 @@
 .text-light-gray {
-  color: $light-gray;
+  color: $light-gray !important;
 }
 
 .text-dark-gray {
-  color: $gray-700;
+  color: $gray-700 !important;
 }
 
-.text-black {
-  color: $black;
+.text-black,
+%text-black {
+  color: $black !important;
 }
 @each $key, $value in $grays {
   .text-gray-#{$key} {
-    color: $value;
+    color: $value !important;
   }
 }
 
@@ -140,8 +141,8 @@ label.toggle-link.active.btn-primary:not(:disabled).light.active {
   width: 0% !important;
 }
 
-.text-link {
-  @extend %p1-font-size;
+.text-link,
+%text-link {
   color: $primary;
   cursor: pointer;
   font-weight: bold;
@@ -157,6 +158,24 @@ label.toggle-link.active.btn-primary:not(:disabled).light.active {
   &:hover {
     text-decoration: underline;
   }
+}
+
+%text-button {
+  box-shadow: none;
+  border: none;
+  outline: none;
+}
+
+.text-button--default {
+  @extend %text-button;
+  @extend %text-link;
+  @extend %p2-font-size;
+}
+
+.text-button--smaller {
+  @extend %text-button;
+  @extend %text-link;
+  @extend %p3-font-size;
 }
 
 .icon-button--right {
