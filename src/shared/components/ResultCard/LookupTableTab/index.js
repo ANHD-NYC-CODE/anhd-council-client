@@ -40,7 +40,6 @@ const getRecordsCount = (request, results) => {
 }
 
 const LookupTableTab = props => {
-  console.log(props.request.level)
   return (
     <button
       className={classnames('lookup-table-tab', props.isBuildingTab ? 'tab--secondary' : 'tab--primary', {

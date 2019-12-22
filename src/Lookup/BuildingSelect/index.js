@@ -58,6 +58,7 @@ class BuildingSelect extends React.Component {
               }
             />
             <Button
+              className="btn--small"
               onClick={
                 this.props.bin
                   ? () => this.props.changeLookup(this.props.bbl, undefined, false)
