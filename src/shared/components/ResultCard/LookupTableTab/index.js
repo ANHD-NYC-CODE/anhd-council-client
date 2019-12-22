@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Button } from 'react-bootstrap'
 import SpinnerLoader from 'shared/components/Loaders/SpinnerLoader'
 import classnames from 'classnames'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -31,20 +30,13 @@ const getLabel = props => {
   }
 }
 
-const getRecordsCount = (request, results) => {
-  if (request.resourceModel.tableRecordsCountFunction) {
-    return request.resourceModel.tableRecordsCountFunction(results)
-  } else {
-    return results.length
-  }
-}
-
 const LookupTableTab = props => {
   return (
     <button
       className={classnames('lookup-table-tab', props.isBuildingTab ? 'tab--secondary' : 'tab--primary', {
         active: props.selected,
       })}
+      disabled={props.loading}
       onClick={props.onClick}
     >
       <div className="summary-result-card__label">
