@@ -82,7 +82,7 @@ class SubHeader extends React.Component {
         <Navbar className="sub-header__wrapper--bottom full-bleed--mobile">
           <Nav className="" variant="tabs" activeKey={this.state.key} onSelect={key => this.setState({ key })}>
             <Link
-              className={classnames('sub-header__nav-tab', {
+              className={classnames('sub-header__nav-tab tab--primary', {
                 active: this.props.pathname.match(/^\/$/),
               })}
               to={'/'}
@@ -92,7 +92,7 @@ class SubHeader extends React.Component {
               </div>
             </Link>
             <Link
-              className={classnames('sub-header__nav-tab', {
+              className={classnames('sub-header__nav-tab tab--primary', {
                 active: this.props.pathname.match(/(lookup|property)/),
               })}
               to={
@@ -109,7 +109,7 @@ class SubHeader extends React.Component {
               </div>
             </Link>
             <Link
-              className={classnames('sub-header__nav-tab', {
+              className={classnames('sub-header__nav-tab tab--primary', {
                 active: this.props.pathname.match(/(map|council|community)/),
               })}
               to={`${
@@ -124,7 +124,7 @@ class SubHeader extends React.Component {
             </Link>
             <Link
               to="/search"
-              className={classnames('sub-header__nav-tab', {
+              className={classnames('sub-header__nav-tab tab--primary', {
                 active: this.props.pathname.match(/(search)/),
               })}
             >

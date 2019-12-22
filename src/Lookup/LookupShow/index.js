@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import LookupTableTab from 'shared/components/ResultCard/LookupTableTab'
 import { getCurrentBuilding } from 'Lookup/utilities'
+import LookupTabs from 'Lookup/LookupTabs'
+
 import * as c from 'shared/constants'
 import LookupAddressDisplay from 'Lookup/LookupAddressDisplay'
 import BaseLink from 'shared/components/BaseLink'
@@ -10,7 +11,7 @@ import { geographyToLink } from 'shared/utilities/routeUtils'
 import LayoutContext from 'Layout/LayoutContext'
 import { Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 import { fireSwitchLookupTableEvent } from 'Store/Analytics/actions'
-import { Badge, Col, Button } from 'react-bootstrap'
+import { Badge, Button } from 'react-bootstrap'
 import { setAppState } from 'Store/AppState/actions'
 import LookupTable from 'Lookup/LookupTable'
 import BuildingSelect from 'Lookup/BuildingSelect'
@@ -152,23 +153,14 @@ class LookupShow extends React.PureComponent {
                   propertyResult={this.props.propertyResult}
                 />
                 <div className="lookup-show__content">
-                  <div className="lookup-show__tabs">
-                    {this.props.lookupRequests.map((request, index) => {
-                      return (
-                        <LookupTableTab
-                          key={`request-summary-${this.props.appState.requests.indexOf(request)}`}
-                          summaryBackgroundColorClass={'acris-yellow property-card'}
-                          onClick={() => this.switchTable(request)}
-                          selected={this.props.appState.selectedRequest === request}
-                          request={request}
-                          loading={this.props.loadingState[request.requestConstant]}
-                          results={this.props.requests[request.requestConstant]}
-                          totalResults={this.props.requests[request.requestConstant]}
-                          label={request.resourceModel.label}
-                        />
-                      )
-                    })}
-                  </div>
+                  <LookupTabs
+                    appState={this.props.appState}
+                    isBuildingView={!!this.props.bin}
+                    loadingState={this.props.loadingState}
+                    requests={this.props.requests}
+                    lookupRequests={this.props.lookupRequests}
+                    switchTable={this.switchTable}
+                  />
                   <div className="lookup-show__tables">
                     {this.props.lookupRequests.map((request, index) => {
                       return (

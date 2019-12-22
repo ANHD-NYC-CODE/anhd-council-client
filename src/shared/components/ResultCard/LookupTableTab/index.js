@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Card, Button } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 import SpinnerLoader from 'shared/components/Loaders/SpinnerLoader'
 import classnames from 'classnames'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -40,31 +40,28 @@ const getRecordsCount = (request, results) => {
 }
 
 const LookupTableTab = props => {
+  console.log(props.request.level)
   return (
-    <Button
-      className={classnames(
-        'lookup-table-tab',
-        { 'building-link': props.request.level === 'BUILDING' },
-        props.summaryBackgroundColorClass,
-        {
-          active: props.selected,
-        }
-      )}
+    <button
+      className={classnames('lookup-table-tab', props.isBuildingTab ? 'tab--secondary' : 'tab--primary', {
+        active: props.selected,
+      })}
       onClick={props.onClick}
     >
       <div className="summary-result-card__label">
         <p>
           {getLabel(props)}{' '}
           <span className="summary-result-card__result">
-            {props.loading ? <SpinnerLoader size="14px" /> : `(${getRecordsCount(props.request, props.results)})`}
+            {props.loading ? <SpinnerLoader className="spinner-loader__container--inline" size="14px" /> : null}
           </span>
         </p>
       </div>
-    </Button>
+    </button>
   )
 }
 
 LookupTableTab.defaultProps = {
+  isBuildingTab: false,
   loading: false,
   error: undefined,
   results: [],
@@ -73,11 +70,12 @@ LookupTableTab.defaultProps = {
 }
 
 LookupTableTab.propTypes = {
+  isBuildingTab: PropTypes.bool,
   onClick: PropTypes.func,
   resultsComponent: PropTypes.func,
   selected: PropTypes.bool,
   summaryTextColorClass: PropTypes.string,
-  summaryBackgroundColorClass: PropTypes.string,
+  className: PropTypes.string,
   results: PropTypes.array,
 }
 export default LookupTableTab

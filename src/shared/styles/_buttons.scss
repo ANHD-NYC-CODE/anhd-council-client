@@ -58,3 +58,47 @@ a.btn-link:hover {
   cursor: initial;
   pointer-events: none;
 }
+
+.tab--primary {
+  color: $gray-900;
+  background-color: $tab-primary;
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: $tab-primary-hover;
+      color: $black;
+    }
+  }
+
+  &.active {
+    background-color: $tab-primary-active;
+    color: $black;
+  }
+
+  &:disabled {
+    background-color: $tab-disabled;
+    color: $black;
+  }
+}
+
+.tab--secondary {
+  color: $gray-900;
+  background-color: $tab-secondary;
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: $tab-secondary-hover;
+      color: $black;
+    }
+  }
+
+  &.active {
+    background-color: $tab-secondary-active;
+    color: $black;
+  }
+
+  &:disabled {
+    background-color: $tab-disabled;
+    color: $black;
+  }
+}
