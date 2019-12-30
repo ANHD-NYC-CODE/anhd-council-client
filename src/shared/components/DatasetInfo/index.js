@@ -38,10 +38,10 @@ const parseDatasetRange = dataset => {
 
   if (dataset.last_update && dataset.update_schedule)
     sentenceArray.push(
-      <div>
+      <span>
         {updateSentenceStart()} last updated on <b>{moment(dataset.last_update).format('MM/DD/YYYY')}</b> and is on{' '}
         {getUpdateType(dataset)} {dataset.update_schedule} update schedule.
-      </div>
+      </span>
     )
 
   return sentenceArray

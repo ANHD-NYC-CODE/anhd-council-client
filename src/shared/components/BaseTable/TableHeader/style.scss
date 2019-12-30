@@ -1,0 +1,25 @@
+@import 'shared/styles/_variables.scss';
+
+.table-header {
+  margin-bottom: 20px;
+
+  .table-header__title-row {
+    display: flex;
+  }
+
+  .table-header__title {
+    margin-right: 20px;
+  }
+
+  .table-header__dataset-info {
+    margin-bottom: 10px;
+  }
+
+  .table-header__subcopy {
+    @extend %p3-font-size;
+
+    a {
+      font-weight: bold;
+    }
+  }
+}

@@ -4,21 +4,24 @@
 
 p,
 li,
-span {
-  @extend %p1-font-size;
+span,
+div {
   font-family: $font-family-secondary;
 }
 
 h1,
 h2,
 h3,
-h4 {
+h4,
+h5,
+h6 {
   font-family: $font-family-primary;
 }
 
-h5,
 h6 {
-  font-family: $font-family-secondary;
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: bold;
 }
 
 button,

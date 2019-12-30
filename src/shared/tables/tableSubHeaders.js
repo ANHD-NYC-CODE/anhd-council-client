@@ -15,23 +15,21 @@ export const getTableSubheaderLinks = ({ constant = '', property = {} } = {}) =>
   switch (constant) {
     case 'ACRIS_REAL_MASTER':
       return (
-        <ul className="text-muted small">
+        <div>
           {!!Object.keys(property).length && (
-            <li>
-              Visit this property’s{' '}
+            <div>
               <BaseLink
                 className="lookup-links__link"
                 href={`http://a836-acris.nyc.gov/bblsearch/bblsearch.asp?borough=${property.bbl.charAt(
                   0
                 )}&block=${property.bbl.slice(1, 6)}&lot=${property.bbl.slice(6, 10)}`}
               >
-                ACRIS page
+                Visit this property’s ACRIS page
               </BaseLink>
-            </li>
+            </div>
           )}
-          to view financing information and additional property documents.
-          <li>Click the Document ID to view the full record in ACRIS</li>
-        </ul>
+          <div>Click the Document ID to view the full record in ACRIS</div>
+        </div>
       )
     case 'HPD_VIOLATION':
       return (
