@@ -2,6 +2,8 @@
 @import 'shared/styles/_utility_classes.scss';
 
 .lookup-tabs {
+  margin-bottom: 20px;
+
   .lookup-tabs__header {
     @extend %text-black;
     display: flex;

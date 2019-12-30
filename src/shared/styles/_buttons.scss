@@ -64,14 +64,21 @@ a.btn-link:hover {
 }
 
 .tab--primary {
-  color: $gray-900;
   background-color: $tab-primary;
+  color: $gray-900;
+  outline: none;
 
   @media (hover: hover) {
     &:hover {
       background-color: $tab-primary-hover;
       color: $black;
     }
+  }
+
+  &:focus {
+    background-color: $tab-primary-hover;
+    color: $black;
+    outline: none;
   }
 
   &.active {

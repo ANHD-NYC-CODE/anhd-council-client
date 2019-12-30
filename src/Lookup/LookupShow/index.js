@@ -167,9 +167,9 @@ class LookupShow extends React.PureComponent {
                         <LookupTable
                           badge={
                             request.level === 'PROPERTY' || !this.props.bin ? (
-                              <Badge className="acris-yellow">Tax Lot Data</Badge>
+                              <Badge className="tab-color--primary">Tax Lot Data</Badge>
                             ) : (
-                              <Badge className="building-pink building-card">Building Data</Badge>
+                              <Badge className="tab-color--secondary">Building Data</Badge>
                             )
                           }
                           loading={this.props.loadingState[request.requestConstant]}
