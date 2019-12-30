@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Row, Col } from 'react-bootstrap'
 import { constantToModelName } from 'shared/utilities/filterUtils'
-import TableHeader from 'shared/components/BaseTable/TableHeader'
+import LookupTableHeader from 'shared/components/BaseTable/LookupTableHeader'
 import moment from 'moment'
 import './style.scss'
 
@@ -59,7 +59,7 @@ const RentStabilizationSection = props => {
               </Row>
             </Col>
             <Col xs={12}>
-              <TableHeader
+              <LookupTableHeader
                 className="property-summary__table-header"
                 showUpdate={false}
                 title="Rent Stabilization History"

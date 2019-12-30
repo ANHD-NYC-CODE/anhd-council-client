@@ -6,7 +6,7 @@ import classnames from 'classnames'
 
 import './style.scss'
 
-const TableHeader = props => {
+const LookupTableHeader = props => {
   return (
     <div className={classnames('table-header', props.className)}>
       <div className="table-header__title-row">
@@ -31,12 +31,12 @@ const TableHeader = props => {
   )
 }
 
-TableHeader.defaultProps = {
+LookupTableHeader.defaultProps = {
   showUpdate: true,
   size: '',
 }
 
-TableHeader.propTypes = {
+LookupTableHeader.propTypes = {
   hideHeaderGutters: PropTypes.bool,
   datasetModelName: PropTypes.string,
   headerClass: PropTypes.string,
@@ -46,4 +46,4 @@ TableHeader.propTypes = {
   property: PropTypes.object,
 }
 
-export default TableHeader
+export default LookupTableHeader
