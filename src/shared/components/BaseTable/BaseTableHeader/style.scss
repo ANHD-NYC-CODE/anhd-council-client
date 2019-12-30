@@ -1,0 +1,37 @@
+@import 'shared/styles/_variables.scss';
+
+.base-table-header {
+  background-color: $blizzard;
+  border-radius: 6px 6px 0 0;
+  color: $black;
+  display: flex;
+  padding: 10px;
+
+  .table-header__share-column {
+    cursor: pointer;
+    color: $gray-400;
+    display: none;
+    margin-right: 10px;
+
+    @include media-breakpoint-up(md) {
+      align-items: center;
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  .base-table-header__right-group {
+    display: flex;
+    margin-left: auto;
+  }
+
+  .table-header__share-column:hover {
+    text-decoration: underline;
+  }
+
+  .table-header__pagination_dropdown {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
+}
