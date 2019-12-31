@@ -28,19 +28,19 @@ const ZoningSection = props => {
         </div>
         <div className="lookup-profile-summary__group">
           <span className="profile-summary-body__label">Built Floor Area Ratio (FAR)</span>
-          <span className="profile-summary-body__value">{props.profile.builtfar}</span>
+          <span className="profile-summary-body__value">{parseFloat(props.profile.builtfar).toFixed(1)}</span>
         </div>
         <div className="lookup-profile-summary__group">
           <span className="profile-summary-body__label">Maximum Residential FAR</span>
-          <span className="profile-summary-body__value">{props.profile.residfar}</span>
+          <span className="profile-summary-body__value">{parseFloat(props.profile.residfar).toFixed(1)}</span>
         </div>
         <div className="lookup-profile-summary__group">
           <span className="profile-summary-body__label">Maximum Commercial FAR</span>
-          <span className="profile-summary-body__value">{props.profile.commfar}</span>
+          <span className="profile-summary-body__value">{parseFloat(props.profile.commfar).toFixed(1)}</span>
         </div>
         <div className="lookup-profile-summary__group">
           <span className="profile-summary-body__label">Maximum Community Facility FAR</span>
-          <span className="profile-summary-body__value">{props.profile.facilfar}</span>
+          <span className="profile-summary-body__value">{parseFloat(props.profile.facilfar).toFixed(1)}</span>
         </div>
       </div>
     </div>
