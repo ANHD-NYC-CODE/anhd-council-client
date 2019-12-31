@@ -5,8 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPrint } from '@fortawesome/free-solid-svg-icons'
 import { spaceEnterKeyDownHandler } from 'shared/utilities/accessibilityUtils'
 
-import { Button } from 'react-bootstrap'
-
 import './style.scss'
 
 const PrintButton = props => {

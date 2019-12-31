@@ -46,7 +46,11 @@ class SubHeader extends React.Component {
               <button className="blank-button text-gray-900">Report a bug</button>
             </Nav.Item>
             <Nav.Item>
-              <BaseLink href="https://forms.gle/EAUkzgsAkHn8NgbTA" className="text-gray-900" text="Feedback" />
+              <BaseLink
+                href="https://forms.gle/EAUkzgsAkHn8NgbTA"
+                className="blank-button text-gray-900"
+                text="Feedback"
+              />
             </Nav.Item>
             {this.props.auth.user ? (
               <div className="d-flex">

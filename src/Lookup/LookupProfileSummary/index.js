@@ -4,11 +4,14 @@ import InnerLoader from 'shared/components/Loaders/InnerLoader'
 import ConfigContext from 'Config/ConfigContext'
 import TableAlert from 'shared/components/BaseTable/TableAlert'
 
-import { Card } from 'react-bootstrap'
 import PropertySummaryBody from 'Lookup/LookupProfileSummary/PropertySummaryBody'
 import OwnershipSection from 'Lookup/LookupProfileSummary/OwnershipSection'
 import RentStabilizationSection from 'Lookup/LookupProfileSummary/RentStabilizationSection'
 import ProgramSection from 'Lookup/LookupProfileSummary/ProgramSection'
+import ZoningSection from 'Lookup/LookupProfileSummary/ZoningSection'
+import ToggleableSection from 'Lookup/LookupProfileSummary/ToggleableSection'
+
+import LeafletMap from 'LeafletMap'
 
 import PrintLookupProfileSummary from 'Lookup/PrintLookupProfileSummary'
 import LayoutContext from 'Layout/LayoutContext'
@@ -18,32 +21,57 @@ const LookupProfileSummary = props => {
   if (props.loading) {
     return <InnerLoader />
   } else if (props.error) {
-    return <TableAlert message={props.error.messge} />
-  } else if (Object.keys(props.records).length) {
-    const profile = props.records
+    return <TableAlert message={props.error.message} />
+  } else if (Object.keys(props.propertyResult).length) {
     return (
       <LayoutContext.Consumer>
         {layout => {
           return layout.print ? (
-            <PrintLookupProfileSummary profile={profile} />
+            <PrintLookupProfileSummary profile={props.propertyResult} />
           ) : (
-            <Card className="lookup-profile-summary p-0 m-0">
-              <Card.Body className="lookup-profile-summary__body p-0">
+            <div className="lookup-profile-summary">
+              <div className="lookup-profile-summary__body">
                 <ConfigContext.Consumer>
                   {config => {
                     return (
                       <div>
-                        <PropertySummaryBody config={config} profile={profile} />
-                        <OwnershipSection profile={profile} request={props.request} />
-                        <ProgramSection config={config} profile={profile} />
-
-                        <RentStabilizationSection config={config} profile={profile} request={props.request} />
+                        <PropertySummaryBody config={config} profile={props.propertyResult} />
+                        <ToggleableSection title="Rent Stabilization">
+                          <RentStabilizationSection
+                            config={config}
+                            profile={props.propertyResult}
+                            request={props.request}
+                          />
+                        </ToggleableSection>
+                        <ToggleableSection title="Ownership">
+                          <OwnershipSection profile={props.propertyResult} request={props.request} />
+                        </ToggleableSection>
+                        <ToggleableSection title="Programs/Statuses">
+                          <ProgramSection config={config} profile={props.propertyResult} />
+                        </ToggleableSection>
+                        <ToggleableSection title="Zoning">
+                          <ZoningSection profile={props.propertyResult} />
+                        </ToggleableSection>
+                        <ToggleableSection startsOpen={true} title="Location">
+                          <LeafletMap
+                            appState={props.appState}
+                            currentGeographyType={props.appState.currentGeographyType}
+                            center={
+                              props.propertyResult.lat
+                                ? [props.propertyResult.lat, props.propertyResult.lng]
+                                : undefined
+                            }
+                            results={props.propertyResult}
+                            iconConfig="SINGLE"
+                            zoom={17}
+                          />
+                        </ToggleableSection>
                       </div>
                     )
                   }}
                 </ConfigContext.Consumer>
-              </Card.Body>
-            </Card>
+              </div>
+            </div>
           )
         }}
       </LayoutContext.Consumer>
@@ -53,11 +81,14 @@ const LookupProfileSummary = props => {
   }
 }
 LookupProfileSummary.propTypes = {
-  records: {},
+  appState: PropTypes.object,
+  loading: PropTypes.bool,
+  error: PropTypes.object,
+  propertyResult: {},
 }
 
 LookupProfileSummary.propTypes = {
-  records: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+  propertyResult: PropTypes.object,
 }
 
 export default LookupProfileSummary
