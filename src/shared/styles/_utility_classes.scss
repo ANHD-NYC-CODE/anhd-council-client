@@ -149,11 +149,9 @@ label.toggle-link.active.btn-primary:not(:disabled).light.active {
   width: 0% !important;
 }
 
-.text-link,
-%text-link {
-  color: $primary;
+.blank-button,
+%blank-button {
   cursor: pointer;
-  font-weight: bold;
   box-shadow: none;
   border: none;
   background: transparent;
@@ -163,8 +161,21 @@ label.toggle-link.active.btn-primary:not(:disabled).light.active {
     outline: none;
   }
 
-  &:hover {
+  &:hover,
+  &:focus {
     text-decoration: underline;
+  }
+}
+
+.text-link,
+%text-link {
+  @extend %blank-button;
+  color: $primary;
+  font-weight: bold;
+
+  &:hover,
+  &:focus {
+    color: darken($primary, 10%);
   }
 }
 

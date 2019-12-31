@@ -43,7 +43,7 @@ class SubHeader extends React.Component {
                 })
               }}
             >
-              <span className="text-gray-900">Report a bug</span>
+              <button className="blank-button text-gray-900">Report a bug</button>
             </Nav.Item>
             <Nav.Item>
               <BaseLink href="https://forms.gle/EAUkzgsAkHn8NgbTA" className="text-gray-900" text="Feedback" />
@@ -57,7 +57,7 @@ class SubHeader extends React.Component {
                     this.props.auth.logoutUser()
                   }}
                 >
-                  <span className="text-gray-900">Logout</span>
+                  <button className="blank-button text-gray-900">Logout</button>
                 </Nav.Item>
               </div>
             ) : (
@@ -72,9 +72,9 @@ class SubHeader extends React.Component {
                   })
                 }}
               >
-                <span className="text-gray-900" id="nav-login-button">
+                <button className="blank-button text-gray-900" id="nav-login-button">
                   Login / Sign up
-                </span>
+                </button>
               </Nav.Item>
             )}
           </Nav>

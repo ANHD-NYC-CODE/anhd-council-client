@@ -29,6 +29,14 @@
   p,
   span {
     @extend %small-font-size;
+    font-weight: bold;
+  }
+
+  .error-cta {
+    font-size: 10px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
   }
 }
 
@@ -44,18 +52,17 @@
     box-shadow: 1px 3px 6px $gray-600;
     border: 1px dashed $white;
   }
+
+  .summary-result-card__label {
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 .summary-result-card {
   height: 120px;
   min-height: 120px;
   width: 100%;
-
-  .summary-result-card__label {
-    flex: 0 1 100%;
-    flex-direction: column;
-    text-align: left;
-  }
 
   .summary-result-card__result {
     flex-shrink: 0;
