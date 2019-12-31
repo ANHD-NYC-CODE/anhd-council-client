@@ -163,6 +163,7 @@ export default class BaseTableConfig {
   createFilterPrototype(constant, forceUpdate = false) {
     return {
       [constant]: textFilter({
+        placeholder: 'Search...',
         getFilter: filter => {
           this.filters[constant] = filter
         },

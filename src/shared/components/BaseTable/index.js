@@ -9,7 +9,7 @@ import paginationFactory, { PaginationProvider, PaginationListStandalone } from 
 import filterFactory from 'react-bootstrap-table2-filter'
 import LookupTableHeader from 'shared/components/BaseTable/LookupTableHeader'
 import BaseTableHeader from 'shared/components/BaseTable/BaseTableHeader'
-import { Row, Col } from 'react-bootstrap'
+import { Row, Col, Button } from 'react-bootstrap'
 import TableAlert from 'shared/components/BaseTable/TableAlert'
 import ToolkitProvider, { CSVExport } from 'react-bootstrap-table2-toolkit'
 
@@ -28,6 +28,7 @@ class BaseTable extends React.Component {
     this.handleCsvClick = this.handleCsvClick.bind(this)
     this.constructCsvFilename = this.constructCsvFilename.bind(this)
     this.baseTableConfig = new BaseTableConfig({ component: this })
+    this.pageButtonRenderer = this.pageButtonRenderer.bind(this)
     this.state = {
       expandedRowContent: '',
       displayedRecordsCount: (props.records || {}).length,
@@ -183,11 +184,27 @@ class BaseTable extends React.Component {
 
   constructFilter(filterType) {
     return filterType({
+      placeholder: 'Search...',
       getFilter: filter => {
         const filterKey = (Math.random() * 100000).toString()
         this.filters = { ...this.filters, [filterKey]: filter }
       },
     })
+  }
+
+  pageButtonRenderer({ page, active, disabled, title, onPageChange }) {
+    const handleClick = e => {
+      e.preventDefault()
+      onPageChange(page)
+    }
+
+    return (
+      <li className="page-item">
+        <Button variant={active ? 'dark' : 'light'} onClick={handleClick}>
+          {page}
+        </Button>
+      </li>
+    )
   }
 
   render() {
@@ -297,11 +314,11 @@ class BaseTable extends React.Component {
                     {!this.props.nested &&
                       !!this.props.includeHeader &&
                       paginationProps.sizePerPage < this.props.records.length && (
-                        <Row>
-                          <Col xs={6}>
-                            <PaginationListStandalone {...paginationProps} />
-                          </Col>
-                        </Row>
+                        <div>
+                          <PaginationListStandalone
+                            {...{ ...paginationProps, pageButtonRenderer: this.pageButtonRenderer }}
+                          />
+                        </div>
                       )}
                   </div>
                 )
