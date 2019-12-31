@@ -19,6 +19,8 @@
     }
 
     &.open {
+      white-space: pre-wrap;
+
       flex: 0 0 100%;
       width: calc(100% + 2rem);
 
