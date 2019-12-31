@@ -6,15 +6,27 @@ table.table,
   table {
     background-color: $white;
   }
+
+  a {
+    font-weight: bold;
+  }
+
+  thead th {
+    outline: none;
+    padding-top: 10px;
+    vertical-align: top;
+  }
+
   thead th,
   tbody td {
-    font-size: 0.8rem;
+    @extend %p3-font-size;
 
     input {
       height: 30px;
       padding: 0 10px;
     }
   }
+
   tbody tr {
     cursor: pointer;
     transition: all 0s linear;
@@ -22,6 +34,29 @@ table.table,
     * {
       transition: all 0s linear;
     }
+  }
+
+  .sortable {
+    span {
+      font-size: 20px;
+    }
+  }
+
+  .sortable:hover {
+    span.order-4 {
+      color: $black;
+      font-weight: bold;
+
+      &::before,
+      &::after {
+        opacity: 1;
+      }
+    }
+  }
+
+  // pagination buttons
+  .page-item {
+    margin-right: 5px;
   }
 
   .table-sm td {
@@ -136,8 +171,16 @@ table.table,
     background-color: $tab-primary;
   }
 
-  .text-filter {
+  .text-filter,
+  .text-filter:focus {
+    border: 1px solid $gray-400;
+    font-size: 12px;
+    line-height: 16px;
+    margin-top: 5px;
     margin-bottom: 0;
+    padding-left: 5px;
+    height: 20px;
+    border-radius: 0;
   }
 }
 

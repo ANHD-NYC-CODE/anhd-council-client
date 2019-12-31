@@ -18,6 +18,10 @@
   .table-header__subcopy {
     @extend %p3-font-size;
 
+    div {
+      margin-bottom: 10px;
+    }
+
     a {
       font-weight: bold;
     }

@@ -4,6 +4,7 @@ body {
 
 /* width */
 ::-webkit-scrollbar {
+  height: 8px;
   width: 8px;
 }
 
@@ -15,8 +16,8 @@ body {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: $primary;
-  border-radius: 20px;
+  background: $rhino;
+  border-radius: 10px;
 }
 
 // Bootstrap

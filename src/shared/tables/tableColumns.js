@@ -1,7 +1,6 @@
 import React from 'react'
 import * as c from 'shared/constants'
 import { textFilter } from 'react-bootstrap-table2-filter'
-import TableConfig from 'shared/classes/TableConfig'
 import ExpandedLinkRow from 'shared/components/BaseTable/ExpandedLinkRow'
 import { push } from 'connected-react-router'
 import { addressResultToPath } from 'shared/utilities/routeUtils'
@@ -271,6 +270,7 @@ export const getTableColumns = ({
     csvFormatter,
     component = ExpandedLinkRow,
     columnEvent,
+    headerSortingClasses = 'base-table__sorting-header',
   }) => {
     return {
       key,
@@ -284,6 +284,7 @@ export const getTableColumns = ({
       hidden,
       csvExport,
       csvFormatter,
+      headerSortingClasses,
       events: {
         onClick: (e, column, columnIndex, row, rowIndex) => {
           if (columnEvent) return columnEvent({ e, column, row, component })
