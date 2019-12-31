@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import BaseLink from 'shared/components/BaseLink'
+import InfoModalButton from 'shared/components/InfoModalButton'
 
 import './style.scss'
 
@@ -26,11 +27,7 @@ const ProgramSection = props => {
       <div>
         <div className="lookup-profile-summary__group">
           <div className="profile-summary-body__label">Subsidy Programs </div>
-          {/* <small>
-            (from <BaseLink href="http://app.coredata.nyc">Furman's CoreData</BaseLink> and DOF's{' '}
-            <BaseLink href="https://www1.nyc.gov/site/finance/benefits/benefits-421a.page">421a</BaseLink> and{' '}
-            <BaseLink href="https://www1.nyc.gov/site/finance/benefits/benefits-j51.page">J-51</BaseLink> data)
-          </small> */}
+          <InfoModalButton modalConstant="SUBSIDY_PROGRAM_SOURCE" />
         </div>
         <div className="lookup-profile-summary__group program-section__list">
           {getSubsidiesText(props)
@@ -84,6 +81,8 @@ const ProgramSection = props => {
   )
 }
 
-ProgramSection.propTypes = {}
+ProgramSection.propTypes = {
+  profile: PropTypes.object,
+}
 
 export default ProgramSection

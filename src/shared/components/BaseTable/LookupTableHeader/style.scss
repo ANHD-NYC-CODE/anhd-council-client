@@ -4,11 +4,12 @@
   margin-bottom: 20px;
 
   .table-header__title-row {
+    align-items: center;
     display: flex;
   }
 
   .table-header__title {
-    margin-right: 20px;
+    margin-right: 10px;
   }
 
   .table-header__dataset-info {
@@ -25,5 +26,9 @@
     a {
       font-weight: bold;
     }
+  }
+
+  .info-modal-button {
+    margin-right: 20px;
   }
 }

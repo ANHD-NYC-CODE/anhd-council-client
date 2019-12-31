@@ -172,6 +172,7 @@ label.toggle-link.active.btn-primary:not(:disabled).light.active {
   @extend %blank-button;
   color: $primary;
   font-weight: bold;
+  padding: 0;
 
   &:hover,
   &:focus {
