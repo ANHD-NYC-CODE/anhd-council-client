@@ -61,7 +61,6 @@ const LookupProfileSummary = props => {
                           <OwnershipSection profile={props.propertyResult} request={props.request} />
                         </ExpandableSection>
                         <ExpandableSection
-                          startsOpen={true}
                           aboveFoldElement={<h5>Programs/Statuses</h5>}
                           className="lookup-profile-summary__section-header"
                           iconClass="lookup-profile-summary__expandable-icon"
