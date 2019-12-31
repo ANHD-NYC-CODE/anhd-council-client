@@ -35,6 +35,7 @@
 
   .lookup-show__content-wrapper {
     display: block;
+
     @include media-breakpoint-up(sm) {
       display: flex;
     }
@@ -44,7 +45,8 @@
     display: flex;
     flex-direction: column;
     flex: 1;
-    overflow-x: scroll;
+    margin-bottom: 40px;
+    overflow-x: auto;
 
     @include media-breakpoint-up(sm) {
       padding: 0 $lookup-padding-size;

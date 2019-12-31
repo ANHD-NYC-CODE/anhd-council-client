@@ -2,8 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import BaseLink from 'shared/components/BaseLink'
 import './style.scss'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faLocationArrow } from '@fortawesome/free-solid-svg-icons'
+
 import { councilIdToString, communityIdToString } from 'shared/utilities/languageUtils'
 import { geographyToLink } from 'shared/utilities/routeUtils'
 
@@ -18,23 +17,16 @@ const PropertySummaryBody = props => {
         <div>
           <div className="lookup-profile-summary__group">
             <span className="profile-summary-body__label">Council District</span>
-            <span className="d-flex profile-summary__geography">
-              <BaseLink
-                className="profile-summary-body__value "
-                href={geographyToLink('COUNCIL', props.profile.council)}
-              >
-                {councilIdToString(props.profile.council, false)}
-                <FontAwesomeIcon className="ml-2" icon={faLocationArrow} size="xs" />
-              </BaseLink>
+            <span className="d-flex profile-summary-body__value profile-summary__geography">
+              {councilIdToString(props.profile.council, false)} (
+              <BaseLink href={geographyToLink('COUNCIL', props.profile.council)}>Visit</BaseLink>)
             </span>
           </div>
           <div className="lookup-profile-summary__group">
             <span className="profile-summary-body__label">Community District</span>
-            <span className="d-flex  profile-summary__geography">
-              <BaseLink className="profile-summary-body__value " href={geographyToLink('COMMUNITY', props.profile.cd)}>
-                {`${communityIdToString(props.profile.cd)}`}
-                <FontAwesomeIcon className="ml-2" icon={faLocationArrow} size="xs" />
-              </BaseLink>
+            <span className="d-flex profile-summary-body__value profile-summary__geography">
+              {`${communityIdToString(props.profile.cd)}`} (
+              <BaseLink href={geographyToLink('COMMUNITY', props.profile.cd)}>Visit</BaseLink>)
             </span>
           </div>
         </div>

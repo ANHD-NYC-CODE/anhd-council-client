@@ -51,7 +51,7 @@ const LookupAddressDisplay = props => {
           >
             <FontAwesomeIcon className="" size="2x" icon={faSearch} />
           </Button>
-          <h5 className="lookup-address-display__title">
+          <p className="lookup-address-display__title">
             Tax Lot Address:{' '}
             {constructAddressString({
               street: props.profile.address,
@@ -65,7 +65,7 @@ const LookupAddressDisplay = props => {
             >
               edit
             </button>
-          </h5>
+          </p>
         </div>
       )}
     </div>

@@ -86,7 +86,7 @@ const RentStabilizationSection = props => {
           </Row>
         </div>
       ) : (
-        <Row className="text-dark text-center font-weight-bold my-4 rentstabilization-section property-section property-summary-body">
+        <Row className="text-dark text-center font-weight-bold rentstabilization-section property-section property-summary-body">
           <Col>No Rent Stabilization History</Col>
         </Row>
       )}
