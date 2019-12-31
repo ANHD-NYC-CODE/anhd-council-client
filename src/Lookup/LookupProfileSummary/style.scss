@@ -1,7 +1,9 @@
 @import 'shared/styles/_variables.scss';
 
 .property-section {
+  @extend %p3-font-size;
   background-color: $blizzard;
+  color: $black;
   padding: $lookup-sidebar-padding;
 }
 
@@ -28,6 +30,13 @@
     background-color: $gray-400;
     outline: none;
   }
+}
+
+.lookup-profile-summary__expandable-icon {
+  color: $white;
+  position: absolute;
+  right: $lookup-sidebar-padding;
+  top: 10px;
 }
 
 .lookup-profile-summary__group {

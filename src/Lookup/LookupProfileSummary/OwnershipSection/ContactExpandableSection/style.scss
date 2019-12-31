@@ -1,3 +1,35 @@
+@import 'shared/styles/_variables.scss';
+
 .contact-expandable-section {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+  outline: none;
+
+  &:hover,
+  &:focus {
+    text-decoration: underline;
+  }
+}
+
+.contact-expandable-section__icon {
+  position: absolute;
+  top: 0;
+  right: 4px;
+}
+
+.contact-expandable-section__below-fold-info {
+  display: flex;
+  margin-left: 20px;
+  margin-bottom: 10px;
+  width: calc(100% - 60px);
+}
+
+.contact-expandable-section__section__label {
+  font-weight: bold;
+  margin-right: 40px;
+  width: 60px;
+  white-space: pre-wrap;
+}
+
+.contact-expandable-section__value {
+  white-space: pre-wrap;
 }

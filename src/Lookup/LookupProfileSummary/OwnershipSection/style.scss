@@ -1,31 +1,25 @@
 @import 'shared/styles/_variables.scss';
 
 .ownership-section {
-  .ownership-section__hpdcontact-row {
-    // color: white;
+  .ownership-section__update-section {
+    margin-bottom: 20px;
   }
 
-  .ownership-section__hpdcontact__whoownswhat {
+  .ownership-section__contacts-section {
+    margin-bottom: 20px;
+  }
+
+  .ownership-section__hpdcontact-row {
+    // color: white;
     display: flex;
-    // align-items: center;
-    // justify-content: center;
+    width: calc(100% - 40px);
+  }
 
-    a {
-      text-decoration: none;
-      // color: $white;
-      max-width: 280px;
-    }
+  .ownership-section__bottom-section {
+    white-space: pre-wrap;
+  }
 
-    a:hover {
-      // color: $white;
-      text-decoration: none;
-      b {
-        color: $warning;
-      }
-    }
-
-    b {
-      text-decoration: underline;
-    }
+  .ownership-section__bottom-value {
+    margin-bottom: 20px;
   }
 }
