@@ -12,8 +12,8 @@ import OwnershipSection from 'Lookup/LookupProfileSummary/OwnershipSection'
 import RentStabilizationSection from 'Lookup/LookupProfileSummary/RentStabilizationSection'
 import ProgramSection from 'Lookup/LookupProfileSummary/ProgramSection'
 import ZoningSection from 'Lookup/LookupProfileSummary/ZoningSection'
+import LocationSection from 'Lookup/LookupProfileSummary/LocationSection'
 import ExpandableSection from 'shared/components/ExpandableSection'
-import LeafletMap from 'LeafletMap'
 
 import PrintLookupProfileSummary from 'Lookup/PrintLookupProfileSummary'
 import LayoutContext from 'Layout/LayoutContext'
@@ -87,17 +87,11 @@ const LookupProfileSummary = props => {
                           expandIcon={<FontAwesomeIcon size="lg" icon={faChevronDown} />}
                           startsOpen={true}
                         >
-                          <LeafletMap
+                          <LocationSection
                             appState={props.appState}
-                            currentGeographyType={props.appState.currentGeographyType}
-                            center={
-                              props.propertyResult.lat
-                                ? [props.propertyResult.lat, props.propertyResult.lng]
-                                : undefined
-                            }
-                            results={props.propertyResult}
-                            iconConfig="SINGLE"
-                            zoom={17}
+                            lat={props.propertyResult.lat}
+                            lng={props.propertyResult.lng}
+                            propertyResult={props.propertyResult}
                           />
                         </ExpandableSection>
                       </div>
