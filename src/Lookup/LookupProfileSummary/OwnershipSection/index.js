@@ -42,7 +42,7 @@ const OwnershipSection = props => {
   }
 
   return (
-    <Row className="ownership-section property-section property-summary-body my-4">
+    <Row className="ownership-section property-section property-summary-body">
       <Col>
         {latestHPDRegistration ? (
           <Row>

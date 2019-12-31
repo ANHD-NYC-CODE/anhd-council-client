@@ -10,19 +10,20 @@ const ZoningSection = props => {
           <span className="profile-summary-body__value">
             {[props.profile.zonedist1, props.profile.zonedist2, props.profile.zonedist3, props.profile.zonedist4]
               .filter(x => !!x)
-              .join(', ')}
+              .join(', ') || 'none'}
           </span>
         </div>
         <div className="lookup-profile-summary__group">
           <span className="profile-summary-body__label">Overlay(s)</span>
           <span className="profile-summary-body__value">
-            {[props.profile.overlay1, props.profile.overlay2].filter(x => !!x).join(', ')}
+            {[props.profile.overlay1, props.profile.overlay2].filter(x => !!x).join(', ') || 'none'}
           </span>
         </div>
         <div className="lookup-profile-summary__group">
           <span className="profile-summary-body__label">Special District(s)</span>
           <span className="profile-summary-body__value">
-            {[props.profile.spdist1, props.profile.spdist2, props.profile.spdist3].filter(x => !!x).join(', ')}
+            {[props.profile.spdist1, props.profile.spdist2, props.profile.spdist3].filter(x => !!x).join(', ') ||
+              'none'}
           </span>
         </div>
         <div className="lookup-profile-summary__group">
