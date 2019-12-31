@@ -155,7 +155,9 @@ class LookupShow extends React.PureComponent {
                 <div className="lookup-show__content">
                   <LookupTabs
                     appState={this.props.appState}
+                    dispatch={this.props.dispatch}
                     isBuildingView={!!this.props.bin}
+                    errorState={this.props.errorState}
                     loadingState={this.props.loadingState}
                     requests={this.props.requests}
                     lookupRequests={this.props.lookupRequests}

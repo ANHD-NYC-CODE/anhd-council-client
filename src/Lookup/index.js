@@ -95,6 +95,7 @@ class Lookup extends React.Component {
         {match && this.props.appState.currentProperty ? (
           <LookupRequestsWrapper
             appState={this.props.appState}
+            errorState={this.props.error}
             loadingState={this.props.loading}
             bbl={match.params.bbl}
             bin={match.params.bin}
@@ -127,6 +128,7 @@ Lookup.propTypes = {
 const mapStateToProps = (state, ownProps) => {
   return {
     appState: state.appState,
+    error: state.error,
     loading: state.loading,
     propertyResult:
       state.requests[(getRequestType(state.appState.requests, 'LOOKUP_PROFILE')[0] || {}).requestConstant],

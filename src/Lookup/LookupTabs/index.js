@@ -26,14 +26,14 @@ const LookupTabs = props => {
       <div className="lookup-tabs__header">
         <span>Click to view different data about this property</span>
         <button className="text-button--smaller" onClick={() => toggleOpen(!isOpen)}>
-          {isOpen ? 'Collapse' : 'Expand'} <FontAwesomeIcon icon={isOpen ? faChevronUp : faChevronDown} />
+          {isOpen ? 'Collapse' : 'Expand Datasets'} <FontAwesomeIcon icon={isOpen ? faChevronUp : faChevronDown} />
         </button>
       </div>
       <div className={classnames('lookup-tabs__tabs', { open: isOpen })}>
         {props.lookupRequests.map((request, index) => {
           const results = props.requests[request.requestConstant] || []
           const loading = props.loadingState[request.requestConstant]
-
+          const error = props.errorState[request.requestConstant]
           const getCount1 = (request, results) => {
             if (request.resourceModel.tableRecordsCountFunction) {
               return request.resourceModel.tableRecordsCountFunction(results)
@@ -53,11 +53,13 @@ const LookupTabs = props => {
           return (
             <LookupTableTab
               className={''}
+              dispatch={props.dispatch}
               isBuildingTab={props.isBuildingView && request.level === 'BUILDING'}
               key={`request-summary-${props.appState.requests.indexOf(request)}`}
               onClick={() => props.switchTable(request)}
               selected={props.appState.selectedRequest === request}
               request={request}
+              error={error}
               loading={loading}
               results={results}
               totalResults={props.requests[request.requestConstant]}
@@ -76,7 +78,9 @@ const LookupTabs = props => {
 
 LookupTabs.propTypes = {
   appState: PropTypes.object,
+  dispatch: PropTypes.func,
   isBuildingView: PropTypes.bool,
+  errorState: PropTypes.array,
   loadingState: PropTypes.array,
   requests: PropTypes.array,
   lookupRequests: PropTypes.array,
