@@ -248,4 +248,35 @@ export const infoModals = {
       },
     ],
   },
+  SUBSIDY_PROGRAM_SOURCE: {
+    title: 'Subsidy Prorgams',
+    body: "Data comes from Furman's CoreData and DOF's 421-a and J-51 data. ",
+    sources: [
+      {
+        text: "Furman's CoreData",
+        url: 'http://app.coredata.nyc',
+      },
+      {
+        text: '421a',
+        url: 'https://www1.nyc.gov/site/finance/benefits/benefits-421a.page',
+      },
+      {
+        text: 'J-51',
+        url: 'https://www1.nyc.gov/site/finance/benefits/benefits-j51.page',
+      },
+    ],
+  },
+
+  BUILDING_SELECT_INFO: {
+    title: 'Tax Lot Buildings',
+    body: ReactDOMServer.renderToString(
+      <div>
+        <p>
+          Sometimes there is more than one building on a tax lot. When that's the case, a drop-down will appear for you
+          to select an individual building by its address.
+        </p>
+        <p>The datasets that are available at a building (rather than tax lot) level appear orange instead of blue.</p>
+      </div>
+    ),
+  },
 }

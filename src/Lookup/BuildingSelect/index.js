@@ -1,12 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { getCurrentBuilding } from 'Lookup/utilities'
-import { addressResultToPath } from 'shared/utilities/routeUtils'
 import StandardizedInput from 'shared/classes/StandardizedInput'
 import SpinnerLoader from 'shared/components/Loaders/SpinnerLoader'
-import { Badge, Form, InputGroup, Row, Col, Button } from 'react-bootstrap'
+import { Form, Button } from 'react-bootstrap'
 import CustomSelect from 'shared/components/CustomSelect'
-import BaseLink from 'shared/components/BaseLink'
+import InfoModalButton from 'shared/components/InfoModalButton'
 
 import classnames from 'classnames'
 
@@ -40,7 +39,15 @@ class BuildingSelect extends React.Component {
             {this.props.propertyResult.buildings.length > 1 || !this.props.propertyResult.buildings.length
               ? ' buildings'
               : ' building'}{' '}
-            found for this lot. Select another address to filter for building-specific data.
+            found for this lot. Select another address to filter for building-specific data
+            {this.props.bin ? (
+              <button className="text-link" onClick={() => this.props.changeLookup(this.props.bbl, undefined, false)}>
+                {' '}
+                or view data for the entire tax lot
+              </button>
+            ) : null}
+            .
+            <InfoModalButton modalConstant="BUILDING_SELECT_INFO" />
           </p>
           <div className="building-select__select-group">
             <CustomSelect

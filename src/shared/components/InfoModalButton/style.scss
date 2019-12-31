@@ -1,21 +1,32 @@
 @import 'shared/styles/bootstrap/_variables.scss';
 
-
 .info-modal-button {
+  background-color: $black;
+  border-radius: 50%;
+  color: $white;
   cursor: pointer;
-  height: 1.5em;
-  width: 1.5em;
+  height: 20px;
+  width: 20px;
+  outline: none;
   padding: 5px;
+
+  &:focus {
+    background-color: $primary;
+  }
 }
 
 .svg-inline--fa.fa-w-12 {
-  width: 1.5em;
+  height: 16px;
+  width: 16px;
+
+  @include media-breakpoint-up(sm) {
+    height: 20px;
+    width: 20px;
+  }
 }
 
 @media (hover: hover) {
   .info-modal-button:hover {
-    color: $secondary;
-    border: 1px solid $secondary;
-    border-radius: 50%;
+    background-color: $primary;
   }
 }
