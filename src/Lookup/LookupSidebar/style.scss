@@ -23,8 +23,8 @@
       width: calc(100% + 2rem);
 
       @include media-breakpoint-up(sm) {
-        flex: 0 0 333px;
-        width: 333px;
+        flex: 0 0 $lookup-sidebar-width;
+        width: $lookup-sidebar-width;
       }
     }
   }
