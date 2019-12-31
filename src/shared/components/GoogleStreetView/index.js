@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import ReactStreetview from 'react-streetview'
 
 const GoogleStreetView = props => {
-  const googleMapsApiKey = 'AIzaSyAgoXvSQyaDsVu36APBBUfwI8xGw0n38x0'
+  const googleMapsApiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY
 
   // see https://developers.google.com/maps/documentation/javascript/3.exp/reference#StreetViewPanoramaOptions
   const streetViewPanoramaOptions = {
