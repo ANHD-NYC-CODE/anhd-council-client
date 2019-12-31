@@ -292,7 +292,7 @@ class BaseTable extends React.Component {
                         !this.props.loading && (
                           <TableAlert
                             textType="text-dark"
-                            variant="warning"
+                            variant="light"
                             message={'No records found'}
                             buttonText="Clear Filters"
                             buttonVariant="outline-secondary"

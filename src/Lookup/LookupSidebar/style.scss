@@ -1,6 +1,8 @@
 @import 'shared/styles/_variables.scss';
 
 .lookup-sidebar {
+  white-space: nowrap;
+
   @include media-breakpoint-down(xs) {
     margin-bottom: 2rem;
   }
@@ -29,6 +31,19 @@
 
   .lookup-sidebar__body {
     overflow: hidden;
+    padding: 30px 0;
+  }
+
+  .lookup-sidebar__header {
+    margin-bottom: 30px;
+    overflow: hidden;
+    padding: 0 $lookup-sidebar-padding;
+
+    h4 {
+      color: $white;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
   }
 
   .lookup-sidebar__toggle {
@@ -40,7 +55,7 @@
     right: -20px;
     width: 20px;
     height: 80px;
-    top: 40px;
+    top: 10px;
     z-index: 1;
 
     flex-direction: column;
@@ -55,7 +70,8 @@
 
     &:focus,
     &:hover {
-      background-color: $primary;
+      background-color: $tab-primary-hover;
+      outline: none;
     }
   }
 }

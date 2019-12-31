@@ -4,7 +4,7 @@ import { Alert, Button } from 'react-bootstrap'
 const TableAlert = props => {
   return (
     <Alert variant={props.variant} className="table-alert">
-      <h6 className={props.textType}>{props.message}</h6>
+      <p className={props.textType}>{props.message}</p>
       {!!props.action && (
         <Button variant={props.buttonVariant} onClick={props.action}>
           {props.buttonText}

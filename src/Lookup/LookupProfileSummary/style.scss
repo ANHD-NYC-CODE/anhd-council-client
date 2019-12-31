@@ -1,13 +1,41 @@
-@import 'shared/styles/bootstrap/_variables.scss';
+@import 'shared/styles/_variables.scss';
 
 .property-section {
-  background-color: $info;
+  background-color: $blizzard;
+  padding: $lookup-sidebar-padding;
 
   a {
     color: $primary;
     font-weight: bold;
     text-decoration: underline;
   }
+}
+
+.lookup-profile-summary__section-header {
+  align-items: center;
+  background-color: $rhino;
+  color: $white;
+  cursor: pointer;
+  display: flex;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding: 10px $lookup-sidebar-padding;
+
+  svg {
+    margin-left: auto;
+  }
+
+  &:hover,
+  &:focus {
+    color: darken($white, 10%);
+    outline: none;
+    text-decoration: underline;
+  }
+}
+
+.lookup-profile-summary__group {
+  display: flex;
+  flex-direction: row;
 }
 
 .property-summary__table-header,
@@ -24,6 +52,7 @@
   font-size: 0.9rem;
   font-weight: bold;
   margin: 0;
+  margin-right: auto;
 }
 
 .profile-summary-body__value {
@@ -49,7 +78,6 @@ li.profile-summary-body__value {
 
 .lookup-profile-summary {
   .lookup-profile-summary__body {
-    margin: 0 15px;
   }
 
   .table-header {

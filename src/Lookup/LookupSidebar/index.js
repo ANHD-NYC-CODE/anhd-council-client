@@ -1,13 +1,11 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 
-import LeafletMap from 'LeafletMap'
-import RequestTableWrapper from 'shared/components/RequestTableWrapper'
+import LookupProfileSummary from 'Lookup/LookupProfileSummary'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 
-import { Row, Col } from 'react-bootstrap'
 import classnames from 'classnames'
 import './style.scss'
 
@@ -18,8 +16,15 @@ const LookupSidebar = props => {
     // space or enter or escape
     if (e.keyCode === 13 || e.keyCode === 32 || (open && e.keyCode === 27)) {
       e.preventDefault()
+      e.currentTarget.blur()
       toggleOpen(!open)
     }
+  }
+
+  const handleClick = e => {
+    e.preventDefault()
+    e.currentTarget.blur()
+    toggleOpen(!open)
   }
 
   return (
@@ -30,39 +35,23 @@ const LookupSidebar = props => {
         aria-label="Toggle Sidebar"
         className="lookup-sidebar__toggle"
         onKeyDown={handleToggleKeyDown}
-        onClick={() => toggleOpen(!open)}
+        onClick={e => handleClick(e)}
       >
         <FontAwesomeIcon icon={open ? faChevronLeft : faChevronRight} size="1x" />
       </div>
       <div className="lookup-sidebar__body">
-        <Row className="mt-4">
-          <Col xs={12}>
-            <h3 className="text-light-gray font-weight-bold text-uppercase">Property Info</h3>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <RequestTableWrapper
-              caption={props.profileRequest.resourceModel.label}
-              request={props.profileRequest}
-              visible={true}
-            />
-          </Col>
-        </Row>
-        <hr />
-        <Row className="mb-4">
-          <Col col={12}>
-            <LeafletMap
-              appState={props.appState}
-              currentGeographyType={props.appState.currentGeographyType}
-              center={props.propertyResult.lat ? [props.propertyResult.lat, props.propertyResult.lng] : undefined}
-              results={props.propertyResult}
-              displayedRequest={props.appState.requests.find(request => request.type === 'LOOKUP_PROFILE')}
-              iconConfig="SINGLE"
-              zoom={17}
-            />
-          </Col>
-        </Row>
+        <div className="lookup-sidebar__header">
+          <h4>Property Info</h4>
+        </div>
+        <div className="lookup-sidebar__content">
+          <LookupProfileSummary
+            appState={props.appState}
+            error={props.error}
+            loading={props.loading}
+            propertyResult={props.propertyResult}
+            request={props.profileRequest}
+          />
+        </div>
       </div>
     </div>
   )
@@ -70,6 +59,7 @@ const LookupSidebar = props => {
 
 LookupSidebar.propTypes = {
   appState: PropTypes.object,
+  loading: PropTypes.bool,
   profileRequest: PropTypes.object,
   propertyResult: PropTypes.object,
 }

@@ -149,6 +149,8 @@ class LookupShow extends React.PureComponent {
               <div className="lookup-show__content-wrapper">
                 <LookupSidebar
                   appState={this.props.appState}
+                  error={this.props.errorState[this.props.profileRequest.requestConstant]}
+                  loading={this.props.loadingState[this.props.profileRequest.requestConstant]}
                   profileRequest={this.props.profileRequest}
                   propertyResult={this.props.propertyResult}
                 />
