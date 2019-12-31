@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Row, Col } from 'react-bootstrap'
 import { dateFormatter } from 'shared/utilities/tableUtils'
 import { capitalizeWords, expandHpdRegistrationAbbreviations } from 'shared/utilities/languageUtils'
 import BaseLink from 'shared/components/BaseLink'
@@ -42,67 +41,58 @@ const OwnershipSection = props => {
   }
 
   return (
-    <Row className="ownership-section property-section property-summary-body">
-      <Col>
-        {latestHPDRegistration ? (
-          <Row>
-            <Col>
-              <Row>
-                <Col>
-                  <span className="d-block">
-                    <h5 className="property-summary__table-header  font-weight-bold d-inline">HPD Registration</h5>
-                    <span className="">
-                      {' '}
-                      (last updated {dateFormatter(latestHPDRegistration.lastregistrationdate)})
-                    </span>
-                  </span>
-                </Col>
-              </Row>
-              <hr />
-              {headOfficer && <ContactExpandableSection contact={headOfficer} />}
-              {siteManager && <ContactExpandableSection contact={siteManager} />}
-              {officer && <ContactExpandableSection contact={officer} />}
-              {agent && <ContactExpandableSection contact={agent} />}
-              {ownershipType && (
-                <div>
-                  This property's ownership type is{' '}
-                  <strong>{capitalizeWords(expandHpdRegistrationAbbreviations(ownershipType))}</strong>.
-                </div>
-              )}
-              {props.profile.ownername && (
-                <div>
-                  The owner on record with the DOF is <strong>{capitalizeWords(props.profile.ownername)}</strong>.
-                </div>
-              )}
-            </Col>
-          </Row>
-        ) : (
-          <Row>
-            <Col xs={12} className="text-center font-weight-bold mt-4">
-              No HPD Registrations Found
-              <hr />
-            </Col>
-            <Col xs={12}>
-              {props.profile.ownername && (
-                <div>
-                  The owner on record with the DOF is <strong>{capitalizeWords(props.profile.ownername)}</strong>.
-                </div>
-              )}
-            </Col>
-          </Row>
+    <div className="ownership-section property-section property-summary-body">
+      {latestHPDRegistration ? (
+        <div>
+          <div className="ownership-section__update-section">
+            Last updated {dateFormatter(latestHPDRegistration.lastregistrationdate)}
+          </div>
+          <div className="ownership-section__contacts-section">
+            {headOfficer && <ContactExpandableSection contact={headOfficer} />}
+            {siteManager && <ContactExpandableSection contact={siteManager} />}
+            {officer && <ContactExpandableSection contact={officer} />}
+            {agent && <ContactExpandableSection contact={agent} />}
+          </div>
+          <div className="ownership-section__bottom-section">
+            {ownershipType && (
+              <div className="ownership-section__bottom-value">
+                This property's ownership type is{' '}
+                <strong>{capitalizeWords(expandHpdRegistrationAbbreviations(ownershipType))}</strong>.
+              </div>
+            )}
+            {props.profile.ownername && (
+              <div className="ownership-section__bottom-value">
+                The owner on record with the DOF is <strong>{capitalizeWords(props.profile.ownername)}</strong>.
+              </div>
+            )}
+          </div>
+        </div>
+      ) : (
+        <div className="ownership-section__bottom-section">
+          <div className="text-center font-weight-bold mt-4">
+            No HPD Registrations Found
+            <hr />
+          </div>
+          <div>
+            {props.profile.ownername && (
+              <div className="ownership-section__bottom-value">
+                The owner on record with the DOF is <strong>{capitalizeWords(props.profile.ownername)}</strong>.
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+      <div className="ownership-section__bottom-section">
+        {!props.print && (
+          <div className="ownership-section__hpdcontact__whoownswhat">
+            For more on ownership visit{' '}
+            <BaseLink className="text-link" href={`https://whoownswhat.justfix.nyc/bbl/${props.profile.bbl}`}>
+              Who Owns What?
+            </BaseLink>
+          </div>
         )}
-        <hr />
-        <Row>
-          {!props.print && (
-            <Col xs={12} className="mb-2 ownership-section__hpdcontact__whoownswhat">
-              <BaseLink href={`https://whoownswhat.justfix.nyc/bbl/${props.profile.bbl}`}>
-                For more on ownership visit <b>"Who Owns What?"</b>
-              </BaseLink>
-            </Col>
-          )}
-        </Row>
-      </Col>
-    </Row>
+      </div>
+    </div>
   )
 }
 

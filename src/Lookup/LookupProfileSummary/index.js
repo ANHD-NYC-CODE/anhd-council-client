@@ -4,13 +4,15 @@ import InnerLoader from 'shared/components/Loaders/InnerLoader'
 import ConfigContext from 'Config/ConfigContext'
 import TableAlert from 'shared/components/BaseTable/TableAlert'
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons'
+
 import PropertySummaryBody from 'Lookup/LookupProfileSummary/PropertySummaryBody'
 import OwnershipSection from 'Lookup/LookupProfileSummary/OwnershipSection'
 import RentStabilizationSection from 'Lookup/LookupProfileSummary/RentStabilizationSection'
 import ProgramSection from 'Lookup/LookupProfileSummary/ProgramSection'
 import ZoningSection from 'Lookup/LookupProfileSummary/ZoningSection'
-import ToggleableSection from 'Lookup/LookupProfileSummary/ToggleableSection'
-
+import ExpandableSection from 'shared/components/ExpandableSection'
 import LeafletMap from 'LeafletMap'
 
 import PrintLookupProfileSummary from 'Lookup/PrintLookupProfileSummary'
@@ -36,23 +38,55 @@ const LookupProfileSummary = props => {
                     return (
                       <div>
                         <PropertySummaryBody config={config} profile={props.propertyResult} />
-                        <ToggleableSection title="Rent Stabilization">
+                        <ExpandableSection
+                          aboveFoldElement={<h5>Rent Stabilization</h5>}
+                          className="lookup-profile-summary__section-header"
+                          iconClass="lookup-profile-summary__expandable-icon"
+                          collapseIcon={<FontAwesomeIcon size="lg" icon={faChevronUp} />}
+                          expandIcon={<FontAwesomeIcon size="lg" icon={faChevronDown} />}
+                        >
                           <RentStabilizationSection
                             config={config}
                             profile={props.propertyResult}
                             request={props.request}
                           />
-                        </ToggleableSection>
-                        <ToggleableSection title="Ownership">
+                        </ExpandableSection>
+                        <ExpandableSection
+                          aboveFoldElement={<h5>Ownership</h5>}
+                          className="lookup-profile-summary__section-header"
+                          iconClass="lookup-profile-summary__expandable-icon"
+                          collapseIcon={<FontAwesomeIcon size="lg" icon={faChevronUp} />}
+                          expandIcon={<FontAwesomeIcon size="lg" icon={faChevronDown} />}
+                        >
                           <OwnershipSection profile={props.propertyResult} request={props.request} />
-                        </ToggleableSection>
-                        <ToggleableSection title="Programs/Statuses">
+                        </ExpandableSection>
+                        <ExpandableSection
+                          startsOpen={true}
+                          aboveFoldElement={<h5>Programs/Statuses</h5>}
+                          className="lookup-profile-summary__section-header"
+                          iconClass="lookup-profile-summary__expandable-icon"
+                          collapseIcon={<FontAwesomeIcon size="lg" icon={faChevronUp} />}
+                          expandIcon={<FontAwesomeIcon size="lg" icon={faChevronDown} />}
+                        >
                           <ProgramSection config={config} profile={props.propertyResult} />
-                        </ToggleableSection>
-                        <ToggleableSection title="Zoning">
+                        </ExpandableSection>
+                        <ExpandableSection
+                          aboveFoldElement={<h5>Zoning</h5>}
+                          className="lookup-profile-summary__section-header"
+                          iconClass="lookup-profile-summary__expandable-icon"
+                          collapseIcon={<FontAwesomeIcon size="lg" icon={faChevronUp} />}
+                          expandIcon={<FontAwesomeIcon size="lg" icon={faChevronDown} />}
+                        >
                           <ZoningSection profile={props.propertyResult} />
-                        </ToggleableSection>
-                        <ToggleableSection startsOpen={true} title="Location">
+                        </ExpandableSection>
+                        <ExpandableSection
+                          aboveFoldElement={<h5>Location</h5>}
+                          className="lookup-profile-summary__section-header"
+                          iconClass="lookup-profile-summary__expandable-icon"
+                          collapseIcon={<FontAwesomeIcon size="lg" icon={faChevronUp} />}
+                          expandIcon={<FontAwesomeIcon size="lg" icon={faChevronDown} />}
+                          startsOpen={true}
+                        >
                           <LeafletMap
                             appState={props.appState}
                             currentGeographyType={props.appState.currentGeographyType}
@@ -65,7 +99,7 @@ const LookupProfileSummary = props => {
                             iconConfig="SINGLE"
                             zoom={17}
                           />
-                        </ToggleableSection>
+                        </ExpandableSection>
                       </div>
                     )
                   }}
