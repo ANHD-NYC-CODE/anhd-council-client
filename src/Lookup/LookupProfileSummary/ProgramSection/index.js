@@ -54,10 +54,7 @@ const ProgramSection = props => {
           {props.profile.conhrecord && (
             <div className="text-danger font-weight-bold">
               A building on this property is eligible for the{' '}
-              <BaseLink
-                className="text-link"
-                href="https://www1.nyc.gov/site/hpd/owners/certification-of-no-harassment.page"
-              >
+              <BaseLink className="text-link" href="https://anhd.org/project/coalition-against-tenant-harassment-cath">
                 Certificate of No Harassment Pilot Program.
               </BaseLink>
             </div>

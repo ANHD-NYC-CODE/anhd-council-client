@@ -190,25 +190,23 @@ class DistrictDashboard extends React.PureComponent {
             scrollToControls={this.scrollToControls}
           />
         ) : (
-          <Container fluid>
-            <DistrictDashboardRequestsWrapper
-              advancedSearch={this.props.advancedSearch}
-              appState={this.props.appState}
-              dashboardState={this.props.dashboardState}
-              dispatch={this.props.dispatch}
-              config={this.props.config}
-              cancelChangeGeography={this.cancelChangeGeography}
-              handleChangeGeography={this.submitGeography}
-              handleChangeGeographyType={this.handleChangeGeographyType}
-              handleChangeGeographyId={this.handleChangeGeographyId}
-              mapRequests={this.props.mapRequests}
-              requests={this.props.requests}
-              loading={this.props.loading}
-              selectedError={this.props.selectedError}
-              totalPropertyResults={this.props.totalPropertyResults}
-              trigger404Error={this.trigger404Error}
-            />
-          </Container>
+          <DistrictDashboardRequestsWrapper
+            advancedSearch={this.props.advancedSearch}
+            appState={this.props.appState}
+            dashboardState={this.props.dashboardState}
+            dispatch={this.props.dispatch}
+            config={this.props.config}
+            cancelChangeGeography={this.cancelChangeGeography}
+            handleChangeGeography={this.submitGeography}
+            handleChangeGeographyType={this.handleChangeGeographyType}
+            handleChangeGeographyId={this.handleChangeGeographyId}
+            mapRequests={this.props.mapRequests}
+            requests={this.props.requests}
+            loading={this.props.loading}
+            selectedError={this.props.selectedError}
+            totalPropertyResults={this.props.totalPropertyResults}
+            trigger404Error={this.trigger404Error}
+          />
         )}
       </div>
     )

@@ -2,12 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import * as b from 'shared/constants/geographies'
 import { getGeographyIdOptions } from 'shared/utilities/componentUtils'
-import { Row, Col, Form, Button } from 'react-bootstrap'
+import { Form, Button } from 'react-bootstrap'
 import StandardizedInput from 'shared/classes/StandardizedInput'
 import ConfigContext from 'Config/ConfigContext'
 import FormError from 'shared/components/FormError'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTimesCircle } from '@fortawesome/free-regular-svg-icons'
+
 import classnames from 'classnames'
 import './style.scss'
 
@@ -34,43 +33,41 @@ class GeographySelect extends React.Component {
       <div className="geography-select">
         <ConfigContext.Consumer>
           {config => (
-            <Row>
-              <Col xs={12} md={this.props.changingGeographyType || this.props.currentGeographyType ? 5 : 12}>
-                <Form.Control
-                  required
-                  className={classnames(this.props.selectClass, {
-                    valued: this.props.currentGeographyType || this.props.changingGeographyType,
-                  })}
-                  size={this.props.inputSize}
-                  name="geographyType"
-                  as="select"
-                  data-key="geographyType"
-                  onChange={this.passChangeType}
-                  value={this.props.changingGeographyType || this.props.currentGeographyType || -1}
-                  onBlur={this.props.handleBlur}
-                  isInvalid={
+            <div className="geography-select__row">
+              <Form.Control
+                required
+                className={classnames(this.props.selectClass, {
+                  valued: this.props.currentGeographyType || this.props.changingGeographyType,
+                })}
+                size={this.props.inputSize}
+                name="geographyType"
+                as="select"
+                data-key="geographyType"
+                onChange={this.passChangeType}
+                value={this.props.changingGeographyType || this.props.currentGeographyType || -1}
+                onBlur={this.props.handleBlur}
+                isInvalid={
+                  ((this.props.touched || {}).geographyType || !!this.props.submitCount) &&
+                  (this.props.errors || {}).geographyType
+                }
+              >
+                <option disabled value={-1} key={-1}>
+                  {this.props.placeholder || 'Select'}
+                </option>
+                <option value={b.COUNCILGEOGRAPHY.constant}>{b.COUNCILGEOGRAPHY.name}</option>
+                <option value={b.COMMUNITYGEOGRAPHY.constant}>{b.COMMUNITYGEOGRAPHY.name}</option>
+              </Form.Control>
+              <FormError
+                show={
+                  !!(
                     ((this.props.touched || {}).geographyType || !!this.props.submitCount) &&
                     (this.props.errors || {}).geographyType
-                  }
-                >
-                  <option disabled value={-1} key={-1}>
-                    {this.props.placeholder || 'Select a geography'}
-                  </option>
-                  <option value={b.COUNCILGEOGRAPHY.constant}>{b.COUNCILGEOGRAPHY.name}</option>
-                  <option value={b.COMMUNITYGEOGRAPHY.constant}>{b.COMMUNITYGEOGRAPHY.name}</option>
-                </Form.Control>
-                <FormError
-                  show={
-                    !!(
-                      ((this.props.touched || {}).geographyType || !!this.props.submitCount) &&
-                      (this.props.errors || {}).geographyType
-                    )
-                  }
-                  message={(this.props.errors || {}).geographyType}
-                />
-              </Col>
+                  )
+                }
+                message={(this.props.errors || {}).geographyType}
+              />
               {!!(this.props.currentGeographyType || this.props.changingGeographyType) && (
-                <Col className="mt-2 mt-sm-2 mt-md-0" xs={12} md={5}>
+                <div>
                   <Form.Control
                     required
                     as="select"
@@ -104,35 +101,31 @@ class GeographySelect extends React.Component {
                     }
                     message={(this.props.errors || {}).geographyId}
                   />
-                </Col>
+                </div>
               )}
               {!!this.props.changingGeographyType && !this.props.showSubmit && (
-                <Col xs={12} md={2} className="mt-2 mt-md-0">
-                  <Button
-                    block
-                    size={this.props.inputSize}
-                    className="cancel-geography-change"
-                    onClick={this.props.cancelChangeGeography}
-                    variant="outline-secondary"
-                  >
-                    <FontAwesomeIcon size="lg" icon={faTimesCircle} />
-                  </Button>
-                </Col>
+                <Button
+                  block
+                  size={this.props.inputSize}
+                  className="cancel-geography-change"
+                  onClick={this.props.cancelChangeGeography}
+                  variant="outline-secondary"
+                >
+                  Cancel
+                </Button>
               )}
               {this.props.showSubmit && (
-                <Col xs={12} md={2} className="mt-2 mt-md-0">
-                  <Button
-                    block
-                    size={this.props.inputSize}
-                    className="submit-geography-change"
-                    onClick={this.props.handleChangeGeography}
-                    variant={this.props.submitButtonVariant}
-                  >
-                    Go
-                  </Button>
-                </Col>
+                <Button
+                  block
+                  size={this.props.inputSize}
+                  className="submit-geography-change"
+                  onClick={this.props.handleChangeGeography}
+                  variant={this.props.submitButtonVariant}
+                >
+                  Go
+                </Button>
               )}
-            </Row>
+            </div>
           )}
         </ConfigContext.Consumer>
       </div>
