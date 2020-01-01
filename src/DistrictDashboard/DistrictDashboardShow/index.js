@@ -183,7 +183,6 @@ class DistrictDashboardShow extends React.Component {
               </Form>
             </div>
             <div className="district-dashboard-show__housing-type-section">
-              <h5 className="text-muted font-weight-bold text-uppercase">Filter by housing type</h5>
               <HousingTypeSection
                 customView={this.props.dashboardState.districtShowCustomView}
                 dispatch={this.props.dispatch}
@@ -191,7 +190,7 @@ class DistrictDashboardShow extends React.Component {
                 switchSelectedFilter={this.props.switchSelectedFilter}
                 housingTypeResults={this.props.dashboardState.housingTypeResults}
                 housingTypeResultFilter={this.props.housingTypeResultFilter}
-                results={this.props.dashboardState.totalPropertyResults}
+                loading={this.props.loading}
               />
             </div>
             <div className="district-dashboard-show__filter-section">
