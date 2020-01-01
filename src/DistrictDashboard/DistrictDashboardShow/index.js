@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import * as c from 'shared/constants'
 import GeographySelect from 'shared/components/GeographySelect'
-import { ButtonToolbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
+import { Form, ButtonToolbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
 import BaseLink from 'shared/components/BaseLink'
 import { constructCsvFileName } from 'Store/AdvancedSearch/utilities/advancedSearchStoreUtils'
 import AdvancedSearchSentence from 'AdvancedSearch/Sentence'
@@ -143,33 +143,44 @@ class DistrictDashboardShow extends React.Component {
         <div className="district-dashboard-show__content layout-width-wrapper district-dashboard-container">
           <div className="district-dashboard-show__sidebar">
             <div className="district-dashboard-show__date-section">
-              <ButtonToolbar>
-                <ToggleButtonGroup
-                  name="dateRange"
+              <Form>
+                <p className="district-dashboard-show__date-section__label" r>
+                  VIEW DATA FROM:
+                </p>
+                <Form.Check
+                  className="district-dashboard-show__date-section__check"
+                  tabIndex={0}
                   type="radio"
-                  value={this.props.dashboardState.mapFilterDate}
-                  onChange={this.props.toggleDateRange}
-                >
-                  <ToggleButton
-                    className="p-1 toggle-link"
-                    disabled={this.props.dashboardState.districtShowCustomView || this.props.loading}
-                    variant="outline-primary"
-                    value={c.DISTRICT_REQUEST_DATE_THREE}
-                  >{`Last 3 Years (${moment(c.DISTRICT_RESULTS_DATE_THREE).format('MM/DD/YYYY')})`}</ToggleButton>
-                  <ToggleButton
-                    className="p-1 toggle-link"
-                    disabled={this.props.dashboardState.districtShowCustomView || this.props.loading}
-                    variant="outline-primary"
-                    value={c.DISTRICT_REQUEST_DATE_TWO}
-                  >{`Last Year (${moment(c.DISTRICT_RESULTS_DATE_TWO).format('MM/DD/YYYY')})`}</ToggleButton>
-                  <ToggleButton
-                    className="p-1 toggle-link"
-                    disabled={this.props.dashboardState.districtShowCustomView || this.props.loading}
-                    variant="outline-primary"
-                    value={c.DISTRICT_REQUEST_DATE_ONE}
-                  >{`Last 30 Days (${moment(c.DISTRICT_RESULTS_DATE_ONE).format('MM/DD/YYYY')})`}</ToggleButton>
-                </ToggleButtonGroup>
-              </ButtonToolbar>
+                  id="date-radio--30-days"
+                  disabled={this.props.dashboardState.districtShowCustomView || this.props.loading}
+                  variant="outline-primary"
+                  label={`Last 30 Days (${moment(c.DISTRICT_RESULTS_DATE_ONE).format('MM/DD/YYYY')})`}
+                  onChange={() => this.props.toggleDateRange(c.DISTRICT_REQUEST_DATE_ONE)}
+                  checked={this.props.dashboardState.mapFilterDate === c.DISTRICT_REQUEST_DATE_ONE}
+                />
+                <Form.Check
+                  className="district-dashboard-show__date-section__check"
+                  tabIndex={0}
+                  type="radio"
+                  id="date-radio--1-year"
+                  disabled={this.props.dashboardState.districtShowCustomView || this.props.loading}
+                  variant="outline-primary"
+                  label={`Last Year (${moment(c.DISTRICT_RESULTS_DATE_TWO).format('MM/DD/YYYY')})`}
+                  onChange={() => this.props.toggleDateRange(c.DISTRICT_REQUEST_DATE_TWO)}
+                  checked={this.props.dashboardState.mapFilterDate === c.DISTRICT_REQUEST_DATE_TWO}
+                />
+                <Form.Check
+                  className="district-dashboard-show__date-section__check"
+                  tabIndex={0}
+                  type="radio"
+                  id="date-radio--3-years"
+                  disabled={this.props.dashboardState.districtShowCustomView || this.props.loading}
+                  variant="outline-primary"
+                  label={`Last 3 Years (${moment(c.DISTRICT_RESULTS_DATE_THREE).format('MM/DD/YYYY')})`}
+                  onChange={() => this.props.toggleDateRange(c.DISTRICT_REQUEST_DATE_THREE)}
+                  checked={this.props.dashboardState.mapFilterDate === c.DISTRICT_REQUEST_DATE_THREE}
+                />
+              </Form>
             </div>
             <div className="district-dashboard-show__housing-type-section">
               <h5 className="text-muted font-weight-bold text-uppercase">Filter by housing type</h5>
@@ -201,7 +212,6 @@ class DistrictDashboardShow extends React.Component {
           </div>
           <div className="district-dashboard-show__results-section">
             <div className="district-dashboard-show__results-header">
-              <DistrictResultsTitle records={resultRecords} />
               <ConfigContext.Consumer>
                 {config => {
                   const propertyResource = Object.values(config.resourceModels).find(

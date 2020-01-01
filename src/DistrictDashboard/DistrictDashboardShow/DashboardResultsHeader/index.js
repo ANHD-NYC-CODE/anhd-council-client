@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-
+import './style.scss'
 const DashboardResultsHeader = props => {
   const numberOfUnits = props.results.reduce((total, result) => parseInt(total) + parseInt(result['unitsres']), 0)
   const totalDistrictUnits = props.totalResults.reduce(
@@ -9,22 +9,17 @@ const DashboardResultsHeader = props => {
   )
   return (
     <div className="dashboard-results-header">
-      <div className="housingtype-summary-result-card__wrapper">
-        <h5 className="housingtype-summary-result-card__title">{props.label}</h5>
-        <div className="housingtype-summary-result-card__inner-wrapper">
-          <div className="">
-            <p>
-              <span className="">{props.results.length}</span> <span className="summary-units">properties</span>
-            </p>
-            <p>
-              <span className="">{numberOfUnits}</span> <span className="summary-units">units</span>
-            </p>
+      <div className="dashboard-results-header__wrapper">
+        <p className="dashboard-results-header__title">{props.label}</p>
+        <div className="dashboard-results-header__inner-wrapper">
+          <div className="dashboard-results-header__group">
+            <span className="dashboard-results-header__label">Properties Found: </span>
+            <span className="dashboard-results-header__value">{props.results.length}</span>
           </div>
-          {props.percentageOfWhole && !!props.totalResults.length && (
-            <div className="">
-              <h5 className="">{`${((numberOfUnits / totalDistrictUnits) * 100).toFixed(1)}%`} </h5>
-            </div>
-          )}
+          <div className="dashboard-results-header__group">
+            <span className="dashboard-results-header__label">Units: </span>
+            <span className="dashboard-results-header__value">{numberOfUnits}</span>
+          </div>
         </div>
       </div>
     </div>

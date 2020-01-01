@@ -11,7 +11,7 @@ export const initialState = {
   districtShowCustomView: false,
   resultRecords: [],
   housingTypeResults: [],
-  housingTypeResultsIndex: undefined,
+  housingTypeResultsIndex: 0,
   totalPropertyResults: [],
   customSearchResults: [],
   dashboardTableView: false, // Showing the map vs the table in dashboard
