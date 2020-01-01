@@ -1,4 +1,4 @@
-@import 'shared/styles/bootstrap/_variables.scss';
+@import 'shared/styles/_variables.scss';
 
 .district-dashboard-show {
   .district-dashboard-container {
@@ -13,6 +13,7 @@
       padding: 0 40px !important;
     }
   }
+
   .district-dashboard-show__top-row__inner {
     align-items: center;
     display: flex;
@@ -28,6 +29,24 @@
         margin-right: auto;
         width: initial;
       }
+    }
+  }
+
+  .district-dashboard-show__date-section__label {
+    @extend %p3-font-size;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .district-dashboard-show__date-section__check,
+  .district-dashboard-show__date-section__check label,
+  .district-dashboard-show__date-section__check input {
+    cursor: pointer;
+  }
+  .district-dashboard-show__date-section__check {
+    &:focus label,
+    &:hover label {
+      text-decoration: underline;
     }
   }
   .geography-select-row {
@@ -88,11 +107,16 @@
     border: none;
   }
 
+  .district-dashboard-show__results-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
   .view-toggle__container {
-    align-items: flex-start;
+    align-items: flex-end;
     flex-direction: column;
     justify-content: center;
-    margin-bottom: 40px;
 
     @include media-breakpoint-up(xl) {
       align-items: flex-end;
