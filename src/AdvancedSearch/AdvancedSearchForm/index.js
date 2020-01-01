@@ -197,6 +197,7 @@ class AdvancedSearchForm extends React.PureComponent {
               </Col>
             </Row>
             <GeographySelect
+              selectClass="main-geography-select"
               cancelChangeGeography={this.cancelChangeGeography}
               changing={this.props.appState.changingGeography}
               changingGeographyType={this.props.appState.changingGeographyType}
