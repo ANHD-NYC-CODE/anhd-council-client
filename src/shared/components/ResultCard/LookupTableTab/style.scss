@@ -12,7 +12,7 @@
   margin-right: 10px;
   width: 100%;
 
-  p {
+  div {
     margin-bottom: 0;
   }
 
@@ -26,6 +26,7 @@
     color: $black;
   }
 
+  div,
   p,
   span {
     @extend %small-font-size;

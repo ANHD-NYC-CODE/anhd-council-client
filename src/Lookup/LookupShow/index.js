@@ -56,6 +56,7 @@ class LookupShow extends React.PureComponent {
 
   componentDidUpdate() {
     if (
+      !this.props.loadingState[this.props.profileRequest.requestConstant] &&
       this.props.bin &&
       Object.keys(this.props.propertyResult).length &&
       !this.props.propertyResult.buildings.some(b => b.bin === this.props.bin)
@@ -64,12 +65,17 @@ class LookupShow extends React.PureComponent {
         `Building with bin: ${this.props.bin} not found at property with bbl: ${this.props.bbl}.`
       )
     }
+
     if (this.props.propertyError && this.props.propertyError.status === 404) {
       this.props.trigger404Error(`Property with bbl: ${this.props.bbl} not found.`)
     }
 
     // Redirect user back to tax lot if landing on page from 1 building address
-    if ((this.props.propertyResult.buildings || []).length == 1 && this.props.bin) {
+    if (
+      !this.props.loadingState[this.props.profileRequest.requestConstant] &&
+      (this.props.propertyResult.buildings || []).length == 1 &&
+      this.props.bin
+    ) {
       this.props.changeLookup(this.props.propertyResult.bbl, undefined)
     }
   }
@@ -180,7 +186,7 @@ class LookupShow extends React.PureComponent {
                           showUpdate={true}
                           property={this.props.propertyResult}
                           caption={request.resourceModel.label}
-                          key={`request-wrapper-${this.props.appState.requests.indexOf(request)}`}
+                          key={`lookup-table-${request.resourceModel.resourceConstant}`}
                           visible={this.props.appState.selectedRequest === request}
                           request={request}
                         />
@@ -209,7 +215,7 @@ LookupShow.propTypes = {
   loadingState: PropTypes.object,
   dispatch: PropTypes.func,
   bin: PropTypes.string,
-  requests: PropTypes.array,
+  requests: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   changeLookup: PropTypes.func,
   propertyResult: PropTypes.object,
   profileRequest: PropTypes.object,

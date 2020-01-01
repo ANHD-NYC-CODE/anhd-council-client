@@ -20,7 +20,6 @@ const LookupTabs = props => {
         return `${resourceModel.label} (${count1})`
     }
   }
-
   return (
     <div className="lookup-tabs">
       <div className="lookup-tabs__header">
@@ -55,7 +54,7 @@ const LookupTabs = props => {
               className={''}
               dispatch={props.dispatch}
               isBuildingTab={props.isBuildingView && request.level === 'BUILDING'}
-              key={`request-summary-${props.appState.requests.indexOf(request)}`}
+              key={`tab-${request.resourceModel.resourceConstant}`}
               onClick={() => props.switchTable(request)}
               selected={props.appState.selectedRequest === request}
               request={request}
@@ -80,9 +79,9 @@ LookupTabs.propTypes = {
   appState: PropTypes.object,
   dispatch: PropTypes.func,
   isBuildingView: PropTypes.bool,
-  errorState: PropTypes.array,
-  loadingState: PropTypes.array,
-  requests: PropTypes.array,
+  errorState: PropTypes.object,
+  loadingState: PropTypes.object,
+  requests: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   lookupRequests: PropTypes.array,
   switchTable: PropTypes.func,
 }

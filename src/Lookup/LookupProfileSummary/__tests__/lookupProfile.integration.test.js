@@ -5,7 +5,6 @@ import { Axios } from 'shared/utilities/Axios'
 import MockAdapter from 'axios-mock-adapter'
 import { setupStore, configuredState, flushAllPromises } from 'shared/testUtilities'
 import { history } from 'Store/configureStore'
-import ConfigContext from 'Config/ConfigContext'
 import Config from 'Config'
 import LayoutContext from 'Layout/LayoutContext'
 import { createPropertyRequestMock, createHPDRegistrationMock, createHPDContactMock } from 'shared/testUtilities/mocks'
@@ -19,7 +18,7 @@ import LookupProfileSummary from 'Lookup/LookupProfileSummary'
 
 configure({ adapter: new Adapter() })
 
-const setupWrapper = ({ state, propertyResult, print = false }) => {
+const setupWrapper = ({ state, propertyResult, loading = false, error, print = false }) => {
   state = configuredState(state)
   const store = setupStore({ ...state })
   const wrapper = mount(
@@ -27,7 +26,7 @@ const setupWrapper = ({ state, propertyResult, print = false }) => {
       <ConnectedRouter history={history}>
         <Config>
           <LayoutContext.Provider value={{ print: print }}>
-            <LookupProfileSummary records={propertyResult} />
+            <LookupProfileSummary propertyResult={propertyResult} error={error} loading={loading} />
           </LayoutContext.Provider>
         </Config>
       </ConnectedRouter>
@@ -37,48 +36,40 @@ const setupWrapper = ({ state, propertyResult, print = false }) => {
 }
 describe('LookupProfileSummary', () => {
   it('has initial state', () => {
-    const [wrapper] = setupWrapper({ propertyResult: createPropertyRequestMock() })
-
-    expect(wrapper.find('PrintLookupProfileSummary')).toHaveLength(0)
+    const [wrapper] = setupWrapper({ propertyResult: createPropertyRequestMock(), loading: false })
     expect(wrapper.find('PropertySummaryBody')).toHaveLength(1)
-    expect(wrapper.find('OwnershipSection')).toHaveLength(1)
-    expect(wrapper.find('ProgramSection')).toHaveLength(1)
+    expect(wrapper.find('ExpandableSection')).toHaveLength(5)
 
-    expect(wrapper.find('RentStabilizationSection')).toHaveLength(1)
-  })
+    // starts closed
+    expect(wrapper.find('RentStabilizationSection')).toHaveLength(0)
+    expect(wrapper.find('OwnershipSection')).toHaveLength(0)
+    expect(wrapper.find('ProgramSection')).toHaveLength(0)
+    expect(wrapper.find('ZoningSection')).toHaveLength(0)
+    expect(wrapper.find('LocationSection')).toHaveLength(1)
 
-  it('displays print layout', () => {
-    const [wrapper] = setupWrapper({
-      print: true,
-      propertyResult: createPropertyRequestMock(),
+    // open all sections
+    wrapper.find('ExpandableSection').forEach(node => {
+      node.find('[role="button"]').simulate('click')
     })
 
-    expect(wrapper.find('PrintLookupProfileSummary')).toHaveLength(1)
-    expect(wrapper.find('PropertySummaryBody')).toHaveLength(1)
+    expect(wrapper.find('RentStabilizationSection')).toHaveLength(1)
     expect(wrapper.find('OwnershipSection')).toHaveLength(1)
     expect(wrapper.find('ProgramSection')).toHaveLength(1)
-
-    expect(wrapper.find('RentStabilizationSection')).toHaveLength(1)
+    expect(wrapper.find('ZoningSection')).toHaveLength(1)
+    expect(wrapper.find('LocationSection')).toHaveLength(0)
   })
 
   describe('property summary body', () => {
     it('renders the information', () => {
       const result = createPropertyRequestMock()
-      const [wrapper] = setupWrapper({ propertyResult: result })
+      const [wrapper] = setupWrapper({ propertyResult: result, loading: false })
 
       const bodyText = wrapper.find('PropertySummaryBody').text()
-      expect(bodyText).toMatch('123 Fake Street, Brooklyn 11111')
-      expect(bodyText).toMatch('BBL 1')
+      expect(bodyText).toMatch('BBL1')
       expect(bodyText).toMatch('Council District1')
       expect(bodyText).toMatch('Community DistrictManhattan 01')
       expect(bodyText).toMatch('Year Built2000')
-      expect(bodyText).toMatch('Zoning District(s)R5, P1')
-      expect(bodyText).toMatch('Special District(s)A, B')
-      expect(bodyText).toMatch('Overlay(s)1, 2')
-      expect(bodyText).toMatch('Built Floor Area Ratio (FAR)10.0')
-      expect(bodyText).toMatch('Maximum Residential FAR1.0')
-      expect(bodyText).toMatch('Maximum Commercial FAR2.0')
-      expect(bodyText).toMatch('Maximum Community Facility FAR3.0')
+
       expect(bodyText).toMatch('Total Units10')
       expect(bodyText).toMatch('Residential Units10')
     })
@@ -90,10 +81,13 @@ describe('LookupProfileSummary', () => {
         const result = createPropertyRequestMock()
         const [wrapper] = setupWrapper({ propertyResult: result })
 
+        // open all sections
+        wrapper.find('ExpandableSection').forEach(node => {
+          node.find('[role="button"]').simulate('click')
+        })
+
         expect(wrapper.find('OwnershipSection').text()).toMatch('No HPD Registrations Found')
-        expect(wrapper.find('ProgramSection').text()).toMatch(
-          "Programs / StatusesSubsidy Programs (from Furman's CoreData and DOF's 421a and J-51 data)None"
-        )
+        expect(wrapper.find('ProgramSection').text()).toMatch('Subsidy Programs None')
         expect(wrapper.find('RentStabilizationSection').text()).toMatch('No Rent Stabilization History')
       })
     })
@@ -117,18 +111,27 @@ describe('LookupProfileSummary', () => {
         })
         const [wrapper] = setupWrapper({ propertyResult: result })
 
-        expect(wrapper.find('OwnershipSection').text()).toMatch('HPD Registration (last updated 01/01/2018)')
+        // open all sections
+        wrapper.find('ExpandableSection').forEach(node => {
+          node.find('[role="button"]').simulate('click')
+        })
+
+        expect(wrapper.find('OwnershipSection').text()).toMatch('Last updated 01/01/2018')
 
         expect(wrapper.find('OwnershipSection').text()).toMatch(
-          'The owner on record with the DOF is Test Owner.For more on ownership visit "Who Owns What?"'
+          'The owner on record with the DOF is Test Owner.For more on ownership visit Who Owns What?'
         )
 
         expect(wrapper.find('ProgramSection').text()).toMatch(
-          "Programs / StatusesSubsidy Programs (from Furman's CoreData and DOF's 421a and J-51 data)J51This property is a NYCHA development.A building on this property is eligible for the Certificate of No Harassment Pilot Program."
+          'Subsidy Programs J51This property is a NYCHA development.A building on this property is eligible for the Certificate of No Harassment Pilot Program.'
+        )
+
+        expect(wrapper.find('ZoningSection').text()).toMatch(
+          'Zoning District(s)R5, P1Overlay(s)1, 2Special District(s)A, BBuilt Floor Area Ratio (FAR)10.0Maximum Residential FAR1.0Maximum Commercial FAR2.0Maximum Community Facility FAR3.0'
         )
 
         expect(wrapper.find('RentStabilizationSection').text()).toMatch(
-          'Rent StabilizationStabilized Units (most recent): 0Change since 2007+50.0%Rent Stabilization HistoryVersion: 201720071020175'
+          'Stabilized Units (most recent): 0Change since 2007+50.0%# Stabilized Units20071020175'
         )
       })
     })
@@ -152,20 +155,26 @@ describe('LookupProfileSummary', () => {
         })
         const [wrapper] = setupWrapper({ propertyResult: result })
 
+        // open all sections
+        wrapper.find('ExpandableSection').forEach(node => {
+          node.find('[role="button"]').simulate('click')
+        })
+
         wrapper
           .find('ContactExpandableSection')
+          .find('[role="button"]')
           .at(0)
           .simulate('click')
 
         const ownershipSectionText = wrapper.find('OwnershipSection').text()
-        expect(ownershipSectionText).toMatch('HPD Registration (last updated 01/01/2018)')
+        expect(ownershipSectionText).toMatch('Last updated 01/01/2018')
 
         expect(ownershipSectionText).toMatch(
-          'This property\'s ownership type is Co-op.The owner on record with the DOF is Test Owner.For more on ownership visit "Who Owns What?"'
+          "This property's ownership type is Co-op.The owner on record with the DOF is Test Owner.For more on ownership visit Who Owns What?"
         )
 
         expect(ownershipSectionText).toMatch(
-          'Head Officer:  -Title:MemberBusiness Address:Apt #1 123 Fake St., Brooklyn NY 12345'
+          'Head Officer:  Title:MemberBusiness Address:Apt #1 123 Fake St., Brooklyn NY 12345'
         )
       })
     })

@@ -32,8 +32,8 @@ const ContactExpandableSection = props => {
     <ExpandableSection
       className="contact-expandable-section"
       iconClass="contact-expandable-section__icon"
-      collapseIcon={<FontAwesomeIcon size="" icon={faChevronUp} />}
-      expandIcon={<FontAwesomeIcon size="" icon={faChevronDown} />}
+      collapseIcon={<FontAwesomeIcon icon={faChevronUp} />}
+      expandIcon={<FontAwesomeIcon icon={faChevronDown} />}
       aboveFoldElement={
         <div className="ownership-section__hpdcontact-row">
           <div className="profile-summary-body__label">{capitalizeWords(splitCamelCase(props.contact.type))}:</div>

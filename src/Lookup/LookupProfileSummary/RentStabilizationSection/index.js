@@ -50,16 +50,18 @@ const RentStabilizationSection = props => {
           <h6># Stabilized Units</h6>
         </div>
         <table className="renstabilization-section__table">
-          {sortedLimitedYears(props)
-            .map(year => {
-              return (
-                <div className="renstabilization-section__table--row" key={`rstable-year-${year}`}>
-                  <th>{year}</th>
-                  <td>{props.profile.rentstabilizationrecord[`uc${year}`]}</td>
-                </div>
-              )
-            })
-            .filter(f => f)}
+          <tbody>
+            {sortedLimitedYears(props)
+              .map(year => {
+                return (
+                  <tr className="renstabilization-section__table--row" key={`rstable-year-${year}`}>
+                    <th>{year}</th>
+                    <td>{props.profile.rentstabilizationrecord[`uc${year}`]}</td>
+                  </tr>
+                )
+              })
+              .filter(f => f)}
+          </tbody>
         </table>
       </div>
     </div>
