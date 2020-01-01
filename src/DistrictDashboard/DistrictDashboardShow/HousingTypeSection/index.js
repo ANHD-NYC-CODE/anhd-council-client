@@ -36,7 +36,7 @@ const HousingTypeSection = props => {
                     >
                       <RequestSummaryWrapper
                         key={`housingtype-wrapper-${index}`}
-                        onClick={() => props.switchSelectedFilter(ownResultFilter)}
+                        onClick={() => props.switchSelectedFilter(ownResultFilter, index)}
                         disabled={props.customView}
                         infoKey={ownResultFilter.id}
                         label={ownResultFilter.label}
