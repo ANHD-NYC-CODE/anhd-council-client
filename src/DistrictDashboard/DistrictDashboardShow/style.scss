@@ -41,23 +41,36 @@
     }
   }
 
-  .geography-select-row__icon {
-    margin-left: -10px;
-    @include media-breakpoint-up(lg) {
-      margin-left: -40px;
+  .district-dashboard-show__content {
+    display: flex;
+    flex-direction: column;
+
+    @include media-breakpoint-up(sm) {
+      flex-direction: row;
     }
-    text-align: right;
   }
 
-  .advanced-search-placeholder {
-    border: 1px solid $black;
-    border-radius: 20px;
+  .district-dashboard-show__sidebar {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 333px;
+    width: 333px;
+  }
+
+  .district-dashboard-show__results-section {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow-x: auto;
+  }
+
+  .district-dashboard-show__table {
+    overflow-x: hidden;
   }
 
   .district-dashboard-show__results-container {
-    h5 {
-      border-bottom: 2px solid $primary;
-    }
+    margin-bottom: 40px;
   }
 
   .combineFilters__checkbox {
@@ -76,11 +89,18 @@
   }
 
   .view-toggle__container {
-    justify-content: center;
-    flex-direction: column;
     align-items: flex-start;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 40px;
+
     @include media-breakpoint-up(xl) {
       align-items: flex-end;
     }
+  }
+
+  .view-toggle {
+    cursor: pointer;
+    min-width: 100px;
   }
 }
