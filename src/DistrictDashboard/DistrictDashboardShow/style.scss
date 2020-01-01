@@ -34,7 +34,9 @@
 
   .district-dashboard-show__date-section__label {
     @extend %p3-font-size;
+    color: $black;
     font-weight: bold;
+    text-transform: uppercase;
     margin-bottom: 10px;
   }
 
@@ -44,6 +46,8 @@
     cursor: pointer;
   }
   .district-dashboard-show__date-section__check {
+    color: $black;
+
     &:focus label,
     &:hover label {
       text-decoration: underline;
@@ -101,10 +105,6 @@
       cursor: pointer;
       text-decoration: underline;
     }
-  }
-
-  select.form-control {
-    border: none;
   }
 
   .district-dashboard-show__results-header {
