@@ -1,0 +1,9 @@
+@import 'shared/styles/_variables.scss';
+
+.district-filter-section {
+  .district-filter-section__label {
+    @extend %p2-font-size;
+    color: $black;
+    font-weight: bold;
+  }
+}

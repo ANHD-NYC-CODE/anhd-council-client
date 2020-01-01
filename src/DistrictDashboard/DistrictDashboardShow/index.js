@@ -10,7 +10,7 @@ import AdvancedSearchSentence from 'AdvancedSearch/Sentence'
 import HousingTypeSection from 'DistrictDashboard/DistrictDashboardShow/HousingTypeSection'
 import DistrictResultsTitle from 'DistrictDashboard/DistrictDashboardShow/DistrictResultsTitle'
 import LeafletMap from 'LeafletMap'
-import DistrictSummarySection from 'DistrictDashboard/DistrictDashboardShow/DistrictSummarySection'
+import DistrictFilterSection from 'DistrictDashboard/DistrictDashboardShow/DistrictFilterSection'
 import DashboardResultsHeader from 'DistrictDashboard/DistrictDashboardShow/DashboardResultsHeader'
 import ConfigContext from 'Config/ConfigContext'
 
@@ -195,7 +195,7 @@ class DistrictDashboardShow extends React.Component {
             </div>
             <div className="district-dashboard-show__filter-section">
               <h5 className="text-muted font-weight-bold text-uppercase">Filter by dataset(s)</h5>
-              <DistrictSummarySection
+              <DistrictFilterSection
                 appState={this.props.appState}
                 dashboardState={this.props.dashboardState}
                 customView={this.props.dashboardState.districtShowCustomView}

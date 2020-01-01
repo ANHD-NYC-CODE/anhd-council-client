@@ -28,7 +28,7 @@ const HousingTypeSection = props => {
               <Form.Label className="housingtype-section__label">Housing Type:</Form.Label>
               <Form.Control
                 disabled={props.customView || props.loading}
-                className="housing-type-section__wrapper"
+                className="housing-type-section__wrapper valued"
                 as="select"
                 size="sm"
                 onChange={e => handleChange(config, parseInt(e.currentTarget.value))}
