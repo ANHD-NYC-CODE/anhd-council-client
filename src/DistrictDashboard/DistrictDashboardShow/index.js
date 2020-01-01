@@ -11,6 +11,8 @@ import HousingTypeSection from 'DistrictDashboard/DistrictDashboardShow/HousingT
 import DistrictResultsTitle from 'DistrictDashboard/DistrictDashboardShow/DistrictResultsTitle'
 import LeafletMap from 'LeafletMap'
 import DistrictSummarySection from 'DistrictDashboard/DistrictDashboardShow/DistrictSummarySection'
+import DashboardResultsHeader from 'DistrictDashboard/DistrictDashboardShow/DashboardResultsHeader'
+import ConfigContext from 'Config/ConfigContext'
 
 import classnames from 'classnames'
 import { shortAmountComparisonString } from 'shared/utilities/languageUtils'
@@ -200,6 +202,26 @@ class DistrictDashboardShow extends React.Component {
           <div className="district-dashboard-show__results-section">
             <div className="district-dashboard-show__results-header">
               <DistrictResultsTitle records={resultRecords} />
+              <ConfigContext.Consumer>
+                {config => {
+                  const propertyResource = Object.values(config.resourceModels).find(
+                    model => model.resourceConstant === 'PROPERTY'
+                  )
+                  const residentialFilter = propertyResource.ownResultFilters.find(
+                    f => f.id === c.HOUSING_TYPE_RESIDENTIAL
+                  )
+                  return (
+                    <DashboardResultsHeader
+                      label={this.props.dashboardState.housingTypeResultFilter.label}
+                      percentageOfWhole={this.props.dashboardState.housingTypeResultFilter !== residentialFilter}
+                      results={
+                        this.props.dashboardState.housingTypeResults[this.props.dashboardState.housingTypeResultsIndex]
+                      }
+                      totalResults={this.props.dashboardState.totalPropertyResults}
+                    />
+                  )
+                }}
+              </ConfigContext.Consumer>
               <ButtonToolbar className="d-flex view-toggle__container">
                 <ToggleButtonGroup
                   name="view"
