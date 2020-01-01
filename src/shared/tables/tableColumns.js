@@ -1314,8 +1314,7 @@ export const getTableColumns = ({
         constructStandardColumn({
           columnEvent: expandColumnEvent,
           classes: 'expandable-cell',
-          dataField: 'acrisrealparties',
-          key: 'acrisparties1',
+          dataField: 'partiesFrom',
           text: 'Parties-1 (From)',
           formatter: acrisParties1Formatter,
           csvFormatter: acrisParties1Formatter,
@@ -1324,8 +1323,7 @@ export const getTableColumns = ({
         constructStandardColumn({
           columnEvent: expandColumnEvent,
           classes: 'expandable-cell',
-          dataField: 'acrisrealparties',
-          key: 'acrisparties2',
+          dataField: 'partiesTo',
           text: 'Parties-2 (To)',
           formatter: acrisParties2Formatter,
           csvFormatter: acrisParties2Formatter,

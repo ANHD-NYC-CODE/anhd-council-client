@@ -111,11 +111,14 @@ LookupProfileSummary.propTypes = {
   appState: PropTypes.object,
   loading: PropTypes.bool,
   error: PropTypes.object,
-  propertyResult: {},
+  propertyResult: PropTypes.object,
 }
 
-LookupProfileSummary.propTypes = {
-  propertyResult: PropTypes.object,
+LookupProfileSummary.defaultProps = {
+  appState: {},
+  loading: true,
+  error: null,
+  propertyResult: {},
 }
 
 export default LookupProfileSummary

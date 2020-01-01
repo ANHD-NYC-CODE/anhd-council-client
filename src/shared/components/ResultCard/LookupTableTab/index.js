@@ -95,7 +95,21 @@ const LookupTableTab = props => {
     }
   }
 
-  return (
+  const renderComponentInside = () => {
+    return (
+      <div className="summary-result-card__label">
+        <div>
+          {getLabel(props)}{' '}
+          <span className="summary-result-card__result">
+            {props.loading ? <SpinnerLoader className="spinner-loader__container--inline" size="14px" /> : null}
+          </span>
+        </div>
+        {props.error && renderErrorButton()}
+      </div>
+    )
+  }
+
+  return !props.error ? (
     <button
       className={classnames('lookup-table-tab', props.isBuildingTab ? 'tab--secondary' : 'tab--primary', {
         active: props.selected,
@@ -103,16 +117,12 @@ const LookupTableTab = props => {
       disabled={props.loading || props.error}
       onClick={props.onClick}
     >
-      <div className="summary-result-card__label">
-        <p>
-          {getLabel(props)}{' '}
-          <span className="summary-result-card__result">
-            {props.loading ? <SpinnerLoader className="spinner-loader__container--inline" size="14px" /> : null}
-          </span>
-        </p>
-        {props.error && renderErrorButton()}
-      </div>
+      {renderComponentInside()}
     </button>
+  ) : (
+    <div className="lookup-table-tab tab--disabled" disabled={props.loading || props.error}>
+      {renderComponentInside()}
+    </div>
   )
 }
 
@@ -134,5 +144,6 @@ LookupTableTab.propTypes = {
   summaryTextColorClass: PropTypes.string,
   className: PropTypes.string,
   results: PropTypes.array,
+  request: PropTypes.object,
 }
 export default LookupTableTab

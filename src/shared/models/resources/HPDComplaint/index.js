@@ -19,22 +19,26 @@ const HPDComplaint = databaseObject => ({
   tableResultsConstructor: results => {
     // Counts all the HPD complaints + Problems together
     return [].concat(
-      ...results.map(complaint =>
-        complaint.hpdproblems.map(problem => {
+      ...results.map(complaint => {
+        if (!complaint.hpdproblems) return
+        return complaint.hpdproblems.map(problem => {
           problem.receiveddate = complaint.receiveddate
           problem.apartment = complaint.apartment
           return problem
         })
-      )
+      })
     )
   },
 
   tableRecordsCountFunction2: results => {
     const problems = [].concat(
       ...results.map(complaint => {
-        return complaint.hpdproblems.map(problem => {
-          return problem
-        })
+        {
+          if (!complaint.hpdproblems) return
+          return complaint.hpdproblems.map(problem => {
+            return problem
+          })
+        }
       })
     )
 

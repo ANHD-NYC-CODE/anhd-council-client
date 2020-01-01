@@ -63,6 +63,12 @@ a.btn-link:hover {
   pointer-events: none;
 }
 
+.tab--disabled {
+  background-color: $tab-disabled;
+  color: $black;
+  outline: none;
+}
+
 .tab--primary {
   background-color: $tab-primary;
   color: $gray-900;
