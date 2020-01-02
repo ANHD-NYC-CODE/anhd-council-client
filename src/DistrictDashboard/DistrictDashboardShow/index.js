@@ -112,7 +112,7 @@ class DistrictDashboardShow extends React.Component {
             )}
           </div>
         </div>
-        {/* <div className="district-dashboard-show__search-section">
+        <div className="district-dashboard-show__search-section layout-width-wrapper district-dashboard-container">
           {// Custom Search
           this.props.geographyRequests
             .filter(r => r.type === c.ADVANCED_SEARCH)
@@ -139,7 +139,7 @@ class DistrictDashboardShow extends React.Component {
               <AdvancedSearchSentence advancedSearch={this.props.advancedSearch} />
             </div>
           ) : null}
-        </div> */}
+        </div>
         <div className="district-dashboard-show__content layout-width-wrapper district-dashboard-container">
           <div className="district-dashboard-show__sidebar">
             <div className="district-dashboard-show__date-section">
@@ -150,6 +150,7 @@ class DistrictDashboardShow extends React.Component {
                 <Form.Check
                   className="district-dashboard-show__date-section__check"
                   tabIndex={0}
+                  custom
                   type="radio"
                   id="date-radio--30-days"
                   disabled={this.props.dashboardState.districtShowCustomView || this.props.loading}
@@ -161,6 +162,7 @@ class DistrictDashboardShow extends React.Component {
                 <Form.Check
                   className="district-dashboard-show__date-section__check"
                   tabIndex={0}
+                  custom
                   type="radio"
                   id="date-radio--1-year"
                   disabled={this.props.dashboardState.districtShowCustomView || this.props.loading}
@@ -172,6 +174,7 @@ class DistrictDashboardShow extends React.Component {
                 <Form.Check
                   className="district-dashboard-show__date-section__check"
                   tabIndex={0}
+                  custom
                   type="radio"
                   id="date-radio--3-years"
                   disabled={this.props.dashboardState.districtShowCustomView || this.props.loading}

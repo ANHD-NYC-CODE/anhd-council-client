@@ -190,6 +190,7 @@ label.checkbox.inline .toggle {
   border-radius: 24px;
   width: 60%;
   height: 100%;
+  color: transparent;
 
   &[disabled] {
     background-color: $gray-400;
@@ -200,6 +201,14 @@ label.checkbox.inline .toggle {
 .round-toggle-on {
   color: transparent;
 
+  &:hover,
+  &:focus,
+  &:active:not([disabled]),
+  &.btn-light:active:not([disabled]),
+  &.btn-success:active:not([disabled]) {
+    color: transparent;
+  }
+
   &[disabled] {
     background-color: $tab-primary;
   }
@@ -207,6 +216,14 @@ label.checkbox.inline .toggle {
 
 .round-toggle-off {
   color: transparent;
+
+  &:hover,
+  &:focus,
+  &:active:not(:disabled),
+  &.btn-light:active:not([disabled]),
+  &.btn-success:active:not([disabled]) {
+    color: transparent;
+  }
 
   &[disabled] {
     background-color: $gray-300;

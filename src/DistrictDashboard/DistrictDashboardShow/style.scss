@@ -34,6 +34,10 @@
     }
   }
 
+  .district-dashboard-show__date-section {
+    padding: 30px 0;
+  }
+
   .district-dashboard-show__date-section__label {
     @extend %p3-font-size;
     color: $black;
@@ -54,6 +58,10 @@
     &:hover label {
       text-decoration: underline;
     }
+  }
+
+  .district-dashboard-show__housing-type-section {
+    margin-bottom: 30px;
   }
   .geography-select-row {
     align-items: center;
@@ -110,9 +118,11 @@
   }
 
   .district-dashboard-show__results-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    @include media-breakpoint-up(sm) {
+      align-items: center;
+      justify-content: space-between;
+      display: flex;
+    }
   }
 
   .district-dashboard-show__map {
@@ -120,12 +130,14 @@
   }
 
   .view-toggle__container {
-    align-items: flex-end;
+    align-items: flex-start;
     flex-direction: column;
     justify-content: center;
+    margin-bottom: 10px;
 
-    @include media-breakpoint-up(xl) {
+    @include media-breakpoint-up(sm) {
       align-items: flex-end;
+      margin-bottom: 0;
     }
   }
 
