@@ -1,18 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Card } from 'react-bootstrap'
+import { Card, Form } from 'react-bootstrap'
 import classnames from 'classnames'
 import StandardizedInput from 'shared/classes/StandardizedInput'
 import './style.scss'
 import { updateAmountFilter } from 'Store/DashboardState/actions'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
-import { faArrowDown } from '@fortawesome/free-solid-svg-icons'
-import { faTimes } from '@fortawesome/free-solid-svg-icons'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
-import InfoModalButton from 'shared/components/InfoModalButton'
 
+import AmountFilterInput from 'DistrictDashboard/AmountFilterInput'
+
+import InfoModalButton from 'shared/components/InfoModalButton'
 import { spaceEnterKeyDownHandler } from 'shared/utilities/accessibilityUtils'
+import { grammaticalNoun } from 'shared/utilities/languageUtils'
+
+import Toggle from 'react-bootstrap-toggle'
 
 class AnnotatedResultFilterCard extends React.Component {
   constructor(props) {
@@ -20,11 +20,22 @@ class AnnotatedResultFilterCard extends React.Component {
 
     this.increaseAmount = this.increaseAmount.bind(this)
     this.decreaseAmount = this.decreaseAmount.bind(this)
+    this.handleClick = this.handleClick.bind(this)
+    this.handleFilterChange = this.handleFilterChange.bind(this)
+  }
+
+  handleClick(e, amountFilter) {
+    e.preventDefault()
+    this.props.handleClick(amountFilter)
   }
 
   handleFilterChange(e) {
     e = new StandardizedInput(e)
-    this.props.amountFilter.value = e.value
+    if (e.value || e.value === 0) {
+      if (e.value > 999) e.value = 999 // max
+      this.props.amountFilter.value = e.value
+      this.props.dispatch(updateAmountFilter(this.props.amountFilter))
+    }
   }
 
   increaseAmount() {
@@ -40,69 +51,44 @@ class AnnotatedResultFilterCard extends React.Component {
   render() {
     return (
       <div className="amount-result-filter-card--container">
-        <div className={classnames('amount-result-filter-card mb-2', { active: this.props.selected })}>
-          <Card
-            as={'div'}
-            className={classnames(
-              'amount-result-filter-card__body',
-              { disabled: this.props.disabled },
-              this.props.amountFilter.resourceModel.summaryBackgroundColorClass
-            )}
+        <div className="amount-result-filter-card__header">
+          <p className="amount-result-filter-card__label">
+            {this.props.amountFilter.resourceModel.dashboardLabel || this.props.amountFilter.resourceModel.label}
+            <span className="amount-result-filter-card__info info-section">
+              <InfoModalButton modalConstant={this.props.amountFilter.resourceModel.resourceConstant} />
+            </span>
+          </p>
+          <Toggle
+            tabindex={0}
+            className="round-toggle"
+            handleClassName="round-toggle-handle"
+            on="On"
+            off="Off"
+            onClassName="round-toggle-on"
+            offClassName="round-toggle-off"
+            onKeyDown={e => spaceEnterKeyDownHandler(e, e => this.handleClick(e, this.props.amountFilter))}
+            onClick={(target, value, e) => this.handleClick(e, this.props.amountFilter)}
+            handlestyle="light"
+            onstyle="success"
+            offstyle="light"
+            active={this.props.selected}
             disabled={this.props.disabled}
-          >
-            <div
-              tabIndex="-1"
-              role="button"
-              onKeyDown={e => spaceEnterKeyDownHandler(e, this.props.handleClick)}
-              onClick={this.props.handleClick}
-              className={classnames('amount-result-filter-card__body--inner-wrapper')}
-            >
-              <div className="amount-result-filter-card__header">
-                <h6 className="amount-result-filter-card__title">
-                  {this.props.amountFilter.resourceModel.dashboardLabel || this.props.amountFilter.resourceModel.label}
-                </h6>
-                <span className="amount-result-filter--deselect">
-                  <FontAwesomeIcon icon={faTimes} size="1x" />
-                </span>
-                <span className="amount-result-filter--select">
-                  <FontAwesomeIcon icon={faPlus} size="1x" />
-                </span>
-              </div>
-              <hr />
-              <div className="amount-result-filter-card__filter">
-                <div className="amount-result-filter-card__input--prefix">
-                  at least: <span className="amount-result-filter-card__input">{this.props.amountFilter.value}</span>
-                </div>
-              </div>
-              <div className="amount-result-filter-card__total">
-                <div className="amount-result-filter-card__total--prefix">Properties:&nbsp;</div>
-                <div className="amount-result-filter-card__total--value">{this.props.calculatedTotal}</div>
-              </div>
-            </div>
-          </Card>
-          <div className="amount-result-filter-card__controls">
-            <div
-              className="amount-result-filter-card__arrow"
-              tabIndex="-1"
-              role="button"
-              onKeyDown={e => spaceEnterKeyDownHandler(e, this.increaseAmount)}
-              onClick={this.increaseAmount}
-            >
-              <FontAwesomeIcon icon={faArrowUp} />
-            </div>
-            <div
-              className="amount-result-filter-card__arrow"
-              tabIndex="-1"
-              role="button"
-              onKeyDown={e => spaceEnterKeyDownHandler(e, this.decreaseAmount)}
-              onClick={this.decreaseAmount}
-            >
-              <FontAwesomeIcon icon={faArrowDown} />
-            </div>
-          </div>
+          />
         </div>
-        <div className="amount-result-filter-card__info info-section">
-          <InfoModalButton modalConstant={this.props.amountFilter.resourceModel.resourceConstant} />
+        <div className="amount-result-filter-card__filter">
+          There are <span>{this.props.calculatedTotal}</span> properties with at least{' '}
+          {this.props.selected ? (
+            <AmountFilterInput onSubmit={this.handleFilterChange} value={this.props.amountFilter.value} />
+          ) : (
+            <span>{this.props.amountFilter.value}</span>
+          )}{' '}
+          <span>
+            {grammaticalNoun(
+              this.props.amountFilter.resourceModel.dashboardLabel || this.props.amountFilter.resourceModel.label,
+              this.props.amountFilter.value
+            )}
+            .
+          </span>
         </div>
       </div>
     )

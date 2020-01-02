@@ -9,11 +9,8 @@ import UserContext from 'Auth/UserContext'
 import AnnotatedResultFilterCard from 'DistrictDashboard/AnnotatedResultFilterCard'
 import ResultFilterError from 'shared/components/ResultFilterError'
 import { setHousingTypeResultFilter, setDashboardTableState } from 'Store/DashboardState/actions'
-import { spaceEnterKeyDownHandler } from 'shared/utilities/accessibilityUtils'
 
 import ModalContext from 'Modal/ModalContext'
-import Toggle from 'react-bootstrap-toggle'
-
 import LoginModal from 'shared/components/modals/LoginModal'
 import LoginModalFooter from 'shared/components/forms/LoginForm/LoginModalFooter'
 import { fireFilterSelectEvent } from 'Store/Analytics/actions'
@@ -54,16 +51,13 @@ const DistrictFilterSection = props => {
     }
   }
 
-  const handleClick = (e, amountFilter) => {
-    e.preventDefault()
-    handleResultFilterClick(amountFilter)
-  }
-
   return (
     <UserContext.Consumer>
       {auth => {
         return (
           <div className="district-filter-section">
+            <p className="district-filter-section__title">Datasets:</p>
+
             {props.dashboardState.resultFilters
               .filter(f => f.category === 'AMOUNT')
               .map((amountFilter, index) => {
@@ -93,24 +87,6 @@ const DistrictFilterSection = props => {
                   </ModalContext.Consumer>
                 ) : (
                   <div>
-                    <p className="district-filter-section__label">
-                      {amountFilter.resourceModel.dashboardLabel || amountFilter.resourceModel.label}
-                    </p>
-                    <Toggle
-                      tabindex={0}
-                      className="round-toggle"
-                      handleClassName="round-toggle-handle"
-                      on="On"
-                      off="Off"
-                      onClassName="round-toggle-on"
-                      offClassName="round-toggle-off"
-                      onKeyDown={e => spaceEnterKeyDownHandler(e, e => handleClick(e, amountFilter))}
-                      onClick={(target, value, e) => handleClick(e, amountFilter)}
-                      handlestyle="light"
-                      onstyle="success"
-                      offstyle="light"
-                      active={!props.customView && props.dashboardState.selectedFilters.includes(amountFilter)}
-                    />
                     <AnnotatedResultFilterCard
                       auth={auth}
                       key={`request-summary-${amountFilter.category}-${index}`}
