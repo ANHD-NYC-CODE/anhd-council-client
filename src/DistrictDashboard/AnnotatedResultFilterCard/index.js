@@ -13,6 +13,7 @@ import LoginModalFooter from 'shared/components/forms/LoginForm/LoginModalFooter
 import InfoModalButton from 'shared/components/InfoModalButton'
 import { spaceEnterKeyDownHandler } from 'shared/utilities/accessibilityUtils'
 import { grammaticalNoun } from 'shared/utilities/languageUtils'
+import classnames from 'classnames'
 
 import Toggle from 'react-bootstrap-toggle'
 
@@ -107,7 +108,7 @@ class AnnotatedResultFilterCard extends React.Component {
             }}
           </ModalContext.Consumer>
         ) : (
-          <div className="amount-result-filter-card__filter">
+          <div className={classnames('amount-result-filter-card__filter', { active: this.props.selected })}>
             There are <span>{this.props.calculatedTotal}</span> properties with at least{' '}
             {this.props.selected ? (
               <AmountFilterInput onSubmit={this.handleFilterChange} value={this.props.amountFilter.value} />
