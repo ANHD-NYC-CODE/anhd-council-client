@@ -47,7 +47,7 @@ const PropertySummaryBody = props => {
             <span className="profile-summary-body__label">Zip Code</span>
             <span className="d-flex profile-summary-body__value profile-summary__geography">
               {props.profile.zipcode} (
-              <BaseLink href={geographyToLink('ZIP_CODE', props.profile.zipcode)}>Visit</BaseLink>)
+              <BaseLink href={geographyToLink('ZIPCODE', props.profile.zipcode)}>Visit</BaseLink>)
             </span>
           </div>
         </div>

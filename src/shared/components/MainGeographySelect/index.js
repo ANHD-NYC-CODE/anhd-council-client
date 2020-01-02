@@ -1,10 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import * as b from 'shared/constants/geographies'
-import { getGeographyIdOptions } from 'shared/utilities/componentUtils'
+import { getGeographyIdOptions, getZipCodeSelectOptions } from 'shared/components/GeographySelect/utils'
 import { Form, Button } from 'react-bootstrap'
 import StandardizedInput from 'shared/classes/StandardizedInput'
 import LeafletMap from 'LeafletMap'
+import CustomSelect from 'shared/components/CustomSelect'
 
 import ConfigContext from 'Config/ConfigContext'
 import FormError from 'shared/components/FormError'
@@ -73,8 +74,11 @@ class MainGeographySelect extends React.Component {
                   <option disabled value={-1} key={-1}>
                     {this.props.placeholder || 'Select'}
                   </option>
-                  <option value={b.COUNCILGEOGRAPHY.constant}>{b.COUNCILGEOGRAPHY.name}</option>
-                  <option value={b.COMMUNITYGEOGRAPHY.constant}>{b.COMMUNITYGEOGRAPHY.name}</option>
+                  <option value={b.COUNCIL_GEOGRAPHY.constant}>{b.COUNCIL_GEOGRAPHY.name}</option>
+                  <option value={b.COMMUNITY_GEOGRAPHY.constant}>{b.COMMUNITY_GEOGRAPHY.name}</option>
+                  <option value={b.STATE_ASSEMBLY_GEOGRAPHY.constant}>{b.STATE_ASSEMBLY_GEOGRAPHY.name}</option>
+                  <option value={b.STATE_SENATE_GEOGRAPHY.constant}>{b.STATE_SENATE_GEOGRAPHY.name}</option>
+                  <option value={b.ZIPCODE_GEOGRAPHY.constant}>{b.ZIPCODE_GEOGRAPHY.name}</option>
                 </Form.Control>
                 <FormError
                   show={
@@ -87,30 +91,56 @@ class MainGeographySelect extends React.Component {
                 />
                 {!!(this.props.currentGeographyType || this.props.changingGeographyType) && (
                   <div>
-                    <Form.Control
-                      required
-                      as="select"
-                      data-key="id"
-                      name="geographyId"
-                      onChange={this.passChangeGeography}
-                      placeholder="#"
-                      className={classnames(this.props.selectClass, {
-                        valued: this.props.currentGeographyId || this.props.changingGeographyId,
-                      })}
-                      size={this.props.inputSize}
-                      value={this.props.changingGeographyId || this.props.currentGeographyId || -1}
-                      onBlur={this.props.handleBlur}
-                      isInvalid={
-                        ((this.props.touched || {}).geographyId || !!this.props.submitCount) &&
-                        (this.props.errors || {}).geographyId
-                      }
-                    >
-                      {getGeographyIdOptions(
-                        config.councilDistricts,
-                        config.communityDistricts,
-                        this.props.changingGeographyType || this.props.currentGeographyType
-                      )}
-                    </Form.Control>
+                    {this.props.changingGeographyType === b.ZIPCODE_GEOGRAPHY.constant ||
+                    (this.props.currentGeographyType === b.ZIPCODE_GEOGRAPHY.constant &&
+                      !!this.props.currentGeographyId &&
+                      !this.props.changingGeographyType) ? (
+                      <CustomSelect
+                        required
+                        data-key="id"
+                        name="geographyId"
+                        onChange={this.passChangeGeography}
+                        value={
+                          (this.props.changingGeographyId || this.props.currentGeographyId) > 0
+                            ? {
+                                value: this.props.changingGeographyId || this.props.currentGeographyId,
+                                label: this.props.changingGeographyId || this.props.currentGeographyId,
+                              }
+                            : ''
+                        }
+                        options={getZipCodeSelectOptions(config.zipCodes)}
+                        size={this.props.selectClass}
+                        placeholder="Enter Zip Code..."
+                      />
+                    ) : (
+                      <Form.Control
+                        required
+                        as="select"
+                        data-key="id"
+                        name="geographyId"
+                        onChange={this.passChangeGeography}
+                        placeholder="#"
+                        className={classnames(this.props.selectClass, {
+                          valued: this.props.currentGeographyId || this.props.changingGeographyId,
+                        })}
+                        size={this.props.inputSize}
+                        value={this.props.changingGeographyId || this.props.currentGeographyId || -1}
+                        onBlur={this.props.handleBlur}
+                        isInvalid={
+                          ((this.props.touched || {}).geographyId || !!this.props.submitCount) &&
+                          (this.props.errors || {}).geographyId
+                        }
+                      >
+                        {getGeographyIdOptions(
+                          config.councilDistricts,
+                          config.communityDistricts,
+                          config.stateAssemblies,
+                          config.stateSenates,
+                          config.zipCodes,
+                          this.props.changingGeographyType || this.props.currentGeographyType
+                        )}
+                      </Form.Control>
+                    )}
                     <FormError
                       show={
                         !!(
