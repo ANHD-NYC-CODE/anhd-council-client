@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import CsvButton from 'shared/components/buttons/CsvButton'
 import { SizePerPageDropdownStandalone } from 'react-bootstrap-table2-paginator'
 import { CSVExport } from 'react-bootstrap-table2-toolkit'
-
+import classnames from 'classnames'
 import './style.scss'
 
 const BaseTableHeader = props => {
@@ -47,7 +47,7 @@ const BaseTableHeader = props => {
   }
 
   return (
-    <div className="base-table-header">
+    <div className={classnames('base-table-header', props.headerClass)}>
       <div className="text-right d-flex justify-content-start align-items-center">
         {getTableSize(props.paginationProps, props.recordsSize)}
       </div>

@@ -247,6 +247,7 @@ class BaseTable extends React.Component {
                       <div>
                         {HeaderComponent}
                         <BaseTableHeader
+                          headerClass={this.props.headerClass}
                           records={this.props.records}
                           recordsSize={this.props.recordsSize}
                           csvProps={toolKitProps.csvProps}
@@ -332,7 +333,6 @@ BaseTable.defaultProps = {
 
 BaseTable.propTypes = {
   annotationStart: PropTypes.string,
-  caption: PropTypes.string,
   classes: PropTypes.string,
   dispatch: PropTypes.func,
   error: PropTypes.object,
