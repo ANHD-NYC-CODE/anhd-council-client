@@ -56,9 +56,12 @@ class ConfigLoader extends React.Component {
         <div className="loading__wrapper d-flex flex-column align-items-center justify-content-center">
           <InnerLoader
             className={classnames('loading__background', {
-              'bg-nyc-blue-lighten-10': this.lengthCompleted(this.props) === 1,
-              'bg-nyc-blue-lighten-15': this.lengthCompleted(this.props) === 2,
-              'bg-nyc-blue-lighten-20': this.lengthCompleted(this.props) === 3,
+              'bg-nyc-blue-lighten-5': this.lengthCompleted(this.props) === 1,
+              'bg-nyc-blue-lighten-10': this.lengthCompleted(this.props) === 2,
+              'bg-nyc-blue-lighten-15': this.lengthCompleted(this.props) === 3,
+              'bg-nyc-blue-lighten-20': this.lengthCompleted(this.props) === 4,
+              'bg-nyc-blue-lighten-25': this.lengthCompleted(this.props) === 5,
+              'bg-nyc-blue-lighten-30': this.lengthCompleted(this.props) === 6,
             })}
             height="calc(100vh - 40px)"
           />
@@ -71,11 +74,12 @@ class ConfigLoader extends React.Component {
               />
             </div>
             {this.props.monitoredRequests.map((request, index) => {
+              const requestName = request.replace('GET_', '').replace('_', ' ')
               return (
                 <div key={`loading-request-monitor-${index}`}>
                   {this[request](this.props.loadingReducer) ? (
                     <div className="text-right">
-                      <b className="text-white">{request.replace('GET_', '')}:</b>
+                      <b className="text-white">{requestName}:</b>
                       <b className="text-white">
                         {' '}
                         <FontAwesomeIcon icon={faSpinner} />
@@ -83,7 +87,7 @@ class ConfigLoader extends React.Component {
                     </div>
                   ) : (
                     <div className="text-right">
-                      <b className="text-white">{request.replace('GET_', '')}:</b>
+                      <b className="text-white">{requestName}:</b>
                       <b className="text-success">
                         <FontAwesomeIcon icon={faCheck} />
                       </b>

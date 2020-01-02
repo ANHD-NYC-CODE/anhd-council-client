@@ -10,6 +10,9 @@ import { authReducer } from 'Store/Auth/reducers'
 import { datasetReducer } from 'Store/Dataset/reducers'
 import { councilReducer } from 'Store/Council/reducers'
 import { communityReducer } from 'Store/Community/reducers'
+import { stateAssemblyReducer } from 'Store/StateAssembly/reducers'
+import { stateSenateReducer } from 'Store/StateSenate/reducers'
+import { zipCodeReducer } from 'Store/ZipCode/reducers'
 import { buildingReducer } from 'Store/Building/reducers'
 import { appStateReducer } from 'Store/AppState/reducers'
 import { advancedSearchReducer } from 'Store/AdvancedSearch/reducers'
@@ -29,6 +32,9 @@ export default history =>
     search: searchReducer,
     council: councilReducer,
     community: communityReducer,
+    stateAssembly: stateAssemblyReducer,
+    stateSenate: stateSenateReducer,
+    zipCode: zipCodeReducer,
     building: buildingReducer,
     advancedSearch: advancedSearchReducer,
   })
