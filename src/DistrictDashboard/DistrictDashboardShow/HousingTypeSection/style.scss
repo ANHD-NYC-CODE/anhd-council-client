@@ -1,0 +1,12 @@
+@import 'shared/styles/_variables.scss';
+
+.housingtype-section {
+  min-width: 240px;
+
+  .housingtype-section__label {
+    @extend %p3-font-size;
+    color: $black;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+}

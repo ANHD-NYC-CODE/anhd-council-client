@@ -100,7 +100,7 @@ class BugReportForm extends React.Component {
                 />
               </Form.Group>
 
-              <Button block disabled={this.props.loading} variant="primary" type="submit">
+              <Button className="btn-loader" block disabled={this.props.loading} variant="primary" type="submit">
                 <span>Submit</span>
                 <div className="button-loader__container">{this.props.loading && <SpinnerLoader size="20px" />}</div>
               </Button>

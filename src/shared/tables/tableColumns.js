@@ -1,7 +1,6 @@
 import React from 'react'
 import * as c from 'shared/constants'
 import { textFilter } from 'react-bootstrap-table2-filter'
-import TableConfig from 'shared/classes/TableConfig'
 import ExpandedLinkRow from 'shared/components/BaseTable/ExpandedLinkRow'
 import { push } from 'connected-react-router'
 import { addressResultToPath } from 'shared/utilities/routeUtils'
@@ -271,6 +270,7 @@ export const getTableColumns = ({
     csvFormatter,
     component = ExpandedLinkRow,
     columnEvent,
+    headerSortingClasses = 'base-table__sorting-header',
   }) => {
     return {
       key,
@@ -284,6 +284,7 @@ export const getTableColumns = ({
       hidden,
       csvExport,
       csvFormatter,
+      headerSortingClasses,
       events: {
         onClick: (e, column, columnIndex, row, rowIndex) => {
           if (columnEvent) return columnEvent({ e, column, row, component })
@@ -1313,8 +1314,7 @@ export const getTableColumns = ({
         constructStandardColumn({
           columnEvent: expandColumnEvent,
           classes: 'expandable-cell',
-          dataField: 'acrisrealparties',
-          key: 'acrisparties1',
+          dataField: 'partiesFrom',
           text: 'Parties-1 (From)',
           formatter: acrisParties1Formatter,
           csvFormatter: acrisParties1Formatter,
@@ -1323,8 +1323,7 @@ export const getTableColumns = ({
         constructStandardColumn({
           columnEvent: expandColumnEvent,
           classes: 'expandable-cell',
-          dataField: 'acrisrealparties',
-          key: 'acrisparties2',
+          dataField: 'partiesTo',
           text: 'Parties-2 (To)',
           formatter: acrisParties2Formatter,
           csvFormatter: acrisParties2Formatter,

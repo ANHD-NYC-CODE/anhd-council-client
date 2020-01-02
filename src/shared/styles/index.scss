@@ -1,11 +1,12 @@
 @import './bootstrap/index.scss';
+@import './bootstrap/_bootstrap2toggle.scss';
 @import './_layout.scss';
 @import './_table.scss';
 @import './_print.scss';
 @import './_form.scss';
 @import './_buttons.scss';
-
 @import './_utility_classes.scss';
+@import './_typography.scss';
 
 body {
   padding: 0 !important;

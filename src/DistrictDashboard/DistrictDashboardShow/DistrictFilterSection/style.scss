@@ -1,0 +1,11 @@
+@import 'shared/styles/_variables.scss';
+
+.district-filter-section {
+  .district-filter-section__title {
+    @extend %p3-font-size;
+    color: $black;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+}

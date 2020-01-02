@@ -1,9 +1,19 @@
 .text-light-gray {
-  color: $light-gray;
+  color: $light-gray !important;
 }
 
 .text-dark-gray {
-  color: $gray-700;
+  color: $gray-700 !important;
+}
+
+.text-black,
+%text-black {
+  color: $black !important;
+}
+@each $key, $value in $grays {
+  .text-gray-#{$key} {
+    color: $value !important;
+  }
 }
 
 .custom-turqouise {
@@ -12,6 +22,14 @@
 
 .building-pink {
   background-color: $pink;
+}
+
+.tab-color--primary {
+  background-color: $tab-primary;
+}
+
+.tab-color--secondary {
+  background-color: $tab-secondary;
 }
 
 .acris-yellow {
@@ -141,4 +159,63 @@ label.toggle-link.active.btn-primary:not(:disabled).light.active {
 }
 .w-0 {
   width: 0% !important;
+}
+
+.blank-button,
+%blank-button {
+  cursor: pointer;
+  box-shadow: none;
+  border: none;
+  background: transparent;
+  outline: none;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:hover,
+  &:focus {
+    text-decoration: underline;
+  }
+}
+
+.text-link,
+%text-link {
+  @extend %blank-button;
+  color: $primary;
+  font-weight: bold;
+  padding: 0;
+
+  &:hover,
+  &:focus {
+    color: darken($primary, 10%);
+  }
+}
+
+%text-button {
+  box-shadow: none;
+  border: none;
+  outline: none;
+}
+
+.text-button--default {
+  @extend %text-button;
+  @extend %text-link;
+  @extend %p2-font-size;
+}
+
+.text-button--smaller {
+  @extend %text-button;
+  @extend %text-link;
+  @extend %p3-font-size;
+}
+
+.icon-button--right {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    margin-left: 10px;
+  }
 }

@@ -101,6 +101,7 @@ describe('AdvancedSearch', () => {
       expect(wrapper.find('select[name="geographyId"]')).toHaveLength(0)
 
       expect(wrapper.find('select[name="geographyType"]').props().value).toEqual(-1)
+      expect(wrapper.find('select[name="geographyType"] option')).toHaveLength(3)
       expect(wrapper.find('select[name="geographyType"] option')).toHaveLength(6)
       expect(wrapper.find('select[name="geographyType"]').text()).toEqual(
         'Select a geographyCouncil DistrictCommunity DistrictState AssemblyState SenateZipcode'

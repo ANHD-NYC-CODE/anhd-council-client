@@ -1,4 +1,4 @@
-@import 'shared/styles/bootstrap/_variables.scss';
+@import 'shared/styles/_variables.scss';
 
 .address-search,
 .address-search .table-hover tbody tr:hover {
@@ -9,4 +9,34 @@
 
 .address-search .table-hover tbody tr:hover {
   color: white;
+}
+
+.address-search {
+  &.main-address-search {
+    @extend %address-search;
+    max-width: $main-input-max-width;
+  }
+
+  &:not(.main-address-search) {
+    .search-bar__close,
+    .search-bar__loading {
+      position: absolute;
+      right: 5px;
+      top: 0;
+      height: 100%;
+      width: 50px;
+      z-index: 999;
+    }
+
+    .search-bar__close {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      svg {
+        background-color: transparent;
+      }
+    }
+  }
 }

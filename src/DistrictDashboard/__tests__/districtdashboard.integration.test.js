@@ -270,16 +270,6 @@ describe('DistrictDashboard', () => {
           createPropertyRequestMock({ bbl: 3, unitsres: 10 }),
         ]
         mock.onGet('/councils/1/properties/').reply(200, results)
-        // const [wrapper, store] = setupWrapper({
-        //   router: { location: { pathname: '/council/1' }, action: 'POP' },
-        // })
-        //
-        // expect(
-        //   wrapper
-        //     .find('div.geography-request-summary__container')
-        //     .at(5)
-        //     .text()
-        // ).toEqual('+ Add Custom Search')
 
         const [newWrapper, newStore] = setupWrapper({
           router: { location: { pathname: '/council/1' }, action: 'POP' },

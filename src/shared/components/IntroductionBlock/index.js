@@ -8,12 +8,12 @@ import './style.scss'
 const IntroductionBlock = props => {
   return (
     <Jumbotron className="introduction-block text-light mb-0">
-      <h3 className="mb-4">WELCOME TO DAP PORTAL [BETA]!</h3>
-      <p className="font-weight-bold">
+      <h3 className="mb-4">ABOUT</h3>
+      <p>
         DAP Portal is a comprehensive new research tool that includes dozens of datasets indicating harassment and
         potential displacement from New York City housing!
       </p>
-      <ModalContext.Consumer>
+      {/* <ModalContext.Consumer>
         {modal => {
           return (
             <p className="font-weight-bold">
@@ -37,7 +37,7 @@ const IntroductionBlock = props => {
             </p>
           )
         }}
-      </ModalContext.Consumer>
+      </ModalContext.Consumer> */}
 
       <p>
         The <BaseLink href="/lookup">Property Lookup</BaseLink> tool allows you to easily find all the relevant
@@ -45,13 +45,14 @@ const IntroductionBlock = props => {
       </p>
       <p>
         The <BaseLink href="/map">District Dashboard</BaseLink> allows you to see displacement threat indicators and
-        trends across your local City Council or Community Board.
+        trends across your local City Council, Community District, State Assembly District, State Senate District, or
+        Zip Code.
       </p>
       <p>
         The <BaseLink href="/search">Custom Search</BaseLink> allows you to produce custom maps and tables of buildings
         that meet your unique search criteria by querying dozens of housing and displacement-related datasets.
       </p>
-      <p>The DAP Portal is made possible by the support of the New York City Council.</p>
+      <p>The DAP Portal is made possible by the support of the New York City Council and New York State Senate.</p>
 
       {props.scrollToControls && (
         <div className="d-block d-lg-none my-5">
@@ -60,8 +61,7 @@ const IntroductionBlock = props => {
           </Button>
         </div>
       )}
-      <h3 className="mb-4">About the Displacement Alert Project</h3>
-      <hr />
+      <h3 className="mb-4">The Displacement Alert Project</h3>
       <p>
         For New Yorkers, stopping tenant displacement is one of the most urgent issues of the day.{' '}
         <BaseLink href="https://displacementalert.org">The Displacement Alert Project</BaseLink> is designed to address

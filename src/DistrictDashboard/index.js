@@ -16,6 +16,7 @@ import { isValidGeography } from 'shared/utilities/routeUtils'
 import PageError from 'shared/components/PageError'
 import { faMapSigns } from '@fortawesome/free-solid-svg-icons'
 import { Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
+import { Container } from 'react-bootstrap'
 
 class DistrictDashboard extends React.PureComponent {
   constructor(props) {
@@ -185,6 +186,7 @@ class DistrictDashboard extends React.PureComponent {
           <DistrictDashboardIndex
             appState={this.props.appState}
             cancelChangeGeography={this.cancelChangeGeography}
+            config={this.props.config}
             dispatch={this.props.dispatch}
             handleChangeGeography={this.submitGeography}
             handleChangeGeographyType={this.handleChangeGeographyType}
