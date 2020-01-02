@@ -62,7 +62,11 @@ class LookupLinks extends React.Component {
         <Col xs={12} className="small">
           <Row>
             <Col>
-              <BaseLink className="lookup-links__link" href={'http://www.oasisnyc.net/map.aspx'} text="Oasis" />
+              <BaseLink
+                className="lookup-links__link"
+                href={`http://www.oasisnyc.net/map.aspx?zoomto=lot:${this.props.property.bbl}`}
+                text="Oasis"
+              />
             </Col>
           </Row>
           <Row>
