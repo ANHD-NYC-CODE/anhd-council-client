@@ -25,14 +25,12 @@ export default class LeafletMap extends React.PureComponent {
     this.state = {
       height: this.props.height,
       hasError: false,
-      alertMessage: undefined,
       overrideWarning: false,
     }
     this.updateDimensions = this.updateDimensions.bind(this)
     this.centerMapOnGeography = this.centerMapOnGeography.bind(this)
     this.getGeographyBounds = this.getGeographyBounds.bind(this)
     this.getGeographyCenter = this.getGeographyCenter.bind(this)
-    this.setAlertMessage = this.setAlertMessage.bind(this)
     this.onMapZoom = this.onMapZoom.bind(this)
   }
 
@@ -60,9 +58,6 @@ export default class LeafletMap extends React.PureComponent {
 
   componentDidCatch(error, info) {
     return null
-  }
-  setAlertMessage(message) {
-    this.setState({ alertMessage: message })
   }
 
   centerMapOnGeography() {
@@ -124,11 +119,13 @@ export default class LeafletMap extends React.PureComponent {
         className={this.props.className}
         style={{ height: this.props.height || this.state.height, width: this.props.width || '100%' }}
       >
-        {this.state.alertMessage && (
+        {!this.state.overrideWarning && this.props.results.length > c.MAP_MARKER_LIMIT && (
           <MapAlertModal
-            alertMessage={this.state.alertMessage}
+            alertMessage={`More than ${
+              c.MAP_MARKER_LIMIT
+            } results will slow down this page. Apply a Housing Type and/or one or more Datasets to narrow down results or click below to proceed.`}
             alertVariant="light"
-            alertCta="Proceed"
+            alertCta="Display Results"
             action={() =>
               this.setState({
                 overrideWarning: true,
@@ -233,7 +230,6 @@ export default class LeafletMap extends React.PureComponent {
             overrideWarning={this.state.overrideWarning}
             results={this.props.results}
             iconConfig={this.props.iconConfig}
-            setAlertMessage={this.setAlertMessage}
             switchView={this.props.switchView}
             visible={!(this.props.appState.changingGeographyType && this.props.appState.changingGeographyId)}
           />

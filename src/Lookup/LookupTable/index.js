@@ -65,9 +65,6 @@ class LookupTable extends React.Component {
     return this.props.visible ? (
       <div className="lookup-table">
         <BaseTable
-          badge={this.props.badge}
-          property={this.props.property}
-          caption={this.props.caption}
           classes={this.props.classes}
           csvBaseFileName={this.constructBaseCsvFileName()}
           datasetModelName={constantToModelName(this.props.request.resourceModel.resourceConstant)}
@@ -81,6 +78,7 @@ class LookupTable extends React.Component {
           records={records}
           request={this.props.request}
           tableConfig={this.props.request.tableConfig}
+          headerClass="base-table-header--lookup"
           headerComponent={
             <LookupTableHeader
               badge={this.props.badge}

@@ -300,12 +300,13 @@ class DistrictDashboardShow extends React.Component {
                   annotationStart={
                     this.props.dashboardState.districtShowCustomView ? '' : this.props.dashboardState.mapFilterDate
                   }
-                  datasetModelName={this.props.propertySummaryRequest.tableConfig.datasetModelName}
+                  datasetModelName={this.props.propertySummaryRequest.resourceModel.resourceConstant}
                   dispatch={this.props.dispatch}
                   error={this.props.error}
                   errorAction={(this.props.error || {}).status === 504 ? this.retryRequest : null}
                   expandable={false}
                   loading={this.props.loading}
+                  recordsSize={resultRecords.length}
                   records={resultRecords}
                   showUpdate={false}
                   tableConfig={this.props.propertySummaryRequest.tableConfig}

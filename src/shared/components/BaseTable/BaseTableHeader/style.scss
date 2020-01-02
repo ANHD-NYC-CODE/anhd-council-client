@@ -1,7 +1,7 @@
 @import 'shared/styles/_variables.scss';
 
 .base-table-header {
-  background-color: $blizzard;
+  background-color: $white;
   border-radius: 6px 6px 0 0;
   color: $black;
   display: flex;
@@ -34,4 +34,8 @@
     display: flex;
     justify-content: center;
   }
+}
+
+.base-table-header--lookup {
+  background-color: $blizzard;
 }
