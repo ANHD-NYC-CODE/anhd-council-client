@@ -44,7 +44,7 @@ const AmountFilterInput = props => {
             Save
           </Button>
         )}
-        {value !== props.value && <Form.Text className="text-muted">(not saved)</Form.Text>}
+        {/* {value !== props.value && <Form.Text className="text-muted">(not saved)</Form.Text>} */}
       </Form.Group>
     </Form>
   )

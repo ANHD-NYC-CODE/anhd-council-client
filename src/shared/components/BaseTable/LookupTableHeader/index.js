@@ -26,7 +26,6 @@ const LookupTableHeader = props => {
         {getTableSubheaders({
           constant: props.resourceConstant,
           property: props.property,
-          hideGutters: props.hideHeaderGutters,
         })}
       </div>
     </div>
@@ -39,7 +38,6 @@ LookupTableHeader.defaultProps = {
 }
 
 LookupTableHeader.propTypes = {
-  hideHeaderGutters: PropTypes.bool,
   datasetModelName: PropTypes.string,
   headerClass: PropTypes.string,
   showUpdate: PropTypes.bool,

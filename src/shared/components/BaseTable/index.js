@@ -208,6 +208,7 @@ class BaseTable extends React.Component {
   }
 
   render() {
+    const HeaderComponent = this.props.headerComponent
     return (
       <PaginationProvider
         pagination={paginationFactory({
@@ -243,19 +244,8 @@ class BaseTable extends React.Component {
                     key={`table-${this.props.tableConfig.keyField}`}
                   >
                     {!this.props.nested && !!this.props.includeHeader && (
-                      <div className={classnames({ 'no-gutter': this.props.hideHeaderGutters })}>
-                        <div xs={12}>
-                          <LookupTableHeader
-                            badge={this.props.badge}
-                            hideHeaderGutters={this.props.hideHeaderGutters}
-                            property={this.props.property}
-                            resourceConstant={this.props.tableConfig.resourceConstant}
-                            datasetModelName={this.props.datasetModelName}
-                            dispatch={this.props.dispatch}
-                            showUpdate={this.props.showUpdate}
-                            title={this.props.caption}
-                          />
-                        </div>
+                      <div>
+                        {HeaderComponent}
                         <BaseTableHeader
                           records={this.props.records}
                           recordsSize={this.props.recordsSize}
@@ -333,7 +323,6 @@ class BaseTable extends React.Component {
 
 BaseTable.defaultProps = {
   globalTableState: {},
-  hideHeaderGutters: false,
   expandable: true,
   includeHeader: true,
   nested: false,
@@ -343,13 +332,13 @@ BaseTable.defaultProps = {
 
 BaseTable.propTypes = {
   annotationStart: PropTypes.string,
-  hideHeaderGutters: PropTypes.bool,
   caption: PropTypes.string,
   classes: PropTypes.string,
   dispatch: PropTypes.func,
   error: PropTypes.object,
   expandable: PropTypes.bool,
   globalTableState: PropTypes.object,
+  headerComponent: PropTypes.object,
   loading: PropTypes.bool,
   nested: PropTypes.bool,
   records: PropTypes.array,

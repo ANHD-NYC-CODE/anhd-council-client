@@ -6,6 +6,7 @@ import { requestWithAuth } from 'shared/utilities/authUtils'
 import { makeRequest } from 'Store/Request/actions'
 import { constantToModelName } from 'shared/utilities/filterUtils'
 import BaseTable from 'shared/components/BaseTable'
+import LookupTableHeader from 'shared/components/BaseTable/LookupTableHeader'
 
 class LookupTable extends React.Component {
   constructor(props) {
@@ -65,7 +66,6 @@ class LookupTable extends React.Component {
       <div className="lookup-table">
         <BaseTable
           badge={this.props.badge}
-          hideHeaderGutters={true}
           property={this.props.property}
           caption={this.props.caption}
           classes={this.props.classes}
@@ -81,6 +81,16 @@ class LookupTable extends React.Component {
           records={records}
           request={this.props.request}
           tableConfig={this.props.request.tableConfig}
+          headerComponent={
+            <LookupTableHeader
+              badge={this.props.badge}
+              property={this.props.property}
+              resourceConstant={this.props.request.resourceModel.resourceConstant}
+              datasetModelName={this.props.datasetModelName}
+              showUpdate={this.props.showUpdate}
+              title={this.props.caption}
+            />
+          }
         />
       </div>
     ) : null

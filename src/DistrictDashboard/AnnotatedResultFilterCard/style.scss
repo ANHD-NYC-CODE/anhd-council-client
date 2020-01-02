@@ -35,8 +35,13 @@
 
 .amount-result-filter-card__filter {
   @extend %p3-font-size;
+  color: $text-muted;
   margin-bottom: 20px;
-  padding-right: 20px;
+  padding-right: 40px;
+
+  &.active {
+    color: $black;
+  }
 
   .form-group {
     display: inline;
