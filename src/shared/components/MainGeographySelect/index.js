@@ -154,6 +154,9 @@ class MainGeographySelect extends React.Component {
                 <LeafletMap
                   councilDistricts={config.councilDistricts}
                   communityDistricts={config.communityDistricts}
+                  stateAssemblies={config.stateAssemblies}
+                  stateSenates={config.stateSenates}
+                  zipCodes={config.zipCodes}
                   className="main-geography-select__map"
                   selectGeographyData={config.selectGeographyData}
                   appState={this.props.appState}

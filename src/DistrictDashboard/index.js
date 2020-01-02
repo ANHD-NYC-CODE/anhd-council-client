@@ -23,7 +23,7 @@ class DistrictDashboard extends React.PureComponent {
     super(props)
 
     this.state = {
-      error404: props.geographyType && !isValidGeography(props.geographyType, props.geographyId),
+      error404: props.geographyType && !isValidGeography(props.config, props.geographyType, props.geographyId),
       error404Message: props.geographyType
         ? `Geography "${props.geographyType.toLowerCase()}" with id "${props.geographyId}" does not exist.`
         : '',
@@ -38,7 +38,7 @@ class DistrictDashboard extends React.PureComponent {
 
     this.syncGeographyMatch = this.syncGeographyMatch.bind(this)
 
-    if (props.geographyType && !isValidGeography(props.geographyType, props.geographyId)) {
+    if (props.geographyType && !isValidGeography(props.config, props.geographyType, props.geographyId)) {
       return
     } else if (!(props.geographyType && props.geographyId)) {
       props.dispatch(push('/map'))
@@ -71,7 +71,7 @@ class DistrictDashboard extends React.PureComponent {
     if (
       this.props.geographyType &&
       !this.state.error404 &&
-      !isValidGeography(this.props.geographyType, this.props.geographyId)
+      !isValidGeography(this.props.config, this.props.geographyType, this.props.geographyId)
     ) {
       this.trigger404Error(
         `Geography "${this.props.geographyType.toLowerCase()}" with id "${this.props.geographyId}" does not exist.`
@@ -144,8 +144,12 @@ class DistrictDashboard extends React.PureComponent {
   }
 
   handleChangeGeographyId(e) {
+    if (e.originalEvent) {
+      e.originalEvent.view.L.DomEvent.stopPropagation(e)
+    } else {
+      e.stopPropagation(e)
+    }
     const geographyId = new StandardizedInput(e).value
-
     if (parseInt(geographyId) <= 0) return
     this.props.dispatch(
       setAppState({
@@ -232,19 +236,18 @@ const makeMapStateToProps = () => {
     const errorSelector = createErrorSelector([state.appState.selectedRequests.map(request => request.requestConstant)])
 
     const selectRequests = makeSelectRequests
-    const pathMatch = state.router.location.pathname.match(/(council|community)/)
+    const pathMatch = state.router.location.pathname.match(/(council|community|state-assembly|state-senate|zipcode)/)
     const path = pathMatch ? pathMatch[0] : undefined
     const matchSelector = createMatchSelector({
       path: `/${path}/:id`,
     })
     const match = matchSelector(state)
-
     return {
       appState: state.appState,
       advancedSearch: state.advancedSearch,
       dashboardState: state.dashboardState,
       geographyId: match ? match.params.id : undefined,
-      geographyType: path ? path.toUpperCase() : undefined,
+      geographyType: path ? path.toUpperCase().replace('-', '_') : undefined,
       mapRequests: selectRequests(state),
       loading: loadingSelector(state),
       selectedError: errorSelector(state),

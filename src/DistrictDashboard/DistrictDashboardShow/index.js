@@ -275,6 +275,9 @@ class DistrictDashboardShow extends React.Component {
                   appState={this.props.appState}
                   councilDistricts={this.props.config.councilDistricts}
                   communityDistricts={this.props.config.communityDistricts}
+                  stateAssemblies={this.props.config.stateAssemblies}
+                  stateSenates={this.props.config.stateSenates}
+                  zipCodes={this.props.config.zipCodes}
                   currentGeographyType={this.props.appState.currentGeographyType}
                   closeGeographyPopup={this.props.endChangingState}
                   dispatch={this.props.dispatch}

@@ -29,6 +29,27 @@ const PropertySummaryBody = props => {
               <BaseLink href={geographyToLink('COMMUNITY', props.profile.cd)}>Visit</BaseLink>)
             </span>
           </div>
+          <div className="lookup-profile-summary__group">
+            <span className="profile-summary-body__label">State Assembly</span>
+            <span className="d-flex profile-summary-body__value profile-summary__geography">
+              {props.profile.stateassembly} (
+              <BaseLink href={geographyToLink('STATE_ASSEMBLY', props.profile.stateassembly)}>Visit</BaseLink>)
+            </span>
+          </div>
+          <div className="lookup-profile-summary__group">
+            <span className="profile-summary-body__label">State Senate</span>
+            <span className="d-flex profile-summary-body__value profile-summary__geography">
+              {props.profile.statesenate} (
+              <BaseLink href={geographyToLink('STATE_SENATE', props.profile.statesenate)}>Visit</BaseLink>)
+            </span>
+          </div>
+          <div className="lookup-profile-summary__group">
+            <span className="profile-summary-body__label">Zip Code</span>
+            <span className="d-flex profile-summary-body__value profile-summary__geography">
+              {props.profile.zipcode} (
+              <BaseLink href={geographyToLink('ZIP_CODE', props.profile.zipcode)}>Visit</BaseLink>)
+            </span>
+          </div>
         </div>
       )}
       <div className="lookup-profile-summary__group">
