@@ -51,7 +51,11 @@ class LookupLinks extends React.Component {
             )}&block=${this.props.property.bbl.slice(1, 6)}&lot=${this.props.property.bbl.slice(6, 10)}`}
             text="DOB Property Overview"
           />
-          <BaseLink className="lookup-links__link" href={'http://www.oasisnyc.net/map.aspx'} text="Oasis" />
+          <BaseLink
+            className="lookup-links__link"
+            href={`http://www.oasisnyc.net/map.aspx?zoomto=lot:${this.props.property.bbl}`}
+            text="Oasis"
+          />
         </div>
       </div>
     ) : null
