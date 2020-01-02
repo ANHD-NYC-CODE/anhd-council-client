@@ -1,12 +1,21 @@
+@import 'shared/styles/_variables.scss';
+
 .expandable-section {
+  outline: none;
+
   .expandable-section__above-fold {
     cursor: pointer;
+    outline: none;
     position: relative;
+    width: 100%;
   }
 
   .expandable-section__above-fold--icon {
     position: absolute;
     top: 0;
-    right: -15px;
+    right: 0;
+  }
+
+  .expandable-section__below-fold {
   }
 }

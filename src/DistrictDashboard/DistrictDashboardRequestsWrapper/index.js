@@ -9,7 +9,7 @@ import { makeRequest } from 'Store/Request/actions'
 import DistrictDashboardShow from 'DistrictDashboard/DistrictDashboardShow'
 import InnerLoader from 'shared/components/Loaders/InnerLoader'
 import { fireFilterSelectEvent } from 'Store/Analytics/actions'
-import { setHousingTypeResultFilter, setMapFilterDate } from 'Store/DashboardState/actions'
+import { setHousingTypeResultsIndex, setHousingTypeResultFilter, setMapFilterDate } from 'Store/DashboardState/actions'
 
 class DistrictDashboardRequestsWrapper extends React.PureComponent {
   constructor(props) {
@@ -74,9 +74,10 @@ class DistrictDashboardRequestsWrapper extends React.PureComponent {
     )
   }
 
-  switchSelectedFilter(filter) {
+  switchSelectedFilter(filter, index) {
     this.endChangingState()
     this.props.dispatch(setHousingTypeResultFilter(filter))
+    this.props.dispatch(setHousingTypeResultsIndex(index))
     this.props.dispatch(fireFilterSelectEvent(filter))
   }
 

@@ -24,13 +24,15 @@ const BaseModal = props => {
       {!!(props.sources || {}).length && (
         <Modal.Body>
           <p>Source(s):</p>
-          {props.sources.map((source, index) => {
-            return (
-              <div key={`source-${index}`}>
-                <BaseLink className="text-muted" href={source.url} text={source.text} />
-              </div>
-            )
-          })}
+          <div className="modal-sources">
+            {props.sources.map((source, index) => {
+              return (
+                <div key={`source-${index}`}>
+                  <BaseLink className="text-link" href={source.url} text={source.text} />
+                </div>
+              )
+            })}
+          </div>
         </Modal.Body>
       )}
 

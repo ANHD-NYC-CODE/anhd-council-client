@@ -1,1 +1,1 @@
-export const LOGIN_CTA = 'Login / Request an Account'
+export const LOGIN_CTA = 'Log in / Register to view'

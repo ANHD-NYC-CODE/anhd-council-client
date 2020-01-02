@@ -26,7 +26,7 @@ const tableConfig = new TableConfig({ resourceConstant: 'HPD_COMPLAINT' })
 const setupWrapper = (records, tableConfig) => {
   return mount(
     <ConfigContext.Provider
-      value={{ datasets: [{ model_name: 'hpdcomplaint', last_updated: '2018-01-01', version: '' }] }}
+      value={{ infoModals: {}, datasets: [{ model_name: 'hpdcomplaint', last_updated: '2018-01-01', version: '' }] }}
     >
       <BaseTable records={records} tableConfig={tableConfig} />
     </ConfigContext.Provider>
@@ -106,9 +106,10 @@ describe('BaseTable', () => {
       it('finds no matches', () => {
         const wrapper = setupWrapper(records, tableConfig)
         expect(wrapper.find('tbody tr')).toHaveLength(3)
+
         wrapper
           .find('.table-filter-button-group .table-filter-button')
-          .at(0)
+          .at(3)
           .simulate('click')
         jest.runAllTimers()
         wrapper.update()
@@ -140,8 +141,9 @@ describe('BaseTable', () => {
         expect(wrapper.find('tbody tr')).toHaveLength(3)
         wrapper
           .find('.table-filter-button-group .table-filter-button')
-          .at(0)
+          .at(3)
           .simulate('click')
+
         jest.runAllTimers()
         wrapper.update()
         expect(wrapper.find('tbody tr')).toHaveLength(2)
