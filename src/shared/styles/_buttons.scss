@@ -119,3 +119,9 @@ a.btn-link:hover {
     color: $black;
   }
 }
+
+// Custom bootstrap radios
+
+.custom-control-input:checked ~ .custom-control-label::before {
+  background-color: $primary;
+}
