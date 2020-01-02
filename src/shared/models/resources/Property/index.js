@@ -3,11 +3,12 @@ import * as c from 'shared/constants'
 
 import {
   comparisonOptions,
-  dateComparisonOptions,
+  rangeComparisonOptions,
   constructCountDateParamSet,
   constructSingleMapParamSet,
   constructDateRangeParamSet,
   amountComparisonOptions,
+  constructRangeParamSet,
   rentRegulatedProgramOptions,
 } from 'shared/utilities/filterUtils'
 import GenericFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/GenericFieldSet'
@@ -41,6 +42,12 @@ const Property = databaseObject => {
           return Object.keys(paramSets)
             .filter(key => !key.match(/(housingType)/))
             .concat('housingType_sh')
+            .filter(p => p)
+            .reduce((ps, key) => ((ps[key] = paramSets[key]), ps), {})
+        case 'mr':
+          return Object.keys(paramSets)
+            .filter(key => !key.match(/(housingType)/))
+            .concat('housingType_mr')
             .filter(p => p)
             .reduce((ps, key) => ((ps[key] = paramSets[key]), ps), {})
         default:
@@ -145,6 +152,7 @@ const Property = databaseObject => {
           })
         },
       },
+      // rent stabilized
       housingType_rs: {
         generatorFunction: (resourceModel, relatedResourceModel = undefined) => {
           return constructCountDateParamSet({
@@ -168,10 +176,9 @@ const Property = databaseObject => {
             dateHighComparison: 'end',
             dateLowValue: 2007,
             dateHighValue: 2017,
-            dateComparisonOptions: dateComparisonOptions({
+            rangeComparisonOptions: rangeComparisonOptions({
               comparisonValues: ['start', 'between'],
               labels: ['After', 'Range'],
-              type: 'DATE',
               rangeKey: 'rsUnitsRange',
             }),
             dateValidations: {
@@ -181,6 +188,7 @@ const Property = databaseObject => {
           })
         },
       },
+      // rent regulated
       housingType_rr_1: {
         generatorFunction: resourceModel => {
           return constructSingleMapParamSet({
@@ -197,6 +205,7 @@ const Property = databaseObject => {
           })
         },
       },
+      // rent regulated
       housingType_rr_2: {
         generatorFunction: resourceModel => {
           return constructDateRangeParamSet({
@@ -209,22 +218,39 @@ const Property = databaseObject => {
           })
         },
       },
+      // small homes
       housingType_sh: {
         generatorFunction: resourceModel => {
-          return constructSingleMapParamSet({
+          return constructRangeParamSet({
             resourceModel,
             paramSetLabel: 'Residential Units',
             paramMapField: 'unitsres',
-            paramMapValue: '4',
+            paramMapRole: 'MODIFIER',
+            lowValue: '1',
+            highValue: '4',
             paramMapComparison: 'lte',
             paramNoun: 'units',
-            defaultOptions: amountComparisonOptions({
-              comparisonValues: ['lte', 'exact'],
-              labels: ['At most', 'Exactly'],
-            }),
             validations: {
               min: 1,
-              max: 6,
+              max: 4,
+            },
+          })
+        },
+      },
+      // market rate
+      housingType_mr: {
+        generatorFunction: resourceModel => {
+          return constructRangeParamSet({
+            resourceModel,
+            paramSetLabel: 'Residential Units',
+            paramMapField: 'unitsres',
+            paramMapRole: 'MODIFIER',
+            lowValue: '1',
+            highValue: '5',
+            paramMapComparison: 'lte',
+            paramNoun: 'units',
+            validations: {
+              min: 1,
             },
           })
         },

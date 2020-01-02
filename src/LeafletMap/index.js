@@ -7,6 +7,7 @@ import { setDashboardMapZoom } from 'Store/DashboardState/actions'
 
 import { Map, TileLayer, Popup } from 'react-leaflet'
 import { Jumbotron, Button, Alert } from 'react-bootstrap'
+import MapAlertModal from 'LeafletMap/MapAlertModal'
 import GeographyGeoJson from 'LeafletMap/GeographyGeoJson'
 import GeographyMarkerLabels from 'LeafletMap/GeographyMarkerLabels'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -124,21 +125,16 @@ export default class LeafletMap extends React.PureComponent {
         style={{ height: this.props.height || this.state.height, width: this.props.width || '100%' }}
       >
         {this.state.alertMessage && (
-          <Alert className="leaflet-map__alert" variant="warning">
-            <span>{this.state.alertMessage}</span>
-            <Button
-              block
-              variant="primary"
-              size="sm"
-              onClick={() =>
-                this.setState({
-                  overrideWarning: true,
-                })
-              }
-            >
-              Proceed
-            </Button>
-          </Alert>
+          <MapAlertModal
+            alertMessage={this.state.alertMessage}
+            alertVariant="light"
+            alertCta="Proceed"
+            action={() =>
+              this.setState({
+                overrideWarning: true,
+              })
+            }
+          />
         )}
         <Map
           boxZoom={this.props.interactive}
