@@ -62,7 +62,7 @@ class LoginForm extends React.Component {
                 />
                 <FormError show={!!((submitCount || touched.password) && errors.password)} message={errors.password} />
               </Form.Group>
-              <Button block disabled={this.props.loading} variant="primary" type="submit">
+              <Button className="btn-loader" block disabled={this.props.loading} variant="primary" type="submit">
                 <span>Submit</span>
                 <div className="button-loader__container">{this.props.loading && <SpinnerLoader size="20px" />}</div>
               </Button>

@@ -1,6 +1,8 @@
 @import 'shared/styles/_variables.scss';
 
 .district-dashboard-show {
+  margin-bottom: 40px;
+
   .district-dashboard-container {
     padding: 0;
     width: 100%;
@@ -111,6 +113,10 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+  }
+
+  .district-dashboard-show__map {
+    position: relative;
   }
 
   .view-toggle__container {

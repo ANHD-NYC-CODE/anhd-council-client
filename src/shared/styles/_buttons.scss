@@ -16,6 +16,10 @@ button.btn-primary:disabled {
   background-color: lighten($info, 10%);
 }
 
+.btn-loader {
+  position: relative;
+}
+
 .btn--small {
   @extend %small-font-size;
 }

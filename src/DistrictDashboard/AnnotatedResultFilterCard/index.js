@@ -1,13 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Card, Form } from 'react-bootstrap'
-import classnames from 'classnames'
+import * as c from 'shared/constants'
 import StandardizedInput from 'shared/classes/StandardizedInput'
 import './style.scss'
 import { updateAmountFilter } from 'Store/DashboardState/actions'
 
 import AmountFilterInput from 'DistrictDashboard/AmountFilterInput'
+import ModalContext from 'Modal/ModalContext'
 
+import LoginModal from 'shared/components/modals/LoginModal'
+import LoginModalFooter from 'shared/components/forms/LoginForm/LoginModalFooter'
 import InfoModalButton from 'shared/components/InfoModalButton'
 import { spaceEnterKeyDownHandler } from 'shared/utilities/accessibilityUtils'
 import { grammaticalNoun } from 'shared/utilities/languageUtils'
@@ -22,6 +24,7 @@ class AnnotatedResultFilterCard extends React.Component {
     this.decreaseAmount = this.decreaseAmount.bind(this)
     this.handleClick = this.handleClick.bind(this)
     this.handleFilterChange = this.handleFilterChange.bind(this)
+    this.handleLoginClick = this.handleLoginClick.bind(this)
   }
 
   handleClick(e, amountFilter) {
@@ -48,7 +51,21 @@ class AnnotatedResultFilterCard extends React.Component {
     this.props.dispatch(updateAmountFilter(this.props.amountFilter))
   }
 
+  handleLoginClick(e, modal) {
+    e.preventDefault()
+    modal.setModal({
+      modalComponent: LoginModal,
+      modalProps: {
+        modalFooter: <LoginModalFooter modal={modal} />,
+      },
+    })
+  }
+
   render() {
+    const isUnauthorized =
+      (this.props.amountFilter.resourceModel.resourceConstant === 'FORECLOSURE' ||
+        this.props.amountFilter.resourceModel.resourceConstant === 'LISPENDEN') &&
+      !this.props.auth.user
     return (
       <div className="amount-result-filter-card--container">
         <div className="amount-result-filter-card__header">
@@ -71,25 +88,41 @@ class AnnotatedResultFilterCard extends React.Component {
             handlestyle="light"
             onstyle="success"
             offstyle="light"
-            active={this.props.selected}
-            disabled={this.props.disabled}
+            active={!isUnauthorized && this.props.selected}
+            disabled={isUnauthorized || this.props.disabled}
           />
         </div>
-        <div className="amount-result-filter-card__filter">
-          There are <span>{this.props.calculatedTotal}</span> properties with at least{' '}
-          {this.props.selected ? (
-            <AmountFilterInput onSubmit={this.handleFilterChange} value={this.props.amountFilter.value} />
-          ) : (
-            <span>{this.props.amountFilter.value}</span>
-          )}{' '}
-          <span>
-            {grammaticalNoun(
-              this.props.amountFilter.resourceModel.dashboardLabel || this.props.amountFilter.resourceModel.label,
-              this.props.amountFilter.value
-            )}
-            .
-          </span>
-        </div>
+        {isUnauthorized ? (
+          <ModalContext.Consumer>
+            {modal => {
+              return (
+                <button
+                  className="text-link"
+                  onClick={e => this.handleLoginClick(e, modal)}
+                  onKeyDown={e => spaceEnterKeyDownHandler(e, e => this.handleLoginClick(e, modal))}
+                >
+                  {c.LOGIN_CTA}
+                </button>
+              )
+            }}
+          </ModalContext.Consumer>
+        ) : (
+          <div className="amount-result-filter-card__filter">
+            There are <span>{this.props.calculatedTotal}</span> properties with at least{' '}
+            {this.props.selected ? (
+              <AmountFilterInput onSubmit={this.handleFilterChange} value={this.props.amountFilter.value} />
+            ) : (
+              <span>{this.props.amountFilter.value}</span>
+            )}{' '}
+            <span>
+              {grammaticalNoun(
+                this.props.amountFilter.resourceModel.dashboardLabel || this.props.amountFilter.resourceModel.label,
+                this.props.amountFilter.value
+              )}
+              .
+            </span>
+          </div>
+        )}
       </div>
     )
   }

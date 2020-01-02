@@ -321,19 +321,19 @@ export const generateResultFilter = ({ resourceModel, value = 5 } = {}) => {
 
 export const newMapResultFilters = ({ resourceModels } = {}) => {
   return [
+    generateResultFilter({ resourceModel: resourceModels['HPD_COMPLAINT'], value: 5 }),
+    generateResultFilter({ resourceModel: resourceModels['DOB_VIOLATION'], value: 10 }),
+    generateResultFilter({ resourceModel: resourceModels['DOB_COMPLAINT'], value: 2 }),
+    generateResultFilter({
+      resourceModel: resourceModels['DOB_FILED_PERMIT'],
+      value: 1,
+    }),
     generateResultFilter({
       resourceModel: resourceModels['ACRIS_REAL_MASTER'],
       value: 1,
     }),
-    generateResultFilter({ resourceModel: resourceModels['HPD_COMPLAINT'], value: 5 }),
-    generateResultFilter({ resourceModel: resourceModels['DOB_COMPLAINT'], value: 2 }),
     generateResultFilter({
       resourceModel: resourceModels['FORECLOSURE'],
-      value: 1,
-    }),
-    generateResultFilter({ resourceModel: resourceModels['HPD_VIOLATION'], value: 10 }),
-    generateResultFilter({
-      resourceModel: resourceModels['DOB_FILED_PERMIT'],
       value: 1,
     }),
   ]

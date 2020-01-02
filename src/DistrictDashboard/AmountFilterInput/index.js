@@ -35,12 +35,13 @@ const AmountFilterInput = props => {
           onChange={handleOnChange}
           onBlur={e => handleSubmit(e, value)}
           onKeyDown={e => spaceEnterKeyDownHandler(e, e => handleSubmit(e, value))}
+          size="sm"
           value={isChanging ? value : props.value}
         />
 
         {value !== props.value && (
           <Button variant="dark" type="submit" size="sm">
-            Go
+            Save
           </Button>
         )}
         {value !== props.value && <Form.Text className="text-muted">(not saved)</Form.Text>}
