@@ -114,7 +114,7 @@ class SubHeader extends React.Component {
             </Link>
             <Link
               className={classnames('sub-header__nav-tab tab--primary', {
-                active: this.props.pathname.match(/(map|council|community)/),
+                active: this.props.pathname.match(/(map|council|community|state-assembly|state-senate|zipcode)/),
               })}
               to={`${
                 this.props.currentGeographyType && this.props.currentGeographyId

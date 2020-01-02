@@ -213,6 +213,46 @@ const customStyle = size => {
           height: '60px',
         }),
       }
+    case 'main-geography-select':
+      return {
+        control: base => ({
+          ...base,
+          minHeight: '1px',
+          height: '38px',
+          border: '1px solid #b9b8b8',
+          boxShadow: 'none',
+        }),
+        dropdownIndicator: base => ({
+          ...base,
+          paddingTop: 0,
+          paddingBottom: 0,
+        }),
+        clearIndicator: base => ({
+          ...base,
+          paddingTop: 0,
+          paddingBottom: 0,
+        }),
+        container: base => ({
+          ...base,
+          marginTop: '0px',
+          minHeight: '1px',
+          height: '38px',
+        }),
+        menu: base => ({
+          ...base,
+          marginTop: '0px',
+          zIndex: '10',
+        }),
+        menuList: base => ({
+          ...base,
+          marginTop: '0px',
+        }),
+        valueContainer: base => ({
+          ...base,
+          marginTop: '0px',
+          minHeight: '1px',
+        }),
+      }
     default:
       return {
         control: base => ({

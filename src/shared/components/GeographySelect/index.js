@@ -75,7 +75,7 @@ class GeographySelect extends React.Component {
                 message={(this.props.errors || {}).geographyType}
               />
               {!!(this.props.currentGeographyType || this.props.changingGeographyType) && (
-                <div>
+                <div className={this.props.selectClass}>
                   {this.props.changingGeographyType === b.ZIPCODE_GEOGRAPHY.constant ||
                   (this.props.currentGeographyType === b.ZIPCODE_GEOGRAPHY.constant &&
                     !!this.props.currentGeographyId &&
