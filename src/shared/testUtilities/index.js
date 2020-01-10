@@ -74,6 +74,10 @@ export const configuredState = state => {
     resourceModels: setupResourceModels(mockDatasetsResponse),
   }
   const council = { districts: [mockGeography(1), mockGeography(2), mockGeography(3)] }
-  const community = { boards: [mockGeography(1)] }
-  return { dataset, council, community, ...state }
+  const community = { districts: [mockGeography(101), mockGeography(102)] }
+  const stateAssembly = { districts: [mockGeography(1)] }
+  const stateSenate = { districts: [mockGeography(1)] }
+  const zipCode = { districts: [mockGeography(1)] }
+
+  return { dataset, council, community, stateAssembly, stateSenate, zipCode, ...state }
 }

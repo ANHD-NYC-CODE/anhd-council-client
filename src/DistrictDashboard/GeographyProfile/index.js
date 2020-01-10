@@ -69,6 +69,23 @@ const renderLinks = props => {
           </Row>
         </Col>
       )
+    default:
+      return (
+        <Col>
+          <Row className="mb-2">
+            <BaseLink
+              href={'https://www1.nyc.gov/site/planning/data-maps/nyc-population/census-2010.page'}
+              text="Census & Demographic Data"
+            />
+          </Row>
+          <Row className="mb-2">
+            <BaseLink
+              href="https://popfactfinder.planning.nyc.gov/#12.25/40.724/-73.9868"
+              text="Population Fact Finder Map"
+            />
+          </Row>
+        </Col>
+      )
   }
 }
 

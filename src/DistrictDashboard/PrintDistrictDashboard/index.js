@@ -35,6 +35,9 @@ const PrintDistrictDashboard = props => {
             currentGeographyType={props.appState.currentGeographyType}
             councilDistricts={props.config.councilDistricts}
             communityDistricts={props.config.communityDistricts}
+            stateAssemblies={props.config.stateAssemblies}
+            stateSenates={props.config.stateSenates}
+            zipCodes={props.config.zipCodes}
             height="300px"
             width="300px"
             iconConfig="MULTIPLE"
