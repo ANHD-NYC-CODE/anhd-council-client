@@ -132,8 +132,8 @@ const customStyle = size => {
           border: 'none',
           borderBottom: '4px dotted #b9b8b8',
           borderRadius: 'none',
-          fontSize: '2rem',
-          lineHeight: '2.25',
+          fontSize: '1.2rem',
+          lineHeight: '2.0',
         }),
         dropdownIndicator: base => ({
           ...base,
@@ -149,8 +149,8 @@ const customStyle = size => {
           ...base,
           marginTop: '0px',
           minHeight: '1px',
-          height: '60px',
-          fontSize: '2rem',
+          height: '48px',
+          fontSize: '1.2rem',
         }),
         menu: base => ({
           ...base,
@@ -165,7 +165,7 @@ const customStyle = size => {
           ...base,
           marginTop: '0px',
           minHeight: '1px',
-          height: '60px',
+          height: '48px',
         }),
       }
     case 'navbar-select':
@@ -210,7 +210,7 @@ const customStyle = size => {
           ...base,
           marginTop: '0px',
           minHeight: '1px',
-          height: '60px',
+          height: '48px',
         }),
       }
     default:
