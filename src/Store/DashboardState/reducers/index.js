@@ -11,6 +11,7 @@ export const initialState = {
   districtShowCustomView: false,
   resultRecords: [],
   housingTypeResults: [],
+  housingTypeResultsIndex: 0,
   totalPropertyResults: [],
   customSearchResults: [],
   dashboardTableView: false, // Showing the map vs the table in dashboard
@@ -103,6 +104,12 @@ export const dashboardStateReducer = (state = Object.freeze(initialState), actio
           state,
           housingTypeResultFilter: action.housingTypeResultFilter,
         }),
+      }
+    }
+    case c.SET_HOUSING_TYPE_RESULTS_INDEX: {
+      return {
+        ...state,
+        housingTypeResultsIndex: action.housingTypeResultsIndex,
       }
     }
     case c.LOAD_RESULT_FILTERS: {

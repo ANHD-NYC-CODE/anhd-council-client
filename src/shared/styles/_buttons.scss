@@ -16,8 +16,12 @@ button.btn-primary:disabled {
   background-color: lighten($info, 10%);
 }
 
-.btn {
+.btn-loader {
   position: relative;
+}
+
+.btn--small {
+  @extend %small-font-size;
 }
 
 .button-loader__container {
@@ -57,4 +61,67 @@ a.btn-link:hover {
   color: $gray-300 !important;
   cursor: initial;
   pointer-events: none;
+}
+
+.tab--disabled {
+  background-color: $tab-disabled;
+  color: $black;
+  outline: none;
+}
+
+.tab--primary {
+  background-color: $tab-primary;
+  color: $gray-900;
+  outline: none;
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: $tab-primary-hover;
+      color: $black;
+    }
+  }
+
+  &:focus {
+    background-color: $tab-primary-hover;
+    color: $black;
+    outline: none;
+  }
+
+  &.active {
+    background-color: $tab-primary-active;
+    color: $black;
+  }
+
+  &:disabled {
+    background-color: $tab-disabled;
+    color: $black;
+  }
+}
+
+.tab--secondary {
+  color: $gray-900;
+  background-color: $tab-secondary;
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: $tab-secondary-hover;
+      color: $black;
+    }
+  }
+
+  &.active {
+    background-color: $tab-secondary-active;
+    color: $black;
+  }
+
+  &:disabled {
+    background-color: $tab-disabled;
+    color: $black;
+  }
+}
+
+// Custom bootstrap radios
+
+.custom-control-input:checked ~ .custom-control-label::before {
+  background-color: $primary;
 }

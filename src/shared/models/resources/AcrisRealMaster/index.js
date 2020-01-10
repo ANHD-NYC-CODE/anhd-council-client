@@ -7,6 +7,17 @@ const AcrisRealMaster = databaseObject => ({
   summaryBackgroundColorClass: 'acris-yellow',
   label: 'Sales',
   sentenceNoun: 'Sales',
+  tableResultsConstructor: results => {
+    // maps party 1 and party 2 to their own fields
+    return [].concat(
+      ...results.map(sale => {
+        sale.partiesFrom = sale.acrisrealparties.filter(party => party.partytype === 1)
+        sale.partiesTo = sale.acrisrealparties.filter(party => party.partytype === 2)
+
+        return sale
+      })
+    )
+  },
   ownResourceFilters: {
     initial: {
       generatorFunction: resourceModel => {

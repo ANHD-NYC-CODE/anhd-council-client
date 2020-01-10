@@ -1,15 +1,71 @@
-@import 'shared/styles/bootstrap/_variables.scss';
+@import 'shared/styles/_variables.scss';
 
 .lookup-show {
-  .summary-result-card {
-    min-height: 80px;
-    height: 80px;
+  .lookup-show__row-wrapper {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    @include media-breakpoint-up(md) {
+      margin-left: $lookup-padding-size;
+      margin-right: 20px;
+    }
   }
-  //
-  // .building-card,
-  // .building-card * {
-  //   color: white;
-  // }
+
+  .lookup-show__top-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    // AddressDisplay
+    > div:first-child {
+      max-width: 660px;
+      width: 100%;
+    }
+
+    // Back to dashboard button
+    > div:last-child {
+      margin-left: $lookup-padding-size;
+      @include media-breakpoint-up(md) {
+        margin-left: auto;
+      }
+    }
+  }
+
+  .lookup-address-search {
+    @extend %address-search;
+  }
+
+  .lookup-show__content-wrapper {
+    display: block;
+
+    @include media-breakpoint-up(sm) {
+      display: flex;
+    }
+  }
+
+  .lookup-show__content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin-bottom: 40px;
+    overflow-x: auto;
+
+    @include media-breakpoint-up(sm) {
+      padding: 0 $lookup-padding-size;
+    }
+  }
+
+  .lookup-table {
+    margin-bottom: 20px;
+  }
+
+  .lookup-table-tab,
+  .result-card {
+    border-radius: 6px;
+    max-height: 40px;
+    min-height: 0;
+    height: 40px;
+    flex: 0 0 140px;
+    width: 140px;
+  }
 
   .lookup-show__data-address {
     border-bottom: 1px dotted $black;

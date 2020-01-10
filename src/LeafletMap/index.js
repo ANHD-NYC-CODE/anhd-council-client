@@ -7,6 +7,7 @@ import { setDashboardMapZoom } from 'Store/DashboardState/actions'
 
 import { Map, TileLayer, Popup } from 'react-leaflet'
 import { Jumbotron, Button, Alert } from 'react-bootstrap'
+import MapAlertModal from 'LeafletMap/MapAlertModal'
 import GeographyGeoJson from 'LeafletMap/GeographyGeoJson'
 import GeographyMarkerLabels from 'LeafletMap/GeographyMarkerLabels'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -24,14 +25,12 @@ export default class LeafletMap extends React.PureComponent {
     this.state = {
       height: this.props.height,
       hasError: false,
-      alertMessage: undefined,
       overrideWarning: false,
     }
     this.updateDimensions = this.updateDimensions.bind(this)
     this.centerMapOnGeography = this.centerMapOnGeography.bind(this)
     this.getGeographyBounds = this.getGeographyBounds.bind(this)
     this.getGeographyCenter = this.getGeographyCenter.bind(this)
-    this.setAlertMessage = this.setAlertMessage.bind(this)
     this.onMapZoom = this.onMapZoom.bind(this)
     this.allGeographiesLoaded = this.allGeographiesLoaded.bind(this)
     this.handleMapClick = this.handleMapClick.bind(this)
@@ -61,9 +60,6 @@ export default class LeafletMap extends React.PureComponent {
 
   componentDidCatch(error, info) {
     return null
-  }
-  setAlertMessage(message) {
-    this.setState({ alertMessage: message })
   }
 
   handleMapClick(e) {
@@ -136,24 +132,22 @@ export default class LeafletMap extends React.PureComponent {
       <div
         id="map"
         ref={this.mapContainerRef}
+        className={this.props.className}
         style={{ height: this.props.height || this.state.height, width: this.props.width || '100%' }}
       >
-        {this.state.alertMessage && (
-          <Alert className="leaflet-map__alert" variant="warning">
-            <span>{this.state.alertMessage}</span>
-            <Button
-              block
-              variant="primary"
-              size="sm"
-              onClick={() =>
-                this.setState({
-                  overrideWarning: true,
-                })
-              }
-            >
-              Proceed
-            </Button>
-          </Alert>
+        {!this.state.overrideWarning && this.props.results.length > c.MAP_MARKER_LIMIT && (
+          <MapAlertModal
+            alertMessage={`More than ${
+              c.MAP_MARKER_LIMIT
+            } results will slow down this page. Apply a Housing Type and/or one or more Datasets to narrow down results or click below to proceed.`}
+            alertVariant="light"
+            alertCta="Display Results"
+            action={() =>
+              this.setState({
+                overrideWarning: true,
+              })
+            }
+          />
         )}
         <Map
           boxZoom={this.props.interactive}
@@ -181,7 +175,8 @@ export default class LeafletMap extends React.PureComponent {
           )}
           <TileLayer
             attribution="mapbox"
-            url="https://api.mapbox.com/styles/v1/anhdnyc/cjtgo9wv009uw1fo0ubm7elun/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYW5oZG55YyIsImEiOiJjanQ0ZWRqaDcxMmRxNDlsbHV1OXN0aGx6In0.i07oerfvXtcRfm3npws7mA"
+            url="https://api.mapbox.com/styles/v1/lblok/cjk4889sb29b12splkdw0pzop/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGJsb2siLCJhIjoiY2o3djQ2ODd4MnVjMjJwbjBxZWZtZDB2ZiJ9.4gctlFUX_n0BzOAwbuL2aw"
+            // url="https://api.mapbox.com/styles/v1/anhdnyc/cjtgo9wv009uw1fo0ubm7elun/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYW5oZG55YyIsImEiOiJjanQ0ZWRqaDcxMmRxNDlsbHV1OXN0aGx6In0.i07oerfvXtcRfm3npws7mA"
           />
           {this.props.currentGeographyType === 'COMMUNITY' && (
             <TileLayer
@@ -268,7 +263,6 @@ export default class LeafletMap extends React.PureComponent {
             overrideWarning={this.state.overrideWarning}
             results={this.props.results}
             iconConfig={this.props.iconConfig}
-            setAlertMessage={this.setAlertMessage}
             switchView={this.props.switchView}
             visible={!(this.props.appState.changingGeographyType && this.props.appState.changingGeographyId)}
           />
@@ -295,6 +289,7 @@ LeafletMap.defaultProps = {
 
 LeafletMap.propTypes = {
   appState: PropTypes.object,
+  className: PropTypes.string,
   communityDistricts: PropTypes.array,
   councilDistricts: PropTypes.array,
   stateAssemblies: PropTypes.array,

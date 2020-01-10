@@ -4,8 +4,22 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faQuestion } from '@fortawesome/free-solid-svg-icons'
 import ConfigContext from 'Config/ConfigContext'
 import ModalContext from 'Modal/ModalContext'
+import { spaceEnterKeyDownHandler } from 'shared/utilities/accessibilityUtils'
+
 import './style.scss'
 const InfoModalButton = props => {
+  const handleClick = (e, modal, config) => {
+    e.preventDefault()
+
+    modal.setModal({
+      modalProps: {
+        title: config.infoModals[props.modalConstant].title,
+        body: config.infoModals[props.modalConstant].body,
+        sources: config.infoModals[props.modalConstant].sources,
+      },
+    })
+  }
+
   return (
     <ConfigContext.Consumer>
       {config => {
@@ -15,17 +29,11 @@ const InfoModalButton = props => {
             {modal => {
               return (
                 <FontAwesomeIcon
+                  tabIndex="0"
                   className="info-modal-button"
                   icon={faQuestion}
-                  onClick={() =>
-                    modal.setModal({
-                      modalProps: {
-                        title: config.infoModals[props.modalConstant].title,
-                        body: config.infoModals[props.modalConstant].body,
-                        sources: config.infoModals[props.modalConstant].sources,
-                      },
-                    })
-                  }
+                  onKeyDown={e => spaceEnterKeyDownHandler(e, e => handleClick(e, modal, config))}
+                  onClick={e => handleClick(e, modal, config)}
                 />
               )
             }}

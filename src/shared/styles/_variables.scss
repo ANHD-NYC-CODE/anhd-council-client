@@ -1,6 +1,92 @@
 @import 'shared/styles/bootstrap/_variables.scss';
 $input-border-focus: 4px dotted $primary;
 $input-border-focus-mobile: 2px dotted $primary;
-
+$input-border-focus-default: 1px solid $blizzard;
 $input-border: 4px dotted $gray-400;
 $input-border-mobile: 2px dotted $gray-400;
+
+// Main landing page variables
+$main-input-max-width: 440px;
+
+// Lookup Variables & Patterns
+$lookup-padding-size: 40px;
+$lookup-sidebar-padding: 25px;
+$lookup-sidebar-width: 333px;
+
+%address-search {
+  margin: 0 auto;
+
+  & input {
+    @extend %p3-font-size;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    overflow: hidden;
+  }
+
+  & button {
+    @extend %p3-font-size;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    overflow: hidden;
+  }
+
+  .search-results__wrapper {
+    margin-left: 15px;
+    width: calc(100% - 30px);
+  }
+
+  .search-bar__close,
+  .search-bar__loading {
+    position: absolute;
+    right: 80px;
+    top: 0;
+    height: 100%;
+    width: 25px;
+    z-index: 999;
+  }
+
+  .search-bar__close {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    svg {
+      background-color: transparent;
+    }
+  }
+}
+
+/* typography */
+
+%p1-font-size {
+  font-size: 16px;
+  line-height: 22px;
+
+  @include media-breakpoint-up(md) {
+    font-size: 18px;
+  }
+}
+
+%p2-font-size {
+  font-size: 14px;
+  line-height: 20px;
+
+  @include media-breakpoint-up(md) {
+    font-size: 16px;
+  }
+}
+
+%p3-font-size {
+  font-size: 12px;
+  line-height: 18px;
+
+  @include media-breakpoint-up(md) {
+    font-size: 14px;
+  }
+}
+
+%small-font-size {
+  font-size: 12px;
+  line-height: 16px;
+}

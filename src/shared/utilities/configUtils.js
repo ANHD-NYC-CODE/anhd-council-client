@@ -112,6 +112,128 @@ export const newLookupRequests = ({ bbl, bin, resourceModels } = {}) => {
       resourceConstant: 'EVICTION',
       resourceModel: resourceModels['EVICTION'],
     }),
+    bin
+      ? newBuildingRequest({
+          type: 'LOOKUP_FILTER',
+          bin: bin,
+          level: 'BUILDING',
+          resourceConstant: 'HPD_COMPLAINT',
+          resourceModel: resourceModels['HPD_COMPLAINT'],
+        })
+      : newPropertyRequest({
+          type: 'LOOKUP_FILTER',
+          bbl: bbl,
+          level: 'BUILDING',
+          resourceConstant: 'HPD_COMPLAINT',
+          resourceModel: resourceModels['HPD_COMPLAINT'],
+        }),
+    bin
+      ? newBuildingRequest({
+          type: 'LOOKUP_FILTER',
+          bin: bin,
+          level: 'BUILDING',
+          resourceConstant: 'HPD_VIOLATION',
+          resourceModel: resourceModels['HPD_VIOLATION'],
+        })
+      : newPropertyRequest({
+          type: 'LOOKUP_FILTER',
+          bbl: bbl,
+          level: 'BUILDING',
+          resourceConstant: 'HPD_VIOLATION',
+          resourceModel: resourceModels['HPD_VIOLATION'],
+        }),
+    bin
+      ? newBuildingRequest({
+          type: 'LOOKUP_FILTER',
+          bin: bin,
+          level: 'BUILDING',
+          resourceConstant: 'DOB_COMPLAINT',
+          resourceModel: resourceModels['DOB_COMPLAINT'],
+        })
+      : newPropertyRequest({
+          type: 'LOOKUP_FILTER',
+          bbl: bbl,
+          level: 'BUILDING',
+          resourceConstant: 'DOB_COMPLAINT',
+          resourceModel: resourceModels['DOB_COMPLAINT'],
+        }),
+    bin
+      ? newBuildingRequest({
+          type: 'LOOKUP_FILTER',
+          bin: bin,
+          level: 'BUILDING',
+          resourceConstant: 'DOB_VIOLATION',
+          resourceModel: resourceModels['DOB_VIOLATION'],
+        })
+      : newPropertyRequest({
+          type: 'LOOKUP_FILTER',
+          bbl: bbl,
+          level: 'BUILDING',
+          resourceConstant: 'DOB_VIOLATION',
+          resourceModel: resourceModels['DOB_VIOLATION'],
+        }),
+
+    bin
+      ? newBuildingRequest({
+          type: 'LOOKUP_FILTER',
+          bin: bin,
+          level: 'BUILDING',
+          resourceConstant: 'ECB_VIOLATION',
+          resourceModel: resourceModels['ECB_VIOLATION'],
+        })
+      : newPropertyRequest({
+          type: 'LOOKUP_FILTER',
+          bbl: bbl,
+          level: 'BUILDING',
+          resourceConstant: 'ECB_VIOLATION',
+          resourceModel: resourceModels['ECB_VIOLATION'],
+        }),
+    bin
+      ? newBuildingRequest({
+          type: 'LOOKUP_FILTER',
+          bin: bin,
+          level: 'BUILDING',
+          resourceConstant: 'DOB_FILED_PERMIT',
+          resourceModel: resourceModels['DOB_FILED_PERMIT'],
+        })
+      : newPropertyRequest({
+          type: 'LOOKUP_FILTER',
+          bbl: bbl,
+          level: 'BUILDING',
+          resourceConstant: 'DOB_FILED_PERMIT',
+          resourceModel: resourceModels['DOB_FILED_PERMIT'],
+        }),
+    bin
+      ? newBuildingRequest({
+          type: 'LOOKUP_FILTER',
+          bin: bin,
+          level: 'BUILDING',
+          resourceConstant: 'DOB_ISSUED_PERMIT',
+          resourceModel: resourceModels['DOB_ISSUED_PERMIT'],
+        })
+      : newPropertyRequest({
+          type: 'LOOKUP_FILTER',
+          bbl: bbl,
+          level: 'BUILDING',
+          resourceConstant: 'DOB_ISSUED_PERMIT',
+          resourceModel: resourceModels['DOB_ISSUED_PERMIT'],
+        }),
+
+    bin
+      ? newBuildingRequest({
+          type: 'LOOKUP_FILTER',
+          bin: bin,
+          level: 'BUILDING',
+          resourceConstant: 'HOUSING_LITIGATION',
+          resourceModel: resourceModels['HOUSING_LITIGATION'],
+        })
+      : newPropertyRequest({
+          type: 'LOOKUP_FILTER',
+          bbl: bbl,
+          level: 'BUILDING',
+          resourceConstant: 'HOUSING_LITIGATION',
+          resourceModel: resourceModels['HOUSING_LITIGATION'],
+        }),
     newPropertyRequest({
       type: 'LOOKUP_FILTER',
       bbl: bbl,
@@ -121,128 +243,6 @@ export const newLookupRequests = ({ bbl, bin, resourceModels } = {}) => {
       datasetModelName: constantToModelName('FORECLOSURE'),
       isAuthenticated: true,
     }),
-    bin
-      ? newBuildingRequest({
-          type: 'LOOKUP_FILTER',
-          bin: bin,
-          level: 'BUILDING',
-          resourceConstant: 'HPD_COMPLAINT',
-          resourceModel: resourceModels['HPD_COMPLAINT'],
-        })
-      : newPropertyRequest({
-          type: 'LOOKUP_FILTER',
-          bbl: bbl,
-          level: 'BUILDING',
-          resourceConstant: 'HPD_COMPLAINT',
-          resourceModel: resourceModels['HPD_COMPLAINT'],
-        }),
-    bin
-      ? newBuildingRequest({
-          type: 'LOOKUP_FILTER',
-          bin: bin,
-          level: 'BUILDING',
-          resourceConstant: 'HPD_VIOLATION',
-          resourceModel: resourceModels['HPD_VIOLATION'],
-        })
-      : newPropertyRequest({
-          type: 'LOOKUP_FILTER',
-          bbl: bbl,
-          level: 'BUILDING',
-          resourceConstant: 'HPD_VIOLATION',
-          resourceModel: resourceModels['HPD_VIOLATION'],
-        }),
-    bin
-      ? newBuildingRequest({
-          type: 'LOOKUP_FILTER',
-          bin: bin,
-          level: 'BUILDING',
-          resourceConstant: 'DOB_COMPLAINT',
-          resourceModel: resourceModels['DOB_COMPLAINT'],
-        })
-      : newPropertyRequest({
-          type: 'LOOKUP_FILTER',
-          bbl: bbl,
-          level: 'BUILDING',
-          resourceConstant: 'DOB_COMPLAINT',
-          resourceModel: resourceModels['DOB_COMPLAINT'],
-        }),
-    bin
-      ? newBuildingRequest({
-          type: 'LOOKUP_FILTER',
-          bin: bin,
-          level: 'BUILDING',
-          resourceConstant: 'DOB_VIOLATION',
-          resourceModel: resourceModels['DOB_VIOLATION'],
-        })
-      : newPropertyRequest({
-          type: 'LOOKUP_FILTER',
-          bbl: bbl,
-          level: 'BUILDING',
-          resourceConstant: 'DOB_VIOLATION',
-          resourceModel: resourceModels['DOB_VIOLATION'],
-        }),
-
-    bin
-      ? newBuildingRequest({
-          type: 'LOOKUP_FILTER',
-          bin: bin,
-          level: 'BUILDING',
-          resourceConstant: 'ECB_VIOLATION',
-          resourceModel: resourceModels['ECB_VIOLATION'],
-        })
-      : newPropertyRequest({
-          type: 'LOOKUP_FILTER',
-          bbl: bbl,
-          level: 'BUILDING',
-          resourceConstant: 'ECB_VIOLATION',
-          resourceModel: resourceModels['ECB_VIOLATION'],
-        }),
-    bin
-      ? newBuildingRequest({
-          type: 'LOOKUP_FILTER',
-          bin: bin,
-          level: 'BUILDING',
-          resourceConstant: 'DOB_FILED_PERMIT',
-          resourceModel: resourceModels['DOB_FILED_PERMIT'],
-        })
-      : newPropertyRequest({
-          type: 'LOOKUP_FILTER',
-          bbl: bbl,
-          level: 'BUILDING',
-          resourceConstant: 'DOB_FILED_PERMIT',
-          resourceModel: resourceModels['DOB_FILED_PERMIT'],
-        }),
-    bin
-      ? newBuildingRequest({
-          type: 'LOOKUP_FILTER',
-          bin: bin,
-          level: 'BUILDING',
-          resourceConstant: 'DOB_ISSUED_PERMIT',
-          resourceModel: resourceModels['DOB_ISSUED_PERMIT'],
-        })
-      : newPropertyRequest({
-          type: 'LOOKUP_FILTER',
-          bbl: bbl,
-          level: 'BUILDING',
-          resourceConstant: 'DOB_ISSUED_PERMIT',
-          resourceModel: resourceModels['DOB_ISSUED_PERMIT'],
-        }),
-
-    bin
-      ? newBuildingRequest({
-          type: 'LOOKUP_FILTER',
-          bin: bin,
-          level: 'BUILDING',
-          resourceConstant: 'HOUSING_LITIGATION',
-          resourceModel: resourceModels['HOUSING_LITIGATION'],
-        })
-      : newPropertyRequest({
-          type: 'LOOKUP_FILTER',
-          bbl: bbl,
-          level: 'BUILDING',
-          resourceConstant: 'HOUSING_LITIGATION',
-          resourceModel: resourceModels['HOUSING_LITIGATION'],
-        }),
   ].filter(r => !!r)
 }
 
@@ -321,19 +321,19 @@ export const generateResultFilter = ({ resourceModel, value = 5 } = {}) => {
 
 export const newMapResultFilters = ({ resourceModels } = {}) => {
   return [
+    generateResultFilter({ resourceModel: resourceModels['HPD_COMPLAINT'], value: 5 }),
+    generateResultFilter({ resourceModel: resourceModels['DOB_VIOLATION'], value: 10 }),
+    generateResultFilter({ resourceModel: resourceModels['DOB_COMPLAINT'], value: 2 }),
+    generateResultFilter({
+      resourceModel: resourceModels['DOB_FILED_PERMIT'],
+      value: 1,
+    }),
     generateResultFilter({
       resourceModel: resourceModels['ACRIS_REAL_MASTER'],
       value: 1,
     }),
-    generateResultFilter({ resourceModel: resourceModels['HPD_COMPLAINT'], value: 5 }),
-    generateResultFilter({ resourceModel: resourceModels['DOB_COMPLAINT'], value: 2 }),
     generateResultFilter({
       resourceModel: resourceModels['FORECLOSURE'],
-      value: 1,
-    }),
-    generateResultFilter({ resourceModel: resourceModels['HPD_VIOLATION'], value: 10 }),
-    generateResultFilter({
-      resourceModel: resourceModels['DOB_FILED_PERMIT'],
       value: 1,
     }),
   ]

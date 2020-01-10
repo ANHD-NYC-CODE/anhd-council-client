@@ -1,4 +1,4 @@
-@import 'shared/styles/bootstrap/_variables.scss';
+@import 'shared/styles/_variables.scss';
 
 table.table,
 .base-table,
@@ -6,15 +6,27 @@ table.table,
   table {
     background-color: $white;
   }
+
+  a {
+    font-weight: bold;
+  }
+
+  thead th {
+    outline: none;
+    padding-top: 10px;
+    vertical-align: top;
+  }
+
   thead th,
   tbody td {
-    font-size: 0.8rem;
+    @extend %p3-font-size;
 
     input {
       height: 30px;
       padding: 0 10px;
     }
   }
+
   tbody tr {
     cursor: pointer;
     transition: all 0s linear;
@@ -22,6 +34,29 @@ table.table,
     * {
       transition: all 0s linear;
     }
+  }
+
+  .sortable {
+    span {
+      font-size: 20px;
+    }
+  }
+
+  .sortable:hover {
+    span.order-4 {
+      color: $black;
+      font-weight: bold;
+
+      &::before,
+      &::after {
+        opacity: 1;
+      }
+    }
+  }
+
+  // pagination buttons
+  .page-item {
+    margin-right: 5px;
   }
 
   .table-sm td {
@@ -124,26 +159,28 @@ table.table,
     font-weight: bold;
   }
 
-  .table-header__share-column {
-    cursor: pointer;
-    color: $gray-400;
-  }
-
-  .table-header__share-column:hover {
-    text-decoration: underline;
-  }
-
   .page-link {
     padding: 5px 10px;
   }
 
   .dropdown-toggle {
-    background-color: white;
     padding: 5px 10px;
   }
 
-  .text-filter {
+  .base-table__select-filters {
+    background-color: $tab-primary;
+  }
+
+  .text-filter,
+  .text-filter:focus {
+    border: 1px solid $gray-400;
+    font-size: 12px;
+    line-height: 16px;
+    margin-top: 5px;
     margin-bottom: 0;
+    padding-left: 5px;
+    height: 20px;
+    border-radius: 0;
   }
 }
 
@@ -164,26 +201,20 @@ table.table,
 }
 
 .table-filter-button-group {
+  align-items: flex-start;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   flex-wrap: wrap;
-  max-height: 80px;
-  max-width: 220px;
+  justify-content: flex-start;
+  padding: 10px;
+  // max-height: 100px;
+  // max-width: 220px;
 
   .table-filter-button {
-    border-radius: 12px;
-    border: 1px solid $gray-500;
-    padding: 4px;
-    line-height: 100%;
-    margin: 4px 0;
+    margin-bottom: 10px;
+    margin-right: 5px;
+    min-width: 60px;
     max-width: 100px;
-  }
-
-  @media (hover: hover) {
-    .table-filter-button:hover {
-      background-color: $primary;
-      color: $white;
-    }
   }
 }
 

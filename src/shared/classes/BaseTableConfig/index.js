@@ -1,5 +1,7 @@
 import React from 'react'
 import { textFilter } from 'react-bootstrap-table2-filter'
+import { Button } from 'react-bootstrap'
+
 import classnames from 'classnames'
 export default class BaseTableConfig {
   constructor({ component = undefined } = {}) {
@@ -161,6 +163,7 @@ export default class BaseTableConfig {
   createFilterPrototype(constant, forceUpdate = false) {
     return {
       [constant]: textFilter({
+        placeholder: 'Search...',
         getFilter: filter => {
           this.filters[constant] = filter
         },
@@ -190,33 +193,34 @@ export default class BaseTableConfig {
     return selectedFilters => {
       return (
         <div key={`${filterConstant}`} className="table-filter-button-group">
+          <Button
+            className={`${classnames('table-filter-button')}`}
+            onClick={() => this.clearFilterGroup(filterConstant)}
+            size="sm"
+            variant={
+              !Object.keys(selectedFilters).find(key => key.includes(filterConstant) && selectedFilters[key])
+                ? 'dark'
+                : 'light'
+            }
+          >
+            {clearLabel}
+          </Button>
           {valuesArray.map((item, index) => {
             return (
-              <button
+              <Button
                 key={`button-${filterConstant}-${index}`}
-                className={`${classnames('table-filter-button', 'btn', {
-                  'btn-primary': !!selectedFilters[`${filterConstant}__ ${item.value}`],
-                })}`}
+                className={`${classnames('table-filter-button')}`}
+                variant={selectedFilters[`${filterConstant}__ ${item.value}`] ? 'dark' : 'light'}
+                size="sm"
                 onClick={e => {
                   this.clearFilterGroup(filterConstant)
                   this.filterFunctions[filterConstant](e, item.value)
                 }}
               >
                 {item.label}
-              </button>
+              </Button>
             )
           })}
-
-          <button
-            className={`${classnames('table-filter-button', 'btn', {
-              'btn-primary': !Object.keys(selectedFilters).find(
-                key => key.includes(filterConstant) && selectedFilters[key]
-              ),
-            })}`}
-            onClick={() => this.clearFilterGroup(filterConstant)}
-          >
-            {clearLabel}
-          </button>
         </div>
       )
     }

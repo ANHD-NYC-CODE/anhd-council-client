@@ -7,7 +7,8 @@ import {
   expandHpdRegistrationAbbreviations,
 } from 'shared/utilities/languageUtils'
 
-import { Row, Col } from 'react-bootstrap'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons'
 import ExpandableSection from 'shared/components/ExpandableSection'
 
 import './style.scss'
@@ -30,33 +31,28 @@ const ContactExpandableSection = props => {
   return (
     <ExpandableSection
       className="contact-expandable-section"
+      iconClass="contact-expandable-section__icon"
+      collapseIcon={<FontAwesomeIcon icon={faChevronUp} />}
+      expandIcon={<FontAwesomeIcon icon={faChevronDown} />}
       aboveFoldElement={
-        <Row className="ownership-section__hpdcontact-row">
-          <Col xs={6} className="profile-summary-body__label">
-            {capitalizeWords(splitCamelCase(props.contact.type))}:
-          </Col>
-          {props.contact && <Col>{capitalizeWords([props.contact.firstname, props.contact.lastname].join(' '))}</Col>}
-        </Row>
+        <div className="ownership-section__hpdcontact-row">
+          <div className="profile-summary-body__label">{capitalizeWords(splitCamelCase(props.contact.type))}:</div>
+          {props.contact && <div>{capitalizeWords([props.contact.firstname, props.contact.lastname].join(' '))}</div>}
+        </div>
       }
     >
-      <Row className="contact-expandable-section__below-fold-info">
-        <Col>
-          <Row>
-            <Col xs={1} />
-            <Col xs={5}>Title:</Col>
-            <Col xs={5}>{capitalizeWords(expandHpdRegistrationAbbreviations(props.contact.title)) || 'n/a'}</Col>
-          </Row>
-        </Col>
-      </Row>
-      <Row className="contact-expandable-section__below-fold-info">
-        <Col>
-          <Row>
-            <Col xs={1} />
-            <Col xs={5}>Business Address:</Col>
-            <Col xs={5}>{constructContactBusinessAddress(props.contact) || 'n/a'}</Col>
-          </Row>
-        </Col>
-      </Row>
+      <div className="contact-expandable-section__below-fold-info">
+        <div className="contact-expandable-section__section__label">Title:</div>
+        <div className="contact-expandable-section__value">
+          {capitalizeWords(expandHpdRegistrationAbbreviations(props.contact.title)) || 'n/a'}
+        </div>
+      </div>
+      <div className="contact-expandable-section__below-fold-info">
+        <div className="contact-expandable-section__section__label">Business Address:</div>
+        <div className="contact-expandable-section__value">
+          {constructContactBusinessAddress(props.contact) || 'n/a'}
+        </div>
+      </div>
     </ExpandableSection>
   )
 }

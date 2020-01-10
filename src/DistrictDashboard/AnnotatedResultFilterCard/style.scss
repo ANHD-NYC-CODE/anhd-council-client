@@ -4,175 +4,65 @@
   // align-items: center;
   height: 100%;
   display: flex;
+  flex-direction: column;
+  padding-right: 40px;
+
+  .text-link {
+    @extend %p3-font-size;
+    text-align: left;
+    font-style: italic;
+  }
 }
 
 .amount-result-filter-card__info {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  display: inline;
   margin-left: 5px;
 }
 
-.amount-result-filter-card {
-  align-items: stretch;
-  border: 0;
-  border: 1px dotted $primary;
-
+.amount-result-filter-card__header {
   display: flex;
-  height: 100px;
-  justify-content: stretch;
-  // overflow: hidden;
-  box-shadow: 1px 1px 6px $gray-400;
-  border-radius: 8px;
-  padding: 0;
-  transition: all 0.2s ease-in-out;
-  width: 100%;
-  hr {
-    margin: 0;
-  }
-  .amount-result-filter-card__title {
-    margin-bottom: 0;
-    font-size: 18px;
-    font-weight: bold;
-    text-align: left;
-  }
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
 
-  .amount-result-filter-card__header {
-    align-items: center;
-    display: flex;
-    justify-content: space-between;
-  }
+.amount-result-filter-card__label {
+  @extend %p2-font-size;
+  color: $black;
+  font-weight: bold;
+  margin-bottom: 0;
+}
 
-  .amount-result-filter-card__total {
-    display: flex;
-    font-size: 16px;
-  }
-
-  .amount-result-filter-card__body {
-    border: 0;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    flex: 1 1 100%;
-    text-align: left;
-    height: 100%;
-    width: 100%;
-  }
-
-  .amount-result-filter-card__body.disabled {
-    cursor: initial;
-    color: $gray-500;
-    background-color: lighten($info, 10%);
-  }
-
-  .amount-result-filter-card__body--inner-wrapper {
-    border: 0;
-    border-radius: 8px;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-    display: flex;
-    flex: 1 1 80%;
-    flex-direction: column;
-    padding: 10px;
-  }
-
-  &.active .amount-result-filter-card__body--inner-wrapper:not(.disabled) {
-    background-color: $primary;
-    color: white;
-  }
+.amount-result-filter-card__filter {
+  @extend %p3-font-size;
+  color: $text-muted;
+  margin-bottom: 20px;
+  padding-right: 40px;
 
   &.active {
-    border: 1px dotted $white;
-  }
-
-  .amount-result-filter--deselect {
-    color: $white;
-    display: none;
-  }
-
-  .amount-result-filter--select {
-    color: $primary;
-    display: block;
-  }
-
-  &.active {
-    .amount-result-filter--deselect {
-      display: block;
-    }
-
-    .amount-result-filter--select {
-      display: none;
-    }
-  }
-
-  @media (hover: hover) {
-    &:not(.disabled):not(.active) {
-      .amount-result-filter-card__body:not(.disabled)
-        .amount-result-filter-card__body--inner-wrapper:not(.active):not(.disabled):hover {
-        background-color: $info;
-        border-color: $info;
-        color: $black;
-        box-shadow: 1px 12px 20px $gray-400;
-      }
-    }
-  }
-
-  .amount-result-filter-card__controls {
-    flex: 1 1 20%;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .amount-result-filter-card__filter {
-    display: flex;
-    font-size: 16px;
-  }
-
-  .amount-result-filter-card__input--prefix {
-    flex: 1 1 50%;
-  }
-
-  .amount-result-filter-card__input {
-    flex: 1 1 50%;
-    font-weight: bold;
-    font-size: 20px;
-  }
-
-  .amount-result-filter-card__arrow {
-    border: 1px solid transparent;
-    border-radius: 50%;
-
     color: $black;
-    cursor: pointer;
-    height: 100%;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
 
-  .amount-result-filter-card__arrow:first-child {
-    border-top-right-radius: 6px;
+  .form-group {
+    display: inline;
+    position: relative;
   }
 
-  .amount-result-filter-card__arrow:last-child {
-    border-bottom-right-radius: 6px;
+  input.form-control {
+    border: none;
+    border-bottom: 1px solid $gray-300;
+    display: inline;
+    max-width: 60px;
+    margin-right: 5px;
   }
 
-  @media (hover: hover) {
-    .amount-result-filter-card__arrow:hover {
-      color: $gray-500;
-    }
-    .amount-result-filter-card__arrow:first-child:hover {
-      color: $primary;
-    }
+  .form-text {
+    position: absolute;
+    bottom: -30px;
+  }
 
-    .amount-result-filter-card__arrow:last-child:hover {
-      color: $danger;
-    }
+  .amount-filter-input {
+    display: inline;
+    outline: none;
   }
 }

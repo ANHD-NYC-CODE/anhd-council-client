@@ -2,9 +2,10 @@ import React from 'react'
 import BaseLink from 'shared/components/BaseLink'
 import { Col, Row } from 'react-bootstrap'
 import { boroughAbbreviationToCode } from 'shared/utilities/languageUtils'
-export const getTableSubheaders = ({ constant, property } = {}) => {
+import classnames from 'classnames'
+export const getTableSubheaders = ({ constant, property, hideGutters = false } = {}) => {
   return (
-    <Row>
+    <Row className={classnames({ 'no-gutter': hideGutters })}>
       <Col>{getTableSubheaderLinks({ constant, property })}</Col>
     </Row>
   )
@@ -14,30 +15,27 @@ export const getTableSubheaderLinks = ({ constant = '', property = {} } = {}) =>
   switch (constant) {
     case 'ACRIS_REAL_MASTER':
       return (
-        <ul className="text-muted small">
+        <div>
           {!!Object.keys(property).length && (
-            <li>
-              Visit this property’s{' '}
+            <div>
               <BaseLink
                 className="lookup-links__link"
                 href={`http://a836-acris.nyc.gov/bblsearch/bblsearch.asp?borough=${property.bbl.charAt(
                   0
                 )}&block=${property.bbl.slice(1, 6)}&lot=${property.bbl.slice(6, 10)}`}
               >
-                ACRIS page
+                Visit this property’s ACRIS page
               </BaseLink>
-            </li>
+            </div>
           )}
-          to view financing information and additional property documents.
-          <li>Click the Document ID to view the full record in ACRIS</li>
-        </ul>
+          <div>Click the Document ID to view the full record in ACRIS</div>
+        </div>
       )
     case 'HPD_VIOLATION':
       return (
-        <ul className="text-muted small">
+        <div>
           {!!Object.keys(property).length && (
-            <li>
-              Visit this property’s{' '}
+            <div>
               <BaseLink
                 className="lookup-links__link"
                 href={`https://hpdonline.hpdnyc.org/HPDonline/Provide_address.aspx?p1=${boroughAbbreviationToCode(
@@ -47,19 +45,17 @@ export const getTableSubheaderLinks = ({ constant = '', property = {} } = {}) =>
                   .slice(1)
                   .join(' ')}&SearchButton=Search`}
               >
-                HPD page
-              </BaseLink>{' '}
-              to view more HPD records.
-            </li>
+                Visit this property’s HPD page
+              </BaseLink>
+            </div>
           )}
-        </ul>
+        </div>
       )
     case 'HPD_COMPLAINT':
       return (
-        <ul className="text-muted small">
+        <div>
           {!!Object.keys(property).length && (
-            <li>
-              Visit this property’s{' '}
+            <div>
               <BaseLink
                 className="lookup-links__link"
                 href={`https://hpdonline.hpdnyc.org/HPDonline/Provide_address.aspx?p1=${boroughAbbreviationToCode(
@@ -69,25 +65,23 @@ export const getTableSubheaderLinks = ({ constant = '', property = {} } = {}) =>
                   .slice(1)
                   .join(' ')}&SearchButton=Search`}
               >
-                HPD page
-              </BaseLink>{' '}
-              to view more HPD records.
-            </li>
+                Visit this property’s HPD page
+              </BaseLink>
+            </div>
           )}
-          <li>One complaint can include multiple problems.</li>
-        </ul>
+          <div>One complaint can include mdivtiple problems.</div>
+        </div>
       )
     case 'HOUSING_LITIGATION':
       return (
-        <ul className="text-muted small">
-          <li>
+        <div>
+          <div>
             <BaseLink className="lookup-links__link" href="https://hpdonline.hpdnyc.org/HPDonline/GlossaryLMS.aspx">
               See glossary of terms
             </BaseLink>
-          </li>
+          </div>
           {!!Object.keys(property).length && (
-            <li>
-              Visit this property’s{' '}
+            <div>
               <BaseLink
                 className="lookup-links__link"
                 href={`https://hpdonline.hpdnyc.org/HPDonline/Provide_address.aspx?p1=${boroughAbbreviationToCode(
@@ -97,124 +91,113 @@ export const getTableSubheaderLinks = ({ constant = '', property = {} } = {}) =>
                   .slice(1)
                   .join(' ')}&SearchButton=Search`}
               >
-                HPD page
-              </BaseLink>{' '}
-              to view more HPD records.
-            </li>
+                Visit this property’s HPD page
+              </BaseLink>
+            </div>
           )}
-        </ul>
+        </div>
       )
     case 'DOB_COMPLAINT':
       return (
-        <ul className="text-muted small">
+        <div>
           {!!Object.keys(property).length && (
-            <li>
-              Visit this property’s{' '}
+            <div>
               <BaseLink
                 className="lookup-links__link"
                 href={`http://a810-bisweb.nyc.gov/bisweb/PropertyProfileOverviewServlet?boro=${property.bbl.charAt(
                   0
                 )}&block=${property.bbl.slice(1, 6)}&lot=${property.bbl.slice(6, 10)}`}
               >
-                DOB page
-              </BaseLink>{' '}
-              to view more about this property.
-            </li>
+                Visit this property’s DOB page
+              </BaseLink>
+            </div>
           )}
-          <li>Click the Complaint # to view the full record in the DOB Building Information System</li>
-        </ul>
+          <div>Click the Complaint # to view the full record in the DOB Building Information System</div>
+        </div>
       )
     case 'DOB_VIOLATION':
       return (
-        <ul className="text-muted small">
+        <div>
           {!!Object.keys(property).length && (
-            <li>
-              Visit this property’s{' '}
+            <div>
               <BaseLink
                 className="lookup-links__link"
                 href={`http://a810-bisweb.nyc.gov/bisweb/PropertyProfileOverviewServlet?boro=${property.bbl.charAt(
                   0
                 )}&block=${property.bbl.slice(1, 6)}&lot=${property.bbl.slice(6, 10)}`}
               >
-                DOB page
-              </BaseLink>{' '}
-              to view more about this property.
-            </li>
+                Visit this property’s DOB page
+              </BaseLink>
+            </div>
           )}
-          <li>Click the Violation # to view the full record in the DOB Building Information System</li>
-        </ul>
+          <div>Click the Violation # to view the full record in the DOB Building Information System</div>
+        </div>
       )
     case 'ECB_VIOLATION':
       return (
-        <ul className="text-muted small">
+        <div>
           {!!Object.keys(property).length && (
-            <li>
-              Visit this property’s{' '}
+            <div>
               <BaseLink
                 className="lookup-links__link"
                 href={`http://a810-bisweb.nyc.gov/bisweb/PropertyProfileOverviewServlet?boro=${property.bbl.charAt(
                   0
                 )}&block=${property.bbl.slice(1, 6)}&lot=${property.bbl.slice(6, 10)}`}
               >
-                DOB page
-              </BaseLink>{' '}
-              to view more about this property.
-            </li>
+                Visit this property’s DOB page
+              </BaseLink>
+            </div>
           )}
-          <li>Click the Violation # to view the full record in the DOB Building Information System</li>
-        </ul>
+          <div>Click the Violation # to view the full record in the DOB Building Information System</div>
+        </div>
       )
     case 'DOB_ISSUED_PERMIT':
       return (
-        <ul className="text-muted small">
+        <div>
           {!!Object.keys(property).length && (
-            <li>
-              Visit this property’s{' '}
+            <div>
               <BaseLink
                 className="lookup-links__link"
                 href={`http://a810-bisweb.nyc.gov/bisweb/PropertyProfileOverviewServlet?boro=${property.bbl.charAt(
                   0
                 )}&block=${property.bbl.slice(1, 6)}&lot=${property.bbl.slice(6, 10)}`}
               >
-                DOB page
-              </BaseLink>{' '}
-              to view more about this property.
-            </li>
+                Visit this property’s DOB page
+              </BaseLink>
+            </div>
           )}
-          <li>Click the Job Filing # to view the full record in the DOB Building Information System.</li>
-          <li>
+          <div>Click the Job Filing # to view the full record in the DOB Building Information System.</div>
+          <div>
             Permits filed electronically through the DOB NOW system need to be searched via the{' '}
             <BaseLink href="https://a810-dobnow.nyc.gov/publish/#!/">DOB NOW portal</BaseLink>.{' '}
-          </li>
-          <li>
+          </div>
+          <div>
             If a permit is renewed, it will show up as a separate record in the table with a Filing Status of{' '}
             <b>Renewed</b>. It will only be counted once in the total DOB Permits Issued.
-          </li>
-        </ul>
+          </div>
+        </div>
       )
     case 'DOB_FILED_PERMIT':
       return (
-        <ul className="text-muted small">
+        <div>
           {!!Object.keys(property).length && (
-            <li>
-              Visit this property’s{' '}
+            <div>
               <BaseLink
                 className="lookup-links__link"
                 href={`http://a810-bisweb.nyc.gov/bisweb/PropertyProfileOverviewServlet?boro=${property.bbl.charAt(
                   0
                 )}&block=${property.bbl.slice(1, 6)}&lot=${property.bbl.slice(6, 10)}`}
               >
-                DOB page
-              </BaseLink>{' '}
-              to view more about this property.
-            </li>
+                Visit this property’s DOB page
+              </BaseLink>
+            </div>
           )}
-          <li>Click the Job Filing # to view the full record in the DOB Building Information System.</li>
-          <li>
+          <div>Click the Job Filing # to view the full record in the DOB Building Information System.</div>
+          <div>
             Permits filed electronically through the DOB NOW system need to be searched via the{' '}
             <BaseLink href="https://a810-dobnow.nyc.gov/publish/#!/">DOB NOW portal</BaseLink>.{' '}
-          </li>
-        </ul>
+          </div>
+        </div>
       )
     default:
       return () => null
