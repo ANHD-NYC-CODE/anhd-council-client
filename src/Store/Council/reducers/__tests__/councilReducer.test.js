@@ -1,6 +1,6 @@
 import * as r from '../'
 import * as a from '../../actions'
-import * as c from '../../constants'
+import { constructSummaryConstant } from 'shared/constants'
 
 describe('Council reducer', () => {
   it('should return the initial state', () => {
@@ -47,7 +47,7 @@ describe('Council reducer', () => {
             {
               data: response,
             },
-            c.constructSummaryConstant('GET_COUNCIL_PROPERTY_SUMMARY', {
+            constructSummaryConstant('GET_COUNCIL_PROPERTY_SUMMARY', {
               type: 'hpdviolations',
               comparison: 'gte',
               value: '10',

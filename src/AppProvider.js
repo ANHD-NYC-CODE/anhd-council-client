@@ -33,7 +33,7 @@ const getStateFromStorage = () => {
         districts: [],
       },
       community: {
-        boards: [],
+        districts: [],
       },
     }
   } catch (err) {
