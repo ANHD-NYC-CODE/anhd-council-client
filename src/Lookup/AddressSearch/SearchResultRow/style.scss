@@ -26,6 +26,7 @@
 .search-result-row:focus {
   background-color: $gray-500;
   color: white;
+  outline: none;
 }
 
 @media (hover: hover) {

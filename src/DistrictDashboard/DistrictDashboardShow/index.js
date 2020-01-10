@@ -181,6 +181,7 @@ class DistrictDashboardShow extends React.Component {
                                   setDashboardCustomView(!this.props.dashboardState.districtShowCustomView)
                                 )
                               }
+                              results={this.props.dashboardState.customSearchResults}
                               resultsComponent={SummaryResultCard}
                               selected={this.props.dashboardState.districtShowCustomView}
                             />

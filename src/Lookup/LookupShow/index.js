@@ -123,7 +123,7 @@ class LookupShow extends React.PureComponent {
               <Col
                 className="layout__left-column touch-left lookup-show__property-column px-lg-2 px-xl-5"
                 xs={12}
-                lg={c.SIDEBAR_COLUMN_SIZE}
+                md={c.SIDEBAR_COLUMN_SIZE}
               >
                 <Row className="mt-4">
                   <Col xs={12}>
@@ -173,7 +173,7 @@ class LookupShow extends React.PureComponent {
                 </Row>
                 <LookupLinks request={this.props.profileRequest} />
               </Col>
-              <Col xs={12} lg={12 - c.SIDEBAR_COLUMN_SIZE}>
+              <Col xs={12} md={12 - c.SIDEBAR_COLUMN_SIZE}>
                 <Row className="mt-2 mb-4 mt-lg-4 mb-lg-2 px-xl-3">
                   <Col>
                     <Row>
@@ -218,7 +218,7 @@ class LookupShow extends React.PureComponent {
                           {
                             // Property level requests
                           }
-                          <Col>
+                          <Col xs={12}>
                             <h6 className="lookup-show__datatype-header">Tax Lot Level Data</h6>
                           </Col>
                           {this.props.lookupRequests

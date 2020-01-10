@@ -123,6 +123,20 @@ const parseParamMapRangeGroup = paramMapRangeGroup => {
         .filter(s => s)
         .join(' ')
         .trim()
+    case 'AMOUNT':
+      return [
+        paramMapRangeGroup[0].comparisonPrefix.trim(),
+        'between',
+        paramMapRangeGroup[0].valuePrefix.trim(),
+        gte.value,
+        'and',
+        paramMapRangeGroup[0].valuePrefix.trim(),
+        lte.value,
+        grammaticalNoun(lte.paramNoun, lte.value),
+      ]
+        .filter(s => s)
+        .join(' ')
+        .trim()
   }
 }
 
