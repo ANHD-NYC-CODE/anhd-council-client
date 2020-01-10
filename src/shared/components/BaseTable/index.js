@@ -5,16 +5,12 @@ import { setDashboardTableState } from 'Store/DashboardState/actions'
 import BootstrapTable from 'react-bootstrap-table-next'
 import BaseTableConfig from 'shared/classes/BaseTableConfig'
 import InnerLoader from 'shared/components/Loaders/InnerLoader'
-import paginationFactory, {
-  PaginationProvider,
-  SizePerPageDropdownStandalone,
-  PaginationListStandalone,
-} from 'react-bootstrap-table2-paginator'
+import paginationFactory, { PaginationProvider, PaginationListStandalone } from 'react-bootstrap-table2-paginator'
 import filterFactory from 'react-bootstrap-table2-filter'
-import TableHeader from 'shared/components/BaseTable/TableHeader'
-import { Row, Col } from 'react-bootstrap'
+import LookupTableHeader from 'shared/components/BaseTable/LookupTableHeader'
+import BaseTableHeader from 'shared/components/BaseTable/BaseTableHeader'
+import { Row, Col, Button } from 'react-bootstrap'
 import TableAlert from 'shared/components/BaseTable/TableAlert'
-import CsvButton from 'shared/components/buttons/CsvButton'
 import ToolkitProvider, { CSVExport } from 'react-bootstrap-table2-toolkit'
 
 import classnames from 'classnames'
@@ -31,8 +27,8 @@ class BaseTable extends React.Component {
     this.constructFilter = this.constructFilter.bind(this)
     this.handleCsvClick = this.handleCsvClick.bind(this)
     this.constructCsvFilename = this.constructCsvFilename.bind(this)
-    this.getTableSize = this.getTableSize.bind(this)
     this.baseTableConfig = new BaseTableConfig({ component: this })
+    this.pageButtonRenderer = this.pageButtonRenderer.bind(this)
     this.state = {
       expandedRowContent: '',
       displayedRecordsCount: (props.records || {}).length,
@@ -188,6 +184,7 @@ class BaseTable extends React.Component {
 
   constructFilter(filterType) {
     return filterType({
+      placeholder: 'Search...',
       getFilter: filter => {
         const filterKey = (Math.random() * 100000).toString()
         this.filters = { ...this.filters, [filterKey]: filter }
@@ -195,46 +192,23 @@ class BaseTable extends React.Component {
     })
   }
 
-  getTableSize(paginationProps, recordsSize = undefined) {
-    const getDefaultSize = () => {
-      const totalSize = recordsSize || paginationProps.totalSize
-      return paginationProps.dataSize === paginationProps.totalSize
-        ? paginationProps.totalSize
-        : `${paginationProps.dataSize}/${totalSize}`
+  pageButtonRenderer({ page, active, disabled, title, onPageChange }) {
+    const handleClick = e => {
+      e.preventDefault()
+      onPageChange(page)
     }
 
-    switch (this.props.tableConfig.resourceConstant) {
-      case 'HPD_COMPLAINT': {
-        return (
-          <span className="text-left">
-            <div>Total Complaints: {String(recordsSize)}</div>
-            <div>
-              Total Problems:{' '}
-              {paginationProps.dataSize === paginationProps.totalSize
-                ? paginationProps.totalSize
-                : `${paginationProps.dataSize}/${paginationProps.totalSize}`}
-            </div>
-          </span>
-        )
-      }
-
-      case 'DOB_ISSUED_PERMIT': {
-        const totalInitial = this.props.request.resourceModel.tableRecordsCountFunction(this.props.records)
-        return (
-          <span className="text-left">
-            <div>Total initial: {totalInitial}</div>
-            <div>Total renewed: {recordsSize - totalInitial}</div>
-          </span>
-        )
-      }
-
-      default:
-        return <span>Total: {getDefaultSize()}</span>
-    }
+    return (
+      <li className="page-item">
+        <Button variant={active ? 'dark' : 'light'} onClick={handleClick}>
+          {page}
+        </Button>
+      </li>
+    )
   }
 
   render() {
-    const { ExportCSVButton } = CSVExport
+    const HeaderComponent = this.props.headerComponent
     return (
       <PaginationProvider
         pagination={paginationFactory({
@@ -270,40 +244,22 @@ class BaseTable extends React.Component {
                     key={`table-${this.props.tableConfig.keyField}`}
                   >
                     {!this.props.nested && !!this.props.includeHeader && (
-                      <Row>
-                        <Col xs={12}>
-                          <TableHeader
-                            badge={this.props.badge}
-                            property={this.props.property}
-                            resourceConstant={this.props.tableConfig.resourceConstant}
-                            datasetModelName={this.props.datasetModelName}
-                            dispatch={this.props.dispatch}
-                            showUpdate={this.props.showUpdate}
-                            title={this.props.caption}
-                          />
-                        </Col>
-
-                        <Col xs={4} className="text-right d-flex justify-content-start align-items-center">
-                          {this.getTableSize(paginationProps, this.props.recordsSize)}
-                        </Col>
-                        <Col
-                          xs={4}
-                          className="table-header__share-column d-none d-md-flex justify-content-end align-items-center"
-                        >
-                          <CsvButton
-                            parentComponent={this}
-                            onClick={this.handleCsvClick}
-                            ExportCSVButton={ExportCSVButton}
-                            csvProps={toolKitProps.csvProps}
-                          />
-                        </Col>
-                        <Col xs={4} className="d-flex align-items-center justify-content-end">
-                          <SizePerPageDropdownStandalone btnContextual="btn-outline-primary" {...paginationProps} />
-                        </Col>
-                      </Row>
+                      <div>
+                        {HeaderComponent}
+                        <BaseTableHeader
+                          headerClass={this.props.headerClass}
+                          records={this.props.records}
+                          recordsSize={this.props.recordsSize}
+                          csvProps={toolKitProps.csvProps}
+                          paginationProps={paginationProps}
+                          handleCsvClick={this.handleCsvClick}
+                          resourceConstant={this.props.tableConfig.resourceConstant}
+                          request={this.props.request}
+                        />
+                      </div>
                     )}
 
-                    <Row>
+                    <Row className="base-table__select-filters no-gutters">
                       {!!this.baseTableConfig.filterButtonSets[this.props.tableConfig.resourceConstant] &&
                         this.baseTableConfig.filterButtonSets[this.props.tableConfig.resourceConstant].map(
                           (set, index) => {
@@ -327,7 +283,7 @@ class BaseTable extends React.Component {
                         !this.props.loading && (
                           <TableAlert
                             textType="text-dark"
-                            variant="warning"
+                            variant="light"
                             message={'No records found'}
                             buttonText="Clear Filters"
                             buttonVariant="outline-secondary"
@@ -349,11 +305,11 @@ class BaseTable extends React.Component {
                     {!this.props.nested &&
                       !!this.props.includeHeader &&
                       paginationProps.sizePerPage < this.props.records.length && (
-                        <Row>
-                          <Col xs={6}>
-                            <PaginationListStandalone {...paginationProps} />
-                          </Col>
-                        </Row>
+                        <div>
+                          <PaginationListStandalone
+                            {...{ ...paginationProps, pageButtonRenderer: this.pageButtonRenderer }}
+                          />
+                        </div>
                       )}
                   </div>
                 )
@@ -377,12 +333,12 @@ BaseTable.defaultProps = {
 
 BaseTable.propTypes = {
   annotationStart: PropTypes.string,
-  caption: PropTypes.string,
   classes: PropTypes.string,
   dispatch: PropTypes.func,
   error: PropTypes.object,
   expandable: PropTypes.bool,
   globalTableState: PropTypes.object,
+  headerComponent: PropTypes.object,
   loading: PropTypes.bool,
   nested: PropTypes.bool,
   records: PropTypes.array,

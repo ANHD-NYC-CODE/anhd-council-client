@@ -59,17 +59,13 @@ const SummaryResultCard = props => {
       onClick={props.handleClick}
     >
       <Card.Body className="d-flex flex-row p-0">
-        <div className="d-flex flex-column align-content-center justify-content-center text-left m-0 pr-1 summary-result-card__label">
-          {getLabel(props)}
-        </div>
-        <div className="align-self-center summary-result-card__result">
-          {props.loading ? (
-            <SpinnerLoader />
-          ) : (
-            <h2 className={classnames('m-0', props.summaryTextColorClass)}>
-              {getRecordsCount(props.request, props.results)}
-            </h2>
-          )}
+        <div className="summary-result-card__label">
+          <p>
+            {getLabel(props)}{' '}
+            <span className="summary-result-card__result">
+              {props.loading ? <SpinnerLoader /> : `(${getRecordsCount(props.request, props.results)})`}
+            </span>
+          </p>
         </div>
       </Card.Body>
     </Card>

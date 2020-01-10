@@ -1,12 +1,19 @@
 @import 'shared/styles/bootstrap/_variables.scss';
 
-
 .spinner-loader__container {
   align-items: center;
   display: flex;
   height: 100%;
   justify-content: center;
   width: 100%;
+}
+
+.spinner-loader__container--inline {
+  align-items: center;
+  display: inline-flex;
+  height: 100%;
+  justify-content: center;
+  margin-left: 2px;
 }
 
 .spinner-loader {

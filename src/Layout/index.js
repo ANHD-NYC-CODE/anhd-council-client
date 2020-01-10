@@ -55,7 +55,7 @@ class Layout extends React.Component {
                   </div>
                 )}
               </UserContext.Consumer>
-              <Container fluid={true}>{this.props.children}</Container>
+              {this.props.children}
             </div>
             <Footer />
           </div>

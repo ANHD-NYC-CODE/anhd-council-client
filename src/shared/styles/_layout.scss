@@ -4,6 +4,7 @@ body {
 
 /* width */
 ::-webkit-scrollbar {
+  height: 8px;
   width: 8px;
 }
 
@@ -15,8 +16,54 @@ body {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: $primary;
-  border-radius: 20px;
+  background: $rhino;
+  border-radius: 10px;
+}
+
+// Bootstrap
+
+.no-gutter > [class*='col-'],
+.no-gutter > [class*='col'] {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+// Layout
+
+%layout-width-wrapper {
+  box-sizing: border-box;
+  max-width: 1024px !important;
+  margin: 0 auto !important;
+  padding: 0 1rem !important;
+  width: 100% !important;
+
+  @include media-breakpoint-up(lg) {
+    padding: 0 !important;
+  }
+
+  .row {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .full-bleed--mobile {
+    @include media-breakpoint-down(md) {
+      margin-left: -1rem;
+      margin-right: -1rem;
+      flex: none;
+      max-width: none;
+      width: calc(100% + 2rem);
+    }
+  }
+}
+
+.layout-width-wrapper {
+  @extend %layout-width-wrapper;
+}
+
+.layout-width-wrapper--padded {
+  @extend %layout-width-wrapper;
+  padding: 0 1rem !important;
 }
 
 .touch-left {

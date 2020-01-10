@@ -1,0 +1,33 @@
+@import 'shared/styles/_variables.scss';
+
+.lookup-address-display {
+  .lookup-address-display__editing {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .lookup-address-display__title {
+    @extend %p1-font-size;
+    display: inline-block;
+  }
+
+  .lookup-address-display__edit-button,
+  .lookup-address-display__cancel-button {
+    display: inline-block;
+
+    @include media-breakpoint-up(md) {
+      margin-left: 0.5rem;
+    }
+  }
+
+  .lookup-address-display__search-button {
+    color: $gray-900;
+    display: none;
+    margin-right: 20px;
+
+    @include media-breakpoint-up(lg) {
+      display: inline-block;
+    }
+  }
+}

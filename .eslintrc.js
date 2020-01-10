@@ -12,7 +12,7 @@ module.exports = {
   },
   settings: {
     react: {
-      version: '16.7',
+      version: '16.18',
     },
   },
   rules: {
@@ -37,6 +37,6 @@ module.exports = {
     es6: true,
     jest: true,
   },
-  extends: ['eslint:recommended', 'plugin:react/recommended', 'prettier'],
-  plugins: ['react', 'prettier', 'jest'],
+  extends: ['eslint:recommended', 'plugin:react/recommended', 'prettier', 'plugin:jsx-a11y/recommended'],
+  plugins: ['react', 'prettier', 'jest', 'jsx-a11y'],
 }

@@ -1,0 +1,37 @@
+@import 'shared/styles/_variables.scss';
+@import 'shared/styles/_utility_classes.scss';
+
+.lookup-tabs {
+  margin-bottom: 20px;
+
+  .lookup-tabs__header {
+    @extend %text-black;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+    span,
+    button {
+      @extend %text-black;
+    }
+
+    span {
+      @extend %p2-font-size;
+    }
+  }
+
+  .lookup-tabs__tabs {
+    display: flex;
+    flex-direction: row;
+    align-content: flex-start;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    overflow-y: hidden;
+    height: 0px;
+    transition: height 0.3s ease-in-out;
+
+    &.open {
+      height: 100%;
+    }
+  }
+}
