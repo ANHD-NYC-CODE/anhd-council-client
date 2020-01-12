@@ -76,7 +76,10 @@ class DistrictDashboard extends React.PureComponent {
       this.trigger404Error(
         `Geography "${this.props.geographyType.toLowerCase()}" with id "${this.props.geographyId}" does not exist.`
       )
-    } else if (this.state.error404) {
+    } else if (
+      isValidGeography(this.props.config, this.props.geographyType, this.props.geographyId) &&
+      this.state.error404
+    ) {
       this.setState({
         error404: false,
       })
