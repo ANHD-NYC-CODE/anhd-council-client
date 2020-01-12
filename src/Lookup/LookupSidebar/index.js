@@ -29,28 +29,30 @@ const LookupSidebar = props => {
 
   return (
     <div className={classnames('lookup-sidebar full-bleed--mobile', { open })}>
-      <div
-        tabIndex="0"
-        role="button"
-        aria-label="Toggle Sidebar"
-        className="lookup-sidebar__toggle"
-        onKeyDown={handleToggleKeyDown}
-        onClick={e => handleClick(e)}
-      >
-        <FontAwesomeIcon icon={open ? faChevronLeft : faChevronRight} size="1x" />
-      </div>
-      <div className="lookup-sidebar__body">
-        <div className="lookup-sidebar__header">
-          <h4>Property Info</h4>
+      <div className="lookup-sidebar__wrapper">
+        <div
+          tabIndex="0"
+          role="button"
+          aria-label="Toggle Sidebar"
+          className="lookup-sidebar__toggle"
+          onKeyDown={handleToggleKeyDown}
+          onClick={e => handleClick(e)}
+        >
+          <FontAwesomeIcon icon={open ? faChevronLeft : faChevronRight} size="1x" />
         </div>
-        <div className="lookup-sidebar__content">
-          <LookupProfileSummary
-            appState={props.appState}
-            error={props.error}
-            loading={props.loading}
-            propertyResult={props.propertyResult}
-            request={props.profileRequest}
-          />
+        <div className="lookup-sidebar__body">
+          <div className="lookup-sidebar__header">
+            <h4>Property Info</h4>
+          </div>
+          <div className="lookup-sidebar__content">
+            <LookupProfileSummary
+              appState={props.appState}
+              error={props.error}
+              loading={props.loading}
+              propertyResult={props.propertyResult}
+              request={props.profileRequest}
+            />
+          </div>
         </div>
       </div>
     </div>

@@ -112,6 +112,9 @@ $sub-header-padding-top: 12px;
   }
 
   .sub-header__nav-tab {
+    border: 1px solid $rhino;
+    box-sizing: border-box;
+    box-shadow: 2px 2px 1px lightgray;
     padding: 1rem 15px;
     text-decoration: none;
     flex: 0 0 100%;
