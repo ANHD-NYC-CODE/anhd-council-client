@@ -84,34 +84,6 @@ class DistrictDashboardShow extends React.Component {
     const resultRecords = this.props.dashboardState.resultRecords
     return (
       <div className="district-dashboard-show">
-        <div className="geography-select-row">
-          <div className="district-dashboard-show__top-row__inner layout-width-wrapper district-dashboard-container">
-            <GeographySelect
-              selectClass="main-geography-select"
-              inputSize="md"
-              submitButtonVariant="dark"
-              currentGeographyType={this.props.appState.currentGeographyType}
-              currentGeographyId={this.props.appState.currentGeographyId}
-              dispatch={this.props.dispatch}
-              changing={this.props.appState.changingGeography}
-              changingGeographyType={this.props.appState.changingGeographyType}
-              changingGeographyId={this.props.appState.changingGeographyId}
-              cancelChangeGeography={this.props.cancelChangeGeography}
-              handleChangeGeographyType={this.props.handleChangeGeographyType}
-              handleChangeGeography={this.props.handleChangeGeography}
-              showSubmit={
-                this.props.appState.changingGeography &&
-                this.props.appState.changingGeographyType &&
-                this.props.appState.changingGeographyId > 0
-              }
-            />
-            {!this.props.geographyRequests.some(r => r.type === c.ADVANCED_SEARCH) && (
-              <BaseLink className="text-link" href="/search">
-                + Custom Search
-              </BaseLink>
-            )}
-          </div>
-        </div>
         <div className="district-dashboard-show__search-section layout-width-wrapper district-dashboard-container">
           {// Custom Search
           this.props.geographyRequests
@@ -212,6 +184,37 @@ class DistrictDashboardShow extends React.Component {
             </div>
           </div>
           <div className="district-dashboard-show__results-section">
+            <div className="geography-select-row">
+              <div className="district-dashboard-show__top-row__inner">
+                <GeographySelect
+                  selectClass="main-geography-select"
+                  inputSize="md"
+                  submitButtonVariant="dark"
+                  currentGeographyType={this.props.appState.currentGeographyType}
+                  currentGeographyId={this.props.appState.currentGeographyId}
+                  dispatch={this.props.dispatch}
+                  changing={this.props.appState.changingGeography}
+                  changingGeographyType={this.props.appState.changingGeographyType}
+                  changingGeographyId={this.props.appState.changingGeographyId}
+                  cancelChangeGeography={this.props.cancelChangeGeography}
+                  handleChangeGeographyType={this.props.handleChangeGeographyType}
+                  handleChangeGeography={this.props.handleChangeGeography}
+                  showSubmit={
+                    this.props.appState.changingGeography &&
+                    this.props.appState.changingGeographyType &&
+                    this.props.appState.changingGeographyId > 0
+                  }
+                />
+                {!this.props.geographyRequests.some(r => r.type === c.ADVANCED_SEARCH) && (
+                  <div className="custom-search-link">
+                    Access more options with a{' '}
+                    <BaseLink className="text-link" href="/search">
+                      Custom Search
+                    </BaseLink>
+                  </div>
+                )}
+              </div>
+            </div>
             <div className="district-dashboard-show__results-header">
               <ConfigContext.Consumer>
                 {config => {

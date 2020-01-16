@@ -20,14 +20,20 @@
     align-items: center;
     display: flex;
     flex-direction: column;
+    width: 100%;
 
     @include media-breakpoint-up(sm) {
+      align-items: flex-start;
+    }
+
+    @include media-breakpoint-up(lg) {
       flex-direction: row;
     }
 
     .geography-select {
+      padding-right: 15px;
       width: 100%;
-      @include media-breakpoint-up(sm) {
+      @include media-breakpoint-up(lg) {
         margin-right: auto;
         width: initial;
       }
@@ -35,11 +41,11 @@
   }
 
   .district-dashboard-show__date-section {
-    padding: 30px 0;
+    padding: 24px 0;
   }
 
   .district-dashboard-show__date-section__label {
-    @extend %p3-font-size;
+    @extend %p2-font-size;
     color: $black;
     font-weight: bold;
     text-transform: uppercase;
@@ -63,14 +69,50 @@
   .district-dashboard-show__housing-type-section {
     margin-bottom: 30px;
   }
+
   .geography-select-row {
     align-items: center;
-    background-color: $gray-300;
     display: flex;
     padding: 10px 0;
 
     @include media-breakpoint-up(sm) {
-      padding: 20px 0;
+      padding: 24px 0;
+    }
+
+    .geography-select__row {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      margin-bottom: 10px;
+    }
+
+    .main-geography-select {
+      margin-right: 16px;
+      @include media-breakpoint-down(md) {
+        min-width: initial;
+      }
+    }
+
+    #geography-id-select {
+      &,
+      select {
+        min-width: 70px;
+      }
+    }
+
+    #geography-custom-select {
+      min-width: 100px;
+      @include media-breakpoint-up(sm) {
+        min-width: initial;
+      }
+      @include media-breakpoint-up(md) {
+        min-width: 100px;
+      }
+    }
+
+    .custom-search-link {
+      @extend %p3-font-size;
+      font-weight: bold;
     }
   }
 

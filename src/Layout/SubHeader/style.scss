@@ -134,4 +134,10 @@ $sub-header-padding-top: 12px;
       padding: 1rem 3rem;
     }
   }
+
+  .sub-header__nav-line {
+    margin: 0;
+    border-color: $gray-300;
+    border-width: 2px;
+  }
 }
