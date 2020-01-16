@@ -127,7 +127,8 @@ class DistrictDashboardShow extends React.Component {
                   id="date-radio--30-days"
                   disabled={this.props.dashboardState.districtShowCustomView || this.props.loading}
                   variant="outline-primary"
-                  label={`Last 30 Days (${moment(c.DISTRICT_RESULTS_DATE_ONE).format('MM/DD/YYYY')})`}
+                  label={`Last 30 Days`}
+                  // label={`Last 30 Days (${moment(c.DISTRICT_RESULTS_DATE_ONE).format('MM/DD/YYYY')})`}
                   onChange={() => this.props.toggleDateRange(c.DISTRICT_REQUEST_DATE_ONE)}
                   checked={this.props.dashboardState.mapFilterDate === c.DISTRICT_REQUEST_DATE_ONE}
                 />
@@ -139,7 +140,8 @@ class DistrictDashboardShow extends React.Component {
                   id="date-radio--1-year"
                   disabled={this.props.dashboardState.districtShowCustomView || this.props.loading}
                   variant="outline-primary"
-                  label={`Last Year (${moment(c.DISTRICT_RESULTS_DATE_TWO).format('MM/DD/YYYY')})`}
+                  label={`Last Year`}
+                  // label={`Last Year (${moment(c.DISTRICT_RESULTS_DATE_TWO).format('MM/DD/YYYY')})`}
                   onChange={() => this.props.toggleDateRange(c.DISTRICT_REQUEST_DATE_TWO)}
                   checked={this.props.dashboardState.mapFilterDate === c.DISTRICT_REQUEST_DATE_TWO}
                 />
@@ -151,7 +153,8 @@ class DistrictDashboardShow extends React.Component {
                   id="date-radio--3-years"
                   disabled={this.props.dashboardState.districtShowCustomView || this.props.loading}
                   variant="outline-primary"
-                  label={`Last 3 Years (${moment(c.DISTRICT_RESULTS_DATE_THREE).format('MM/DD/YYYY')})`}
+                  label={`Last 3 Years`}
+                  // label={`Last 3 Years (${moment(c.DISTRICT_RESULTS_DATE_THREE).format('MM/DD/YYYY')})`}
                   onChange={() => this.props.toggleDateRange(c.DISTRICT_REQUEST_DATE_THREE)}
                   checked={this.props.dashboardState.mapFilterDate === c.DISTRICT_REQUEST_DATE_THREE}
                 />
@@ -165,6 +168,7 @@ class DistrictDashboardShow extends React.Component {
                 switchSelectedFilter={this.props.switchSelectedFilter}
                 housingTypeResults={this.props.dashboardState.housingTypeResults}
                 housingTypeResultFilter={this.props.housingTypeResultFilter}
+                housingTypeResultsIndex={this.props.dashboardState.housingTypeResultsIndex}
                 loading={this.props.loading}
               />
             </div>
