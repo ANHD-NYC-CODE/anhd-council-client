@@ -2,24 +2,35 @@
 
 .dashboard-results-header {
   @extend %p3-font-size;
-  border: 1px solid $black;
+  border: 1px solid $rhino;
+  border-radius: 2px;
   box-sizing: border-box;
   color: $black;
   background-color: $blizzard;
   padding: 16px;
+  margin-bottom: 10px;
 
   .dashboard-results-header__wrapper {
-    display: flex;
     align-items: center;
+    display: block;
     justify-content: space-between;
+
+    @include media-breakpoint-up(lg) {
+      display: flex;
+    }
   }
 
   .dashboard-results-header__title {
     @extend %p1-font-size;
     color: $black;
     font-weight: bold;
-    margin: 0;
+    margin-right: 10px;
+    margin-bottom: 10px;
     text-transform: uppercase;
+
+    @include media-breakpoint-up(lg) {
+      margin: 0;
+    }
   }
 
   .dashboard-results-header__inner-wrapper {
@@ -32,13 +43,16 @@
   }
 
   .dashboard-results-header__group {
-    margin-bottom: 5px;
   }
 
   .dashboard-results-header__label {
     @extend %p2-font-size;
     color: $black;
-    margin-bottom: 10px;
+    display: block;
+
+    @include media-breakpoint-up(lg) {
+      display: inline-block;
+    }
   }
 
   .dashboard-results-header__value {

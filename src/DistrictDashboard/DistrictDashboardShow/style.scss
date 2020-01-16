@@ -174,11 +174,11 @@
 
     @include media-breakpoint-up(sm) {
       align-items: flex-end;
-      margin-bottom: 0;
     }
   }
 
   .view-toggle {
+    border: 2px solid $rhino;
     cursor: pointer;
     min-width: 100px;
   }
