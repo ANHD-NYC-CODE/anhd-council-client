@@ -160,11 +160,6 @@
   }
 
   .district-dashboard-show__results-header {
-    @include media-breakpoint-up(sm) {
-      align-items: center;
-      justify-content: space-between;
-      display: flex;
-    }
   }
 
   .district-dashboard-show__map {

@@ -61,7 +61,7 @@ const Property = databaseObject => {
       {
         id: c.HOUSING_TYPE_RESIDENTIAL,
         category: 'HOUSING_TYPE',
-        label: 'All Residential',
+        label: 'All Residential Housing',
         paramMaps: [new ParamMap({ field: 'unitsres', comparison: 'gte', value: 1 })],
         internalFilter: (results, paramMaps) => {
           if (!results) return []
