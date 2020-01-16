@@ -56,6 +56,8 @@
   .district-dashboard-show__date-section__check label,
   .district-dashboard-show__date-section__check input {
     cursor: pointer;
+    @extend %p3-font-size;
+    color: $black;
   }
   .district-dashboard-show__date-section__check {
     color: $black;
