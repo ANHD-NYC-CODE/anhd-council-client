@@ -8,7 +8,7 @@ import BaseLink from 'shared/components/BaseLink'
 import { constructCsvFileName } from 'Store/AdvancedSearch/utilities/advancedSearchStoreUtils'
 import AdvancedSearchSentence from 'AdvancedSearch/Sentence'
 import HousingTypeSection from 'DistrictDashboard/DistrictDashboardShow/HousingTypeSection'
-import DistrictResultsTitle from 'DistrictDashboard/DistrictDashboardShow/DistrictResultsTitle'
+import DashboardResultsEditor from 'DistrictDashboard/DistrictDashboardShow/DashboardResultsEditor'
 import LeafletMap from 'LeafletMap'
 import DistrictFilterSection from 'DistrictDashboard/DistrictDashboardShow/DistrictFilterSection'
 import DashboardResultsHeader from 'DistrictDashboard/DistrictDashboardShow/DashboardResultsHeader'
@@ -236,6 +236,7 @@ class DistrictDashboardShow extends React.Component {
                   )
                 }}
               </ConfigContext.Consumer>
+              <DashboardResultsEditor dispatch={this.props.dispatch} />
               <ButtonToolbar className="d-flex view-toggle__container">
                 <ToggleButtonGroup
                   name="view"

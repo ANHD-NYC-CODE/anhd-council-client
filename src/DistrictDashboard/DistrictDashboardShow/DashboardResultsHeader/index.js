@@ -16,11 +16,11 @@ const DashboardResultsHeader = props => {
         <p className="dashboard-results-header__title">{props.label}</p>
         <div className="dashboard-results-header__inner-wrapper">
           <div className="dashboard-results-header__group">
-            <span className="dashboard-results-header__label">Properties Found: </span>
+            <span className="dashboard-results-header__label">Properties Found:</span>{' '}
             <span className="dashboard-results-header__value">{formatNumber(props.results.length)}</span>
           </div>
           <div className="dashboard-results-header__group">
-            <span className="dashboard-results-header__label">Units: </span>
+            <span className="dashboard-results-header__label">Units:</span>{' '}
             <span className="dashboard-results-header__value">{formatNumber(numberOfUnits)}</span>
           </div>
         </div>
