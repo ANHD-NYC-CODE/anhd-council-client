@@ -75,7 +75,7 @@ class GeographySelect extends React.Component {
                 message={(this.props.errors || {}).geographyType}
               />
               {!!(this.props.currentGeographyType || this.props.changingGeographyType) && (
-                <div className={this.props.selectClass}>
+                <div id="geography-id-select" className={this.props.selectClass}>
                   {this.props.changingGeographyType === b.ZIPCODE_GEOGRAPHY.constant ||
                   (this.props.currentGeographyType === b.ZIPCODE_GEOGRAPHY.constant &&
                     !!this.props.currentGeographyId &&
@@ -84,6 +84,7 @@ class GeographySelect extends React.Component {
                       required
                       data-key="id"
                       name="geographyId"
+                      id="geography-custom-select"
                       onChange={this.passChangeGeography}
                       value={
                         (this.props.changingGeographyId || this.props.currentGeographyId) > 0
