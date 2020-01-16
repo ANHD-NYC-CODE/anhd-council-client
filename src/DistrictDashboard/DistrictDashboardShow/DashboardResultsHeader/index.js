@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
+
+import { formatNumber } from 'shared/utilities/languageUtils'
+
 import './style.scss'
 const DashboardResultsHeader = props => {
   const numberOfUnits = props.results.reduce((total, result) => parseInt(total) + parseInt(result['unitsres']), 0)
@@ -13,12 +16,12 @@ const DashboardResultsHeader = props => {
         <p className="dashboard-results-header__title">{props.label}</p>
         <div className="dashboard-results-header__inner-wrapper">
           <div className="dashboard-results-header__group">
-            <span className="dashboard-results-header__label">Properties Found: </span>
-            <span className="dashboard-results-header__value">{props.results.length}</span>
+            <span className="dashboard-results-header__label">Properties Found:</span>{' '}
+            <span className="dashboard-results-header__value">{formatNumber(props.results.length)}</span>
           </div>
           <div className="dashboard-results-header__group">
-            <span className="dashboard-results-header__label">Units: </span>
-            <span className="dashboard-results-header__value">{numberOfUnits}</span>
+            <span className="dashboard-results-header__label">Units:</span>{' '}
+            <span className="dashboard-results-header__value">{formatNumber(numberOfUnits)}</span>
           </div>
         </div>
       </div>

@@ -199,3 +199,7 @@ export const communityIdToString = id => {
   const borough = boroCodeToName(String(id).charAt(0))
   return `${borough} ${String(id).slice(1)}`
 }
+
+export const formatNumber = num => {
+  return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+}

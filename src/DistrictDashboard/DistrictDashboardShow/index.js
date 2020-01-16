@@ -8,7 +8,7 @@ import BaseLink from 'shared/components/BaseLink'
 import { constructCsvFileName } from 'Store/AdvancedSearch/utilities/advancedSearchStoreUtils'
 import AdvancedSearchSentence from 'AdvancedSearch/Sentence'
 import HousingTypeSection from 'DistrictDashboard/DistrictDashboardShow/HousingTypeSection'
-import DistrictResultsTitle from 'DistrictDashboard/DistrictDashboardShow/DistrictResultsTitle'
+import DashboardResultsEditor from 'DistrictDashboard/DistrictDashboardShow/DashboardResultsEditor'
 import LeafletMap from 'LeafletMap'
 import DistrictFilterSection from 'DistrictDashboard/DistrictDashboardShow/DistrictFilterSection'
 import DashboardResultsHeader from 'DistrictDashboard/DistrictDashboardShow/DashboardResultsHeader'
@@ -84,34 +84,6 @@ class DistrictDashboardShow extends React.Component {
     const resultRecords = this.props.dashboardState.resultRecords
     return (
       <div className="district-dashboard-show">
-        <div className="geography-select-row">
-          <div className="district-dashboard-show__top-row__inner layout-width-wrapper district-dashboard-container">
-            <GeographySelect
-              selectClass="main-geography-select"
-              inputSize="md"
-              submitButtonVariant="dark"
-              currentGeographyType={this.props.appState.currentGeographyType}
-              currentGeographyId={this.props.appState.currentGeographyId}
-              dispatch={this.props.dispatch}
-              changing={this.props.appState.changingGeography}
-              changingGeographyType={this.props.appState.changingGeographyType}
-              changingGeographyId={this.props.appState.changingGeographyId}
-              cancelChangeGeography={this.props.cancelChangeGeography}
-              handleChangeGeographyType={this.props.handleChangeGeographyType}
-              handleChangeGeography={this.props.handleChangeGeography}
-              showSubmit={
-                this.props.appState.changingGeography &&
-                this.props.appState.changingGeographyType &&
-                this.props.appState.changingGeographyId > 0
-              }
-            />
-            {!this.props.geographyRequests.some(r => r.type === c.ADVANCED_SEARCH) && (
-              <BaseLink className="text-link" href="/search">
-                + Custom Search
-              </BaseLink>
-            )}
-          </div>
-        </div>
         <div className="district-dashboard-show__search-section layout-width-wrapper district-dashboard-container">
           {// Custom Search
           this.props.geographyRequests
@@ -155,7 +127,8 @@ class DistrictDashboardShow extends React.Component {
                   id="date-radio--30-days"
                   disabled={this.props.dashboardState.districtShowCustomView || this.props.loading}
                   variant="outline-primary"
-                  label={`Last 30 Days (${moment(c.DISTRICT_RESULTS_DATE_ONE).format('MM/DD/YYYY')})`}
+                  label={`Last 30 Days`}
+                  // label={`Last 30 Days (${moment(c.DISTRICT_RESULTS_DATE_ONE).format('MM/DD/YYYY')})`}
                   onChange={() => this.props.toggleDateRange(c.DISTRICT_REQUEST_DATE_ONE)}
                   checked={this.props.dashboardState.mapFilterDate === c.DISTRICT_REQUEST_DATE_ONE}
                 />
@@ -167,7 +140,8 @@ class DistrictDashboardShow extends React.Component {
                   id="date-radio--1-year"
                   disabled={this.props.dashboardState.districtShowCustomView || this.props.loading}
                   variant="outline-primary"
-                  label={`Last Year (${moment(c.DISTRICT_RESULTS_DATE_TWO).format('MM/DD/YYYY')})`}
+                  label={`Last Year`}
+                  // label={`Last Year (${moment(c.DISTRICT_RESULTS_DATE_TWO).format('MM/DD/YYYY')})`}
                   onChange={() => this.props.toggleDateRange(c.DISTRICT_REQUEST_DATE_TWO)}
                   checked={this.props.dashboardState.mapFilterDate === c.DISTRICT_REQUEST_DATE_TWO}
                 />
@@ -179,7 +153,8 @@ class DistrictDashboardShow extends React.Component {
                   id="date-radio--3-years"
                   disabled={this.props.dashboardState.districtShowCustomView || this.props.loading}
                   variant="outline-primary"
-                  label={`Last 3 Years (${moment(c.DISTRICT_RESULTS_DATE_THREE).format('MM/DD/YYYY')})`}
+                  label={`Last 3 Years`}
+                  // label={`Last 3 Years (${moment(c.DISTRICT_RESULTS_DATE_THREE).format('MM/DD/YYYY')})`}
                   onChange={() => this.props.toggleDateRange(c.DISTRICT_REQUEST_DATE_THREE)}
                   checked={this.props.dashboardState.mapFilterDate === c.DISTRICT_REQUEST_DATE_THREE}
                 />
@@ -193,6 +168,7 @@ class DistrictDashboardShow extends React.Component {
                 switchSelectedFilter={this.props.switchSelectedFilter}
                 housingTypeResults={this.props.dashboardState.housingTypeResults}
                 housingTypeResultFilter={this.props.housingTypeResultFilter}
+                housingTypeResultsIndex={this.props.dashboardState.housingTypeResultsIndex}
                 loading={this.props.loading}
               />
             </div>
@@ -212,6 +188,37 @@ class DistrictDashboardShow extends React.Component {
             </div>
           </div>
           <div className="district-dashboard-show__results-section">
+            <div className="geography-select-row">
+              <div className="district-dashboard-show__top-row__inner">
+                <GeographySelect
+                  selectClass="main-geography-select"
+                  inputSize="md"
+                  submitButtonVariant="dark"
+                  currentGeographyType={this.props.appState.currentGeographyType}
+                  currentGeographyId={this.props.appState.currentGeographyId}
+                  dispatch={this.props.dispatch}
+                  changing={this.props.appState.changingGeography}
+                  changingGeographyType={this.props.appState.changingGeographyType}
+                  changingGeographyId={this.props.appState.changingGeographyId}
+                  cancelChangeGeography={this.props.cancelChangeGeography}
+                  handleChangeGeographyType={this.props.handleChangeGeographyType}
+                  handleChangeGeography={this.props.handleChangeGeography}
+                  showSubmit={
+                    this.props.appState.changingGeography &&
+                    this.props.appState.changingGeographyType &&
+                    this.props.appState.changingGeographyId > 0
+                  }
+                />
+                {!this.props.geographyRequests.some(r => r.type === c.ADVANCED_SEARCH) && (
+                  <div className="custom-search-link">
+                    Access more options with a{' '}
+                    <BaseLink className="text-link" href="/search">
+                      Custom Search
+                    </BaseLink>
+                  </div>
+                )}
+              </div>
+            </div>
             <div className="district-dashboard-show__results-header">
               <ConfigContext.Consumer>
                 {config => {
@@ -233,6 +240,7 @@ class DistrictDashboardShow extends React.Component {
                   )
                 }}
               </ConfigContext.Consumer>
+              <DashboardResultsEditor dispatch={this.props.dispatch} />
               <ButtonToolbar className="d-flex view-toggle__container">
                 <ToggleButtonGroup
                   name="view"
