@@ -178,6 +178,7 @@ label.checkbox.inline .toggle {
   border-radius: 24px;
   border: 1px solid rgba(120, 120, 120, 0.5);
   cursor: pointer;
+  outline: none;
 
   &:hover:not([disabled]) .round-toggle-handle,
   &:focus:not([disabled]) .round-toggle-handle {
