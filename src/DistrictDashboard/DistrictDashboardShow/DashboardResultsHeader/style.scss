@@ -2,14 +2,33 @@
 
 .dashboard-results-header {
   @extend %p3-font-size;
+  border: 1px solid $black;
+  box-sizing: border-box;
   color: $black;
-  padding: 30px 0;
+  background-color: $blizzard;
+  padding: 16px;
+
+  .dashboard-results-header__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 
   .dashboard-results-header__title {
+    @extend %p1-font-size;
     color: $black;
     font-weight: bold;
-    margin-bottom: 20px;
+    margin: 0;
     text-transform: uppercase;
+  }
+
+  .dashboard-results-header__inner-wrapper {
+    display: flex;
+    align-items: center;
+
+    > div:first-child {
+      margin-right: 16px;
+    }
   }
 
   .dashboard-results-header__group {
@@ -17,8 +36,14 @@
   }
 
   .dashboard-results-header__label {
+    @extend %p2-font-size;
     color: $black;
-    font-weight: bold;
     margin-bottom: 10px;
+  }
+
+  .dashboard-results-header__value {
+    @extend %p2-font-size;
+
+    font-weight: bold;
   }
 }

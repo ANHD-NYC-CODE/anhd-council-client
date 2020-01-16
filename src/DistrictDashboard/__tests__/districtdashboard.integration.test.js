@@ -178,7 +178,7 @@ describe('DistrictDashboard', () => {
         await flushAllPromises()
         wrapper.update()
         expect(wrapper.find('.housing-type-section__wrapper').text()).toMatch(
-          'All Residential2 properties11 unitsRent Stabilized0 properties0 units0.0% of residential unitsSubsidized Housing0 properties0 units0.0% of residential unitsSmall Homes1 properties1 units9.1% of residential unitsMarket Rate2 properties11 units100.0% of residential unitsPublic Housing0 properties0 units0.0% of residential units'
+          'All Residential Housing2 properties11 unitsRent Stabilized0 properties0 units0.0% of residential unitsSubsidized Housing0 properties0 units0.0% of residential unitsSmall Homes1 properties1 units9.1% of residential unitsMarket Rate2 properties11 units100.0% of residential unitsPublic Housing0 properties0 units0.0% of residential units'
         )
       })
 
