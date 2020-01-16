@@ -1,0 +1,9 @@
+@import 'shared/styles/_variables.scss';
+
+.dashboard-results-editor {
+  border: 1px solid $rhino;
+  border-radius: 2px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  padding: 16px;
+}

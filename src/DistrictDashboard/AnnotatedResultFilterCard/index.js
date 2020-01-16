@@ -87,7 +87,7 @@ class AnnotatedResultFilterCard extends React.Component {
             onKeyDown={e => spaceEnterKeyDownHandler(e, e => this.handleClick(e, this.props.amountFilter))}
             onClick={(target, value, e) => this.handleClick(e, this.props.amountFilter)}
             handlestyle="light"
-            onstyle="success"
+            onstyle="primary"
             offstyle="light"
             active={!isUnauthorized && this.props.selected}
             disabled={isUnauthorized || this.props.disabled}

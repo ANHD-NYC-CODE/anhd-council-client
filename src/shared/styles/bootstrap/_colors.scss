@@ -13,6 +13,7 @@ $gray-900: #585858 !default;
 $black: #0a2126 !default;
 
 $rhino: #424a54 !default;
+$rhino-200: #c0c7c4 !default;
 
 $grays: () !default;
 // stylelint-disable-next-line scss/dollar-variable-default
@@ -63,6 +64,10 @@ $logo-gray: #f2f2f2 !default;
 $property-blue: #a3bec8 !default;
 $housing-purple: #96a6d8 !default;
 $light-gray: #a39e9e !default;
+
+$tab-dark: $rhino;
+$tab-dark-hover: $gray-200;
+$tab-dark-active: $rhino;
 
 $tab-primary: $tab-blue;
 $tab-primary-hover: $paleCornflowerBlue;
