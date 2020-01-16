@@ -13,6 +13,7 @@
   justify-content: center;
   padding: 20px;
   background: rgba(100, 100, 100, 0.5);
+  pointer-events: none;
 
   .map-alert-modal__alert {
     display: flex;
@@ -20,6 +21,7 @@
     align-items: center;
     justify-content: center;
     max-width: 240px;
+    pointer-events: all;
   }
 
   .map-alert-modal__text {

@@ -26,21 +26,23 @@ const HousingTypeSection = props => {
           <Form className="housingtype-section">
             <Form.Group controlId="housing-type-select">
               <Form.Label className="housingtype-section__label">Housing Type:</Form.Label>
-              <Form.Control
-                disabled={props.customView || props.loading}
-                className="housing-type-section__wrapper valued"
-                as="select"
-                size="sm"
-                onChange={e => handleChange(config, parseInt(e.currentTarget.value))}
-              >
-                {propertyResource.ownResultFilters.map((ownResultFilter, index) => {
-                  return (
-                    <option key={`housingtype-wrapper-${index}`} value={index}>
-                      {ownResultFilter.label}
-                    </option>
-                  )
-                })}
-              </Form.Control>
+              {propertyResource.ownResultFilters.map((ownResultFilter, index) => {
+                return (
+                  <Form.Check
+                    custom
+                    key={`housingtype-wrapper-${index}`}
+                    className="housingtype-section__check"
+                    id={`${ownResultFilter.label}--${index}`}
+                    label={ownResultFilter.label}
+                    type="radio"
+                    variant="outline-primary"
+                    checked={props.housingTypeResultFilter.id === ownResultFilter.id}
+                    disabled={props.customView || props.loading}
+                    value={index}
+                    onChange={e => handleChange(config, parseInt(index))}
+                  />
+                )
+              })}
             </Form.Group>
           </Form>
         )
