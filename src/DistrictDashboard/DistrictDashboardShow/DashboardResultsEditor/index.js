@@ -1,12 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+
+import * as c from 'shared/constants'
 import { formatNumber } from 'shared/utilities/languageUtils'
-import { updateAmountFilter, setHousingTypeResultFilter } from 'Store/DashboardState/actions'
+import { setMapFilterDate, updateAmountFilter, setHousingTypeResultFilter } from 'Store/DashboardState/actions'
 import StandardizedInput from 'shared/classes/StandardizedInput'
 
 import { mapFilterDateToLabel, longAmountComparisonString } from 'shared/utilities/languageUtils'
 import AmountFilterInput from 'DistrictDashboard/AmountFilterInput'
 import HousingTypeDropdown from 'DistrictDashboard/HousingTypeDropdown'
+import DateDropdown from 'DistrictDashboard/DateDropdown'
+
 import Property from 'shared/models/resources/Property'
 
 import './style.scss'
@@ -32,6 +36,10 @@ const DashboardResultsEditor = props => {
     }
   }
 
+  const handleDateChange = value => {
+    props.dispatch(setMapFilterDate(value))
+  }
+
   const constructDashboardSentence = (
     housingTypeResultFilter,
     selectedFilters = [],
@@ -39,19 +47,19 @@ const DashboardResultsEditor = props => {
     filterCondition
   ) => {
     if (!housingTypeResultFilter || !mapFilterDate || !filterCondition) return '...'
-    const dateString = mapFilterDateToLabel(mapFilterDate)
-    const conditionString = filterCondition.toLowerCase()
     const housingLabel = housingTypeResultFilter.label.toLowerCase()
     const housingOptions = Property().ownResultFilters.map(f => ({ value: f.id, label: f.label }))
+    const dateString = mapFilterDateToLabel(mapFilterDate)
+    const dateOptions = [c.DISTRICT_REQUEST_DATE_ONE, c.DISTRICT_REQUEST_DATE_TWO, c.DISTRICT_REQUEST_DATE_THREE].map(
+      d => ({ value: d, label: mapFilterDateToLabel(d) })
+    )
+    const conditionString = filterCondition.toLowerCase()
 
     const housingDropdown = (
-      <HousingTypeDropdown
-        onSubmit={handleHousingTypeFilterChange}
-        options={housingOptions}
-        value={'ok'}
-        label={housingLabel}
-      />
+      <HousingTypeDropdown onSubmit={handleHousingTypeFilterChange} options={housingOptions} label={housingLabel} />
     )
+
+    const dateDropdown = <DateDropdown label={dateString} options={dateOptions} onSubmit={handleDateChange} />
 
     const selectedFilterElements = selectedFilters.map((filter, index) => {
       return (
@@ -69,7 +77,7 @@ const DashboardResultsEditor = props => {
     return (
       <span>
         Displaying {housingDropdown} {selectedFilterElements.length ? 'with' : null} {selectedFilterElements}
-        {selectedFilters.length ? ` in the ${dateString}.` : '.'}
+        {selectedFilters.length ? ' in the ' : null} {selectedFilters.length ? dateDropdown : null}.
       </span>
     )
   }
