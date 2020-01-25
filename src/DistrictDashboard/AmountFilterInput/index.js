@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { Form, Button } from 'react-bootstrap'
 import StandardizedInput from 'shared/classes/StandardizedInput'
 import { spaceEnterKeyDownHandler } from 'shared/utilities/accessibilityUtils'
+import classnames from 'classnames'
 
 const AmountFilterInput = props => {
   const [value, setValue] = useState(props.value)
@@ -26,7 +27,7 @@ const AmountFilterInput = props => {
   }
 
   return (
-    <Form className="amount-filter-input" onSubmit={e => handleSubmit(e, value)}>
+    <Form className={classnames('amount-filter-input', { active: isChanging })} onSubmit={e => handleSubmit(e, value)}>
       <Form.Group>
         <Form.Control
           type="number"
@@ -39,7 +40,7 @@ const AmountFilterInput = props => {
           value={isChanging ? value : props.value}
         />
 
-        {value !== props.value && (
+        {!!isChanging && (
           <Button variant="dark" type="submit" size="sm">
             Save
           </Button>
