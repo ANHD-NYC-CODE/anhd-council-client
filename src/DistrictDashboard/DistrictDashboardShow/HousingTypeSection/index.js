@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import ConfigContext from 'Config/ConfigContext'
 
 import { Form } from 'react-bootstrap'
+import InfoModalButton from 'shared/components/InfoModalButton'
 
 import './style.scss'
 
@@ -13,6 +14,14 @@ const HousingTypeSection = props => {
     const filter = propertyResource.ownResultFilters[index]
 
     props.switchSelectedFilter(filter, index)
+  }
+
+  const getLabel = (label, index) => {
+    // don't return first (all residential)
+    if (!index || props.housingTypeResults[index] == undefined) return label
+    return `${label} (${((props.housingTypeResults[index].length / props.totalPropertyResults.length) * 100).toFixed(
+      1
+    )}%)`
   }
 
   return (
@@ -28,19 +37,21 @@ const HousingTypeSection = props => {
               <Form.Label className="housingtype-section__label">Housing Type:</Form.Label>
               {propertyResource.ownResultFilters.map((ownResultFilter, index) => {
                 return (
-                  <Form.Check
-                    custom
-                    key={`housingtype-wrapper-${index}`}
-                    className="housingtype-section__check"
-                    id={`${ownResultFilter.label}--${index}`}
-                    label={ownResultFilter.label}
-                    type="radio"
-                    variant="outline-primary"
-                    checked={props.housingTypeResultFilter.id === ownResultFilter.id}
-                    disabled={props.customView || props.loading}
-                    value={index}
-                    onChange={e => handleChange(config, parseInt(index))}
-                  />
+                  <span key={`housingtype-wrapper-${index}`} className="housingtype-section__section">
+                    <Form.Check
+                      custom
+                      className="housingtype-section__check"
+                      id={`${ownResultFilter.label}--${index}`}
+                      label={getLabel(ownResultFilter.label, index)}
+                      type="radio"
+                      variant="outline-primary"
+                      checked={props.housingTypeResultFilter.id === ownResultFilter.id}
+                      disabled={props.customView || props.loading}
+                      value={index}
+                      onChange={e => handleChange(config, parseInt(index))}
+                    />
+                    {!!index && <InfoModalButton modalConstant={ownResultFilter.id} />}
+                  </span>
                 )
               })}
             </Form.Group>
@@ -58,6 +69,7 @@ HousingTypeSection.propTypes = {
   propertyResource: PropTypes.object,
   housingTypeResultFilter: PropTypes.object,
   switchSelectedFilter: PropTypes.func,
+  totalPropertyResults: PropTypes.object,
 }
 
 HousingTypeSection.defaultProps = {

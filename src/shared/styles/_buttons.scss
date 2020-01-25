@@ -154,3 +154,8 @@ a.btn-link:hover {
 .custom-control-input:checked ~ .custom-control-label::before {
   background-color: $primary;
 }
+
+.custom-control-label::before,
+.custom-control-label::after {
+  top: 2px;
+}

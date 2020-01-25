@@ -5,7 +5,10 @@ import { formatNumber } from 'shared/utilities/languageUtils'
 
 import './style.scss'
 const DashboardResultsHeader = props => {
-  const numberOfUnits = props.results.reduce((total, result) => parseInt(total) + parseInt(result['unitsres']), 0)
+  const numberOfUnits = props.housingResults.reduce(
+    (total, result) => parseInt(total) + parseInt(result['unitsres']),
+    0
+  )
   const totalDistrictUnits = props.totalResults.reduce(
     (total, result) => parseInt(total) + parseInt(result['unitsres']),
     0
@@ -17,7 +20,7 @@ const DashboardResultsHeader = props => {
         <div className="dashboard-results-header__inner-wrapper">
           <div className="dashboard-results-header__group">
             <span className="dashboard-results-header__label">Properties Found:</span>{' '}
-            <span className="dashboard-results-header__value">{formatNumber(props.results.length)}</span>
+            <span className="dashboard-results-header__value">{formatNumber(props.housingResults.length)}</span>
           </div>
           <div className="dashboard-results-header__group">
             <span className="dashboard-results-header__label">Units:</span>{' '}
@@ -32,12 +35,12 @@ const DashboardResultsHeader = props => {
 DashboardResultsHeader.propTypes = {
   label: PropTypes.string,
   percentageOfWhole: PropTypes.bool,
-  results: PropTypes.array,
+  housingResults: PropTypes.array,
   totalResults: PropTypes.array,
 }
 DashboardResultsHeader.defaultProps = {
   percentageOfWhole: false,
-  results: [],
+  housingResults: [],
   totalResults: [],
 }
 
