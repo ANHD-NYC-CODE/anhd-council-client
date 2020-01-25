@@ -3,19 +3,19 @@ import PropTypes from 'prop-types'
 
 import { Dropdown, NavItem } from 'react-bootstrap'
 
-const HousingTypeDropdown = props => {
+const ConditionDropdown = props => {
   const handleSubmit = value => {
     props.onSubmit(value)
   }
 
   return (
-    <Dropdown tabindex={0} as={NavItem} className="housing-type-dropdown">
+    <Dropdown tabindex={0} as={NavItem} className="condition-dropdown">
       <Dropdown.Toggle as={NavItem}>{props.label}</Dropdown.Toggle>
 
       <Dropdown.Menu>
         {props.options.map((option, index) => {
           return (
-            <Dropdown.Item key={`housing-dropdown--${index}`} onClick={() => handleSubmit(option.value)}>
+            <Dropdown.Item key={`date-dropdown--${index}`} onClick={() => handleSubmit(option.value)}>
               {option.label}
             </Dropdown.Item>
           )
@@ -25,13 +25,14 @@ const HousingTypeDropdown = props => {
   )
 }
 
-HousingTypeDropdown.propTypes = {
+ConditionDropdown.propTypes = {
   label: PropTypes.string,
   options: PropTypes.array,
+  value: PropTypes.string,
   onSubmit: PropTypes.func,
 }
-HousingTypeDropdown.defaultProps = {
+ConditionDropdown.defaultProps = {
   options: [],
 }
 
-export default HousingTypeDropdown
+export default ConditionDropdown

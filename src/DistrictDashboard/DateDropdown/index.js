@@ -9,7 +9,7 @@ const DateDropdown = props => {
   }
 
   return (
-    <Dropdown as={NavItem}>
+    <Dropdown tabindex={0} as={NavItem} className="date-dropdown">
       <Dropdown.Toggle as={NavItem}>{props.label}</Dropdown.Toggle>
 
       <Dropdown.Menu>
