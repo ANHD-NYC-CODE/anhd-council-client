@@ -15,7 +15,7 @@ import DashboardResultsHeader from 'DistrictDashboard/DistrictDashboardShow/Dash
 import ConfigContext from 'Config/ConfigContext'
 
 import classnames from 'classnames'
-import { shortAmountComparisonString } from 'shared/utilities/languageUtils'
+import { shortAmountComparisonString, mapFilterDateToLabel } from 'shared/utilities/languageUtils'
 import GeographyProfile from 'DistrictDashboard/GeographyProfile'
 import BaseTable from 'shared/components/BaseTable'
 
@@ -127,7 +127,7 @@ class DistrictDashboardShow extends React.Component {
                   id="date-radio--30-days"
                   disabled={this.props.dashboardState.districtShowCustomView || this.props.loading}
                   variant="outline-primary"
-                  label={`Last 30 Days`}
+                  label={mapFilterDateToLabel(c.DISTRICT_REQUEST_DATE_ONE)}
                   // label={`Last 30 Days (${moment(c.DISTRICT_RESULTS_DATE_ONE).format('MM/DD/YYYY')})`}
                   onChange={() => this.props.toggleDateRange(c.DISTRICT_REQUEST_DATE_ONE)}
                   checked={this.props.dashboardState.mapFilterDate === c.DISTRICT_REQUEST_DATE_ONE}
@@ -140,7 +140,7 @@ class DistrictDashboardShow extends React.Component {
                   id="date-radio--1-year"
                   disabled={this.props.dashboardState.districtShowCustomView || this.props.loading}
                   variant="outline-primary"
-                  label={`Last Year`}
+                  label={mapFilterDateToLabel(c.DISTRICT_REQUEST_DATE_TWO)}
                   // label={`Last Year (${moment(c.DISTRICT_RESULTS_DATE_TWO).format('MM/DD/YYYY')})`}
                   onChange={() => this.props.toggleDateRange(c.DISTRICT_REQUEST_DATE_TWO)}
                   checked={this.props.dashboardState.mapFilterDate === c.DISTRICT_REQUEST_DATE_TWO}
@@ -153,7 +153,7 @@ class DistrictDashboardShow extends React.Component {
                   id="date-radio--3-years"
                   disabled={this.props.dashboardState.districtShowCustomView || this.props.loading}
                   variant="outline-primary"
-                  label={`Last 3 Years`}
+                  label={mapFilterDateToLabel(c.DISTRICT_REQUEST_DATE_THREE)}
                   // label={`Last 3 Years (${moment(c.DISTRICT_RESULTS_DATE_THREE).format('MM/DD/YYYY')})`}
                   onChange={() => this.props.toggleDateRange(c.DISTRICT_REQUEST_DATE_THREE)}
                   checked={this.props.dashboardState.mapFilterDate === c.DISTRICT_REQUEST_DATE_THREE}
@@ -236,13 +236,19 @@ class DistrictDashboardShow extends React.Component {
                       housingResults={
                         this.props.dashboardState.housingTypeResults[this.props.dashboardState.housingTypeResultsIndex]
                       }
-                      filteredResults={this.props.dashboardState.resultRecords}
                       totalResults={this.props.dashboardState.totalPropertyResults}
                     />
                   )
                 }}
               </ConfigContext.Consumer>
-              <DashboardResultsEditor dispatch={this.props.dispatch} />
+              <DashboardResultsEditor
+                dispatch={this.props.dispatch}
+                filteredResults={this.props.dashboardState.resultRecords}
+                housingTypeResultFilter={this.props.dashboardState.housingTypeResultFilter}
+                selectedFilters={this.props.dashboardState.selectedFilters}
+                mapFilterDate={this.props.dashboardState.mapFilterDate}
+                filterCondition={this.props.dashboardState.filterCondition}
+              />
               <ButtonToolbar className="d-flex view-toggle__container">
                 <ToggleButtonGroup
                   name="view"

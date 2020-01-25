@@ -58,6 +58,7 @@
     cursor: pointer;
     @extend %p3-font-size;
     color: $black;
+    text-transform: capitalize;
   }
   .district-dashboard-show__date-section__check {
     color: $black;
