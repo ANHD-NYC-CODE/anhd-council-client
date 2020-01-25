@@ -11,6 +11,14 @@
     text-transform: uppercase;
   }
 
+  .housingtype-section__section {
+    display: flex;
+
+    > :first-child {
+      margin-right: 10px;
+    }
+  }
+
   .housingtype-section__check,
   .housingtype-section__check label,
   .housingtype-section__check input {
