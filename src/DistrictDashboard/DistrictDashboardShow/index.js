@@ -233,9 +233,10 @@ class DistrictDashboardShow extends React.Component {
                     <DashboardResultsHeader
                       label={this.props.dashboardState.housingTypeResultFilter.label}
                       percentageOfWhole={this.props.dashboardState.housingTypeResultFilter !== residentialFilter}
-                      results={
+                      housingResults={
                         this.props.dashboardState.housingTypeResults[this.props.dashboardState.housingTypeResultsIndex]
                       }
+                      filteredResults={this.props.dashboardState.resultRecords}
                       totalResults={this.props.dashboardState.totalPropertyResults}
                     />
                   )
