@@ -18,7 +18,7 @@ const HousingTypeSection = props => {
 
   const getLabel = (label, index) => {
     // don't return first (all residential)
-    if (!index || props.housingTypeResults[index] == undefined) return label
+    if (!index || props.housingTypeResults[index] == undefined || !props.totalPropertyResults.length) return label
     return `${label} (${((props.housingTypeResults[index].length / props.totalPropertyResults.length) * 100).toFixed(
       1
     )}%)`
@@ -75,6 +75,7 @@ HousingTypeSection.propTypes = {
 HousingTypeSection.defaultProps = {
   customView: false,
   loading: false,
+  totalPropertyResults: [],
 }
 
 export default HousingTypeSection
