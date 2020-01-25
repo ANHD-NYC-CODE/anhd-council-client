@@ -169,6 +169,7 @@ class DistrictDashboardShow extends React.Component {
                 housingTypeResults={this.props.dashboardState.housingTypeResults}
                 housingTypeResultFilter={this.props.housingTypeResultFilter}
                 housingTypeResultsIndex={this.props.dashboardState.housingTypeResultsIndex}
+                totalPropertyResults={this.props.totalPropertyResults}
                 loading={this.props.loading}
               />
             </div>
