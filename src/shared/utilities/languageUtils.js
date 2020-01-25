@@ -1,3 +1,5 @@
+import * as c from 'shared/constants'
+
 export const capitalizeWords = string => {
   if (!string) return ''
   return preserveUppercaseTerms(
@@ -202,4 +204,15 @@ export const communityIdToString = id => {
 
 export const formatNumber = num => {
   return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+}
+
+export const mapFilterDateToLabel = token => {
+  switch (token) {
+    case c.DISTRICT_REQUEST_DATE_ONE:
+      return 'last 30 days'
+    case c.DISTRICT_REQUEST_DATE_TWO:
+      return 'last year'
+    case c.DISTRICT_REQUEST_DATE_THREE:
+      return 'last 3 years'
+  }
 }
