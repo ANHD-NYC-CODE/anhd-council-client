@@ -6,12 +6,16 @@ import { setDashboardCustomView, toggleSelectedAmountFilter } from 'Store/Dashbo
 import UserContext from 'Auth/UserContext'
 import AnnotatedResultFilterCard from 'DistrictDashboard/AnnotatedResultFilterCard'
 import { setHousingTypeResultFilter, setDashboardTableState } from 'Store/DashboardState/actions'
-
+import { ButtonToolbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
 import { fireFilterSelectEvent } from 'Store/Analytics/actions'
+import { setDashboardFilterCondition } from 'Store/DashboardState/actions'
 
 import './style.scss'
 
 const DistrictFilterSection = props => {
+  const setFilterCondition = filterCondition => {
+    props.dispatch(setDashboardFilterCondition(filterCondition))
+  }
   const handleResultFilterClick = amountFilter => {
     props.endChangingState()
     if (props.customView) {
@@ -50,7 +54,36 @@ const DistrictFilterSection = props => {
       {auth => {
         return (
           <div className="district-filter-section">
-            <p className="district-filter-section__title">Datasets:</p>
+            <div className="district-filter-section__header">
+              <p className="district-filter-section__title">Datasets:</p>
+              <ButtonToolbar className="d-flex dashboard-filter-section__toggle">
+                <ToggleButtonGroup
+                  name="view"
+                  type="radio"
+                  value={props.dashboardState.filterCondition}
+                  onChange={setFilterCondition}
+                >
+                  <ToggleButton
+                    tabIndex="0"
+                    className="view-toggle"
+                    size="sm"
+                    variant={props.dashboardState.filterCondition === 'OR' ? 'dark' : 'light'}
+                    value={'OR'}
+                  >
+                    Or
+                  </ToggleButton>
+                  <ToggleButton
+                    tabIndex="0"
+                    className="view-toggle"
+                    size="sm"
+                    variant={props.dashboardState.filterCondition === 'OR' ? 'light' : 'dark'}
+                    value={'AND'}
+                  >
+                    And
+                  </ToggleButton>
+                </ToggleButtonGroup>
+              </ButtonToolbar>
+            </div>
 
             {props.dashboardState.resultFilters
               .filter(f => f.category === 'AMOUNT')

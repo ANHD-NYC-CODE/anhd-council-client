@@ -8,6 +8,7 @@ export const initialState = {
   resultFilterCalculations: [],
   resultFilters: [], // initialize in Config/index.js
   selectedFilters: [],
+  filterCondition: 'OR',
   districtShowCustomView: false,
   resultRecords: [],
   housingTypeResults: [],
@@ -179,6 +180,13 @@ export const dashboardStateReducer = (state = Object.freeze(initialState), actio
         customSearchResults: action.customSearchResults,
         resultRecords: getResultRecords({ state, customSearchResults: action.customSearchResults }),
         resultFilterCalculations: calculateAmountTotals({ state, customSearchResults: action.customSearchResults }),
+      }
+    }
+
+    case c.SET_DASHBOARD_FILTER_CONDITION: {
+      return {
+        ...state,
+        filterCondition: action.filterCondition,
       }
     }
 

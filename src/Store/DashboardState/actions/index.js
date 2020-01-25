@@ -59,3 +59,8 @@ export const setDashboardTableState = (dashboardTableState = {}) => ({
   type: c.SET_DASHBOARD_TABLE_STATE,
   dashboardTableState,
 })
+
+export const setDashboardFilterCondition = (filterCondition = 'OR') => ({
+  type: c.SET_DASHBOARD_FILTER_CONDITION,
+  filterCondition,
+})
