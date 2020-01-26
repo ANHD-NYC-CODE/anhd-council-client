@@ -75,3 +75,8 @@ export const resetAdvancedSearchReducer = propertyFilter => ({
   type: c.RESET_ADVANCED_SEARCH_REDUCER,
   propertyFilter,
 })
+
+export const setCustomSearchResults = (customSearchResults = []) => ({
+  type: c.SET_CUSTOM_SEARCH_RESULTS,
+  customSearchResults,
+})

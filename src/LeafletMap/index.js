@@ -63,7 +63,9 @@ export default class LeafletMap extends React.PureComponent {
   }
 
   handleMapClick(e) {
-    this.props.closeGeographyPopup()
+    if (this.props.closeGeographyPopup) {
+      this.props.closeGeographyPopup()
+    }
   }
 
   centerMapOnGeography() {
@@ -263,7 +265,6 @@ export default class LeafletMap extends React.PureComponent {
             overrideWarning={this.state.overrideWarning}
             results={this.props.results}
             iconConfig={this.props.iconConfig}
-            switchView={this.props.switchView}
             visible={!(this.props.appState.changingGeographyType && this.props.appState.changingGeographyId)}
           />
         </Map>
