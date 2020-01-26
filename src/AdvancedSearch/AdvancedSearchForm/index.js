@@ -7,7 +7,6 @@ import { getAdvancedSearchParamMaps } from 'Store/AdvancedSearch/utilities/advan
 import FilterComponent from 'AdvancedSearch/FilterComponent'
 import { replacePropertyFilter } from 'Store/AdvancedSearch/actions'
 import ClearAdvancedSearchButton from 'shared/components/buttons/ClearAdvancedSearchButton'
-import { fireAdvancedSearchSubmitEvent, fireCustomSearchPropertyTypeEvent } from 'Store/Analytics/actions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { addGeography, updateGeography } from 'Store/AdvancedSearch/actions'
@@ -39,33 +38,7 @@ class AdvancedSearchForm extends React.PureComponent {
 
     this.submitForm = this.submitForm.bind(this)
 
-    this.updatePropertyFilter = this.updatePropertyFilter.bind(this)
     this.validateForm = this.validateForm.bind(this)
-    this.syncGeographyToAppState = this.syncGeographyToAppState.bind(this)
-
-    this.syncGeographyToAppState(props)
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.syncGeographyToAppState(nextProps)
-  }
-
-  syncGeographyToAppState(props) {
-    if (props.geographyType && !!props.advancedSearch.geographies.length) {
-      const geography = props.advancedSearch.geographies[0]
-      if (props.geographyType !== geography.geographyType.constant || props.geographyId !== geography.id) {
-        geography['geographyType'] = props.geographyType
-        geography['id'] = props.geographyId
-        props.dispatch(updateGeography(0, geography))
-      }
-    } else if (props.geographyType && !props.advancedSearch.geographies.length) {
-      this.props.dispatch(addGeography(new Geography(props.geographyType, props.geographyId)))
-    }
-  }
-
-  updatePropertyFilter() {
-    const propertyFilter = this.props.advancedSearch.propertyFilter
-    this.props.dispatch(replacePropertyFilter(propertyFilter))
   }
 
   validateForm() {
@@ -96,16 +69,7 @@ class AdvancedSearchForm extends React.PureComponent {
         return
       } else {
         this.setState({ hasErrors: false })
-        this.props.dispatch(fireAdvancedSearchSubmitEvent(this.props.advancedSearch))
-        this.props.dispatch(
-          setAdvancedSearchRequest({
-            advancedSearchRequest: this.props.config.createAdvancedSearchRequest(
-              this.props.geographyType,
-              this.props.geographyId,
-              this.props.advancedSearch
-            ),
-          })
-        )
+        this.props.onSubmit()
       }
     })
   }
@@ -168,7 +132,7 @@ class AdvancedSearchForm extends React.PureComponent {
                     blockWidth={true}
                     config={this.props.config}
                     dispatch={this.props.dispatch}
-                    dispatchAction={this.updatePropertyFilter}
+                    dispatchAction={this.props.forceUpdate}
                     filter={this.props.advancedSearch.propertyFilter}
                     showPopups={false}
                   />
@@ -207,10 +171,10 @@ AdvancedSearchForm.propTypes = {
   advancedSearch: PropTypes.object,
   appState: PropTypes.object,
   dispatch: PropTypes.func,
-  geographyType: PropTypes.func,
-  geographyId: PropTypes.func,
-  changingGeographyType: PropTypes.func,
-  changingGeographyId: PropTypes.func,
+  geographyType: PropTypes.string,
+  geographyId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  changingGeographyType: PropTypes.string,
+  changingGeographyId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   error: PropTypes.object,
   loading: PropTypes.bool,
 }

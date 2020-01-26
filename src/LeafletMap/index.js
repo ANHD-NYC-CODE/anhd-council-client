@@ -70,8 +70,8 @@ export default class LeafletMap extends React.PureComponent {
 
   centerMapOnGeography() {
     if (this.mapRef.current) {
-      const changingOrCurrentType = this.props.appState.changingGeographyType || this.props.currentGeographyType
-      const changingOrCurrentId = this.props.appState.changingGeographyId || this.props.appState.currentGeographyId
+      const changingOrCurrentType = this.props.changingGeographyType || this.props.currentGeographyType
+      const changingOrCurrentId = this.props.changingGeographyId || this.props.currentGeographyId
       if (!(changingOrCurrentType && changingOrCurrentId)) return
       const bounds = this.getGeographyBounds(changingOrCurrentType, changingOrCurrentId)
 
@@ -216,47 +216,42 @@ export default class LeafletMap extends React.PureComponent {
               <GeographyGeoJson
                 geoJsonRef={this.geoJsonRef}
                 geographies={this.props.selectGeographyData(
-                  this.props.appState.changingGeographyType || this.props.currentGeographyType
+                  this.props.changingGeographyType || this.props.currentGeographyType
                 )}
-                currentGeographyId={this.props.appState.currentGeographyId}
+                currentGeographyId={this.props.currentGeographyId}
                 currentGeographyType={this.props.currentGeographyType}
-                changingGeographyId={this.props.appState.changingGeographyId}
-                changingGeographyType={this.props.appState.changingGeographyType}
+                changingGeographyId={this.props.changingGeographyId}
+                changingGeographyType={this.props.changingGeographyType}
                 onClick={this.props.handleChangeGeographyId}
               />
               <GeographyMarkerLabels
                 currentGeographyType={this.props.currentGeographyType}
                 geographies={this.props.selectGeographyData(
-                  this.props.appState.changingGeographyType || this.props.currentGeographyType
+                  this.props.changingGeographyType || this.props.currentGeographyType
                 )}
               />
             </div>
           )}
           {this.allGeographiesLoaded() &&
-            this.props.appState.changingGeographyType &&
-            (this.props.appState.currentGeographyId !== this.props.appState.changingGeographyId &&
-              this.props.appState.changingGeographyId > 0) && (
+            this.props.changingGeographyType &&
+            (this.props.currentGeographyId !== this.props.changingGeographyId &&
+              this.props.changingGeographyId > 0) && (
               <Popup
                 key={`${this.changingGeographyType}-${this.changingGeographyId}`}
                 onClose={this.props.closeGeographyPopup}
                 closeOnClick={false}
                 position={
-                  this.getGeographyCenter(
-                    this.props.appState.changingGeographyType,
-                    this.props.appState.changingGeographyId
-                  ) || {}
+                  this.getGeographyCenter(this.props.changingGeographyType, this.props.changingGeographyId) || {}
                 }
               >
                 <p>
                   {geographySelectionToString({
-                    type: this.props.appState.changingGeographyType,
-                    id: this.props.appState.changingGeographyId,
+                    type: this.props.changingGeographyType,
+                    id: this.props.changingGeographyId,
                   })}
                 </p>
                 <Button
-                  onClick={() =>
-                    this.props.handleChangeGeography({ geographyId: this.props.appState.changingGeographyId })
-                  }
+                  onClick={() => this.props.handleChangeGeography({ geographyId: this.props.changingGeographyId })}
                 >
                   Visit
                 </Button>
@@ -266,7 +261,7 @@ export default class LeafletMap extends React.PureComponent {
             overrideWarning={this.state.overrideWarning}
             results={this.props.results}
             iconConfig={this.props.iconConfig}
-            visible={!(this.props.appState.changingGeographyType && this.props.appState.changingGeographyId)}
+            visible={!(this.props.changingGeographyType && this.props.changingGeographyId)}
           />
         </Map>
       </div>
@@ -290,7 +285,6 @@ LeafletMap.defaultProps = {
 }
 
 LeafletMap.propTypes = {
-  appState: PropTypes.object,
   className: PropTypes.string,
   communityDistricts: PropTypes.array,
   councilDistricts: PropTypes.array,

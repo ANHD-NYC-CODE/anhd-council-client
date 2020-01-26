@@ -7,6 +7,7 @@ import Geography from 'shared/classes/Geography'
 
 import { getSingleRequest } from 'Store/AppState/selectors'
 import { constructCsvFileName } from 'Store/AdvancedSearch/utilities/advancedSearchStoreUtils'
+import { fireAdvancedSearchSubmitEvent, fireCustomSearchPropertyTypeEvent } from 'Store/Analytics/actions'
 
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
@@ -19,7 +20,7 @@ import SpinnerLoader from 'shared/components/Loaders/SpinnerLoader'
 import BaseTable from 'shared/components/BaseTable'
 import { requestWithAuth } from 'shared/utilities/authUtils'
 import { makeRequest } from 'Store/Request/actions'
-import { addGeography, updateGeography } from 'Store/AdvancedSearch/actions'
+import { addGeography, updateGeography, forceUpdateSearch } from 'Store/AdvancedSearch/actions'
 import {
   clearAdvancedSearchRequest,
   setAppState,
@@ -29,6 +30,7 @@ import {
 
 import AdvancedSearchForm from 'AdvancedSearch/AdvancedSearchForm'
 import AdvancedSearchSentenceEditor from 'AdvancedSearch/AdvancedSearchSentenceEditor'
+import { newAdvancedSearchRequest } from 'shared/utilities/configUtils'
 import ConfigContext from 'Config/ConfigContext'
 
 import classnames from 'classnames'
@@ -48,11 +50,14 @@ export class AdvancedSearch extends React.Component {
       displayingList: false,
       zoom: 14,
       tableState: {},
+      advancedSearch: this.props.advancedSearch,
     }
     this.loadRequest = this.loadRequest.bind(this)
     this.handleChangeGeographyType = this.handleChangeGeographyType.bind(this)
     this.changeGeography = this.changeGeography.bind(this)
     this.cancelChangeGeography = this.cancelChangeGeography.bind(this)
+    this.pageForceUpdate = this.pageForceUpdate.bind(this)
+    this.submitSearch = this.submitSearch.bind(this)
 
     if (this.props.appState.changingGeography) {
       this.props.dispatch(
@@ -76,6 +81,7 @@ export class AdvancedSearch extends React.Component {
   }
 
   componentDidUpdate() {
+    console.log(this.state.advancedSearch)
     if (this.props.advancedSearchRequest && !this.props.advancedSearchRequest.called) {
       this.loadRequest(this.props.advancedSearchRequest)
       this.setState({ displayingForm: false })
@@ -98,13 +104,25 @@ export class AdvancedSearch extends React.Component {
     e = new StandardizedInput(e)
     const type = geographyType || this.state.changingGeographyType || this.state.currentGeographyType
     const id = geographyId || e.value
-    if (!this.props.advancedSearch.geographies.length) {
+    if (!this.state.advancedSearch.geographies.length) {
       const newGeography = new Geography(type, id)
-      this.props.dispatch(addGeography(newGeography))
+
+      const newAdvancedSearch = this.state.advancedSearch
+      newAdvancedSearch.geographies = [...newAdvancedSearch.geographies, newGeography]
+      this.setState({
+        advancedSearch: newAdvancedSearch,
+      })
+      this.pageForceUpdate()
     } else {
-      const geography = this.props.advancedSearch.geographies[0]
+      const geography = this.state.advancedSearch.geographies[0]
       geography[e.key] = e.value
-      this.props.dispatch(updateGeography(0, geography))
+
+      const newAdvancedSearch = this.state.advancedSearch
+      newAdvancedSearch.geographies[0] = geography
+      this.setState({
+        advancedSearch: newAdvancedSearch,
+      })
+      this.pageForceUpdate()
     }
 
     this.setState({
@@ -122,6 +140,7 @@ export class AdvancedSearch extends React.Component {
         })
       )
     }
+
     this.cancelChangeGeography()
   }
 
@@ -130,6 +149,26 @@ export class AdvancedSearch extends React.Component {
       changingGeographyType: undefined,
       changingGeographyId: undefined,
     })
+  }
+
+  pageForceUpdate() {
+    this.props.dispatch(forceUpdateSearch())
+  }
+
+  submitSearch() {
+    this.props.dispatch(fireAdvancedSearchSubmitEvent(this.props.advancedSearch))
+    this.props.dispatch(
+      setAdvancedSearchRequest({
+        advancedSearchRequest: newAdvancedSearchRequest({
+          geographyType: this.state.currentGeographyType,
+          geographyId: this.state.currentGeographyId,
+          advancedSearch: this.state.advancedSearch,
+          resourceModels: this.props.config.resourceModels,
+        }),
+      })
+    )
+
+    this.pageForceUpdate()
   }
 
   render() {
@@ -166,7 +205,7 @@ export class AdvancedSearch extends React.Component {
           {!this.state.displayingForm && (
             <div className="advanced-search__results">
               <AdvancedSearchSentenceEditor
-                advancedSearch={this.props.advancedSearch}
+                advancedSearch={this.state.advancedSearch}
                 changeGeography={this.props.changeGeography}
                 dispatch={this.props.dispatch}
                 results={this.props.advancedSearch.results}
@@ -206,16 +245,16 @@ export class AdvancedSearch extends React.Component {
                   })}
                 >
                   <LeafletMap
-                    key={`${this.state.currentGeographyType}-${this.state.currentGeographyId}-${
-                      this.state.displayingList
-                    }`}
-                    appState={this.props.appState}
+                    key={`${this.props.advancedSearch.geographies[0].constant}-${
+                      this.props.advancedSearch.geographies[0].id
+                    }-${this.state.displayingList}`}
+                    currentGeographyType={(this.props.advancedSearch.geographies[0] || {}).constant}
+                    currentGeographyId={(this.props.advancedSearch.geographies[0] || {}).id}
                     councilDistricts={this.props.config.councilDistricts}
                     communityDistricts={this.props.config.communityDistricts}
                     stateAssemblies={this.props.config.stateAssemblies}
                     stateSenates={this.props.config.stateSenates}
                     zipCodes={this.props.config.zipCodes}
-                    currentGeographyType={this.state.currentGeographyType}
                     dispatch={this.props.dispatch}
                     iconConfig="MULTIPLE"
                     loading={this.props.loading}
@@ -251,26 +290,24 @@ export class AdvancedSearch extends React.Component {
             <div className="advanced-search-form--container">
               <div className="advanced-search__title">Custom Search</div>
 
-              <ConfigContext.Consumer>
-                {config => (
-                  <AdvancedSearchForm
-                    advancedSearch={this.props.advancedSearch}
-                    appState={this.props.appState}
-                    changeGeography={this.changeGeography}
-                    cancelChangeGeography={this.cancelChangeGeography}
-                    handleChangeGeographyType={this.handleChangeGeographyType}
-                    changingGeographyType={this.state.changingGeographyType}
-                    changingGeographyId={this.state.changingGeographyId}
-                    geographyType={this.state.currentGeographyType}
-                    geographyId={this.state.currentGeographyId}
-                    config={config}
-                    dispatch={this.props.dispatch}
-                    error={this.props.error}
-                    loading={this.props.loading}
-                    showPopups={this.state.view === 2}
-                  />
-                )}
-              </ConfigContext.Consumer>
+              <AdvancedSearchForm
+                advancedSearch={this.state.advancedSearch}
+                appState={this.props.appState}
+                changingGeographyType={this.state.changingGeographyType}
+                changingGeographyId={this.state.changingGeographyId}
+                geographyType={this.state.currentGeographyType}
+                geographyId={this.state.currentGeographyId}
+                config={this.props.config}
+                dispatch={this.props.dispatch}
+                error={this.props.error}
+                loading={this.props.loading}
+                showPopups={this.state.view === 2}
+                changeGeography={this.changeGeography}
+                cancelChangeGeography={this.cancelChangeGeography}
+                handleChangeGeographyType={this.handleChangeGeographyType}
+                forceUpdate={this.pageForceUpdate}
+                onSubmit={this.submitSearch}
+              />
             </div>
           )}
         </div>
@@ -281,6 +318,7 @@ export class AdvancedSearch extends React.Component {
 
 AdvancedSearch.propTypes = {
   advancedSearch: PropTypes.object,
+  config: PropTypes.object,
   dispatch: PropTypes.func,
 }
 

@@ -253,13 +253,15 @@ class DistrictDashboardShow extends React.Component {
                   key={`${this.props.appState.currentGeographyType}-${this.props.appState.currentGeographyId}-${
                     this.props.dashboardState.dashboardTableView
                   }`}
-                  appState={this.props.appState}
+                  currentGeographyType={this.props.appState.currentGeographyType}
+                  currentGeographyId={this.props.appState.currentGeographyId}
+                  changingGeographyType={this.props.appState.changingGeographyType}
+                  changingGeographyId={this.props.appState.changingGeographyId}
                   councilDistricts={this.props.config.councilDistricts}
                   communityDistricts={this.props.config.communityDistricts}
                   stateAssemblies={this.props.config.stateAssemblies}
                   stateSenates={this.props.config.stateSenates}
                   zipCodes={this.props.config.zipCodes}
-                  currentGeographyType={this.props.appState.currentGeographyType}
                   closeGeographyPopup={this.props.endChangingState}
                   dispatch={this.props.dispatch}
                   handleChangeGeography={this.props.handleChangeGeography}

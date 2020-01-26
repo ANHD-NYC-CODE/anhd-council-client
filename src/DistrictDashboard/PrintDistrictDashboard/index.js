@@ -31,8 +31,10 @@ const PrintDistrictDashboard = props => {
 
         <Col xs={8}>
           <LeafletMap
-            appState={props.appState}
             currentGeographyType={props.appState.currentGeographyType}
+            currentGeographyId={props.appState.currentGeographyId}
+            changingGeographyType={props.appState.changingGeographyType}
+            changingGeographyId={props.appState.changingGeographyId}
             councilDistricts={props.config.councilDistricts}
             communityDistricts={props.config.communityDistricts}
             stateAssemblies={props.config.stateAssemblies}

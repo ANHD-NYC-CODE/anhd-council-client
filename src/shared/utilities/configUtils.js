@@ -341,6 +341,7 @@ export const newMapResultFilters = ({ resourceModels } = {}) => {
 
 export const newAdvancedSearchRequest = ({ geographyType, geographyId, advancedSearch, resourceModels } = {}) => {
   const paramMaps = getUrlFormattedParamMaps(advancedSearch)
+  console.log(geographyType, geographyId)
   return new DataRequest({
     isAuthenticated: true,
     type: c.ADVANCED_SEARCH,
