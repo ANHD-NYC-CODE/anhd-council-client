@@ -168,6 +168,12 @@ export const advancedSearchReducer = (state = Object.freeze(initialState()), act
       }
     }
 
+    case c.FORCE_UPDATE_SEARCH: {
+      return {
+        ...state,
+      }
+    }
+
     case c.HANDLE_GET_ADVANCED_SEARCH: {
       return {
         ...state,

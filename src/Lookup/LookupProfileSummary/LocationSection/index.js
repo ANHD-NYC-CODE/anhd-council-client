@@ -17,8 +17,10 @@ const LocationSection = props => {
       </div>
       <div className="location-section__map">
         <LeafletMap
-          appState={props.appState}
           currentGeographyType={props.appState.currentGeographyType}
+          currentGeographyId={props.appState.currentGeographyId}
+          changingGeographyType={props.appState.changingGeographyType}
+          changingGeographyId={props.appState.changingGeographyId}
           center={[props.lat, props.lng]}
           results={props.propertyResult}
           iconConfig="SINGLE"

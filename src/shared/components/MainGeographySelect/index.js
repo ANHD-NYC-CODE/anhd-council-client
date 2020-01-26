@@ -24,6 +24,7 @@ class MainGeographySelect extends React.Component {
     this.passChangeType = this.passChangeType.bind(this)
     this.passChangeGeography = this.passChangeGeography.bind(this)
     this.handleShowMapClick = this.handleShowMapClick.bind(this)
+    this.handleGeographyIdClick = this.handleGeographyIdClick.bind(this)
   }
 
   handleShowMapClick(e) {
@@ -45,6 +46,16 @@ class MainGeographySelect extends React.Component {
     const standardE = new StandardizedInput(e)
     this.props.handleChangeGeography({ e: standardE })
     if (this.props.handleChange) this.props.handleChange(standardE)
+  }
+
+  handleGeographyIdClick(e) {
+    if (e.originalEvent) {
+      e.originalEvent.view.L.DomEvent.stopPropagation(e)
+    } else {
+      e.stopPropagation(e)
+    }
+    const standardE = new StandardizedInput(e)
+    this.props.handleChangeGeographyId(standardE)
   }
 
   render() {
@@ -192,10 +203,12 @@ class MainGeographySelect extends React.Component {
                   zipCodes={config.zipCodes}
                   className="main-geography-select__map"
                   selectGeographyData={config.selectGeographyData}
-                  appState={this.props.appState}
                   currentGeographyType={this.props.changingGeographyType || this.props.currentGeographyType}
-                  handleChangeGeography={this.passChangeType}
-                  handleChangeGeographyId={this.passChangeGeography}
+                  currentGeographyId={this.props.currentGeographyId}
+                  changingGeographyType={this.props.changingGeographyType}
+                  changingGeographyId={this.props.changingGeographyId}
+                  handleChangeGeography={this.passChangeGeography}
+                  handleChangeGeographyId={this.handleGeographyIdClick}
                 />
               )}
             </div>
