@@ -233,7 +233,6 @@ const makeMapStateToProps = () => {
   const mapStateToProps = state => {
     const loadingSelector = createLoadingSelector([
       state.appState.selectedRequests.map(request => request.requestConstant),
-      c.ADVANCED_SEARCH,
     ])
 
     const errorSelector = createErrorSelector([state.appState.selectedRequests.map(request => request.requestConstant)])

@@ -183,7 +183,6 @@ class LookupShow extends React.PureComponent {
                             )
                           }
                           loading={this.props.loadingState[request.requestConstant]}
-                          showUpdate={true}
                           property={this.props.propertyResult}
                           caption={request.resourceModel.label}
                           key={`lookup-table-${request.resourceModel.resourceConstant}`}

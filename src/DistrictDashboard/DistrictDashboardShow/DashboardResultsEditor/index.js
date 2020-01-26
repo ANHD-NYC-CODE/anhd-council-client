@@ -133,7 +133,7 @@ DashboardResultsEditor.propTypes = {
   filteredResults: PropTypes.array,
   housingTypeResultFilter: PropTypes.object,
   selectedFilters: PropTypes.array,
-  mapFilterDate: PropTypes.object,
+  mapFilterDate: PropTypes.string,
   filterCondition: PropTypes.string,
 }
 DashboardResultsEditor.defaultProps = {

@@ -62,12 +62,13 @@ const setupWrapper = state => {
 describe('DistrictDashboard', () => {
   it('has initial state', () => {
     const [wrapper, store] = setupWrapper()
+
     expect(wrapper.find('DistrictDashboard')).toBeDefined()
     expect(store.getState().router.location.pathname).toEqual('/map')
     expect(wrapper.find('DistrictDashboardIndex')).toHaveLength(1)
     expect(wrapper.find('DistrictDashboardRequestsWrapper')).toHaveLength(0)
     expect(wrapper.find('DistrictDashboardShow')).toHaveLength(0)
-    expect(wrapper.find('GeographySelect select[name="geographyType"]').props().value).toEqual(-1)
+    expect(wrapper.findByTestId('geography-select--type', 'select').props().value).toEqual(-1)
   })
 
   describe('with a geography type and id', () => {
@@ -75,6 +76,14 @@ describe('DistrictDashboard', () => {
       const [wrapper, store] = setupWrapper({
         router: { location: { pathname: '/council/1' }, action: 'POP' },
       })
+
+      const results = [
+        createPropertyRequestMock({ bbl: 1, unitsres: 1 }),
+        createPropertyRequestMock({ bbl: 2, unitsres: 0 }),
+        createPropertyRequestMock({ bbl: 3, unitsres: 10 }),
+      ]
+
+      mock.onGet('/councils/1/properties/').reply(200, results)
 
       expect(wrapper.find('DistrictDashboard')).toBeDefined()
       expect(store.getState().router.location.pathname).toEqual('/council/1')
@@ -87,14 +96,11 @@ describe('DistrictDashboard', () => {
       expect(wrapper.find('GeographyProfile')).toHaveLength(1)
       expect(wrapper.find('LeafletMap')).toHaveLength(1)
 
-      expect(wrapper.find('RequestSummaryWrapper')).toHaveLength(6)
       expect(wrapper.find('AnnotatedResultFilterCard')).toHaveLength(6)
-      const housingTypeCards = wrapper.findWhere(node => (node.key() || '').match(/housingtype-wrapper/))
-      housingTypeCards.forEach(card => {
-        expect(card.props().disabled).toEqual(false)
-      })
 
-      expect(housingTypeCards.at(0).props().selected).toEqual(true)
+      const housingTypeCards = wrapper.findByTestId('housing-type-radio', 'input')
+
+      expect(housingTypeCards.at(0).props().checked).toEqual(true)
 
       expect(wrapper.find('DistrictResultsTitle').text()).toEqual('Properties Found: 0')
     })

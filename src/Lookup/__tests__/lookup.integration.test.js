@@ -99,6 +99,17 @@ describe('Lookup', () => {
       expect(store.getState().appState.currentBuilding).toEqual('2')
     })
 
+    it('renders the LookupSidebar', () => {
+      const [wrapper, store] = setupWrapper({
+        router: { location: { pathname: '/property/1/building/2' }, action: 'POP' },
+      })
+      expect(wrapper.find('LookupSidebar')).toBeDefined()
+
+      expect(wrapper.findByTestId('lookup-sidebar').hasClass('open')).toEqual(true)
+      wrapper.findByTestId('lookup-sidebar-toggle').simulate('click')
+      expect(wrapper.findByTestId('lookup-sidebar').hasClass('open')).toEqual(false)
+    })
+
     it('renders the tables', () => {
       const [wrapper] = setupWrapper({
         router: { location: { pathname: '/property/1/building/2' }, action: 'POP' },

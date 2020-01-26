@@ -21,10 +21,6 @@ import BaseTable from 'shared/components/BaseTable'
 
 import { setDashboardTableView } from 'Store/DashboardState/actions'
 
-import RequestSummaryWrapper from 'shared/components/RequestSummaryWrapper'
-
-import SummaryResultCard from 'shared/components/ResultCard/SummaryResultCard'
-
 import './style.scss'
 
 class DistrictDashboardShow extends React.Component {
@@ -84,9 +80,7 @@ class DistrictDashboardShow extends React.Component {
           <div className="district-dashboard-show__sidebar">
             <div className="district-dashboard-show__date-section">
               <Form>
-                <p className="district-dashboard-show__date-section__label" r>
-                  VIEW DATA FROM:
-                </p>
+                <p className="district-dashboard-show__date-section__label">VIEW DATA FROM:</p>
                 <Form.Check
                   className="district-dashboard-show__date-section__check"
                   tabIndex={0}
@@ -197,7 +191,7 @@ class DistrictDashboardShow extends React.Component {
                   )
                   return (
                     <DashboardResultsHeader
-                      label={this.props.dashboardState.housingTypeResultFilter.label}
+                      label={(this.props.dashboardState.housingTypeResultFilter || {}).label}
                       percentageOfWhole={this.props.dashboardState.housingTypeResultFilter !== residentialFilter}
                       housingResults={
                         this.props.dashboardState.housingTypeResults[this.props.dashboardState.housingTypeResultsIndex]

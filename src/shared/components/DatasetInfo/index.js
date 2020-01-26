@@ -56,7 +56,7 @@ const DatasetInfo = props => {
           if (dataset) {
             return (
               <div>
-                {props.showUpdate && <div>{parseDatasetRange(dataset).map(el => el)}</div>}
+                <div>{parseDatasetRange(dataset).map(el => el)}</div>
 
                 {dataset.version && (
                   <div>
@@ -73,9 +73,7 @@ const DatasetInfo = props => {
   )
 }
 
-DatasetInfo.defaultProps = {
-  showUpdate: true,
-}
+DatasetInfo.defaultProps = {}
 
 DatasetInfo.propTypes = {
   datasetModelName: PropTypes.string,
