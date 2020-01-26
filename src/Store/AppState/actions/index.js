@@ -85,7 +85,7 @@ export const setLookupAndRequestsAndRedirect = ({ bbl, bin, replaceHistory = fal
 }
 
 export const setAdvancedSearchRequest = ({ advancedSearchRequest } = {}) => (dispatch, getState) => {
-  dispatch(removeRequestType(c.GET_ADVANCED_SEARCH))
+  dispatch(removeRequestType(c.ADVANCED_SEARCH))
   dispatch(removeRequest(advancedSearchRequest.requestConstant))
   dispatch(handleSetAdvancedSearchRequest(advancedSearchRequest))
 }

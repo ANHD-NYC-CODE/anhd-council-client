@@ -83,8 +83,30 @@
     border-bottom: 4px solid transparent;
   }
 
+  // Page
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    min-height: 40px;
+  }
+
+  &__toggle-button {
+    flex-shrink: 0;
+  }
+
   &__results-container {
     margin-bottom: 40px;
+  }
+
+  &__results-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 20px;
   }
 
   &__map {
@@ -96,5 +118,11 @@
   }
 
   &__results-header {
+  }
+
+  .view-toggle {
+    border: 2px solid $rhino;
+    cursor: pointer;
+    min-width: 100px;
   }
 }

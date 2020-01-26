@@ -20,7 +20,7 @@ import { makeRequest } from 'Store/Request/actions'
 
 import AdvancedSearchForm from 'AdvancedSearch/AdvancedSearchForm'
 import AdvancedSearchInstructions from 'AdvancedSearch/AdvancedSearchInstructions'
-
+import AdvancedSearchSentenceEditor from 'AdvancedSearch/AdvancedSearchSentenceEditor'
 import ConfigContext from 'Config/ConfigContext'
 import { setAppState } from 'Store/AppState/actions'
 import classnames from 'classnames'
@@ -33,7 +33,7 @@ export class AdvancedSearch extends React.Component {
       view: 1,
       currentGeographyType: this.props.appState.currentGeographyType,
       currentGeographyId: this.props.appState.currentGeographyId,
-      displayingForm: true,
+      displayingForm: !this.props.advancedSearch.results.length,
       displayingList: false,
       zoom: 14,
       tableState: {},
@@ -65,6 +65,7 @@ export class AdvancedSearch extends React.Component {
   componentDidUpdate() {
     if (this.props.advancedSearchRequest && !this.props.advancedSearchRequest.called) {
       this.loadRequest(this.props.advancedSearchRequest)
+      this.setState({ displayingForm: false })
     }
   }
 
@@ -84,10 +85,14 @@ export class AdvancedSearch extends React.Component {
         <Helmet>
           <title>DAP Portal | Custom Search</title>
         </Helmet>
-        <div className="advanced_search__header">
-          {this.props.loading && <SpinnerLoader />}
-          {!!this.props.advancedSearch.results.length && (
-            <Button variant="dark" onClick={() => this.setState({ displayingForm: !this.state.displayingForm })}>
+        <div className="advanced-search__header">
+          {this.props.loading && <SpinnerLoader size={'40px'} />}
+          {!!(this.props.advancedSearchRequest || {}).called && !this.props.loading && (
+            <Button
+              className="advanced-search__toggle-button"
+              variant="dark"
+              onClick={() => this.setState({ displayingForm: !this.state.displayingForm })}
+            >
               {this.state.displayingForm ? 'View Results' : 'Edit Custom Search'}
             </Button>
           )}
@@ -95,6 +100,11 @@ export class AdvancedSearch extends React.Component {
         <div className="advanced-search--content">
           {!this.state.displayingForm && (
             <div className="advanced-search__results">
+              <AdvancedSearchSentenceEditor
+                dispatch={this.props.dispatch}
+                results={this.props.advancedSearch.results}
+                loading={this.props.loading}
+              />
               <div className="advanced-search__results-header">
                 <ButtonToolbar className="d-flex view-toggle__container">
                   <ToggleButtonGroup
@@ -129,6 +139,9 @@ export class AdvancedSearch extends React.Component {
                   })}
                 >
                   <LeafletMap
+                    key={`${this.props.appState.currentGeographyType}-${this.props.appState.currentGeographyId}-${
+                      this.state.displayingList
+                    }`}
                     appState={this.props.appState}
                     councilDistricts={this.props.config.councilDistricts}
                     communityDistricts={this.props.config.communityDistricts}
@@ -139,7 +152,7 @@ export class AdvancedSearch extends React.Component {
                     dispatch={this.props.dispatch}
                     iconConfig="MULTIPLE"
                     loading={this.props.loading}
-                    results={this.props.advancedSearch.results}
+                    results={this.props.loading ? [] : this.props.advancedSearch.results}
                     selectGeographyData={this.props.config.selectGeographyData}
                     zoom={this.state.zoom}
                   />
@@ -159,7 +172,7 @@ export class AdvancedSearch extends React.Component {
                     expandable={false}
                     loading={this.props.loading}
                     recordsSize={this.props.advancedSearch.results.length}
-                    records={this.props.advancedSearch.results}
+                    records={this.props.loading ? [] : this.props.advancedSearch.results}
                     showUpdate={false}
                     tableConfig={this.props.advancedSearchRequest.tableConfig}
                   />
