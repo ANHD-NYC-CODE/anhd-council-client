@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { setAppState } from 'Store/AppState/actions'
-import { setDashboardCustomView, toggleSelectedAmountFilter } from 'Store/DashboardState/actions'
+import { toggleSelectedAmountFilter } from 'Store/DashboardState/actions'
 import UserContext from 'Auth/UserContext'
 import AnnotatedResultFilterCard from 'DistrictDashboard/AnnotatedResultFilterCard'
 import { setHousingTypeResultFilter, setDashboardTableState } from 'Store/DashboardState/actions'
@@ -18,9 +18,7 @@ const DistrictFilterSection = props => {
   }
   const handleResultFilterClick = amountFilter => {
     props.endChangingState()
-    if (props.customView) {
-      props.dispatch(setDashboardCustomView(false))
-    }
+
     props.dispatch(
       setAppState({
         selectedResultFilters: amountFilter,
@@ -94,9 +92,9 @@ const DistrictFilterSection = props => {
                     auth={auth}
                     amountFilter={amountFilter}
                     calculatedTotal={(props.dashboardState.resultFilterCalculations[index] || {}).length}
-                    disabled={props.customView || props.loading}
+                    disabled={props.loading}
                     dispatch={props.dispatch}
-                    selected={!props.customView && props.dashboardState.selectedFilters.includes(amountFilter)}
+                    selected={props.dashboardState.selectedFilters.includes(amountFilter)}
                     handleClick={() => handleResultFilterClick(amountFilter)}
                   />
                 )
@@ -109,12 +107,10 @@ const DistrictFilterSection = props => {
 }
 DistrictFilterSection.defaultProps = {
   loading: false,
-  customView: false,
 }
 DistrictFilterSection.propTypes = {
   appState: PropTypes.object,
   dashboardState: PropTypes.object,
-  customView: PropTypes.bool,
   loading: PropTypes.bool,
 }
 

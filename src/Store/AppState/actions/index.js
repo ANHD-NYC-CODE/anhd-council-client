@@ -2,7 +2,8 @@ import * as c from 'shared/constants'
 import { push, replace } from 'connected-react-router'
 import { getGeographyPath, addressResultToPath } from 'shared/utilities/routeUtils'
 import { removeRequest, removeManyRequests } from 'Store/Request/actions'
-
+import { handleCompletedRequest } from 'Store/Loading/actions'
+import { handleClearErrors } from 'Store/Error/actions'
 export const setAppState = state => ({
   type: c.SET_APP_STATE,
   state,
@@ -85,7 +86,16 @@ export const setLookupAndRequestsAndRedirect = ({ bbl, bin, replaceHistory = fal
 }
 
 export const setAdvancedSearchRequest = ({ advancedSearchRequest } = {}) => (dispatch, getState) => {
+  console.log(advancedSearchRequest.requestConstant)
   dispatch(removeRequestType(c.ADVANCED_SEARCH))
   dispatch(removeRequest(advancedSearchRequest.requestConstant))
   dispatch(handleSetAdvancedSearchRequest(advancedSearchRequest))
+}
+
+export const clearAdvancedSearchRequest = () => dispatch => {
+  console.log('cancel')
+  dispatch(removeRequestType(c.ADVANCED_SEARCH))
+  dispatch(removeRequest(c.ADVANCED_SEARCH))
+  dispatch(handleCompletedRequest(c.ADVANCED_SEARCH))
+  dispatch(handleClearErrors(c.ADVANCED_SEARCH))
 }

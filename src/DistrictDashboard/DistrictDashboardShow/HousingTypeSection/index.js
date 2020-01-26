@@ -46,7 +46,7 @@ const HousingTypeSection = props => {
                       type="radio"
                       variant="outline-primary"
                       checked={props.housingTypeResultFilter.id === ownResultFilter.id}
-                      disabled={props.customView || props.loading}
+                      disabled={props.loading}
                       value={index}
                       onChange={e => handleChange(config, parseInt(index))}
                     />
@@ -63,7 +63,6 @@ const HousingTypeSection = props => {
 }
 
 HousingTypeSection.propTypes = {
-  customView: PropTypes.bool,
   loading: PropTypes.bool,
   propertySummaryRequest: PropTypes.object,
   propertyResource: PropTypes.object,
@@ -73,7 +72,6 @@ HousingTypeSection.propTypes = {
 }
 
 HousingTypeSection.defaultProps = {
-  customView: false,
   loading: false,
   totalPropertyResults: [],
 }

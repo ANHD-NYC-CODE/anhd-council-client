@@ -19,7 +19,7 @@ import { shortAmountComparisonString, mapFilterDateToLabel } from 'shared/utilit
 import GeographyProfile from 'DistrictDashboard/GeographyProfile'
 import BaseTable from 'shared/components/BaseTable'
 
-import { setDashboardCustomView, setDashboardTableView } from 'Store/DashboardState/actions'
+import { setDashboardTableView } from 'Store/DashboardState/actions'
 
 import RequestSummaryWrapper from 'shared/components/RequestSummaryWrapper'
 
@@ -65,15 +65,11 @@ class DistrictDashboardShow extends React.Component {
       }
     }
 
-    if (this.props.dashboardState.districtShowCustomView) {
-      return constructCsvFileName(this.props.advancedSearch)
-    } else {
-      return `${
-        housingFilter ? housingFilter.label : 'residential'
-      }_properties__${geographyType}${geographyId}__${selectedFilters
-        .map(filter => `${filter.fieldName}_${shortAmountComparisonString(filter.comparison, filter.value)}`)
-        .join('_or_')}${mapFilterDate()}-${moment(moment.now()).format('MM/DD/YYYY')}`
-    }
+    return `${
+      housingFilter ? housingFilter.label : 'residential'
+    }_properties__${geographyType}${geographyId}__${selectedFilters
+      .map(filter => `${filter.fieldName}_${shortAmountComparisonString(filter.comparison, filter.value)}`)
+      .join('_or_')}${mapFilterDate()}-${moment(moment.now()).format('MM/DD/YYYY')}`
   }
 
   getGeographySummaryResultsFilter() {
@@ -84,34 +80,6 @@ class DistrictDashboardShow extends React.Component {
     const resultRecords = this.props.dashboardState.resultRecords
     return (
       <div className="district-dashboard-show">
-        <div className="district-dashboard-show__search-section layout-width-wrapper district-dashboard-container">
-          {// Custom Search
-          this.props.geographyRequests
-            .filter(r => r.type === c.ADVANCED_SEARCH)
-            .map(request => {
-              return (
-                <RequestSummaryWrapper
-                  key={'request-summary-custom-search'}
-                  summaryBackgroundColorClass={c.CUSTOM_CARD_BACKGROUND_COLOR_CLASS}
-                  request={request}
-                  resultsFilter={undefined}
-                  label={'Custom Search'}
-                  onClick={() =>
-                    this.props.dispatch(setDashboardCustomView(!this.props.dashboardState.districtShowCustomView))
-                  }
-                  results={this.props.dashboardState.customSearchResults}
-                  resultsComponent={SummaryResultCard}
-                  selected={this.props.dashboardState.districtShowCustomView}
-                />
-              )
-            })}
-          {this.props.dashboardState.districtShowCustomView ? (
-            <div>
-              <h5 className="text-primary font-weight-bold">Description:</h5>
-              <AdvancedSearchSentence advancedSearch={this.props.advancedSearch} />
-            </div>
-          ) : null}
-        </div>
         <div className="district-dashboard-show__content layout-width-wrapper district-dashboard-container">
           <div className="district-dashboard-show__sidebar">
             <div className="district-dashboard-show__date-section">
@@ -125,7 +93,7 @@ class DistrictDashboardShow extends React.Component {
                   custom
                   type="radio"
                   id="date-radio--30-days"
-                  disabled={this.props.dashboardState.districtShowCustomView || this.props.loading}
+                  disabled={this.props.loading}
                   variant="outline-primary"
                   label={mapFilterDateToLabel(c.DISTRICT_REQUEST_DATE_ONE)}
                   // label={`Last 30 Days (${moment(c.DISTRICT_RESULTS_DATE_ONE).format('MM/DD/YYYY')})`}
@@ -138,7 +106,7 @@ class DistrictDashboardShow extends React.Component {
                   custom
                   type="radio"
                   id="date-radio--1-year"
-                  disabled={this.props.dashboardState.districtShowCustomView || this.props.loading}
+                  disabled={this.props.loading}
                   variant="outline-primary"
                   label={mapFilterDateToLabel(c.DISTRICT_REQUEST_DATE_TWO)}
                   // label={`Last Year (${moment(c.DISTRICT_RESULTS_DATE_TWO).format('MM/DD/YYYY')})`}
@@ -151,7 +119,7 @@ class DistrictDashboardShow extends React.Component {
                   custom
                   type="radio"
                   id="date-radio--3-years"
-                  disabled={this.props.dashboardState.districtShowCustomView || this.props.loading}
+                  disabled={this.props.loading}
                   variant="outline-primary"
                   label={mapFilterDateToLabel(c.DISTRICT_REQUEST_DATE_THREE)}
                   // label={`Last 3 Years (${moment(c.DISTRICT_RESULTS_DATE_THREE).format('MM/DD/YYYY')})`}
@@ -162,7 +130,6 @@ class DistrictDashboardShow extends React.Component {
             </div>
             <div className="district-dashboard-show__housing-type-section">
               <HousingTypeSection
-                customView={this.props.dashboardState.districtShowCustomView}
                 dispatch={this.props.dispatch}
                 propertySummaryRequest={this.props.propertySummaryRequest}
                 switchSelectedFilter={this.props.switchSelectedFilter}
@@ -177,7 +144,6 @@ class DistrictDashboardShow extends React.Component {
               <DistrictFilterSection
                 appState={this.props.appState}
                 dashboardState={this.props.dashboardState}
-                customView={this.props.dashboardState.districtShowCustomView}
                 dispatch={this.props.dispatch}
                 endChangingState={this.props.endChangingState}
                 geographyRequests={this.props.geographyRequests}
@@ -315,9 +281,7 @@ class DistrictDashboardShow extends React.Component {
                   key={`table-${this.props.dashboardState.mapFilterDate}`}
                   csvBaseFileName={this.constructBaseCsvFileName()}
                   globalTableState={this.props.dashboardState.dashboardTableState}
-                  annotationStart={
-                    this.props.dashboardState.districtShowCustomView ? '' : this.props.dashboardState.mapFilterDate
-                  }
+                  annotationStart={this.props.dashboardState.mapFilterDate}
                   datasetModelName={this.props.propertySummaryRequest.resourceModel.resourceConstant}
                   dispatch={this.props.dispatch}
                   error={this.props.error}
