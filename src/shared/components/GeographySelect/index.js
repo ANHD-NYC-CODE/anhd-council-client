@@ -53,9 +53,6 @@ class GeographySelect extends React.Component {
                   (this.props.errors || {}).geographyType
                 }
               >
-                <option disabled value={-1} key={'select--nil'}>
-                  {this.props.placeholder || 'Select'}
-                </option>
                 <option disabled value={-1} key={'select-a-geography--nil'}>
                   {this.props.placeholder || 'Select a geography'}
                 </option>
