@@ -64,6 +64,7 @@ const DistrictFilterSection = props => {
                   <ToggleButton
                     tabIndex="0"
                     className="view-toggle"
+                    data-test-id="dashboard-condition-toggle"
                     size="sm"
                     variant={props.dashboardState.filterCondition === 'OR' ? 'dark' : 'light'}
                     value={'OR'}
@@ -73,6 +74,7 @@ const DistrictFilterSection = props => {
                   <ToggleButton
                     tabIndex="0"
                     className="view-toggle"
+                    data-test-id="dashboard-condition-toggle"
                     size="sm"
                     variant={props.dashboardState.filterCondition === 'OR' ? 'light' : 'dark'}
                     value={'AND'}

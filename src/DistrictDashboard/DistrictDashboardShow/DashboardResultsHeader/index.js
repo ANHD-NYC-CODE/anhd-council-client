@@ -14,7 +14,7 @@ const DashboardResultsHeader = props => {
     0
   )
   return (
-    <div className="dashboard-results-header">
+    <div className="dashboard-results-header" data-test-id="dashboard-results-header">
       <div className="dashboard-results-header__wrapper">
         <div className="dashboard-results-header__inner-wrapper">
           <p className="dashboard-results-header__title">{props.label}</p>

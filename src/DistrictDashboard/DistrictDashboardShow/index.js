@@ -85,6 +85,7 @@ class DistrictDashboardShow extends React.Component {
                   className="district-dashboard-show__date-section__check"
                   tabIndex={0}
                   custom
+                  data-test-id="dashboard-show-date-radio"
                   type="radio"
                   id="date-radio--30-days"
                   disabled={this.props.loading}
@@ -98,6 +99,7 @@ class DistrictDashboardShow extends React.Component {
                   className="district-dashboard-show__date-section__check"
                   tabIndex={0}
                   custom
+                  data-test-id="dashboard-show-date-radio"
                   type="radio"
                   id="date-radio--1-year"
                   disabled={this.props.loading}
@@ -111,6 +113,7 @@ class DistrictDashboardShow extends React.Component {
                   className="district-dashboard-show__date-section__check"
                   tabIndex={0}
                   custom
+                  data-test-id="dashboard-show-date-radio"
                   type="radio"
                   id="date-radio--3-years"
                   disabled={this.props.loading}
@@ -219,6 +222,7 @@ class DistrictDashboardShow extends React.Component {
                   <ToggleButton
                     tabIndex="0"
                     className="view-toggle"
+                    data-test-id="dashboard-map-table-toggle"
                     variant={this.props.dashboardState.dashboardTableView ? 'light' : 'dark'}
                     value={false}
                   >
@@ -227,6 +231,7 @@ class DistrictDashboardShow extends React.Component {
                   <ToggleButton
                     tabIndex="0"
                     className="view-toggle"
+                    data-test-id="dashboard-map-table-toggle"
                     variant={this.props.dashboardState.dashboardTableView ? 'dark' : 'light'}
                     value={true}
                   >

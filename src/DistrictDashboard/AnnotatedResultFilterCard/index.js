@@ -68,7 +68,7 @@ class AnnotatedResultFilterCard extends React.Component {
         this.props.amountFilter.resourceModel.resourceConstant === 'LISPENDEN') &&
       !this.props.auth.user
     return (
-      <div className="amount-result-filter-card--container">
+      <div className="amount-result-filter-card--container" data-test-id="amount-result-filter">
         <div className="amount-result-filter-card__header">
           <p className="amount-result-filter-card__label">
             {this.props.amountFilter.resourceModel.dashboardLabel || this.props.amountFilter.resourceModel.label}

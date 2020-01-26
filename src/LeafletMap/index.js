@@ -152,6 +152,7 @@ export default class LeafletMap extends React.PureComponent {
           />
         )}
         <Map
+          data-test-id="map"
           boxZoom={this.props.interactive}
           center={this.props.center}
           className="map"
