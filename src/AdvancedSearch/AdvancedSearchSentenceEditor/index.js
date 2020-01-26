@@ -8,6 +8,8 @@ import StandardizedInput from 'shared/classes/StandardizedInput'
 
 import { mapFilterDateToLabel, longAmountComparisonString } from 'shared/utilities/languageUtils'
 
+import { constructAdvancedSearchSentence } from 'shared/utilities/sentenceUtils'
+
 import Property from 'shared/models/resources/Property'
 
 import './style.scss'
@@ -16,7 +18,7 @@ const AdvancedSearchSentenceEditor = props => {
   const numberOfUnits = props.results.reduce((total, result) => parseInt(total) + parseInt(result['unitsres']), 0)
 
   const constructSentenceEditor = () => {
-    return '...'
+    return constructAdvancedSearchSentence(props.advancedSearch)
   }
 
   return (
@@ -44,6 +46,7 @@ const AdvancedSearchSentenceEditor = props => {
 }
 
 AdvancedSearchSentenceEditor.propTypes = {
+  advancedSearch: PropTypes.object,
   dispatch: PropTypes.func,
   results: PropTypes.array,
   loading: PropTypes.bool,

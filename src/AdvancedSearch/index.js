@@ -2,6 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { GET_ADVANCED_SEARCH } from 'Store/AdvancedSearch/constants'
 import * as c from 'shared/constants'
+import StandardizedInput from 'shared/classes/StandardizedInput'
+import Geography from 'shared/classes/Geography'
+
 import { getSingleRequest } from 'Store/AppState/selectors'
 import { constructCsvFileName } from 'Store/AdvancedSearch/utilities/advancedSearchStoreUtils'
 
@@ -10,19 +13,23 @@ import { createErrorSelector } from 'Store/Error/selectors'
 import { connect } from 'react-redux'
 import { Events, animateScroll as scroll, scrollSpy } from 'react-scroll'
 import Helmet from 'react-helmet'
-import AdvancedSearchSentence from 'AdvancedSearch/Sentence'
 import { Button, ButtonToolbar, Row, Col, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
 import LeafletMap from 'LeafletMap'
 import SpinnerLoader from 'shared/components/Loaders/SpinnerLoader'
 import BaseTable from 'shared/components/BaseTable'
 import { requestWithAuth } from 'shared/utilities/authUtils'
 import { makeRequest } from 'Store/Request/actions'
+import { addGeography, updateGeography } from 'Store/AdvancedSearch/actions'
+import {
+  clearAdvancedSearchRequest,
+  setAppState,
+  setGeographyAndRequestsAndRedirect,
+  setAdvancedSearchRequest,
+} from 'Store/AppState/actions'
 
 import AdvancedSearchForm from 'AdvancedSearch/AdvancedSearchForm'
-import AdvancedSearchInstructions from 'AdvancedSearch/AdvancedSearchInstructions'
 import AdvancedSearchSentenceEditor from 'AdvancedSearch/AdvancedSearchSentenceEditor'
 import ConfigContext from 'Config/ConfigContext'
-import { setAppState, clearAdvancedSearchRequest } from 'Store/AppState/actions'
 
 import classnames from 'classnames'
 
@@ -30,17 +37,22 @@ import './style.scss'
 export class AdvancedSearch extends React.Component {
   constructor(props) {
     super(props)
+    const searchGeography = props.advancedSearch.geographies[0]
+
     this.state = {
-      view: 1,
-      currentGeographyType: this.props.appState.currentGeographyType,
-      currentGeographyId: this.props.appState.currentGeographyId,
+      currentGeographyType: searchGeography ? searchGeography.constant : this.props.appState.currentGeographyType,
+      currentGeographyId: searchGeography ? searchGeography.id : this.props.appState.currentGeographyId,
+      changingGeographyType: undefined,
+      changingGeographyId: undefined,
       displayingForm: !this.props.advancedSearch.results.length,
       displayingList: false,
       zoom: 14,
       tableState: {},
     }
-    this.toggleView = this.toggleView.bind(this)
     this.loadRequest = this.loadRequest.bind(this)
+    this.handleChangeGeographyType = this.handleChangeGeographyType.bind(this)
+    this.changeGeography = this.changeGeography.bind(this)
+    this.cancelChangeGeography = this.cancelChangeGeography.bind(this)
 
     if (this.props.appState.changingGeography) {
       this.props.dispatch(
@@ -74,9 +86,49 @@ export class AdvancedSearch extends React.Component {
     this.props.dispatch(requestWithAuth(makeRequest(request)))
   }
 
-  toggleView(value) {
+  handleChangeGeographyType(e) {
+    e = new StandardizedInput(e)
     this.setState({
-      view: value,
+      changingGeographyType: e.value,
+      changingGeographyId: -1,
+    })
+  }
+
+  changeGeography({ e, geographyType, geographyId } = {}) {
+    e = new StandardizedInput(e)
+    const type = geographyType || this.state.changingGeographyType || this.state.currentGeographyType
+    const id = geographyId || e.value
+    if (!this.props.advancedSearch.geographies.length) {
+      const newGeography = new Geography(type, id)
+      this.props.dispatch(addGeography(newGeography))
+    } else {
+      const geography = this.props.advancedSearch.geographies[0]
+      geography[e.key] = e.value
+      this.props.dispatch(updateGeography(0, geography))
+    }
+
+    this.setState({
+      currentGeographyType: type,
+      currentGeographyId: id,
+    })
+
+    if (!this.props.appState.currentGeographyId) {
+      this.props.dispatch(
+        setGeographyAndRequestsAndRedirect({
+          geographyType: type,
+          geographyId: id,
+          redirect: false,
+          requests: this.props.config.createMapRequests(type, id),
+        })
+      )
+    }
+    this.cancelChangeGeography()
+  }
+
+  cancelChangeGeography() {
+    this.setState({
+      changingGeographyType: undefined,
+      changingGeographyId: undefined,
     })
   }
 
@@ -114,6 +166,8 @@ export class AdvancedSearch extends React.Component {
           {!this.state.displayingForm && (
             <div className="advanced-search__results">
               <AdvancedSearchSentenceEditor
+                advancedSearch={this.props.advancedSearch}
+                changeGeography={this.props.changeGeography}
                 dispatch={this.props.dispatch}
                 results={this.props.advancedSearch.results}
                 loading={this.props.loading}
@@ -152,7 +206,7 @@ export class AdvancedSearch extends React.Component {
                   })}
                 >
                   <LeafletMap
-                    key={`${this.props.appState.currentGeographyType}-${this.props.appState.currentGeographyId}-${
+                    key={`${this.state.currentGeographyType}-${this.state.currentGeographyId}-${
                       this.state.displayingList
                     }`}
                     appState={this.props.appState}
@@ -161,7 +215,7 @@ export class AdvancedSearch extends React.Component {
                     stateAssemblies={this.props.config.stateAssemblies}
                     stateSenates={this.props.config.stateSenates}
                     zipCodes={this.props.config.zipCodes}
-                    currentGeographyType={this.props.appState.currentGeographyType}
+                    currentGeographyType={this.state.currentGeographyType}
                     dispatch={this.props.dispatch}
                     iconConfig="MULTIPLE"
                     loading={this.props.loading}
@@ -202,6 +256,13 @@ export class AdvancedSearch extends React.Component {
                   <AdvancedSearchForm
                     advancedSearch={this.props.advancedSearch}
                     appState={this.props.appState}
+                    changeGeography={this.changeGeography}
+                    cancelChangeGeography={this.cancelChangeGeography}
+                    handleChangeGeographyType={this.handleChangeGeographyType}
+                    changingGeographyType={this.state.changingGeographyType}
+                    changingGeographyId={this.state.changingGeographyId}
+                    geographyType={this.state.currentGeographyType}
+                    geographyId={this.state.currentGeographyId}
                     config={config}
                     dispatch={this.props.dispatch}
                     error={this.props.error}

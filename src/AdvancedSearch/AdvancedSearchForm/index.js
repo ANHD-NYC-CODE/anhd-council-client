@@ -4,7 +4,6 @@ import Geography from 'shared/classes/Geography'
 import * as yup from 'yup'
 import StandardizedInput from 'shared/classes/StandardizedInput'
 import { getAdvancedSearchParamMaps } from 'Store/AdvancedSearch/utilities/advancedSearchStoreUtils'
-import { setGeographyAndRequestsAndRedirect } from 'Store/AppState/actions'
 import FilterComponent from 'AdvancedSearch/FilterComponent'
 import { replacePropertyFilter } from 'Store/AdvancedSearch/actions'
 import ClearAdvancedSearchButton from 'shared/components/buttons/ClearAdvancedSearchButton'
@@ -42,9 +41,6 @@ class AdvancedSearchForm extends React.PureComponent {
 
     this.updatePropertyFilter = this.updatePropertyFilter.bind(this)
     this.validateForm = this.validateForm.bind(this)
-    this.changeGeography = this.changeGeography.bind(this)
-    this.handleChangeGeographyType = this.handleChangeGeographyType.bind(this)
-    this.cancelChangeGeography = this.cancelChangeGeography.bind(this)
     this.syncGeographyToAppState = this.syncGeographyToAppState.bind(this)
 
     this.syncGeographyToAppState(props)
@@ -55,66 +51,16 @@ class AdvancedSearchForm extends React.PureComponent {
   }
 
   syncGeographyToAppState(props) {
-    if (props.appState.currentGeographyType && !!props.advancedSearch.geographies.length) {
+    if (props.geographyType && !!props.advancedSearch.geographies.length) {
       const geography = props.advancedSearch.geographies[0]
-      if (
-        props.appState.currentGeographyType !== geography.geographyType.constant ||
-        props.appState.currentGeographyId !== geography.id
-      ) {
-        geography['geographyType'] = props.appState.currentGeographyType
-        geography['id'] = props.appState.currentGeographyId
+      if (props.geographyType !== geography.geographyType.constant || props.geographyId !== geography.id) {
+        geography['geographyType'] = props.geographyType
+        geography['id'] = props.geographyId
         props.dispatch(updateGeography(0, geography))
       }
-    } else if (props.appState.currentGeographyType && !props.advancedSearch.geographies.length) {
-      this.props.dispatch(
-        addGeography(new Geography(props.appState.currentGeographyType, props.appState.currentGeographyId))
-      )
+    } else if (props.geographyType && !props.advancedSearch.geographies.length) {
+      this.props.dispatch(addGeography(new Geography(props.geographyType, props.geographyId)))
     }
-  }
-
-  changeGeography({ e, geographyType, geographyId } = {}) {
-    e = new StandardizedInput(e)
-    const type = geographyType || this.props.appState.changingGeographyType || this.props.appState.currentGeographyType
-    const id = geographyId || e.value
-    if (!this.props.advancedSearch.geographies.length) {
-      const newGeography = new Geography(type, id)
-      this.props.dispatch(addGeography(newGeography))
-    } else {
-      const geography = this.props.advancedSearch.geographies[0]
-      geography[e.key] = e.value
-      this.props.dispatch(updateGeography(0, geography))
-    }
-    this.props.dispatch(
-      setGeographyAndRequestsAndRedirect({
-        geographyType: type,
-        geographyId: id,
-        redirect: false,
-        requests: this.props.config.createMapRequests(type, id),
-      })
-    )
-    this.cancelChangeGeography()
-  }
-
-  handleChangeGeographyType(e) {
-    e = new StandardizedInput(e)
-    this.props.dispatch(
-      setAppState({
-        changingGeography: true,
-        changingGeographyType: e.value,
-        changingGeographyId: -1,
-      })
-    )
-    if (this.props.handleChange) this.props.handleChange(e)
-  }
-
-  cancelChangeGeography() {
-    this.props.dispatch(
-      setAppState({
-        changingGeography: false,
-        changingGeographyType: undefined,
-        changingGeographyId: undefined,
-      })
-    )
   }
 
   updatePropertyFilter() {
@@ -154,8 +100,8 @@ class AdvancedSearchForm extends React.PureComponent {
         this.props.dispatch(
           setAdvancedSearchRequest({
             advancedSearchRequest: this.props.config.createAdvancedSearchRequest(
-              this.props.appState.currentGeographyType,
-              this.props.appState.currentGeographyId,
+              this.props.geographyType,
+              this.props.geographyId,
               this.props.advancedSearch
             ),
           })
@@ -169,8 +115,8 @@ class AdvancedSearchForm extends React.PureComponent {
       <Formik
         enableReinitialize={true}
         initialValues={{
-          geographyType: this.props.appState.currentGeographyType,
-          geographyId: this.props.appState.currentGeographyId,
+          geographyType: this.props.geographyType,
+          geographyId: this.props.geographyId,
         }}
         onSubmit={this.submitForm}
         validationSchema={schema}
@@ -199,22 +145,22 @@ class AdvancedSearchForm extends React.PureComponent {
               selectClass="main-geography-select"
               inputSize="md"
               submitButtonVariant="dark"
-              cancelChangeGeography={this.cancelChangeGeography}
+              cancelChangeGeography={this.props.cancelChangeGeography}
               changing={this.props.appState.changingGeography}
-              changingGeographyType={this.props.appState.changingGeographyType}
-              changingGeographyId={this.props.appState.changingGeographyId}
+              changingGeographyType={this.props.changingGeographyType}
+              changingGeographyId={this.props.changingGeographyId}
               confirmChange={true}
-              currentGeographyType={this.props.appState.currentGeographyType}
-              currentGeographyId={this.props.appState.currentGeographyId}
+              currentGeographyType={this.props.geographyType}
+              currentGeographyId={this.props.geographyId}
               dispatch={this.props.dispatch}
-              handleChangeGeography={this.changeGeography}
+              handleChangeGeography={this.props.changeGeography}
               handleBlur={handleBlur}
               handleChange={handleChange}
               touched={touched}
               errors={errors}
-              handleChangeGeographyType={this.handleChangeGeographyType}
+              handleChangeGeographyType={this.props.handleChangeGeographyType}
             />
-            {this.props.appState.currentGeographyType && this.props.appState.currentGeographyId && (
+            {this.props.geographyType && this.props.geographyId && (
               <div className="advanced-search-form__housingtype-select">
                 <h4 className="text-muted font-weight-bold text-uppercase mt-5 mb-4">2) Select a housing type</h4>
                 {
@@ -261,6 +207,10 @@ AdvancedSearchForm.propTypes = {
   advancedSearch: PropTypes.object,
   appState: PropTypes.object,
   dispatch: PropTypes.func,
+  geographyType: PropTypes.func,
+  geographyId: PropTypes.func,
+  changingGeographyType: PropTypes.func,
+  changingGeographyId: PropTypes.func,
   error: PropTypes.object,
   loading: PropTypes.bool,
 }
