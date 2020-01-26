@@ -1,10 +1,10 @@
 @import 'shared/styles/_variables.scss';
 
-.dashboard-results-editor {
+.advanced-search-sentence-editor {
   border: 1px solid $rhino;
   border-radius: 2px;
   box-sizing: border-box;
-  margin-bottom: 10px;
+  margin-bottom: 40px;
   padding: 16px;
   display: flex;
   flex-direction: column;
@@ -18,10 +18,23 @@
     margin-bottom: 10px;
   }
 
+  .housing-type-dropdown,
+  .date-dropdown,
+  .condition-dropdown,
   .amount-filter-input {
+    cursor: pointer;
     display: inline-block;
     font-weight: bold;
     text-decoration: underline;
+
+    .dropdown-toggle::after {
+      display: none;
+    }
+
+    .dropdown-menu,
+    .dropdown-item {
+      padding-left: 5px;
+    }
 
     .form-group {
       display: flex;
@@ -36,6 +49,11 @@
     .form-control,
     button[type='submit'] {
       display: inline-block;
+    }
+
+    &:hover,
+    &:focus {
+      color: $primary;
     }
   }
 

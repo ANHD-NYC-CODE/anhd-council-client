@@ -1,7 +1,8 @@
 import * as c from 'shared/constants'
 import { constructAxiosGet, constructAxiosPost } from 'shared/utilities/Axios'
 import { requestWithAuth } from 'shared/utilities/authUtils'
-import { setTotalPropertyResults, setCustomSearchResults } from 'Store/DashboardState/actions'
+import { setTotalPropertyResults } from 'Store/DashboardState/actions'
+import { setCustomSearchResults } from 'Store/AdvancedSearch/actions'
 
 export const addRequest = requestConstant => ({
   type: c.ADD_REQUEST,

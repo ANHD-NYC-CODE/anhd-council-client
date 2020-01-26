@@ -2,7 +2,6 @@ import * as c from 'shared/constants'
 import { push, replace } from 'connected-react-router'
 import { getGeographyPath, addressResultToPath } from 'shared/utilities/routeUtils'
 import { removeRequest, removeManyRequests } from 'Store/Request/actions'
-import { setDashboardCustomView } from 'Store/DashboardState/actions'
 
 export const setAppState = state => ({
   type: c.SET_APP_STATE,
@@ -48,7 +47,7 @@ export const setGeographyAndRequestsAndRedirect = ({
   dispatch(removeRequestType('MAP_FILTER'))
   dispatch(removeRequestType('MAP_PROFILE'))
   dispatch(removeRequestType('GEOGRAPHY_HOUSING_TYPE'))
-  dispatch(removeRequestType(c.ADVANCED_SEARCH))
+  dispatch(removeRequestType(c.GET_ADVANCED_SEARCH))
   dispatch(removeManyRequests(requests.map(r => r.requestConstant)))
   dispatch(setAppState({ selectedRequests: [] }))
   dispatch(handleSetGeographyRequests(geographyType, geographyId, requests))
@@ -85,24 +84,8 @@ export const setLookupAndRequestsAndRedirect = ({ bbl, bin, replaceHistory = fal
   }
 }
 
-export const setAdvancedSearchRequestAndRedirect = ({
-  redirect = true,
-  replaceHistory = false,
-  advancedSearchRequest,
-} = {}) => (dispatch, getState) => {
-  const appState = getState().appState
-
+export const setAdvancedSearchRequest = ({ advancedSearchRequest } = {}) => (dispatch, getState) => {
   dispatch(removeRequestType(c.ADVANCED_SEARCH))
   dispatch(removeRequest(advancedSearchRequest.requestConstant))
   dispatch(handleSetAdvancedSearchRequest(advancedSearchRequest))
-  dispatch(setDashboardCustomView(true))
-
-  if (redirect) {
-    const path = getGeographyPath(appState.currentGeographyType)
-    if (replaceHistory) {
-      dispatch(replace(`/${path}/${appState.currentGeographyId}`))
-    } else {
-      dispatch(push(`/${path}/${appState.currentGeographyId}`))
-    }
-  }
 }
