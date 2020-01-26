@@ -177,15 +177,6 @@ export const dashboardStateReducer = (state = Object.freeze(initialState), actio
       }
     }
 
-    case c.SET_CUSTOM_SEARCH_RESULTS: {
-      return {
-        ...state,
-        customSearchResults: action.customSearchResults,
-        resultRecords: getResultRecords({ ...state, customSearchResults: action.customSearchResults }),
-        resultFilterCalculations: calculateAmountTotals({ state, customSearchResults: action.customSearchResults }),
-      }
-    }
-
     case c.SET_DASHBOARD_FILTER_CONDITION: {
       return {
         ...state,

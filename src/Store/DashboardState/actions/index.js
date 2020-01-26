@@ -45,11 +45,6 @@ export const setTotalPropertyResults = (totalPropertyResults = []) => ({
   totalPropertyResults,
 })
 
-export const setCustomSearchResults = (customSearchResults = []) => ({
-  type: c.SET_CUSTOM_SEARCH_RESULTS,
-  customSearchResults,
-})
-
 export const setDashboardTableView = dashboardTableView => ({
   type: c.SET_DASHBOARD_TABLE_VIEW,
   dashboardTableView,

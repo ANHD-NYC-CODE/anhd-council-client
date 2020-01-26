@@ -206,7 +206,10 @@ class Config extends React.PureComponent {
         !(
           !!this.props.datasets.length &&
           !!this.props.councilDistricts.length &&
-          !!this.props.communityDistricts.length
+          !!this.props.communityDistricts.length &&
+          !!this.props.stateAssemblies.length &&
+          !!this.props.stateSenates.length &&
+          !!this.props.zipCodes.length
         ) ? (
           <ConfigLoader monitoredRequests={Config.MonitoredRequests} />
         ) : (

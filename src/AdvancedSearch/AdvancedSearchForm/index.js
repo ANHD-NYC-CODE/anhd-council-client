@@ -12,7 +12,7 @@ import { fireAdvancedSearchSubmitEvent, fireCustomSearchPropertyTypeEvent } from
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { addGeography, updateGeography } from 'Store/AdvancedSearch/actions'
-import { setAppState, setAdvancedSearchRequestAndRedirect } from 'Store/AppState/actions'
+import { setAppState, setAdvancedSearchRequest } from 'Store/AppState/actions'
 import ConditionComponent from 'AdvancedSearch/ConditionComponent'
 import GeographySelect from 'shared/components/GeographySelect'
 import FormError from 'shared/components/FormError'
@@ -152,8 +152,7 @@ class AdvancedSearchForm extends React.PureComponent {
         this.setState({ hasErrors: false })
         this.props.dispatch(fireAdvancedSearchSubmitEvent(this.props.advancedSearch))
         this.props.dispatch(
-          setAdvancedSearchRequestAndRedirect({
-            redirect: true,
+          setAdvancedSearchRequest({
             advancedSearchRequest: this.props.config.createAdvancedSearchRequest(
               this.props.appState.currentGeographyType,
               this.props.appState.currentGeographyId,
