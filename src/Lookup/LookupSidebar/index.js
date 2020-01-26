@@ -28,10 +28,11 @@ const LookupSidebar = props => {
   }
 
   return (
-    <div className={classnames('lookup-sidebar full-bleed--mobile', { open })}>
+    <div data-test-id="lookup-sidebar" className={classnames('lookup-sidebar full-bleed--mobile', { open })}>
       <div className="lookup-sidebar__wrapper">
         <div
           tabIndex="0"
+          data-test-id="lookup-sidebar-toggle"
           role="button"
           aria-label="Toggle Sidebar"
           className="lookup-sidebar__toggle"

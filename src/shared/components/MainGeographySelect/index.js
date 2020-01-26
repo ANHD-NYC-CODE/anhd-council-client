@@ -49,7 +49,7 @@ class MainGeographySelect extends React.Component {
 
   render() {
     return (
-      <div className="geography-select">
+      <div data-test-id="geography-select" className="geography-select">
         <ConfigContext.Consumer>
           {config => (
             <div className="geography-select__wrapper">
@@ -59,6 +59,7 @@ class MainGeographySelect extends React.Component {
                   className={classnames(this.props.selectClass, {
                     valued: this.props.currentGeographyType || this.props.changingGeographyType,
                   })}
+                  data-test-id="geography-select--type"
                   size={this.props.inputSize}
                   name="geographyType"
                   as="select"
@@ -99,6 +100,7 @@ class MainGeographySelect extends React.Component {
                         required
                         data-key="id"
                         name="geographyId"
+                        data-test-id="geography-select--custom"
                         onChange={this.passChangeGeography}
                         value={
                           (this.props.changingGeographyId || this.props.currentGeographyId) > 0
@@ -118,6 +120,7 @@ class MainGeographySelect extends React.Component {
                         as="select"
                         data-key="id"
                         name="geographyId"
+                        data-test-id="geography-select--id"
                         onChange={this.passChangeGeography}
                         placeholder="#"
                         className={classnames(this.props.selectClass, {

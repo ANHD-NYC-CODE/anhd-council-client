@@ -11,7 +11,7 @@ const SentenceDropdown = props => {
   }
 
   return (
-    <Dropdown tabindex={0} as={NavItem} className="sentence-dropdown">
+    <Dropdown tabIndex={0} as={NavItem} className="sentence-dropdown">
       <Dropdown.Toggle as={NavItem}>{props.label}</Dropdown.Toggle>
 
       <Dropdown.Menu>

@@ -4,6 +4,7 @@ import DatasetInfo from 'shared/components/DatasetInfo'
 import { getTableSubheaders } from 'shared/tables/tableSubHeaders'
 import classnames from 'classnames'
 import InfoModalButton from 'shared/components/InfoModalButton'
+import { constantToModelName } from 'shared/utilities/filterUtils'
 
 import './style.scss'
 
@@ -19,7 +20,7 @@ const LookupTableHeader = props => {
       </div>
 
       <div className="table-header__dataset-info">
-        <DatasetInfo datasetModelName={props.datasetModelName} showUpdate={props.showUpdate} />
+        <DatasetInfo datasetModelName={constantToModelName(props.resourceConstant)} showUpdate={props.showUpdate} />
       </div>
 
       <div className="table-header__subcopy">
@@ -33,14 +34,12 @@ const LookupTableHeader = props => {
 }
 
 LookupTableHeader.defaultProps = {
-  showUpdate: true,
   size: '',
 }
 
 LookupTableHeader.propTypes = {
-  datasetModelName: PropTypes.string,
+  resourceConstant: PropTypes.string,
   headerClass: PropTypes.string,
-  showUpdate: PropTypes.bool,
   size: PropTypes.string,
   title: PropTypes.string,
   property: PropTypes.object,

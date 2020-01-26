@@ -84,8 +84,6 @@ class LookupTable extends React.Component {
               badge={this.props.badge}
               property={this.props.property}
               resourceConstant={this.props.request.resourceModel.resourceConstant}
-              datasetModelName={this.props.datasetModelName}
-              showUpdate={this.props.showUpdate}
               title={this.props.caption}
             />
           }

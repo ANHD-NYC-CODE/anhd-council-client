@@ -42,6 +42,7 @@ const HousingTypeSection = props => {
                       custom
                       className="housingtype-section__check"
                       id={`${ownResultFilter.label}--${index}`}
+                      data-test-id="housing-type-radio"
                       label={getLabel(ownResultFilter.label, index)}
                       type="radio"
                       variant="outline-primary"
@@ -68,12 +69,13 @@ HousingTypeSection.propTypes = {
   propertyResource: PropTypes.object,
   housingTypeResultFilter: PropTypes.object,
   switchSelectedFilter: PropTypes.func,
-  totalPropertyResults: PropTypes.object,
+  totalPropertyResults: PropTypes.array,
 }
 
 HousingTypeSection.defaultProps = {
   loading: false,
   totalPropertyResults: [],
+  housingTypeResultFilter: {},
 }
 
 export default HousingTypeSection

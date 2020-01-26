@@ -32,12 +32,13 @@ class GeographySelect extends React.Component {
 
   render() {
     return (
-      <div className="geography-select">
+      <div data-test-id="geography-select" className="geography-select">
         <ConfigContext.Consumer>
           {config => (
             <div className="geography-select__row">
               <Form.Control
                 required
+                data-test-id="geography-select--type"
                 className={classnames(this.props.selectClass, {
                   valued: this.props.currentGeographyType || this.props.changingGeographyType,
                 })}
@@ -79,6 +80,7 @@ class GeographySelect extends React.Component {
                     !this.props.changingGeographyType) ? (
                     <CustomSelect
                       required
+                      data-test-id="geography-select--custom"
                       data-key="id"
                       name="geographyId"
                       id="geography-custom-select"
@@ -101,6 +103,7 @@ class GeographySelect extends React.Component {
                       as="select"
                       data-key="id"
                       name="geographyId"
+                      data-test-id="geography-select--id"
                       onChange={this.passChangeGeography}
                       placeholder="#"
                       className={classnames(this.props.selectClass, {
