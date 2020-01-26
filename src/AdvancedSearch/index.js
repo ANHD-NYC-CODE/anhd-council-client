@@ -22,7 +22,8 @@ import AdvancedSearchForm from 'AdvancedSearch/AdvancedSearchForm'
 import AdvancedSearchInstructions from 'AdvancedSearch/AdvancedSearchInstructions'
 import AdvancedSearchSentenceEditor from 'AdvancedSearch/AdvancedSearchSentenceEditor'
 import ConfigContext from 'Config/ConfigContext'
-import { setAppState } from 'Store/AppState/actions'
+import { setAppState, clearAdvancedSearchRequest } from 'Store/AppState/actions'
+
 import classnames from 'classnames'
 
 import './style.scss'
@@ -80,6 +81,9 @@ export class AdvancedSearch extends React.Component {
   }
 
   render() {
+    const requestCalledAndNotLoading = !!(this.props.advancedSearchRequest || {}).called && !this.props.loading
+    const loadingButDisplayingResults = !!this.props.loading && !this.state.displayingForm
+    const loadingButDisplayingForm = this.props.loading && this.state.displayingForm
     return (
       <div className="advanced-search layout-width-wrapper">
         <Helmet>
@@ -87,13 +91,22 @@ export class AdvancedSearch extends React.Component {
         </Helmet>
         <div className="advanced-search__header">
           {this.props.loading && <SpinnerLoader size={'40px'} />}
-          {!!(this.props.advancedSearchRequest || {}).called && !this.props.loading && (
+          {(requestCalledAndNotLoading || loadingButDisplayingResults) && (
             <Button
               className="advanced-search__toggle-button"
               variant="dark"
               onClick={() => this.setState({ displayingForm: !this.state.displayingForm })}
             >
               {this.state.displayingForm ? 'View Results' : 'Edit Custom Search'}
+            </Button>
+          )}
+          {loadingButDisplayingForm && (
+            <Button
+              className="advanced-search__toggle-button"
+              onClick={() => this.props.dispatch(clearAdvancedSearchRequest())}
+              variant="danger"
+            >
+              Cancel
             </Button>
           )}
         </div>
