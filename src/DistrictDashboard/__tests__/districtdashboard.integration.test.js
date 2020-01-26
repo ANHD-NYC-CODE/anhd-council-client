@@ -268,6 +268,8 @@ describe('DistrictDashboard', () => {
             .props().active
         ).toEqual(true)
 
+        expect(wrapper.find('BaseTable').find('tbody tr')).toHaveLength(1)
+
         expect(wrapper.findByTestId('dashboard-results-header').text()).toEqual(
           'All Residential HousingProperties: 2Units: 11'
         )
@@ -328,6 +330,149 @@ describe('DistrictDashboard', () => {
         )
         // 2 Small homes
         expect(wrapper.find('BaseTable').find('tbody tr')).toHaveLength(2)
+      })
+    })
+    describe('condition filters', () => {
+      it('Switches the condition filter', async () => {
+        MockDate.set('01/01/2019')
+        const results = [
+          createPropertyRequestMock({ bbl: 1, unitsres: 1 }, { 'hpdcomplaints_recent__12/02/2018-01/01/2019': 1 }),
+          createPropertyRequestMock({ bbl: 2, unitsres: 1 }, { 'hpdcomplaints_recent__12/02/2018-01/01/2019': 10 }),
+          createPropertyRequestMock({ bbl: 3, unitsres: 0 }, { 'hpdcomplaints_recent__12/02/2018-01/01/2019': 10 }),
+          createPropertyRequestMock(
+            { bbl: 4, unitsres: 10 },
+            { 'dobviolations_recent__12/02/2018-01/01/2019': 10, 'hpdcomplaints_recent__12/02/2018-01/01/2019': 1 }
+          ),
+          createPropertyRequestMock(
+            { bbl: 5, unitsres: 10 },
+            { 'dobviolations_recent__12/02/2018-01/01/2019': 10, 'hpdcomplaints_recent__12/02/2018-01/01/2019': 10 }
+          ),
+        ]
+        mock.onGet('/councils/1/properties/').reply(200, results)
+        const [wrapper, store] = setupWrapper({
+          router: { location: { pathname: '/council/1' }, action: 'POP' },
+        })
+
+        await flushAllPromises()
+
+        // check hpdcomplaints
+
+        wrapper
+          .findByTestId('amount-toggle', 'ReactBootstrapToggle')
+          .at(0)
+          .simulate('click')
+
+        wrapper.update()
+
+        expect(wrapper.find('BaseTable').find('tbody tr')).toHaveLength(2)
+        expect(
+          wrapper
+            .find('BaseTable')
+            .props()
+            .records.map(r => r.bbl)
+        ).toEqual([2, 5])
+
+        expect(wrapper.findByTestId('dashboard-results-editor').text()).toEqual(
+          'Displaying all residential housing with at least HPD complaints  in the  last 30 daysProperties: 2Units: 11'
+        )
+
+        // check dovviolations
+        wrapper
+          .findByTestId('amount-toggle', 'ReactBootstrapToggle')
+          .at(1)
+          .simulate('click')
+
+        wrapper.update()
+
+        expect(wrapper.find('BaseTable').find('tbody tr')).toHaveLength(3)
+        expect(
+          wrapper
+            .find('BaseTable')
+            .props()
+            .records.map(r => r.bbl)
+        ).toEqual([2, 4, 5])
+        expect(wrapper.findByTestId('dashboard-results-editor').text()).toEqual(
+          'Displaying all residential housing with at least HPD complaints OR at least DOB violations  in the  last 30 daysProperties: 3Units: 21'
+        )
+
+        wrapper.update()
+
+        // toggle AND
+        wrapper
+          .findByTestId('dashboard-condition-toggle', 'input')
+          .at(1)
+          .simulate('change', { target: { value: 'AND' } })
+
+        expect(wrapper.find('BaseTable').find('tbody tr')).toHaveLength(1)
+        expect(
+          wrapper
+            .find('BaseTable')
+            .props()
+            .records.map(r => r.bbl)
+        ).toEqual([5])
+        expect(wrapper.findByTestId('dashboard-results-editor').text()).toEqual(
+          'Displaying all residential housing with at least HPD complaints AND at least DOB violations  in the  last 30 daysProperties: 1Units: 10'
+        )
+
+        MockDate.reset()
+      })
+    })
+
+    describe('editor filters', () => {
+      it('Switches the amount', async () => {
+        MockDate.set('01/01/2019')
+        const results = [
+          createPropertyRequestMock({ bbl: 1, unitsres: 1 }, { 'hpdcomplaints_recent__12/02/2018-01/01/2019': 5 }),
+          createPropertyRequestMock({ bbl: 2, unitsres: 1 }, { 'hpdcomplaints_recent__12/02/2018-01/01/2019': 6 }),
+        ]
+        mock.onGet('/councils/1/properties/').reply(200, results)
+        const [wrapper, store] = setupWrapper({
+          router: { location: { pathname: '/council/1' }, action: 'POP' },
+        })
+
+        await flushAllPromises()
+
+        // check hpdcomplaints
+
+        wrapper
+          .findByTestId('amount-toggle', 'ReactBootstrapToggle')
+          .at(0)
+          .simulate('click')
+
+        wrapper.update()
+
+        expect(wrapper.find('BaseTable').find('tbody tr')).toHaveLength(2)
+        expect(
+          wrapper
+            .find('BaseTable')
+            .props()
+            .records.map(r => r.bbl)
+        ).toEqual([1, 2])
+
+        wrapper
+          .findByTestId('dashboard-results-editor')
+          .findByTestId('amount-filter-input--input', 'input')
+          .simulate('change', { target: { value: 6 } })
+        wrapper.update()
+
+        wrapper
+          .findByTestId('dashboard-results-editor')
+          .findByTestId('amount-filter-input', 'form')
+          .simulate('submit')
+        wrapper.update()
+
+        expect(wrapper.find('BaseTable').find('tbody tr')).toHaveLength(1)
+        expect(
+          wrapper
+            .find('BaseTable')
+            .props()
+            .records.map(r => r.bbl)
+        ).toEqual([2])
+        expect(wrapper.findByTestId('dashboard-results-editor').text()).toEqual(
+          'Displaying all residential housing with at least HPD complaints  in the  last 30 daysProperties: 1Units: 1'
+        )
+
+        MockDate.reset()
       })
     })
   })
