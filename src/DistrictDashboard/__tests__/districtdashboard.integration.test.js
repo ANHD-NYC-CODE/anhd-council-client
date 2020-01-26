@@ -96,13 +96,43 @@ describe('DistrictDashboard', () => {
       expect(wrapper.find('GeographyProfile')).toHaveLength(1)
       expect(wrapper.find('LeafletMap')).toHaveLength(1)
 
-      expect(wrapper.find('AnnotatedResultFilterCard')).toHaveLength(6)
-
       const housingTypeCards = wrapper.findByTestId('housing-type-radio', 'input')
 
       expect(housingTypeCards.at(0).props().checked).toEqual(true)
 
-      expect(wrapper.find('DistrictResultsTitle').text()).toEqual('Properties Found: 0')
+      expect(wrapper.findByTestId('dashboard-show-date-radio', 'input')).toHaveLength(3)
+      expect(
+        wrapper
+          .findByTestId('dashboard-show-date-radio', 'input')
+          .at(0)
+          .props().checked
+      ).toEqual(true)
+
+      expect(wrapper.findByTestId('amount-result-filter')).toHaveLength(6)
+      expect(wrapper.findByTestId('dashboard-condition-toggle', 'input')).toHaveLength(2)
+      expect(
+        wrapper
+          .findByTestId('dashboard-condition-toggle', 'input')
+          .at(0)
+          .props().checked
+      ).toEqual(true)
+
+      expect(wrapper.findByTestId('geography-select--type', 'select')).toHaveLength(1)
+      expect(wrapper.findByTestId('geography-select--id', 'select')).toHaveLength(1)
+      expect(wrapper.findByTestId('dashboard-results-header')).toHaveLength(1)
+
+      expect(wrapper.findByTestId('dashboard-results-editor')).toHaveLength(1)
+      expect(wrapper.findByTestId('dashboard-map-table-toggle', 'input')).toHaveLength(2)
+      expect(
+        wrapper
+          .findByTestId('dashboard-map-table-toggle', 'input')
+          .at(0)
+          .props().checked
+      ).toEqual(true)
+
+      expect(wrapper.findByTestId('map')).toHaveLength(1)
+      expect(wrapper.findByTestId('base-table')).toHaveLength(1)
+      expect(wrapper.findByTestId('geography-profile')).toHaveLength(1)
     })
     describe('geography select', () => {
       it('shows the selected geography values', () => {
@@ -265,102 +295,6 @@ describe('DistrictDashboard', () => {
         // 2 Small homes
         expect(wrapper.find('BaseTable').find('tbody tr')).toHaveLength(2)
         expect(wrapper.find('DistrictResultsTitle').text()).toEqual('Properties Found: 2')
-      })
-    })
-
-    describe('with custom filter', () => {
-      it('adds a summary card', async () => {
-        const results = [
-          createPropertyRequestMock({ bbl: 1, unitsres: 1 }),
-          createPropertyRequestMock({ bbl: 2, unitsres: 0 }),
-          createPropertyRequestMock({ bbl: 3, unitsres: 10 }),
-        ]
-        mock.onGet('/councils/1/properties/').reply(200, results)
-
-        const [newWrapper, newStore] = setupWrapper({
-          router: { location: { pathname: '/council/1' }, action: 'POP' },
-          appState: {
-            ...appStateReducer.initialState,
-          },
-          requests: {
-            ADVANCED_SEARCH: results,
-          },
-        })
-
-        const advancedSearchRequest = new DataRequest({
-          type: c.ADVANCED_SEARCH,
-          apiMaps: [
-            new ApiMap({ constant: 'council', resourceId: '1' }),
-            new ApiMap({ constant: 'PROPERTY', name: 'Custom Search' }),
-          ],
-          resourceModel: resourceModels['PROPERTY'],
-          tableConfig: new TableConfig({ resourceConstant: 'PROPERTY' }),
-        })
-
-        newStore.dispatch(
-          setAppState({
-            requests: [...newStore.getState().appState.requests, advancedSearchRequest],
-          })
-        )
-        await flushAllPromises()
-        newWrapper.update()
-        expect(newWrapper.find('RequestSummaryWrapper')).toHaveLength(7)
-
-        newWrapper
-          .findWhere(node => node.key() === 'request-summary-custom-search')
-          .find('button.summary-result-card')
-          .simulate('click')
-        newWrapper.update()
-
-        expect(newWrapper.findWhere(node => node.key() === 'request-summary-custom-search').props().selected).toEqual(
-          true
-        )
-        expect(newWrapper.find('DistrictResultsTitle').text()).toEqual('Properties Found: 3')
-
-        const housingTypeCards = newWrapper.findWhere(node => (node.key() || '').match(/housingtype-wrapper/))
-        housingTypeCards.forEach(card => {
-          expect(card.props().disabled).toEqual(true)
-        })
-      })
-
-      it('clears the custom filter', async () => {
-        const [wrapper, store] = setupWrapper({
-          router: { location: { pathname: '/council/1' }, action: 'POP' },
-        })
-
-        const advancedRequest = new DataRequest({
-          type: c.ADVANCED_SEARCH,
-          resourceModel: resourceModels['PROPERTY'],
-          tableConfig: new TableConfig({ resourceConstant: 'PROPERTY' }),
-        })
-
-        const [newWrapper, newStore] = setupWrapper({
-          router: { location: { pathname: '/council/1' }, action: 'POP' },
-          appState: {
-            ...store.getState().appState,
-            requests: [...store.getState().appState.requests, advancedRequest],
-            selectedRequests: [advancedRequest],
-          },
-        })
-
-        await flushAllPromises()
-        newWrapper.update()
-        expect(newWrapper.find('RequestSummaryWrapper')).toHaveLength(7)
-
-        newWrapper.find('ClearAdvancedSearchButton .clear-advanced-search-button button').simulate('click')
-        newWrapper.update()
-
-        expect(newWrapper.find('RequestSummaryWrapper')).toHaveLength(6)
-
-        const housingTypeCards = newWrapper.findWhere(node => (node.key() || '').match(/housingtype-wrapper/))
-
-        // Re-enables housing type filter selection
-        expect(housingTypeCards.at(0).props().selected).toEqual(true)
-
-        // Un-disables housing type cards
-        housingTypeCards.forEach(card => {
-          expect(card.props().disabled).toEqual(false)
-        })
       })
     })
   })
