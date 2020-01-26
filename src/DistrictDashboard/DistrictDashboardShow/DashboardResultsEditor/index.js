@@ -13,10 +13,8 @@ import StandardizedInput from 'shared/classes/StandardizedInput'
 
 import { mapFilterDateToLabel, longAmountComparisonString } from 'shared/utilities/languageUtils'
 import AmountFilterInput from 'DistrictDashboard/AmountFilterInput'
-import HousingTypeDropdown from 'DistrictDashboard/HousingTypeDropdown'
-import DateDropdown from 'DistrictDashboard/DateDropdown'
-import ConditionDropdown from 'DistrictDashboard/ConditionDropdown'
 
+import SentenceDropdown from 'shared/components/SentenceDropdown'
 import Property from 'shared/models/resources/Property'
 
 import './style.scss'
@@ -66,7 +64,7 @@ const DashboardResultsEditor = props => {
     const conditionString = filterCondition
 
     const housingDropdown = (
-      <HousingTypeDropdown
+      <SentenceDropdown
         onSubmit={handleHousingTypeFilterChange}
         options={housingOptions}
         label={
@@ -77,7 +75,7 @@ const DashboardResultsEditor = props => {
       />
     )
 
-    const dateDropdown = <DateDropdown label={dateString} options={dateOptions} onSubmit={handleDateChange} />
+    const dateDropdown = <SentenceDropdown label={dateString} options={dateOptions} onSubmit={handleDateChange} />
 
     const selectedFilterElements = selectedFilters.map((filter, index) => {
       return (
@@ -87,7 +85,7 @@ const DashboardResultsEditor = props => {
           {` ${filter.resourceModel.sentenceNoun} `}
           {selectedFilters.length > 1 && index != selectedFilters.length - 1 && (
             <span>
-              <ConditionDropdown
+              <SentenceDropdown
                 onSubmit={handleConditionChange}
                 label={conditionString}
                 options={[{ value: 'AND', label: 'AND' }, { value: 'OR', label: 'OR' }]}

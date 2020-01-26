@@ -3,13 +3,15 @@ import PropTypes from 'prop-types'
 
 import { Dropdown, NavItem } from 'react-bootstrap'
 
-const ConditionDropdown = props => {
+import './style.scss'
+
+const SentenceDropdown = props => {
   const handleSubmit = value => {
     props.onSubmit(value)
   }
 
   return (
-    <Dropdown tabindex={0} as={NavItem} className="condition-dropdown">
+    <Dropdown tabindex={0} as={NavItem} className="sentence-dropdown">
       <Dropdown.Toggle as={NavItem}>{props.label}</Dropdown.Toggle>
 
       <Dropdown.Menu>
@@ -25,14 +27,14 @@ const ConditionDropdown = props => {
   )
 }
 
-ConditionDropdown.propTypes = {
+SentenceDropdown.propTypes = {
   label: PropTypes.string,
   options: PropTypes.array,
   value: PropTypes.string,
   onSubmit: PropTypes.func,
 }
-ConditionDropdown.defaultProps = {
+SentenceDropdown.defaultProps = {
   options: [],
 }
 
-export default ConditionDropdown
+export default SentenceDropdown
