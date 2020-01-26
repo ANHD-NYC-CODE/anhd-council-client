@@ -80,6 +80,7 @@ class AnnotatedResultFilterCard extends React.Component {
             tabIndex={0}
             height={32}
             width={60}
+            data-test-id="amount-toggle"
             className="round-toggle"
             handleClassName="round-toggle-handle"
             on="On"

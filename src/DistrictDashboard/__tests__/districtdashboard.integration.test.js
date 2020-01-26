@@ -13,12 +13,11 @@ import UserContext from 'Auth/UserContext'
 import LayoutContext from 'Layout/LayoutContext'
 import { createPropertyRequestMock } from 'shared/testUtilities/mocks'
 import { ConnectedRouter } from 'connected-react-router'
-import TableConfig from 'shared/classes/TableConfig'
-import DataRequest from 'shared/classes/DataRequest'
-import * as appStateReducer from 'Store/AppState/reducers'
+
 import { mockSetupResourceModels } from 'shared/testUtilities/index.js'
-import { setAppState } from 'Store/AppState/actions'
-import ApiMap from 'shared/classes/ApiMap'
+
+import MockDate from 'mockdate'
+
 const resourceModels = mockSetupResourceModels()
 
 import sinon from 'sinon'
@@ -98,8 +97,10 @@ describe('DistrictDashboard', () => {
 
       const housingTypeCards = wrapper.findByTestId('housing-type-radio', 'input')
 
+      // housing cards
       expect(housingTypeCards.at(0).props().checked).toEqual(true)
 
+      // dates
       expect(wrapper.findByTestId('dashboard-show-date-radio', 'input')).toHaveLength(3)
       expect(
         wrapper
@@ -108,6 +109,7 @@ describe('DistrictDashboard', () => {
           .props().checked
       ).toEqual(true)
 
+      // amounts
       expect(wrapper.findByTestId('amount-result-filter')).toHaveLength(6)
       expect(wrapper.findByTestId('dashboard-condition-toggle', 'input')).toHaveLength(2)
       expect(
@@ -117,11 +119,17 @@ describe('DistrictDashboard', () => {
           .props().checked
       ).toEqual(true)
 
+      // geography select
       expect(wrapper.findByTestId('geography-select--type', 'select')).toHaveLength(1)
       expect(wrapper.findByTestId('geography-select--id', 'select')).toHaveLength(1)
+
+      // header
       expect(wrapper.findByTestId('dashboard-results-header')).toHaveLength(1)
 
+      // editor
       expect(wrapper.findByTestId('dashboard-results-editor')).toHaveLength(1)
+
+      // map toggle
       expect(wrapper.findByTestId('dashboard-map-table-toggle', 'input')).toHaveLength(2)
       expect(
         wrapper
@@ -134,13 +142,14 @@ describe('DistrictDashboard', () => {
       expect(wrapper.findByTestId('base-table')).toHaveLength(1)
       expect(wrapper.findByTestId('geography-profile')).toHaveLength(1)
     })
+
     describe('geography select', () => {
       it('shows the selected geography values', () => {
         const [wrapper, store] = setupWrapper({
           router: { location: { pathname: '/council/1' }, action: 'POP' },
         })
-        expect(wrapper.find('GeographySelect select[name="geographyType"]').props().value).toEqual('COUNCIL')
-        expect(wrapper.find('GeographySelect select[name="geographyId"]').props().value).toEqual('1')
+        expect(wrapper.findByTestId('geography-select--type', 'select').props().value).toEqual('COUNCIL')
+        expect(wrapper.findByTestId('geography-select--id', 'select').props().value).toEqual('1')
         expect(wrapper.find('button.cancel-geography-change')).toHaveLength(0)
         expect(wrapper.find('button.submit-geography-change')).toHaveLength(0)
       })
@@ -149,27 +158,23 @@ describe('DistrictDashboard', () => {
         const [wrapper, store] = setupWrapper({
           router: { location: { pathname: '/council/1' }, action: 'POP' },
         })
-        wrapper
-          .find('GeographySelect select[name="geographyType"]')
-          .simulate('change', { target: { value: 'COMMUNITY' } })
+        wrapper.findByTestId('geography-select--type', 'select').simulate('change', { target: { value: 'COMMUNITY' } })
 
         wrapper.update()
-        expect(wrapper.find('GeographySelect select[name="geographyType"]').props().value).toEqual('COMMUNITY')
-        expect(wrapper.find('GeographySelect select[name="geographyId"]').props().value).toEqual(-1)
+        expect(wrapper.findByTestId('geography-select--type', 'select').props().value).toEqual('COMMUNITY')
+        expect(wrapper.findByTestId('geography-select--id', 'select').props().value).toEqual(-1)
         expect(wrapper.find('button.cancel-geography-change')).toHaveLength(1)
         expect(wrapper.find('button.submit-geography-change')).toHaveLength(0)
       })
 
       it('submits the change', () => {
         const [wrapper, store] = setupWrapper()
-        wrapper
-          .find('GeographySelect select[name="geographyType"]')
-          .simulate('change', { target: { value: 'COMMUNITY' } })
-        wrapper.find('GeographySelect select[name="geographyId"]').simulate('change', { target: { value: '102' } })
+        wrapper.findByTestId('geography-select--type', 'select').simulate('change', { target: { value: 'COMMUNITY' } })
+        wrapper.findByTestId('geography-select--id', 'select').simulate('change', { target: { value: '102' } })
         wrapper.update()
         expect(store.getState().router.location.pathname).toEqual('/community/102')
-        expect(wrapper.find('GeographySelect select[name="geographyType"]').props().value).toEqual('COMMUNITY')
-        expect(wrapper.find('GeographySelect select[name="geographyId"]').props().value).toEqual('102')
+        expect(wrapper.findByTestId('geography-select--type', 'select').props().value).toEqual('COMMUNITY')
+        expect(wrapper.findByTestId('geography-select--id', 'select').props().value).toEqual('102')
         expect(wrapper.find('button.cancel-geography-change')).toHaveLength(0)
         expect(wrapper.find('button.submit-geography-change')).toHaveLength(0)
       })
@@ -213,8 +218,9 @@ describe('DistrictDashboard', () => {
 
         await flushAllPromises()
         wrapper.update()
-        expect(wrapper.find('.housing-type-section__wrapper').text()).toMatch(
-          'All Residential Housing2 properties11 unitsRent Stabilized0 properties0 units0.0% of residential unitsSubsidized Housing0 properties0 units0.0% of residential unitsSmall Homes1 properties1 units9.1% of residential unitsMarket Rate2 properties11 units100.0% of residential unitsPublic Housing0 properties0 units0.0% of residential units'
+
+        expect(wrapper.findByTestId('housingtype-section', 'form').text()).toMatch(
+          'Housing Type:All Residential HousingRent Stabilized (0.0%)Subsidized Housing (0.0%)Small Homes (33.3%)Market Rate (66.7%)Public Housing (0.0%)'
         )
       })
 
@@ -232,32 +238,48 @@ describe('DistrictDashboard', () => {
 
         await flushAllPromises()
         wrapper.update()
-        wrapper.find('table').forEach(table => {
-          expect(table.find('tbody tr')).toHaveLength(results.length)
-        })
+        expect(wrapper.findByTestId('base-table').find('tbody tr')).toHaveLength(results.length)
       })
     })
     describe('dataset filters', () => {
-      it('Switches the visible request wrapper', () => {
+      it('Switches the visible request wrapper', async () => {
+        MockDate.set('01/01/2019')
+
         const [wrapper, store] = setupWrapper({
           router: { location: { pathname: '/council/1' }, action: 'POP' },
         })
 
-        const summaryElement = wrapper.find('RequestSummaryWrapper').at(4)
-        wrapper
-          .find('RequestSummaryWrapper')
-          .at(4)
-          .find('button')
-          .simulate('click')
-        summaryElement.update()
+        const results = [
+          createPropertyRequestMock({ bbl: 1, unitsres: 1 }, { 'acrisrealmasters_recent__12/02/2018-01/01/2019': 0 }),
+          createPropertyRequestMock({ bbl: 2, unitsres: 0 }, { 'acrisrealmasters_recent__12/02/2018-01/01/2019': 0 }),
+          createPropertyRequestMock({ bbl: 3, unitsres: 10 }, { 'acrisrealmasters_recent__12/02/2018-01/01/2019': 10 }),
+        ]
+        mock.onGet('/councils/1/properties/').reply(200, results)
+
+        await flushAllPromises()
         wrapper.update()
+        const summaryElement = wrapper.findByTestId('amount-toggle', 'ReactBootstrapToggle').at(4)
+        summaryElement.simulate('click')
+        summaryElement.update()
         expect(
           wrapper
-            .find('RequestSummaryWrapper')
+            .findByTestId('amount-toggle', 'ReactBootstrapToggle')
             .at(4)
-
-            .props().selected
+            .props().active
         ).toEqual(true)
+
+        expect(wrapper.findByTestId('dashboard-results-header').text()).toEqual(
+          'All Residential HousingProperties: 2Units: 11'
+        )
+
+        // amount sentence
+        expect(wrapper.findByTestId('dashboard-results-editor').text()).toEqual(
+          'Displaying all residential housing with at least Sales  in the  last 30 daysProperties: 1Units: 10'
+        )
+
+        // amount input
+        expect(wrapper.findByTestId('dashboard-results-editor', 'input').props().value).toEqual(1)
+        MockDate.reset()
       })
     })
 
@@ -277,24 +299,35 @@ describe('DistrictDashboard', () => {
         await flushAllPromises()
 
         wrapper
-          .findWhere(node => node.key() === 'housingtype-summary-0')
-          .find('button')
-          .simulate('click')
+          .findByTestId('housing-type-radio', 'input')
+          .at(0)
+          .simulate('change', { target: { value: 3 } })
 
         wrapper.update()
-        expect(wrapper.find('DistrictResultsTitle').text()).toEqual('Properties Found: 3')
+        expect(wrapper.findByTestId('dashboard-results-header').text()).toEqual(
+          'All Residential HousingProperties: 3Units: 12'
+        )
+
+        wrapper.update()
+        expect(wrapper.findByTestId('dashboard-results-editor').text()).toEqual(
+          'Displaying all residential housing   Properties: 3Units: 12'
+        )
         // 3 residential out of 4
         expect(wrapper.find('BaseTable').find('tbody tr')).toHaveLength(3)
 
         wrapper
-          .findWhere(node => node.key() === 'housingtype-summary-3')
-          .find('button')
-          .simulate('click')
+          .findByTestId('housing-type-radio', 'input')
+          .at(3)
+          .simulate('change', { target: { value: 3 } })
 
         wrapper.update()
+
+        expect(wrapper.findByTestId('dashboard-results-header').text()).toEqual('Small HomesProperties: 2Units: 2')
+        expect(wrapper.findByTestId('dashboard-results-editor').text()).toEqual(
+          'Displaying small homes   Properties: 2Units: 2'
+        )
         // 2 Small homes
         expect(wrapper.find('BaseTable').find('tbody tr')).toHaveLength(2)
-        expect(wrapper.find('DistrictResultsTitle').text()).toEqual('Properties Found: 2')
       })
     })
   })

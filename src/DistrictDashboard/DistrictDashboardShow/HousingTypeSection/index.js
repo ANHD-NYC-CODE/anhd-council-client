@@ -32,7 +32,7 @@ const HousingTypeSection = props => {
         )
 
         return (
-          <Form className="housingtype-section">
+          <Form className="housingtype-section" data-test-id="housingtype-section">
             <Form.Group controlId="housing-type-select">
               <Form.Label className="housingtype-section__label">Housing Type:</Form.Label>
               {propertyResource.ownResultFilters.map((ownResultFilter, index) => {
