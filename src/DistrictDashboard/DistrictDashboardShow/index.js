@@ -303,7 +303,6 @@ class DistrictDashboardShow extends React.Component {
                   loading={this.props.loading}
                   results={resultRecords}
                   selectGeographyData={this.props.config.selectGeographyData}
-                  switchView={() => this.setViewTable(1)}
                   zoom={this.props.dashboardState.dashboardMapZoom}
                 />
               </div>

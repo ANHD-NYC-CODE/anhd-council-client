@@ -31,6 +31,10 @@ export const getManyRequestTypes = (requests = [], types = []) => {
   return requests.filter(request => types.some(type => type === request.type))
 }
 
+export const getSingleRequest = (requests, type) => {
+  return requests.find(request => request.type === type)
+}
+
 export const selectRequests = state => {
   return state.appState.requests
 }

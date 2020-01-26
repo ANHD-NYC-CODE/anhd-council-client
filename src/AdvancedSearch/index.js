@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { GET_ADVANCED_SEARCH } from 'Store/AdvancedSearch/constants'
 import * as c from 'shared/constants'
+import { getSingleRequest } from 'Store/AppState/selectors'
+import { constructCsvFileName } from 'Store/AdvancedSearch/utilities/advancedSearchStoreUtils'
 
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
@@ -9,7 +11,13 @@ import { connect } from 'react-redux'
 import { Events, animateScroll as scroll, scrollSpy } from 'react-scroll'
 import Helmet from 'react-helmet'
 import AdvancedSearchSentence from 'AdvancedSearch/Sentence'
-import { Jumbotron, Row, Col, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
+import { Button, ButtonToolbar, Row, Col, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
+import LeafletMap from 'LeafletMap'
+import SpinnerLoader from 'shared/components/Loaders/SpinnerLoader'
+import BaseTable from 'shared/components/BaseTable'
+import { requestWithAuth } from 'shared/utilities/authUtils'
+import { makeRequest } from 'Store/Request/actions'
+
 import AdvancedSearchForm from 'AdvancedSearch/AdvancedSearchForm'
 import AdvancedSearchInstructions from 'AdvancedSearch/AdvancedSearchInstructions'
 
@@ -23,8 +31,15 @@ export class AdvancedSearch extends React.Component {
     super(props)
     this.state = {
       view: 1,
+      currentGeographyType: this.props.appState.currentGeographyType,
+      currentGeographyId: this.props.appState.currentGeographyId,
+      displayingForm: true,
+      displayingList: false,
+      zoom: 14,
+      tableState: {},
     }
     this.toggleView = this.toggleView.bind(this)
+    this.loadRequest = this.loadRequest.bind(this)
 
     if (this.props.appState.changingGeography) {
       this.props.dispatch(
@@ -47,6 +62,16 @@ export class AdvancedSearch extends React.Component {
     Events.scrollEvent.remove('end')
   }
 
+  componentDidUpdate() {
+    if (this.props.advancedSearchRequest && !this.props.advancedSearchRequest.called) {
+      this.loadRequest(this.props.advancedSearchRequest)
+    }
+  }
+
+  loadRequest(request) {
+    this.props.dispatch(requestWithAuth(makeRequest(request)))
+  }
+
   toggleView(value) {
     this.setState({
       view: value,
@@ -55,70 +80,113 @@ export class AdvancedSearch extends React.Component {
 
   render() {
     return (
-      <div className="advanced-search">
+      <div className="advanced-search layout-width-wrapper">
         <Helmet>
           <title>DAP Portal | Custom Search</title>
         </Helmet>
-        <Row>
-          <Col className="touch-left padding-xs-sm-0" xs={12} lg={c.SIDEBAR_COLUMN_SIZE}>
-            <Jumbotron className="layout__left-column advanced-search__left-column">
-              <div className="sticky-section">
-                <Row className="advanced-search__row mb-4">
-                  <Col xs={12} xl={11}>
-                    <h3 className="text-uppercase font-weight-bold m-0">Custom Search</h3>
-                  </Col>
-                </Row>
-                <Row className="mb-2">
-                  <Col>
-                    <ToggleButtonGroup
-                      name="view"
-                      type="radio"
+        <div className="advanced_search__header">
+          {this.props.loading && <SpinnerLoader />}
+          {!!this.props.advancedSearch.results.length && (
+            <Button variant="dark" onClick={() => this.setState({ displayingForm: !this.state.displayingForm })}>
+              {this.state.displayingForm ? 'View Results' : 'Edit Custom Search'}
+            </Button>
+          )}
+        </div>
+        <div className="advanced-search--content">
+          {!this.state.displayingForm && (
+            <div className="advanced-search__results">
+              <div className="advanced-search__results-header">
+                <ButtonToolbar className="d-flex view-toggle__container">
+                  <ToggleButtonGroup
+                    name="view"
+                    type="radio"
+                    value={this.state.displayingList}
+                    onChange={value => this.setState({ displayingList: value })}
+                  >
+                    <ToggleButton
+                      tabIndex="0"
                       className="view-toggle"
-                      value={this.state.view}
-                      variant="info"
-                      onChange={this.toggleView}
+                      variant={this.state.displayingList ? 'light' : 'dark'}
+                      value={false}
                     >
-                      <ToggleButton className="toggle-link light" value={1}>
-                        Sentence
-                      </ToggleButton>
-                      <ToggleButton className="toggle-link light" value={2}>
-                        Search Guide
-                      </ToggleButton>
-                    </ToggleButtonGroup>
-                  </Col>
-                </Row>
-
-                <Row className="mb-5">
-                  <Col>
-                    <div className={classnames({ 'd-none': this.state.view === 1 })}>
-                      <AdvancedSearchInstructions />
-                    </div>
-                    <div
-                      className={classnames('advanced-search__sentence-container', { 'd-none': this.state.view !== 1 })}
+                      Map
+                    </ToggleButton>
+                    <ToggleButton
+                      tabIndex="0"
+                      className="view-toggle"
+                      variant={this.state.displayingList ? 'dark' : 'light'}
+                      value={true}
                     >
-                      <AdvancedSearchSentence advancedSearch={this.props.advancedSearch} />
-                    </div>
-                  </Col>
-                </Row>
+                      List
+                    </ToggleButton>
+                  </ToggleButtonGroup>
+                </ButtonToolbar>
               </div>
-            </Jumbotron>
-          </Col>
-          <Col className="advanced-search-form--container px-lg-4 pt-6" xs={12} lg={12 - c.SIDEBAR_COLUMN_SIZE}>
-            <ConfigContext.Consumer>
-              {config => (
-                <AdvancedSearchForm
-                  advancedSearch={this.props.advancedSearch}
-                  appState={this.props.appState}
-                  config={config}
-                  dispatch={this.props.dispatch}
-                  error={this.props.error}
-                  loading={this.props.loading}
-                  showPopups={this.state.view === 2}
-                />
-              )}
-            </ConfigContext.Consumer>
-          </Col>
-        </Row>
+              <div className="advanced-search__results-container">
+                <div
+                  className={classnames('advanced-search__map', {
+                    'd-none': this.state.displayingList,
+                  })}
+                >
+                  <LeafletMap
+                    appState={this.props.appState}
+                    councilDistricts={this.props.config.councilDistricts}
+                    communityDistricts={this.props.config.communityDistricts}
+                    stateAssemblies={this.props.config.stateAssemblies}
+                    stateSenates={this.props.config.stateSenates}
+                    zipCodes={this.props.config.zipCodes}
+                    currentGeographyType={this.props.appState.currentGeographyType}
+                    dispatch={this.props.dispatch}
+                    iconConfig="MULTIPLE"
+                    loading={this.props.loading}
+                    results={this.props.advancedSearch.results}
+                    selectGeographyData={this.props.config.selectGeographyData}
+                    zoom={this.state.zoom}
+                  />
+                </div>
+                <div
+                  className={classnames('advanced-search__table', {
+                    'd-none': !this.state.displayingList,
+                  })}
+                >
+                  <BaseTable
+                    csvBaseFileName={constructCsvFileName(this.props.advancedSearch)}
+                    globalTableState={this.state.tableState}
+                    datasetModelName={this.props.advancedSearchRequest.resourceModel.resourceConstant}
+                    dispatch={this.props.dispatch}
+                    error={this.props.error}
+                    errorAction={(this.props.error || {}).status === 504 ? this.retryRequest : null}
+                    expandable={false}
+                    loading={this.props.loading}
+                    recordsSize={this.props.advancedSearch.results.length}
+                    records={this.props.advancedSearch.results}
+                    showUpdate={false}
+                    tableConfig={this.props.advancedSearchRequest.tableConfig}
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+          {this.state.displayingForm && (
+            <div className="advanced-search-form--container">
+              <div className="advanced-search__title">Custom Search</div>
+
+              <ConfigContext.Consumer>
+                {config => (
+                  <AdvancedSearchForm
+                    advancedSearch={this.props.advancedSearch}
+                    appState={this.props.appState}
+                    config={config}
+                    dispatch={this.props.dispatch}
+                    error={this.props.error}
+                    loading={this.props.loading}
+                    showPopups={this.state.view === 2}
+                  />
+                )}
+              </ConfigContext.Consumer>
+            </div>
+          )}
+        </div>
       </div>
     )
   }
@@ -129,15 +197,15 @@ AdvancedSearch.propTypes = {
   dispatch: PropTypes.func,
 }
 
-const loadingSelector = createLoadingSelector([GET_ADVANCED_SEARCH])
-const errorSelector = createErrorSelector([GET_ADVANCED_SEARCH])
-
+const loadingSelector = createLoadingSelector([c.ADVANCED_SEARCH])
+const errorSelector = createErrorSelector([c.ADVANCED_SEARCH])
 const mapStateToProps = state => {
   return {
     appState: state.appState,
     advancedSearch: state.advancedSearch,
     error: errorSelector(state),
     loading: loadingSelector(state),
+    advancedSearchRequest: getSingleRequest(state.appState.requests, c.ADVANCED_SEARCH),
   }
 }
 
