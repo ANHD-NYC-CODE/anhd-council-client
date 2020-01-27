@@ -10,7 +10,8 @@
   }
 
   .paramset__label {
-    margin-left: 20px;
+    margin-top: 10px;
+    margin-left: 32px;
   }
   .paramset__label,
   .paramset--new-button {
@@ -30,7 +31,10 @@
     background-color: $white;
   }
 
-  .modifying-paramset {
-    // padding: 20px;
+  .modifying-paramset .fieldset {
+    // margin-bottom: 10px;
   }
+}
+
+.filter-component {
 }

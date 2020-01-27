@@ -4,6 +4,8 @@ import StandardizedInput from 'shared/classes/StandardizedInput'
 import { Form, Col, InputGroup } from 'react-bootstrap'
 import classnames from 'classnames'
 
+import './style.scss'
+
 const comparisonReconfigure = (props, e) => {
   e = new StandardizedInput(e)
   if (e.value.toUpperCase().match(/(LTE|END)/)) {
@@ -32,8 +34,8 @@ const hasPrefix = props => {
 
 const RangeFieldSet = props => {
   return (
-    <Form.Row>
-      <InputGroup className="fieldset range-fieldset" as={Col} xs={12} sm={12} md={hasPrefix(props) ? 12 : 2}>
+    <div className="range-fieldset">
+      <InputGroup className="fieldset range-fieldset">
         <InputGroup.Prepend>
           {!!hasPrefix(props) && <InputGroup.Text>{props.paramMapRangeGroup[0].comparisonPrefix}</InputGroup.Text>}
         </InputGroup.Prepend>
@@ -64,17 +66,10 @@ const RangeFieldSet = props => {
       {props.paramMapRangeGroup
         .sort((a, b) => a.rangePosition - b.rangePosition)
         .map((paramMap, paramMapIndex) => {
-          console.log(paramMap)
           return (
-            <InputGroup
-              as={Col}
-              xs={12}
-              sm={12}
-              md={hasPrefix(props) ? 6 : 5}
-              key={`paramMapRangeGroup-col-${paramMapIndex}`}
-            >
+            <InputGroup key={`paramMapRangeGroup-col-${paramMapIndex}`}>
               <InputGroup.Prepend>
-                <InputGroup.Text>{paramMap.rangePosition == 1 ? 'From' : 'To'}</InputGroup.Text>
+                <InputGroup.Text>{paramMap.rangePosition == 1 ? '' : 'and '}</InputGroup.Text>
               </InputGroup.Prepend>
               {paramMap.baseComponent({
                 key: `rangeGroup-paramMap-${paramMapIndex}`,
@@ -85,7 +80,7 @@ const RangeFieldSet = props => {
             </InputGroup>
           )
         })}
-    </Form.Row>
+    </div>
   )
 }
 

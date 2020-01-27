@@ -2,7 +2,8 @@
 
 .advanced-search {
   .advanced-search-form--container {
-    overflow-x: auto;
+    overflow-x: hidden;
+    padding: 0 80px;
   }
 
   .geography-select__row {
@@ -16,6 +17,10 @@
   .sticky-section {
     position: sticky;
     top: 20px;
+  }
+
+  .paramset-wrapper {
+    display: flex;
   }
 
   .paramset-wrapper:not(.modifying-paramset) {
@@ -80,11 +85,13 @@
   // FORM COMPONENTS
 
   .input-group {
+    width: auto;
     // margin-top: 10px;
   }
 
   .input-group-text {
     border-bottom: 4px solid transparent;
+    color: $black;
   }
 
   // Page
@@ -135,6 +142,8 @@
 
   &__title {
     @extend %heading-md;
+    color: $black;
+
     text-align: center;
     width: 100%;
     margin-bottom: 80px;
