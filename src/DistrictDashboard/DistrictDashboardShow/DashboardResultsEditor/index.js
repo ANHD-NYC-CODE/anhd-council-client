@@ -105,7 +105,7 @@ const DashboardResultsEditor = props => {
   }
 
   return (
-    <div className="dashboard-results-editor">
+    <div className="dashboard-results-editor" data-test-id="dashboard-results-editor">
       <div className="dashboard-results-editor__sentence-section">
         {constructDashboardSentence(
           props.housingTypeResultFilter,
@@ -133,7 +133,7 @@ DashboardResultsEditor.propTypes = {
   filteredResults: PropTypes.array,
   housingTypeResultFilter: PropTypes.object,
   selectedFilters: PropTypes.array,
-  mapFilterDate: PropTypes.object,
+  mapFilterDate: PropTypes.string,
   filterCondition: PropTypes.string,
 }
 DashboardResultsEditor.defaultProps = {

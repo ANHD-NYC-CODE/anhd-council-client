@@ -3,8 +3,14 @@ import * as b from 'shared/constants/geographies'
 export default class Geography {
   constructor(GeographyConstant, id) {
     this._id = id
+    this._GeographyConstant = GeographyConstant
     this._errors = []
     this.handleSetGeographyType(GeographyConstant)
+  }
+
+  clone() {
+    const newSelf = new Geography(this._GeographyConstant, this._id)
+    return newSelf
   }
 
   handleSetGeographyType(GeographyConstant) {
@@ -57,6 +63,10 @@ export default class Geography {
   set geographyType(GeographyConstant) {
     this.handleSetGeographyType(GeographyConstant)
     this.id = undefined // Clear the ID to avoid Geography/id mismatches
+  }
+
+  set constant(value) {
+    this._constant = value
   }
 
   set id(value) {

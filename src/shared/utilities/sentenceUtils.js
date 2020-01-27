@@ -288,3 +288,15 @@ export const constructSentence = advancedSearch => {
     .join(' ')
     .trim()
 }
+
+export const constructAdvancedSearchSentence = (advancedSearch, loading) => {
+  return [
+    loading ? 'Searching for' : 'Displaying',
+    convertFilterToSentence(advancedSearch.propertyFilter),
+    convertGeographiesToSentence(advancedSearch.geographies),
+    convertConditionMappingToSentence(advancedSearch.conditions),
+  ]
+    .filter(p => p)
+    .join(' ')
+    .trim()
+}

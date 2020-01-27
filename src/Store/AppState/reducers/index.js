@@ -69,7 +69,6 @@ export const appStateReducer = (state = Object.freeze(initialState), action = { 
       }
     }
     case c.SET_ADVANCED_SEARCH_REQUEST: {
-      console.log(action.advancedSearchRequest)
       return {
         ...state,
         requests: [...state.requests, action.advancedSearchRequest],

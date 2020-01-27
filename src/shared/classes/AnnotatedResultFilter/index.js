@@ -79,7 +79,6 @@ export default class AnnotatedResultFilter {
     const resultField = Object.keys(result).find(key =>
       key.match(`${this.fieldName}${this._annotationStart ? '_' + this._annotationStart : ''}`)
     )
-
     switch (this.comparison) {
       case 'gte':
         return result[resultField] >= this.value

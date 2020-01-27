@@ -241,6 +241,7 @@ class BaseTable extends React.Component {
                 return (
                   <div
                     className={`base-table ${this.props.wrapperClasses}`}
+                    data-test-id="base-table"
                     key={`table-${this.props.tableConfig.keyField}`}
                   >
                     {!this.props.nested && !!this.props.includeHeader && (

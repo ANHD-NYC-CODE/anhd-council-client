@@ -16,6 +16,7 @@ class DistrictDashboardIndex extends React.Component {
     this.submitGeography = this.submitGeography.bind(this)
     this.cancelChangeGeography = this.cancelChangeGeography.bind(this)
     this.handleChangeGeographyType = this.handleChangeGeographyType.bind(this)
+    this.handleChangeGeographyId = this.handleChangeGeographyId.bind(this)
   }
 
   submitGeography({ e, geographyType, geographyId } = {}) {
@@ -42,6 +43,18 @@ class DistrictDashboardIndex extends React.Component {
         changingGeography: true,
         changingGeographyType: new StandardizedInput(e).value,
         changingGeographyId: -1,
+      })
+    )
+  }
+
+  handleChangeGeographyId(e) {
+    const geographyId = new StandardizedInput(e).value
+    if (parseInt(geographyId) <= 0) return
+    this.props.dispatch(
+      setAppState({
+        changingGeography: true,
+        changingGeographyType: this.props.appState.changingGeographyType || this.props.appState.currentGeographyType,
+        changingGeographyId: String(geographyId),
       })
     )
   }
@@ -76,19 +89,22 @@ class DistrictDashboardIndex extends React.Component {
                 submitButtonVariant="dark"
                 cancelChangeGeography={this.cancelChangeGeography}
                 changingGeographyType={this.props.appState.changingGeographyType}
+                changingGeographyId={this.props.appState.changingGeographyId}
                 confirmChange={false}
                 currentGeographyType={
                   this.props.appState.changingGeographyType || this.props.appState.currentGeographyType
                 }
-                currentGeographyId={this.props.appState.changingGeographyId || this.props.appState.currentGeographyId}
+                currentGeographyId={this.props.appState.currentGeographyId}
                 dispatch={this.props.dispatch}
                 handleChangeGeography={this.submitGeography}
                 handleChangeGeographyType={this.handleChangeGeographyType}
+                handleChangeGeographyId={this.handleChangeGeographyId}
                 placeholder="Select"
                 showSubmit={
-                  !this.props.appState.changingGeography &&
-                  this.props.appState.currentGeographyType &&
-                  this.props.appState.currentGeographyId > 0
+                  (!this.props.appState.changingGeography &&
+                    this.props.appState.currentGeographyType &&
+                    this.props.appState.currentGeographyId > 0) ||
+                  (this.props.appState.changingGeographyType && this.props.appState.changingGeographyId > 0)
                 }
               />
             </div>

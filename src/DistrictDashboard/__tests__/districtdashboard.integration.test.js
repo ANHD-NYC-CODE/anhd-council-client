@@ -13,12 +13,11 @@ import UserContext from 'Auth/UserContext'
 import LayoutContext from 'Layout/LayoutContext'
 import { createPropertyRequestMock } from 'shared/testUtilities/mocks'
 import { ConnectedRouter } from 'connected-react-router'
-import TableConfig from 'shared/classes/TableConfig'
-import DataRequest from 'shared/classes/DataRequest'
-import * as appStateReducer from 'Store/AppState/reducers'
+
 import { mockSetupResourceModels } from 'shared/testUtilities/index.js'
-import { setAppState } from 'Store/AppState/actions'
-import ApiMap from 'shared/classes/ApiMap'
+
+import MockDate from 'mockdate'
+
 const resourceModels = mockSetupResourceModels()
 
 import sinon from 'sinon'
@@ -62,12 +61,13 @@ const setupWrapper = state => {
 describe('DistrictDashboard', () => {
   it('has initial state', () => {
     const [wrapper, store] = setupWrapper()
+
     expect(wrapper.find('DistrictDashboard')).toBeDefined()
     expect(store.getState().router.location.pathname).toEqual('/map')
     expect(wrapper.find('DistrictDashboardIndex')).toHaveLength(1)
     expect(wrapper.find('DistrictDashboardRequestsWrapper')).toHaveLength(0)
     expect(wrapper.find('DistrictDashboardShow')).toHaveLength(0)
-    expect(wrapper.find('GeographySelect select[name="geographyType"]').props().value).toEqual(-1)
+    expect(wrapper.findByTestId('geography-select--type', 'select').props().value).toEqual(-1)
   })
 
   describe('with a geography type and id', () => {
@@ -75,6 +75,14 @@ describe('DistrictDashboard', () => {
       const [wrapper, store] = setupWrapper({
         router: { location: { pathname: '/council/1' }, action: 'POP' },
       })
+
+      const results = [
+        createPropertyRequestMock({ bbl: 1, unitsres: 1 }),
+        createPropertyRequestMock({ bbl: 2, unitsres: 0 }),
+        createPropertyRequestMock({ bbl: 3, unitsres: 10 }),
+      ]
+
+      mock.onGet('/councils/1/properties/').reply(200, results)
 
       expect(wrapper.find('DistrictDashboard')).toBeDefined()
       expect(store.getState().router.location.pathname).toEqual('/council/1')
@@ -87,24 +95,61 @@ describe('DistrictDashboard', () => {
       expect(wrapper.find('GeographyProfile')).toHaveLength(1)
       expect(wrapper.find('LeafletMap')).toHaveLength(1)
 
-      expect(wrapper.find('RequestSummaryWrapper')).toHaveLength(6)
-      expect(wrapper.find('AnnotatedResultFilterCard')).toHaveLength(6)
-      const housingTypeCards = wrapper.findWhere(node => (node.key() || '').match(/housingtype-wrapper/))
-      housingTypeCards.forEach(card => {
-        expect(card.props().disabled).toEqual(false)
-      })
+      const housingTypeCards = wrapper.findByTestId('housing-type-radio', 'input')
 
-      expect(housingTypeCards.at(0).props().selected).toEqual(true)
+      // housing cards
+      expect(housingTypeCards.at(0).props().checked).toEqual(true)
 
-      expect(wrapper.find('DistrictResultsTitle').text()).toEqual('Properties Found: 0')
+      // dates
+      expect(wrapper.findByTestId('dashboard-show-date-radio', 'input')).toHaveLength(3)
+      expect(
+        wrapper
+          .findByTestId('dashboard-show-date-radio', 'input')
+          .at(0)
+          .props().checked
+      ).toEqual(true)
+
+      // amounts
+      expect(wrapper.findByTestId('amount-result-filter')).toHaveLength(6)
+      expect(wrapper.findByTestId('dashboard-condition-toggle', 'input')).toHaveLength(2)
+      expect(
+        wrapper
+          .findByTestId('dashboard-condition-toggle', 'input')
+          .at(0)
+          .props().checked
+      ).toEqual(true)
+
+      // geography select
+      expect(wrapper.findByTestId('geography-select--type', 'select')).toHaveLength(1)
+      expect(wrapper.findByTestId('geography-select--id', 'select')).toHaveLength(1)
+
+      // header
+      expect(wrapper.findByTestId('dashboard-results-header')).toHaveLength(1)
+
+      // editor
+      expect(wrapper.findByTestId('dashboard-results-editor')).toHaveLength(1)
+
+      // map toggle
+      expect(wrapper.findByTestId('dashboard-map-table-toggle', 'input')).toHaveLength(2)
+      expect(
+        wrapper
+          .findByTestId('dashboard-map-table-toggle', 'input')
+          .at(0)
+          .props().checked
+      ).toEqual(true)
+
+      expect(wrapper.findByTestId('map')).toHaveLength(1)
+      expect(wrapper.findByTestId('base-table')).toHaveLength(1)
+      expect(wrapper.findByTestId('geography-profile')).toHaveLength(1)
     })
+
     describe('geography select', () => {
       it('shows the selected geography values', () => {
         const [wrapper, store] = setupWrapper({
           router: { location: { pathname: '/council/1' }, action: 'POP' },
         })
-        expect(wrapper.find('GeographySelect select[name="geographyType"]').props().value).toEqual('COUNCIL')
-        expect(wrapper.find('GeographySelect select[name="geographyId"]').props().value).toEqual('1')
+        expect(wrapper.findByTestId('geography-select--type', 'select').props().value).toEqual('COUNCIL')
+        expect(wrapper.findByTestId('geography-select--id', 'select').props().value).toEqual('1')
         expect(wrapper.find('button.cancel-geography-change')).toHaveLength(0)
         expect(wrapper.find('button.submit-geography-change')).toHaveLength(0)
       })
@@ -113,27 +158,23 @@ describe('DistrictDashboard', () => {
         const [wrapper, store] = setupWrapper({
           router: { location: { pathname: '/council/1' }, action: 'POP' },
         })
-        wrapper
-          .find('GeographySelect select[name="geographyType"]')
-          .simulate('change', { target: { value: 'COMMUNITY' } })
+        wrapper.findByTestId('geography-select--type', 'select').simulate('change', { target: { value: 'COMMUNITY' } })
 
         wrapper.update()
-        expect(wrapper.find('GeographySelect select[name="geographyType"]').props().value).toEqual('COMMUNITY')
-        expect(wrapper.find('GeographySelect select[name="geographyId"]').props().value).toEqual(-1)
+        expect(wrapper.findByTestId('geography-select--type', 'select').props().value).toEqual('COMMUNITY')
+        expect(wrapper.findByTestId('geography-select--id', 'select').props().value).toEqual(-1)
         expect(wrapper.find('button.cancel-geography-change')).toHaveLength(1)
         expect(wrapper.find('button.submit-geography-change')).toHaveLength(0)
       })
 
       it('submits the change', () => {
         const [wrapper, store] = setupWrapper()
-        wrapper
-          .find('GeographySelect select[name="geographyType"]')
-          .simulate('change', { target: { value: 'COMMUNITY' } })
-        wrapper.find('GeographySelect select[name="geographyId"]').simulate('change', { target: { value: '102' } })
+        wrapper.findByTestId('geography-select--type', 'select').simulate('change', { target: { value: 'COMMUNITY' } })
+        wrapper.findByTestId('geography-select--id', 'select').simulate('change', { target: { value: '102' } })
         wrapper.update()
         expect(store.getState().router.location.pathname).toEqual('/community/102')
-        expect(wrapper.find('GeographySelect select[name="geographyType"]').props().value).toEqual('COMMUNITY')
-        expect(wrapper.find('GeographySelect select[name="geographyId"]').props().value).toEqual('102')
+        expect(wrapper.findByTestId('geography-select--type', 'select').props().value).toEqual('COMMUNITY')
+        expect(wrapper.findByTestId('geography-select--id', 'select').props().value).toEqual('102')
         expect(wrapper.find('button.cancel-geography-change')).toHaveLength(0)
         expect(wrapper.find('button.submit-geography-change')).toHaveLength(0)
       })
@@ -177,8 +218,9 @@ describe('DistrictDashboard', () => {
 
         await flushAllPromises()
         wrapper.update()
-        expect(wrapper.find('.housing-type-section__wrapper').text()).toMatch(
-          'All Residential Housing2 properties11 unitsRent Stabilized0 properties0 units0.0% of residential unitsSubsidized Housing0 properties0 units0.0% of residential unitsSmall Homes1 properties1 units9.1% of residential unitsMarket Rate2 properties11 units100.0% of residential unitsPublic Housing0 properties0 units0.0% of residential units'
+
+        expect(wrapper.findByTestId('housingtype-section', 'form').text()).toMatch(
+          'Housing Type:All Residential HousingRent Stabilized (0.0%)Subsidized Housing (0.0%)Small Homes (33.3%)Market Rate (66.7%)Public Housing (0.0%)'
         )
       })
 
@@ -196,32 +238,50 @@ describe('DistrictDashboard', () => {
 
         await flushAllPromises()
         wrapper.update()
-        wrapper.find('table').forEach(table => {
-          expect(table.find('tbody tr')).toHaveLength(results.length)
-        })
+        expect(wrapper.findByTestId('base-table').find('tbody tr')).toHaveLength(results.length)
       })
     })
     describe('dataset filters', () => {
-      it('Switches the visible request wrapper', () => {
+      it('Switches the visible request wrapper', async () => {
+        MockDate.set('01/01/2019')
+
         const [wrapper, store] = setupWrapper({
           router: { location: { pathname: '/council/1' }, action: 'POP' },
         })
 
-        const summaryElement = wrapper.find('RequestSummaryWrapper').at(4)
-        wrapper
-          .find('RequestSummaryWrapper')
-          .at(4)
-          .find('button')
-          .simulate('click')
-        summaryElement.update()
+        const results = [
+          createPropertyRequestMock({ bbl: 1, unitsres: 1 }, { 'acrisrealmasters_recent__12/02/2018-01/01/2019': 0 }),
+          createPropertyRequestMock({ bbl: 2, unitsres: 0 }, { 'acrisrealmasters_recent__12/02/2018-01/01/2019': 0 }),
+          createPropertyRequestMock({ bbl: 3, unitsres: 10 }, { 'acrisrealmasters_recent__12/02/2018-01/01/2019': 10 }),
+        ]
+        mock.onGet('/councils/1/properties/').reply(200, results)
+
+        await flushAllPromises()
         wrapper.update()
+        const summaryElement = wrapper.findByTestId('amount-toggle', 'ReactBootstrapToggle').at(4)
+        summaryElement.simulate('click')
+        summaryElement.update()
         expect(
           wrapper
-            .find('RequestSummaryWrapper')
+            .findByTestId('amount-toggle', 'ReactBootstrapToggle')
             .at(4)
-
-            .props().selected
+            .props().active
         ).toEqual(true)
+
+        expect(wrapper.find('BaseTable').find('tbody tr')).toHaveLength(1)
+
+        expect(wrapper.findByTestId('dashboard-results-header').text()).toEqual(
+          'All Residential HousingProperties: 2Units: 11'
+        )
+
+        // amount sentence
+        expect(wrapper.findByTestId('dashboard-results-editor').text()).toEqual(
+          'Displaying all residential housing with at least Sales  in the  last 30 daysProperties: 1Units: 10'
+        )
+
+        // amount input
+        expect(wrapper.findByTestId('dashboard-results-editor', 'input').props().value).toEqual(1)
+        MockDate.reset()
       })
     })
 
@@ -241,120 +301,178 @@ describe('DistrictDashboard', () => {
         await flushAllPromises()
 
         wrapper
-          .findWhere(node => node.key() === 'housingtype-summary-0')
-          .find('button')
-          .simulate('click')
+          .findByTestId('housing-type-radio', 'input')
+          .at(0)
+          .simulate('change', { target: { value: 3 } })
 
         wrapper.update()
-        expect(wrapper.find('DistrictResultsTitle').text()).toEqual('Properties Found: 3')
+        expect(wrapper.findByTestId('dashboard-results-header').text()).toEqual(
+          'All Residential HousingProperties: 3Units: 12'
+        )
+
+        wrapper.update()
+        expect(wrapper.findByTestId('dashboard-results-editor').text()).toEqual(
+          'Displaying all residential housing   Properties: 3Units: 12'
+        )
         // 3 residential out of 4
         expect(wrapper.find('BaseTable').find('tbody tr')).toHaveLength(3)
 
         wrapper
-          .findWhere(node => node.key() === 'housingtype-summary-3')
-          .find('button')
-          .simulate('click')
+          .findByTestId('housing-type-radio', 'input')
+          .at(3)
+          .simulate('change', { target: { value: 3 } })
 
         wrapper.update()
+
+        expect(wrapper.findByTestId('dashboard-results-header').text()).toEqual('Small HomesProperties: 2Units: 2')
+        expect(wrapper.findByTestId('dashboard-results-editor').text()).toEqual(
+          'Displaying small homes   Properties: 2Units: 2'
+        )
         // 2 Small homes
         expect(wrapper.find('BaseTable').find('tbody tr')).toHaveLength(2)
-        expect(wrapper.find('DistrictResultsTitle').text()).toEqual('Properties Found: 2')
       })
     })
-
-    describe('with custom filter', () => {
-      it('adds a summary card', async () => {
+    describe('condition filters', () => {
+      it('Switches the condition filter', async () => {
+        MockDate.set('01/01/2019')
         const results = [
-          createPropertyRequestMock({ bbl: 1, unitsres: 1 }),
-          createPropertyRequestMock({ bbl: 2, unitsres: 0 }),
-          createPropertyRequestMock({ bbl: 3, unitsres: 10 }),
+          createPropertyRequestMock({ bbl: 1, unitsres: 1 }, { 'hpdcomplaints_recent__12/02/2018-01/01/2019': 1 }),
+          createPropertyRequestMock({ bbl: 2, unitsres: 1 }, { 'hpdcomplaints_recent__12/02/2018-01/01/2019': 10 }),
+          createPropertyRequestMock({ bbl: 3, unitsres: 0 }, { 'hpdcomplaints_recent__12/02/2018-01/01/2019': 10 }),
+          createPropertyRequestMock(
+            { bbl: 4, unitsres: 10 },
+            { 'dobviolations_recent__12/02/2018-01/01/2019': 10, 'hpdcomplaints_recent__12/02/2018-01/01/2019': 1 }
+          ),
+          createPropertyRequestMock(
+            { bbl: 5, unitsres: 10 },
+            { 'dobviolations_recent__12/02/2018-01/01/2019': 10, 'hpdcomplaints_recent__12/02/2018-01/01/2019': 10 }
+          ),
         ]
         mock.onGet('/councils/1/properties/').reply(200, results)
-
-        const [newWrapper, newStore] = setupWrapper({
-          router: { location: { pathname: '/council/1' }, action: 'POP' },
-          appState: {
-            ...appStateReducer.initialState,
-          },
-          requests: {
-            ADVANCED_SEARCH: results,
-          },
-        })
-
-        const advancedSearchRequest = new DataRequest({
-          type: c.ADVANCED_SEARCH,
-          apiMaps: [
-            new ApiMap({ constant: 'council', resourceId: '1' }),
-            new ApiMap({ constant: 'PROPERTY', name: 'Custom Search' }),
-          ],
-          resourceModel: resourceModels['PROPERTY'],
-          tableConfig: new TableConfig({ resourceConstant: 'PROPERTY' }),
-        })
-
-        newStore.dispatch(
-          setAppState({
-            requests: [...newStore.getState().appState.requests, advancedSearchRequest],
-          })
-        )
-        await flushAllPromises()
-        newWrapper.update()
-        expect(newWrapper.find('RequestSummaryWrapper')).toHaveLength(7)
-
-        newWrapper
-          .findWhere(node => node.key() === 'request-summary-custom-search')
-          .find('button.summary-result-card')
-          .simulate('click')
-        newWrapper.update()
-
-        expect(newWrapper.findWhere(node => node.key() === 'request-summary-custom-search').props().selected).toEqual(
-          true
-        )
-        expect(newWrapper.find('DistrictResultsTitle').text()).toEqual('Properties Found: 3')
-
-        const housingTypeCards = newWrapper.findWhere(node => (node.key() || '').match(/housingtype-wrapper/))
-        housingTypeCards.forEach(card => {
-          expect(card.props().disabled).toEqual(true)
-        })
-      })
-
-      it('clears the custom filter', async () => {
         const [wrapper, store] = setupWrapper({
           router: { location: { pathname: '/council/1' }, action: 'POP' },
         })
 
-        const advancedRequest = new DataRequest({
-          type: c.ADVANCED_SEARCH,
-          resourceModel: resourceModels['PROPERTY'],
-          tableConfig: new TableConfig({ resourceConstant: 'PROPERTY' }),
-        })
+        await flushAllPromises()
 
-        const [newWrapper, newStore] = setupWrapper({
+        // check hpdcomplaints
+
+        wrapper
+          .findByTestId('amount-toggle', 'ReactBootstrapToggle')
+          .at(0)
+          .simulate('click')
+
+        wrapper.update()
+
+        expect(wrapper.find('BaseTable').find('tbody tr')).toHaveLength(2)
+        expect(
+          wrapper
+            .find('BaseTable')
+            .props()
+            .records.map(r => r.bbl)
+        ).toEqual([2, 5])
+
+        expect(wrapper.findByTestId('dashboard-results-editor').text()).toEqual(
+          'Displaying all residential housing with at least HPD complaints  in the  last 30 daysProperties: 2Units: 11'
+        )
+
+        // check dovviolations
+        wrapper
+          .findByTestId('amount-toggle', 'ReactBootstrapToggle')
+          .at(1)
+          .simulate('click')
+
+        wrapper.update()
+
+        expect(wrapper.find('BaseTable').find('tbody tr')).toHaveLength(3)
+        expect(
+          wrapper
+            .find('BaseTable')
+            .props()
+            .records.map(r => r.bbl)
+        ).toEqual([2, 4, 5])
+        expect(wrapper.findByTestId('dashboard-results-editor').text()).toEqual(
+          'Displaying all residential housing with at least HPD complaints OR at least DOB violations  in the  last 30 daysProperties: 3Units: 21'
+        )
+
+        wrapper.update()
+
+        // toggle AND
+        wrapper
+          .findByTestId('dashboard-condition-toggle', 'input')
+          .at(1)
+          .simulate('change', { target: { value: 'AND' } })
+
+        expect(wrapper.find('BaseTable').find('tbody tr')).toHaveLength(1)
+        expect(
+          wrapper
+            .find('BaseTable')
+            .props()
+            .records.map(r => r.bbl)
+        ).toEqual([5])
+        expect(wrapper.findByTestId('dashboard-results-editor').text()).toEqual(
+          'Displaying all residential housing with at least HPD complaints AND at least DOB violations  in the  last 30 daysProperties: 1Units: 10'
+        )
+
+        MockDate.reset()
+      })
+    })
+
+    describe('editor filters', () => {
+      it('Switches the amount', async () => {
+        MockDate.set('01/01/2019')
+        const results = [
+          createPropertyRequestMock({ bbl: 1, unitsres: 1 }, { 'hpdcomplaints_recent__12/02/2018-01/01/2019': 5 }),
+          createPropertyRequestMock({ bbl: 2, unitsres: 1 }, { 'hpdcomplaints_recent__12/02/2018-01/01/2019': 6 }),
+        ]
+        mock.onGet('/councils/1/properties/').reply(200, results)
+        const [wrapper, store] = setupWrapper({
           router: { location: { pathname: '/council/1' }, action: 'POP' },
-          appState: {
-            ...store.getState().appState,
-            requests: [...store.getState().appState.requests, advancedRequest],
-            selectedRequests: [advancedRequest],
-          },
         })
 
         await flushAllPromises()
-        newWrapper.update()
-        expect(newWrapper.find('RequestSummaryWrapper')).toHaveLength(7)
 
-        newWrapper.find('ClearAdvancedSearchButton .clear-advanced-search-button button').simulate('click')
-        newWrapper.update()
+        // check hpdcomplaints
 
-        expect(newWrapper.find('RequestSummaryWrapper')).toHaveLength(6)
+        wrapper
+          .findByTestId('amount-toggle', 'ReactBootstrapToggle')
+          .at(0)
+          .simulate('click')
 
-        const housingTypeCards = newWrapper.findWhere(node => (node.key() || '').match(/housingtype-wrapper/))
+        wrapper.update()
 
-        // Re-enables housing type filter selection
-        expect(housingTypeCards.at(0).props().selected).toEqual(true)
+        expect(wrapper.find('BaseTable').find('tbody tr')).toHaveLength(2)
+        expect(
+          wrapper
+            .find('BaseTable')
+            .props()
+            .records.map(r => r.bbl)
+        ).toEqual([1, 2])
 
-        // Un-disables housing type cards
-        housingTypeCards.forEach(card => {
-          expect(card.props().disabled).toEqual(false)
-        })
+        wrapper
+          .findByTestId('dashboard-results-editor')
+          .findByTestId('amount-filter-input--input', 'input')
+          .simulate('change', { target: { value: 6 } })
+        wrapper.update()
+
+        wrapper
+          .findByTestId('dashboard-results-editor')
+          .findByTestId('amount-filter-input', 'form')
+          .simulate('submit')
+        wrapper.update()
+
+        expect(wrapper.find('BaseTable').find('tbody tr')).toHaveLength(1)
+        expect(
+          wrapper
+            .find('BaseTable')
+            .props()
+            .records.map(r => r.bbl)
+        ).toEqual([2])
+        expect(wrapper.findByTestId('dashboard-results-editor').text()).toEqual(
+          'Displaying all residential housing with at least HPD complaints  in the  last 30 daysProperties: 1Units: 1'
+        )
+
+        MockDate.reset()
       })
     })
   })

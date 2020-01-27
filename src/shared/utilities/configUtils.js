@@ -339,7 +339,7 @@ export const newMapResultFilters = ({ resourceModels } = {}) => {
   ]
 }
 
-export const newAdvancedSearchRequest = ({ geographyType, geographyId, advancedSearch, resourceModels } = {}) => {
+export const newAdvancedSearchRequest = ({ advancedSearch, resourceModels } = {}) => {
   const paramMaps = getUrlFormattedParamMaps(advancedSearch)
   return new DataRequest({
     isAuthenticated: true,
@@ -347,7 +347,7 @@ export const newAdvancedSearchRequest = ({ geographyType, geographyId, advancedS
     resourceModel: resourceModels['PROPERTY'],
     resourceConstant: 'PROPERTY_ADVANCED_SEARCH',
     apiMaps: [
-      new ApiMap({ constant: geographyType, resourceId: geographyId }),
+      new ApiMap({ constant: advancedSearch.geographies[0].constant, resourceId: advancedSearch.geographies[0].id }),
       new ApiMap({ constant: 'PROPERTY', name: 'Custom Search' }),
     ],
     paramMaps: paramMaps,

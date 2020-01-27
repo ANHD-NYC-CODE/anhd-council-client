@@ -32,7 +32,7 @@ const HousingTypeSection = props => {
         )
 
         return (
-          <Form className="housingtype-section">
+          <Form className="housingtype-section" data-test-id="housingtype-section">
             <Form.Group controlId="housing-type-select">
               <Form.Label className="housingtype-section__label">Housing Type:</Form.Label>
               {propertyResource.ownResultFilters.map((ownResultFilter, index) => {
@@ -42,11 +42,12 @@ const HousingTypeSection = props => {
                       custom
                       className="housingtype-section__check"
                       id={`${ownResultFilter.label}--${index}`}
+                      data-test-id="housing-type-radio"
                       label={getLabel(ownResultFilter.label, index)}
                       type="radio"
                       variant="outline-primary"
                       checked={props.housingTypeResultFilter.id === ownResultFilter.id}
-                      disabled={props.customView || props.loading}
+                      disabled={props.loading}
                       value={index}
                       onChange={e => handleChange(config, parseInt(index))}
                     />
@@ -63,19 +64,18 @@ const HousingTypeSection = props => {
 }
 
 HousingTypeSection.propTypes = {
-  customView: PropTypes.bool,
   loading: PropTypes.bool,
   propertySummaryRequest: PropTypes.object,
   propertyResource: PropTypes.object,
   housingTypeResultFilter: PropTypes.object,
   switchSelectedFilter: PropTypes.func,
-  totalPropertyResults: PropTypes.object,
+  totalPropertyResults: PropTypes.array,
 }
 
 HousingTypeSection.defaultProps = {
-  customView: false,
   loading: false,
   totalPropertyResults: [],
+  housingTypeResultFilter: {},
 }
 
 export default HousingTypeSection
