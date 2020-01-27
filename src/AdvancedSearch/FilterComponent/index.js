@@ -7,7 +7,7 @@ import AddInnerConditionButton from 'AdvancedSearch/FilterComponent/AddInnerCond
 import RemoveFilterButton from 'AdvancedSearch/FilterComponent/RemoveFilterButton'
 import { removeCondition } from 'Store/AdvancedSearch/actions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMinus } from '@fortawesome/free-solid-svg-icons'
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
 import classnames from 'classnames'
 import './style.scss'
@@ -52,9 +52,9 @@ export class FilterComponent extends React.Component {
             })
           }
           size="sm"
-          variant="outline-danger"
+          variant="link"
         >
-          <FontAwesomeIcon icon={faMinus} />
+          <FontAwesomeIcon icon={faTimes} />
         </Button>
       )
     } else {
@@ -106,7 +106,10 @@ export class FilterComponent extends React.Component {
             {
               // New Button
             }
-            {Object.keys(this.props.filter.paramSets).length > 1 && <p className="paramset__label">Options</p>}
+            {Object.keys(this.props.filter.paramSets).length > 1 &&
+              !Object.keys(this.props.filter.paramSets).every(
+                k => !!this.props.filter.paramSets[k].paramMaps.length
+              ) && <p className="paramset__label">Options</p>}
             {Object.keys(this.props.filter.paramSets)
               .filter(key => key !== 'initial')
               .map((key, index) => {

@@ -3,12 +3,21 @@
 .advanced-search-form {
   &__heading {
     @extend %p1-font-size;
+    color: $black;
     font-family: $font-family-secondary;
     margin-bottom: 20px;
   }
 
   &__section {
     margin-bottom: 20px;
+  }
+
+  // geo and housing selects
+  .geography-select__row select,
+  .advanced-search-form__housingtype-select .filter .paramset-wrapper:first-child .fieldset .form-control {
+    border: 1px solid $gray-400;
+    padding-left: 12px;
+    text-decoration: none;
   }
 
   button[type='submit'].btn {
@@ -20,11 +29,50 @@
     }
   }
 
+  .form-control {
+    @extend %p3-font-size;
+    color: $black;
+    padding-left: 0px;
+    text-decoration: underline;
+  }
+
+  .input-group-prepend .input-group-text {
+    @extend %p3-font-size;
+    background-color: $white;
+    border: 0;
+  }
+
   .fieldset {
+    display: flex;
     max-height: 50px;
+  }
+
+  .form-control {
+    border: 0;
+  }
+
+  .input-group-text {
+    padding-left: 0;
   }
 
   .form-group {
     margin-bottom: 0;
+  }
+
+  .input-group {
+    align-items: center;
+    line-height: 100%;
+
+    input[type='date'] {
+      max-width: 140px;
+    }
+
+    input[type='number'] {
+      max-width: 60px;
+    }
+
+    select {
+      line-height: 100%;
+    }
   }
 }
