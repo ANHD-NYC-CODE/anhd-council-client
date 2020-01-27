@@ -8,7 +8,7 @@ import './style.scss'
 
 const GeographyProfile = props => {
   return (
-    <div className="geography-links">
+    <div data-test-id="geography-profile" className="geography-links">
       <p>More information</p>
       {renderLinks(props)}
     </div>

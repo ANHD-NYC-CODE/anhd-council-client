@@ -24,6 +24,7 @@ class MainGeographySelect extends React.Component {
     this.passChangeType = this.passChangeType.bind(this)
     this.passChangeGeography = this.passChangeGeography.bind(this)
     this.handleShowMapClick = this.handleShowMapClick.bind(this)
+    this.handleGeographyIdClick = this.handleGeographyIdClick.bind(this)
   }
 
   handleShowMapClick(e) {
@@ -47,9 +48,19 @@ class MainGeographySelect extends React.Component {
     if (this.props.handleChange) this.props.handleChange(standardE)
   }
 
+  handleGeographyIdClick(e) {
+    if (e.originalEvent) {
+      e.originalEvent.view.L.DomEvent.stopPropagation(e)
+    } else {
+      e.stopPropagation(e)
+    }
+    const standardE = new StandardizedInput(e)
+    this.props.handleChangeGeographyId(standardE)
+  }
+
   render() {
     return (
-      <div className="geography-select">
+      <div data-test-id="geography-select" className="geography-select">
         <ConfigContext.Consumer>
           {config => (
             <div className="geography-select__wrapper">
@@ -59,6 +70,7 @@ class MainGeographySelect extends React.Component {
                   className={classnames(this.props.selectClass, {
                     valued: this.props.currentGeographyType || this.props.changingGeographyType,
                   })}
+                  data-test-id="geography-select--type"
                   size={this.props.inputSize}
                   name="geographyType"
                   as="select"
@@ -99,6 +111,7 @@ class MainGeographySelect extends React.Component {
                         required
                         data-key="id"
                         name="geographyId"
+                        data-test-id="geography-select--custom"
                         onChange={this.passChangeGeography}
                         value={
                           (this.props.changingGeographyId || this.props.currentGeographyId) > 0
@@ -118,6 +131,7 @@ class MainGeographySelect extends React.Component {
                         as="select"
                         data-key="id"
                         name="geographyId"
+                        data-test-id="geography-select--id"
                         onChange={this.passChangeGeography}
                         placeholder="#"
                         className={classnames(this.props.selectClass, {
@@ -189,10 +203,12 @@ class MainGeographySelect extends React.Component {
                   zipCodes={config.zipCodes}
                   className="main-geography-select__map"
                   selectGeographyData={config.selectGeographyData}
-                  appState={this.props.appState}
                   currentGeographyType={this.props.changingGeographyType || this.props.currentGeographyType}
-                  handleChangeGeography={this.passChangeType}
-                  handleChangeGeographyId={this.passChangeGeography}
+                  currentGeographyId={this.props.currentGeographyId}
+                  changingGeographyType={this.props.changingGeographyType}
+                  changingGeographyId={this.props.changingGeographyId}
+                  handleChangeGeography={this.passChangeGeography}
+                  handleChangeGeographyId={this.handleGeographyIdClick}
                 />
               )}
             </div>

@@ -27,9 +27,14 @@ const AmountFilterInput = props => {
   }
 
   return (
-    <Form className={classnames('amount-filter-input', { active: isChanging })} onSubmit={e => handleSubmit(e, value)}>
+    <Form
+      data-test-id="amount-filter-input"
+      className={classnames('amount-filter-input', { active: isChanging })}
+      onSubmit={e => handleSubmit(e, value)}
+    >
       <Form.Group>
         <Form.Control
+          data-test-id="amount-filter-input--input"
           type="number"
           min={0}
           max={999}
@@ -41,7 +46,7 @@ const AmountFilterInput = props => {
         />
 
         {!!isChanging && (
-          <Button variant="dark" type="submit" size="sm">
+          <Button data-test-id="amount-filter-input--save" variant="dark" type="submit" size="sm">
             Save
           </Button>
         )}

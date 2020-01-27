@@ -4,7 +4,6 @@ import StandardizedInput from 'shared/classes/StandardizedInput'
 import { Form, InputGroup, Col } from 'react-bootstrap'
 import classnames from 'classnames'
 const ComparisonFieldSet = props => {
-  console.log(props.paramMap)
   return (
     <Form.Row className="fieldset comparison-fieldset" key={props.key}>
       <InputGroup as={Col} xs={props.filter ? 4 : 6}>
