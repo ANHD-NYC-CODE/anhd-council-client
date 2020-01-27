@@ -27,23 +27,6 @@
     margin-bottom: 20px;
   }
 
-  .paramset-wrapper,
-  .form-row__container {
-    // margin-bottom: 10px;
-    width: 700px;
-    @include media-breakpoint-up(md) {
-      width: 800px;
-    }
-
-    @include media-breakpoint-up(lg) {
-      width: 700px;
-    }
-
-    @include media-breakpoint-up(xl) {
-      width: 750px;
-    }
-  }
-
   div.condition-control {
     padding: 0;
   }

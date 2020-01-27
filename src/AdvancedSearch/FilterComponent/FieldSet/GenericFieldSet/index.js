@@ -6,7 +6,7 @@ const GenericFieldSet = props => {
   return (
     <InputGroup className="generic-fieldset fieldset" key={props.key}>
       {props.paramMap.valuePrefix && (
-        <InputGroup.Prepend>
+        <InputGroup.Prepend className="input-group__label">
           <InputGroup.Text>{props.paramMap.valuePrefix}</InputGroup.Text>
         </InputGroup.Prepend>
       )}

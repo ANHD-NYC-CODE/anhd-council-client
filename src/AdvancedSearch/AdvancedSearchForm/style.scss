@@ -30,13 +30,25 @@
   }
 
   .form-control {
+    text-decoration: underline;
+  }
+
+  .form-control,
+  .dropdown.btn-group,
+  .dropdown-item {
     @extend %p3-font-size;
     color: $black;
     padding-left: 0px;
     text-decoration: underline;
   }
 
-  .input-group-prepend .input-group-text {
+  .dropdown.btn-group button,
+  .dropdown-item {
+    color: $black;
+    font-weight: bold;
+  }
+
+  .input-group__label .input-group-text {
     @extend %p3-font-size;
     background-color: $white;
     border: 0;
@@ -69,10 +81,18 @@
 
     input[type='number'] {
       max-width: 60px;
+      padding-left: 8px;
     }
 
     select {
       line-height: 100%;
     }
+
+    select[name='newFilter'] {
+      max-width: 240px;
+    }
+  }
+
+  .dropdown.btn-group {
   }
 }

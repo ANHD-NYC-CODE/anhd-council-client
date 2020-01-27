@@ -142,7 +142,7 @@ class AdvancedSearchForm extends React.PureComponent {
                     showPopups={this.props.showPopups}
                     validateForm={this.validateForm}
                   />
-                  <div className="w-100 d-flex flex-column align-items-end my-4">
+                  <div className="my-4">
                     <FormError
                       show={!!this.state.hasErrors || !!Object.keys(errors).length}
                       message="Please correct errors before proceeding."
