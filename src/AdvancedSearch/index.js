@@ -13,6 +13,7 @@ import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
 import { connect } from 'react-redux'
 import { Events, animateScroll as scroll, scrollSpy } from 'react-scroll'
+import * as advancedSearchReducer from 'Store/AdvancedSearch/reducers'
 import Helmet from 'react-helmet'
 import { Button, ButtonToolbar, Row, Col, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
 import LeafletMap from 'LeafletMap'
@@ -20,7 +21,15 @@ import SpinnerLoader from 'shared/components/Loaders/SpinnerLoader'
 import BaseTable from 'shared/components/BaseTable'
 import { requestWithAuth } from 'shared/utilities/authUtils'
 import { makeRequest } from 'Store/Request/actions'
-import { addGeography, updateGeography, forceUpdateSearch } from 'Store/AdvancedSearch/actions'
+import { deepCloneObject, cloneInstance } from 'shared/utilities/classUtils'
+
+import {
+  updateCondition,
+  replacePropertyFilter,
+  addGeography,
+  updateGeography,
+  forceUpdateSearch,
+} from 'Store/AdvancedSearch/actions'
 import {
   clearAdvancedSearchRequest,
   setAppState,
@@ -50,8 +59,10 @@ export class AdvancedSearch extends React.Component {
       displayingList: false,
       zoom: 14,
       tableState: {},
-      advancedSearch: this.props.advancedSearch,
+      advancedSearch: this.cloneAdvancedSearchInstance(this.props.advancedSearch),
     }
+
+    this.cloneAdvancedSearchInstance = this.cloneAdvancedSearchInstance.bind(this)
     this.loadRequest = this.loadRequest.bind(this)
     this.handleChangeGeographyType = this.handleChangeGeographyType.bind(this)
     this.changeGeography = this.changeGeography.bind(this)
@@ -66,6 +77,18 @@ export class AdvancedSearch extends React.Component {
     }
   }
 
+  cloneAdvancedSearchInstance(advancedSearchObject) {
+    return {
+      geographies: advancedSearchObject.geographies.length
+        ? [advancedSearchObject.geographies[0].clone()]
+        : advancedSearchObject.geographies,
+      propertyFilter: advancedSearchObject.propertyFilter.clone(),
+      conditions: {
+        '0': advancedSearchObject.conditions['0'].clone(),
+      },
+    }
+  }
+
   componentDidMount() {
     scrollSpy.update()
     scroll.scrollToTop({
@@ -73,6 +96,13 @@ export class AdvancedSearch extends React.Component {
       delay: 0,
       smooth: 'easeInOutQuart',
     })
+
+    if (!this.state.advancedSearch.geographies[0] && !!this.props.appState.currentGeographyId) {
+      this.changeGeography({
+        geographyType: this.props.appState.currentGeographyType,
+        geographyId: this.props.appState.currentGeographyId,
+      })
+    }
   }
 
   componentWillUnmount() {
@@ -81,7 +111,6 @@ export class AdvancedSearch extends React.Component {
   }
 
   componentDidUpdate() {
-    console.log(this.state.advancedSearch)
     if (this.props.advancedSearchRequest && !this.props.advancedSearchRequest.called) {
       this.loadRequest(this.props.advancedSearchRequest)
       this.setState({ displayingForm: false })
@@ -102,32 +131,23 @@ export class AdvancedSearch extends React.Component {
 
   changeGeography({ e, geographyType, geographyId } = {}) {
     e = new StandardizedInput(e)
+    const newAdvancedSearch = { ...this.state.advancedSearch }
     const type = geographyType || this.state.changingGeographyType || this.state.currentGeographyType
     const id = geographyId || e.value
+
     if (!this.state.advancedSearch.geographies.length) {
       const newGeography = new Geography(type, id)
 
-      const newAdvancedSearch = this.state.advancedSearch
       newAdvancedSearch.geographies = [...newAdvancedSearch.geographies, newGeography]
-      this.setState({
-        advancedSearch: newAdvancedSearch,
-      })
-      this.pageForceUpdate()
     } else {
-      const geography = this.state.advancedSearch.geographies[0]
-      geography[e.key] = e.value
-
-      const newAdvancedSearch = this.state.advancedSearch
-      newAdvancedSearch.geographies[0] = geography
-      this.setState({
-        advancedSearch: newAdvancedSearch,
-      })
-      this.pageForceUpdate()
+      newAdvancedSearch.geographies[0].constant = type
+      newAdvancedSearch.geographies[0].id = id
     }
 
     this.setState({
       currentGeographyType: type,
       currentGeographyId: id,
+      advancedSearch: newAdvancedSearch,
     })
 
     if (!this.props.appState.currentGeographyId) {
@@ -140,7 +160,6 @@ export class AdvancedSearch extends React.Component {
         })
       )
     }
-
     this.cancelChangeGeography()
   }
 
@@ -156,13 +175,17 @@ export class AdvancedSearch extends React.Component {
   }
 
   submitSearch() {
-    this.props.dispatch(fireAdvancedSearchSubmitEvent(this.props.advancedSearch))
+    this.props.dispatch(fireAdvancedSearchSubmitEvent(this.state.advancedSearch))
+
+    const newAdvancedSearch = this.cloneAdvancedSearchInstance(this.state.advancedSearch)
+    this.props.dispatch(updateGeography(0, newAdvancedSearch.geographies[0].clone()))
+    this.props.dispatch(replacePropertyFilter(newAdvancedSearch.propertyFilter.clone()))
+    this.props.dispatch(updateCondition('0', newAdvancedSearch.conditions['0'].clone()))
+
     this.props.dispatch(
       setAdvancedSearchRequest({
         advancedSearchRequest: newAdvancedSearchRequest({
-          geographyType: this.state.currentGeographyType,
-          geographyId: this.state.currentGeographyId,
-          advancedSearch: this.state.advancedSearch,
+          advancedSearch: newAdvancedSearch,
           resourceModels: this.props.config.resourceModels,
         }),
       })
@@ -205,7 +228,7 @@ export class AdvancedSearch extends React.Component {
           {!this.state.displayingForm && (
             <div className="advanced-search__results">
               <AdvancedSearchSentenceEditor
-                advancedSearch={this.state.advancedSearch}
+                advancedSearch={this.props.advancedSearch}
                 changeGeography={this.props.changeGeography}
                 dispatch={this.props.dispatch}
                 results={this.props.advancedSearch.results}
@@ -245,8 +268,8 @@ export class AdvancedSearch extends React.Component {
                   })}
                 >
                   <LeafletMap
-                    key={`${this.props.advancedSearch.geographies[0].constant}-${
-                      this.props.advancedSearch.geographies[0].id
+                    key={`${(this.props.advancedSearch.geographies[0] || {}).constant}-${
+                      (this.props.advancedSearch.geographies[0] || {}).id
                     }-${this.state.displayingList}`}
                     currentGeographyType={(this.props.advancedSearch.geographies[0] || {}).constant}
                     currentGeographyId={(this.props.advancedSearch.geographies[0] || {}).id}
@@ -295,6 +318,8 @@ export class AdvancedSearch extends React.Component {
                 appState={this.props.appState}
                 changingGeographyType={this.state.changingGeographyType}
                 changingGeographyId={this.state.changingGeographyId}
+                currentGeographyType={this.state.currentGeographyType}
+                currentGeographyId={this.state.currentGeographyId}
                 geographyType={this.state.currentGeographyType}
                 geographyId={this.state.currentGeographyId}
                 config={this.props.config}
@@ -303,8 +328,8 @@ export class AdvancedSearch extends React.Component {
                 loading={this.props.loading}
                 showPopups={this.state.view === 2}
                 changeGeography={this.changeGeography}
-                cancelChangeGeography={this.cancelChangeGeography}
                 handleChangeGeographyType={this.handleChangeGeographyType}
+                cancelChangeGeography={this.cancelChangeGeography}
                 forceUpdate={this.pageForceUpdate}
                 onSubmit={this.submitSearch}
               />
@@ -320,6 +345,10 @@ AdvancedSearch.propTypes = {
   advancedSearch: PropTypes.object,
   config: PropTypes.object,
   dispatch: PropTypes.func,
+}
+
+AdvancedSearch.defaultProps = {
+  advancedSearch: advancedSearchReducer.initialState(),
 }
 
 const loadingSelector = createLoadingSelector([c.ADVANCED_SEARCH])

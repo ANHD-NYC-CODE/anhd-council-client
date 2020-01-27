@@ -8,6 +8,21 @@ export default class Condition {
     this._errors = errors
   }
 
+  keys() {
+    return {
+      key: this._key,
+      type: this._type,
+      filters: [],
+      errors: this._errors,
+    }
+  }
+
+  clone() {
+    const newSelf = new Condition({ ...this.keys() })
+    this.filters.forEach(filter => newSelf.addFilter({ filter: filter.clone() }))
+    return newSelf
+  }
+
   get key() {
     return this._key
   }

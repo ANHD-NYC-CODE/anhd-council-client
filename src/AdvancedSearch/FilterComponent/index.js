@@ -24,9 +24,9 @@ export class FilterComponent extends React.Component {
       filterIndex: this.props.filterIndex,
     })
 
-    if (this.props.condition.key !== '0' && !this.props.condition.filters.length) {
-      this.props.dispatch(removeCondition(this.props.condition.key))
-    }
+    // if (this.props.condition.key !== '0' && !this.props.condition.filters.length) {
+    //   this.props.dispatch(removeCondition(this.props.condition.key))
+    // }
   }
 
   renderButtons(paramSet, key) {
@@ -81,6 +81,7 @@ export class FilterComponent extends React.Component {
               {Object.keys(this.props.filter.paramSets).map((key, index) => {
                 // Render all param sets in the filter
                 const paramSet = this.props.filter.paramSets[key]
+
                 return (
                   <Form.Row
                     className={classnames('paramset-wrapper', { 'modifying-paramset': key !== 'initial' })}

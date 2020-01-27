@@ -46,6 +46,35 @@ export default class ParamMap {
     this._valueSuffix = valueSuffix
   }
 
+  keys() {
+    return {
+      component: this._component,
+      baseComponent: this._baseComponent,
+      props: this._props,
+      validations: this._validations,
+      defaultOptions: this._defaultOptions,
+      field: this._field,
+      comparison: this._comparison,
+      value: this._value,
+      rangeKey: this._rangeKey,
+      rangePosition: this._rangePosition,
+      errors: this._errors,
+      resourceConstant: this._resourceConstant,
+      resourceModel: this._resourceModel,
+      type: this._type,
+      role: this._role,
+      paramNoun: this._paramNoun,
+      comparisonPrefix: this._comparisonPrefix,
+      valuePrefix: this._valuePrefix,
+      valueSuffix: this._valueSuffix,
+    }
+  }
+
+  clone() {
+    const newSelf = new ParamMap({ ...this.keys() })
+    return newSelf
+  }
+
   get field() {
     return this._field
   }

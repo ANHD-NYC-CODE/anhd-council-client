@@ -1,16 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Geography from 'shared/classes/Geography'
 import * as yup from 'yup'
-import StandardizedInput from 'shared/classes/StandardizedInput'
 import { getAdvancedSearchParamMaps } from 'Store/AdvancedSearch/utilities/advancedSearchStoreUtils'
 import FilterComponent from 'AdvancedSearch/FilterComponent'
-import { replacePropertyFilter } from 'Store/AdvancedSearch/actions'
 import ClearAdvancedSearchButton from 'shared/components/buttons/ClearAdvancedSearchButton'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
-import { addGeography, updateGeography } from 'Store/AdvancedSearch/actions'
-import { setAppState, setAdvancedSearchRequest } from 'Store/AppState/actions'
 import ConditionComponent from 'AdvancedSearch/ConditionComponent'
 import GeographySelect from 'shared/components/GeographySelect'
 import FormError from 'shared/components/FormError'
@@ -111,18 +106,18 @@ class AdvancedSearchForm extends React.PureComponent {
               submitButtonVariant="dark"
               cancelChangeGeography={this.props.cancelChangeGeography}
               changing={this.props.appState.changingGeography}
-              changingGeographyType={this.props.changingGeographyType}
-              changingGeographyId={this.props.changingGeographyId}
               confirmChange={true}
               currentGeographyType={this.props.geographyType}
               currentGeographyId={this.props.geographyId}
+              changingGeographyType={this.props.changingGeographyType}
+              changingGeographyId={this.props.changingGeographyId}
               dispatch={this.props.dispatch}
               handleChangeGeography={this.props.changeGeography}
+              handleChangeGeographyType={this.props.handleChangeGeographyType}
               handleBlur={handleBlur}
               handleChange={handleChange}
               touched={touched}
               errors={errors}
-              handleChangeGeographyType={this.props.handleChangeGeographyType}
             />
             {this.props.geographyType && this.props.geographyId && (
               <div className="advanced-search-form__housingtype-select">
@@ -144,6 +139,7 @@ class AdvancedSearchForm extends React.PureComponent {
                   condition={this.props.advancedSearch.conditions[0]}
                   config={this.props.config}
                   dispatch={this.props.dispatch}
+                  dispatchAction={this.props.forceUpdate}
                   key={'condition-0'}
                   conditionKey={'0'}
                   showPopups={this.props.showPopups}

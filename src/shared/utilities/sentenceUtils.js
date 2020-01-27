@@ -289,9 +289,9 @@ export const constructSentence = advancedSearch => {
     .trim()
 }
 
-export const constructAdvancedSearchSentence = advancedSearch => {
+export const constructAdvancedSearchSentence = (advancedSearch, loading) => {
   return [
-    'Displaying',
+    loading ? 'Searching for' : 'Displaying',
     convertFilterToSentence(advancedSearch.propertyFilter),
     convertGeographiesToSentence(advancedSearch.geographies),
     convertConditionMappingToSentence(advancedSearch.conditions),
