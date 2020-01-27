@@ -54,7 +54,6 @@ export default class ParamSet {
   }
 
   create({ dispatchAction = undefined, paramMap = null, unshift = false } = {}) {
-    console.log('hi')
     switch (this.createType) {
       case 'ONE':
         return this.createOne({ dispatchAction, unshift })
