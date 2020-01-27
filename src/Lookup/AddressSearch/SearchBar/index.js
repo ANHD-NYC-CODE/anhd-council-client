@@ -86,7 +86,7 @@ export default class SearchBar extends React.PureComponent {
           )}
           {// only include button on legacy config
           this.props.inputClass !== 'xl-form-control' && (
-            <InputGroup.Append>
+            <InputGroup.Append className="input-group__label">
               <Button onClick={this.onSearchClick} variant="dark">
                 Search
               </Button>

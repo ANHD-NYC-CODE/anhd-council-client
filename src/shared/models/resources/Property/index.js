@@ -26,16 +26,22 @@ const Property = databaseObject => {
     filterParamSets: paramSets => {
       if (!paramSets['initial'] || !paramSets['initial'].paramMaps.length) return paramSets
       switch (paramSets['initial'].paramMaps[0].value) {
+        case 'all':
+          return Object.keys(paramSets)
+            .filter(key => !key.match(/(housingType)/))
+            .concat('housingType_all_1')
+            .filter(p => p)
+            .reduce((ps, key) => ((ps[key] = paramSets[key]), ps), {})
         case 'rs':
           return Object.keys(paramSets)
             .filter(key => !key.match(/(housingType)/))
-            .concat('housingType_rs')
+            .concat('housingType_rs_1', 'housingType_rs_2')
             .filter(p => p)
             .reduce((ps, key) => ((ps[key] = paramSets[key]), ps), {})
         case 'rr':
           return Object.keys(paramSets)
             .filter(key => !key.match(/(housingType)/))
-            .concat('housingType_rr_1', 'housingType_rr_2')
+            .concat('housingType_rr_1', 'housingType_rr_2', 'housingType_rr_3')
             .filter(p => p)
             .reduce((ps, key) => ((ps[key] = paramSets[key]), ps), {})
         case 'sh':
@@ -48,6 +54,12 @@ const Property = databaseObject => {
           return Object.keys(paramSets)
             .filter(key => !key.match(/(housingType)/))
             .concat('housingType_mr')
+            .filter(p => p)
+            .reduce((ps, key) => ((ps[key] = paramSets[key]), ps), {})
+        case 'ph':
+          return Object.keys(paramSets)
+            .filter(key => !key.match(/(housingType)/))
+            .concat('housingType_ph')
             .filter(p => p)
             .reduce((ps, key) => ((ps[key] = paramSets[key]), ps), {})
         default:
@@ -152,8 +164,26 @@ const Property = databaseObject => {
           })
         },
       },
+
+      housingType_all_1: {
+        generatorFunction: resourceModel => {
+          return constructSingleMapParamSet({
+            resourceModel,
+            paramSetLabel: 'Residential Units',
+            paramMapField: 'unitsres',
+            paramMapRole: 'MODIFIER',
+            lowValue: '1',
+            highValue: '5',
+            paramMapComparison: 'lte',
+            paramNoun: 'units',
+            validations: {
+              min: 1,
+            },
+          })
+        },
+      },
       // rent stabilized
-      housingType_rs: {
+      housingType_rs_1: {
         generatorFunction: (resourceModel, relatedResourceModel = undefined) => {
           return constructCountDateParamSet({
             resourceModel,
@@ -188,6 +218,24 @@ const Property = databaseObject => {
           })
         },
       },
+      housingType_rs_2: {
+        generatorFunction: resourceModel => {
+          return constructSingleMapParamSet({
+            resourceModel,
+            paramSetLabel: 'Residential Units',
+            paramMapField: 'unitsres',
+            paramMapRole: 'MODIFIER',
+            lowValue: '1',
+            highValue: '5',
+            paramMapComparison: 'lte',
+            paramNoun: 'units',
+            validations: {
+              min: 1,
+            },
+          })
+        },
+      },
+
       // rent regulated
       housingType_rr_1: {
         generatorFunction: resourceModel => {
@@ -205,6 +253,7 @@ const Property = databaseObject => {
           })
         },
       },
+
       // rent regulated
       housingType_rr_2: {
         generatorFunction: resourceModel => {
@@ -218,10 +267,28 @@ const Property = databaseObject => {
           })
         },
       },
+      housingType_rr_3: {
+        generatorFunction: resourceModel => {
+          return constructSingleMapParamSet({
+            resourceModel,
+            paramSetLabel: 'Residential Units',
+            paramMapField: 'unitsres',
+            paramMapRole: 'MODIFIER',
+            lowValue: '1',
+            highValue: '5',
+            paramMapComparison: 'lte',
+            paramNoun: 'units',
+            validations: {
+              min: 1,
+            },
+          })
+        },
+      },
+
       // small homes
       housingType_sh: {
         generatorFunction: resourceModel => {
-          return constructRangeParamSet({
+          return constructSingleMapParamSet({
             resourceModel,
             paramSetLabel: 'Residential Units',
             paramMapField: 'unitsres',
@@ -240,7 +307,24 @@ const Property = databaseObject => {
       // market rate
       housingType_mr: {
         generatorFunction: resourceModel => {
-          return constructRangeParamSet({
+          return constructSingleMapParamSet({
+            resourceModel,
+            paramSetLabel: 'Residential Units',
+            paramMapField: 'unitsres',
+            paramMapRole: 'MODIFIER',
+            lowValue: '1',
+            highValue: '5',
+            paramMapComparison: 'lte',
+            paramNoun: 'units',
+            validations: {
+              min: 1,
+            },
+          })
+        },
+      },
+      housingType_ph: {
+        generatorFunction: resourceModel => {
+          return constructSingleMapParamSet({
             resourceModel,
             paramSetLabel: 'Residential Units',
             paramMapField: 'unitsres',

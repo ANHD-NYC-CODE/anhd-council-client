@@ -66,16 +66,6 @@ export class FilterComponent extends React.Component {
     return (
       <div className="filter-component">
         <div className="filter-component__primary-row d-flex">
-          <div
-            className={classnames('form-row__connection-container', 'filter-connection', 'flex-column', {
-              'd-flex': !this.props.blockWidth,
-              'd-none': this.props.blockWidth,
-            })}
-          >
-            <div className="form-row__connection" />
-            <div className="form-row__connection" />
-          </div>
-
           <div className="filter align-content-center">
             {Object.keys(this.props.filter.paramSets).map((key, index) => {
               // Render all param sets in the filter

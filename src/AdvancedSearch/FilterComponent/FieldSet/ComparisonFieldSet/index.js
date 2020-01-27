@@ -10,7 +10,7 @@ const ComparisonFieldSet = props => {
   return (
     <div className="fieldset comparison-fieldset" key={props.key}>
       <InputGroup>
-        <InputGroup.Prepend>
+        <InputGroup.Prepend className="input-group__label">
           <InputGroup.Text>{props.paramMap.comparisonPrefix}</InputGroup.Text>
         </InputGroup.Prepend>
         <Form.Control
@@ -40,7 +40,7 @@ const ComparisonFieldSet = props => {
       </InputGroup>
       <InputGroup>
         {props.paramMap.valuePrefix && (
-          <InputGroup.Prepend>
+          <InputGroup.Prepend className="input-group__label">
             <InputGroup.Text>{props.paramMap.valuePrefix}</InputGroup.Text>
           </InputGroup.Prepend>
         )}
@@ -49,7 +49,7 @@ const ComparisonFieldSet = props => {
           paramMap: props.paramMap,
           onChange: e => props.paramMap.update({ dispatchAction: props.dispatchAction, e: new StandardizedInput(e) }),
         })}
-        <InputGroup.Append>
+        <InputGroup.Append className="input-group__label">
           {props.paramMap.valueSuffix && <InputGroup.Text>{props.paramMap.valueSuffix}</InputGroup.Text>}
           {props.paramMap.paramNoun && <InputGroup.Text>{props.paramMap.paramNoun}</InputGroup.Text>}
         </InputGroup.Append>
