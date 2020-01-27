@@ -57,6 +57,13 @@ $lookup-sidebar-width: 333px;
   }
 }
 
+%heading-md {
+  font-size: 24px;
+  font-weight: bold;
+  font-family: $font-family-primary;
+  line-height: 150%;
+}
+
 /* typography */
 
 %p1-font-size {

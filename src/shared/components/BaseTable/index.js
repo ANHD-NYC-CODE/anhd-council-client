@@ -302,7 +302,7 @@ class BaseTable extends React.Component {
                             variant="light"
                             message={'No records found'}
                             buttonText="Clear Filters"
-                            buttonVariant="outline-secondary"
+                            buttonVariant="outline-dark"
                           />
                         )
                       }
