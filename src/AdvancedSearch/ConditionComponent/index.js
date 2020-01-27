@@ -57,7 +57,9 @@ export class ConditionComponent extends React.Component {
     if (this.props.condition.errors.length) {
       this.props.validateForm()
     }
-    this.props.dispatch(updateCondition(this.props.condition.key, this.props.condition))
+
+    this.props.dispatchAction()
+    // this.props.dispatch(updateCondition(this.props.condition.key, this.props.condition))
   }
 
   removeCondition() {
@@ -177,14 +179,6 @@ export class ConditionComponent extends React.Component {
                 />{' '}
                 of the following:
               </div>
-            </Col>
-            <Col xs={12} sm={4}>
-              <ConditionControlGroup
-                condition={this.props.condition}
-                addCondition={this.addConditionGroup}
-                showPopups={this.props.showPopups}
-                removeCondition={this.removeCondition}
-              />
             </Col>
           </Form.Row>
         )}

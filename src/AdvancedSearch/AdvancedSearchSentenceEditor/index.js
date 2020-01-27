@@ -18,7 +18,7 @@ const AdvancedSearchSentenceEditor = props => {
   const numberOfUnits = props.results.reduce((total, result) => parseInt(total) + parseInt(result['unitsres']), 0)
 
   const constructSentenceEditor = () => {
-    return constructAdvancedSearchSentence(props.advancedSearch)
+    return constructAdvancedSearchSentence(props.advancedSearch, props.loading)
   }
 
   return (
@@ -34,11 +34,15 @@ const AdvancedSearchSentenceEditor = props => {
       <div className="advanced-search-sentence-editor__inner-wrapper">
         <div className="advanced-search-sentence-editor__group">
           <span className="advanced-search-sentence-editor__label">Properties:</span>{' '}
-          <span className="advanced-search-sentence-editor__value">{formatNumber(props.results.length)}</span>
+          <span className="advanced-search-sentence-editor__value">
+            {props.loading ? null : formatNumber(props.results.length)}
+          </span>
         </div>
         <div className="advanced-search-sentence-editor__group">
           <span className="advanced-search-sentence-editor__label">Units:</span>{' '}
-          <span className="advanced-search-sentence-editor__value">{formatNumber(numberOfUnits)}</span>
+          <span className="advanced-search-sentence-editor__value">
+            {props.loading ? null : formatNumber(numberOfUnits)}
+          </span>
         </div>
       </div>
     </div>
