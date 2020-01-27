@@ -30,6 +30,7 @@ class BaseTable extends React.Component {
     this.baseTableConfig = new BaseTableConfig({ component: this })
     this.pageButtonRenderer = this.pageButtonRenderer.bind(this)
     this.state = {
+      key: props.key,
       expandedRowContent: '',
       displayedRecordsCount: (props.records || {}).length,
       page: props.globalTableState.page || 1,
@@ -43,6 +44,7 @@ class BaseTable extends React.Component {
         rowExample: props.records[0],
         dispatch: props.dispatch,
         annotationStart: props.annotationStart,
+        advancedSearchDatasets: props.advancedSearchDatasets,
       }),
     }
   }
@@ -50,6 +52,7 @@ class BaseTable extends React.Component {
   componentDidUpdate(props, state) {
     if (props.records.length !== state.displayedRecordsCount) {
       this.setState({
+        key: props.key,
         page: props.globalTableState.page || state.page,
         sizePerPage: props.globalTableState.sizePerPage || 10,
         displayedRecordsCount: props.records.length,
@@ -61,6 +64,7 @@ class BaseTable extends React.Component {
           rowExample: props.records[0],
           dispatch: props.dispatch,
           annotationStart: props.annotationStart,
+          advancedSearchDatasets: props.advancedSearchDatasets,
         }),
       })
     }
@@ -208,9 +212,19 @@ class BaseTable extends React.Component {
   }
 
   render() {
+    const columns = this.props.tableConfig.getColumns({
+      expandColumnFunction: this.setExpandedContent,
+      constructFilter: this.constructFilter,
+      baseTableConfig: this.baseTableConfig,
+      rowExample: this.props.records[0],
+      dispatch: this.props.dispatch,
+      annotationStart: this.props.annotationStart,
+      advancedSearchDatasets: this.props.advancedSearchDatasets,
+    })
     const HeaderComponent = this.props.headerComponent
     return (
       <PaginationProvider
+        key={this.props.advancedSearchDatasets}
         pagination={paginationFactory({
           custom: true,
           totalSize: this.props.records.length,
@@ -231,7 +245,7 @@ class BaseTable extends React.Component {
             <ToolkitProvider
               keyField={`${this.props.tableConfig.keyField}`}
               data={this.props.records}
-              columns={this.state.columns}
+              columns={columns}
               exportCSV={{
                 fileName: this.constructCsvFilename(this.baseTableConfig.selectedFilters),
               }}
@@ -270,6 +284,7 @@ class BaseTable extends React.Component {
                     </Row>
 
                     <BootstrapTable
+                      key={this.props.records}
                       ref={n => (this.node = n)}
                       {...toolKitProps.baseProps}
                       {...paginationTableProps}
@@ -345,6 +360,7 @@ BaseTable.propTypes = {
   records: PropTypes.array,
   recordsSize: PropTypes.number,
   tableConfig: PropTypes.object,
+  advancedSearchDatasets: PropTypes.array,
 }
 
 export default BaseTable

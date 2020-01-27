@@ -60,9 +60,9 @@ export default class Filter {
   clone() {
     const newSelf = new Filter({ ...this.keys() })
 
-    const paramSets = newSelf.paramSets
-    Object.keys(newSelf.paramSets).forEach(key => {
-      paramSets[key] = newSelf.paramSets[key].clone()
+    const paramSets = {}
+    Object.keys(this._paramSets).forEach(key => {
+      paramSets[key] = this._paramSets[key].clone()
     })
 
     newSelf.paramSets = paramSets
@@ -82,7 +82,7 @@ export default class Filter {
         .reverse()
         .map(key => {
           if (!this._paramSets[key]) {
-            this._paramSets[key] = cloneInstance(schema[key])
+            this._paramSets[key] = schema[key].clone()
           }
         })
     }

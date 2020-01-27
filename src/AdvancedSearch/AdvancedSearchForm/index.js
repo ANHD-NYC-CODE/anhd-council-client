@@ -40,13 +40,17 @@ class AdvancedSearchForm extends React.PureComponent {
     const allParamMaps = getAdvancedSearchParamMaps(this.props.advancedSearch)
     const allConditions = [
       ...Object.keys(this.props.advancedSearch.conditions).map(key => this.props.advancedSearch.conditions[key]),
-    ]
-    const allFilters = [].concat(
-      ...allConditions.map(condition => condition.filters.filter(filter => !filter.conditionGroup)),
-      this.props.advancedSearch.propertyFilter
-    )
+    ].filter(c => c)
 
     allConditions.forEach(condition => condition.validate())
+    allConditions.forEach(condition => condition.removeNewFilters())
+    const allFilters = []
+      .concat(
+        ...allConditions.map(condition => condition.filters.filter(filter => !filter.conditionGroup)),
+        this.props.advancedSearch.propertyFilter
+      )
+      .filter(f => f)
+
     allFilters.forEach(filter => filter.validate())
     allParamMaps.forEach(paramMap => paramMap.validate())
     return [allConditions, allFilters, allParamMaps]

@@ -1,4 +1,5 @@
 import ParamError from 'shared/classes/ParamError'
+import moment from 'moment'
 
 export default class Condition {
   constructor({ key = undefined, type = undefined, filters = [], errors = [] } = {}) {
@@ -141,6 +142,15 @@ export default class Condition {
 
   clearErrors() {
     this._errors = []
+  }
+
+  getFilterDatasets() {
+    return this.filters.map(f => {
+      const constant = f.resourceModel.resourceConstant.toLowerCase().replace(/_/g, '')
+      const date = (f.paramMaps.find(pm => pm.type === 'DATE') || {}).value
+
+      return `${constant}s__${moment(date).format('MM/DD/YYYY')}`
+    })
   }
 
   validate() {
