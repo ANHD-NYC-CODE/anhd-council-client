@@ -157,7 +157,7 @@ const Property = databaseObject => {
         generatorFunction: (resourceModel, relatedResourceModel = undefined) => {
           return constructCountDateParamSet({
             resourceModel,
-            paramSetLabel: 'Units lost',
+            paramSetLabel: 'Change in # of Stabilized Units',
             amountComponent: ComparisonFieldSet,
             amountType: 'PERCENT',
             amountRole: 'MODIFIER',

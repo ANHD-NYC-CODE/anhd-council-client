@@ -1,6 +1,16 @@
-@import 'shared/styles/bootstrap/_variables.scss';
+@import 'shared/styles/_variables.scss';
 
 .advanced-search-form {
+  &__heading {
+    @extend %p1-font-size;
+    font-family: $font-family-secondary;
+    margin-bottom: 20px;
+  }
+
+  &__section {
+    margin-bottom: 20px;
+  }
+
   button[type='submit'].btn {
     font-weight: bold;
     min-width: 100%;

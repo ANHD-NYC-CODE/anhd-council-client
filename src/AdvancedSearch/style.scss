@@ -18,6 +18,10 @@
     top: 20px;
   }
 
+  .paramset-wrapper:not(.modifying-paramset) {
+    margin-bottom: 20px;
+  }
+
   .paramset-wrapper,
   .form-row__container {
     // margin-bottom: 10px;
@@ -91,7 +95,10 @@
     justify-content: flex-end;
     margin-top: 40px;
     margin-bottom: 40px;
-    min-height: 40px;
+
+    @include media-breakpoint-up(md) {
+      min-height: 40px;
+    }
   }
 
   &__toggle-button {
@@ -124,5 +131,12 @@
     border: 2px solid $rhino;
     cursor: pointer;
     min-width: 100px;
+  }
+
+  &__title {
+    @extend %heading-md;
+    text-align: center;
+    width: 100%;
+    margin-bottom: 80px;
   }
 }
