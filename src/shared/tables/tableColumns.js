@@ -175,9 +175,9 @@ export const getTableColumns = ({
   dispatch,
   rowExample,
   annotationStart = c.DISTRICT_REQUEST_DATE_ONE,
+  advancedSearchDatasets = [],
 } = {}) => {
   let columns
-
   const getAnnotatedDataField = ({ annotationKey = '', rowExample = undefined } = {}) => {
     if (!rowExample) return ''
     const columnKey = Object.keys(rowExample).find(key => key.match(annotationKey))
@@ -326,12 +326,17 @@ export const getTableColumns = ({
     }
   }
 
-  const getAnnotationKey = (datasetKey, annotationStart = undefined) => {
-    if (annotationStart) {
+  const getAnnotationKey = (datasetKey, annotationStart = undefined, advancedSearchDatasets = []) => {
+    if (
+      advancedSearchDatasets.length &&
+      advancedSearchDatasets.some(constantDateKey => constantDateKey.includes(datasetKey))
+    ) {
+      return `${datasetKey}`
+    } else if (annotationStart) {
       return `${datasetKey}_${annotationStart}`
+    } else {
+      return `${datasetKey}`
     }
-
-    return `${datasetKey}`
   }
 
   switch (constant) {
@@ -392,13 +397,13 @@ export const getTableColumns = ({
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
           dataField: getAnnotatedDataField({
-            annotationKey: getAnnotationKey('acrisrealmasters', annotationStart),
+            annotationKey: getAnnotationKey('acrisrealmasters', annotationStart, advancedSearchDatasets),
             rowExample,
           }),
           text: getAnnotatedLabel({
             annotationLabel: 'Sales',
             rowExample,
-            annotationKey: getAnnotationKey('acrisrealmasters', annotationStart),
+            annotationKey: getAnnotationKey('acrisrealmasters', annotationStart, advancedSearchDatasets),
           }),
           sort: true,
           formatter: annotatedColumnFormatter,
@@ -407,13 +412,13 @@ export const getTableColumns = ({
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
           dataField: getAnnotatedDataField({
-            annotationKey: getAnnotationKey('evictions', annotationStart),
+            annotationKey: getAnnotationKey('evictions', annotationStart, advancedSearchDatasets),
             rowExample,
           }),
           text: getAnnotatedLabel({
             annotationLabel: 'Marshal Evictions',
             rowExample,
-            annotationKey: getAnnotationKey('evictions', annotationStart),
+            annotationKey: getAnnotationKey('evictions', annotationStart, advancedSearchDatasets),
           }),
           sort: true,
           formatter: annotatedColumnFormatter,
@@ -423,13 +428,13 @@ export const getTableColumns = ({
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
           dataField: getAnnotatedDataField({
-            annotationKey: getAnnotationKey('foreclosures', annotationStart),
+            annotationKey: getAnnotationKey('foreclosures', annotationStart, advancedSearchDatasets),
             rowExample,
           }),
           text: getAnnotatedLabel({
             annotationLabel: 'Foreclosures',
             rowExample,
-            annotationKey: getAnnotationKey('foreclosures', annotationStart),
+            annotationKey: getAnnotationKey('foreclosures', annotationStart, advancedSearchDatasets),
           }),
           sort: true,
           formatter: annotatedColumnFormatter,
@@ -438,13 +443,13 @@ export const getTableColumns = ({
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
           dataField: getAnnotatedDataField({
-            annotationKey: getAnnotationKey('hpdcomplaints', annotationStart),
+            annotationKey: getAnnotationKey('hpdcomplaints', annotationStart, advancedSearchDatasets),
             rowExample,
           }),
           text: getAnnotatedLabel({
             annotationLabel: 'HPD Complaints',
             rowExample,
-            annotationKey: getAnnotationKey('hpdcomplaints', annotationStart),
+            annotationKey: getAnnotationKey('hpdcomplaints', annotationStart, advancedSearchDatasets),
           }),
           sort: true,
           formatter: annotatedColumnFormatter,
@@ -453,13 +458,13 @@ export const getTableColumns = ({
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
           dataField: getAnnotatedDataField({
-            annotationKey: getAnnotationKey('hpdviolations', annotationStart),
+            annotationKey: getAnnotationKey('hpdviolations', annotationStart, advancedSearchDatasets),
             rowExample,
           }),
           text: getAnnotatedLabel({
             annotationLabel: 'HPD Violations',
             rowExample,
-            annotationKey: getAnnotationKey('hpdviolations', annotationStart),
+            annotationKey: getAnnotationKey('hpdviolations', annotationStart, advancedSearchDatasets),
           }),
           sort: true,
           formatter: annotatedColumnFormatter,
@@ -468,13 +473,13 @@ export const getTableColumns = ({
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
           dataField: getAnnotatedDataField({
-            annotationKey: getAnnotationKey('dobcomplaints', annotationStart),
+            annotationKey: getAnnotationKey('dobcomplaints', annotationStart, advancedSearchDatasets),
             rowExample,
           }),
           text: getAnnotatedLabel({
             annotationLabel: 'DOB Complaints',
             rowExample,
-            annotationKey: getAnnotationKey('dobcomplaints', annotationStart),
+            annotationKey: getAnnotationKey('dobcomplaints', annotationStart, advancedSearchDatasets),
           }),
           sort: true,
           formatter: annotatedColumnFormatter,
@@ -483,13 +488,13 @@ export const getTableColumns = ({
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
           dataField: getAnnotatedDataField({
-            annotationKey: getAnnotationKey('dobviolations', annotationStart),
+            annotationKey: getAnnotationKey('dobviolations', annotationStart, advancedSearchDatasets),
             rowExample,
           }),
           text: getAnnotatedLabel({
             annotationLabel: 'DOB Violations',
             rowExample,
-            annotationKey: getAnnotationKey('dobviolations', annotationStart),
+            annotationKey: getAnnotationKey('dobviolations', annotationStart, advancedSearchDatasets),
           }),
           sort: true,
           formatter: annotatedColumnFormatter,
@@ -498,13 +503,13 @@ export const getTableColumns = ({
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
           dataField: getAnnotatedDataField({
-            annotationKey: getAnnotationKey('ecbviolations', annotationStart),
+            annotationKey: getAnnotationKey('ecbviolations', annotationStart, advancedSearchDatasets),
             rowExample,
           }),
           text: getAnnotatedLabel({
             annotationLabel: 'ECB Violations',
             rowExample,
-            annotationKey: getAnnotationKey('ecbviolations', annotationStart),
+            annotationKey: getAnnotationKey('ecbviolations', annotationStart, advancedSearchDatasets),
           }),
           sort: true,
           formatter: annotatedColumnFormatter,
@@ -513,13 +518,13 @@ export const getTableColumns = ({
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
           dataField: getAnnotatedDataField({
-            annotationKey: getAnnotationKey('dobfiledpermits', annotationStart),
+            annotationKey: getAnnotationKey('dobfiledpermits', annotationStart, advancedSearchDatasets),
             rowExample,
           }),
           text: getAnnotatedLabel({
             annotationLabel: 'DOB Permit Applications',
             rowExample,
-            annotationKey: getAnnotationKey('dobfiledpermits', annotationStart),
+            annotationKey: getAnnotationKey('dobfiledpermits', annotationStart, advancedSearchDatasets),
           }),
           sort: true,
           formatter: annotatedColumnFormatter,
@@ -528,13 +533,13 @@ export const getTableColumns = ({
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
           dataField: getAnnotatedDataField({
-            annotationKey: getAnnotationKey('dobissuedpermits', annotationStart),
+            annotationKey: getAnnotationKey('dobissuedpermits', annotationStart, advancedSearchDatasets),
             rowExample,
           }),
           text: getAnnotatedLabel({
             annotationLabel: 'DOB Permit Issuances',
             rowExample,
-            annotationKey: getAnnotationKey('dobissuedpermits', annotationStart),
+            annotationKey: getAnnotationKey('dobissuedpermits', annotationStart, advancedSearchDatasets),
           }),
           sort: true,
           formatter: annotatedColumnFormatter,
@@ -543,13 +548,13 @@ export const getTableColumns = ({
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
           dataField: getAnnotatedDataField({
-            annotationKey: getAnnotationKey('housinglitigations', annotationStart),
+            annotationKey: getAnnotationKey('housinglitigations', annotationStart, advancedSearchDatasets),
             rowExample,
           }),
           text: getAnnotatedLabel({
             annotationLabel: 'Litigations against landlords',
             rowExample,
-            annotationKey: getAnnotationKey('housinglitigations', annotationStart),
+            annotationKey: getAnnotationKey('housinglitigations', annotationStart, advancedSearchDatasets),
           }),
           sort: true,
           formatter: annotatedColumnFormatter,
