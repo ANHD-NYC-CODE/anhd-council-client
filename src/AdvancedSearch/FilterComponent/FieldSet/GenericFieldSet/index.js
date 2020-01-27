@@ -4,18 +4,9 @@ import { InputGroup, Col } from 'react-bootstrap'
 import './style.scss'
 const GenericFieldSet = props => {
   return (
-    <InputGroup
-      className="generic-fieldset fieldset"
-      key={props.key}
-      as={Col}
-      xs={{
-        '3': props.filter && !props.paramMap.rangeKey,
-        '6': !props.filter,
-        '8': props.filter && props.paramMap.rangeKey,
-      }}
-    >
+    <InputGroup className="generic-fieldset fieldset" key={props.key}>
       {props.paramMap.valuePrefix && (
-        <InputGroup.Prepend>
+        <InputGroup.Prepend className="input-group__label">
           <InputGroup.Text>{props.paramMap.valuePrefix}</InputGroup.Text>
         </InputGroup.Prepend>
       )}

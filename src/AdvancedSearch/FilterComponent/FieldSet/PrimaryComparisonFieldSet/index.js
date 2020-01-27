@@ -6,9 +6,9 @@ import NewFilterSelect from 'AdvancedSearch/FilterComponent/NewFilterSelect'
 import classnames from 'classnames'
 const PrimaryComparisonFieldSet = props => {
   return (
-    <Form.Row className="fieldset comparison-fieldset" key={props.key}>
-      <InputGroup as={Col} xs={props.filter ? 4 : 6}>
-        <InputGroup.Prepend>
+    <div className="fieldset comparison-fieldset" key={props.key}>
+      <InputGroup>
+        <InputGroup.Prepend className="input-group__label">
           <InputGroup.Text />
         </InputGroup.Prepend>
         <Form.Control
@@ -36,16 +36,9 @@ const PrimaryComparisonFieldSet = props => {
           })}
         </Form.Control>
       </InputGroup>
-      <InputGroup
-        as={Col}
-        xs={{
-          '3': props.filter && !props.paramMap.rangeKey,
-          '6': !props.filter,
-          '8': props.filter && props.paramMap.rangeKey,
-        }}
-      >
+      <InputGroup>
         {props.paramMap.valuePrefix && (
-          <InputGroup.Prepend>
+          <InputGroup.Prepend className="input-group__label">
             <InputGroup.Text>{props.paramMap.valuePrefix}</InputGroup.Text>
           </InputGroup.Prepend>
         )}
@@ -54,13 +47,13 @@ const PrimaryComparisonFieldSet = props => {
           paramMap: props.paramMap,
           onChange: e => props.paramMap.update({ dispatchAction: props.dispatchAction, e: new StandardizedInput(e) }),
         })}
-        <InputGroup.Append>
+        <InputGroup.Append className="input-group__label">
           {props.paramMap.valueSuffix && <InputGroup.Text>{props.paramMap.valueSuffix}</InputGroup.Text>}
           {props.paramMap.paramNoun && <InputGroup.Text>{props.paramMap.paramNoun}</InputGroup.Text>}
         </InputGroup.Append>
       </InputGroup>
 
-      <InputGroup as={Col} xs={5}>
+      <InputGroup>
         <NewFilterSelect
           filter={props.filter}
           filterIndex={props.filterIndex}
@@ -68,7 +61,7 @@ const PrimaryComparisonFieldSet = props => {
           value={props.filter.resourceModel.resourceConstant}
         />
       </InputGroup>
-    </Form.Row>
+    </div>
   )
 }
 

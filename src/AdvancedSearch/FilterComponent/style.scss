@@ -1,7 +1,6 @@
-@import 'shared/styles/bootstrap/_variables.scss';
+@import 'shared/styles/_variables.scss';
 
 .filter {
-  margin-bottom: 40px;
   width: 100%;
 
   .form-row,
@@ -9,30 +8,32 @@
     width: 100%;
   }
 
+  .paramset__label {
+    margin-top: 10px;
+    margin-left: 32px;
+  }
+  .paramset__label,
+  .paramset--new-button {
+    @extend %p3-font-size;
+    margin-bottom: 0px;
+  }
+
   .filter-control {
     margin: 0px 2px;
   }
 
   .filter-component__paramsets {
-    background-color: $gray-200;
+    padding: 10px 20px;
   }
 
   .filter-component__paramsets-wrapper {
     background-color: $white;
-    padding-top: 20px;
-    padding-left: 20px;
-    margin-left: 28px;
   }
 
-  .modifying-paramset {
-    background-color: $primary;
-    margin-left: 0;
-    .input-column {
-      padding-left: 0;
-    }
-    .filter-component__wrapper {
-      background: $white;
-      margin-left: 15px;
-    }
+  .modifying-paramset .fieldset {
+    // margin-bottom: 10px;
   }
+}
+
+.filter-component {
 }
