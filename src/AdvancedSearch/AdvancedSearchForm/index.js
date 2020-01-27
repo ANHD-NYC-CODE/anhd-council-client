@@ -92,71 +92,65 @@ class AdvancedSearchForm extends React.PureComponent {
             validated={this.state.validated}
           >
             <FormError show={!!this.props.error} message={(this.props.error || {}).message} />
-            <Row>
-              <Col xs={12} md={6}>
-                <h4 className="text-muted font-weight-bold text-uppercase mb-4">1) Select a geography</h4>
-              </Col>
-              <Col xs={12} md={6} className="mb-4 mb-md-0">
-                <ClearAdvancedSearchButton className="d-inline">
-                  <span className="border-danger text-danger toggle-link btn">
-                    <FontAwesomeIcon icon={faTimes} /> Clear Search
-                  </span>
-                </ClearAdvancedSearchButton>
-              </Col>
-            </Row>
-            <GeographySelect
-              selectClass="main-geography-select"
-              inputSize="md"
-              submitButtonVariant="dark"
-              cancelChangeGeography={this.props.cancelChangeGeography}
-              changing={this.props.appState.changingGeography}
-              confirmChange={true}
-              currentGeographyType={this.props.geographyType}
-              currentGeographyId={this.props.geographyId}
-              changingGeographyType={this.props.changingGeographyType}
-              changingGeographyId={this.props.changingGeographyId}
-              dispatch={this.props.dispatch}
-              handleChangeGeography={this.props.changeGeography}
-              handleChangeGeographyType={this.props.handleChangeGeographyType}
-              handleBlur={handleBlur}
-              handleChange={handleChange}
-              touched={touched}
-              errors={errors}
-            />
+            <div className="advanced-search-form__section">
+              <h4 className="advanced-search-form__heading">1) Select a geography</h4>
+              <GeographySelect
+                selectClass="main-geography-select"
+                inputSize="md"
+                submitButtonVariant="dark"
+                cancelChangeGeography={this.props.cancelChangeGeography}
+                changing={this.props.appState.changingGeography}
+                confirmChange={true}
+                currentGeographyType={this.props.geographyType}
+                currentGeographyId={this.props.geographyId}
+                changingGeographyType={this.props.changingGeographyType}
+                changingGeographyId={this.props.changingGeographyId}
+                dispatch={this.props.dispatch}
+                handleChangeGeography={this.props.changeGeography}
+                handleChangeGeographyType={this.props.handleChangeGeographyType}
+                handleBlur={handleBlur}
+                handleChange={handleChange}
+                touched={touched}
+                errors={errors}
+              />
+            </div>
             {this.props.geographyType && this.props.geographyId && (
-              <div className="advanced-search-form__housingtype-select">
-                <h4 className="text-muted font-weight-bold text-uppercase mt-5 mb-4">2) Select a housing type</h4>
-                {
-                  <FilterComponent
-                    blockWidth={true}
+              <div>
+                <div className="advanced-search-form__section advanced-search-form__housingtype-select">
+                  <h4 className="advanced-search-form__heading">2) Select a housing type</h4>
+                  {
+                    <FilterComponent
+                      blockWidth={true}
+                      config={this.props.config}
+                      dispatch={this.props.dispatch}
+                      dispatchAction={this.props.forceUpdate}
+                      filter={this.props.advancedSearch.propertyFilter}
+                      showPopups={false}
+                    />
+                  }
+                </div>
+                <div className="advanced-search-form__filter-section">
+                  <h4 className="advanced-search-form__heading">3) Add filters</h4>
+                  <ConditionComponent
+                    conditions={this.props.advancedSearch.conditions}
+                    condition={this.props.advancedSearch.conditions[0]}
                     config={this.props.config}
                     dispatch={this.props.dispatch}
                     dispatchAction={this.props.forceUpdate}
-                    filter={this.props.advancedSearch.propertyFilter}
-                    showPopups={false}
+                    key={'condition-0'}
+                    conditionKey={'0'}
+                    showPopups={this.props.showPopups}
+                    validateForm={this.validateForm}
                   />
-                }
-
-                <h4 className="text-muted font-weight-bold text-uppercase mt-5 mb-4">3) Add filters</h4>
-                <ConditionComponent
-                  conditions={this.props.advancedSearch.conditions}
-                  condition={this.props.advancedSearch.conditions[0]}
-                  config={this.props.config}
-                  dispatch={this.props.dispatch}
-                  dispatchAction={this.props.forceUpdate}
-                  key={'condition-0'}
-                  conditionKey={'0'}
-                  showPopups={this.props.showPopups}
-                  validateForm={this.validateForm}
-                />
-                <div className="w-100 d-flex flex-column align-items-end my-4">
-                  <FormError
-                    show={!!this.state.hasErrors || !!Object.keys(errors).length}
-                    message="Please correct errors before proceeding."
-                  />
-                  <Button disabled={this.props.loading} size="lg" type="submit" variant="primary">
-                    Submit
-                  </Button>
+                  <div className="my-4">
+                    <FormError
+                      show={!!this.state.hasErrors || !!Object.keys(errors).length}
+                      message="Please correct errors before proceeding."
+                    />
+                    <Button disabled={this.props.loading} size="lg" type="submit" variant="primary">
+                      Submit
+                    </Button>
+                  </div>
                 </div>
               </div>
             )}

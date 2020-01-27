@@ -6,22 +6,22 @@ import { Form, Col, ButtonGroup, Button } from 'react-bootstrap'
 
 const ParamSetWrapper = props => {
   return (
-    <Form.Row className="form-row__container housingtype-paramset align-content-center">
-      <Form.Group className="paramset-wrapper--group" as={Col} xs={10}>
+    <div className="form-row__container housingtype-paramset align-content-center">
+      <div className="paramset-wrapper--group">
         {props.paramSet.component({
           dispatchAction: props.dispatchAction,
           paramSet: props.paramSet,
           paramSetIndex: props.paramSetIndex,
         })}
-      </Form.Group>
-      <Col xs={2} className="flex-column">
+      </div>
+      <div className="flex-column">
         <ButtonGroup className="align-self-center">
           <Button onClick={() => props.paramSet.deleteAll({ dispatchAction: props.dispatchAction })} variant="danger">
             <FontAwesomeIcon icon={faMinus} />
           </Button>
         </ButtonGroup>
-      </Col>
-    </Form.Row>
+      </div>
+    </div>
   )
 }
 

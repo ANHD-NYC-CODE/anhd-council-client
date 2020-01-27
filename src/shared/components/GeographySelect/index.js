@@ -144,7 +144,7 @@ class GeographySelect extends React.Component {
                   size={this.props.inputSize}
                   className="cancel-geography-change"
                   onClick={this.props.cancelChangeGeography}
-                  variant="outline-secondary"
+                  variant="outline-dark"
                 >
                   Cancel
                 </Button>

@@ -7,7 +7,7 @@ import CustomSelect from 'shared/components/CustomSelect'
 const MultiSelectField = props => {
   return (
     <InputGroup>
-      <InputGroup.Prepend>
+      <InputGroup.Prepend className="input-group__label">
         <InputGroup.Text>{props.paramMap.paramNoun}</InputGroup.Text>
       </InputGroup.Prepend>
       <CustomSelect
