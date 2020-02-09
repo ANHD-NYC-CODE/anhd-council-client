@@ -17,6 +17,11 @@ const LookupAddressDisplay = props => {
     toggleEditing(!isEditing)
   }
 
+  const handleClear = e => {
+    e.preventDefault()
+    props.handleClear()
+  }
+
   return (
     <div className="lookup-address-display">
       {isEditing && (
@@ -35,7 +40,7 @@ const LookupAddressDisplay = props => {
           </ConfigContext.Consumer>
           <button
             href="#"
-            className="lookup-address-display__cancel-button text-button--default"
+            className="lookup-address-display__button lookup-address-display__cancel-button text-button--default"
             onClick={handleEditClick}
           >
             cancel
@@ -45,11 +50,11 @@ const LookupAddressDisplay = props => {
       {!isEditing && (
         <div className="lookup-address-display__displaying">
           <Button
-            className="lookup-address-display__search-button btn--small"
-            variant="outline-dark"
+            className="lookup-address-display__button lookup-address-display__search-button btn--small"
+            variant="dark"
             onClick={handleEditClick}
           >
-            <FontAwesomeIcon className="" size="2x" icon={faSearch} />
+            <FontAwesomeIcon color="white" className="" size="2x" icon={faSearch} />
           </Button>
           <p className="lookup-address-display__title">
             Tax Lot Address:{' '}
@@ -58,13 +63,20 @@ const LookupAddressDisplay = props => {
               borough: boroCodeToName(props.profile.borough),
               zip: props.profile.zipcode,
             })}
-            <button
-              href="#"
-              className="lookup-address-display__edit-button text-button--default"
+            <Button
+              className="lookup-address-display__button lookup-address-display__edit-button"
               onClick={handleEditClick}
+              variant="dark"
             >
-              edit
-            </button>
+              EDIT
+            </Button>
+            <Button
+              className="lookup-address-display__button lookup-address-display__clear-button"
+              onClick={handleClear}
+              variant="dark"
+            >
+              CLEAR
+            </Button>
           </p>
         </div>
       )}
@@ -74,6 +86,7 @@ const LookupAddressDisplay = props => {
 
 LookupAddressDisplay.propTypes = {
   profile: PropTypes.object,
+  handleClear: PropTypes.func,
 }
 
 export default LookupAddressDisplay
