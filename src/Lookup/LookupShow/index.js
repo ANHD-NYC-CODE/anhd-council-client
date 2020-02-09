@@ -62,7 +62,11 @@ class LookupShow extends React.PureComponent {
       !this.props.propertyResult.buildings.some(b => b.bin === this.props.bin)
     ) {
       this.props.trigger404Error(
-        `Building with bin: ${this.props.bin} not found at property with bbl: ${this.props.bbl}.`
+        <div>
+          {`Building with bin: ${this.props.bin} not found at property with bbl: ${this.props.bbl}.`}
+          <br />
+          <a href={`/property/${this.props.bbl}`}>View property instead.</a>
+        </div>
       )
     }
 

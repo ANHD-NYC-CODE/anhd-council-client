@@ -17,7 +17,6 @@ const BugReportModal = props => {
             modalFooter={props.modalFooter}
             hideModal={modal.hideModal}
             show={props.show}
-            size={props.size}
             title="Report a bug"
           >
             <BugReportForm
