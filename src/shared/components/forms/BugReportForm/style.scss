@@ -1,0 +1,9 @@
+@import 'shared/styles/_variables.scss';
+
+.bug-report-form {
+  &__text,
+  .form-label {
+    @extend %p3-font-size;
+    color: $black;
+  }
+}

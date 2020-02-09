@@ -8,8 +8,10 @@ const LoginModalFooter = props => {
     <Modal.Footer as={Row}>
       <Col xs={12}>
         <Button
+          className="login-form__request-button"
           block
-          variant="outline-primary"
+          variant="dark"
+          size="lg"
           onClick={e => {
             e.preventDefault()
             props.modal.setModal({
@@ -22,13 +24,6 @@ const LoginModalFooter = props => {
         >
           Request an account
         </Button>
-      </Col>
-      <Col xs={12}>
-        <BaseLink className="btn-link" href="https://api.displacementalert.org/password_reset">
-          <Button block variant="outline-secondary">
-            Reset Password
-          </Button>
-        </BaseLink>
       </Col>
     </Modal.Footer>
   )

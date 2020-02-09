@@ -78,13 +78,11 @@ export default class Filter {
   setParamSets(schema) {
     // Load the schema if no paramSets was directly supplied
     if (schema) {
-      Object.keys(schema)
-        .reverse()
-        .map(key => {
-          if (!this._paramSets[key]) {
-            this._paramSets[key] = schema[key].clone()
-          }
-        })
+      Object.keys(schema).map(key => {
+        if (!this._paramSets[key]) {
+          this._paramSets[key] = schema[key].clone()
+        }
+      })
     }
   }
 

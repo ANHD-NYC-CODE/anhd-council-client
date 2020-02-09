@@ -9,6 +9,8 @@ import FormError from 'shared/components/FormError'
 import { toast } from 'react-toastify'
 import SpinnerLoader from 'shared/components/Loaders/SpinnerLoader'
 
+import './style.scss'
+
 const schema = yup.object({
   email: yup
     .string()
@@ -51,11 +53,14 @@ class BugReportForm extends React.Component {
       <Formik onSubmit={e => this.handleSubmit(e)} validationSchema={schema}>
         {({ handleSubmit, handleChange, handleBlur, touched, errors, submitCount }) => {
           return (
-            <Form noValidate className="auth-login-form" validated={this.state.validated} onSubmit={handleSubmit}>
+            <Form
+              noValidate
+              className="bug-report-form auth-login-form"
+              validated={this.state.validated}
+              onSubmit={handleSubmit}
+            >
               <FormError show={!!this.props.error} message={(this.props.error || {}).message} />
-              <Form.Text className="text-muted mb-3">
-                We'll only use your email if needed to clarify your report and won't share it with anyone else.
-              </Form.Text>
+
               <Form.Group controlId="userRequestEmail">
                 <Form.Label>Email *</Form.Label>
                 <Form.Control
@@ -66,19 +71,22 @@ class BugReportForm extends React.Component {
                   isValid={false}
                   isInvalid={!!this.props.submitCount || (touched.email && errors.email)}
                   type="email"
-                  placeholder="Enter your email"
+                  placeholder=""
                 />
+                <Form.Text className="bug-report-form__text text-muted mb-3">
+                  We'll only use your email if needed to clarify your report and won't share it with anyone else.
+                </Form.Text>
                 <FormError show={!!((submitCount || touched.email) && errors.email)} message={errors.email} />
               </Form.Group>
               <Form.Group controlId="userRequestUsername">
-                <Form.Text className="text-primary font-weight-bold">
+                <Form.Text className="bug-report-form__text">
                   Please provide a detailed description, including:
                 </Form.Text>
-                <Form.Text className="text-primary font-weight-bold">1) The browser you were using.</Form.Text>
-                <Form.Text className="text-primary font-weight-bold">
-                  2) The url of the page that the bug occured on.
+                <Form.Text className="bug-report-form__text">
+                  1) The browser and type of device you were using (ex: Android phone, Chrome browser).
                 </Form.Text>
-                <Form.Text className="mb-3 text-primary font-weight-bold">
+                <Form.Text className="bug-report-form__text">2) The url of the page that the bug occured on.</Form.Text>
+                <Form.Text className="mb-3 bug-report-form__text">
                   3) (important!) The steps we'd need to take to see the bug for ourselves.
                 </Form.Text>
                 <Form.Label>Description *</Form.Label>
@@ -100,7 +108,7 @@ class BugReportForm extends React.Component {
                 />
               </Form.Group>
 
-              <Button className="btn-loader" block disabled={this.props.loading} variant="primary" type="submit">
+              <Button className="btn-loader" block disabled={this.props.loading} variant="dark" type="submit">
                 <span>Submit</span>
                 <div className="button-loader__container">{this.props.loading && <SpinnerLoader size="20px" />}</div>
               </Button>

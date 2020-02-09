@@ -21,7 +21,6 @@
   }
 
   button[type='submit'].btn {
-    font-weight: bold;
     min-width: 100%;
     @include media-breakpoint-up(lg) {
       min-width: 240px;
