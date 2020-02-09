@@ -1,12 +1,12 @@
 import { constructCountDateParamSet } from 'shared/utilities/filterUtils'
 
-const Foreclosure = databaseObject => ({
+const ForeclosureAuction = databaseObject => ({
   summaryBackgroundColorClass: 'summary-blue',
 
-  resourceConstant: 'FORECLOSURE',
-  urlPath: 'foreclosures',
-  label: 'Foreclosure Filings',
-  sentenceNoun: 'foreclosure filings',
+  resourceConstant: 'PSFORECLOSURE',
+  urlPath: 'foreclosure-auctions',
+  label: 'Foreclosure Auctions',
+  sentenceNoun: 'foreclosure auctions',
   ownResourceFilters: {
     initial: {
       generatorFunction: resourceModel => {
@@ -19,4 +19,4 @@ const Foreclosure = databaseObject => ({
   },
 })
 
-export default Foreclosure
+export default ForeclosureAuction

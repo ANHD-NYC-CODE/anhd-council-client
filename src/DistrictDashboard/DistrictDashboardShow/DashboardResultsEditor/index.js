@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef, useState } from 'react'
 import PropTypes from 'prop-types'
 
 import * as c from 'shared/constants'
@@ -10,9 +10,12 @@ import {
   setHousingTypeResultFilter,
 } from 'Store/DashboardState/actions'
 import StandardizedInput from 'shared/classes/StandardizedInput'
-
+import { Button, Overlay, Tooltip } from 'react-bootstrap'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faQuestion } from '@fortawesome/free-solid-svg-icons'
 import { mapFilterDateToLabel, longAmountComparisonString } from 'shared/utilities/languageUtils'
 import AmountFilterInput from 'DistrictDashboard/AmountFilterInput'
+import { spaceEnterKeyDownHandler } from 'shared/utilities/accessibilityUtils'
 
 import SentenceDropdown from 'shared/components/SentenceDropdown'
 import Property from 'shared/models/resources/Property'
@@ -20,6 +23,8 @@ import Property from 'shared/models/resources/Property'
 import './style.scss'
 
 const DashboardResultsEditor = props => {
+  const tooltipRef = useRef(null)
+
   const numberOfUnits = props.filteredResults.reduce(
     (total, result) => parseInt(total) + parseInt(result['unitsres']),
     0
@@ -75,6 +80,33 @@ const DashboardResultsEditor = props => {
       />
     )
 
+    const housingToolip = () => {
+      const [show, setShow] = useState(false)
+      if (selectedFilters.length) return null
+      console.log(show, tooltipRef)
+      return (
+        <div className="tooltip-wrapper">
+          <button
+            className="ghost-button"
+            href="#"
+            tabIndex="0"
+            ref={tooltipRef}
+            onFocus={e => setShow(true)}
+            onBlur={e => setShow(false)}
+            onMouseEnter={e => setShow(true)}
+            onMouseLeave={e => setShow(false)}
+          >
+            <FontAwesomeIcon className="info-modal-button info-modal-button--tooltip" icon={faQuestion} size="sm" />
+          </button>
+          <Overlay placement="top" show={show} target={tooltipRef.current}>
+            {props => {
+              return <Tooltip {...props}>TIP: Apply one or more Datasets to narrow down results</Tooltip>
+            }}
+          </Overlay>
+        </div>
+      )
+    }
+
     const dateDropdown = <SentenceDropdown label={dateString} options={dateOptions} onSubmit={handleDateChange} />
 
     const selectedFilterElements = selectedFilters.map((filter, index) => {
@@ -98,7 +130,8 @@ const DashboardResultsEditor = props => {
     })
     return (
       <span>
-        Displaying {housingDropdown} {selectedFilterElements.length ? 'with' : null} {selectedFilterElements}
+        Displaying {housingDropdown}
+        {housingToolip()} {selectedFilterElements.length ? 'with' : null} {selectedFilterElements}
         {selectedFilters.length ? ' in the ' : null} {selectedFilters.length ? dateDropdown : null}
       </span>
     )

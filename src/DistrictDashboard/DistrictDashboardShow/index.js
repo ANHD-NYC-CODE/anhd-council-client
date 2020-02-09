@@ -17,6 +17,7 @@ import classnames from 'classnames'
 import { shortAmountComparisonString, mapFilterDateToLabel } from 'shared/utilities/languageUtils'
 import GeographyProfile from 'DistrictDashboard/GeographyProfile'
 import BaseTable from 'shared/components/BaseTable'
+import InfoModalButton from 'shared/components/InfoModalButton'
 
 import { push } from 'connected-react-router'
 
@@ -94,7 +95,11 @@ class DistrictDashboardShow extends React.Component {
           <div className="district-dashboard-show__sidebar">
             <div className="district-dashboard-show__date-section">
               <Form>
-                <p className="district-dashboard-show__date-section__label">VIEW DATA FROM:</p>
+                <div className="district-dashboard-show__date-label-row">
+                  <p className="district-dashboard-show__date-section__label">VIEW DATA FROM:</p>
+                  <InfoModalButton modalConstant={'DASHBOARD_DATES'} />
+                </div>
+
                 <Form.Check
                   className="district-dashboard-show__date-section__check"
                   tabIndex={0}
