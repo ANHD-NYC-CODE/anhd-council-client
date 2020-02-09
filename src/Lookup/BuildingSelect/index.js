@@ -19,7 +19,7 @@ class BuildingSelect extends React.Component {
   }
 
   getBuildingOptions() {
-    const empty = { value: -1, isDisabled: true, label: 'Select a building' }
+    const empty = { value: -1, isDisabled: true, label: this.props.propertyResult.address }
     const buildings = this.props.propertyResult.buildings.map(building => {
       return { value: building.bin, label: `${building.house_number} ${building.stname}` }
     })
