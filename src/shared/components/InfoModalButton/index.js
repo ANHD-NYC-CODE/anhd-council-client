@@ -5,6 +5,7 @@ import { faQuestion } from '@fortawesome/free-solid-svg-icons'
 import ConfigContext from 'Config/ConfigContext'
 import ModalContext from 'Modal/ModalContext'
 import { spaceEnterKeyDownHandler } from 'shared/utilities/accessibilityUtils'
+import classnames from 'classnames'
 
 import './style.scss'
 const InfoModalButton = props => {
@@ -19,18 +20,19 @@ const InfoModalButton = props => {
       },
     })
   }
-
+  console.log(props.className)
   return (
     <ConfigContext.Consumer>
       {config => {
-        if (!config.infoModals[props.modalConstant]) return <div className="info-modal-button" />
+        if (!config.infoModals[props.modalConstant])
+          return <div className={classnames('info-modal-button', props.className)} />
         return (
           <ModalContext.Consumer>
             {modal => {
               return (
                 <FontAwesomeIcon
                   tabIndex="0"
-                  className="info-modal-button"
+                  className={classnames('info-modal-button', props.className)}
                   icon={faQuestion}
                   onKeyDown={e => spaceEnterKeyDownHandler(e, e => handleClick(e, modal, config))}
                   onClick={e => handleClick(e, modal, config)}
@@ -45,6 +47,7 @@ const InfoModalButton = props => {
 }
 
 InfoModalButton.propTypes = {
+  className: PropTypes.string,
   modalConstant: PropTypes.string,
 }
 

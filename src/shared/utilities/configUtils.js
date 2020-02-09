@@ -15,6 +15,8 @@ import LookupProfileSummary from 'Lookup/LookupProfileSummary'
 
 export const setupResourceModels = datasets => {
   let loadedResources = {}
+  const ro = resources
+
   Object.keys(resources).forEach(constant => {
     let databaseObject
     switch (constant) {
@@ -241,6 +243,15 @@ export const newLookupRequests = ({ bbl, bin, resourceModels } = {}) => {
       resourceConstant: 'FORECLOSURE',
       resourceModel: resourceModels['FORECLOSURE'],
       datasetModelName: constantToModelName('FORECLOSURE'),
+      isAuthenticated: true,
+    }),
+    newPropertyRequest({
+      type: 'LOOKUP_FILTER',
+      bbl: bbl,
+      level: 'PROPERTY',
+      resourceConstant: 'PSFORECLOSURE',
+      resourceModel: resourceModels['PSFORECLOSURE'],
+      datasetModelName: constantToModelName('PSFORECLOSURE'),
       isAuthenticated: true,
     }),
   ].filter(r => !!r)

@@ -32,6 +32,11 @@
   }
 }
 
+.lookup-profile-summary__info {
+  display: inline-block;
+  margin-left: 8px;
+}
+
 .lookup-profile-summary__expandable-icon {
   color: $white;
   position: absolute;
@@ -52,8 +57,11 @@
 
 .profile-summary-body__label {
   @extend %p3-font-size;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
   color: $black;
-  display: block;
   font-weight: bold;
   margin: 0;
   margin-right: auto;

@@ -1,13 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { GET_ADVANCED_SEARCH } from 'Store/AdvancedSearch/constants'
 import * as c from 'shared/constants'
 import StandardizedInput from 'shared/classes/StandardizedInput'
 import Geography from 'shared/classes/Geography'
 
 import { getSingleRequest } from 'Store/AppState/selectors'
 import { constructCsvFileName } from 'Store/AdvancedSearch/utilities/advancedSearchStoreUtils'
-import { fireAdvancedSearchSubmitEvent, fireCustomSearchPropertyTypeEvent } from 'Store/Analytics/actions'
+import { fireAdvancedSearchSubmitEvent } from 'Store/Analytics/actions'
 
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
@@ -15,13 +14,13 @@ import { connect } from 'react-redux'
 import { Events, animateScroll as scroll, scrollSpy } from 'react-scroll'
 import * as advancedSearchReducer from 'Store/AdvancedSearch/reducers'
 import Helmet from 'react-helmet'
-import { Button, ButtonToolbar, Row, Col, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
+import { Button, ButtonToolbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
 import LeafletMap from 'LeafletMap'
 import SpinnerLoader from 'shared/components/Loaders/SpinnerLoader'
 import BaseTable from 'shared/components/BaseTable'
 import { requestWithAuth } from 'shared/utilities/authUtils'
 import { makeRequest } from 'Store/Request/actions'
-import { deepCloneObject, cloneInstance } from 'shared/utilities/classUtils'
+import FormError from 'shared/components/FormError'
 
 import {
   updateCondition,
@@ -227,6 +226,7 @@ export class AdvancedSearch extends React.Component {
         <div className="advanced-search--content">
           {!this.state.displayingForm && (
             <div className="advanced-search__results">
+              <FormError show={!!this.props.error} message={(this.props.error || {}).message} />
               <AdvancedSearchSentenceEditor
                 advancedSearch={this.props.advancedSearch}
                 changeGeography={this.props.changeGeography}

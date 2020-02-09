@@ -26,8 +26,9 @@ const ProgramSection = props => {
     <div className="program-section property-section property-summary-body">
       <div>
         <div className="lookup-profile-summary__group">
-          <div className="profile-summary-body__label">Subsidy Programs </div>
-          <InfoModalButton modalConstant="SUBSIDY_PROGRAM_SOURCE" />
+          <div className="profile-summary-body__label">
+            Subsidy Programs <InfoModalButton modalConstant="SUBSIDY_PROGRAM_SOURCE" />
+          </div>
         </div>
         <div className="lookup-profile-summary__group program-section__list">
           {getSubsidiesText(props)

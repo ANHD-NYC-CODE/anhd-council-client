@@ -55,12 +55,20 @@
     padding: 24px 0;
   }
 
+  .district-dashboard-show__date-label-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+  }
+
   .district-dashboard-show__date-section__label {
     @extend %p2-font-size;
     color: $black;
     font-weight: bold;
     text-transform: uppercase;
-    margin-bottom: 10px;
+    margin-right: 15px;
+    margin-bottom: 0;
   }
 
   .district-dashboard-show__date-section__check,
