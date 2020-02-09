@@ -48,8 +48,10 @@
   .cancel-geography-change {
     margin: 0 auto;
     max-width: $main-input-max-width;
+    margin-right: 15px;
     @include media-breakpoint-up(sm) {
       margin: 0;
+      margin-right: 15px;
       max-width: 80px;
     }
   }

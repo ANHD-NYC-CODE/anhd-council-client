@@ -13,6 +13,21 @@
   &:focus {
     background-color: $primary;
   }
+
+  &--tooltip {
+    background-color: $secondary;
+    margin-left: 8px;
+    outline: none;
+
+    &:focus {
+      background: $primary;
+    }
+  }
+}
+
+.tooltip-wrapper {
+  display: inline-block;
+  outline: none;
 }
 
 .svg-inline--fa.fa-w-12 {

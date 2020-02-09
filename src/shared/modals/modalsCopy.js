@@ -279,4 +279,10 @@ export const infoModals = {
       </div>
     ),
   },
+
+  DASHBOARD_DATES: {
+    title: 'Date Ranges',
+    body:
+      "The selected time period is dependent on a dataset's update schedule. Some datasets are on a weekly or monthly update schedule, in which case the time period will reflect the 30 days, year, or three years prior to the most recent available data. You can find update schedules under each dataset's table header on a building's Property Lookup page.",
+  },
 }
