@@ -57,7 +57,6 @@ const LookupAddressDisplay = props => {
             <FontAwesomeIcon color="white" className="" size="2x" icon={faSearch} />
           </Button>
           <p className="lookup-address-display__title">
-            Tax Lot Address:{' '}
             {constructAddressString({
               street: props.profile.address,
               borough: boroCodeToName(props.profile.borough),
