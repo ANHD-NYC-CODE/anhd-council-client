@@ -77,6 +77,9 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
       resourceModel: resourceModels['FORECLOSURE'],
     },
     {
+      resourceModel: resourceModels['PSFORECLOSURE'],
+    },
+    {
       resourceModel: resourceModels['ACRIS_REAL_MASTER'],
     },
     {
@@ -436,6 +439,8 @@ export const getDatasetDateField = datasetConstant => {
       return 'fileddate'
     case 'FORECLOSURE':
       return 'date_added'
+    case 'PSFORECLOSURE':
+      return 'dateadded'
     case 'DOB_ISSUED_PERMIT':
       return 'issuedate'
     case 'DOB_FILED_PERMIT':

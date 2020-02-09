@@ -5,6 +5,7 @@ import * as c from 'shared/constants'
 import { TOKEN_URL, TOKEN_REFRESH_URL, CURRENT_USER_URL } from 'shared/constants/urls'
 import { getUserStorageData, removeUserStorageData } from 'shared/utilities/storageUtils'
 import { retryAuthenticatedRequests } from 'Store/Request/actions'
+import { setCustomSearchResults } from 'Store/AdvancedSearch/actions'
 
 import { handleCatchError } from 'shared/utilities/actionUtils'
 import { requestWithAuth } from 'shared/utilities/authUtils'
@@ -99,6 +100,7 @@ export const loginUser = (data, postLoginAction) => (dispatch, getState) => {
 export const logoutUser = (sentToast = false) => (dispatch, getState) => {
   removeUserStorageData()
   dispatch(handleUserLogout())
+  dispatch(setCustomSearchResults()) // clears custom search
   if (sentToast) {
     toast.info("You've been logged out.")
   }

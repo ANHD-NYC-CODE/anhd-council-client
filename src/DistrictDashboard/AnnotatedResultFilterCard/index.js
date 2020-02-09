@@ -64,7 +64,8 @@ class AnnotatedResultFilterCard extends React.Component {
 
   render() {
     const isUnauthorized =
-      (this.props.amountFilter.resourceModel.resourceConstant === 'FORECLOSURE' ||
+      (this.props.amountFilter.resourceModel.resourceConstant === 'PSFORECLOSURE' ||
+        this.props.amountFilter.resourceModel.resourceConstant === 'FORECLOSURE' ||
         this.props.amountFilter.resourceModel.resourceConstant === 'LISPENDEN') &&
       !this.props.auth.user
     return (

@@ -89,7 +89,7 @@ const LookupTableTab = props => {
           onClick={() => retryRequest(props)}
           onKeyDown={e => spaceEnterKeyDownHandler(e, () => retryRequest(props))}
         >
-          Retry
+          (!) Retry
         </button>
       )
     }
@@ -103,8 +103,8 @@ const LookupTableTab = props => {
           <span className="summary-result-card__result">
             {props.loading ? <SpinnerLoader className="spinner-loader__container--inline" size="14px" /> : null}
           </span>
+          {props.error && renderErrorButton()}
         </div>
-        {props.error && renderErrorButton()}
       </div>
     )
   }

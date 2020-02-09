@@ -341,6 +341,7 @@ const Property = databaseObject => {
       },
     },
 
+    // Map constant to api property_set query path
     relatedResourceMappings: {
       ACRIS_REAL_MASTER: 'acrisreallegals__documentid',
       PROPERTY_SALE_BY_AMOUNT: 'acrisreallegals__documentid',
@@ -356,6 +357,7 @@ const Property = databaseObject => {
       HPD_VIOLATION: 'hpdviolations',
       LISPENDEN: 'lispendens',
       FORECLOSURE: 'foreclosures',
+      PSFORECLOSURE: 'psforeclosures',
       TAX_LIEN: 'taxliens',
       CONH_RECORD: 'conhrecords',
     },
