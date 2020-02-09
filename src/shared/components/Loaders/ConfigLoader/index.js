@@ -8,7 +8,7 @@ import InnerLoader from 'shared/components/Loaders/InnerLoader'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
-import logo from 'shared/images/dapportal_beta.png'
+import logo from 'shared/images/portallogo.png'
 
 import classnames from 'classnames'
 import './style.scss'

@@ -93,7 +93,7 @@ table.table,
 
   @media (hover: hover) {
     table.no-expand {
-      tr:hover {
+      tbody tr:hover {
         background-color: $primary;
         color: white;
       }
