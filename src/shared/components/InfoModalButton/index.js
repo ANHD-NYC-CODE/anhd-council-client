@@ -20,7 +20,6 @@ const InfoModalButton = props => {
       },
     })
   }
-  console.log(props.className)
   return (
     <ConfigContext.Consumer>
       {config => {

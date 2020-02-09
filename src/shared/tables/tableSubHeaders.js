@@ -2,13 +2,11 @@ import React from 'react'
 import BaseLink from 'shared/components/BaseLink'
 import { Col, Row } from 'react-bootstrap'
 import { boroughAbbreviationToCode } from 'shared/utilities/languageUtils'
+import lookupIcon from 'shared/images/lookup-document.svg'
+
 import classnames from 'classnames'
 export const getTableSubheaders = ({ constant, property, hideGutters = false } = {}) => {
-  return (
-    <Row className={classnames({ 'no-gutter': hideGutters })}>
-      <Col>{getTableSubheaderLinks({ constant, property })}</Col>
-    </Row>
-  )
+  return getTableSubheaderLinks({ constant, property })
 }
 
 export const getTableSubheaderLinks = ({ constant = '', property = {} } = {}) => {
@@ -28,7 +26,10 @@ export const getTableSubheaderLinks = ({ constant = '', property = {} } = {}) =>
               </BaseLink>
             </div>
           )}
-          <div>Click the Document ID to view the full record in ACRIS</div>
+          <div>
+            Click the Document ID to view the full record and the document icon{' '}
+            <img alt="document icon" src={lookupIcon} /> to view the scanned document.
+          </div>
         </div>
       )
     case 'HPD_VIOLATION':
