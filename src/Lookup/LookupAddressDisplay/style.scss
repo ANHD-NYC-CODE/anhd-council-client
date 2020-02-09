@@ -12,8 +12,7 @@
     display: inline-block;
   }
 
-  .lookup-address-display__edit-button,
-  .lookup-address-display__cancel-button {
+  .lookup-address-display__button {
     display: inline-block;
 
     @include media-breakpoint-up(md) {
