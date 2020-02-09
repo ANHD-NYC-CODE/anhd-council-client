@@ -60,6 +60,8 @@ export const getApiMap = resourceConstant => {
       return new ApiMap({ constant: 'LISPENDEN' })
     case 'FORECLOSURE':
       return new ApiMap({ constant: 'FORECLOSURE' })
+    case 'PSFORECLOSURE':
+      return new ApiMap({ constant: 'PSFORECLOSURE', queryName: 'foreclosure-auctions' })
     case 'PROPERTY_SALE_BY_AMOUNT':
       return new ApiMap({ constant: 'ACRIS_REAL_LEGAL' })
     case 'PROPERTY_SALE_BY_COUNT':

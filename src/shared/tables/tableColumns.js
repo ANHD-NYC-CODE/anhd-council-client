@@ -67,6 +67,8 @@ export const getKeyField = constant => {
       return 'key'
     case 'FORECLOSURE':
       return 'key'
+    case 'PSFORECLOSURE':
+      return 'key'
     default:
       return 'id'
   }
@@ -1546,6 +1548,63 @@ export const getTableColumns = ({
         constructStandardColumn({
           dataField: 'source',
           text: 'Source',
+          sort: true,
+        }),
+      ]
+      break
+    case 'PSFORECLOSURE':
+      columns = [
+        constructStandardColumn({
+          dataField: 'key',
+          text: 'Index No.',
+          hidden: true,
+        }),
+        constructStandardColumn({
+          dataField: 'judgement',
+          text: 'Judgement Date',
+          formatter: dateFormatter,
+          csvFormatter: dateFormatter,
+          sort: true,
+        }),
+        constructStandardColumn({
+          dataField: 'dateadded',
+          text: 'Date Added',
+          formatter: dateFormatter,
+          csvFormatter: dateFormatter,
+          sort: true,
+        }),
+        constructStandardColumn({
+          dataField: 'foreclosuretype',
+          text: 'Foreclosure Type',
+          sort: true,
+        }),
+        constructStandardColumn({
+          dataField: 'lien',
+          text: 'Lien Amount',
+          formatter: dollarFormatter,
+          csvFormatter: annotatedColumnFormatter,
+          sort: true,
+        }),
+        constructStandardColumn({
+          dataField: 'plaintiff',
+          text: 'Plaintiff (Creditor)',
+          sort: true,
+        }),
+        constructStandardColumn({
+          dataField: 'defendant',
+          text: 'Defendant (Debtor)',
+          sort: true,
+        }),
+        constructStandardColumn({
+          dataField: 'auction',
+          text: 'Auction Date',
+          formatter: dateFormatter,
+          csvFormatter: dateFormatter,
+          sort: true,
+        }),
+        constructStandardColumn({
+          dataField: 'auctionlocation',
+          text: 'Auction Location',
           sort: true,
         }),
       ]

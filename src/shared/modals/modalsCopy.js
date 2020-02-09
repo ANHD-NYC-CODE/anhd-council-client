@@ -190,9 +190,28 @@ export const infoModals = {
     ],
   },
   FORECLOSURE: {
-    title: 'Foreclosures',
-    body:
-      'Lis pendens, pre-foreclosures, and foreclosures indicate that an owner is in financial distress any may lose the property to the mortgage lender. Data available since Dec, 2018',
+    title: 'Foreclosure Filings',
+    body: ReactDOMServer.renderToString(
+      <div>
+        <p>
+          This table includes records of foreclosure filings in court, which indicates that a property is in
+          pre-foreclosure and the homeowner is at risk of losing the property to the lender. A foreclosure can still be
+          avoided, and many owners facing foreclosure benefit from homeowner assistance such as that offered by the{' '}
+          <a rel="noopener noreferrer" target="_blank" href="https://cnycn.org/foreclosure/">
+            Center for New York City Neighborhoods
+          </a>
+          . See information about the entire foreclosure process{' '}
+          <a
+            rel="noopener noreferrer"
+            target="_blank"
+            href="https://www.propertyshark.com/info/foreclosure-process-new-york/"
+          >
+            here
+          </a>
+          .
+        </p>
+      </div>
+    ),
     sources: [
       {
         text: 'PropertyShark (August, 2019 - Present)',
@@ -201,6 +220,33 @@ export const infoModals = {
       {
         text: 'Public Data Corporation (Dec, 2018 - July, 2019)',
         url: 'http://www.pdcny.com',
+      },
+    ],
+  },
+  PSFORECLOSURE: {
+    title: 'Foreclosue Auctions',
+    body: ReactDOMServer.renderToString(
+      <div>
+        <p>
+          This table includes scheduled foreclosure auctions, beginning with 5/15/2019. We update auctions scheduled in
+          the next 90 days on a weekly basis. Auctions that have already occurred are still included. Before an auction
+          occurs, the owner can still recuperate the property by paying off the owed debt: see information about
+          pre-sale reinstatement and an overview of the entire foreclosure process{' '}
+          <a
+            rel="noopener noreferrer"
+            target="_blank"
+            href="https://www.propertyshark.com/info/foreclosure-process-new-york"
+          >
+            here
+          </a>
+          .
+        </p>
+      </div>
+    ),
+    sources: [
+      {
+        text: 'PropertyShark (August, 2019 - Present)',
+        url: 'https://propertyshark.com',
       },
     ],
   },
