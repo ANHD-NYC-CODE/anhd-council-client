@@ -5,6 +5,7 @@ import ExpandedLinkRow from 'shared/components/BaseTable/ExpandedLinkRow'
 import { push } from 'connected-react-router'
 import { addressResultToPath } from 'shared/utilities/routeUtils'
 import BaseTable from 'shared/components/BaseTable'
+
 import {
   dateFormatter,
   hpdProblemStatusFormatter,
@@ -15,6 +16,7 @@ import {
   acrisDocTypeFormatter,
   acrisParties1Formatter,
   acrisParties2Formatter,
+  linkWithDocumentFormatter,
   dollarFormatter,
   dobPermitSourceFormatter,
   dobPermitTypeFormatter,
@@ -142,6 +144,11 @@ export const getLinkProps = constant => {
     case 'ACRIS_REAL_MASTER':
       return ({ linkId }) => ({
         href: `https://a836-acris.nyc.gov/DS/DocumentSearch/DocumentDetail?doc_id=${linkId}`,
+        linkText: linkId,
+      })
+    case 'ACRIS_REAL_MASTER_SCANNED':
+      return ({ linkId }) => ({
+        href: `https://a836-acris.nyc.gov/DS/DocumentSearch/DocumentImageView?doc_id=${linkId}`,
         linkText: linkId,
       })
     default:
@@ -1282,7 +1289,8 @@ export const getTableColumns = ({
         constructStandardColumn({
           dataField: 'documentid',
           text: 'Document ID',
-          formatter: (cell, row, index) => linkFormatter(cell, row, index, 'ACRIS_REAL_MASTER', 'documentid'),
+          formatter: (cell, row, index) =>
+            linkWithDocumentFormatter(cell, row, index, 'ACRIS_REAL_MASTER', 'documentid'),
           csvExport: false,
         }),
         constructStandardColumn({
@@ -1556,8 +1564,13 @@ export const getTableColumns = ({
       columns = [
         constructStandardColumn({
           dataField: 'key',
-          text: 'Index No.',
+          text: 'key',
           hidden: true,
+        }),
+        constructStandardColumn({
+          dataField: 'indexno',
+          text: 'Index No.',
+          hidden: false,
         }),
         constructStandardColumn({
           dataField: 'judgement',

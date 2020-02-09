@@ -83,7 +83,6 @@ const DashboardResultsEditor = props => {
     const housingToolip = () => {
       const [show, setShow] = useState(false)
       if (selectedFilters.length) return null
-      console.log(show, tooltipRef)
       return (
         <div className="tooltip-wrapper">
           <button

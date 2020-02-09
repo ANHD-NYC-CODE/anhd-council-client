@@ -5,6 +5,8 @@ import BaseLink from 'shared/components/BaseLink'
 import { getLinkId, getLinkProps } from 'shared/tables/tableColumns'
 import { capitalizeWords } from 'shared/utilities/languageUtils'
 
+import lookupIcon from 'shared/images/lookup-document.svg'
+
 export const hpdProblemStatusFormatter = (cell, row, index) => {
   switch (cell) {
     case 'The Department of Housing Preservation and Development responded to a complaint of no heat or hot water and was advised by a tenant in the building that heat and hot water had been restored. If the condition still exists, please file a new complaint.':
@@ -131,7 +133,14 @@ export const dateFormatter = (cell, row, index) => {
 
 export const dollarFormatter = (cell, row, index) => {
   if (!cell && cell != 0) return ''
-  return parseInt(cell).toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 })
+  if (typeof cell == 'string') {
+    cell = cell.replace(/(\$|,)/, '')
+  }
+  return parseInt(cell).toLocaleString('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 0,
+  })
 }
 
 export const annotatedColumnFormatter = (cell, row, index) => {
@@ -145,7 +154,25 @@ export const annotatedColumnFormatter = (cell, row, index) => {
 export const linkFormatter = (cell, row, index, constant, id) => {
   const linkProps = getLinkProps(constant)({ linkId: row[getLinkId(constant)], bin: row.bin, type: row.type })
 
-  return <BaseLink href={linkProps.href} text={linkProps.linkText} />
+  return <BaseLink href={linkProps.href}>{linkProps.linkText}</BaseLink>
+}
+
+export const linkWithDocumentFormatter = (cell, row, index, constant, id) => {
+  const linkProps = getLinkProps(constant)({ linkId: row[getLinkId(constant)], bin: row.bin, type: row.type })
+  const scannedProps = getLinkProps(`${constant}_SCANNED`)({
+    linkId: row[getLinkId(constant)],
+    bin: row.bin,
+    type: row.type,
+  })
+
+  return (
+    <span>
+      <BaseLink href={linkProps.href}>{linkProps.linkText}</BaseLink>{' '}
+      <BaseLink href={scannedProps.href}>
+        <img src={lookupIcon} alt="document icon" />
+      </BaseLink>
+    </span>
+  )
 }
 
 export const expandTableFormatter = (cell, row, index) => {
