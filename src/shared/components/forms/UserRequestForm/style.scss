@@ -1,0 +1,14 @@
+@import 'shared/styles/_variables.scss';
+
+.user-request-form {
+  .form-label {
+    @extend %p3-font-size;
+    color: $black;
+    font-weight: bold;
+  }
+
+  &__text {
+    @extend %p3-font-size;
+    color: $black;
+  }
+}

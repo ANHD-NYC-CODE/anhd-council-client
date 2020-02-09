@@ -6,6 +6,7 @@ import ModalContext from 'Modal/ModalContext'
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
 import { connect } from 'react-redux'
+
 const UserRequestModal = props => {
   return (
     <ModalContext.Consumer>
@@ -18,7 +19,6 @@ const UserRequestModal = props => {
             modalFooter={props.modalFooter}
             hideModal={modal.hideModal}
             show={props.show}
-            size={props.size}
             title="Request an account"
           >
             <UserRequestForm
