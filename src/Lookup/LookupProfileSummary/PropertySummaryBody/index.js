@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import BaseLink from 'shared/components/BaseLink'
 import './style.scss'
+import InfoModalButton from 'shared/components/InfoModalButton'
 
 import { councilIdToString, communityIdToString } from 'shared/utilities/languageUtils'
 import { geographyToLink } from 'shared/utilities/routeUtils'
@@ -10,7 +11,9 @@ const PropertySummaryBody = props => {
   return (
     <div className="property-summary-body property-section">
       <div className="lookup-profile-summary__group">
-        <span className="profile-summary-body__label">BBL</span>
+        <span className="profile-summary-body__label">
+          BBL <InfoModalButton className="lookup-profile-summary__info" modalConstant="LOOKUP_BBL" />
+        </span>
         <span className="profile-summary-body__value">{props.profile.bbl}</span>
       </div>
       {!props.print && (

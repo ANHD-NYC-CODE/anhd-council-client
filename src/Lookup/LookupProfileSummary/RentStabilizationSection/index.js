@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Row, Col } from 'react-bootstrap'
-import { constantToModelName } from 'shared/utilities/filterUtils'
-import LookupTableHeader from 'shared/components/BaseTable/LookupTableHeader'
+
 import moment from 'moment'
+import InfoModalButton from 'shared/components/InfoModalButton'
+
 import './style.scss'
 
 const sortedLimitedYears = props => {
@@ -47,7 +47,10 @@ const RentStabilizationSection = props => {
       </div>
       <div>
         <div className="renstabilization-section__table-header">
-          <h6># Stabilized Units</h6>
+          <h6 className="profile-summary-body__label">
+            # Stabilized Units{' '}
+            <InfoModalButton className="lookup-profile-summary__info" modalConstant="LOOKUP_STABILIZATION" />
+          </h6>
         </div>
         <table className="renstabilization-section__table">
           <tbody>
