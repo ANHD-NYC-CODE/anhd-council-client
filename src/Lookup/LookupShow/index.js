@@ -17,6 +17,7 @@ import LookupTable from 'Lookup/LookupTable'
 import BuildingSelect from 'Lookup/BuildingSelect'
 import PrintLookup from 'Lookup/PrintLookup'
 import LookupLinks from 'Lookup/LookupLinks'
+import { push } from 'connected-react-router'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
@@ -33,6 +34,7 @@ class LookupShow extends React.PureComponent {
     }
 
     this.switchTable = this.switchTable.bind(this)
+    this.handleClearLookup = this.handleClearLookup.bind(this)
   }
 
   componentDidMount() {
@@ -84,6 +86,11 @@ class LookupShow extends React.PureComponent {
     }
   }
 
+  handleClearLookup() {
+    this.props.dispatch(setAppState({ currentProperty: undefined, currentBuilding: undefined }))
+    this.props.dispatch(push('/lookup'))
+  }
+
   switchTable(request) {
     this.props.dispatch(fireSwitchLookupTableEvent(request.resourceModel.label))
     this.props.dispatch(
@@ -130,7 +137,7 @@ class LookupShow extends React.PureComponent {
               <div className="lookup-show__row-wrapper">
                 <div className="lookup-show__top-row">
                   <div>
-                    <LookupAddressDisplay profile={this.props.propertyResult} />
+                    <LookupAddressDisplay handleClear={this.handleClearLookup} profile={this.props.propertyResult} />
                   </div>
                   <div>
                     {this.props.appState.currentGeographyType && this.props.appState.currentGeographyId && (

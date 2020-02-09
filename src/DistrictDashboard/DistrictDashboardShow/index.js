@@ -3,21 +3,22 @@ import PropTypes from 'prop-types'
 import moment from 'moment'
 import * as c from 'shared/constants'
 import GeographySelect from 'shared/components/GeographySelect'
-import { Form, ButtonToolbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
+import { Button, Form, ButtonToolbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
 import BaseLink from 'shared/components/BaseLink'
-import { constructCsvFileName } from 'Store/AdvancedSearch/utilities/advancedSearchStoreUtils'
-import AdvancedSearchSentence from 'AdvancedSearch/Sentence'
 import HousingTypeSection from 'DistrictDashboard/DistrictDashboardShow/HousingTypeSection'
 import DashboardResultsEditor from 'DistrictDashboard/DistrictDashboardShow/DashboardResultsEditor'
 import LeafletMap from 'LeafletMap'
 import DistrictFilterSection from 'DistrictDashboard/DistrictDashboardShow/DistrictFilterSection'
 import DashboardResultsHeader from 'DistrictDashboard/DistrictDashboardShow/DashboardResultsHeader'
 import ConfigContext from 'Config/ConfigContext'
+import { setAppState } from 'Store/AppState/actions'
 
 import classnames from 'classnames'
 import { shortAmountComparisonString, mapFilterDateToLabel } from 'shared/utilities/languageUtils'
 import GeographyProfile from 'DistrictDashboard/GeographyProfile'
 import BaseTable from 'shared/components/BaseTable'
+
+import { push } from 'connected-react-router'
 
 import { setDashboardTableView } from 'Store/DashboardState/actions'
 
@@ -30,6 +31,7 @@ class DistrictDashboardShow extends React.Component {
 
     this.constructBaseCsvFileName = this.constructBaseCsvFileName.bind(this)
     this.getGeographySummaryResultsFilter = this.getGeographySummaryResultsFilter.bind(this)
+    this.handleClearDashboard = this.handleClearDashboard.bind(this)
   }
 
   componentDidUpdate() {
@@ -39,6 +41,18 @@ class DistrictDashboardShow extends React.Component {
     ) {
       this.props.cancelChangeGeography()
     }
+  }
+
+  handleClearDashboard() {
+    this.props.dispatch(
+      setAppState({
+        currentGeographyType: undefined,
+        currentGeographyId: undefined,
+        changingGeographyType: undefined,
+        changingGeographyId: undefined,
+      })
+    )
+    this.props.dispatch(push('/map'))
   }
 
   setTableView(value) {
@@ -173,14 +187,19 @@ class DistrictDashboardShow extends React.Component {
                     this.props.appState.changingGeographyId > 0
                   }
                 />
-                {!this.props.geographyRequests.some(r => r.type === c.ADVANCED_SEARCH) && (
-                  <div className="custom-search-link">
-                    Access more options with a{' '}
-                    <BaseLink className="text-link" href="/search">
-                      Custom Search
-                    </BaseLink>
-                  </div>
-                )}
+                <div className="district-dashboard-show__top-row-group">
+                  <Button className="district-dashboard-show__clear" variant="dark" onClick={this.handleClearDashboard}>
+                    CLEAR
+                  </Button>
+                  {!this.props.geographyRequests.some(r => r.type === c.ADVANCED_SEARCH) && (
+                    <div className="custom-search-link">
+                      Access more options with a{' '}
+                      <BaseLink className="text-link" href="/search">
+                        Custom Search
+                      </BaseLink>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
             <div className="district-dashboard-show__results-header">
