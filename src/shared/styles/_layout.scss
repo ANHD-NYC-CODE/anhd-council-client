@@ -38,9 +38,7 @@ body {
 
   @include media-breakpoint-up(lg) {
     padding: 0 !important;
-    margin-left: 15% !important;
-    margin-right: 20px !important;
-    max-width: 85% !important;
+    max-width: 1024px !important;
   }
 
   .row {
@@ -59,8 +57,22 @@ body {
   }
 }
 
+%layout-width-wrapper--extended {
+  @include media-breakpoint-up(lg) {
+    margin-left: 20% !important;
+    margin-right: 20px !important;
+    width: 80% !important;
+    max-width: 1600px !important;
+  }
+}
+
 .layout-width-wrapper {
   @extend %layout-width-wrapper;
+}
+
+.layout-width-wrapper--extended {
+  @extend %layout-width-wrapper;
+  @extend %layout-width-wrapper--extended;
 }
 
 .layout-width-wrapper--padded {
