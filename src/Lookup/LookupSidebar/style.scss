@@ -30,6 +30,10 @@
         width: $lookup-sidebar-width;
       }
     }
+
+    &:not(.open) + .lookup-show__content .lookup-tabs__tabs {
+      max-width: 1024px;
+    }
   }
 
   .lookup-sidebar__wrapper {

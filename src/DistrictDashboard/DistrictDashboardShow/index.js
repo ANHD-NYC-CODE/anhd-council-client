@@ -193,9 +193,16 @@ class DistrictDashboardShow extends React.Component {
                   }
                 />
                 <div className="district-dashboard-show__top-row-group">
-                  <Button className="district-dashboard-show__clear" variant="dark" onClick={this.handleClearDashboard}>
-                    CLEAR
-                  </Button>
+                  {!this.props.appState.changingGeography && (
+                    <Button
+                      className="district-dashboard-show__clear"
+                      variant="dark"
+                      onClick={this.handleClearDashboard}
+                    >
+                      CLEAR
+                    </Button>
+                  )}
+
                   {!this.props.geographyRequests.some(r => r.type === c.ADVANCED_SEARCH) && (
                     <div className="custom-search-link">
                       Access more options with a{' '}

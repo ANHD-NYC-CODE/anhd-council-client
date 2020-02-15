@@ -116,14 +116,14 @@
       }
     }
 
-    .main-geography-select {
+    .main-geography-select:not(.zip-select) {
       margin-right: 16px;
       @include media-breakpoint-down(md) {
         min-width: initial;
       }
     }
 
-    #geography-id-select {
+    #geography-id-select:not(.zip-select) {
       &,
       select {
         min-width: 70px;
