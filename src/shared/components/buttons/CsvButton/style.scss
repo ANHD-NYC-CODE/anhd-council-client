@@ -1,3 +1,8 @@
 .csv-button {
   cursor: pointer;
+  text-transform: uppercase;
+
+  svg {
+    margin-left: 8px;
+  }
 }

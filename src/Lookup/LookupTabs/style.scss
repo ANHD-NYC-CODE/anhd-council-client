@@ -3,6 +3,7 @@
 
 .lookup-tabs {
   margin-bottom: 20px;
+  max-width: 600px;
 
   .lookup-tabs__header {
     @extend %text-black;
