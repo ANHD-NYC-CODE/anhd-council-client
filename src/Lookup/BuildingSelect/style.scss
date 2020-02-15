@@ -52,15 +52,18 @@
 
       // Control component
 
-      &.valued > [class*='-control'] {
+      [class*='-control'] {
         background-color: $light-orange;
       }
 
-      &.valued > div:nth-of-type(n + 2) {
+      div:nth-of-type(n + 2) {
         background-color: $light-orange;
       }
+      [class*='-indicatorContainer'] {
+        color: $dark;
+      }
 
-      &.valued [class*='-menu'] {
+      [class*='-menu'] {
         [class*='-option']:nth-of-type(1) {
           background-color: $blizzard;
           color: $black;

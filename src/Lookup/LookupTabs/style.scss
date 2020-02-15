@@ -29,6 +29,7 @@
     overflow-y: hidden;
     height: 0px;
     transition: height 0.3s ease-in-out;
+    max-width: 600px;
 
     &.open {
       height: 100%;

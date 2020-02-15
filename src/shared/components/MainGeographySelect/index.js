@@ -102,7 +102,7 @@ class MainGeographySelect extends React.Component {
                   message={(this.props.errors || {}).geographyType}
                 />
                 {!!(this.props.currentGeographyType || this.props.changingGeographyType) && (
-                  <div>
+                  <div className="zip-select">
                     {this.props.changingGeographyType === b.ZIPCODE_GEOGRAPHY.constant ||
                     (this.props.currentGeographyType === b.ZIPCODE_GEOGRAPHY.constant &&
                       !!this.props.currentGeographyId &&
@@ -172,7 +172,7 @@ class MainGeographySelect extends React.Component {
                     size={this.props.inputSize}
                     className="cancel-geography-change"
                     onClick={this.props.cancelChangeGeography}
-                    variant="outline-secondary"
+                    variant="outline-dark"
                   >
                     Cancel
                   </Button>
