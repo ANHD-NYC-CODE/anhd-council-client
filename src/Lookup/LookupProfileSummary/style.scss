@@ -127,4 +127,10 @@ li.profile-summary-body__value {
       overflow: hidden;
     }
   }
+
+  .expandable-section:first-child {
+    .lookup-profile-summary__expandable-icon {
+      top: 40px;
+    }
+  }
 }

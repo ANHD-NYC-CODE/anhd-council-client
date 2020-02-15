@@ -37,7 +37,20 @@ const LookupProfileSummary = props => {
                   {config => {
                     return (
                       <div>
-                        <PropertySummaryBody config={config} profile={props.propertyResult} />
+                        <ExpandableSection
+                          aboveFoldElement={
+                            <div className="lookup-sidebar__header">
+                              <h4>Property Info</h4>
+                            </div>
+                          }
+                          className="lookup-profile-summary__section-header"
+                          iconClass="lookup-profile-summary__expandable-icon"
+                          collapseIcon={<FontAwesomeIcon size="lg" icon={faChevronUp} />}
+                          expandIcon={<FontAwesomeIcon size="lg" icon={faChevronDown} />}
+                          startsOpen={true}
+                        >
+                          <PropertySummaryBody config={config} profile={props.propertyResult} />
+                        </ExpandableSection>
                         <ExpandableSection
                           aboveFoldElement={<h5>Rent Stabilization</h5>}
                           className="lookup-profile-summary__section-header"
