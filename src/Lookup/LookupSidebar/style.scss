@@ -1,4 +1,5 @@
 @import 'shared/styles/_variables.scss';
+$opened-width: 1024px;
 
 .lookup-sidebar {
   white-space: nowrap;
@@ -31,8 +32,10 @@
       }
     }
 
-    &:not(.open) + .lookup-show__content .lookup-tabs__tabs {
-      max-width: 1024px;
+    &:not(.open) + .lookup-show__content .lookup-tabs,
+    &:not(.open) + .lookup-show__content .base-table-header,
+    &:not(.open) + .lookup-show__content .table-header {
+      max-width: $opened-width;
     }
   }
 

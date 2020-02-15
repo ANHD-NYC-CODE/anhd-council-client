@@ -168,6 +168,16 @@
     flex-direction: column;
     flex: 1;
     overflow-x: auto;
+
+    @include media-breakpoint-up(xl) {
+      overflow-x: visible;
+    }
+  }
+
+  .base-table-header,
+  .geography-select-row,
+  .district-dashboard-show__results-header {
+    max-width: 600px;
   }
 
   .district-dashboard-show__table {
