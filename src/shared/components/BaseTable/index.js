@@ -278,7 +278,11 @@ class BaseTable extends React.Component {
                       {!!this.baseTableConfig.filterButtonSets[this.props.tableConfig.resourceConstant] &&
                         this.baseTableConfig.filterButtonSets[this.props.tableConfig.resourceConstant].map(
                           (set, index) => {
-                            return <Col key={`button-set${index}`}>{set(this.baseTableConfig.selectedFilters)}</Col>
+                            return (
+                              <span className="base-table__select-filters__container" key={`button-set${index}`}>
+                                {set(this.baseTableConfig.selectedFilters)}
+                              </span>
+                            )
                           }
                         )}
                     </Row>

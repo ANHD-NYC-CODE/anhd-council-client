@@ -31,7 +31,7 @@ describe('Landing page', () => {
     expect(wrapper.find('NavigationBar')).toHaveLength(1)
     expect(wrapper.find('NavigationBar li')).toHaveLength(9)
     expect(wrapper.find('NavigationBar').text()).toMatch(
-      /HomeDAP MapMap TutorialDistrict ReportsReports TutorialWatch ListPortalAboutContact/
+      /HomeDAP MapMap TutorialDistrict ReportsReports TutorialPortalAboutContact/
     )
     expect(wrapper.find('SubHeader')).toHaveLength(1)
     expect(wrapper.find('SubHeader Link')).toHaveLength(5)
