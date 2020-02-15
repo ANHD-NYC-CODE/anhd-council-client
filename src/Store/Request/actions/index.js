@@ -109,7 +109,7 @@ export const postBugReport = (bugData, hideModal) => (dispatch, getState, access
     dispatch,
     getState,
     requestId,
-    '/bug-reports/',
+    '/user-messages/',
     JSON.stringify(bugData), // Body
     { format: null },
     access_token,
