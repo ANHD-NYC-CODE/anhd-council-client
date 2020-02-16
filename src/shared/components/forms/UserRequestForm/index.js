@@ -36,6 +36,7 @@ const schema = yup.object({
     .string()
     .required()
     .max(120),
+  longDescription: yup.string().max(1000),
 })
 
 class UserRequestForm extends React.Component {
@@ -63,6 +64,7 @@ class UserRequestForm extends React.Component {
       last_name: formData.last_name,
       organization: formData.organization,
       description: formData.position,
+      long_description: formData.longDescription,
     }
 
     this.props.dispatch(postUserRequest(userData, this.handleSuccessfulSubmit))
@@ -169,6 +171,24 @@ class UserRequestForm extends React.Component {
                 <Form.Control
                   required
                   name="position"
+                  className="valued"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  isValid={false}
+                  isInvalid={false}
+                  placeholder=""
+                />
+                <FormError
+                  show={!!((submitCount || touched.first_name) && errors.position)}
+                  message={errors.position}
+                />
+              </Form.Group>
+              <Form.Group controlId="userRequestLongDescription">
+                <Form.Label>Please describe how you'd like to use this tool.</Form.Label>
+                <Form.Control
+                  required
+                  name="longDescription"
+                  as="textarea"
                   className="valued"
                   onChange={handleChange}
                   onBlur={handleBlur}

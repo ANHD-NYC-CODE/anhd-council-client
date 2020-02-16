@@ -1,6 +1,6 @@
 import React from 'react'
 import { Jumbotron, Button } from 'react-bootstrap'
-import BugReportModal from 'shared/components/modals/BugReportModal'
+import UserMessageModal from 'shared/components/modals/UserMessageModal'
 import ModalContext from 'Modal/ModalContext'
 import BaseLink from 'shared/components/BaseLink'
 import './style.scss'
@@ -13,31 +13,6 @@ const IntroductionBlock = props => {
         DAP Portal is a comprehensive new research tool that includes dozens of datasets indicating harassment and
         potential displacement from New York City housing!
       </p>
-      {/* <ModalContext.Consumer>
-        {modal => {
-          return (
-            <p className="font-weight-bold">
-              DAP Portal is currently in Beta, so please send us{' '}
-              <BaseLink href="https://forms.gle/EAUkzgsAkHn8NgbTA">feedback</BaseLink> or{' '}
-              <BaseLink
-                href="#"
-                onClick={e => {
-                  e.preventDefault()
-                  modal.setModal({
-                    modalComponent: BugReportModal,
-                    modalProps: {
-                      size: 'lg',
-                    },
-                  })
-                }}
-              >
-                report any bugs
-              </BaseLink>{' '}
-              you encounter.
-            </p>
-          )
-        }}
-      </ModalContext.Consumer> */}
 
       <p>
         The <BaseLink href="/lookup">Property Lookup</BaseLink> tool allows you to easily find all the relevant
