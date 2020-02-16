@@ -73,30 +73,32 @@ class GeographySelect extends React.Component {
                 message={(this.props.errors || {}).geographyType}
               />
               {!!(this.props.currentGeographyType || this.props.changingGeographyType) && (
-                <div id="geography-id-select" className={this.props.selectClass}>
+                <div id="geography-id-select" className={classnames(this.props.selectClass)}>
                   {this.props.changingGeographyType === b.ZIPCODE_GEOGRAPHY.constant ||
                   (this.props.currentGeographyType === b.ZIPCODE_GEOGRAPHY.constant &&
                     !!this.props.currentGeographyId &&
                     !this.props.changingGeographyType) ? (
-                    <CustomSelect
-                      required
-                      data-test-id="geography-select--custom"
-                      data-key="id"
-                      name="geographyId"
-                      id="geography-custom-select"
-                      onChange={this.passChangeGeography}
-                      value={
-                        (this.props.changingGeographyId || this.props.currentGeographyId) > 0
-                          ? {
-                              value: this.props.changingGeographyId || this.props.currentGeographyId,
-                              label: this.props.changingGeographyId || this.props.currentGeographyId,
-                            }
-                          : ''
-                      }
-                      options={getZipCodeSelectOptions(config.zipCodes)}
-                      size={this.props.selectClass}
-                      placeholder="Enter Zip Code..."
-                    />
+                    <div className="zip-select">
+                      <CustomSelect
+                        required
+                        data-test-id="geography-select--custom"
+                        data-key="id"
+                        name="geographyId"
+                        id="geography-custom-select"
+                        onChange={this.passChangeGeography}
+                        value={
+                          (this.props.changingGeographyId || this.props.currentGeographyId) > 0
+                            ? {
+                                value: this.props.changingGeographyId || this.props.currentGeographyId,
+                                label: this.props.changingGeographyId || this.props.currentGeographyId,
+                              }
+                            : ''
+                        }
+                        options={getZipCodeSelectOptions(config.zipCodes)}
+                        size={this.props.selectClass}
+                        placeholder="Enter Zip Code..."
+                      />
+                    </div>
                   ) : (
                     <Form.Control
                       required

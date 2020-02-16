@@ -7,7 +7,7 @@ import { getGeographyPath, addressResultToPath } from 'shared/utilities/routeUti
 import logo from 'shared/images/portallogo.png'
 import LoginModal from 'shared/components/modals/LoginModal'
 import LoginModalFooter from 'shared/components/forms/LoginForm/LoginModalFooter'
-import BugReportModal from 'shared/components/modals/BugReportModal'
+import UserMessageModal from 'shared/components/modals/UserMessageModal'
 
 import classnames from 'classnames'
 import BaseLink from 'shared/components/BaseLink'
@@ -37,14 +37,14 @@ class SubHeader extends React.Component {
                 onClick={e => {
                   e.preventDefault()
                   this.props.modal.setModal({
-                    modalComponent: BugReportModal,
+                    modalComponent: UserMessageModal,
                     modalProps: {
                       size: 'lg',
                     },
                   })
                 }}
               >
-                <button className="blank-button text-gray-900">Report a bug</button>
+                <button className="blank-button text-gray-900">Contact us / Report an issue</button>
               </Nav.Item>
               <Nav.Item>
                 <BaseLink

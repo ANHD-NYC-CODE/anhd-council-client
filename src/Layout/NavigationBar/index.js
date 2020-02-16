@@ -59,16 +59,6 @@ const NavigationBar = props => {
           </div>
           <Nav.Link as="li">
             <a
-              className="text-muted"
-              target=""
-              rel="noopener noreferrer"
-              href="https://www.displacementalert.org/watchlist"
-            >
-              Watch List
-            </a>
-          </Nav.Link>
-          <Nav.Link as="li">
-            <a
               className="text-portal-orange"
               target=""
               rel="noopener noreferrer"

@@ -221,6 +221,7 @@ const customStyle = size => {
           height: '38px',
           border: '1px solid #b9b8b8',
           boxShadow: 'none',
+          fontSize: '14px',
         }),
         dropdownIndicator: base => ({
           ...base,
@@ -242,6 +243,7 @@ const customStyle = size => {
           ...base,
           marginTop: '0px',
           zIndex: '10',
+          fontSize: '14px',
         }),
         menuList: base => ({
           ...base,

@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import BaseModal from 'shared/components/BaseModal'
-import BugReportForm from 'shared/components/forms/BugReportForm'
+import UserMessageForm from 'shared/components/forms/UserMessageForm'
 import ModalContext from 'Modal/ModalContext'
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
 import { connect } from 'react-redux'
-const BugReportModal = props => {
+const UserMessageModal = props => {
   return (
     <ModalContext.Consumer>
       {modal => {
@@ -17,9 +17,9 @@ const BugReportModal = props => {
             modalFooter={props.modalFooter}
             hideModal={modal.hideModal}
             show={props.show}
-            title="Report a bug"
+            title="Send us a message"
           >
-            <BugReportForm
+            <UserMessageForm
               dispatch={props.dispatch}
               error={props.error}
               loading={props.loading}
@@ -32,11 +32,11 @@ const BugReportModal = props => {
   )
 }
 
-BugReportModal.defaultProps = {
+UserMessageModal.defaultProps = {
   error: null,
 }
 
-BugReportModal.propTypes = {
+UserMessageModal.propTypes = {
   centered: PropTypes.bool,
   className: PropTypes.string,
   dialogClassName: PropTypes.string,
@@ -61,4 +61,4 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(mapStateToProps)(BugReportModal)
+export default connect(mapStateToProps)(UserMessageModal)
