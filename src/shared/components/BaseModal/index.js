@@ -35,6 +35,29 @@ const BaseModal = props => {
           </div>
         </Modal.Body>
       )}
+      {!!(props.documentationBody || (props.documentationSources || {}).length) && (
+        <Modal.Body>
+          <Modal.Title as="h5">Glossary:</Modal.Title>
+        </Modal.Body>
+      )}
+      {props.documentationBody && (
+        <Modal.Body>
+          <ReactMarkdown escapeHtml={false} source={props.documentationBody} />
+        </Modal.Body>
+      )}
+      {!!(props.documentationSources || {}).length && (
+        <Modal.Body>
+          <div className="modal-sources">
+            {props.documentationSources.map((source, index) => {
+              return (
+                <div key={`source-${index}`}>
+                  <BaseLink className="text-link" href={source.url} text={source.text} />
+                </div>
+              )
+            })}
+          </div>
+        </Modal.Body>
+      )}
 
       {props.modalFooter}
     </Modal>
