@@ -61,6 +61,17 @@ export const newPropertyRequest = ({
   resourceModel,
   tableComponent = undefined,
   isAuthenticated = false,
+  paramMaps = [
+    type === 'LOOKUP_PROFILE'
+      ? new ParamMap({
+          resourceModel,
+          type: 'TEXT',
+          field: 'summary',
+          comparison: '',
+          value: true,
+        })
+      : undefined,
+  ].filter(p => p),
 } = {}) => {
   // WARNING: Do not change the summary request path or params without
   // simultaneously updating the backend app's core/utils/cache.py
@@ -76,17 +87,7 @@ export const newPropertyRequest = ({
       new ApiMap({ constant: 'PROPERTY', resourceId: bbl, name: 'Properties' }),
       resourceConstant ? getApiMap(resourceConstant) : undefined,
     ].filter(a => !!a),
-    paramMaps: [
-      type === 'LOOKUP_PROFILE'
-        ? new ParamMap({
-            resourceModel,
-            type: 'TEXT',
-            field: 'summary',
-            comparison: '',
-            value: true,
-          })
-        : undefined,
-    ].filter(p => p),
+    paramMaps,
     tableConfig: new TableConfig({ resourceConstant: resourceConstant, component: tableComponent, datasetModelName }),
   })
 }
@@ -106,6 +107,15 @@ export const newLookupRequests = ({ bbl, bin, resourceModels } = {}) => {
       level: 'PROPERTY',
       resourceConstant: 'ACRIS_REAL_MASTER',
       resourceModel: resourceModels['ACRIS_REAL_MASTER'],
+      paramMaps: [
+        new ParamMap({
+          resourceModel: resourceModels['ACRIS_REAL_MASTER'],
+          type: 'TEXT',
+          field: 'financing',
+          comparison: '',
+          value: true,
+        }),
+      ],
     }),
     newPropertyRequest({
       type: 'LOOKUP_FILTER',

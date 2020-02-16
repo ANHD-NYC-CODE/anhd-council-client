@@ -1,6 +1,11 @@
 @import 'shared/styles/_variables.scss';
 
 .geography-select {
+  .zip-select {
+    min-width: 170px;
+    max-width: 440px;
+  }
+
   .geography-select__wrapper {
     display: flex;
     align-items: center;
@@ -25,7 +30,6 @@
     @extend %p3-font-size;
     min-width: 200px;
     max-width: $main-input-max-width;
-    margin: 10px auto;
 
     &.form-control:focus,
     &.form-control:focus-within {
@@ -33,7 +37,6 @@
     }
 
     @include media-breakpoint-up(sm) {
-      margin: 0 10px 0 0;
       max-width: 200px;
     }
 
@@ -44,11 +47,18 @@
     }
   }
 
+  .main-geography-select,
+  .main-geography-select + .zip-select {
+    margin: 10px auto;
+    @include media-breakpoint-up(sm) {
+      margin: 0 10px 0 0;
+    }
+  }
+
   .submit-geography-change,
   .cancel-geography-change {
     margin: 0 auto;
     max-width: $main-input-max-width;
-    margin-right: 15px;
     @include media-breakpoint-up(sm) {
       margin: 0;
       margin-right: 15px;

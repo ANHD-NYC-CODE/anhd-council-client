@@ -42,9 +42,6 @@ const LookupSidebar = props => {
           <FontAwesomeIcon icon={open ? faChevronLeft : faChevronRight} size="1x" />
         </div>
         <div className="lookup-sidebar__body">
-          <div className="lookup-sidebar__header">
-            <h4>Property Info</h4>
-          </div>
           <div className="lookup-sidebar__content">
             <LookupProfileSummary
               appState={props.appState}

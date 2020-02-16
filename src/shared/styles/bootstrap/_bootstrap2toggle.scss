@@ -25,8 +25,8 @@ label.checkbox.inline .toggle {
   top: 0;
   bottom: 0;
   left: 0;
-  transition: left 0.35s;
-  -webkit-transition: left 0.35s;
+  // transition: left 0.35s;
+  // -webkit-transition: left 0.35s;
   -moz-user-select: none;
   -webkit-user-select: none;
   user-select: none;
@@ -66,6 +66,7 @@ label.checkbox.inline .toggle {
   height: 100%;
   width: 0px;
   border-width: 0 1px;
+  top: -5px;
 }
 
 .toggle-handle.btn-mini {
