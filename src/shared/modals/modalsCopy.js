@@ -4,54 +4,149 @@ import ReactDOMServer from 'react-dom/server'
 export const infoModals = {
   rs: {
     title: 'Rent Stabilized Housing',
-    body: `An apartment may be regulated under New York State’s system of Rent Stabilization if it is in a property that was built before 1974 and has six or more units or if the property has benefitted from certain regulatory programs like 421a or J-51. All properties in this report included at least one rent stabilized unit beginning in 2007, the first year for which we have data. We base stabilized unit numbers on property tax bills from the NYC Department of Finance. Missing or fluctuating numbers may be due to missing/incorrect registration by the owner or inconsistencies in property tax documentation.
-    <br>
-    <br>
-    We display the percentage of properties and units in buildings that have contained <strong>any</strong> rent stabilized units during this time period, even though not all units in those buildings are currently stabilized.`,
+    body: ReactDOMServer.renderToString(
+      <div>
+        <p>
+          An apartment may be regulated under New York State’s system of Rent Stabilization if it is in a property that
+          was built before 1974 and has six or more units or if the property has benefitted from certain regulatory
+          programs like 421a or J-51. All properties in this report included at least one rent stabilized unit beginning
+          in 2007, the first year for which we have data. We base stabilized unit numbers on property tax bills from the
+          NYC Department of Finance. Missing or fluctuating numbers may be due to missing/incorrect registration by the
+          owner or inconsistencies in property tax documentation.
+        </p>
+        <p>
+          We display the percentage of properties and units in buildings that have contained any rent stabilized units
+          during this time period, even though not all units in those buildings are currently stabilized.
+        </p>
+        <p>
+          The percentage displayed in parenthesis is the number of residential units in this housing category as a share
+          of all residential units in this geography.
+        </p>
+      </div>
+    ),
 
     sources: [
       {
         text: 'taxbills.nyc',
         url: 'https://github.com/talos/nyc-stabilization-unit-counts',
       },
+      {
+        text: 'https://github.com/talos/nyc-stabilization-unit-counts',
+        url: 'https://github.com/talos/nyc-stabilization-unit-counts',
+      },
+      {
+        text: 'https://github.com/justfixnyc/nyc-doffer',
+        url: 'https://github.com/justfixnyc/nyc-doffer',
+      },
+    ],
+    documentationSources: [
+      {
+        text: 'NYC Stabilization Unit Counts',
+        url: 'https://github.com/talos/nyc-stabilization-unit-counts',
+      },
     ],
   },
   rr: {
     title: 'Subsidized Housing',
-    body:
-      'These properties are subject to a regulatory agreement at the City, State, or Federal level. This includes tax incentives and financing that determines affordability levels. ',
+    body: ReactDOMServer.renderToString(
+      <div>
+        <p>
+          These properties are subject to a regulatory agreement at the City, State, or Federal level. This includes tax
+          incentives and financing that determines affordability levels.
+        </p>
+        <p>
+          The percentage displayed in parenthesis is the number of residential units in this housing category as a share
+          of all residential units in this geography.
+        </p>
+      </div>
+    ),
     sources: [
       {
         text: 'New York University Furman Center’s CoreData.nyc',
         url: 'http://coredata.nyc/',
       },
     ],
+    documentationSources: [
+      {
+        text: 'Directory of NYC Housing Programs',
+        url: 'https://furmancenter.org/coredata/directory',
+      },
+    ],
   },
   sh: {
     title: 'Small Homes',
-    body: 'We consider small homes to be any property with four or fewer dwelling units.',
+    body: ReactDOMServer.renderToString(
+      <div>
+        <p>
+          We consider small homes to be any property with one to four residential units (apartments). This category
+          overlaps significantly with Market Rate properties, and possibly some stabilized or subsidized properties.
+        </p>
+        <p>
+          The percentage displayed in parenthesis is the number of residential units in this housing category as a share
+          of all residential units in this geography.
+        </p>
+      </div>
+    ),
     sources: [
       {
         text: 'NYC Department of City Planning',
         url: 'https://www1.nyc.gov/site/planning/data-maps/open-data.page#pluto',
+      },
+    ],
+    documentationSources: [
+      {
+        text: 'PLUTO Data Dictionary',
+        url:
+          'https://www1.nyc.gov/assets/planning/download/pdf/data-maps/open-data/pluto_datadictionary.pdf?r=18v21beta',
       },
     ],
   },
   mr: {
     title: 'Market Rate',
-    body:
-      'We consider market rate properties to be buildings that are not covered under either New York State rent stabilization code or any regulatory agreement governing apartment affordability.',
+    body: ReactDOMServer.renderToString(
+      <div>
+        <p>
+          We consider market rate properties to be buildings that are not covered under either New York State rent
+          stabilization code or any regulatory agreement governing apartment affordability.
+        </p>
+        <p>
+          This category includes one-unit or single-family homes, many of which are occupied by homeowners rather than
+          renters.
+        </p>
+        <p>
+          The percentage displayed in parenthesis is the number of residential units in this housing category as a share
+          of all residential units in this geography.
+        </p>
+      </div>
+    ),
     sources: [
       {
         text: 'NYC Department of City Planning',
         url: 'https://www1.nyc.gov/site/planning/data-maps/open-data.page#pluto',
       },
     ],
+    documentationSources: [
+      {
+        text: 'PLUTO Data Dictionary',
+        url:
+          'https://www1.nyc.gov/assets/planning/download/pdf/data-maps/open-data/pluto_datadictionary.pdf?r=18v21beta',
+      },
+    ],
   },
   ph: {
     title: 'Public Housing',
-    body:
-      'We consider public housing properties to be any building operated by the New York City Housing Authority (NYCHA)',
+    body: ReactDOMServer.renderToString(
+      <div>
+        <p>
+          Public housing properties are buildings owned and operated by the New York City Housing Authority (NYCHA).
+        </p>
+        <p>
+          The percentage displayed in parenthesis is the number of residential units in this housing category as a share
+          of all residential units in this geography.
+        </p>
+      </div>
+    ),
+
     sources: [
       {
         text: 'NYCHA Property Directory via JustFixNYC nycha scraper',
@@ -69,6 +164,13 @@ export const infoModals = {
         url: 'https://data.cityofnewyork.us/Housing-Development/Housing-Maintenance-Code-Violations/wvxf-dwi5/data',
       },
     ],
+    documentationSources: [
+      {
+        text: 'HPD Violation Open Data 2017.pdf',
+        url:
+          'https://data.cityofnewyork.us/api/views/wvxf-dwi5/files/02c794c8-3013-49ea-9ab3-9e5998b061de?download=true&filename=HPD%20Violation%20Open%20Data%202017.pdf',
+      },
+    ],
   },
   HPD_COMPLAINT: {
     title: 'HPD Complaints & Problems',
@@ -81,7 +183,8 @@ export const infoModals = {
         </p>
         <p>
           <b>Note:</b> HPD complaint data updates once per month, so the "Last 30 Days" time period will display the
-          most recent calendar month of available data.
+          most recent calendar month of available data. You can visit HPD's website directly to view complaints since
+          the beginning of the month.
         </p>
       </div>
     ),
@@ -95,15 +198,34 @@ export const infoModals = {
         url: 'https://data.cityofnewyork.us/Housing-Development/Complaint-Problems/a2nx-4u46',
       },
     ],
+    documentationSources: [
+      {
+        text: 'Complaint Data Dictionary.pdf',
+        url:
+          'https://data.cityofnewyork.us/api/views/uwyv-629c/files/6d8919d1-2b80-4ec0-8640-d6c55461ce44?download=true&filename=Complaint%20Data%20Dictionary.pdf',
+      },
+      {
+        text: 'HPD Complaint Open Data.pdf',
+        url:
+          'https://data.cityofnewyork.us/api/views/a2nx-4u46/files/516fa3f1-fff3-4ef4-9ec8-74da856d9cb8?download=true&filename=HPD%20Complaint%20Open%20Data.pdf',
+      },
+    ],
   },
   DOB_VIOLATION: {
     title: 'DOB Violations',
     body:
-      'DOB violations are notices of City building code or zoning code violations for which the landlord is responsible, placed by the Department of Buildings (DOB). These violations are sometimes part of a pattern of harassment against tenants.',
+      'The Department of Buildings (DOB) issues violations to landlords when they violate the City building or zoning codes. DOB violations can relate to construction, demolition, renovations, or structural issues in a building. A high number of DOB violations can indicate a failure to uphold safety standards and potential tenant harassment.',
     sources: [
       {
         text: 'NYC Open Data - DOB Violations',
         url: 'https://data.cityofnewyork.us/Housing-Development/DOB-Violations/3h2n-5cm9',
+      },
+    ],
+    documentationSources: [
+      {
+        text: 'DD_DOB_Violations_2019-03-19.xlsx',
+        url:
+          'https://data.cityofnewyork.us/api/views/3h2n-5cm9/files/77115414-4d7e-4188-8547-a5ad3d10f726?download=true&filename=DD_DOB_Violations_2019-03-19.xlsx',
       },
     ],
   },
@@ -117,11 +239,35 @@ export const infoModals = {
         url: 'https://data.cityofnewyork.us/Housing-Development/DOB-Complaints-Received/eabe-havv',
       },
     ],
+    documentationSources: [
+      {
+        text: 'DD_DOB_Complaints_Received_2019-08-21.xlsx',
+        url:
+          'https://data.cityofnewyork.us/api/views/eabe-havv/files/e19c463a-69dd-4810-ae72-3c7c7fc657f8?download=true&filename=DD_DOB_Complaints_Received_2019-08-21.xlsx',
+      },
+    ],
   },
   DOB_ISSUED_PERMIT: {
     title: 'DOB Issued Permits',
-    body:
-      'Issued construction permits show that a landlord has permission to do construction and renovations, which can indicate harassment and displacement. For example, building-wide work can be used to increase rents via a Major Capital Improvement (MCI) and individual apartment renovations may show that a landlord is actively vacating apartments to dramatically raise rents via Individual Apartment Improvements. One permit can contain multiple work types, which are listed here as separate records.',
+    body: ReactDOMServer.renderToString(
+      <div>
+        <p>
+          Construction permits issued by the Department of Buildings show that a landlord has permission to do
+          construction and renovations, which can indicate displacement pressure. While the{' '}
+          <a href="https://www.nysenate.gov/legislation/bills/2019/s6458" target="_blank" rel="noopener noreferrer">
+            Housing Stability and Tenant Protection Act of 2019
+          </a>{' '}
+          eliminated much of the displacement incentive of renovating rent-stabilized apartments to conduct Individual
+          Apartment Improvements and dramatically raise rents, construction still poses risks to affordability.
+          Landlords can use Major Capital Improvements, combine adjacent apartments, vacate and demolish a building, or
+          use "substantial rehabilitation" to greatly increase rents.
+        </p>
+        <p>
+          One issued permit can contain multiple work types, which are displayed in the table as separate records. Only
+          initial permit records (and not permit renewals) are displayed.{' '}
+        </p>
+      </div>
+    ),
     sources: [
       {
         text: 'NYC Open Data - DOB Permit Issuance',
@@ -132,11 +278,42 @@ export const infoModals = {
         url: 'https://data.cityofnewyork.us/Housing-Development/DOB-NOW-Build-Approved-Permits/rbx6-tga4',
       },
     ],
+    documentationBody:
+      "DOB permits data comes from two sources: permits filed in hard copy via the traditional system that captures data in DOB's Building Information System (BIS), and permits filed electronically via the DOB NOW portal. Currently, only some permits are able to be submitted via DOB NOW. The fields and data captured in the two systems differ from one another. ",
+    documentationSources: [
+      {
+        text: 'DD_DOB_Permit_Issuance_2019-07-29.xlsx',
+        url:
+          'https://data.cityofnewyork.us/api/views/ipu4-2q9a/files/12265875-36c8-4f5c-8a8c-657952bd1484?download=true&filename=DD_DOB_Permit_Issuance_2019-07-29.xlsx',
+      },
+      {
+        text: 'DD_DOB_NOW_Build_Approved_Permits_2018-06-29.xlsx',
+        url:
+          'https://data.cityofnewyork.us/api/views/rbx6-tga4/files/04484c71-75ff-46ba-8b90-3eaf66d45dc8?download=true&filename=DD_DOB_NOW_Build_Approved_Permits_2018-06-29.xlsx',
+      },
+    ],
   },
   DOB_FILED_PERMIT: {
     title: 'DOB Permit Applications',
-    body:
-      "Construction permit applications show a landlord's intention to do construction and renovations, which can be used to destabilize apartments. For example, building-wide work can be used to increase rents via a Major Capital Improvement (MCI) and individual apartment renovations may show that a landlord is actively vacating apartments to dramatically raise rents via Individual Apartment Improvements. One permit can contain multiple work types, which are listed here as separate records.",
+    body: ReactDOMServer.renderToString(
+      <div>
+        <p>
+          Construction permits issued by the Department of Buildings show that a landlord has permission to do
+          construction and renovations, which can indicate displacement pressure. While the{' '}
+          <a href="https://www.nysenate.gov/legislation/bills/2019/s6458" target="_blank" rel="noopener noreferrer">
+            Housing Stability and Tenant Protection Act of 2019
+          </a>{' '}
+          eliminated much of the displacement incentive of renovating rent-stabilized apartments to conduct Individual
+          Apartment Improvements and dramatically raise rents, construction still poses risks to affordability.
+          Landlords can use Major Capital Improvements (MCIs), combine adjacent apartments, vacate and demolish a
+          building, or use "substantial rehabilitation" to greatly increase rents.
+        </p>
+        <p>
+          One issued permit can contain multiple work types, which are displayed in the table as separate records. Only
+          initial permit records (and not permit renewals) are displayed.
+        </p>
+      </div>
+    ),
     sources: [
       {
         text: 'NYC Open Data - DOB Job Application Filings',
@@ -147,15 +324,36 @@ export const infoModals = {
         url: 'https://data.cityofnewyork.us/Housing-Development/DOB-NOW-Build-Job-Application-Filings/w9ak-ipjd',
       },
     ],
+    documentationBody:
+      "DOB permits data comes from two sources: permits filed in hard copy via the traditional system that captures data in DOB's Building Information System (BIS), and permits filed electronically via the DOB NOW portal. Currently, only some permits are able to be submitted via DOB NOW. The fields and data captured in the two systems differ from one another.",
+    documentationSources: [
+      {
+        text: 'DD_DOB_Permit_Issuance_2019-07-29.xlsx',
+        url:
+          'https://data.cityofnewyork.us/api/views/ipu4-2q9a/files/12265875-36c8-4f5c-8a8c-657952bd1484?download=true&filename=DD_DOB_Permit_Issuance_2019-07-29.xlsx',
+      },
+      {
+        text: 'DD_DOB_NOW_Build_Approved_Permits_2018-06-29.xlsx',
+        url:
+          'https://data.cityofnewyork.us/api/views/rbx6-tga4/files/04484c71-75ff-46ba-8b90-3eaf66d45dc8?download=true&filename=DD_DOB_NOW_Build_Approved_Permits_2018-06-29.xlsx',
+      },
+    ],
   },
   ECB_VIOLATION: {
     title: 'ECB Violations',
     body:
-      'ECB violations are notices of city building code or zoning code violations, issued by the Department of Buildings, that are subject to review by the Environmental Control Board. These violations are sometimes part of a pattern of harassment against tenants.',
+      'The Department of Buildings (DOB) issues violations to landlords when they violate the City building or zoning codes. Environmental Control Board (ECB) violations are a type of DOB violation that an owner can contest in front of the Office of Administrative Trials and Hearings (OATH). Unlike regular DOB violations, ECB violations carry penalties. A high number of DOB violations can indicate a failure to uphold safety standards and potential tenant harassment.',
     sources: [
       {
         text: 'NYC Open Data - DOB/ECB Violations',
         url: 'https://data.cityofnewyork.us/Housing-Development/DOB-ECB-Violations/6bgk-3dad',
+      },
+    ],
+    documentationSources: [
+      {
+        text: 'DD_DOB ECB Violations_2019-07-10.xlsx',
+        url:
+          'https://data.cityofnewyork.us/api/views/6bgk-3dad/files/9cf3234e-9687-4a4b-8085-9b8f95dc1f58?download=true&filename=DD_DOB%20ECB%20Violations_2019-07-10.xlsx',
       },
     ],
   },
@@ -166,7 +364,18 @@ export const infoModals = {
         <p>
           Sales come from the Department of Finance’s ACRIS database and include all deeds recorded. The sale price of a
           building matters because speculative investment is one of the key underlying threats to existing affordable
-          housing. A high sale price can mean a new owner plans to displace existing tenants to make large profits.
+          housing. A high sale price can mean a new owner must raise rents to make large profits. While the{' '}
+          <a href="https://www.nysenate.gov/legislation/bills/2019/s6458" target="_blank" rel="noopener noreferrer">
+            Housing Stability and Tenant Protection Act of 2019
+          </a>{' '}
+          eliminated much of the financial incentives to displace tenants, threats such as increases via Major Capital
+          Improvements (MCIs), preferential rents, substantial rehabilitation, demolition, and fraud remain.
+        </p>
+        <p>
+          Although they are not counted in the total number of Sales, mortgage-related documents are included here for
+          financing context. A mortgage is the loan a buyer takes from a bank or non-bank lender to purchase a property.
+          It can also be a loan taken out for other purposes, with an owner's property serving as collateral for that
+          loan.
         </p>
         <p>
           <b>Note:</b> Acris data updates once per month, so the "Last 30 Days" time period will display the most recent
@@ -186,6 +395,13 @@ export const infoModals = {
       {
         text: 'NYC Open Data - ACRIS Real Property Parties',
         url: 'https://data.cityofnewyork.us/City-Government/ACRIS-Real-Property-Parties/636b-3b5g',
+      },
+    ],
+    documentationSources: [
+      {
+        text: 'ACRIS_Public_OpenData_Guide.doc',
+        url:
+          'https://data.cityofnewyork.us/api/views/bnx9-e6tj/files/c5d51488-f56b-495e-aef1-b9e7acc4680c?download=true&filename=ACRIS_Public_OpenData_Extract_Guide_v_1.0.doc',
       },
     ],
   },
@@ -264,11 +480,18 @@ export const infoModals = {
   EVICTION: {
     title: 'Marshal Evictions',
     body:
-      'This dataset containts evictions that were executed by court-ordered marshals since 1/1/2017. Evictions in affordable rent-regulated apartments usually indicate an immediate loss of affordable housing because landlords take advantage of the vacancy to dramatically raise the rent. A high rate of evictions may also be an indicator of tenant harassment and displacement by a landlord aggressively driving vacancies.',
+      'This dataset containts evictions that were executed by court-ordered marshals since 1/1/2017. "Marshal evictions" only occur at the very end of an eviction proceeding, if a judge orders a marshal to physically remove a tenant from their home and change the locks. If a case ends any other way prior to that point, it won\'t be captured in this data. In many of those cases, tenants will still have left their homes. We have de-duplicated the Department of Investgations\' data and matched addresses to BBLs to the best of our ability.',
     sources: [
       {
         text: 'NYC Open Data - Evictions',
         url: 'https://data.cityofnewyork.us/City-Government/Evictions/6z8x-wfk4',
+      },
+    ],
+    documentationSources: [
+      {
+        text: 'DOI - Marshals Evictions - Dataset Dictionary.xlsx',
+        url:
+          'https://data.cityofnewyork.us/api/views/6z8x-wfk4/files/39d3f781-a654-4547-be79-b6bd12c1e6d5?download=true&filename=DOI%20-%20Marshals%20Evictions%20-%20Dataset%20Dictionary.xlsx',
       },
     ],
   },
@@ -277,13 +500,10 @@ export const infoModals = {
     body: ReactDOMServer.renderToString(
       <div>
         <p>
-          This dataset includes actions in Housing Court initiated by the Department of Housing Preservation and
-          Development (HPD) or by tenants, where HPD is named as a party. Court cases indicate that a landlord is not
-          maintaining building conditions or may be actively harassing tenants.
-        </p>
-        <p>
-          <b>Note:</b> Litigation data updates once per month, so the "Last 30 Days" time period will display the most
-          recent calendar month of available data.
+          This dataset contains records of litigations that the Department of Housing Preservation and Development (HPD)
+          or tenants initiate in Housing Court against landlords. These cases can result in enforceable orders to
+          correct, civil penalties (fines), and contempt sanctions. A history of litigation can indicate harassment or
+          negligence by landlords, poor building conditions, and/or a history of tenant organizing.
         </p>
       </div>
     ),
@@ -291,6 +511,17 @@ export const infoModals = {
       {
         text: 'NYC Open Data - Housing Litigations',
         url: 'https://data.cityofnewyork.us/Housing-Development/Housing-Litigations/59kj-x8nc',
+      },
+    ],
+    documentationSources: [
+      {
+        text: 'Glossary of terms',
+        url: 'https://hpdonline.hpdnyc.org/HPDonline/GlossaryLMS.aspx',
+      },
+      {
+        text: 'Housing_Litigations_Data_Dictionary.pdf',
+        url:
+          'https://data.cityofnewyork.us/api/views/59kj-x8nc/files/f1fa59a6-f45d-4109-bbf0-811aacc3fa1a?download=true&filename=Housing_Litigations_Data_Dictionary.pdf',
       },
     ],
   },
@@ -309,6 +540,12 @@ export const infoModals = {
       {
         text: 'J-51',
         url: 'https://www1.nyc.gov/site/finance/benefits/benefits-j51.page',
+      },
+    ],
+    documentationSources: [
+      {
+        text: 'Directory of NYC Housing Programs',
+        url: 'https://furmancenter.org/coredata/directory',
       },
     ],
   },
@@ -334,11 +571,27 @@ export const infoModals = {
 
   LOOKUP_BBL: {
     title: 'BBL',
-    body: '',
+    body:
+      'BBL stands for Borough/Block/Lot, and it identifies a property for taxation. The first digit is the borough, the next five are for the block, and the last four are for the lot.',
   },
 
   LOOKUP_STABILIZATION: {
     title: 'Rent Stabilization',
-    body: '',
+    body:
+      'We base stabilized unit numbers on property tax bills from the NYC Department of Finance. They have been scraped by open data activists. Missing or fluctuating numbers may be due to missing/incorrect registration by the owner or inconsistencies in property tax documentation. Click the links below for documentation and raw data.',
+    sources: [
+      {
+        text: 'taxbills.nyc',
+        url: 'https://github.com/talos/nyc-stabilization-unit-counts',
+      },
+      {
+        text: 'https://github.com/talos/nyc-stabilization-unit-counts',
+        url: 'https://github.com/talos/nyc-stabilization-unit-counts',
+      },
+      {
+        text: 'https://github.com/justfixnyc/nyc-doffer',
+        url: 'https://github.com/justfixnyc/nyc-doffer',
+      },
+    ],
   },
 }
