@@ -39,6 +39,12 @@ export const infoModals = {
         url: 'https://github.com/justfixnyc/nyc-doffer',
       },
     ],
+    documentationSources: [
+      {
+        text: 'NYC Stabilization Unit Counts',
+        url: 'https://github.com/talos/nyc-stabilization-unit-counts',
+      },
+    ],
   },
   rr: {
     title: 'Subsidized Housing',
@@ -60,6 +66,12 @@ export const infoModals = {
         url: 'http://coredata.nyc/',
       },
     ],
+    documentationSources: [
+      {
+        text: 'Directory of NYC Housing Programs',
+        url: 'https://furmancenter.org/coredata/directory',
+      },
+    ],
   },
   sh: {
     title: 'Small Homes',
@@ -79,6 +91,13 @@ export const infoModals = {
       {
         text: 'NYC Department of City Planning',
         url: 'https://www1.nyc.gov/site/planning/data-maps/open-data.page#pluto',
+      },
+    ],
+    documentationSources: [
+      {
+        text: 'PLUTO Data Dictionary',
+        url:
+          'https://www1.nyc.gov/assets/planning/download/pdf/data-maps/open-data/pluto_datadictionary.pdf?r=18v21beta',
       },
     ],
   },
@@ -104,6 +123,13 @@ export const infoModals = {
       {
         text: 'NYC Department of City Planning',
         url: 'https://www1.nyc.gov/site/planning/data-maps/open-data.page#pluto',
+      },
+    ],
+    documentationSources: [
+      {
+        text: 'PLUTO Data Dictionary',
+        url:
+          'https://www1.nyc.gov/assets/planning/download/pdf/data-maps/open-data/pluto_datadictionary.pdf?r=18v21beta',
       },
     ],
   },
@@ -138,6 +164,13 @@ export const infoModals = {
         url: 'https://data.cityofnewyork.us/Housing-Development/Housing-Maintenance-Code-Violations/wvxf-dwi5/data',
       },
     ],
+    documentationSources: [
+      {
+        text: 'HPD Violation Open Data 2017.pdf',
+        url:
+          'https://data.cityofnewyork.us/api/views/wvxf-dwi5/files/02c794c8-3013-49ea-9ab3-9e5998b061de?download=true&filename=HPD%20Violation%20Open%20Data%202017.pdf',
+      },
+    ],
   },
   HPD_COMPLAINT: {
     title: 'HPD Complaints & Problems',
@@ -165,6 +198,18 @@ export const infoModals = {
         url: 'https://data.cityofnewyork.us/Housing-Development/Complaint-Problems/a2nx-4u46',
       },
     ],
+    documentationSources: [
+      {
+        text: 'Complaint Data Dictionary.pdf',
+        url:
+          'https://data.cityofnewyork.us/api/views/uwyv-629c/files/6d8919d1-2b80-4ec0-8640-d6c55461ce44?download=true&filename=Complaint%20Data%20Dictionary.pdf',
+      },
+      {
+        text: 'HPD Complaint Open Data.pdf',
+        url:
+          'https://data.cityofnewyork.us/api/views/a2nx-4u46/files/516fa3f1-fff3-4ef4-9ec8-74da856d9cb8?download=true&filename=HPD%20Complaint%20Open%20Data.pdf',
+      },
+    ],
   },
   DOB_VIOLATION: {
     title: 'DOB Violations',
@@ -176,6 +221,13 @@ export const infoModals = {
         url: 'https://data.cityofnewyork.us/Housing-Development/DOB-Violations/3h2n-5cm9',
       },
     ],
+    documentationSources: [
+      {
+        text: 'DD_DOB_Violations_2019-03-19.xlsx',
+        url:
+          'https://data.cityofnewyork.us/api/views/3h2n-5cm9/files/77115414-4d7e-4188-8547-a5ad3d10f726?download=true&filename=DD_DOB_Violations_2019-03-19.xlsx',
+      },
+    ],
   },
   DOB_COMPLAINT: {
     title: 'DOB Complaints',
@@ -185,6 +237,13 @@ export const infoModals = {
       {
         text: 'NYC Open Data - DOB Complaints Received',
         url: 'https://data.cityofnewyork.us/Housing-Development/DOB-Complaints-Received/eabe-havv',
+      },
+    ],
+    documentationSources: [
+      {
+        text: 'DD_DOB_Complaints_Received_2019-08-21.xlsx',
+        url:
+          'https://data.cityofnewyork.us/api/views/eabe-havv/files/e19c463a-69dd-4810-ae72-3c7c7fc657f8?download=true&filename=DD_DOB_Complaints_Received_2019-08-21.xlsx',
       },
     ],
   },
@@ -219,6 +278,20 @@ export const infoModals = {
         url: 'https://data.cityofnewyork.us/Housing-Development/DOB-NOW-Build-Approved-Permits/rbx6-tga4',
       },
     ],
+    documentationBody:
+      "DOB permits data comes from two sources: permits filed in hard copy via the traditional system that captures data in DOB's Building Information System (BIS), and permits filed electronically via the DOB NOW portal. Currently, only some permits are able to be submitted via DOB NOW. The fields and data captured in the two systems differ from one another. ",
+    documentationSources: [
+      {
+        text: 'DD_DOB_Permit_Issuance_2019-07-29.xlsx',
+        url:
+          'https://data.cityofnewyork.us/api/views/ipu4-2q9a/files/12265875-36c8-4f5c-8a8c-657952bd1484?download=true&filename=DD_DOB_Permit_Issuance_2019-07-29.xlsx',
+      },
+      {
+        text: 'DD_DOB_NOW_Build_Approved_Permits_2018-06-29.xlsx',
+        url:
+          'https://data.cityofnewyork.us/api/views/rbx6-tga4/files/04484c71-75ff-46ba-8b90-3eaf66d45dc8?download=true&filename=DD_DOB_NOW_Build_Approved_Permits_2018-06-29.xlsx',
+      },
+    ],
   },
   DOB_FILED_PERMIT: {
     title: 'DOB Permit Applications',
@@ -251,6 +324,20 @@ export const infoModals = {
         url: 'https://data.cityofnewyork.us/Housing-Development/DOB-NOW-Build-Job-Application-Filings/w9ak-ipjd',
       },
     ],
+    documentationBody:
+      "DOB permits data comes from two sources: permits filed in hard copy via the traditional system that captures data in DOB's Building Information System (BIS), and permits filed electronically via the DOB NOW portal. Currently, only some permits are able to be submitted via DOB NOW. The fields and data captured in the two systems differ from one another.",
+    documentationSources: [
+      {
+        text: 'DD_DOB_Permit_Issuance_2019-07-29.xlsx',
+        url:
+          'https://data.cityofnewyork.us/api/views/ipu4-2q9a/files/12265875-36c8-4f5c-8a8c-657952bd1484?download=true&filename=DD_DOB_Permit_Issuance_2019-07-29.xlsx',
+      },
+      {
+        text: 'DD_DOB_NOW_Build_Approved_Permits_2018-06-29.xlsx',
+        url:
+          'https://data.cityofnewyork.us/api/views/rbx6-tga4/files/04484c71-75ff-46ba-8b90-3eaf66d45dc8?download=true&filename=DD_DOB_NOW_Build_Approved_Permits_2018-06-29.xlsx',
+      },
+    ],
   },
   ECB_VIOLATION: {
     title: 'ECB Violations',
@@ -260,6 +347,13 @@ export const infoModals = {
       {
         text: 'NYC Open Data - DOB/ECB Violations',
         url: 'https://data.cityofnewyork.us/Housing-Development/DOB-ECB-Violations/6bgk-3dad',
+      },
+    ],
+    documentationSources: [
+      {
+        text: 'DD_DOB ECB Violations_2019-07-10.xlsx',
+        url:
+          'https://data.cityofnewyork.us/api/views/6bgk-3dad/files/9cf3234e-9687-4a4b-8085-9b8f95dc1f58?download=true&filename=DD_DOB%20ECB%20Violations_2019-07-10.xlsx',
       },
     ],
   },
@@ -301,6 +395,13 @@ export const infoModals = {
       {
         text: 'NYC Open Data - ACRIS Real Property Parties',
         url: 'https://data.cityofnewyork.us/City-Government/ACRIS-Real-Property-Parties/636b-3b5g',
+      },
+    ],
+    documentationSources: [
+      {
+        text: 'ACRIS_Public_OpenData_Guide.doc',
+        url:
+          'https://data.cityofnewyork.us/api/views/bnx9-e6tj/files/c5d51488-f56b-495e-aef1-b9e7acc4680c?download=true&filename=ACRIS_Public_OpenData_Extract_Guide_v_1.0.doc',
       },
     ],
   },
@@ -386,6 +487,13 @@ export const infoModals = {
         url: 'https://data.cityofnewyork.us/City-Government/Evictions/6z8x-wfk4',
       },
     ],
+    documentationSources: [
+      {
+        text: 'DOI - Marshals Evictions - Dataset Dictionary.xlsx',
+        url:
+          'https://data.cityofnewyork.us/api/views/6z8x-wfk4/files/39d3f781-a654-4547-be79-b6bd12c1e6d5?download=true&filename=DOI%20-%20Marshals%20Evictions%20-%20Dataset%20Dictionary.xlsx',
+      },
+    ],
   },
   HOUSING_LITIGATION: {
     title: 'Litigations against landlord',
@@ -405,6 +513,17 @@ export const infoModals = {
         url: 'https://data.cityofnewyork.us/Housing-Development/Housing-Litigations/59kj-x8nc',
       },
     ],
+    documentationSources: [
+      {
+        text: 'Glossary of terms',
+        url: 'https://hpdonline.hpdnyc.org/HPDonline/GlossaryLMS.aspx',
+      },
+      {
+        text: 'Housing_Litigations_Data_Dictionary.pdf',
+        url:
+          'https://data.cityofnewyork.us/api/views/59kj-x8nc/files/f1fa59a6-f45d-4109-bbf0-811aacc3fa1a?download=true&filename=Housing_Litigations_Data_Dictionary.pdf',
+      },
+    ],
   },
   SUBSIDY_PROGRAM_SOURCE: {
     title: 'Subsidy Prorgams',
@@ -421,6 +540,12 @@ export const infoModals = {
       {
         text: 'J-51',
         url: 'https://www1.nyc.gov/site/finance/benefits/benefits-j51.page',
+      },
+    ],
+    documentationSources: [
+      {
+        text: 'Directory of NYC Housing Programs',
+        url: 'https://furmancenter.org/coredata/directory',
       },
     ],
   },
