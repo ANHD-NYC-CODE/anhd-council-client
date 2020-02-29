@@ -203,7 +203,12 @@ export class AdvancedSearch extends React.Component {
           <title>DAP Portal | Custom Search</title>
         </Helmet>
         <div className="advanced-search__header">
-          {this.props.loading && <SpinnerLoader size={'40px'} />}
+          {this.props.loading ? (
+            <SpinnerLoader className="advanced-search__title" size={'40px'} />
+          ) : (
+            <h4 className="advanced-search__title">Custom Search</h4>
+          )}
+
           {(requestCalledAndNotLoading || loadingButDisplayingResults) && (
             <Button
               className="advanced-search__toggle-button"
@@ -313,8 +318,6 @@ export class AdvancedSearch extends React.Component {
           )}
           {this.state.displayingForm && (
             <div className="advanced-search-form--container">
-              <div className="advanced-search__title">Custom Search</div>
-
               <AdvancedSearchForm
                 advancedSearch={this.state.advancedSearch}
                 appState={this.props.appState}

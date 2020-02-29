@@ -8,7 +8,7 @@ export const initialState = {
   resultFilterCalculations: [],
   resultFilters: [], // initialize in Config/index.js
   selectedFilters: [],
-  filterCondition: 'OR',
+  filterCondition: 'AND',
   districtShowCustomView: false,
   resultRecords: [],
   housingTypeResults: [],

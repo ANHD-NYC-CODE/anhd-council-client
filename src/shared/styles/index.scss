@@ -21,3 +21,13 @@ body {
 ul {
   margin-bottom: 0;
 }
+
+.view-toggle {
+  border: 1px solid $dark;
+  cursor: pointer;
+  text-transform: uppercase;
+
+  &.btn-dark:not(:disabled):not(.disabled).active {
+    background-color: $dark;
+  }
+}

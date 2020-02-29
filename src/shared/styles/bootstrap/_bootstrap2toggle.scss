@@ -185,13 +185,27 @@ label.checkbox.inline .toggle {
   &:focus:not([disabled]) .round-toggle-handle {
     box-shadow: 1px 1px 2px $blizzard;
   }
+
+  .toggle-handle,
+  .toggle-handle:hover {
+    background-color: white;
+    border-color: $gray-200;
+  }
+  .btn-light.toggle-off {
+    color: transparent;
+    background-color: #e2e6ea;
+    border-color: #dae0e5;
+  }
+
+  &.btn-light:hover {
+  }
 }
 
 .round-toggle-handle {
   border: 1px solid rgba(120, 120, 120, 0.5);
   border-radius: 24px;
-  width: 60%;
-  height: 100%;
+  width: 55%;
+  height: 110%;
   color: transparent;
 
   &[disabled] {

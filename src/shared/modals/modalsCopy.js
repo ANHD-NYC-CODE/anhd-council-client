@@ -594,4 +594,9 @@ export const infoModals = {
       },
     ],
   },
+  DASHBOARD_AND_OR: {
+    title: 'Conditional Filters',
+    body:
+      'The most recent version of DAP Portal will by default display results that meet **all** of the active filter conditions. DAP Portal BETA displayed results that met **any** of the active filter conditions. You can go back to displaying any of the active filter conditions by toggling to **OR**.',
+  },
 }
