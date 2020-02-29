@@ -182,6 +182,9 @@
 
   .district-dashboard-show__table {
     overflow-x: hidden;
+    @include media-breakpoint-up(lg) {
+      max-width: calc((100vw - (100vw - 1024px) / 2) - 400px);
+    }
   }
 
   .district-dashboard-show__results-container {
