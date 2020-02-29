@@ -110,7 +110,7 @@ export const postUserMessage = (bugData, hideModal) => (dispatch, getState, acce
     dispatch,
     getState,
     requestId,
-    '/bug-reports/',
+    '/user-messages/',
     JSON.stringify(bugData), // Body
     { format: null },
     access_token,
