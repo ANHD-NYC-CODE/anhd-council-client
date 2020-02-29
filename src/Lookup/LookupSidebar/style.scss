@@ -10,7 +10,7 @@ $opened-width: 1024px;
   }
 
   &.full-bleed--mobile {
-    background-color: $rhino;
+    background-color: $dark;
     overflow: visible;
     position: relative;
     transition: width 0.4s ease-in-out, flex-basis 0.4s ease-in-out;
@@ -33,9 +33,15 @@ $opened-width: 1024px;
     }
 
     &:not(.open) + .lookup-show__content .lookup-tabs,
-    &:not(.open) + .lookup-show__content .base-table-header,
     &:not(.open) + .lookup-show__content .table-header {
       max-width: $opened-width;
+    }
+
+    &:not(.open) + .lookup-show__content .table {
+      @include media-breakpoint-up(xl) {
+        max-width: calc((100vw - (100vw - 1024px) / 2) - 80px);
+        width: calc((100vw - (100vw - 1024px) / 2) - 80px);
+      }
     }
   }
 
@@ -60,7 +66,7 @@ $opened-width: 1024px;
   }
 
   .lookup-sidebar__header {
-    padding: 30px 0;
+    // padding: 30px 0;
 
     h4 {
       color: $white;
@@ -71,7 +77,7 @@ $opened-width: 1024px;
 
   .lookup-sidebar__content {
     @include media-breakpoint-up(sm) {
-      height: calc(100vh - 100px);
+      height: calc(100vh - 50px);
       min-height: 0;
       overflow-x: hidden;
       overflow-y: overlay;
@@ -108,7 +114,7 @@ $opened-width: 1024px;
   }
 
   .lookup-sidebar__toggle {
-    background-color: $rhino;
+    background-color: $dark;
     color: white;
     cursor: pointer;
     display: none;

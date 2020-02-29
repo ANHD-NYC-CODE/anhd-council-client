@@ -4,6 +4,11 @@
   .advanced-search-form--container {
     overflow-x: hidden;
     padding: 0 80px;
+    padding-left: 0;
+  }
+
+  .advanced-search-form__heading {
+    @extend %p1-font-size;
   }
 
   .base-table {
@@ -89,8 +94,9 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    margin-top: 40px;
+    margin-top: 24px;
     margin-bottom: 40px;
+    position: relative;
 
     @include media-breakpoint-up(md) {
       min-height: 40px;
@@ -114,27 +120,43 @@
 
   &__map {
     position: relative;
+
+    @include media-breakpoint-up(lg) {
+      margin: 0 auto;
+      max-height: 50%;
+      max-width: 50%;
+    }
   }
 
   &__table {
     overflow-x: hidden;
+
+    @include media-breakpoint-up(lg) {
+      width: calc(100vw - ((100vw - 1024px) / 2) - 16px);
+    }
+  }
+
+  .base-table-header__wrapper {
+    max-width: 1024px;
   }
 
   &__results-header {
   }
 
   .view-toggle {
-    border: 2px solid $rhino;
+    border: 2px solid $dark;
     cursor: pointer;
     min-width: 100px;
   }
 
   &__title {
-    @extend %heading-md;
+    // @extend %heading-md;
     color: $black;
-
+    position: absolute;
+    top: 0;
+    margin-top: 12px;
     text-align: center;
     width: 100%;
-    margin-bottom: 80px;
+    pointer-events: none;
   }
 }

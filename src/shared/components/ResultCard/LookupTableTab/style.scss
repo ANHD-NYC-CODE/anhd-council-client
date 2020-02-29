@@ -6,7 +6,7 @@
   align-content: center;
   height: 100%;
   text-align: left;
-  padding: 2px;
+  padding: 8px;
   margin-bottom: 10px;
   margin-right: 10px;
   width: 100%;
@@ -55,6 +55,8 @@
 
   .summary-result-card__label {
     display: flex;
+    align-items: center;
+    justify-content: center;
     flex-direction: column;
   }
 }

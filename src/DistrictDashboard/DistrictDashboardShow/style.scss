@@ -174,7 +174,6 @@
     }
   }
 
-  .base-table-header,
   .geography-select-row,
   .district-dashboard-show__results-header {
     max-width: 600px;
@@ -182,6 +181,9 @@
 
   .district-dashboard-show__table {
     overflow-x: hidden;
+    @include media-breakpoint-up(lg) {
+      max-width: calc((100vw - (100vw - 1024px) / 2) - 400px);
+    }
   }
 
   .district-dashboard-show__results-container {
@@ -218,8 +220,6 @@
   }
 
   .view-toggle {
-    border: 2px solid $rhino;
-    cursor: pointer;
     min-width: 100px;
   }
 }
