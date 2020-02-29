@@ -112,12 +112,13 @@ $sub-header-padding-top: 12px;
   }
 
   .sub-header__nav-tab {
-    border: 1px solid $rhino;
+    border: 1px solid $dark;
     box-sizing: border-box;
     padding: 1rem 15px;
     text-decoration: none;
     flex: 0 0 100%;
     white-space: pre;
+    height: 40px;
     margin-bottom: -1px;
 
     @include media-breakpoint-up(sm) {

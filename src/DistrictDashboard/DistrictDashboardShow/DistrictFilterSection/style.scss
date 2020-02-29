@@ -18,6 +18,13 @@
   }
 
   .dashboard-filter-section__toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .info-modal-button {
+      margin-right: 10px;
+    }
     label {
       min-width: 50px;
     }

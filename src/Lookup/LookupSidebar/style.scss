@@ -10,7 +10,7 @@ $opened-width: 1024px;
   }
 
   &.full-bleed--mobile {
-    background-color: $rhino;
+    background-color: $dark;
     overflow: visible;
     position: relative;
     transition: width 0.4s ease-in-out, flex-basis 0.4s ease-in-out;
@@ -108,7 +108,7 @@ $opened-width: 1024px;
   }
 
   .lookup-sidebar__toggle {
-    background-color: $rhino;
+    background-color: $dark;
     color: white;
     cursor: pointer;
     display: none;
