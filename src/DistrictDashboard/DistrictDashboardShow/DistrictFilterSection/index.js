@@ -43,7 +43,6 @@ const DistrictFilterSection = props => {
           changingGeographyType: undefined,
         })
       )
-
       props.dispatch(setHousingTypeResultFilter(props.dashboardState.resultFilters[0]))
     }
   }

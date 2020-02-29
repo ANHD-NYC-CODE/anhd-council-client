@@ -10,10 +10,13 @@
 
   .lookup-links__link-row {
     display: flex;
+    flex-direction: column;
+    text-align: left;
 
     > * {
       font-weight: bold;
       margin-right: 20px;
+      margin-bottom: 10px;
     }
   }
 }

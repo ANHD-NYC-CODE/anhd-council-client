@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import BaseLink from 'shared/components/BaseLink'
 
 const ZoningSection = props => {
   return (
@@ -42,6 +43,17 @@ const ZoningSection = props => {
           <span className="profile-summary-body__label">Maximum Community Facility FAR</span>
           <span className="profile-summary-body__value">{parseFloat(props.profile.facilfar).toFixed(1)}</span>
         </div>
+      </div>
+      <div className="lookup-profile-summary__link">
+        View more zoning information at{' '}
+        <BaseLink
+          className="text-link"
+          href={`https://zola.planning.nyc.gov/lot/${props.profile.bbl.charAt(0)}/${props.profile.bbl.slice(
+            1,
+            6
+          )}/${props.profile.bbl.slice(6, 10)}`}
+          text="ZoLa"
+        />
       </div>
     </div>
   )
