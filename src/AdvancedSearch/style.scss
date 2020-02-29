@@ -118,6 +118,14 @@
 
   &__table {
     overflow-x: hidden;
+
+    @include media-breakpoint-up(lg) {
+      width: calc(100vw - ((100vw - 1024px) / 2) - 16px);
+    }
+  }
+
+  .base-table-header {
+    max-width: 1024px;
   }
 
   &__results-header {
