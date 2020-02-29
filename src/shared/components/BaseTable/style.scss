@@ -20,6 +20,7 @@ table.table,
   thead th,
   tbody td {
     @extend %p3-font-size;
+    vertical-align: middle;
 
     input {
       height: 30px;
@@ -168,7 +169,7 @@ table.table,
   }
 
   .base-table__select-filters {
-    background-color: $tab-primary;
+    background-color: $blizzard;
   }
 
   .base-table__select-filters__container {
@@ -210,6 +211,7 @@ table.table,
   flex-wrap: wrap;
   justify-content: flex-start;
   padding: 10px;
+  padding-bottom: 0;
   // max-height: 100px;
   // max-width: 220px;
 

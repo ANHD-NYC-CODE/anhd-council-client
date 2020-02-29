@@ -9,6 +9,7 @@ import { setHousingTypeResultFilter, setDashboardTableState } from 'Store/Dashbo
 import { ButtonToolbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
 import { fireFilterSelectEvent } from 'Store/Analytics/actions'
 import { setDashboardFilterCondition } from 'Store/DashboardState/actions'
+import InfoModalButton from 'shared/components/InfoModalButton'
 
 import './style.scss'
 
@@ -55,6 +56,7 @@ const DistrictFilterSection = props => {
             <div className="district-filter-section__header">
               <p className="district-filter-section__title">Datasets:</p>
               <ButtonToolbar className="d-flex dashboard-filter-section__toggle">
+                <InfoModalButton modalConstant={'DASHBOARD_AND_OR'} />
                 <ToggleButtonGroup
                   name="view"
                   type="radio"

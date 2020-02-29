@@ -1,12 +1,15 @@
 @import 'shared/styles/_variables.scss';
+$unopened-width: 660px;
 
 .base-table-header {
   background-color: $white;
   border-radius: 6px 6px 0 0;
   color: $black;
-  display: flex;
   padding: 10px 0;
 
+  &__wrapper {
+    display: flex;
+  }
   .table-header__share-column {
     cursor: pointer;
     color: $gray-400;
@@ -39,4 +42,7 @@
 .base-table-header--lookup {
   background-color: $blizzard;
   padding: 10px;
+  .base-table-header__wrapper {
+    max-width: $unopened-width;
+  }
 }

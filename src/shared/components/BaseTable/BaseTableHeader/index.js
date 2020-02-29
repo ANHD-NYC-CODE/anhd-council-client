@@ -48,24 +48,26 @@ const BaseTableHeader = props => {
 
   return (
     <div className={classnames('base-table-header', props.headerClass)}>
-      <div className="text-right d-flex justify-content-start align-items-center">
-        {getTableSize(props.paginationProps, props.recordsSize)}
-      </div>
-      <div className="base-table-header__right-group">
-        <div className="table-header__share-column">
-          <CsvButton
-            parentComponent={this}
-            onClick={props.handleCsvClick}
-            ExportCSVButton={CSVExport.ExportCSVButton}
-            csvProps={props.csvProps}
-            size="sm"
-          />
+      <div className="base-table-header__wrapper">
+        <div className="text-right d-flex justify-content-start align-items-center">
+          {getTableSize(props.paginationProps, props.recordsSize)}
         </div>
-        {props.recordsSize > 10 && (
-          <div className="table-header__pagination_dropdown">
-            <SizePerPageDropdownStandalone btnContextual="btn-dark btn-sm" {...props.paginationProps} />
+        <div className="base-table-header__right-group">
+          <div className="table-header__share-column">
+            <CsvButton
+              parentComponent={this}
+              onClick={props.handleCsvClick}
+              ExportCSVButton={CSVExport.ExportCSVButton}
+              csvProps={props.csvProps}
+              size="sm"
+            />
           </div>
-        )}
+          {props.recordsSize > 10 && (
+            <div className="table-header__pagination_dropdown">
+              <SizePerPageDropdownStandalone btnContextual="btn-dark btn-sm" {...props.paginationProps} />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   )

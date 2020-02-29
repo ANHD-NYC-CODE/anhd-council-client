@@ -77,18 +77,18 @@ a.btn-link:hover {
   @media (hover: hover) {
     &:hover {
       background-color: $tab-dark-hover;
-      color: $black;
+      color: $dark;
     }
   }
 
   &:focus {
     background-color: $tab-dark-hover;
-    color: $black;
+    color: $dark;
     outline: none;
   }
 
   &.active {
-    background-color: $rhino;
+    background-color: $dark;
     color: $white;
   }
 
