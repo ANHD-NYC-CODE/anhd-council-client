@@ -50,7 +50,12 @@ $sub-header-padding-top: 12px;
 
     .sub-header__logo {
       height: auto;
-      width: 100%;
+      width: 50%;
+      margin: 0 auto;
+      display: block;
+      @include media-breakpoint-up(sm) {
+        width: 100%;
+      }
     }
   }
 
@@ -118,7 +123,6 @@ $sub-header-padding-top: 12px;
     text-decoration: none;
     flex: 0 0 100%;
     white-space: pre;
-    height: 40px;
     margin-bottom: -1px;
 
     @include media-breakpoint-up(sm) {
@@ -128,6 +132,8 @@ $sub-header-padding-top: 12px;
       flex: 0 1 auto;
       margin-right: 4px;
       justify-content: center;
+      height: 40px;
+
       padding: 1rem 1rem;
     }
 
