@@ -34,7 +34,7 @@ class Footer extends React.Component {
                       >
                         Google Analytics
                       </a>{' '}
-                      to help us better understand how it's used.
+                      to help us better understand how it's used.{' '}
                       <button
                         className="text-link"
                         href="#"

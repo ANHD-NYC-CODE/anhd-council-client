@@ -5,6 +5,11 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    flex-wrap: wrap;
+
+    @include media-breakpoint-up(sm) {
+      flex-wrap: nowrap;
+    }
   }
 
   .lookup-address-display__title {
@@ -14,7 +19,15 @@
   }
 
   .lookup-address-display__button {
-    display: inline-block;
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+    @include media-breakpoint-up(sm) {
+      display: inline-block;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
 
     @include media-breakpoint-up(md) {
       margin-left: 0.5rem;

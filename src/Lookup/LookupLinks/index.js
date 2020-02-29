@@ -20,6 +20,13 @@ class LookupLinks extends React.Component {
         <div className="lookup-links__link-row">
           <BaseLink
             className="lookup-links__link"
+            href={`http://a836-acris.nyc.gov/bblsearch/bblsearch.asp?borough=${this.props.property.bbl.charAt(
+              0
+            )}&block=${this.props.property.bbl.slice(1, 6)}&lot=${this.props.property.bbl.slice(6, 10)}`}
+            text="ACRIS Documents"
+          />
+          <BaseLink
+            className="lookup-links__link"
             href={`https://hpdonline.hpdnyc.org/HPDonline/Provide_address.aspx?p1=${boroughAbbreviationToCode(
               this.props.property.borough
             )}&p2=${(this.props.property.original_address || this.props.property.address).split(' ')[0]}&p3=${(
@@ -32,29 +39,10 @@ class LookupLinks extends React.Component {
           />
           <BaseLink
             className="lookup-links__link"
-            href={`http://a836-acris.nyc.gov/bblsearch/bblsearch.asp?borough=${this.props.property.bbl.charAt(
-              0
-            )}&block=${this.props.property.bbl.slice(1, 6)}&lot=${this.props.property.bbl.slice(6, 10)}`}
-            text="ACRIS Documents"
-          />
-          <BaseLink
-            className="lookup-links__link"
-            href={`https://zola.planning.nyc.gov/lot/${this.props.property.bbl.charAt(
-              0
-            )}/${this.props.property.bbl.slice(1, 6)}/${this.props.property.bbl.slice(6, 10)}`}
-            text="ZoLa"
-          />
-          <BaseLink
-            className="lookup-links__link"
             href={`http://a810-bisweb.nyc.gov/bisweb/PropertyProfileOverviewServlet?boro=${this.props.property.bbl.charAt(
               0
             )}&block=${this.props.property.bbl.slice(1, 6)}&lot=${this.props.property.bbl.slice(6, 10)}`}
             text="DOB Property Overview"
-          />
-          <BaseLink
-            className="lookup-links__link"
-            href={`http://www.oasisnyc.net/map.aspx?zoomto=lot:${this.props.property.bbl}`}
-            text="Oasis"
           />
         </div>
       </div>
