@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { Button } from 'react-bootstrap'
 import { boroCodeToName, constructAddressString } from 'shared/utilities/languageUtils'
+import { spaceEnterKeyDownHandler } from 'shared/utilities/accessibilityUtils'
 
 import './style.scss'
 
@@ -33,7 +34,7 @@ const LookupAddressDisplay = props => {
                   config={config}
                   inputClass="home-search-bar"
                   inputSize="md"
-                  containerClass="lookup-address-search mr-2"
+                  containerClass="lookup-address-search"
                 />
               )
             }}
@@ -49,14 +50,20 @@ const LookupAddressDisplay = props => {
       )}
       {!isEditing && (
         <div className="lookup-address-display__displaying">
-          <Button
+          {/* <Button
             className="lookup-address-display__button lookup-address-display__search-button btn--small"
             variant="dark"
             onClick={handleEditClick}
           >
             <FontAwesomeIcon color="white" className="" size="2x" icon={faSearch} />
-          </Button>
-          <p className="lookup-address-display__title">
+          </Button> */}
+          <div
+            tabIndex="0"
+            role="button"
+            className="lookup-address-display__title"
+            onKeyDown={e => spaceEnterKeyDownHandler(e, e => handleEditClick())}
+            onClick={handleEditClick}
+          >
             {constructAddressString({
               street: props.profile.address,
               borough: boroCodeToName(props.profile.borough),
@@ -76,7 +83,7 @@ const LookupAddressDisplay = props => {
             >
               CLEAR
             </Button>
-          </p>
+          </div>
         </div>
       )}
     </div>

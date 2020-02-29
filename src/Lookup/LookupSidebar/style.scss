@@ -1,5 +1,5 @@
 @import 'shared/styles/_variables.scss';
-$opened-width: 1024px;
+$opened-width: 1044px;
 
 .lookup-sidebar {
   white-space: nowrap;
@@ -39,8 +39,8 @@ $opened-width: 1024px;
 
     &:not(.open) + .lookup-show__content .table {
       @include media-breakpoint-up(xl) {
-        max-width: calc((100vw - (100vw - 1024px) / 2) - 80px);
-        width: calc((100vw - (100vw - 1024px) / 2) - 80px);
+        max-width: calc((100vw - (100vw - 1044px) / 2) - 80px);
+        width: calc((100vw - (100vw - 1044px) / 2) - 80px);
       }
     }
   }

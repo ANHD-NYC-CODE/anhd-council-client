@@ -29,13 +29,13 @@ const IntroductionBlock = props => {
       </p>
       <p>The DAP Portal is made possible by the support of the New York City Council and New York State Senate.</p>
 
-      {props.scrollToControls && (
+      {/* {props.scrollToControls && (
         <div className="d-block d-lg-none my-5">
           <Button variant="info" onClick={props.scrollToControls}>
             Get Started
           </Button>
         </div>
-      )}
+      )} */}
       <h3 className="mb-4">The Displacement Alert Project</h3>
       <p>
         For New Yorkers, stopping tenant displacement is one of the most urgent issues of the day.{' '}
@@ -55,6 +55,9 @@ const IntroductionBlock = props => {
       <p>
         The Displacement Alert Project is operated by the{' '}
         <BaseLink href="https://anhd.org">Association for Neighborhood and Housing Development (ANHD)</BaseLink>.
+      </p>
+      <p>
+        Development by <BaseLink href="https://data.automatica.love">Data Automatica</BaseLink>.
       </p>
     </Jumbotron>
   )

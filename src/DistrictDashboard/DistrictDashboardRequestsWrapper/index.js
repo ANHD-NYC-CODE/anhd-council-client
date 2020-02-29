@@ -23,7 +23,8 @@ class DistrictDashboardRequestsWrapper extends React.PureComponent {
   }
 
   componentDidMount() {
-    if (this.props.mapRequests.length) {
+    const uncalledRequests = this.props.mapRequests.filter(r => !r.called)
+    if (this.props.mapRequests.length && uncalledRequests.length) {
       this.loadRequests(this.props.mapRequests)
     }
   }
@@ -45,7 +46,6 @@ class DistrictDashboardRequestsWrapper extends React.PureComponent {
     requests.forEach(request => {
       this.props.dispatch(requestWithAuth(makeRequest(request)))
     })
-
     this.props.dispatch(
       setHousingTypeResultFilter(
         this.props.dashboardState.housingTypeResultFilter || this.props.dashboardState.resultFilters[0]

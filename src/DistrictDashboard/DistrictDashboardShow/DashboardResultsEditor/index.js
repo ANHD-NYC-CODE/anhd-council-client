@@ -32,7 +32,6 @@ const DashboardResultsEditor = props => {
 
   const handleHousingTypeFilterChange = id => {
     const filter = Property().ownResultFilters.find(f => f.id === id)
-
     props.dispatch(setHousingTypeResultFilter(filter))
   }
 
