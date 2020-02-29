@@ -11,7 +11,7 @@ const LoginModalFooter = props => {
           className="login-form__request-button"
           block
           variant="dark"
-          size="lg"
+          size="md"
           onClick={e => {
             e.preventDefault()
             props.modal.setModal({

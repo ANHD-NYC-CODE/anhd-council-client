@@ -85,7 +85,7 @@ class LoginForm extends React.Component {
                   disabled={this.props.loading}
                   variant="dark"
                   type="submit"
-                  size="lg"
+                  size="md"
                 >
                   <span>Submit</span>
                   <div className="button-loader__container">{this.props.loading && <SpinnerLoader size="20px" />}</div>

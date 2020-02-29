@@ -176,13 +176,13 @@
 
   .geography-select-row,
   .district-dashboard-show__results-header {
-    max-width: 600px;
+    max-width: 640px;
   }
 
   .district-dashboard-show__table {
     overflow-x: hidden;
     @include media-breakpoint-up(lg) {
-      max-width: calc((100vw - (100vw - 1024px) / 2) - 400px);
+      max-width: calc((100vw - (100vw - 1044px) / 2) - 400px);
     }
   }
 
