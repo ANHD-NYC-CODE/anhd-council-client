@@ -70,7 +70,7 @@ export const getTableSubheaderLinks = ({ constant = '', property = {} } = {}) =>
               </BaseLink>
             </div>
           )}
-          <div>One complaint can include mdivtiple problems.</div>
+          <div>One complaint can include multiple problems.</div>
         </div>
       )
     case 'HOUSING_LITIGATION':

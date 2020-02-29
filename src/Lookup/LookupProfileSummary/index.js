@@ -40,14 +40,14 @@ const LookupProfileSummary = props => {
                         <ExpandableSection
                           aboveFoldElement={
                             <div className="lookup-sidebar__header">
-                              <h4>Property Info</h4>
+                              <h5>Property Info</h5>
                             </div>
                           }
                           className="lookup-profile-summary__section-header"
                           iconClass="lookup-profile-summary__expandable-icon"
                           collapseIcon={<FontAwesomeIcon size="lg" icon={faChevronUp} />}
                           expandIcon={<FontAwesomeIcon size="lg" icon={faChevronDown} />}
-                          startsOpen={true}
+                          startsOpen={window.matchMedia('(min-width: 576px)').matches}
                         >
                           <PropertySummaryBody config={config} profile={props.propertyResult} />
                         </ExpandableSection>
@@ -97,7 +97,7 @@ const LookupProfileSummary = props => {
                           iconClass="lookup-profile-summary__expandable-icon"
                           collapseIcon={<FontAwesomeIcon size="lg" icon={faChevronUp} />}
                           expandIcon={<FontAwesomeIcon size="lg" icon={faChevronDown} />}
-                          startsOpen={true}
+                          startsOpen={window.matchMedia('(min-width: 576px)').matches}
                         >
                           <LocationSection
                             appState={props.appState}

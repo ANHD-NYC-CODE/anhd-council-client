@@ -1,10 +1,10 @@
 @import 'shared/styles/_variables.scss';
-$unopened-width: 600px;
+$unopened-width: 660px;
 
 .lookup-show {
   .lookup-show__row-wrapper {
     margin-top: 1rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     @include media-breakpoint-up(md) {
       margin-left: $lookup-padding-size;
       margin-right: 20px;
@@ -42,23 +42,23 @@ $unopened-width: 600px;
     }
   }
 
-  .table-header,
-  .base-table-header {
+  .table-header {
     max-width: $unopened-width;
   }
+
   .lookup-show__content {
     display: flex;
     flex-direction: column;
     flex: 1;
     margin-bottom: 40px;
-    overflow-x: auto;
+    overflow: hidden;
 
     @include media-breakpoint-up(sm) {
       padding: 0 $lookup-padding-size;
     }
 
     @include media-breakpoint-up(xl) {
-      overflow-x: visible;
+      overflow: visible;
     }
 
     .table {
