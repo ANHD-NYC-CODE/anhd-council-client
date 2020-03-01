@@ -223,6 +223,7 @@ class DistrictDashboardShow extends React.Component {
                   const residentialFilter = propertyResource.ownResultFilters.find(
                     f => f.id === c.HOUSING_TYPE_RESIDENTIAL
                   )
+
                   return (
                     <DashboardResultsHeader
                       label={(this.props.dashboardState.housingTypeResultFilter || {}).label}
