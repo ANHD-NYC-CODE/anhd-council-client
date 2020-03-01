@@ -8,6 +8,7 @@ import {
   setMapFilterDate,
   updateAmountFilter,
   setHousingTypeResultFilter,
+  setHousingTypeResultsIndex,
 } from 'Store/DashboardState/actions'
 import StandardizedInput from 'shared/classes/StandardizedInput'
 import { Button, Overlay, Tooltip } from 'react-bootstrap'
@@ -32,7 +33,9 @@ const DashboardResultsEditor = props => {
 
   const handleHousingTypeFilterChange = id => {
     const filter = Property().ownResultFilters.find(f => f.id === id)
+    const index = Property().ownResultFilters.findIndex(f => f.id === id)
     props.dispatch(setHousingTypeResultFilter(filter))
+    props.dispatch(setHousingTypeResultsIndex(index))
   }
 
   const handleAmountFilterChange = (e, amountFilter) => {
