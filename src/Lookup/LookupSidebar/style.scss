@@ -69,10 +69,15 @@
 
   .lookup-sidebar__content {
     @include media-breakpoint-up(sm) {
-      height: calc(100vh - 50px);
+      height: calc(100vh);
       min-height: 0;
       overflow-x: hidden;
       overflow-y: overlay;
+      padding-bottom: 0;
+
+      @include media-breakpoint-up(sm) {
+        padding-bottom: 200px;
+      }
     }
 
     /* Track */
