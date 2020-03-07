@@ -8,6 +8,10 @@
     margin-bottom: 20px;
   }
 
+  @include media-breakpoint-up(sm) {
+    margin-left: -1rem;
+  }
+
   &.full-bleed--mobile {
     background-color: $dark;
     overflow: visible;

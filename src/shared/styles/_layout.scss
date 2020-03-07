@@ -37,8 +37,8 @@ body {
   width: 100% !important;
 
   @include media-breakpoint-up(lg) {
-    padding: 0 !important;
-    max-width: 1044px !important;
+    // padding: 0 !important;
+    // max-width: 1044px !important;
   }
 
   .row {
@@ -59,10 +59,11 @@ body {
 
 %layout-width-wrapper--extended {
   @include media-breakpoint-up(lg) {
-    margin-left: 20% !important;
-    margin-right: 20px !important;
-    width: 80% !important;
-    max-width: 1600px !important;
+    // margin-left: 20% !important;
+    // margin-right: 20px !important;
+    padding: 0 !important;
+    width: 100% !important;
+    // max-width: 1600px !important;
   }
 }
 
@@ -72,7 +73,13 @@ body {
 
 .layout-width-wrapper--extended {
   @extend %layout-width-wrapper;
-  @extend %layout-width-wrapper--extended;
+  // @extend %layout-width-wrapper--extended;
+  padding: 0 !important;
+}
+
+.max-width-wrapper {
+  @extend %layout-width-wrapper;
+  max-width: 1044px !important;
 }
 
 .layout-width-wrapper--padded {

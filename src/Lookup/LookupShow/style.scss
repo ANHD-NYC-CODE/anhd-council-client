@@ -8,22 +8,29 @@ $unopened-width: 660px;
     @include media-breakpoint-up(md) {
       // margin-left: $lookup-padding-size;
       // margin-right: 20px;
+      max-width: 1000px;
     }
   }
 
   .lookup-show__top-row {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     margin: 1rem 0;
     flex-wrap: wrap;
 
-    @include media-breakpoint-up(sm) {
+    @include media-breakpoint-up(md) {
       flex-wrap: nowrap;
     }
     // AddressDisplay
     > div:first-child {
       // max-width: 760px;
-      width: 100%;
+      // width: 100%;
+      width: auto;
+
+      @include media-breakpoint-up(sm) {
+        margin-right: auto;
+      }
     }
 
     // Back to dashboard button

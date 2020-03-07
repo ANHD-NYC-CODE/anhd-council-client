@@ -133,36 +133,7 @@ class LookupShow extends React.PureComponent {
               profileRequest={this.props.profileRequest}
             />
           ) : (
-            <div className="lookup-show">
-              <div className="lookup-show__row-wrapper">
-                <div className="lookup-show__top-row">
-                  <div>
-                    <LookupAddressDisplay handleClear={this.handleClearLookup} profile={this.props.propertyResult} />
-                  </div>
-                  <div>
-                    {this.props.appState.currentGeographyType && this.props.appState.currentGeographyId && (
-                      <BaseLink
-                        href={geographyToLink(
-                          this.props.appState.currentGeographyType,
-                          this.props.appState.currentGeographyId
-                        )}
-                      >
-                        <Button className="icon-button--right" variant="dark">
-                          Back to dashboard <FontAwesomeIcon icon={faChevronRight} size="sm" />
-                        </Button>
-                      </BaseLink>
-                    )}
-                  </div>
-                </div>
-                <div className="lookup-show__building-row">
-                  <BuildingSelect
-                    bbl={this.props.bbl}
-                    bin={this.props.bin}
-                    changeLookup={this.props.changeLookup}
-                    propertyResult={this.props.propertyResult}
-                  />
-                </div>
-              </div>
+            <div className="lookup-show layout-width-wrapper">
               <div className="lookup-show__content-wrapper">
                 <LookupSidebar
                   appState={this.props.appState}
@@ -172,6 +143,31 @@ class LookupShow extends React.PureComponent {
                   propertyResult={this.props.propertyResult}
                 />
                 <div className="lookup-show__content">
+                  <div className="lookup-show__row-wrapper">
+                    <div className="lookup-show__top-row">
+                      <LookupAddressDisplay handleClear={this.handleClearLookup} profile={this.props.propertyResult} />
+                      {this.props.appState.currentGeographyType && this.props.appState.currentGeographyId && (
+                        <BaseLink
+                          href={geographyToLink(
+                            this.props.appState.currentGeographyType,
+                            this.props.appState.currentGeographyId
+                          )}
+                        >
+                          <Button className="icon-button--right" variant="dark">
+                            Back to dashboard <FontAwesomeIcon icon={faChevronRight} size="sm" />
+                          </Button>
+                        </BaseLink>
+                      )}
+                    </div>
+                    <div className="lookup-show__building-row">
+                      <BuildingSelect
+                        bbl={this.props.bbl}
+                        bin={this.props.bin}
+                        changeLookup={this.props.changeLookup}
+                        propertyResult={this.props.propertyResult}
+                      />
+                    </div>
+                  </div>
                   <LookupTabs
                     appState={this.props.appState}
                     dispatch={this.props.dispatch}
