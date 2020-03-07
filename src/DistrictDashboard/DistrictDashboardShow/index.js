@@ -303,6 +303,7 @@ class DistrictDashboardShow extends React.Component {
                   results={resultRecords}
                   selectGeographyData={this.props.config.selectGeographyData}
                   zoom={this.props.dashboardState.dashboardMapZoom}
+                  height="100%"
                 />
               </div>
               <div

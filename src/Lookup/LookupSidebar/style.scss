@@ -9,6 +9,7 @@
   }
 
   @include media-breakpoint-up(sm) {
+    margin-top: -1px;
     margin-left: -1rem;
   }
 

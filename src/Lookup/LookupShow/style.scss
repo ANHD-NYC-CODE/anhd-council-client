@@ -34,7 +34,7 @@ $unopened-width: 660px;
     }
 
     // Back to dashboard button
-    > div:last-child {
+    > div:last-child:not(:first-child) {
       // margin-left: $lookup-padding-size;
       @include media-breakpoint-up(md) {
         margin-left: auto;
