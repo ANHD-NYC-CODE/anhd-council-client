@@ -1,5 +1,4 @@
 @import 'shared/styles/_variables.scss';
-$opened-width: 1044px;
 
 .lookup-sidebar {
   white-space: nowrap;
@@ -29,18 +28,6 @@ $opened-width: 1044px;
       @include media-breakpoint-up(sm) {
         flex: 0 0 $lookup-sidebar-width;
         width: $lookup-sidebar-width;
-      }
-    }
-
-    &:not(.open) + .lookup-show__content .lookup-tabs,
-    &:not(.open) + .lookup-show__content .table-header {
-      max-width: $opened-width;
-    }
-
-    &:not(.open) + .lookup-show__content .table {
-      @include media-breakpoint-up(xl) {
-        max-width: calc((100vw - (100vw - 1044px) / 2) - 80px);
-        width: calc((100vw - (100vw - 1044px) / 2) - 80px);
       }
     }
   }

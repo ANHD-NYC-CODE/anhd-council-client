@@ -3,6 +3,13 @@
 table.table,
 .base-table,
 .nested-table {
+  width: 100%;
+
+  @include media-breakpoint-up(xl) {
+    width: fit-content;
+    max-width: 100%;
+  }
+
   table {
     background-color: $white;
   }

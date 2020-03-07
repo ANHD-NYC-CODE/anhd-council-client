@@ -133,7 +133,7 @@ class LookupShow extends React.PureComponent {
               profileRequest={this.props.profileRequest}
             />
           ) : (
-            <div className="lookup-show layout-width-wrapper">
+            <div className="lookup-show">
               <div className="lookup-show__row-wrapper">
                 <div className="lookup-show__top-row">
                   <div>
