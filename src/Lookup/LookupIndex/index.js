@@ -14,7 +14,7 @@ class LookupIndex extends React.Component {
   }
   render() {
     return (
-      <div id="main" className="main layout-width-wrapper">
+      <div id="main" className="main max-width-wrapper">
         <Helmet>
           <title>DAP Portal | Property Lookup</title>
         </Helmet>
