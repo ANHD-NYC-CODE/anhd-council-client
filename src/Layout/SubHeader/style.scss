@@ -7,6 +7,15 @@ $sub-header-padding-top: 12px;
     padding: 0;
   }
 
+  .sub-header__brand {
+    margin: 0 auto;
+
+    @include media-breakpoint-up(sm) {
+      margin-right: auto;
+      margin-left: 0;
+    }
+  }
+
   .sub-header__wrapper--top,
   .sub-header__wrapper--bottom {
     @include media-breakpoint-up(xl) {
@@ -22,7 +31,7 @@ $sub-header-padding-top: 12px;
     width: 100%;
 
     @include media-breakpoint-up(sm) {
-      flex-wrap: nowrap;
+      // flex-wrap: nowrap;
     }
 
     @include media-breakpoint-up(md) {
@@ -49,11 +58,14 @@ $sub-header-padding-top: 12px;
     }
 
     .sub-header__logo {
+      display: block;
       height: auto;
-      width: 50%;
+      width: 100%;
       margin: 0 auto;
       display: block;
-      @include media-breakpoint-up(sm) {
+      max-width: 320px;
+
+      @include media-breakpoint-up(md) {
         width: 100%;
       }
     }
@@ -61,11 +73,28 @@ $sub-header-padding-top: 12px;
 
   .sub-header__wrapper--top__links {
     align-self: flex-start;
+    flex-wrap: wrap;
 
     .nav-item {
-      padding: $sub-header-padding-top 10px;
+      margin-bottom: 10px;
+      padding: 0;
       white-space: pre;
+      width: 100%;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      button {
+        padding: 0;
+      }
+
+      @include media-breakpoint-up(sm) {
+        margin-right: 20px;
+        width: auto;
+      }
       @include media-breakpoint-up(md) {
+        margin-right: 0px;
         padding: $sub-header-padding-top 20px 10px;
       }
     }

@@ -270,23 +270,13 @@ class BaseTable extends React.Component {
                           handleCsvClick={this.handleCsvClick}
                           resourceConstant={this.props.tableConfig.resourceConstant}
                           request={this.props.request}
+                          filterButtonSets={
+                            this.baseTableConfig.filterButtonSets[this.props.tableConfig.resourceConstant]
+                          }
+                          selectedFilters={this.baseTableConfig.selectedFilters}
                         />
                       </div>
                     )}
-
-                    <Row className="base-table__select-filters no-gutters">
-                      {!!this.baseTableConfig.filterButtonSets[this.props.tableConfig.resourceConstant] &&
-                        this.baseTableConfig.filterButtonSets[this.props.tableConfig.resourceConstant].map(
-                          (set, index) => {
-                            return (
-                              <span className="base-table__select-filters__container" key={`button-set${index}`}>
-                                {set(this.baseTableConfig.selectedFilters)}
-                              </span>
-                            )
-                          }
-                        )}
-                    </Row>
-
                     <BootstrapTable
                       key={this.props.records}
                       ref={n => (this.node = n)}

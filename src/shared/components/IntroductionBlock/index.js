@@ -57,7 +57,7 @@ const IntroductionBlock = props => {
         <BaseLink href="https://anhd.org">Association for Neighborhood and Housing Development (ANHD)</BaseLink>.
       </p>
       <p>
-        Development by <BaseLink href="https://data.automatica.love">Data Automatica</BaseLink>.
+        Developed by <BaseLink href="https://data.automatica.love">Data Automatica</BaseLink>.
       </p>
     </Jumbotron>
   )

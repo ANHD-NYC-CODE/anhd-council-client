@@ -25,8 +25,8 @@ class SubHeader extends React.Component {
       <div className="sub-header">
         <Nav className=" layout-width-wrapper">
           <Navbar className="sub-header__wrapper--top">
-            <Nav className="mr-auto">
-              <Navbar.Brand className="mr-auto">
+            <Nav className="sub-header__brand">
+              <Navbar.Brand>
                 <Link to="/">
                   <img src={logo} className="sub-header__logo" alt="Displacement Alert Portal Logo" />
                 </Link>
@@ -46,13 +46,13 @@ class SubHeader extends React.Component {
               >
                 <button className="blank-button text-gray-900">Contact us / Report an issue</button>
               </Nav.Item>
-              <Nav.Item>
+              {/* <Nav.Item>
                 <BaseLink
                   href="https://forms.gle/EAUkzgsAkHn8NgbTA"
                   className="blank-button text-gray-900"
                   text="Feedback"
                 />
-              </Nav.Item>
+              </Nav.Item> */}
               {this.props.auth.user ? (
                 <div className="d-flex">
                   <Nav.Item className="text-gray-900">{this.props.auth.user.username}</Nav.Item>

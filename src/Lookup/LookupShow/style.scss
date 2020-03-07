@@ -5,29 +5,34 @@ $unopened-width: 660px;
   .lookup-show__row-wrapper {
     margin-top: 1rem;
     margin-bottom: 1rem;
-    @include media-breakpoint-up(md) {
-      // margin-left: $lookup-padding-size;
-      // margin-right: 20px;
+    @include media-breakpoint-up(xxl) {
+      // max-width: 1200px;
     }
   }
 
   .lookup-show__top-row {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     margin: 1rem 0;
     flex-wrap: wrap;
 
-    @include media-breakpoint-up(sm) {
+    @include media-breakpoint-up(md) {
       flex-wrap: nowrap;
     }
     // AddressDisplay
     > div:first-child {
-      max-width: 760px;
-      width: 100%;
+      // max-width: 760px;
+      // width: 100%;
+      width: auto;
+
+      @include media-breakpoint-up(sm) {
+        margin-right: auto;
+      }
     }
 
     // Back to dashboard button
-    > div:last-child {
+    > div:last-child:not(:first-child) {
       // margin-left: $lookup-padding-size;
       @include media-breakpoint-up(md) {
         margin-left: auto;
@@ -72,10 +77,6 @@ $unopened-width: 660px;
     }
   }
 
-  .table-header {
-    max-width: $unopened-width;
-  }
-
   .lookup-show__content {
     display: flex;
     flex-direction: column;
@@ -86,16 +87,6 @@ $unopened-width: 660px;
     @include media-breakpoint-up(sm) {
       padding: 0 $lookup-padding-size;
     }
-
-    @include media-breakpoint-up(xl) {
-      overflow: visible;
-    }
-
-    .table {
-      @include media-breakpoint-up(xl) {
-        width: 56vw;
-      }
-    }
   }
 
   .lookup-table {
@@ -105,9 +96,9 @@ $unopened-width: 660px;
   .lookup-table-tab,
   .result-card {
     border-radius: 6px;
-    max-height: 60px;
+    max-height: 50px;
     min-height: 0;
-    height: 60px;
+    height: 50px;
     flex: 0 0 160px;
     width: 160px;
   }

@@ -71,7 +71,7 @@ class DistrictDashboardIndex extends React.Component {
 
   render() {
     return (
-      <div id="main" className="main layout-width-wrapper">
+      <div id="main" className="main max-width-wrapper">
         <Helmet>
           <title>DAP Portal | District Dashboard</title>
         </Helmet>

@@ -15,7 +15,8 @@
   .lookup-address-display__title {
     @extend %p1-font-size;
     display: inline-block;
-    margin-bottom: 0;
+    margin-bottom: 10px;
+    width: 100%;
   }
 
   .lookup-address-display__button {
