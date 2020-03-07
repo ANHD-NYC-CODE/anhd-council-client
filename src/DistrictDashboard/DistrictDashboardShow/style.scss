@@ -12,7 +12,7 @@
     }
 
     @include media-breakpoint-up(md) {
-      padding: 0 40px !important;
+      padding: 0 20px !important;
     }
   }
 
@@ -35,7 +35,7 @@
     .geography-select {
       width: 100%;
       @include media-breakpoint-up(lg) {
-        margin-right: auto;
+        margin-right: 40px;
         width: initial;
       }
     }
@@ -168,22 +168,19 @@
     flex-direction: column;
     flex: 1;
     overflow-x: auto;
-
-    @include media-breakpoint-up(xl) {
-      overflow-x: visible;
-    }
   }
 
   .geography-select-row,
   .district-dashboard-show__results-header {
-    max-width: 640px;
+    // max-width: 640px;
   }
 
   .district-dashboard-show__table {
     overflow-x: hidden;
-    @include media-breakpoint-up(lg) {
-      max-width: calc((100vw - (100vw - 1044px) / 2) - 400px);
-    }
+    // @include media-breakpoint-up(lg) {
+    //   max-width: calc((100vw - (100vw - 1044px) / 2) - 400px);
+    // }
+    // max-width: 100%;
   }
 
   .district-dashboard-show__results-container {
@@ -206,6 +203,16 @@
 
   .district-dashboard-show__map {
     position: relative;
+    height: 400px;
+    width: 100%;
+
+    @include media-breakpoint-up(sm) {
+      height: 500px;
+    }
+
+    @include media-breakpoint-up(lg) {
+      height: 700px;
+    }
   }
 
   .view-toggle__container {
@@ -215,7 +222,7 @@
     margin-bottom: 10px;
 
     @include media-breakpoint-up(sm) {
-      align-items: flex-end;
+      align-items: flex-start;
     }
   }
 
