@@ -15,6 +15,10 @@ table {
       width: 100%;
       overflow-x: auto;
     }
+
+    @include media-breakpoint-up(xl) {
+      width: fit-content;
+    }
   }
 
   td {

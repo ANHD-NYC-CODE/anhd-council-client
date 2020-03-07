@@ -22,7 +22,7 @@ $unopened-width: 660px;
     }
     // AddressDisplay
     > div:first-child {
-      max-width: 760px;
+      // max-width: 760px;
       width: 100%;
     }
 
@@ -72,10 +72,6 @@ $unopened-width: 660px;
     }
   }
 
-  .table-header {
-    max-width: $unopened-width;
-  }
-
   .lookup-show__content {
     display: flex;
     flex-direction: column;
@@ -86,16 +82,6 @@ $unopened-width: 660px;
     @include media-breakpoint-up(sm) {
       padding: 0 $lookup-padding-size;
     }
-
-    @include media-breakpoint-up(xl) {
-      overflow: visible;
-    }
-
-    .table {
-      @include media-breakpoint-up(xl) {
-        width: 56vw;
-      }
-    }
   }
 
   .lookup-table {
@@ -105,9 +91,9 @@ $unopened-width: 660px;
   .lookup-table-tab,
   .result-card {
     border-radius: 6px;
-    max-height: 60px;
+    max-height: 50px;
     min-height: 0;
-    height: 60px;
+    height: 50px;
     flex: 0 0 160px;
     width: 160px;
   }
