@@ -176,10 +176,20 @@ table.table,
   }
 
   .base-table__select-filters {
-    background-color: $blizzard;
+    // background-color: $blizzard;
+    align-items: center;
+    justify-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: auto;
+
+    & > * {
+      margin-right: 20px;
+    }
   }
 
   .base-table__select-filters__container {
+    // margin-bottom: 10px;
   }
 
   .text-filter,
@@ -217,8 +227,8 @@ table.table,
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
-  padding: 10px;
-  padding-bottom: 0;
+  // padding: 10px;
+  // padding-bottom: 0;
   // max-height: 100px;
   // max-width: 220px;
 

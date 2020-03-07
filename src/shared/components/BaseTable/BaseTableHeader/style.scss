@@ -23,9 +23,23 @@ $unopened-width: 660px;
     }
   }
 
+  .base-table-header__wrapper {
+    display: flex;
+    align-items: flex-start;
+    justify-items: flex-start;
+    flex-wrap: wrap;
+
+    & > * {
+      margin-bottom: 5px;
+      @include media-breakpoint-up(sm) {
+        margin-right: 20px;
+      }
+    }
+  }
+
   .base-table-header__right-group {
     display: flex;
-    margin-left: auto;
+    // margin-left: auto;
   }
 
   .table-header__share-column:hover {

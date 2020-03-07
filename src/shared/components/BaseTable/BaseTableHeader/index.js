@@ -49,8 +49,15 @@ const BaseTableHeader = props => {
   return (
     <div className={classnames('base-table-header', props.headerClass)}>
       <div className="base-table-header__wrapper">
-        <div className="text-right d-flex justify-content-start align-items-center">
-          {getTableSize(props.paginationProps, props.recordsSize)}
+        {getTableSize(props.paginationProps, props.recordsSize)}
+        <div className="base-table__select-filters">
+          {props.filterButtonSets.map((set, index) => {
+            return (
+              <div className="base-table__select-filters__container" key={`button-set${index}`}>
+                {set(props.selectedFilters)}
+              </div>
+            )
+          })}
         </div>
         <div className="base-table-header__right-group">
           <div className="table-header__share-column">
@@ -81,10 +88,14 @@ BaseTableHeader.propTypes = {
   resourceConstant: PropTypes.string,
   records: PropTypes.array,
   request: PropTypes.object,
+  filterButtonSets: PropTypes.array,
+  selectedFilters: PropTypes.array,
 }
 BaseTableHeader.defaultProps = {
   csvProps: {},
   records: [],
+  filterButtonSets: [],
+  selectedFilters: [],
 }
 
 export default BaseTableHeader
