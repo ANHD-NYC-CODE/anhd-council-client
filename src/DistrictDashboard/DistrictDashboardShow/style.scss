@@ -203,6 +203,16 @@
 
   .district-dashboard-show__map {
     position: relative;
+    height: 400px;
+    width: 100%;
+
+    @include media-breakpoint-up(sm) {
+      height: 500px;
+    }
+
+    @include media-breakpoint-up(lg) {
+      height: 700px;
+    }
   }
 
   .view-toggle__container {
