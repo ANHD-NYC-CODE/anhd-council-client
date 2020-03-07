@@ -36,9 +36,9 @@ body {
   padding: 0 1rem !important;
   width: 100% !important;
 
-  @include media-breakpoint-up(lg) {
-    // padding: 0 !important;
-    // max-width: 1044px !important;
+  @include media-breakpoint-up(xxl) {
+    padding: 0 !important;
+    max-width: 2200px !important;
   }
 
   .row {

@@ -5,10 +5,8 @@ $unopened-width: 660px;
   .lookup-show__row-wrapper {
     margin-top: 1rem;
     margin-bottom: 1rem;
-    @include media-breakpoint-up(md) {
-      // margin-left: $lookup-padding-size;
-      // margin-right: 20px;
-      max-width: 1000px;
+    @include media-breakpoint-up(xxl) {
+      // max-width: 1200px;
     }
   }
 
