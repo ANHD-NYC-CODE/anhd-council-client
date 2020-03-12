@@ -19,7 +19,7 @@ class BuildingSelect extends React.Component {
   }
 
   getBuildingOptions() {
-    const empty = { value: -1, isDisabled: true, label: this.props.propertyResult.address }
+    const empty = { value: undefined, isDisabled: false, label: this.props.propertyResult.address }
     const buildings = this.props.propertyResult.buildings
       .filter(building => `${building.house_number} ${building.stname}` !== this.props.propertyResult.address)
       .map(building => {
@@ -93,6 +93,7 @@ BuildingSelect.defaultProps = {
 }
 
 BuildingSelect.propTypes = {
+  changeLookup: PropTypes.func,
   bbl: PropTypes.string,
   bin: PropTypes.string,
   dispatch: PropTypes.func,
