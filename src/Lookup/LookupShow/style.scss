@@ -18,13 +18,13 @@ $unopened-width: 660px;
     flex-wrap: wrap;
 
     @include media-breakpoint-up(md) {
-      flex-wrap: nowrap;
+      // flex-wrap: nowrap;
     }
     // AddressDisplay
     > div:first-child {
       // max-width: 760px;
       // width: 100%;
-      width: auto;
+      // width: auto;
 
       @include media-breakpoint-up(sm) {
         margin-right: auto;
@@ -37,6 +37,10 @@ $unopened-width: 660px;
       @include media-breakpoint-up(md) {
         margin-left: auto;
       }
+    }
+
+    button {
+      white-space: pre;
     }
   }
 
@@ -51,6 +55,11 @@ $unopened-width: 660px;
       margin-bottom: 0;
       max-width: 360px;
       margin-right: 10px;
+    }
+
+    @include media-breakpoint-up(md) {
+      width: 100%;
+      max-width: none;
     }
 
     .search-results__wrapper {

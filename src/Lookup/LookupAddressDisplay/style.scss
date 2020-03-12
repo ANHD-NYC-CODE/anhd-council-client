@@ -1,6 +1,10 @@
 @import 'shared/styles/_variables.scss';
 
 .lookup-address-display {
+  flex-grow: 1;
+  margin-right: 20px;
+  margin-bottom: 10px;
+
   .lookup-address-display__editing {
     display: flex;
     align-items: center;
@@ -9,6 +13,10 @@
 
     @include media-breakpoint-up(sm) {
       flex-wrap: nowrap;
+    }
+
+    @include media-breakpoint-up(lg) {
+      max-width: 600px;
     }
   }
 
