@@ -7,9 +7,12 @@ import CustomSelect from 'shared/components/CustomSelect'
 const MultiSelectField = props => {
   return (
     <InputGroup>
-      <InputGroup.Prepend className="input-group__label">
-        <InputGroup.Text>{props.paramMap.paramNoun}</InputGroup.Text>
-      </InputGroup.Prepend>
+      {props.paramMap.paramNoun && (
+        <InputGroup.Prepend className="input-group__label">
+          <InputGroup.Text>{props.paramMap.paramNoun}</InputGroup.Text>
+        </InputGroup.Prepend>
+      )}
+
       <CustomSelect
         className={'textmultiselect-field form-control'}
         key={props.key}
