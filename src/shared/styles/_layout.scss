@@ -36,9 +36,13 @@ body {
   padding: 0 1rem !important;
   width: 100% !important;
 
+  @include media-breakpoint-up(xl) {
+    padding: 0 2rem !important;
+  }
+
   @include media-breakpoint-up(xxl) {
-    padding: 0 !important;
-    max-width: 2200px !important;
+    // padding: 0 !important;
+    // max-width: 2200px !important;
   }
 
   .row {

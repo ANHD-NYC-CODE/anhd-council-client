@@ -19,9 +19,15 @@ const HousingTypeSection = props => {
   const getLabel = (label, index) => {
     // don't return first (all residential)
     if (!index || props.housingTypeResults[index] == undefined || !props.totalPropertyResults.length) return label
-    return `${label} (${((props.housingTypeResults[index].length / props.totalPropertyResults.length) * 100).toFixed(
-      1
-    )}%)`
+    const numberOfUnits = props.housingTypeResults[index].reduce(
+      (total, result) => parseInt(total) + parseInt(result['unitsres']),
+      0
+    )
+    const totalDistrictUnits = props.totalPropertyResults.reduce(
+      (total, result) => parseInt(total) + parseInt(result['unitsres']),
+      0
+    )
+    return `${label} (${((numberOfUnits / totalDistrictUnits) * 100).toFixed(1)}%)`
   }
 
   return (

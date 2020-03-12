@@ -19,6 +19,10 @@
       @extend %text-black;
     }
 
+    button {
+      white-space: pre;
+    }
+
     span {
       @extend %p2-font-size;
     }

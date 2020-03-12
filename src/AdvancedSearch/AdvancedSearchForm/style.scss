@@ -55,15 +55,24 @@
 
   .fieldset {
     display: flex;
-    max-height: 50px;
+    flex-wrap: wrap;
+
+    @include media-breakpoint-up(xl) {
+      max-height: 50px;
+    }
   }
 
   .form-control {
     border: 0;
+    margin-right: 10px;
   }
 
   .input-group-text {
-    padding-left: 0;
+    padding: 0;
+    margin-right: 10px;
+
+    &:not(:first-child) {
+    }
   }
 
   .form-group {
@@ -79,8 +88,15 @@
     }
 
     input[type='number'] {
-      max-width: 60px;
+      max-width: 120px;
       padding-left: 8px;
+    }
+
+    input[type='number']::-webkit-inner-spin-button,
+    input[type='number']::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+      padding: 0;
     }
 
     select {
