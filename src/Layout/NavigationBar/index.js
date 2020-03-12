@@ -6,7 +6,7 @@ import './style.scss'
 const NavigationBar = props => {
   return (
     <div className="navigation-bar">
-      <Navbar bg="dark" variant="dark" expand="lg">
+      <Navbar bg="black" variant="black" expand="lg">
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav.Link as="li">
