@@ -53,6 +53,7 @@
 
       [class*='-control'] {
         background-color: $light-orange;
+        overflow: hidden;
       }
 
       div:nth-of-type(n + 2) {
@@ -63,6 +64,10 @@
       }
 
       [class*='-menu'] {
+        [class*='-option'] {
+          cursor: pointer;
+        }
+
         [class*='-option']:nth-of-type(1) {
           background-color: $blizzard;
           color: $black;

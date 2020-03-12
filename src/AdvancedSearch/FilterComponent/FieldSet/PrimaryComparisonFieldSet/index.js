@@ -8,9 +8,6 @@ const PrimaryComparisonFieldSet = props => {
   return (
     <div className="fieldset comparison-fieldset" key={props.key}>
       <InputGroup>
-        <InputGroup.Prepend className="input-group__label">
-          <InputGroup.Text />
-        </InputGroup.Prepend>
         <Form.Control
           name="comparison"
           as="select"

@@ -13,6 +13,10 @@
     margin-left: -1rem;
   }
 
+  @include media-breakpoint-up(xl) {
+    margin-left: -2rem;
+  }
+
   &.full-bleed--mobile {
     background-color: $dark;
     overflow: visible;

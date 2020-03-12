@@ -1599,14 +1599,18 @@ export const getTableColumns = ({
           sort: true,
         }),
         constructStandardColumn({
+          columnEvent: expandColumnEvent,
           dataField: 'plaintiff',
           text: 'Plaintiff (Creditor)',
           sort: true,
+          classes: 'expandable-cell table-column--description',
         }),
         constructStandardColumn({
           dataField: 'defendant',
           text: 'Defendant (Debtor)',
           sort: true,
+          columnEvent: expandColumnEvent,
+          classes: 'expandable-cell table-column--description',
         }),
         constructStandardColumn({
           dataField: 'auction',
@@ -1616,9 +1620,11 @@ export const getTableColumns = ({
           sort: true,
         }),
         constructStandardColumn({
+          columnEvent: expandColumnEvent,
           dataField: 'auctionlocation',
           text: 'Auction Location',
           sort: true,
+          classes: 'expandable-cell table-column--description',
         }),
       ]
       break

@@ -36,9 +36,12 @@ const RangeFieldSet = props => {
   return (
     <div className="range-fieldset">
       <InputGroup className="fieldset range-fieldset">
-        <InputGroup.Prepend className="input-group__label">
-          {!!hasPrefix(props) && <InputGroup.Text>{props.paramMapRangeGroup[0].comparisonPrefix}</InputGroup.Text>}
-        </InputGroup.Prepend>
+        {!!hasPrefix(props) && (
+          <InputGroup.Prepend className="input-group__label">
+            <InputGroup.Text>{props.paramMapRangeGroup[0].comparisonPrefix}</InputGroup.Text>
+          </InputGroup.Prepend>
+        )}
+
         <Form.Control
           name="comparison"
           as="select"
@@ -68,9 +71,12 @@ const RangeFieldSet = props => {
         .map((paramMap, paramMapIndex) => {
           return (
             <InputGroup key={`paramMapRangeGroup-col-${paramMapIndex}`}>
-              <InputGroup.Prepend className="input-group__label">
-                <InputGroup.Text>{paramMap.rangePosition == 1 ? '' : 'and '}</InputGroup.Text>
-              </InputGroup.Prepend>
+              {paramMap.rangePosition != 1 && (
+                <InputGroup.Prepend className="input-group__label">
+                  <InputGroup.Text>and</InputGroup.Text>
+                </InputGroup.Prepend>
+              )}
+
               {paramMap.baseComponent({
                 key: `rangeGroup-paramMap-${paramMapIndex}`,
                 dispatchAction: props.dispatchAction,
