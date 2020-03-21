@@ -570,9 +570,9 @@ export const infoModals = {
   },
 
   LOOKUP_BBL: {
-    title: 'BBL',
+    title: 'Borough-Block-Lot code',
     body:
-      'BBL stands for Borough/Block/Lot, and it identifies a property for taxation. The first digit is the borough, the next five are for the block, and the last four are for the lot.',
+      'BBL stands for Borough-Block-Lot, a combined 10-digit code that identifies individual properties, or tax lots, in New York City. Borough is one digit, Block is 5, and Lot is 4. To look up a property on city agency websites, you usually need to select the borough and then enter the Block and Lot codes separately.',
   },
 
   LOOKUP_STABILIZATION: {
