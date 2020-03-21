@@ -20,6 +20,11 @@
     text-decoration: none;
   }
 
+  // reduce spacing between housing type param sets
+  &__housingtype-select .filter-component__primary-row .filter-component__paramsets {
+    padding-top: 0;
+  }
+
   button[type='submit'].btn {
     min-width: 100%;
     @include media-breakpoint-up(lg) {

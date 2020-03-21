@@ -83,6 +83,7 @@ class LookupTable extends React.Component {
             <LookupTableHeader
               badge={this.props.badge}
               property={this.props.property}
+              bin={this.props.bin}
               resourceConstant={this.props.request.resourceModel.resourceConstant}
               title={this.props.caption}
             />
@@ -108,6 +109,8 @@ LookupTable.propTypes = {
   dispatch: PropTypes.func,
   request: PropTypes.object,
   visible: PropTypes.bool,
+  property: PropTypes.object,
+  bin: PropTypes.string,
 }
 
 const mapStateToProps = (state, ownProps) => {
