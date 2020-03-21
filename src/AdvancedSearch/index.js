@@ -56,7 +56,7 @@ export class AdvancedSearch extends React.Component {
       changingGeographyId: undefined,
       displayingForm: !this.props.advancedSearch.results.length,
       displayingList: false,
-      zoom: 14,
+      zoom: 13,
       tableState: {},
       advancedSearch: this.cloneAdvancedSearchInstance(this.props.advancedSearch),
     }
