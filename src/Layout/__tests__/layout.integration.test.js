@@ -29,12 +29,12 @@ describe('navigation', () => {
   it('displays the initial navigation', () => {
     const wrapper = setupWrapper()
     expect(wrapper.find('NavigationBar')).toHaveLength(1)
-    expect(wrapper.find('NavigationBar li')).toHaveLength(9)
+    expect(wrapper.find('NavigationBar li')).toHaveLength(8)
     expect(wrapper.find('NavigationBar').text()).toMatch(
       /HomeDAP MapMap TutorialDistrict ReportsReports TutorialPortalAboutContact/
     )
     expect(wrapper.find('SubHeader')).toHaveLength(1)
-    expect(wrapper.find('SubHeader a')).toHaveLength(6)
+    expect(wrapper.find('SubHeader a')).toHaveLength(5)
     expect(wrapper.find('SubHeader').text()).toMatch(/HomeProperty LookupDistrict DashboardCustom Search/)
     expect(
       wrapper
