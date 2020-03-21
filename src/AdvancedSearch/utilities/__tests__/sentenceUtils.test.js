@@ -355,7 +355,7 @@ describe('convertConditionMappingToSentence', () => {
         }),
       }
 
-      const result = ` that have at least 1 foreclosure between ${startDate} and ${endDate}.`
+      const result = ` that have at least 1 foreclosure filing between ${startDate} and ${endDate}.`
       expect(a.convertConditionMappingToSentence(conditions)).toEqual(result)
     })
   })
