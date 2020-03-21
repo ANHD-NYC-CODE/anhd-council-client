@@ -139,9 +139,15 @@ export default class LeafletMap extends React.PureComponent {
       >
         {!this.state.overrideWarning && this.props.results.length > c.MAP_MARKER_LIMIT && (
           <MapAlertModal
-            alertMessage={`More than ${
-              c.MAP_MARKER_LIMIT
-            } results will slow down this page. Apply a Housing Type and/or one or more Datasets to narrow down results or click below to proceed.`}
+            alertMessage={
+              <div>
+                <p>More than {c.MAP_MARKER_LIMIT} results will slow down this page.</p>
+                <p>
+                  Apply a Housing Type and/or one or more Datasets to narrow down results or click below to proceed.
+                </p>
+                <p>If the page freezes, refresh your browser to reset.</p>
+              </div>
+            }
             alertVariant="light"
             alertCta="Display Results"
             action={() =>
@@ -176,11 +182,7 @@ export default class LeafletMap extends React.PureComponent {
               <SpinnerLoader size="100px" />
             </div>
           )}
-          <TileLayer
-            attribution="mapbox"
-            url="https://api.mapbox.com/styles/v1/lblok/cjk4889sb29b12splkdw0pzop/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGJsb2siLCJhIjoiY2o3djQ2ODd4MnVjMjJwbjBxZWZtZDB2ZiJ9.4gctlFUX_n0BzOAwbuL2aw"
-            // url="https://api.mapbox.com/styles/v1/anhdnyc/cjtgo9wv009uw1fo0ubm7elun/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYW5oZG55YyIsImEiOiJjanQ0ZWRqaDcxMmRxNDlsbHV1OXN0aGx6In0.i07oerfvXtcRfm3npws7mA"
-          />
+
           {this.props.currentGeographyType === 'COMMUNITY' && (
             <TileLayer
               attribution="mapbox"
@@ -211,6 +213,11 @@ export default class LeafletMap extends React.PureComponent {
               url="https://api.mapbox.com/styles/v1/anhdnyc/ck3093t330s3e1cnvcair3d0n/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYW5oZG55YyIsImEiOiJjanQ0ZWRqaDcxMmRxNDlsbHV1OXN0aGx6In0.i07oerfvXtcRfm3npws7mA"
             />
           )}
+          <TileLayer
+            attribution="mapbox"
+            url="https://api.mapbox.com/styles/v1/lblok/cjk4889sb29b12splkdw0pzop/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGJsb2siLCJhIjoiY2o3djQ2ODd4MnVjMjJwbjBxZWZtZDB2ZiJ9.4gctlFUX_n0BzOAwbuL2aw"
+            // url="https://api.mapbox.com/styles/v1/anhdnyc/cjtgo9wv009uw1fo0ubm7elun/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYW5oZG55YyIsImEiOiJjanQ0ZWRqaDcxMmRxNDlsbHV1OXN0aGx6In0.i07oerfvXtcRfm3npws7mA"
+          />
           {this.allGeographiesLoaded() && this.props.currentGeographyType && (
             <div>
               <GeographyGeoJson
