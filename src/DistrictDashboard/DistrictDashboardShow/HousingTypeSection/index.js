@@ -40,7 +40,10 @@ const HousingTypeSection = props => {
         return (
           <Form className="housingtype-section" data-test-id="housingtype-section">
             <Form.Group controlId="housing-type-select">
-              <Form.Label className="housingtype-section__label">Housing Type:</Form.Label>
+              <div className="housingtype-section__label-row">
+                <Form.Label className="housingtype-section__label">Housing Type:</Form.Label>
+                <InfoModalButton modalConstant="DASHBOARD_HOUSING_TYPE" />
+              </div>
               {propertyResource.ownResultFilters.map((ownResultFilter, index) => {
                 return (
                   <span key={`housingtype-wrapper-${index}`} className="housingtype-section__section">

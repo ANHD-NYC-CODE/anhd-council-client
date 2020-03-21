@@ -3,6 +3,13 @@
 .housingtype-section {
   min-width: 240px;
 
+  &__label-row {
+    display: flex;
+    label {
+      margin-right: 15px;
+    }
+  }
+
   .housingtype-section__label {
     @extend %p2-font-size;
 
