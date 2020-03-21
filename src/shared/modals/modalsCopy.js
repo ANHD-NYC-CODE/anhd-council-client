@@ -2,6 +2,22 @@ import React from 'react'
 import ReactDOMServer from 'react-dom/server'
 
 export const infoModals = {
+  DASHBOARD_HOUSING_TYPE: {
+    title: 'Housing Type',
+    body: ReactDOMServer.renderToString(
+      <div>
+        <p>
+          Housing Types are our definitions of different housing categories; each housing type carries unique
+          displacement risks.
+        </p>
+        <p>
+          There is overlap between the housing types below, which is why percentages do not add up to one hundred. The
+          percentages displayed are the share of units in that housing type out of all residential units in the
+          geography shown.
+        </p>
+      </div>
+    ),
+  },
   rs: {
     title: 'Rent Stabilized Housing',
     body: ReactDOMServer.renderToString(
@@ -9,18 +25,24 @@ export const infoModals = {
         <p>
           An apartment may be regulated under New York State’s system of Rent Stabilization if it is in a property that
           was built before 1974 and has six or more units or if the property has benefitted from certain regulatory
-          programs like 421a or J-51. All properties in this report included at least one rent stabilized unit beginning
-          in 2007, the first year for which we have data. We base stabilized unit numbers on property tax bills from the
-          NYC Department of Finance. Missing or fluctuating numbers may be due to missing/incorrect registration by the
-          owner or inconsistencies in property tax documentation.
+          programs like 421a or J-51. All properties classified in DAP Portal as rent stabilized included at least one
+          rent stabilized unit beginning in 2007, the first year for which we have data. We base stabilized unit numbers
+          on property tax bills from the NYC Department of Finance. Missing or fluctuating numbers may be due to
+          missing/incorrect registration by the owner or inconsistencies in property tax documentation. Properties with
+          tax incentives or subsidies that require rent stabilization will be included in this housing type as well as
+          Subsidized Housing.
+        </p>
+        <p>
+          Note that because rent controlled apartments historically have not required registration by owners, they will
+          not be reflected in this housing type.
         </p>
         <p>
           We display the percentage of properties and units in buildings that have contained any rent stabilized units
           during this time period, even though not all units in those buildings are currently stabilized.
         </p>
         <p>
-          The percentage displayed in parenthesis is the number of residential units in this housing category as a share
-          of all residential units in this geography.
+          The percentage displayed in parentheses is the number of residential units in this housing type as a share of
+          all residential units in this geography.
         </p>
       </div>
     ),
@@ -51,12 +73,16 @@ export const infoModals = {
     body: ReactDOMServer.renderToString(
       <div>
         <p>
-          These properties are subject to a regulatory agreement at the City, State, or Federal level. This includes tax
-          incentives and financing that determines affordability levels.
+          These properties are subject to regulations and agreements at the City, State, or Federal level and receive
+          some form of subsidy. This includes tax incentives and financing that determines affordability levels or
+          requires rent stabilization, as well as zoning incentives such as Mandatory Inclusionary Housing. Find out
+          more about the programs included by clicking on the link below to the Furman Center's Directory of NYC Housing
+          Programs. Properties receiving subsidies that require rent stabilization will be included in this housing type
+          as well as Rent Stabilized.
         </p>
         <p>
-          The percentage displayed in parenthesis is the number of residential units in this housing category as a share
-          of all residential units in this geography.
+          The percentage displayed in parentheses is the number of residential units in this housing type as a share of
+          all residential units in this geography.
         </p>
       </div>
     ),
@@ -78,12 +104,13 @@ export const infoModals = {
     body: ReactDOMServer.renderToString(
       <div>
         <p>
-          We consider small homes to be any property with one to four residential units (apartments). This category
-          overlaps significantly with Market Rate properties, and possibly some stabilized or subsidized properties.
+          We define small homes as any property with one to four residential units (apartments), regardless of rent
+          stabilization or subsidy. Therefore this housing type overlaps significantly with Market Rate properties and
+          to some degree, Rent Stabilized and Subsidized Housing.
         </p>
         <p>
-          The percentage displayed in parenthesis is the number of residential units in this housing category as a share
-          of all residential units in this geography.
+          The percentage displayed in parentheses is the number of residential units in this housing type as a share of
+          all residential units in this geography.
         </p>
       </div>
     ),
@@ -106,16 +133,16 @@ export const infoModals = {
     body: ReactDOMServer.renderToString(
       <div>
         <p>
-          We consider market rate properties to be buildings that are not covered under either New York State rent
-          stabilization code or any regulatory agreement governing apartment affordability.
+          We define market rate properties as buildings that are not covered under either rent stabilization or any
+          subsidy governing affordability.
         </p>
         <p>
           This category includes one-unit or single-family homes, many of which are occupied by homeowners rather than
           renters.
         </p>
         <p>
-          The percentage displayed in parenthesis is the number of residential units in this housing category as a share
-          of all residential units in this geography.
+          The percentage displayed in parentheses is the number of residential units in this housing type as a share of
+          all residential units in this geography.
         </p>
       </div>
     ),
@@ -138,11 +165,13 @@ export const infoModals = {
     body: ReactDOMServer.renderToString(
       <div>
         <p>
-          Public housing properties are buildings owned and operated by the New York City Housing Authority (NYCHA).
+          Public housing properties are buildings owned and operated by the New York City Housing Authority (NYCHA) or
+          Project-based Section 8 buildings. This housing type does not include properties with households using Section
+          8 vouchers.
         </p>
         <p>
-          The percentage displayed in parenthesis is the number of residential units in this housing category as a share
-          of all residential units in this geography.
+          The percentage displayed in parentheses is the number of residential units in this housing type as a share of
+          all residential units in this geography.
         </p>
       </div>
     ),
@@ -298,8 +327,8 @@ export const infoModals = {
     body: ReactDOMServer.renderToString(
       <div>
         <p>
-          Construction permits issued by the Department of Buildings show that a landlord has permission to do
-          construction and renovations, which can indicate displacement pressure. While the{' '}
+          Construction permit applications show a landlord's intention to do construction and renovations, which can
+          cause displacement pressure. While the{' '}
           <a href="https://www.nysenate.gov/legislation/bills/2019/s6458" target="_blank" rel="noopener noreferrer">
             Housing Stability and Tenant Protection Act of 2019
           </a>{' '}
@@ -375,11 +404,13 @@ export const infoModals = {
           Although they are not counted in the total number of Sales, mortgage-related documents are included here for
           financing context. A mortgage is the loan a buyer takes from a bank or non-bank lender to purchase a property.
           It can also be a loan taken out for other purposes, with an owner's property serving as collateral for that
-          loan.
+          loan. The following mortgage-related documents are included on DAP Portal: AALR, AGMT, AL&R, ASST, ASPM, DEMM,
+          MTGE, PSAT, SAT, SMTG, WSAT, M&CON, SPRD
         </p>
         <p>
-          <b>Note:</b> Acris data updates once per month, so the "Last 30 Days" time period will display the most recent
-          calendar month of available data.
+          <b>Note:</b> ACRIS data updates once per month, so the time periods on the District Dashboard will display
+          month, year, or three years prior to the most recent available data. Usually, the prior calendar month's data
+          is available around the 10th of the following month.
         </p>
       </div>
     ),

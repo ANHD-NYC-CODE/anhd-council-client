@@ -191,6 +191,7 @@ class LookupShow extends React.PureComponent {
                           }
                           loading={this.props.loadingState[request.requestConstant]}
                           property={this.props.propertyResult}
+                          bin={this.props.appState.currentBuilding}
                           caption={request.resourceModel.label}
                           key={`lookup-table-${request.resourceModel.resourceConstant}`}
                           visible={this.props.appState.selectedRequest === request}
@@ -200,7 +201,7 @@ class LookupShow extends React.PureComponent {
                     })}
                   </div>
                   <div className="lookup-show__links">
-                    <LookupLinks request={this.props.profileRequest} />
+                    <LookupLinks property={this.props.propertyResult} bin={this.props.appState.currentBuilding} />
                   </div>
                 </div>
               </div>

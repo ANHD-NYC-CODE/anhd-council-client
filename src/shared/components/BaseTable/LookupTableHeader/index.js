@@ -27,6 +27,7 @@ const LookupTableHeader = props => {
         {getTableSubheaders({
           constant: props.resourceConstant,
           property: props.property,
+          bin: props.bin,
         })}
       </div>
     </div>
@@ -43,6 +44,7 @@ LookupTableHeader.propTypes = {
   size: PropTypes.string,
   title: PropTypes.string,
   property: PropTypes.object,
+  bin: PropTypes.string,
   request: PropTypes.object,
 }
 
