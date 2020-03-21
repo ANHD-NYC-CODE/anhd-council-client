@@ -261,7 +261,7 @@ export class AdvancedSearch extends React.Component {
                       variant={this.state.displayingList ? 'dark' : 'light'}
                       value={true}
                     >
-                      List
+                      Table
                     </ToggleButton>
                   </ToggleButtonGroup>
                 </ButtonToolbar>
@@ -289,6 +289,7 @@ export class AdvancedSearch extends React.Component {
                     results={this.props.loading ? [] : this.props.advancedSearch.results}
                     selectGeographyData={this.props.config.selectGeographyData}
                     zoom={this.state.zoom}
+                    height={'100%'}
                   />
                 </div>
                 <div

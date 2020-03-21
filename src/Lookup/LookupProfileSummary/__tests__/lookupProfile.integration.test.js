@@ -34,11 +34,20 @@ const setupWrapper = ({ state, propertyResult, loading = false, error, print = f
   )
   return [wrapper, store]
 }
+
+// mock window size for desktop expandable sections to start open
+window.matchMedia = jest.fn()
+window.matchMedia.mockImplementation(() => {
+  return {
+    matches: true,
+  }
+})
+
 describe('LookupProfileSummary', () => {
   it('has initial state', () => {
     const [wrapper] = setupWrapper({ propertyResult: createPropertyRequestMock(), loading: false })
     expect(wrapper.find('PropertySummaryBody')).toHaveLength(1)
-    expect(wrapper.find('ExpandableSection')).toHaveLength(5)
+    expect(wrapper.find('ExpandableSection')).toHaveLength(6)
 
     // starts closed
     expect(wrapper.find('RentStabilizationSection')).toHaveLength(0)
@@ -65,7 +74,9 @@ describe('LookupProfileSummary', () => {
       const [wrapper] = setupWrapper({ propertyResult: result, loading: false })
 
       const bodyText = wrapper.find('PropertySummaryBody').text()
-      expect(bodyText).toMatch('BBL1')
+      expect(bodyText).toMatch(
+        'BBL 1Council District1 (Visit)Community DistrictManhattan 01 (Visit)State Assembly (Visit)State Senate (Visit)Zip Code11111 (Visit)Total Units10Residential Units10Year Built2000'
+      )
       expect(bodyText).toMatch('Council District1')
       expect(bodyText).toMatch('Community DistrictManhattan 01')
       expect(bodyText).toMatch('Year Built2000')
@@ -131,7 +142,7 @@ describe('LookupProfileSummary', () => {
         )
 
         expect(wrapper.find('RentStabilizationSection').text()).toMatch(
-          'Stabilized Units (most recent): 0Change since 2007+50.0%# Stabilized Units20071020175'
+          'Stabilized Units (most recent): 0Change since 2007+50.0%# Stabilized Units 20071020175'
         )
       })
     })

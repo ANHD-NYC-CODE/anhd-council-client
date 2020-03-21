@@ -9,6 +9,8 @@ import * as loadingActions from 'Store/Loading/actions'
 import * as errorActions from 'Store/Error/actions'
 import { push } from 'connected-react-router'
 import { requestWithAuth } from 'shared/utilities/authUtils'
+import { setCustomSearchResults } from 'Store/AdvancedSearch/actions'
+
 import { GET_TOKEN, GET_TOKEN_REFRESH } from 'shared/constants/actions'
 import * as u from 'shared/utilities/constantUtils'
 
@@ -79,7 +81,7 @@ describe('loginUser', () => {
 describe('logoutUser', () => {
   it('on SUCCESS - dispatches HANDLE_USER_LOGOUT', async () => {
     store.dispatch(logoutUser())
-    const expectedActions = [handleUserLogout()]
+    const expectedActions = [handleUserLogout(), setCustomSearchResults([])]
     expect(store.getActions()).toEqual(expectedActions)
   })
 })
@@ -122,6 +124,7 @@ describe('refreshTokens', () => {
         errorActions.handleFailure(GET_TOKEN_REFRESH, errorResponse.status, 'Please login for access.'),
         loadingActions.handleCompletedRequest(GET_TOKEN_REFRESH),
         handleUserLogout(),
+        setCustomSearchResults([]),
       ]
 
       expect(store.getActions()).toEqual(expectedActions)
