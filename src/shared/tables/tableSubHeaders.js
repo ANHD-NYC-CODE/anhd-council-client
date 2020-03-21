@@ -4,12 +4,14 @@ import { Col, Row } from 'react-bootstrap'
 import { boroughAbbreviationToCode } from 'shared/utilities/languageUtils'
 import lookupIcon from 'shared/images/lookup-document.svg'
 
+import { constructDOBLink } from 'shared/utilities/linkUtils'
+
 import classnames from 'classnames'
-export const getTableSubheaders = ({ constant, property, hideGutters = false } = {}) => {
-  return getTableSubheaderLinks({ constant, property })
+export const getTableSubheaders = ({ constant, property, bin = null, hideGutters = false } = {}) => {
+  return getTableSubheaderLinks({ constant, property, bin })
 }
 
-export const getTableSubheaderLinks = ({ constant = '', property = {} } = {}) => {
+export const getTableSubheaderLinks = ({ constant = '', property = {}, bin = null } = {}) => {
   switch (constant) {
     case 'ACRIS_REAL_MASTER':
       return (
@@ -103,12 +105,7 @@ export const getTableSubheaderLinks = ({ constant = '', property = {} } = {}) =>
         <div>
           {!!Object.keys(property).length && (
             <div>
-              <BaseLink
-                className="lookup-links__link"
-                href={`http://a810-bisweb.nyc.gov/bisweb/PropertyProfileOverviewServlet?boro=${property.bbl.charAt(
-                  0
-                )}&block=${property.bbl.slice(1, 6)}&lot=${property.bbl.slice(6, 10)}`}
-              >
+              <BaseLink className="lookup-links__link" href={constructDOBLink(property.bbl, bin)}>
                 Visit this property’s DOB page
               </BaseLink>
             </div>
@@ -121,12 +118,7 @@ export const getTableSubheaderLinks = ({ constant = '', property = {} } = {}) =>
         <div>
           {!!Object.keys(property).length && (
             <div>
-              <BaseLink
-                className="lookup-links__link"
-                href={`http://a810-bisweb.nyc.gov/bisweb/PropertyProfileOverviewServlet?boro=${property.bbl.charAt(
-                  0
-                )}&block=${property.bbl.slice(1, 6)}&lot=${property.bbl.slice(6, 10)}`}
-              >
+              <BaseLink className="lookup-links__link" href={constructDOBLink(property.bbl, bin)}>
                 Visit this property’s DOB page
               </BaseLink>
             </div>
@@ -139,12 +131,7 @@ export const getTableSubheaderLinks = ({ constant = '', property = {} } = {}) =>
         <div>
           {!!Object.keys(property).length && (
             <div>
-              <BaseLink
-                className="lookup-links__link"
-                href={`http://a810-bisweb.nyc.gov/bisweb/PropertyProfileOverviewServlet?boro=${property.bbl.charAt(
-                  0
-                )}&block=${property.bbl.slice(1, 6)}&lot=${property.bbl.slice(6, 10)}`}
-              >
+              <BaseLink className="lookup-links__link" href={constructDOBLink(property.bbl, bin)}>
                 Visit this property’s DOB page
               </BaseLink>
             </div>
@@ -157,12 +144,7 @@ export const getTableSubheaderLinks = ({ constant = '', property = {} } = {}) =>
         <div>
           {!!Object.keys(property).length && (
             <div>
-              <BaseLink
-                className="lookup-links__link"
-                href={`http://a810-bisweb.nyc.gov/bisweb/PropertyProfileOverviewServlet?boro=${property.bbl.charAt(
-                  0
-                )}&block=${property.bbl.slice(1, 6)}&lot=${property.bbl.slice(6, 10)}`}
-              >
+              <BaseLink className="lookup-links__link" href={constructDOBLink(property.bbl, bin)}>
                 Visit this property’s DOB page
               </BaseLink>
             </div>
@@ -183,12 +165,7 @@ export const getTableSubheaderLinks = ({ constant = '', property = {} } = {}) =>
         <div>
           {!!Object.keys(property).length && (
             <div>
-              <BaseLink
-                className="lookup-links__link"
-                href={`http://a810-bisweb.nyc.gov/bisweb/PropertyProfileOverviewServlet?boro=${property.bbl.charAt(
-                  0
-                )}&block=${property.bbl.slice(1, 6)}&lot=${property.bbl.slice(6, 10)}`}
-              >
+              <BaseLink className="lookup-links__link" href={constructDOBLink(property.bbl, bin)}>
                 Visit this property’s DOB page
               </BaseLink>
             </div>

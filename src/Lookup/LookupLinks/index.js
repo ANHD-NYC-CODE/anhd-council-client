@@ -1,9 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 import { Row, div } from 'react-bootstrap'
 import { boroughAbbreviationToCode } from 'shared/utilities/languageUtils'
 import BaseLink from 'shared/components/BaseLink'
+
+import { constructDOBLink } from 'shared/utilities/linkUtils'
+
 import './style.scss'
 
 class LookupLinks extends React.Component {
@@ -12,7 +14,7 @@ class LookupLinks extends React.Component {
   }
 
   render() {
-    return this.props.property ? (
+    return Object.keys(this.props.property).length ? (
       <div className="lookup-links">
         <div>
           <p className="lookup-links__label">More information:</p>
@@ -39,9 +41,7 @@ class LookupLinks extends React.Component {
           />
           <BaseLink
             className="lookup-links__link"
-            href={`http://a810-bisweb.nyc.gov/bisweb/PropertyProfileOverviewServlet?boro=${this.props.property.bbl.charAt(
-              0
-            )}&block=${this.props.property.bbl.slice(1, 6)}&lot=${this.props.property.bbl.slice(6, 10)}`}
+            href={constructDOBLink(this.props.property.bbl, this.props.bin)}
             text="DOB Property Overview"
           />
         </div>
@@ -52,18 +52,11 @@ class LookupLinks extends React.Component {
 
 LookupLinks.defaultProps = {
   property: undefined,
-  request: {},
 }
 
 LookupLinks.propTypes = {
-  dispatch: PropTypes.func,
-  request: PropTypes.object,
+  property: PropTypes.object,
+  bin: PropTypes.string,
 }
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    property: state.requests[ownProps.request.requestConstant],
-  }
-}
-
-export default connect(mapStateToProps)(LookupLinks)
+export default LookupLinks

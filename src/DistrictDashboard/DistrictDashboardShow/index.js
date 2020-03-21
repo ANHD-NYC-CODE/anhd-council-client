@@ -267,7 +267,7 @@ class DistrictDashboardShow extends React.Component {
                     variant={this.props.dashboardState.dashboardTableView ? 'dark' : 'light'}
                     value={true}
                   >
-                    List
+                    Table
                   </ToggleButton>
                 </ToggleButtonGroup>
               </ButtonToolbar>
