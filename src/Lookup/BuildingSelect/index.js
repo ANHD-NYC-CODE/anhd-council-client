@@ -41,10 +41,9 @@ class BuildingSelect extends React.Component {
             {this.props.propertyResult.buildings.length > 1 || !this.props.propertyResult.buildings.length
               ? ' buildings'
               : ' building'}{' '}
-            found for this lot. Select another address to filter for building-specific data
+            found for this lot. Select another address to filter for building-specific data&nbsp;
             {this.props.bin ? (
               <button className="text-link" onClick={() => this.props.changeLookup(this.props.bbl, undefined, false)}>
-                {' '}
                 or view data for the entire tax lot
               </button>
             ) : null}
