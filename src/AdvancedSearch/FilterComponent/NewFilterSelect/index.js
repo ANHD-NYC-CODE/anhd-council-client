@@ -45,8 +45,6 @@ const NewFilterSelect = props => {
                 <FontAwesomeIcon icon={faTimes} /> Cancel
               </Button>
             )}
-
-            <FormError show={!!props.filter.errors.length} message={(props.filter.errors[0] || {}).message} />
           </div>
         )
       }}

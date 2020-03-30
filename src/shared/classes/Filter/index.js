@@ -187,10 +187,14 @@ export default class Filter {
     this._errors = []
   }
 
-  validate() {
+  validate(loggedIn = false) {
     this.clearErrors()
     if (this.id === 'NEW_FILTER') {
       this.addError(new ParamError({ message: 'Please make a selection' }))
+    }
+
+    if (!loggedIn && (this.id === 'FORECLOSURE' || this.id === 'PSFORECLOSURE')) {
+      this.addError(new ParamError({ message: 'Please login to search foreclosures.' }))
     }
   }
 }

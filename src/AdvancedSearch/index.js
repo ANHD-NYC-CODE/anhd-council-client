@@ -309,6 +309,7 @@ export class AdvancedSearch extends React.Component {
                 dispatch={this.props.dispatch}
                 error={this.props.error}
                 loading={this.props.loading}
+                loggedIn={this.props.loggedIn}
                 showPopups={this.state.view === 2}
                 changeGeography={this.changeGeography}
                 handleChangeGeographyType={this.handleChangeGeographyType}
@@ -340,6 +341,7 @@ const mapStateToProps = state => {
   return {
     appState: state.appState,
     advancedSearch: state.advancedSearch,
+    loggedIn: !!state.auth.user,
     error: errorSelector(state),
     loading: loadingSelector(state),
     advancedSearchRequest: getSingleRequest(state.appState.requests, c.ADVANCED_SEARCH),
