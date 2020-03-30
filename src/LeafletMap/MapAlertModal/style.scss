@@ -18,7 +18,7 @@
   .map-alert-modal__alert {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     max-width: 240px;
     pointer-events: all;
@@ -27,7 +27,7 @@
   .map-alert-modal__text {
     @extend %p2-font-size;
     color: $black;
-    text-align: center;
+    text-align: left;
     margin-bottom: 20px;
   }
 }

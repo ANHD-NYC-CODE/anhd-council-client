@@ -38,7 +38,7 @@ class CsvButton extends React.Component {
 CsvButton.defaultProps = {
   error: null,
   loading: false,
-  size: '',
+  size: 'sm',
 }
 
 CsvButton.propTypes = {

@@ -51,7 +51,7 @@ class AdvancedSearchForm extends React.PureComponent {
       )
       .filter(f => f)
 
-    allFilters.forEach(filter => filter.validate())
+    allFilters.forEach(filter => filter.validate(this.props.loggedIn))
     allParamMaps.forEach(paramMap => paramMap.validate())
     return [allConditions, allFilters, allParamMaps]
   }
@@ -171,6 +171,7 @@ AdvancedSearchForm.propTypes = {
   changingGeographyId: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   error: PropTypes.object,
   loading: PropTypes.bool,
+  loggedIn: PropTypes.bool,
 }
 
 export default AdvancedSearchForm

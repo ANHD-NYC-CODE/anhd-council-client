@@ -73,6 +73,7 @@ const LookupAddressDisplay = props => {
               className="lookup-address-display__button lookup-address-display__edit-button"
               onClick={handleEditClick}
               variant="dark"
+              size="sm"
             >
               EDIT
             </Button>
@@ -80,6 +81,7 @@ const LookupAddressDisplay = props => {
               className="lookup-address-display__button lookup-address-display__clear-button"
               onClick={handleClear}
               variant="dark"
+              size="sm"
             >
               CLEAR
             </Button>

@@ -141,15 +141,15 @@ export default class LeafletMap extends React.PureComponent {
           <MapAlertModal
             alertMessage={
               <div>
-                <p>More than {c.MAP_MARKER_LIMIT} results will slow down this page.</p>
                 <p>
-                  Apply a Housing Type and/or one or more Datasets to narrow down results or click below to proceed.
+                  More than {c.MAP_MARKER_LIMIT} results will slow down this page. Apply a Housing Type and/or one or
+                  more Datasets to narrow down results or click below to proceed. If the page freezes, refresh your
+                  browser to reset.
                 </p>
-                <p>If the page freezes, refresh your browser to reset.</p>
               </div>
             }
             alertVariant="light"
-            alertCta="Display Results"
+            alertCta="Display Anyway"
             action={() =>
               this.setState({
                 overrideWarning: true,
