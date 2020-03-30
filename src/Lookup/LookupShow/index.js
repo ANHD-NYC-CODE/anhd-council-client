@@ -153,7 +153,7 @@ class LookupShow extends React.PureComponent {
                             this.props.appState.currentGeographyId
                           )}
                         >
-                          <Button className="icon-button--right" variant="dark">
+                          <Button className="icon-button--right" variant="dark" size="sm">
                             Back to dashboard <FontAwesomeIcon icon={faChevronRight} size="sm" />
                           </Button>
                         </BaseLink>
