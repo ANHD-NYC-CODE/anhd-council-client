@@ -1,18 +1,30 @@
-@import 'shared/styles/bootstrap/_variables.scss';
+@import 'shared/styles/_variables.scss';
 $sub-header-padding-top: 12px;
 .sub-header {
   background-color: $white;
+
+  .auth-user {
+    width: 100%;
+
+    @include media-breakpoint-up(sm) {
+      width: initial;
+    }
+  }
 
   .navbar {
     padding: 0;
   }
 
   .sub-header__brand {
-    margin: 0 auto;
+    // margin: 0 auto;
+    margin-left: auto;
+    margin-right: 0;
 
     @include media-breakpoint-up(sm) {
-      margin-right: auto;
-      margin-left: 0;
+    }
+
+    .navbar-brand {
+      margin-right: 0;
     }
   }
 
@@ -53,7 +65,7 @@ $sub-header-padding-top: 12px;
       @include media-breakpoint-up(md) {
         padding: $sub-header-padding-top 40px 20px;
         padding-left: 0;
-        width: 300px;
+        // width: 300px;
       }
     }
 
@@ -146,6 +158,7 @@ $sub-header-padding-top: 12px;
   }
 
   .sub-header__nav-tab {
+    @extend %p3-font-size;
     border: 1px solid $dark;
     box-sizing: border-box;
     padding: 1rem 15px;

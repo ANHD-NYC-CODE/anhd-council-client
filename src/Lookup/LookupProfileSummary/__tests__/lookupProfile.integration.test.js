@@ -142,7 +142,7 @@ describe('LookupProfileSummary', () => {
         )
 
         expect(wrapper.find('RentStabilizationSection').text()).toMatch(
-          'Stabilized Units (most recent): 0Change since 2007+50.0%# Stabilized Units 20071020175'
+          'Stabilized Units (most recent): 0Change after 2007+50.0%# Stabilized Units 20071020175'
         )
       })
     })
