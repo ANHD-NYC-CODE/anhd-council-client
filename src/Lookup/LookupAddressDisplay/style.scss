@@ -21,9 +21,10 @@
   }
 
   .lookup-address-display__title {
-    @extend %p1-font-size;
+    @extend %p3-font-size;
     display: inline-block;
     margin-bottom: 10px;
+    font-weight: bold;
     width: 100%;
   }
 

@@ -4,7 +4,9 @@ import { connect } from 'react-redux'
 import { Navbar, Nav } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { getGeographyPath, addressResultToPath } from 'shared/utilities/routeUtils'
-import logo from 'shared/images/portallogo.png'
+// import logo from 'shared/images/portallogo.png'
+import logo from 'shared/images/portallogo-2020.svg'
+
 import LoginModal from 'shared/components/modals/LoginModal'
 import LoginModalFooter from 'shared/components/forms/LoginForm/LoginModalFooter'
 import UserMessageModal from 'shared/components/modals/UserMessageModal'
@@ -24,7 +26,7 @@ class SubHeader extends React.Component {
     return (
       <div className="sub-header">
         <Nav className=" layout-width-wrapper">
-          <Navbar className="sub-header__wrapper--top">
+          <Navbar className="w-100">
             <Nav className="sub-header__brand">
               <Navbar.Brand>
                 <Link to="/">
@@ -32,6 +34,8 @@ class SubHeader extends React.Component {
                 </Link>
               </Navbar.Brand>
             </Nav>
+          </Navbar>
+          <Navbar className="sub-header__wrapper--top">
             <Nav className="sub-header__wrapper--top__links">
               <Nav.Item
                 onClick={e => {
@@ -54,7 +58,7 @@ class SubHeader extends React.Component {
                 />
               </Nav.Item> */}
               {this.props.auth.user ? (
-                <div className="d-flex">
+                <div className="d-flex auth-user">
                   <Nav.Item className="text-gray-900">{this.props.auth.user.username}</Nav.Item>
                   <Nav.Item
                     onClick={e => {
