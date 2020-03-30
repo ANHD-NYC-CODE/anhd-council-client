@@ -18,19 +18,19 @@ const parseDatasetRange = dataset => {
   let sentenceArray = []
   if (dataset.records_start && !dataset.records_end)
     sentenceArray.push(
-      <span>
+      <span key="dataset-info-sentence-item-1">
         This dataset starts on <b>{moment(dataset.records_start).format('MM/DD/YYYY')}</b>.
       </span>
     )
   else if (!dataset.records_start && dataset.records_end)
     sentenceArray.push(
-      <span>
+      <span key="dataset-info-sentence-item-2">
         This dataset ends on <b>{moment(dataset.records_end).format('MM/DD/YYYY')}</b>.
       </span>
     )
   else if (dataset.records_start && dataset.records_end)
     sentenceArray.push(
-      <span>
+      <span key="dataset-info-sentence-item-3">
         This dataset's range is from <b>{moment(dataset.records_start).format('MM/DD/YYYY')}</b> to{' '}
         <b>{moment(dataset.records_end).format('MM/DD/YYYY')}</b>.
       </span>
@@ -38,7 +38,7 @@ const parseDatasetRange = dataset => {
 
   if (dataset.last_update && dataset.update_schedule)
     sentenceArray.push(
-      <span>
+      <span key="dataset-info-sentence-item-4">
         {updateSentenceStart()} last updated on <b>{moment(dataset.last_update).format('MM/DD/YYYY')}</b> and is on{' '}
         {getUpdateType(dataset)} {dataset.update_schedule} update schedule.
       </span>

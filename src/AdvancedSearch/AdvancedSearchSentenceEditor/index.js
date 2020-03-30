@@ -9,6 +9,8 @@ import StandardizedInput from 'shared/classes/StandardizedInput'
 import { mapFilterDateToLabel, longAmountComparisonString } from 'shared/utilities/languageUtils'
 
 import { constructAdvancedSearchSentence } from 'shared/utilities/sentenceUtils'
+import { Button } from 'react-bootstrap'
+import { clearAdvancedSearchRequest } from 'Store/AppState/actions'
 
 import Property from 'shared/models/resources/Property'
 
@@ -44,6 +46,22 @@ const AdvancedSearchSentenceEditor = props => {
             {props.loading ? null : formatNumber(numberOfUnits)}
           </span>
         </div>
+        <span className="advanced-search-sentence-editor__buttons">
+          {(props.requestCalledAndNotLoading || props.loadingButDisplayingResults) && (
+            <Button className="advanced-search__toggle-button" variant="dark" onClick={props.toggleForm}>
+              {props.displayingForm ? 'View Results' : 'Edit Custom Search'}
+            </Button>
+          )}
+          {props.loadingButDisplayingForm && (
+            <Button
+              className="advanced-search__toggle-button"
+              onClick={() => props.dispatch(clearAdvancedSearchRequest())}
+              variant="danger"
+            >
+              Cancel
+            </Button>
+          )}
+        </span>
       </div>
     </div>
   )
@@ -54,6 +72,11 @@ AdvancedSearchSentenceEditor.propTypes = {
   dispatch: PropTypes.func,
   results: PropTypes.array,
   loading: PropTypes.bool,
+  requestCalledAndNotLoading: PropTypes.bool,
+  loadingButDisplayingResults: PropTypes.bool,
+  loadingButDisplayingForm: PropTypes.bool,
+  displayingForm: PropTypes.bool,
+  toggleForm: PropTypes.func,
 }
 AdvancedSearchSentenceEditor.defaultProps = {
   results: [],

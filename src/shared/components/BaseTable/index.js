@@ -210,7 +210,6 @@ class BaseTable extends React.Component {
       </li>
     )
   }
-
   render() {
     const columns = this.props.tableConfig.getColumns({
       expandColumnFunction: this.setExpandedContent,

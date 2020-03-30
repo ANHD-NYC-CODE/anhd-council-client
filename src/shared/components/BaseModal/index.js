@@ -35,18 +35,10 @@ const BaseModal = props => {
           </div>
         </Modal.Body>
       )}
-      {!!(props.documentationBody || (props.documentationSources || {}).length) && (
-        <Modal.Body>
-          <Modal.Title as="h5">Glossary:</Modal.Title>
-        </Modal.Body>
-      )}
-      {props.documentationBody && (
-        <Modal.Body>
-          <ReactMarkdown escapeHtml={false} source={props.documentationBody} />
-        </Modal.Body>
-      )}
-      {!!(props.documentationSources || {}).length && (
-        <Modal.Body>
+      <Modal.Body>
+        {!!(props.documentationBody || (props.documentationSources || {}).length) && <p>Documentation(s):</p>}
+        {props.documentationBody && <ReactMarkdown escapeHtml={false} source={props.documentationBody} />}
+        {!!(props.documentationSources || {}).length && (
           <div className="modal-sources">
             {props.documentationSources.map((source, index) => {
               return (
@@ -56,8 +48,8 @@ const BaseModal = props => {
               )
             })}
           </div>
-        </Modal.Body>
-      )}
+        )}
+      </Modal.Body>
 
       {props.modalFooter}
     </Modal>

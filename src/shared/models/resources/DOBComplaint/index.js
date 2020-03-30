@@ -1,5 +1,7 @@
 import { constructCountDateParamSet } from 'shared/utilities/filterUtils'
 
+import { dobComplaintCategoryDescriptionFormatter } from 'shared/utilities/tableUtils'
+
 const DOBComplaint = databaseObject => ({
   summaryBackgroundColorClass: 'dob-red',
   resourceConstant: 'DOB_COMPLAINT',
@@ -14,6 +16,14 @@ const DOBComplaint = databaseObject => ({
         })
       },
     },
+  },
+  tableResultsConstructor: results => {
+    // adds a field called complaintdescription which is derived from complaintcategory
+    // which is taken from the dob_complaint description documents
+    return results.map(complaint => {
+      complaint.complaintdescription = dobComplaintCategoryDescriptionFormatter(complaint.complaintcategory)
+      return complaint
+    })
   },
 })
 

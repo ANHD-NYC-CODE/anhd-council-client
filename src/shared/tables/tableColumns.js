@@ -237,7 +237,7 @@ export const getTableColumns = ({
   const constructPropertyColumn = ({
     dataField,
     text,
-    sort,
+    sort = true,
     filter,
     classes,
     formatter,
@@ -269,7 +269,7 @@ export const getTableColumns = ({
     key,
     dataField,
     text,
-    sort,
+    sort = true,
     filter,
     classes,
     headerClasses,
@@ -1012,10 +1012,11 @@ export const getTableColumns = ({
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
-          dataField: 'complaintcategory',
+          dataField: 'complaintdescription',
           text: 'Description',
-          formatter: dobComplaintCategoryDescriptionFormatter,
-          csvFormatter: dobComplaintCategoryDescriptionFormatter,
+          // formatting occurs in ResourceModel#tabletableResultsConstructor
+          // formatter: dobComplaintCategoryDescriptionFormatter,
+          // csvFormatter: dobComplaintCategoryDescriptionFormatter,
           classes: 'expandable-cell table-column--description',
           filter: constructFilter(textFilter),
           sort: true,
