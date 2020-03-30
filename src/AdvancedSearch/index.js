@@ -14,7 +14,7 @@ import { connect } from 'react-redux'
 import { Events, animateScroll as scroll, scrollSpy } from 'react-scroll'
 import * as advancedSearchReducer from 'Store/AdvancedSearch/reducers'
 import Helmet from 'react-helmet'
-import { Button, ButtonToolbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
+import { ButtonToolbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
 import LeafletMap from 'LeafletMap'
 import SpinnerLoader from 'shared/components/Loaders/SpinnerLoader'
 import BaseTable from 'shared/components/BaseTable'
@@ -29,12 +29,7 @@ import {
   updateGeography,
   forceUpdateSearch,
 } from 'Store/AdvancedSearch/actions'
-import {
-  clearAdvancedSearchRequest,
-  setAppState,
-  setGeographyAndRequestsAndRedirect,
-  setAdvancedSearchRequest,
-} from 'Store/AppState/actions'
+import { setAppState, setGeographyAndRequestsAndRedirect, setAdvancedSearchRequest } from 'Store/AppState/actions'
 
 import AdvancedSearchForm from 'AdvancedSearch/AdvancedSearchForm'
 import AdvancedSearchSentenceEditor from 'AdvancedSearch/AdvancedSearchSentenceEditor'
@@ -195,42 +190,14 @@ export class AdvancedSearch extends React.Component {
 
   render() {
     const requestCalledAndNotLoading = !!(this.props.advancedSearchRequest || {}).called && !this.props.loading
-    const loadingButDisplayingResults = !!this.props.loading && !this.state.displayingForm
-    const loadingButDisplayingForm = this.props.loading && this.state.displayingForm
     return (
       <div className="advanced-search layout-width-wrapper">
         <Helmet>
           <title>DAP Portal | Custom Search</title>
         </Helmet>
-        <div className="advanced-search__header">
-          {this.props.loading ? (
-            <SpinnerLoader className="advanced-search__title" size={'40px'} />
-          ) : (
-            <h4 className="advanced-search__title">Custom Search</h4>
-          )}
-
-          {(requestCalledAndNotLoading || loadingButDisplayingResults) && (
-            <Button
-              className="advanced-search__toggle-button"
-              variant="dark"
-              onClick={() => this.setState({ displayingForm: !this.state.displayingForm })}
-            >
-              {this.state.displayingForm ? 'View Results' : 'Edit Custom Search'}
-            </Button>
-          )}
-          {loadingButDisplayingForm && (
-            <Button
-              className="advanced-search__toggle-button"
-              onClick={() => this.props.dispatch(clearAdvancedSearchRequest())}
-              variant="danger"
-            >
-              Cancel
-            </Button>
-          )}
-        </div>
-        <div className="advanced-search--content">
-          {!this.state.displayingForm && (
-            <div className="advanced-search__results">
+        <div className="advanced-search__content">
+          {requestCalledAndNotLoading && (
+            <div>
               <FormError show={!!this.props.error} message={(this.props.error || {}).message} />
               <AdvancedSearchSentenceEditor
                 advancedSearch={this.props.advancedSearch}
@@ -238,7 +205,17 @@ export class AdvancedSearch extends React.Component {
                 dispatch={this.props.dispatch}
                 results={this.props.advancedSearch.results}
                 loading={this.props.loading}
+                toggleForm={() => this.setState({ displayingForm: !this.state.displayingForm })}
+                displayingForm={this.state.displayingForm}
+                requestCalledAndNotLoading={requestCalledAndNotLoading}
+                loadingButDisplayingResults={!!this.props.loading && !this.state.displayingForm}
+                loadingButDisplayingForm={this.props.loading && this.state.displayingForm}
               />
+            </div>
+          )}
+
+          {!this.state.displayingForm && (
+            <div className="advanced-search__results">
               <div className="advanced-search__results-header">
                 <ButtonToolbar className="d-flex view-toggle__container">
                   <ToggleButtonGroup

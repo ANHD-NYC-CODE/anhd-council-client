@@ -89,13 +89,13 @@ BaseTableHeader.propTypes = {
   records: PropTypes.array,
   request: PropTypes.object,
   filterButtonSets: PropTypes.array,
-  selectedFilters: PropTypes.array,
+  selectedFilters: PropTypes.object,
 }
 BaseTableHeader.defaultProps = {
   csvProps: {},
   records: [],
   filterButtonSets: [],
-  selectedFilters: [],
+  selectedFilters: {},
 }
 
 export default BaseTableHeader
