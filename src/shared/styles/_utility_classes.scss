@@ -89,7 +89,7 @@ label.toggle-link.btn:active,
 label.btn-primary:not(:disabled):not(.disabled):active {
   background: transparent;
   box-shadow: none;
-  color: $primary;
+  color: $secondary;
   border: 2px solid transparent;
   border-radius: 10px !important;
   cursor: pointer;
@@ -182,13 +182,13 @@ label.toggle-link.active.btn-primary:not(:disabled).light.active {
 .text-link,
 %text-link {
   @extend %blank-button;
-  color: $primary;
+  color: $text-link;
   font-weight: bold;
   padding: 0;
 
   &:hover,
   &:focus {
-    color: darken($primary, 10%);
+    color: darken($text-link, 10%);
   }
 }
 

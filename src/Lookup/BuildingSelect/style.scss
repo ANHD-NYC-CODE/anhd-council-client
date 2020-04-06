@@ -69,7 +69,7 @@
         }
 
         [class*='-option']:nth-of-type(1) {
-          background-color: $blizzard;
+          background-color: $secondary;
           color: $black;
         }
 
@@ -80,7 +80,7 @@
 
         [class*='-option']:nth-of-type(n + 2):focus,
         [class*='-option']:nth-of-type(n + 2):hover {
-          background-color: $primary;
+          background-color: $secondary;
           color: $white;
         }
       }

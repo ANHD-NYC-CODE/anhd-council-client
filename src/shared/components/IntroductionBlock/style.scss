@@ -4,16 +4,4 @@
   svg {
     margin: 20px 0;
   }
-
-  a {
-    color: $acris-yellow;
-    font-weight: bold;
-  }
-
-  @media (hover: hover) {
-    a:hover {
-      color: $secondary-light;
-      text-decoration: underline;
-    }
-  }
 }

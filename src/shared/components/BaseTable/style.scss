@@ -14,10 +14,6 @@ table.table,
     background-color: $white;
   }
 
-  a {
-    font-weight: bold;
-  }
-
   thead th {
     outline: none;
     padding-top: 10px;
@@ -102,18 +98,18 @@ table.table,
   @media (hover: hover) {
     table.no-expand {
       tbody tr:hover {
-        background-color: $primary;
+        background-color: $secondary;
         color: white;
       }
     }
     // tr:not(.expanding-row) td:not(.table-column--active):not(.react-bs-table-no-data):hover {
-    //   background-color: $primary;
+    //   background-color: $secondary;
     //   color: white;
     // }
   }
 
   .table-column--active {
-    background-color: $primary;
+    background-color: $secondary;
     color: white;
     // text-overflow: inherit;
     // white-space: normal;
@@ -176,7 +172,7 @@ table.table,
   }
 
   .base-table__select-filters {
-    // background-color: $blizzard;
+    // background-color: $secondary;
     align-items: center;
     justify-items: center;
     display: flex;
@@ -207,7 +203,7 @@ table.table,
 
 .base-table .base-table {
   .expanded-row {
-    background-color: $primary;
+    background-color: $secondary;
   }
 }
 .csv-button.btn {

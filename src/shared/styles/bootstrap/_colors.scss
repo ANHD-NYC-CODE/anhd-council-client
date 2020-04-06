@@ -35,6 +35,8 @@ $grays: map-merge(
 $blue: #007bff !default;
 $paleCornflowerBlue: #b8d8ff !default;
 $blizzard: #95bae8 !default;
+$danube: #609bd6 !default;
+$congress-blue: #014c8d !default;
 $indigo: #6610f2 !default;
 $purple: #6f42c1 !default;
 $pink: #ffc4cd !default;
@@ -65,20 +67,6 @@ $property-blue: #a3bec8 !default;
 $housing-purple: #96a6d8 !default;
 $light-gray: #a39e9e !default;
 
-$tab-dark: $rhino;
-$tab-dark-hover: $gray-200;
-$tab-dark-active: $rhino;
-
-$tab-primary: $tab-blue;
-$tab-primary-hover: $paleCornflowerBlue;
-$tab-primary-active: $blizzard;
-
-$tab-secondary: $light-orange;
-$tab-secondary-hover: $texasRose;
-$tab-secondary-active: $carrotOrange;
-
-$tab-disabled: $gray-300;
-
 // Summary Card Colors
 $acris-yellow: #f6f7c6;
 $hpd-orange: #fce7d0;
@@ -108,8 +96,8 @@ $colors: map-merge(
   $colors
 );
 
-$primary: $nyc-blue !default;
-$secondary: $nyc-orange !default;
+$primary: $gray-900 !default;
+$secondary: $danube !default;
 $secondary-light: lighten($secondary, 10%);
 $success: $green !default;
 $info: $blizzard !default;
@@ -117,6 +105,22 @@ $warning: $yellow !default;
 $danger: $red !default;
 $light: $gray-100 !default;
 $dark: $gray-900 !default;
+
+$text-link: $congress-blue;
+
+$tab-dark: $rhino;
+$tab-dark-hover: $gray-200;
+$tab-dark-active: $rhino;
+
+$tab-primary: $tab-blue;
+$tab-primary-hover: $paleCornflowerBlue;
+$tab-primary-active: $secondary;
+
+$tab-secondary: $light-orange;
+$tab-secondary-hover: $texasRose;
+$tab-secondary-active: $carrotOrange;
+
+$tab-disabled: $gray-300;
 
 $theme-colors: () !default;
 // stylelint-disable-next-line scss/dollar-variable-default
