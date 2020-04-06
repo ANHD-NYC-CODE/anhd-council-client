@@ -60,7 +60,7 @@ describe('convertFilterToSentence', () => {
         },
       })
 
-      const result = `have at least 5 HPD violations (class A) after ${startDate}`
+      const result = `have at least 5 HPD violations (class A) since ${startDate}`
       expect(a.convertFilterToSentence(object)).toEqual(result)
     })
   })
@@ -104,7 +104,7 @@ describe('process property housing type filter', () => {
       object.paramSets['initial'].paramMaps.find(pm => pm.field === 'housingtype').value = 'rr'
 
       object.paramSets['housingType_rr_2'].create()
-      const result = `subsidized housing properties (expiring after ${startDate})`
+      const result = `subsidized housing properties (expiring since ${startDate})`
 
       expect(a.convertFilterToSentence(object)).toEqual(result)
     })

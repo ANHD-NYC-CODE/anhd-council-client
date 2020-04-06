@@ -2,12 +2,12 @@
 
 .layout {
   .footer-push {
-    min-height: calc(100vh);
+    min-height: calc(100vh - 26px);
   }
 
   .layout__left-column .jumbotron,
   .layout__left-column {
-    background-color: $primary;
+    background-color: $secondary;
     border-radius: 0;
     height: 100%;
     overflow-x: hidden;

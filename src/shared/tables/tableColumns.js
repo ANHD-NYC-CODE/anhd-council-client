@@ -1319,6 +1319,8 @@ export const getTableColumns = ({
           formatter: acrisDocTypeFormatter,
           csvFormatter: acrisDocTypeFormatter,
           sort: true,
+          filter: baseTableConfig.filterPrototypes['ACRIS_REAL_MASTER_DOCUMENT_TYPE'],
+          headerClasses: 'hide-filter',
         }),
         constructStandardColumn({
           dataField: 'docamount',

@@ -1,7 +1,7 @@
 @import 'shared/styles/_variables.scss';
 
 .search-result-row {
-  @extend %p2-font-size;
+  @extend %p3-font-size;
   background-color: $white;
   cursor: pointer;
   padding: 10px;

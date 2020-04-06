@@ -1,7 +1,12 @@
 @import 'shared/styles/_variables.scss';
 
+$max-desktop-section-height: 78vh;
+
 .district-dashboard-show {
   margin-bottom: 40px;
+  @include media-breakpoint-up(sm) {
+    margin-bottom: 0;
+  }
 
   .district-dashboard-container {
     padding: 0;
@@ -161,6 +166,12 @@
     flex-direction: column;
     flex: 0 0 333px;
     width: 333px;
+
+    @include media-breakpoint-up(sm) {
+      max-height: $max-desktop-section-height;
+      overflow: auto;
+      margin-right: 20px;
+    }
   }
 
   .district-dashboard-show__results-section {
@@ -168,6 +179,11 @@
     flex-direction: column;
     flex: 1;
     overflow-x: auto;
+
+    @include media-breakpoint-up(sm) {
+      // max-height: $max-desktop-section-height;
+      overflow: hidden;
+    }
   }
 
   .geography-select-row,
@@ -185,11 +201,15 @@
 
   .district-dashboard-show__results-container {
     margin-bottom: 40px;
+
+    @include media-breakpoint-up(sm) {
+      margin-bottom: 0;
+    }
   }
 
   .combineFilters__checkbox {
     label {
-      color: $primary;
+      color: $secondary;
     }
 
     label:hover {
@@ -207,22 +227,18 @@
     width: 100%;
 
     @include media-breakpoint-up(sm) {
-      height: 500px;
-    }
-
-    @include media-breakpoint-up(lg) {
-      height: 700px;
+      height: 48vh;
     }
   }
 
   .view-toggle__container {
-    align-items: flex-start;
+    align-items: flex-end;
     flex-direction: column;
     justify-content: center;
     margin-bottom: 10px;
 
     @include media-breakpoint-up(sm) {
-      align-items: flex-start;
+      align-items: flex-end;
     }
   }
 

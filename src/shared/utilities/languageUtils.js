@@ -91,9 +91,9 @@ export const longAmountComparisonString = comparison => {
 export const constructDateComparisonString = comparison => {
   switch (comparison) {
     case 'gte':
-      return 'after'
+      return 'since'
     case 'start':
-      return 'after'
+      return 'since'
     case 'lte':
       return 'before'
     case 'end':
