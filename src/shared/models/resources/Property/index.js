@@ -208,7 +208,7 @@ const Property = databaseObject => {
             dateHighValue: 2017,
             rangeComparisonOptions: rangeComparisonOptions({
               comparisonValues: ['start', 'between'],
-              labels: ['After', 'Range'],
+              labels: ['Since', 'Range'],
               rangeKey: 'rsUnitsRange',
             }),
             dateValidations: {

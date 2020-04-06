@@ -329,12 +329,6 @@ class DistrictDashboardShow extends React.Component {
                 />
               </div>
             </div>
-            <div>
-              <GeographyProfile
-                currentGeographyType={this.props.appState.currentGeographyType}
-                currentGeographyId={this.props.appState.currentGeographyId}
-              />
-            </div>
           </div>
         </div>
       </div>

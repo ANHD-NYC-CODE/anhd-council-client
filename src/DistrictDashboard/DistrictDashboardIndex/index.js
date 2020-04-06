@@ -111,7 +111,7 @@ class DistrictDashboardIndex extends React.Component {
             <p className="text-black text-center my-5">
               You can also{' '}
               <BaseLink className="text-link" href="/lookup">
-                find information about a building:
+                find information about a building
               </BaseLink>
               {' or '}
               <BaseLink className="text-link" href="/search">

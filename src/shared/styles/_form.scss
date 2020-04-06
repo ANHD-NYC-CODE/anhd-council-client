@@ -22,10 +22,8 @@ select.form-control.valued {
 }
 .form-control:focus,
 .form-control:focus-within {
-  outline: $blizzard;
-  // box-shadow: none;
+  outline: $secondary; // box-shadow: none;
   // border-bottom: $input-border-focus-mobile;
-
   @include media-breakpoint-up(sm) {
     // border-bottom: $input-border-focus;
   }

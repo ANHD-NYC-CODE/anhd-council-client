@@ -31,3 +31,15 @@ ul {
     background-color: $dark;
   }
 }
+
+a {
+  font-weight: bold;
+  color: $text-link;
+
+  &:hover,
+  &:focus {
+    color: darken($text-link, 10%);
+    text-decoration: underline;
+    outline: none;
+  }
+}

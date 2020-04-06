@@ -57,7 +57,7 @@
     &::-webkit-scrollbar {
       width: 8px;
       box-shadow: none;
-      background: $blizzard;
+      background: $secondary;
     }
   }
 
@@ -92,7 +92,7 @@
 
     &::-webkit-scrollbar-track-piece {
       box-shadow: none;
-      background: $blizzard;
+      background: $secondary;
     }
 
     /* Handle */
@@ -110,7 +110,7 @@
     }
 
     &::-webkit-scrollbar-corner {
-      background: $blizzard;
+      background: $secondary;
     }
   }
 

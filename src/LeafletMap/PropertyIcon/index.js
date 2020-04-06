@@ -29,19 +29,14 @@ class PropertyIcon extends React.Component {
           {this.props.interactive && (
             <div>
               <Popup>
-                <Card style={{ border: 'none' }}>
-                  <Card.Body>
-                    <Card.Title>{this.props.result.address}</Card.Title>
-                    <Card.Text>
-                      <Button
-                        as={BaseLink}
-                        variant="primary"
-                        href={`/property/${this.props.result.bbl}`}
-                        text="View Property"
-                      />
-                    </Card.Text>
-                  </Card.Body>
-                </Card>
+                <div className="leaflet-popup-title">{this.props.result.address}</div>
+                <Button
+                  as={BaseLink}
+                  variant="primary"
+                  href={`/property/${this.props.result.bbl}`}
+                  text="View Property"
+                  size="sm"
+                />
               </Popup>
               <Tooltip>{this.props.result.address}</Tooltip>
             </div>
