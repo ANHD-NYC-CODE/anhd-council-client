@@ -22,3 +22,13 @@
   left: 0;
   z-index: 2;
 }
+
+.leaflet-popup-content {
+  @extend %p3-font-size;
+  display: flex;
+  flex-direction: column;
+}
+
+.leaflet-popup-title {
+  margin-bottom: 10px;
+}

@@ -1,5 +1,5 @@
 import React from 'react'
-import { textFilter } from 'react-bootstrap-table2-filter'
+import { textFilter, multiSelectFilter } from 'react-bootstrap-table2-filter'
 import { Button } from 'react-bootstrap'
 
 import classnames from 'classnames'
@@ -9,9 +9,25 @@ export default class BaseTableConfig {
     this._filters = {}
     this._selectedFilters = {}
     this._filterPrototypes = {
+      ...this.createFilterPrototype('ACRIS_REAL_MASTER_DOCUMENT_TYPE', 'multi-select', [
+        'DEED',
+        'AALR',
+        'AGMT',
+        'AL&R',
+        'ASST',
+        'ASPM',
+        'DEMM',
+        'MTGE',
+        'PSAT',
+        'SAT',
+        'SMTG',
+        'WSAT',
+        'M&CON',
+        'SPRD',
+      ]),
       ...this.createFilterPrototype('HPD_VIOLATION_OPEN'),
       ...this.createFilterPrototype('HPD_VIOLATION_CLASS'),
-      ...this.createFilterPrototype('HPD_COMPLAINT_OPEN', true),
+      ...this.createFilterPrototype('HPD_COMPLAINT_OPEN'),
       ...this.createFilterPrototype('DOB_VIOLATION_ACTIVE'),
       ...this.createFilterPrototype('DOB_COMPLAINT_ACTIVE'),
       ...this.createFilterPrototype('ECB_VIOLATION_ACTIVE'),
@@ -19,6 +35,7 @@ export default class BaseTableConfig {
       ...this.createFilterPrototype('DOB_ISSUED_PERMIT_TYPE'),
     }
     this._filterFunctions = {
+      ...this.createFilterFunction('ACRIS_REAL_MASTER_DOCUMENT_TYPE'),
       ...this.createFilterFunction('HPD_VIOLATION_OPEN'),
       ...this.createFilterFunction('HPD_VIOLATION_CLASS'),
       ...this.createFilterFunction('HPD_COMPLAINT_OPEN'),
@@ -29,6 +46,31 @@ export default class BaseTableConfig {
       ...this.createFilterFunction('DOB_ISSUED_PERMIT_TYPE'),
     }
     this.filterButtonSets = {
+      ACRIS_REAL_MASTER: [
+        this.createFilterButtonSet(
+          'ACRIS_REAL_MASTER',
+          'ACRIS_REAL_MASTER_DOCUMENT_TYPE',
+          [
+            this.createFilterItem('Deed', ['DEED']),
+            this.createFilterItem('Mortgages', [
+              'AALR',
+              'AGMT',
+              'AL&R',
+              'ASST',
+              'ASPM',
+              'DEMM',
+              'MTGE',
+              'PSAT',
+              'SAT',
+              'SMTG',
+              'WSAT',
+              'M&CON',
+              'SPRD',
+            ]),
+          ],
+          'All'
+        ),
+      ],
       HPD_VIOLATION: [
         this.createFilterButtonSet(
           'HPD_VIOLATION',
@@ -160,17 +202,28 @@ export default class BaseTableConfig {
     })
   }
 
-  createFilterPrototype(constant, forceUpdate = false) {
-    return {
-      [constant]: textFilter({
-        placeholder: 'Search...',
-        getFilter: filter => {
-          this.filters[constant] = filter
-        },
-        // onFilter: (filter, data) => {
-        //   this.component.forceUpdate()
-        // },
-      }),
+  createFilterPrototype(constant, type = 'text', multiSelectOptions = []) {
+    switch (type) {
+      case 'text':
+        return {
+          [constant]: textFilter({
+            placeholder: 'Search...',
+            getFilter: filter => {
+              this.filters[constant] = filter
+            },
+          }),
+        }
+      case 'multi-select':
+        return {
+          [constant]: multiSelectFilter({
+            options: multiSelectOptions,
+            comparator: 'LIKE',
+            placeholder: 'Search...',
+            getFilter: filter => {
+              this.filters[constant] = filter
+            },
+          }),
+        }
     }
   }
 
