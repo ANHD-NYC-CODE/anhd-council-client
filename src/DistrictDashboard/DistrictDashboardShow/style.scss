@@ -209,7 +209,7 @@ $max-desktop-section-height: 78vh;
 
   .combineFilters__checkbox {
     label {
-      color: $primary;
+      color: $secondary;
     }
 
     label:hover {
@@ -232,13 +232,13 @@ $max-desktop-section-height: 78vh;
   }
 
   .view-toggle__container {
-    align-items: flex-start;
+    align-items: flex-end;
     flex-direction: column;
     justify-content: center;
     margin-bottom: 10px;
 
     @include media-breakpoint-up(sm) {
-      align-items: flex-start;
+      align-items: flex-end;
     }
   }
 

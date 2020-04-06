@@ -123,6 +123,10 @@
     margin-bottom: 40px;
     position: relative;
 
+    @include media-breakpoint-up(sm) {
+      margin-bottom: 0;
+    }
+
     @include media-breakpoint-up(xl) {
       display: flex;
       align-items: flex-start;

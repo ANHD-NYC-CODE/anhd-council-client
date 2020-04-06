@@ -2,7 +2,7 @@
 
 .property-section {
   @extend %p3-font-size;
-  background-color: $blizzard;
+  background-color: $secondary;
   color: $black;
   padding: $lookup-sidebar-padding;
 }
@@ -73,10 +73,6 @@
   color: $black;
   display: block;
   font-weight: normal;
-
-  a {
-    font-weight: bold;
-  }
 }
 
 li.profile-summary-body__value {
@@ -89,10 +85,6 @@ li.profile-summary-body__value {
   background-color: transparent;
 }
 
-.lookup-profile-summary__geography-link {
-  margin-left: -15px;
-}
-
 .lookup-profile-summary {
   .lookup-profile-summary__body {
   }
@@ -103,30 +95,6 @@ li.profile-summary-body__value {
 
   .lookup-profile-summary__bottom-info {
     margin: 0 -15px;
-  }
-
-  .lookup-profile-summary__geography-link {
-    a {
-      color: $white;
-      text-transform: uppercase;
-      text-decoration: underline;
-    }
-  }
-
-  .lookup-profile-summary__geography-link:first-child {
-  }
-
-  .base-table {
-    background-color: $white;
-    padding: 0px;
-
-    .expanded-row--wrapper {
-      margin-left: 10px;
-    }
-
-    .expanded-row {
-      overflow: hidden;
-    }
   }
 
   .expandable-section:first-child {

@@ -2,7 +2,7 @@ table {
   .expandable-cell {
     @media (hover: hover) {
       &:hover {
-        background-color: $primary;
+        background-color: $secondary;
         color: white;
       }
     }

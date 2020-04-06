@@ -6,11 +6,11 @@
   .condition {
     .form-row__connection-container:not(.condition-connection) {
       .form-row__connection {
-        border-color: $primary;
+        border-color: $secondary;
       }
 
       .form-row__connection:first-child {
-        border-bottom: 5px double $primary;
+        border-bottom: 5px double $secondary;
       }
     }
     .condition-connection {
@@ -80,8 +80,5 @@
     margin: 0;
     padding-left: 0;
     padding-right: 0;
-    a {
-      font-weight: bold;
-    }
   }
 }

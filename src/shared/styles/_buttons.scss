@@ -152,7 +152,7 @@ a.btn-link:hover {
 // Custom bootstrap radios
 
 .custom-control-input:checked ~ .custom-control-label::before {
-  background-color: $primary;
+  background-color: $secondary;
 }
 
 .custom-control-label::before,
