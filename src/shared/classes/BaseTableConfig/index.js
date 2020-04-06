@@ -75,7 +75,7 @@ export default class BaseTableConfig {
         this.createFilterButtonSet(
           'HPD_VIOLATION',
           'HPD_VIOLATION_OPEN',
-          [this.createFilterItem('Open', 'open')],
+          [this.createFilterItem('Open', 'open'), this.createFilterItem('Closed', 'close')],
           'All'
         ),
         this.createFilterButtonSet(
@@ -93,7 +93,7 @@ export default class BaseTableConfig {
         this.createFilterButtonSet(
           'HPD_COMPLAINT',
           'HPD_COMPLAINT_OPEN',
-          [this.createFilterItem('Open', 'open')],
+          [this.createFilterItem('Open', 'open'), this.createFilterItem('Closed', 'close')],
           'All'
         ),
       ],
@@ -101,7 +101,7 @@ export default class BaseTableConfig {
         this.createFilterButtonSet(
           'DOB_COMPLAINT',
           'DOB_COMPLAINT_ACTIVE',
-          [this.createFilterItem('Active', 'active')],
+          [this.createFilterItem('Active', 'active'), this.createFilterItem('Closed', 'close')],
           'All'
         ),
       ],
@@ -110,7 +110,7 @@ export default class BaseTableConfig {
         this.createFilterButtonSet(
           'DOB_VIOLATION',
           'DOB_VIOLATION_ACTIVE',
-          [this.createFilterItem('Active', 'active')],
+          [this.createFilterItem('Active', 'active'), this.createFilterItem('Dismissed', 'dismissed')],
           'All'
         ),
       ],
@@ -118,7 +118,7 @@ export default class BaseTableConfig {
         this.createFilterButtonSet(
           'ECB_VIOLATION',
           'ECB_VIOLATION_ACTIVE',
-          [this.createFilterItem('Active', 'active')],
+          [this.createFilterItem('Active', 'active'), this.createFilterItem('Resolved', 'resolve')],
           'All'
         ),
       ],
