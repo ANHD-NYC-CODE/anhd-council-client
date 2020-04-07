@@ -71,7 +71,11 @@ const LookupProfileSummary = props => {
                           collapseIcon={<FontAwesomeIcon size="lg" icon={faChevronUp} />}
                           expandIcon={<FontAwesomeIcon size="lg" icon={faChevronDown} />}
                         >
-                          <OwnershipSection profile={props.propertyResult} request={props.request} />
+                          <OwnershipSection
+                            profile={props.propertyResult}
+                            wowData={props.appState.currentPropertyWowData}
+                            request={props.request}
+                          />
                         </ExpandableSection>
                         <ExpandableSection
                           aboveFoldElement={<h5>Programs/Statuses</h5>}
