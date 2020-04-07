@@ -1,3 +1,4 @@
+import Axios from 'axios'
 import * as c from 'shared/constants'
 import { push, replace } from 'connected-react-router'
 import { getGeographyPath, addressResultToPath } from 'shared/utilities/routeUtils'
@@ -76,7 +77,7 @@ export const setLookupAndRequestsAndRedirect = ({ bbl, bin, replaceHistory = fal
   dispatch(removeRequestType('LOOKUP_FILTER'))
   dispatch(removeRequestType('LOOKUP_PROFILE'))
   dispatch(removeManyRequests(requests.map(r => r.requestConstant)))
-
+  // dispatch(getWowPropertyData(bbl))
   dispatch(handleSetPropertyBuildingLookupRequests(bbl, bin, requests))
   if (replaceHistory) {
     dispatch(replace(addressResultToPath({ bbl, bin })))
@@ -96,4 +97,14 @@ export const clearAdvancedSearchRequest = () => dispatch => {
   dispatch(removeRequest(c.ADVANCED_SEARCH))
   dispatch(handleCompletedRequest(c.ADVANCED_SEARCH))
   dispatch(handleClearErrors(c.ADVANCED_SEARCH))
+}
+
+export const getWowPropertyData = bbl => dispatch => {
+  Axios.get('https://whoownswhat.justfix.nyc/api/address/dap-aggregate', { params: { bbl } })
+    .then(response => {
+      console.log(response)
+    })
+    .catch(error => {
+      console.error(error)
+    })
 }

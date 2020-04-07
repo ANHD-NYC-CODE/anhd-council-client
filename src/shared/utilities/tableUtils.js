@@ -3,7 +3,12 @@ import moment from 'moment'
 import { Button } from 'react-bootstrap'
 import BaseLink from 'shared/components/BaseLink'
 import { getLinkId, getLinkProps } from 'shared/tables/tableColumns'
-import { capitalizeWords } from 'shared/utilities/languageUtils'
+import {
+  capitalizeSentences,
+  capitalizeString,
+  capitalizeWords,
+  preserveUppercaseTerms,
+} from 'shared/utilities/languageUtils'
 
 import lookupIcon from 'shared/images/lookup-document.svg'
 
@@ -111,6 +116,17 @@ export const dobViolationStatusFormatter = (cell, row, index) => {
   )
 }
 
+export const dobViolationTypeFormatter = (cell, row, index) => {
+  if (!cell) return cell
+
+  const split = cell.split(/-(.+)/)
+  if (split.length > 1) {
+    return preserveUppercaseTerms(capitalizeString(split[1]))
+  } else {
+    return preserveUppercaseTerms(capitalizeString(cell))
+  }
+}
+
 export const lispendenCleanupFormatter = (cell, row, index) => {
   if (!cell) return cell
   return cell.replace('00000', '')
@@ -129,6 +145,10 @@ export const dateFormatter = (cell, row, index) => {
   } catch (e) {
     return ''
   }
+}
+
+export const sentencesFormatter = (cell, row, index) => {
+  return capitalizeSentences(cell)
 }
 
 export const dollarFormatter = (cell, row, index) => {

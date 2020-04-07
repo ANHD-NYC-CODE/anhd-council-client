@@ -46,7 +46,9 @@ class LookupRequestsWrapper extends React.Component {
 
 LookupRequestsWrapper.propTypes = {
   appState: PropTypes.object,
+  dispatch: PropTypes.func,
   loadingState: PropTypes.object,
+  propertyResult: PropTypes.object,
 }
 
 export default LookupRequestsWrapper
