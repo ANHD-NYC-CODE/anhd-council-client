@@ -39,6 +39,11 @@ export const handleSetAdvancedSearchRequest = advancedSearchRequest => ({
   advancedSearchRequest,
 })
 
+export const handleSetWowPropertyData = data => ({
+  type: c.SET_WOW_PROPERTY_DATA,
+  data,
+})
+
 export const setGeographyAndRequestsAndRedirect = ({
   geographyType,
   geographyId,
@@ -77,7 +82,7 @@ export const setLookupAndRequestsAndRedirect = ({ bbl, bin, replaceHistory = fal
   dispatch(removeRequestType('LOOKUP_FILTER'))
   dispatch(removeRequestType('LOOKUP_PROFILE'))
   dispatch(removeManyRequests(requests.map(r => r.requestConstant)))
-  // dispatch(getWowPropertyData(bbl))
+  dispatch(getWowPropertyData(bbl))
   dispatch(handleSetPropertyBuildingLookupRequests(bbl, bin, requests))
   if (replaceHistory) {
     dispatch(replace(addressResultToPath({ bbl, bin })))
@@ -100,11 +105,15 @@ export const clearAdvancedSearchRequest = () => dispatch => {
 }
 
 export const getWowPropertyData = bbl => dispatch => {
+  console.log('hiii')
   Axios.get('https://whoownswhat.justfix.nyc/api/address/dap-aggregate', { params: { bbl } })
     .then(response => {
-      console.log(response)
+      const data = response.data.result[0]
+      dispatch(handleSetWowPropertyData(data))
     })
     .catch(error => {
       console.error(error)
+      // silently fail and return blank data
+      dispatch(handleSetWowPropertyData({}))
     })
 }

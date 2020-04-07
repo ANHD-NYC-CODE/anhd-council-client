@@ -83,14 +83,15 @@ const OwnershipSection = props => {
         </div>
       )}
       <div className="ownership-section__bottom-section">
-        {!props.print && (
-          <div className="ownership-section__hpdcontact__whoownswhat">
-            For more on ownership visit{' '}
-            <BaseLink className="text-link" href={`https://whoownswhat.justfix.nyc/bbl/${props.profile.bbl}`}>
-              Who Owns What?
-            </BaseLink>
-          </div>
-        )}
+        <div className="ownership-section__bottom-value">
+          There are <strong>{props.wowData['bldgs'] || '0'}</strong> buildings associated with this property's owner.
+        </div>
+        <div className="ownership-section__bottom-value">
+          For more on ownership visit{' '}
+          <BaseLink className="text-link" href={`https://whoownswhat.justfix.nyc/bbl/${props.profile.bbl}`}>
+            Who Owns What?
+          </BaseLink>
+        </div>
       </div>
     </div>
   )
@@ -98,10 +99,12 @@ const OwnershipSection = props => {
 
 OwnershipSection.defaultProps = {
   profile: {},
+  wowData: {},
 }
 
 OwnershipSection.propTypes = {
   profile: PropTypes.object,
+  wowData: PropTypes.object,
 }
 
 export default OwnershipSection
