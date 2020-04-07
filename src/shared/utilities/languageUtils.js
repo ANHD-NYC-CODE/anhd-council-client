@@ -1,19 +1,29 @@
 import * as c from 'shared/constants'
 
+export const capitalizeString = string => {
+  if (!string) return ''
+  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase()
+}
+
 export const capitalizeWords = string => {
   if (!string) return ''
   return preserveUppercaseTerms(
     string
       .split(' ')
       .map(word => {
-        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+        return capitalizeString(word)
       })
       .join(' ')
   )
 }
 
+export const capitalizeSentences = string => {
+  if (!string) return ''
+  return string.split('.').map(sentence => capitalizeString(sentence))
+}
+
 export const preserveUppercaseTerms = string => {
-  return string.replace(/\bllc\b/i, 'LLC')
+  return string.replace(/\bllc\b/i, 'LLC').replace(/nycha/i, 'NYCHA')
 }
 
 export const splitCamelCase = string => {
