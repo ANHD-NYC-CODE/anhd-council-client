@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import * as c from 'shared/constants'
+import * as b from 'shared/constants/geographies'
 import L from 'leaflet'
 import { geographySelectionToString } from 'shared/utilities/languageUtils'
 import { setDashboardMapZoom } from 'Store/DashboardState/actions'
@@ -83,6 +84,7 @@ export default class LeafletMap extends React.PureComponent {
   }
 
   getGeographyBounds(type, id) {
+    if (type === b.BOROUGH_GEOGRAPHY.constant) return null
     if (!this.allGeographiesLoaded()) return null
     const geographyDataset = this.props.selectGeographyData(type)
     const selectedGeography = geographyDataset.find(geography => String(geography.id) === String(id))

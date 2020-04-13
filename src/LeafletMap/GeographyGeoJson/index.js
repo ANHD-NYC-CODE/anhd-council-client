@@ -57,6 +57,9 @@ const GeographyGeoJson = props => {
     return null
   }
 }
+GeographyGeoJson.defaultProps = {
+  geographies: [],
+}
 
 GeographyGeoJson.propTypes = {
   changingGeographyType: PropTypes.string,

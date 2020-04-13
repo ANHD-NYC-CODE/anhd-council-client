@@ -3,20 +3,20 @@ import * as b from 'shared/constants/geographies'
 export default class Geography {
   constructor(GeographyConstant, id) {
     this._id = id
-    this._GeographyConstant = GeographyConstant
+    this._constant = GeographyConstant
     this._errors = []
     this.handleSetGeographyType(GeographyConstant)
   }
 
   clone() {
-    const newSelf = new Geography(this._GeographyConstant, this._id)
+    const newSelf = new Geography(this._constant, this._id)
     return newSelf
   }
 
   handleSetGeographyType(GeographyConstant) {
     const geographyType = b[Object.keys(b).find(obj => b[obj].constant === GeographyConstant)]
     if (geographyType) {
-      this._GEOGRAPHYType = geographyType
+      this._type = geographyType
       this._name = this.geographyType.name
       this._queryName = this.geographyType.queryName
       this._constant = this.geographyType.constant
@@ -28,7 +28,7 @@ export default class Geography {
   }
 
   get geographyType() {
-    return this._GEOGRAPHYType
+    return this._type
   }
   get id() {
     return this._id
