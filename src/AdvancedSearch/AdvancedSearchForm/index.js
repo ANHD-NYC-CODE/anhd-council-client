@@ -112,6 +112,7 @@ class AdvancedSearchForm extends React.PureComponent {
                 handleChange={handleChange}
                 touched={touched}
                 errors={errors}
+                withBoroughs={true}
               />
             </div>
             {this.props.geographyType && this.props.geographyId && (

@@ -9,7 +9,7 @@ import ParamMap from 'shared/classes/ParamMap'
 import Resource from 'shared/classes/Resource'
 import { housingTypeCodeToName } from 'shared/utilities/languageUtils'
 import { constantToModelName } from 'shared/utilities/filterUtils'
-import { getUrlFormattedParamMaps } from 'Store/AdvancedSearch/utilities/advancedSearchStoreUtils'
+import { getUrlFormattedParamMaps, getApiMaps } from 'Store/AdvancedSearch/utilities/advancedSearchStoreUtils'
 
 import LookupProfileSummary from 'Lookup/LookupProfileSummary'
 
@@ -362,15 +362,15 @@ export const newMapResultFilters = ({ resourceModels } = {}) => {
 
 export const newAdvancedSearchRequest = ({ advancedSearch, resourceModels } = {}) => {
   const paramMaps = getUrlFormattedParamMaps(advancedSearch)
+  const apiMaps = getApiMaps(advancedSearch)
+
+  console.log(apiMaps, paramMaps)
   return new DataRequest({
     isAuthenticated: true,
     type: c.ADVANCED_SEARCH,
     resourceModel: resourceModels['PROPERTY'],
     resourceConstant: 'PROPERTY_ADVANCED_SEARCH',
-    apiMaps: [
-      new ApiMap({ constant: advancedSearch.geographies[0].constant, resourceId: advancedSearch.geographies[0].id }),
-      new ApiMap({ constant: 'PROPERTY', name: 'Custom Search' }),
-    ],
+    apiMaps: apiMaps,
     paramMaps: paramMaps,
     tableConfig: new TableConfig({ resourceConstant: 'PROPERTY' }),
   })
