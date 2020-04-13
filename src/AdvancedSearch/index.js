@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import * as c from 'shared/constants'
+import * as b from 'shared/constants/geographies'
+
 import StandardizedInput from 'shared/classes/StandardizedInput'
 import Geography from 'shared/classes/Geography'
 
@@ -128,7 +130,6 @@ export class AdvancedSearch extends React.Component {
     const newAdvancedSearch = { ...this.state.advancedSearch }
     const type = geographyType || this.state.changingGeographyType || this.state.currentGeographyType
     const id = geographyId || e.value
-
     if (!this.state.advancedSearch.geographies.length) {
       const newGeography = new Geography(type, id)
 
@@ -143,8 +144,8 @@ export class AdvancedSearch extends React.Component {
       currentGeographyId: id,
       advancedSearch: newAdvancedSearch,
     })
-
-    if (!this.props.appState.currentGeographyId) {
+    // Change global geography unless it's the borough one
+    if (!this.props.appState.currentGeographyId && type !== b.BOROUGH_GEOGRAPHY.constant) {
       this.props.dispatch(
         setGeographyAndRequestsAndRedirect({
           geographyType: type,

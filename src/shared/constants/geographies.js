@@ -1,3 +1,10 @@
+export const BOROUGH_GEOGRAPHY = {
+  name: 'City / Boroughs',
+  constant: 'BOROUGH',
+  frontEndPath: '',
+  queryName: 'borough',
+}
+
 export const COUNCIL_GEOGRAPHY = {
   name: 'Council District',
   constant: 'COUNCIL',
