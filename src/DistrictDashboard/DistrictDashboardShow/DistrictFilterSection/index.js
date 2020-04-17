@@ -55,7 +55,6 @@ const DistrictFilterSection = props => {
             <div className="district-filter-section__header">
               <p className="district-filter-section__title">Datasets:</p>
               <ButtonToolbar className="d-flex dashboard-filter-section__toggle">
-                <InfoModalButton modalConstant={'DASHBOARD_AND_OR'} />
                 <ToggleButtonGroup
                   name="view"
                   type="radio"
@@ -67,22 +66,23 @@ const DistrictFilterSection = props => {
                     className="view-toggle"
                     data-test-id="dashboard-condition-toggle"
                     size="sm"
-                    variant={props.dashboardState.filterCondition === 'OR' ? 'dark' : 'light'}
-                    value={'OR'}
+                    variant={props.dashboardState.filterCondition === 'OR' ? 'light' : 'dark'}
+                    value={'AND'}
                   >
-                    Or
+                    And
                   </ToggleButton>
                   <ToggleButton
                     tabIndex="0"
                     className="view-toggle"
                     data-test-id="dashboard-condition-toggle"
                     size="sm"
-                    variant={props.dashboardState.filterCondition === 'OR' ? 'light' : 'dark'}
-                    value={'AND'}
+                    variant={props.dashboardState.filterCondition === 'OR' ? 'dark' : 'light'}
+                    value={'OR'}
                   >
-                    And
+                    Or
                   </ToggleButton>
                 </ToggleButtonGroup>
+                <InfoModalButton modalConstant={'DASHBOARD_AND_OR'} />
               </ButtonToolbar>
             </div>
 

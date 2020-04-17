@@ -10,22 +10,25 @@ const IntroductionBlock = props => {
     <Jumbotron className="introduction-block text-light mb-0">
       <h3 className="mb-4">ABOUT</h3>
       <p>
-        DAP Portal is a comprehensive new research tool that includes dozens of datasets indicating harassment and
-        potential displacement from New York City housing!
+        The Displacement Alert Project (DAP) Portal is a dynamic and powerful data tool that helps you understand a New
+        York City neighborhood’s housing landscape, where tenants and homeowners are at heightened risk of displacement,
+        and what is happening in buildings where tenants or homeowners are having problems.
       </p>
-
+      <p>DAP Portal is made up of three features:</p>
       <p>
-        The <BaseLink href="/lookup">Property Lookup</BaseLink> tool allows you to easily find all the relevant
-        information about a building across a variety of city agency and other unique datasets.
-      </p>
-      <p>
-        The <BaseLink href="/map">District Dashboard</BaseLink> allows you to see displacement threat indicators and
-        trends across your local City Council, Community District, State Assembly District, State Senate District, or
-        Zip Code.
+        The <BaseLink href="/lookup">Property Lookup</BaseLink> lets you investigate displacement threats at a building
+        level, view detailed records over time, find patterns and connections, and get the most recent information
+        possible.
       </p>
       <p>
-        The <BaseLink href="/search">Custom Search</BaseLink> allows you to produce custom maps and tables of buildings
-        that meet your unique search criteria by querying dozens of housing and displacement-related datasets.
+        The <BaseLink href="/map">District Dashboard</BaseLink> allows you to apply displacement threat indicators
+        across districts or zip codes to see a broader snapshot of threats by neighborhood, and produce maps and lists
+        of buildings that might not be on your radar for outreach and organizing.
+      </p>
+      <p>
+        The <BaseLink href="/search">Custom Search</BaseLink> allows you to customize maps and lists of buildings that
+        meet your unique search criteria and answer specific research questions about the threats facing our
+        neighborhoods.
       </p>
       <p>The DAP Portal is made possible by the support of the New York City Council and New York State Senate.</p>
 
@@ -38,18 +41,18 @@ const IntroductionBlock = props => {
       )} */}
       <h3 className="mb-4">The Displacement Alert Project</h3>
       <p>
-        For New Yorkers, stopping tenant displacement is one of the most urgent issues of the day.{' '}
+        In New York City, ending displacement is one of the most urgent issues we face.
         <BaseLink href="https://displacementalert.org">The Displacement Alert Project</BaseLink> is designed to address
         this problem by providing effective early warning information for residents facing harassment and displacement,
         for communities being destabilized, and for the community groups and policy makers trying to address the crisis.
       </p>
       <p>
         Existing data and information is fragmented and often confusing, which can make it challenging to identify which
-        buildings are most vulnerable in order to do something about it.
+        buildings are most vulnerable in order to intervene.
       </p>
       <p>
         We use data and information visualization tools to proactively identify buildings that are facing a rising risk
-        of displacement. With this information, community groups, decision makers, and local residents themselves can
+        of displacement. With this information community groups, decision makers, and local residents themselves can
         take strategic steps to push back with outreach, education, and organizing strategies.
       </p>
       <p>

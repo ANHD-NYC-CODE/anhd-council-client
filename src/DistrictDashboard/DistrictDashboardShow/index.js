@@ -175,7 +175,7 @@ class DistrictDashboardShow extends React.Component {
               <div className="district-dashboard-show__top-row__inner">
                 <GeographySelect
                   selectClass="main-geography-select"
-                  inputSize="md"
+                  inputSize="sm"
                   submitButtonVariant="dark"
                   currentGeographyType={this.props.appState.currentGeographyType}
                   currentGeographyId={this.props.appState.currentGeographyId}
@@ -198,6 +198,7 @@ class DistrictDashboardShow extends React.Component {
                       className="district-dashboard-show__clear"
                       variant="dark"
                       onClick={this.handleClearDashboard}
+                      size="sm"
                     >
                       CLEAR
                     </Button>
@@ -250,6 +251,7 @@ class DistrictDashboardShow extends React.Component {
                   type="radio"
                   value={this.props.dashboardState.dashboardTableView}
                   onChange={this.setTableView}
+                  size="sm"
                 >
                   <ToggleButton
                     tabIndex="0"
