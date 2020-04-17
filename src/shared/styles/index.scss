@@ -43,3 +43,9 @@ a {
     outline: none;
   }
 }
+
+// dropdowns
+
+.dropdown-item {
+  @extend %p3-font-size;
+}

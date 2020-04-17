@@ -25,7 +25,7 @@ class PageError extends React.Component {
               <span className="" />
               Take Me Home{' '}
             </Button>
-            <Button href={`mailto:${c.CONTACT_EMAIL}`} variant="dark">
+            <Button href={`mailto:${c.CONTACT_EMAIL}`} variant="outline-secondary">
               Contact Support
             </Button>
             <span className="w-100 text-center text-primary">{c.CONTACT_EMAIL}</span>
