@@ -35,6 +35,8 @@
     }
 
     .building-select__select-group {
+      @extend %p3-font-size;
+
       display: flex;
       width: 100%;
       @include media-breakpoint-up(sm) {

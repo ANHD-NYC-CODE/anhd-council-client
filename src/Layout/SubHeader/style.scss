@@ -87,11 +87,16 @@ $sub-header-padding-top: 12px;
     align-self: flex-start;
     flex-wrap: wrap;
 
+    @include media-breakpoint-up(md) {
+      margin-left: auto;
+    }
+
     .nav-item {
-      margin-bottom: 10px;
+      @extend %p3-font-size;
       padding: 0;
       white-space: pre;
       width: 100%;
+      padding: $sub-header-padding-top 15px 10px;
 
       &:last-child {
         margin-right: 0;
@@ -107,7 +112,6 @@ $sub-header-padding-top: 12px;
       }
       @include media-breakpoint-up(md) {
         margin-right: 0px;
-        padding: $sub-header-padding-top 20px 10px;
       }
     }
 
@@ -123,7 +127,7 @@ $sub-header-padding-top: 12px;
     .navbar-nav {
       flex-wrap: wrap;
 
-      @include media-breakpoint-up(sm) {
+      @include media-breakpoint-up(xl) {
         flex-wrap: nowrap;
       }
     }
@@ -169,7 +173,7 @@ $sub-header-padding-top: 12px;
 
     @include media-breakpoint-up(sm) {
       align-items: center;
-      border-radius: 6px 6px 0 0;
+      border-radius: 6px;
       display: flex;
       flex: 0 1 auto;
       margin-right: 4px;

@@ -24,13 +24,22 @@ $unopened-width: 660px;
   }
 
   .base-table-header__wrapper {
+    @extend %p3-font-size;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-items: flex-start;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 5px 10px;
+    box-sizing: border-box;
+
+    // total number
+    & > span:first-child {
+      flex: 0 0 auto;
+      margin-right: 10px;
+    }
 
     & > * {
-      margin-bottom: 5px;
       @include media-breakpoint-up(sm) {
         margin-right: 20px;
       }
@@ -39,6 +48,7 @@ $unopened-width: 660px;
 
   .base-table-header__right-group {
     display: flex;
+    flex: 0 0 auto;
     // margin-left: auto;
   }
 
@@ -55,5 +65,5 @@ $unopened-width: 660px;
 
 .base-table-header--lookup {
   background-color: $secondary;
-  padding: 10px;
+  padding: 0;
 }

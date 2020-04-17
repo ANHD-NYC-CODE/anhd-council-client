@@ -35,59 +35,7 @@ class SubHeader extends React.Component {
               </Navbar.Brand>
             </Nav>
           </Navbar>
-          <Navbar className="sub-header__wrapper--top">
-            <Nav className="sub-header__wrapper--top__links">
-              <Nav.Item
-                onClick={e => {
-                  e.preventDefault()
-                  this.props.modal.setModal({
-                    modalComponent: UserMessageModal,
-                    modalProps: {
-                      size: 'lg',
-                    },
-                  })
-                }}
-              >
-                <button className="blank-button text-gray-900">Contact us / Report an issue</button>
-              </Nav.Item>
-              {/* <Nav.Item>
-                <BaseLink
-                  href="https://forms.gle/EAUkzgsAkHn8NgbTA"
-                  className="blank-button text-gray-900"
-                  text="Feedback"
-                />
-              </Nav.Item> */}
-              {this.props.auth.user ? (
-                <div className="d-flex auth-user">
-                  <Nav.Item className="text-gray-900">{this.props.auth.user.username}</Nav.Item>
-                  <Nav.Item
-                    onClick={e => {
-                      e.preventDefault()
-                      this.props.auth.logoutUser()
-                    }}
-                  >
-                    <button className="blank-button text-gray-900">Logout</button>
-                  </Nav.Item>
-                </div>
-              ) : (
-                <Nav.Item
-                  onClick={e => {
-                    e.preventDefault()
-                    this.props.modal.setModal({
-                      modalComponent: LoginModal,
-                      modalProps: {
-                        modalFooter: <LoginModalFooter modal={this.props.modal} />,
-                      },
-                    })
-                  }}
-                >
-                  <button className="blank-button text-gray-900" id="nav-login-button">
-                    Login / Sign up
-                  </button>
-                </Nav.Item>
-              )}
-            </Nav>
-          </Navbar>
+          <Navbar className="sub-header__wrapper--top" />
           <Navbar className="sub-header__wrapper--bottom full-bleed--mobile">
             <Nav className="" variant="tabs" activeKey={this.state.key} onSelect={key => this.setState({ key })}>
               <Link
@@ -141,6 +89,61 @@ class SubHeader extends React.Component {
                   <Nav.Item>Custom Search</Nav.Item>
                 </div>
               </Link>
+              {/*
+              link navs
+              */}
+
+              <Nav className="sub-header__wrapper--top__links">
+                <Nav.Item
+                  onClick={e => {
+                    e.preventDefault()
+                    this.props.modal.setModal({
+                      modalComponent: UserMessageModal,
+                      modalProps: {
+                        size: 'lg',
+                      },
+                    })
+                  }}
+                >
+                  <button className="blank-button text-gray-900">Contact us / Report an issue</button>
+                </Nav.Item>
+                {/* <Nav.Item>
+                <BaseLink
+                  href="https://forms.gle/EAUkzgsAkHn8NgbTA"
+                  className="blank-button text-gray-900"
+                  text="Feedback"
+                />
+              </Nav.Item> */}
+                {this.props.auth.user ? (
+                  <div className="d-flex auth-user">
+                    <Nav.Item className="text-gray-900">{this.props.auth.user.username}</Nav.Item>
+                    <Nav.Item
+                      onClick={e => {
+                        e.preventDefault()
+                        this.props.auth.logoutUser()
+                      }}
+                    >
+                      <button className="blank-button text-gray-900">Logout</button>
+                    </Nav.Item>
+                  </div>
+                ) : (
+                  <Nav.Item
+                    onClick={e => {
+                      e.preventDefault()
+                      this.props.modal.setModal({
+                        modalComponent: LoginModal,
+                        modalProps: {
+                          modalFooter: <LoginModalFooter modal={this.props.modal} />,
+                        },
+                      })
+                    }}
+                  >
+                    <button className="blank-button text-gray-900" id="nav-login-button">
+                      Login / Sign up
+                    </button>
+                  </Nav.Item>
+                )}
+              </Nav>
             </Nav>
           </Navbar>
         </Nav>
