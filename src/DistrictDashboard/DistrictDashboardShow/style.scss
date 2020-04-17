@@ -40,7 +40,6 @@ $max-desktop-section-height: 78vh;
     .geography-select {
       width: 100%;
       @include media-breakpoint-up(lg) {
-        margin-right: 40px;
         width: initial;
       }
     }

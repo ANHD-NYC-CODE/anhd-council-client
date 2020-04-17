@@ -144,17 +144,18 @@ export class AdvancedSearch extends React.Component {
       currentGeographyId: id,
       advancedSearch: newAdvancedSearch,
     })
+
     // Change global geography unless it's the borough one
-    if (!this.props.appState.currentGeographyId && type !== b.BOROUGH_GEOGRAPHY.constant) {
-      this.props.dispatch(
-        setGeographyAndRequestsAndRedirect({
-          geographyType: type,
-          geographyId: id,
-          redirect: false,
-          requests: this.props.config.createMapRequests(type, id),
-        })
-      )
-    }
+    // if (!this.props.appState.currentGeographyId && type !== b.BOROUGH_GEOGRAPHY.constant) {
+    //   this.props.dispatch(
+    //     setGeographyAndRequestsAndRedirect({
+    //       geographyType: type,
+    //       geographyId: id,
+    //       redirect: false,
+    //       requests: this.props.config.createMapRequests(type, id),
+    //     })
+    //   )
+    // }
     this.cancelChangeGeography()
   }
 
