@@ -45,11 +45,11 @@ const AmountFilterInput = props => {
           value={isChanging ? value : props.value}
         />
 
-        {!!isChanging && (
+        {/* {!!isChanging && (
           <Button data-test-id="amount-filter-input--save" variant="dark" type="submit" size="sm">
             Save
           </Button>
-        )}
+        )} */}
         {/* {value !== props.value && <Form.Text className="text-muted">(not saved)</Form.Text>} */}
       </Form.Group>
     </Form>
