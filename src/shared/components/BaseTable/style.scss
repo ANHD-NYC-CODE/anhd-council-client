@@ -177,7 +177,7 @@ table.table,
     justify-items: center;
     display: flex;
     flex-wrap: nowrap;
-    margin-right: auto;
+    // margin-right: 20px;
     flex: 0 0 auto;
 
     & > * {
@@ -205,6 +205,18 @@ table.table,
 
 .base-table__header-body-wrapper {
   overflow-x: auto;
+  // width: min-content;
+}
+
+.base-table__header-body-inner-wrapper {
+  width: min-content;
+}
+
+.base-table-header__wrapper {
+  // max-width: 1044px;
+  width: min-content;
+  position: sticky;
+  left: 0;
 }
 
 .base-table .base-table {
