@@ -127,4 +127,14 @@ describe('DashboardState reducer', () => {
       })
     })
   })
+
+  describe('RESET_DASHBOARD_STATE', () => {
+    it('resets to initial state', () => {
+      expect(
+        r.dashboardStateReducer({ ...r.initialState, selectedFilters: [1, 2, 3] }, a.resetDashboardState())
+      ).toEqual({
+        ...r.initialState,
+      })
+    })
+  })
 })
