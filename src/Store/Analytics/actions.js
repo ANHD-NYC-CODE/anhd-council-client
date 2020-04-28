@@ -85,6 +85,16 @@ export const fireMapDateRangeSelectEvent = value => (dispatch, getState) => {
   })
 }
 
+export const fireDashboardToggleConditionEvent = value => (dispatch, getState) => {
+  const userId = getState().auth.user ? getState().auth.user.id : undefined
+  ReactGA.event({
+    category: 'DistrictDashboard',
+    action: 'toggle-condition',
+
+    label: value,
+  })
+}
+
 export const fireSwitchLookupTableEvent = name => (dispatch, getState) => {
   const userId = getState().auth.user ? getState().auth.user.id : undefined
   ReactGA.event({
