@@ -146,7 +146,7 @@ class LookupShow extends React.PureComponent {
                   <div className="lookup-show__row-wrapper">
                     <div className="lookup-show__top-row">
                       <LookupAddressDisplay handleClear={this.handleClearLookup} profile={this.props.propertyResult} />
-                      {this.props.appState.currentGeographyType && this.props.appState.currentGeographyId && (
+                      {this.props.appState.linkLookupBackToDashboard && (
                         <BaseLink
                           href={geographyToLink(
                             this.props.appState.currentGeographyType,
