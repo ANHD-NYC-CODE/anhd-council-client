@@ -73,7 +73,7 @@ export default class SearchBar extends React.PureComponent {
             type="text"
             value={this.props.searchValue}
           />
-          {this.props.show && (
+          {/* {this.props.show && (
             <div
               className="search-bar__close"
               tabIndex="-1"
@@ -83,7 +83,7 @@ export default class SearchBar extends React.PureComponent {
             >
               <FontAwesomeIcon className="text-secondary" size="lg" icon={faTimesCircle} />
             </div>
-          )}
+          )} */}
           {// only include button on legacy config
           this.props.inputClass !== 'xl-form-control' && (
             <InputGroup.Append className="input-group__label">
