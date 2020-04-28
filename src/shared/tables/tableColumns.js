@@ -31,6 +31,8 @@ import {
   capitalizeFormatter,
 } from 'shared/utilities/tableUtils'
 
+import { setAppState } from 'Store/AppState/actions'
+
 export const getKeyField = constant => {
   switch (constant) {
     case 'PROPERTY':
@@ -178,6 +180,7 @@ export const getDescriptionKey = constant => {
 }
 
 export const getTableColumns = ({
+  page = undefined, // what page is this table on? "DASHBOARD" | "SEARCH"
   constant,
   columnExpandFunction,
   linkPropsFunction = () => null,
@@ -223,6 +226,12 @@ export const getTableColumns = ({
   }
 
   const linkToColumnEvent = ({ row } = {}) => {
+    // Lets property rows be clickable and link to their lookup page
+    if (page === 'DASHBOARD') {
+      dispatch(setAppState({ linkLookupBackToDashboard: true }))
+    } else {
+      dispatch(setAppState({ linkLookupBackToDashboard: false }))
+    }
     dispatch(push(addressResultToPath({ bbl: row.bbl })))
   }
 

@@ -13,6 +13,7 @@ export const initialState = {
   selectedRequests: [],
   selectedRequest: undefined, // DEPRECATED, still used in lookup however
   requests: [],
+  linkLookupBackToDashboard: false, // whether or not to show "back to dashboard button in lookup"
 }
 
 export const appStateReducer = (state = Object.freeze(initialState), action = { data: [] }) => {

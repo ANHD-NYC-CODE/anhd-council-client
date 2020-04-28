@@ -50,6 +50,7 @@ export default class TableConfig {
   }
 
   getColumns({
+    page,
     expandColumnFunction,
     constructFilter,
     baseTableConfig,
@@ -59,6 +60,7 @@ export default class TableConfig {
     advancedSearchDatasets,
   } = {}) {
     return getTableColumns({
+      page,
       constant: this._resourceConstant,
       columnExpandFunction: expandColumnFunction,
       linkPropsFunction: getLinkProps(this._resourceConstant),

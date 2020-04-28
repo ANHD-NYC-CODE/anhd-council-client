@@ -316,6 +316,7 @@ class DistrictDashboardShow extends React.Component {
               >
                 <BaseTable
                   key={`table-${this.props.dashboardState.mapFilterDate}`}
+                  page="DASHBOARD"
                   csvBaseFileName={this.constructBaseCsvFileName()}
                   globalTableState={this.props.dashboardState.dashboardTableState}
                   annotationStart={this.props.dashboardState.mapFilterDate}
