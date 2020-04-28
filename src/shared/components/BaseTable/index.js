@@ -257,51 +257,49 @@ class BaseTable extends React.Component {
                     data-test-id="base-table"
                     key={`table-${this.props.tableConfig.keyField}`}
                   >
-                    {!this.props.nested && !!this.props.includeHeader && (
-                      <div>
-                        {HeaderComponent}
-                        <BaseTableHeader
-                          headerClass={this.props.headerClass}
-                          records={this.props.records}
-                          recordsSize={this.props.recordsSize}
-                          csvProps={toolKitProps.csvProps}
-                          paginationProps={paginationProps}
-                          handleCsvClick={this.handleCsvClick}
-                          resourceConstant={this.props.tableConfig.resourceConstant}
-                          request={this.props.request}
-                          filterButtonSets={
-                            this.baseTableConfig.filterButtonSets[this.props.tableConfig.resourceConstant]
-                          }
-                          selectedFilters={this.baseTableConfig.selectedFilters}
-                        />
-                      </div>
-                    )}
-                    <BootstrapTable
-                      key={this.props.records}
-                      ref={n => (this.node = n)}
-                      {...toolKitProps.baseProps}
-                      {...paginationTableProps}
-                      condensed
-                      classes={classnames(this.props.classes, { 'no-expand': !this.props.expandable })}
-                      defaultSorted={this.state.defaultSorted}
-                      expandRow={this.props.expandable ? this.expandRow() : undefined}
-                      filter={filterFactory()}
-                      height="200px"
-                      scrollTop="top"
-                      noDataIndication={() =>
-                        !this.props.loading && (
-                          <TableAlert
-                            textType="text-dark"
-                            variant="light"
-                            message={'No records found'}
-                            buttonText="Clear Filters"
-                            buttonVariant="outline-dark"
-                          />
-                        )
-                      }
-                      rowClasses={this.props.tableConfig.tableRowClasses}
-                      tabIndexCell
-                    />
+                    {!this.props.nested && !!this.props.includeHeader && <div>{HeaderComponent}</div>}
+                    <div className="base-table__header-body-wrapper">
+                      <BaseTableHeader
+                        headerClass={this.props.headerClass}
+                        records={this.props.records}
+                        recordsSize={this.props.recordsSize}
+                        csvProps={toolKitProps.csvProps}
+                        paginationProps={paginationProps}
+                        handleCsvClick={this.handleCsvClick}
+                        resourceConstant={this.props.tableConfig.resourceConstant}
+                        request={this.props.request}
+                        filterButtonSets={
+                          this.baseTableConfig.filterButtonSets[this.props.tableConfig.resourceConstant]
+                        }
+                        selectedFilters={this.baseTableConfig.selectedFilters}
+                      />
+                      <BootstrapTable
+                        key={this.props.records}
+                        ref={n => (this.node = n)}
+                        {...toolKitProps.baseProps}
+                        {...paginationTableProps}
+                        condensed
+                        classes={classnames(this.props.classes, { 'no-expand': !this.props.expandable })}
+                        defaultSorted={this.state.defaultSorted}
+                        expandRow={this.props.expandable ? this.expandRow() : undefined}
+                        filter={filterFactory()}
+                        height="200px"
+                        scrollTop="top"
+                        noDataIndication={() =>
+                          !this.props.loading && (
+                            <TableAlert
+                              textType="text-dark"
+                              variant="light"
+                              message={'No records found'}
+                              buttonText="Clear Filters"
+                              buttonVariant="outline-dark"
+                            />
+                          )
+                        }
+                        rowClasses={this.props.tableConfig.tableRowClasses}
+                        tabIndexCell
+                      />
+                    </div>
                     {this.props.loading && <InnerLoader />}
                     {this.props.error && (
                       <TableAlert
