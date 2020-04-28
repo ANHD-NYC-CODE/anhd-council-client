@@ -8,14 +8,13 @@ import AnnotatedResultFilterCard from 'DistrictDashboard/AnnotatedResultFilterCa
 import { setHousingTypeResultFilter, setDashboardTableState } from 'Store/DashboardState/actions'
 import { ButtonToolbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
 import { fireFilterSelectEvent } from 'Store/Analytics/actions'
-import { setDashboardFilterCondition } from 'Store/DashboardState/actions'
 import InfoModalButton from 'shared/components/InfoModalButton'
 
 import './style.scss'
 
 const DistrictFilterSection = props => {
   const setFilterCondition = filterCondition => {
-    props.dispatch(setDashboardFilterCondition(filterCondition))
+    props.toggleFilterCondition(filterCondition)
   }
   const handleResultFilterClick = amountFilter => {
     props.endChangingState()

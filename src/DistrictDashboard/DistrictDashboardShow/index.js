@@ -168,6 +168,7 @@ class DistrictDashboardShow extends React.Component {
                 loading={this.props.loading}
                 resendPropertyRequest={this.props.resendPropertyRequest}
                 totalPropertyResults={this.props.totalPropertyResults}
+                toggleFilterCondition={this.props.toggleFilterCondition}
               />
             </div>
           </div>
@@ -245,6 +246,9 @@ class DistrictDashboardShow extends React.Component {
                 selectedFilters={this.props.dashboardState.selectedFilters}
                 mapFilterDate={this.props.dashboardState.mapFilterDate}
                 filterCondition={this.props.dashboardState.filterCondition}
+                toggleDateRange={this.props.toggleDateRange}
+                switchSelectedFilter={this.props.switchSelectedFilter}
+                toggleFilterCondition={this.props.toggleFilterCondition}
               />
               <ButtonToolbar className="d-flex view-toggle__container">
                 <ToggleButtonGroup
