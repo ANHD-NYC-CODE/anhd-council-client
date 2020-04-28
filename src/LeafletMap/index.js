@@ -267,6 +267,8 @@ export default class LeafletMap extends React.PureComponent {
               </Popup>
             )}
           <PropertyIcons
+            dispatch={this.props.dispatch}
+            page={this.props.page}
             overrideWarning={this.state.overrideWarning}
             results={this.props.results}
             iconConfig={this.props.iconConfig}
@@ -306,4 +308,5 @@ LeafletMap.propTypes = {
   results: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   interactive: PropTypes.bool,
   loading: PropTypes.bool,
+  page: PropTypes.string,
 }

@@ -4,12 +4,16 @@ import { Marker, Popup, Tooltip } from 'react-leaflet'
 import BaseLink from 'shared/components/BaseLink'
 import { Card, Button } from 'react-bootstrap'
 import { MarkerIcon } from './MarkerIcon'
+import { setAppState } from 'Store/AppState/actions'
+import { push } from 'connected-react-router'
 
 import './style.scss'
 
 class PropertyIcon extends React.Component {
   constructor(props) {
     super(props)
+
+    this.handleClick = this.handleClick.bind(this)
   }
 
   getIconSize(result) {
@@ -22,6 +26,13 @@ class PropertyIcon extends React.Component {
     } else return '2x'
   }
 
+  handleClick() {
+    if (this.props.page === 'DASHBOARD') {
+      this.props.dispatch(setAppState({ linkLookupBackToDashboard: true }))
+    }
+    this.props.dispatch(push(`/property/${this.props.result.bbl}`))
+  }
+
   render() {
     return (
       <div className="property-icon">
@@ -30,13 +41,9 @@ class PropertyIcon extends React.Component {
             <div>
               <Popup>
                 <div className="leaflet-popup-title">{this.props.result.address}</div>
-                <Button
-                  as={BaseLink}
-                  variant="primary"
-                  href={`/property/${this.props.result.bbl}`}
-                  text="View Property"
-                  size="sm"
-                />
+                <Button variant="primary" onClick={this.handleClick} size="sm">
+                  View Property
+                </Button>
               </Popup>
               <Tooltip>{this.props.result.address}</Tooltip>
             </div>
@@ -50,6 +57,7 @@ class PropertyIcon extends React.Component {
 PropertyIcon.propTypes = {
   result: PropTypes.object,
   position: PropTypes.array,
+  dispatch: PropTypes.func,
 }
 
 export default PropertyIcon
