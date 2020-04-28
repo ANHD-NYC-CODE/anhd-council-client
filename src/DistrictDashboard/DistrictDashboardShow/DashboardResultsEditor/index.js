@@ -34,8 +34,7 @@ const DashboardResultsEditor = props => {
   const handleHousingTypeFilterChange = id => {
     const filter = Property().ownResultFilters.find(f => f.id === id)
     const index = Property().ownResultFilters.findIndex(f => f.id === id)
-    props.dispatch(setHousingTypeResultFilter(filter))
-    props.dispatch(setHousingTypeResultsIndex(index))
+    props.switchSelectedFilter(filter, index)
   }
 
   const handleAmountFilterChange = (e, amountFilter) => {
@@ -48,11 +47,11 @@ const DashboardResultsEditor = props => {
   }
 
   const handleDateChange = value => {
-    props.dispatch(setMapFilterDate(value))
+    props.toggleDateRange(value)
   }
 
   const handleConditionChange = value => {
-    props.dispatch(setDashboardFilterCondition(value))
+    props.toggleFilterCondition(value)
   }
 
   const constructDashboardSentence = (
