@@ -21,7 +21,7 @@ import InfoModalButton from 'shared/components/InfoModalButton'
 
 import { push } from 'connected-react-router'
 
-import { setDashboardTableView } from 'Store/DashboardState/actions'
+import { setDashboardTableView, resetDashboardState } from 'Store/DashboardState/actions'
 
 import './style.scss'
 
@@ -53,6 +53,7 @@ class DistrictDashboardShow extends React.Component {
         changingGeographyId: undefined,
       })
     )
+    this.props.dispatch(resetDashboardState())
     this.props.dispatch(push('/map'))
   }
 

@@ -185,6 +185,12 @@ export const dashboardStateReducer = (state = Object.freeze(initialState), actio
       }
     }
 
+    case c.RESET_DASHBOARD_STATE: {
+      return {
+        ...initialState,
+      }
+    }
+
     default:
       return state
   }

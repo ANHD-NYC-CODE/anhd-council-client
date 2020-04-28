@@ -1,5 +1,9 @@
 import * as c from 'shared/constants'
 
+export const resetDashboardState = () => ({
+  type: c.RESET_DASHBOARD_STATE,
+})
+
 export const setDashboardMapZoom = dashboardMapZoom => ({
   type: c.SET_DASHBOARD_MAP_ZOOM,
   dashboardMapZoom,
