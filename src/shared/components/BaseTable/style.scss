@@ -203,6 +203,10 @@ table.table,
   }
 }
 
+.base-table__header-body-wrapper {
+  overflow-x: auto;
+}
+
 .base-table .base-table {
   .expanded-row {
     background-color: $secondary;
