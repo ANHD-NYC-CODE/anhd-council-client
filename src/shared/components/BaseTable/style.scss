@@ -214,7 +214,7 @@ table.table,
 
 .base-table-header__wrapper {
   // max-width: 1044px;
-  width: min-content;
+  width: max-content;
   position: sticky;
   left: 0;
 }
