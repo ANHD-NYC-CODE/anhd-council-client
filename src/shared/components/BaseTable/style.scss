@@ -33,6 +33,7 @@ table.table,
 
   tbody tr {
     cursor: pointer;
+    // remove animation expanding
     transition: all 0s linear;
 
     * {
@@ -138,6 +139,12 @@ table.table,
   .row-expansion-style,
   .reset-expansion-style {
     padding: 0;
+  }
+
+  // eliminates table animation
+  .row-expand-slide-appear-active,
+  .row-expand-slide-exit-active {
+    transition: none;
   }
 
   .table-row--nested-bumper {
