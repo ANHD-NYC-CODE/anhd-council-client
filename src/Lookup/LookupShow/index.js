@@ -148,6 +148,7 @@ class LookupShow extends React.PureComponent {
                       <LookupAddressDisplay handleClear={this.handleClearLookup} profile={this.props.propertyResult} />
                       {this.props.appState.linkLookupBackToDashboard && (
                         <BaseLink
+                          className="lookup-show__back-to-dashboard"
                           href={geographyToLink(
                             this.props.appState.currentGeographyType,
                             this.props.appState.currentGeographyId
