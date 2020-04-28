@@ -292,6 +292,7 @@ class DistrictDashboardShow extends React.Component {
                   key={`${this.props.appState.currentGeographyType}-${this.props.appState.currentGeographyId}-${
                     this.props.dashboardState.dashboardTableView
                   }`}
+                  page={'DASHBOARD'}
                   currentGeographyType={this.props.appState.currentGeographyType}
                   currentGeographyId={this.props.appState.currentGeographyId}
                   changingGeographyType={this.props.appState.changingGeographyType}

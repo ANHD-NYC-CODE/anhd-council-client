@@ -25,10 +25,12 @@ class PropertyIcons extends React.Component {
             return (
               <PropertyIcon
                 key={`property-popup-${index}`}
+                page={this.props.page}
                 result={result}
                 interactive={true}
                 handlePropertyAction={this.props.handlePropertyAction}
                 position={this.getLatLng(result)}
+                dispatch={this.props.dispatch}
               />
             )
           } else {
@@ -56,6 +58,7 @@ PropertyIcons.propTypes = {
   dispatch: PropTypes.func,
   results: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   visible: PropTypes.bool,
+  page: PropTypes.string,
 }
 
 export default PropertyIcons
