@@ -5,7 +5,7 @@ import { Navbar, Nav } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { getGeographyPath, addressResultToPath } from 'shared/utilities/routeUtils'
 // import logo from 'shared/images/portallogo.png'
-import logo from 'shared/images/portallogo-2020.svg'
+import logo from 'shared/images/portallogo-2020.png'
 
 import LoginModal from 'shared/components/modals/LoginModal'
 import LoginModalFooter from 'shared/components/forms/LoginForm/LoginModalFooter'
