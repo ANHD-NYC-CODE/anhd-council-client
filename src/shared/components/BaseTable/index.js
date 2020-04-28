@@ -38,6 +38,7 @@ class BaseTable extends React.Component {
       defaultSorted: props.tableConfig.defaultSorted,
       expanded: [],
       columns: props.tableConfig.getColumns({
+        page: props.page,
         expandColumnFunction: this.setExpandedContent,
         constructFilter: this.constructFilter,
         baseTableConfig: this.baseTableConfig,
@@ -58,6 +59,7 @@ class BaseTable extends React.Component {
         displayedRecordsCount: props.records.length,
         defaultSorted: props.tableConfig.defaultSorted,
         columns: props.tableConfig.getColumns({
+          page: props.page,
           expandColumnFunction: this.setExpandedContent,
           constructFilter: this.constructFilter,
           baseTableConfig: this.baseTableConfig,
@@ -212,6 +214,7 @@ class BaseTable extends React.Component {
   }
   render() {
     const columns = this.props.tableConfig.getColumns({
+      page: this.props.page,
       expandColumnFunction: this.setExpandedContent,
       constructFilter: this.constructFilter,
       baseTableConfig: this.baseTableConfig,
@@ -352,6 +355,7 @@ BaseTable.propTypes = {
   recordsSize: PropTypes.number,
   tableConfig: PropTypes.object,
   advancedSearchDatasets: PropTypes.array,
+  page: PropTypes.string,
 }
 
 export default BaseTable

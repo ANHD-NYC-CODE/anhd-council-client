@@ -11,6 +11,7 @@ import { handleClearErrors } from 'Store/Error/actions'
 import { setSearchValue } from 'Store/Search/actions'
 import classnames from 'classnames'
 import { setLookupAndRequestsAndRedirect } from 'Store/AppState/actions'
+import { setAppState } from 'Store/AppState/actions'
 
 import './style.scss'
 
@@ -130,6 +131,7 @@ class AddressSearch extends React.PureComponent {
 
     this.props.dispatch(setSearchValue(searchString))
     this.hideSearch(e, true)
+    this.props.dispatch(setAppState({ linkLookupBackToDashboard: false }))
     this.props.dispatch(
       setLookupAndRequestsAndRedirect({
         bbl: result.bbl,

@@ -68,18 +68,17 @@ $sub-header-padding-top: 12px;
         // width: 300px;
       }
     }
+  }
+  .sub-header__logo {
+    display: block;
+    height: auto;
+    width: 100%;
+    margin: 0 auto;
+    display: block;
+    max-width: 320px;
 
-    .sub-header__logo {
-      display: block;
-      height: auto;
+    @include media-breakpoint-up(md) {
       width: 100%;
-      margin: 0 auto;
-      display: block;
-      max-width: 320px;
-
-      @include media-breakpoint-up(md) {
-        width: 100%;
-      }
     }
   }
 
