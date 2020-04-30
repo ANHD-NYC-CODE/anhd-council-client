@@ -211,6 +211,7 @@ class AdvancedSearchForm extends React.PureComponent {
               touched={touched}
               errors={errors}
               handleChangeGeographyType={this.handleChangeGeographyType}
+              withBoroughs={true}
             />
             {this.props.appState.currentGeographyType && this.props.appState.currentGeographyId && (
               <div className="advanced-search-form__housingtype-select">

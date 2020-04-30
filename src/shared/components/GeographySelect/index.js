@@ -58,6 +58,9 @@ class GeographySelect extends React.Component {
                   <option disabled value={-1} key={-1}>
                     {this.props.placeholder || 'Select a geography'}
                   </option>
+                  {this.props.withBoroughs && (
+                    <option value={b.BOROUGH_GEOGRAPHY.constant}>{b.BOROUGH_GEOGRAPHY.name}</option>
+                  )}
                   <option value={b.COUNCIL_GEOGRAPHY.constant}>{b.COUNCIL_GEOGRAPHY.name}</option>
                   <option value={b.COMMUNITY_GEOGRAPHY.constant}>{b.COMMUNITY_GEOGRAPHY.name}</option>
                   <option value={b.STATE_ASSEMBLY_GEOGRAPHY.constant}>{b.STATE_ASSEMBLY_GEOGRAPHY.name}</option>
@@ -122,7 +125,8 @@ class GeographySelect extends React.Component {
                         config.stateAssemblies,
                         config.stateSenates,
                         config.zipCodes,
-                        this.props.changingGeographyType || this.props.currentGeographyType
+                        this.props.changingGeographyType || this.props.currentGeographyType,
+                        this.props.withBoroughs
                       )}
                     </Form.Control>
                   )}
@@ -175,6 +179,7 @@ class GeographySelect extends React.Component {
 GeographySelect.defaultProps = {
   selectClass: 'navbar-select',
   submitButtonVariant: 'primary',
+  withBoroughs: false,
 }
 
 GeographySelect.propTypes = {
@@ -193,6 +198,7 @@ GeographySelect.propTypes = {
   selectClass: PropTypes.string,
   showSubmit: PropTypes.bool,
   submitButtonVariant: PropTypes.string,
+  withBoroughs: PropTypes.bool,
 }
 
 export default GeographySelect
