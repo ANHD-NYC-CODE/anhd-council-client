@@ -69,16 +69,44 @@ export default class LeafletMap extends React.PureComponent {
     }
   }
 
+  cityBoroughLatLng(changingOrCurrentType, changingOrCurrentId) {
+    if (changingOrCurrentType === b.BOROUGH_GEOGRAPHY.constant) {
+      switch (changingOrCurrentId) {
+        case 'MN':
+          return [40.7677746, -74.0032918]
+        case 'BX':
+          return [40.8489779, -73.8893546]
+        case 'BK':
+          return [40.6394277, -74.011271]
+        case 'QN':
+          return [40.6777619, -73.9721773]
+        case 'SI':
+          return [40.5619124, -74.2069121]
+      }
+    } else if (changingOrCurrentType === b.CITY_GEOGRAPHY.constant) {
+      return [40.6752793, -74.0847861]
+    }
+  }
+
   centerMapOnGeography() {
     if (this.mapRef.current) {
       const changingOrCurrentType = this.props.changingGeographyType || this.props.currentGeographyType
       const changingOrCurrentId = this.props.changingGeographyId || this.props.currentGeographyId
-      if (!(changingOrCurrentType && changingOrCurrentId)) return
-      const bounds = this.getGeographyBounds(changingOrCurrentType, changingOrCurrentId)
+      if (!(changingOrCurrentType && changingOrCurrentId) && changingOrCurrentType !== b.CITY_GEOGRAPHY.constant) return
+      if (
+        changingOrCurrentType !== b.BOROUGH_GEOGRAPHY.constant &&
+        changingOrCurrentType !== b.CITY_GEOGRAPHY.constant
+      ) {
+        const bounds = this.getGeographyBounds(changingOrCurrentType, changingOrCurrentId)
 
-      if (bounds) {
-        this.mapRef.current.leafletElement.fitBounds(bounds, { padding: [-100, 0] })
-        // this.mapRef.current.leafletElement.setZoom(this.props.zoom)
+        if (bounds) {
+          this.mapRef.current.leafletElement.fitBounds(bounds, { padding: [-100, 0] })
+          // this.mapRef.current.leafletElement.setZoom(this.props.zoom)
+        }
+      } else {
+        const latLng = this.cityBoroughLatLng(changingOrCurrentType, changingOrCurrentId)
+        const zoom = changingOrCurrentType === b.BOROUGH_GEOGRAPHY.constant ? 11 : 10
+        this.mapRef.current.leafletElement.setView(latLng, zoom)
       }
     }
   }
