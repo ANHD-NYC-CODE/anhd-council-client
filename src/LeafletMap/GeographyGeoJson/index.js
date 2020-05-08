@@ -8,7 +8,7 @@ const GeographyGeoJson = props => {
     if (props.currentGeographyId == geography.properties.id) return '#f7f8c6' // yellow
     if (props.changingGeographyId == geography.properties.id) return 'white'
     // selecting
-    else return getGeographyTypeColor(displayGeographyType)
+    else return 'transparent'
   }
 
   const getGeographyTypeColor = geographyType => {
@@ -29,13 +29,14 @@ const GeographyGeoJson = props => {
   const getFillOpacity = geography => {
     if (props.currentGeographyId == geography.properties.id) return '0.4'
     if (props.changingGeographyId == geography.properties.id) return '0.5'
-    else return '0.1'
+    else return '0'
   }
   const getStyle = geography => {
     return {
-      color: '#040404',
+      stroke: true,
       weight: 1,
-      opacity: 0.7,
+      opacity: 1,
+      color: '#FFF',
       fillColor: getGeographyColor(geography),
       fillOpacity: getFillOpacity(geography),
       fill: true,
