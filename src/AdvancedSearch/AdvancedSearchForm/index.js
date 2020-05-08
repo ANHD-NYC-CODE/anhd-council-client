@@ -105,6 +105,14 @@ class AdvancedSearchForm extends React.PureComponent {
             <FormError show={!!this.props.error} message={(this.props.error || {}).message} />
             <div className="advanced-search-form__section">
               <h4 className="advanced-search-form__heading">1) Select a geography</h4>
+              <FormError
+                show={
+                  this.props.currentGeographyType === b.CITY_GEOGRAPHY.constant ||
+                  this.props.currentGeographyType === b.BOROUGH_GEOGRAPHY.constant
+                }
+                message="Warning: Some borough and citywide queries may be too complex for our server to handle. Please allow extra time for queries to finish."
+              />
+
               <GeographySelect
                 selectClass="main-geography-select"
                 inputSize="md"
