@@ -2,8 +2,6 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import AddressSearch from 'Lookup/AddressSearch'
 import ConfigContext from 'Config/ConfigContext'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { Button } from 'react-bootstrap'
 import { boroCodeToName, constructAddressString } from 'shared/utilities/languageUtils'
 import { spaceEnterKeyDownHandler } from 'shared/utilities/accessibilityUtils'
@@ -23,6 +21,10 @@ const LookupAddressDisplay = props => {
     props.handleClear()
   }
 
+  const handleBlur = () => {
+    toggleEditing(false)
+  }
+
   return (
     <div className="lookup-address-display">
       {isEditing && (
@@ -35,17 +37,18 @@ const LookupAddressDisplay = props => {
                   inputClass="home-search-bar"
                   inputSize="md"
                   containerClass="lookup-address-search"
+                  handleBlur={handleBlur}
                 />
               )
             }}
           </ConfigContext.Consumer>
-          <button
+          {/* <button
             href="#"
             className="lookup-address-display__button lookup-address-display__cancel-button text-button--default"
             onClick={handleEditClick}
           >
             cancel
-          </button>
+          </button> */}
         </div>
       )}
       {!isEditing && (
@@ -61,7 +64,7 @@ const LookupAddressDisplay = props => {
             tabIndex="0"
             role="button"
             className="lookup-address-display__title"
-            onKeyDown={e => spaceEnterKeyDownHandler(e, e => handleEditClick())}
+            onKeyDown={e => spaceEnterKeyDownHandler(e => handleEditClick(e))}
             onClick={handleEditClick}
           >
             {constructAddressString({
