@@ -10,12 +10,16 @@ import './style.scss'
 const LookupTabs = props => {
   const [isOpen, toggleOpen] = useState(true)
 
-  const getTabLabel = (resourceModel, count1 = '...', count2 = 0) => {
+  const getTabLabel = (error, resourceModel, count1 = '...', count2 = 0) => {
     switch (resourceModel.resourceConstant) {
       case 'ACRIS_REAL_MASTER':
         return `Sales (${count1}) and Financing`
       case 'HPD_COMPLAINT':
         return `HPD Complaints (${count1}) and Problems (${count2})`
+      case 'FORECLOSURE':
+        return error && error.status === 401 ? `${resourceModel.label}` : `${resourceModel.label} (${count1})`
+      case 'PSFORECLOSURE':
+        return error && error.status === 401 ? `${resourceModel.label}` : `${resourceModel.label} (${count1})`
       default:
         return `${resourceModel.label} (${count1})`
     }
@@ -63,6 +67,7 @@ const LookupTabs = props => {
               results={results}
               totalResults={props.requests[request.requestConstant]}
               label={getTabLabel(
+                error,
                 request.resourceModel,
                 loading ? undefined : getCount1(request, results),
                 getCount2(request, results)
