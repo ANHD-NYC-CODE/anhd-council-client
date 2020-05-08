@@ -21,6 +21,7 @@ export default class ParamMap {
     type = '',
     role = 'PRIMARY',
     paramNoun = '',
+    inputClass = '',
     comparisonPrefix = '',
     valuePrefix = '',
     valueSuffix = '',
@@ -41,6 +42,7 @@ export default class ParamMap {
     this._type = type
     this._role = role
     this._paramNoun = paramNoun
+    this.inputClass = inputClass
     this._comparisonPrefix = comparisonPrefix
     this._valuePrefix = valuePrefix
     this._valueSuffix = valueSuffix

@@ -37,6 +37,7 @@ const AcrisRealMaster = databaseObject => ({
           paramSetLabel: 'Sale Price',
           paramMapField: 'docamount',
           valuePrefix: '$',
+          inputClass: 'sales-input',
         })
       },
     },
