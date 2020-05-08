@@ -25,7 +25,6 @@ export const constructCsvFileName = (advancedSearch, annotated = true) => {
 export const getApiMaps = advancedSearch => {
   // Don't return geography API Maps for borough geography /geography/:id/properties...
   // instead return them as params ?borough=...
-  console.log(advancedSearch.geographies[0].constant)
   const apiMaps = []
   if (
     advancedSearch.geographies[0].constant !== b.BOROUGH_GEOGRAPHY.constant &&

@@ -6,6 +6,8 @@ $unopened-width: 660px;
   border-radius: 6px 6px 0 0;
   color: $black;
   padding: 10px 0;
+  position: relative;
+  z-index: 1;
 
   &__wrapper {
     display: flex;
