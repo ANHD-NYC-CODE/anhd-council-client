@@ -7,7 +7,7 @@ import { Form } from 'react-bootstrap'
 const IntegerField = props => {
   return (
     <Form.Control
-      className=""
+      className={props.paramMap.inputClass}
       key={props.key}
       min={props.paramMap.validations.min || 0}
       max={props.paramMap.validations.max}
