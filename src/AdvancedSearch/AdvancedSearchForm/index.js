@@ -3,24 +3,15 @@ import PropTypes from 'prop-types'
 import * as yup from 'yup'
 import { getAdvancedSearchParamMaps } from 'Store/AdvancedSearch/utilities/advancedSearchStoreUtils'
 import FilterComponent from 'AdvancedSearch/FilterComponent'
-import ClearAdvancedSearchButton from 'shared/components/buttons/ClearAdvancedSearchButton'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTimes } from '@fortawesome/free-solid-svg-icons'
+
+import * as b from 'shared/constants/geographies'
+
 import ConditionComponent from 'AdvancedSearch/ConditionComponent'
 import GeographySelect from 'shared/components/GeographySelect'
 import FormError from 'shared/components/FormError'
-import { Form, Button, Row, Col } from 'react-bootstrap'
+import { Form, Button } from 'react-bootstrap'
 import { Formik } from 'formik'
 import './style.scss'
-const schema = yup.object({
-  geographyType: yup
-    .string()
-    .test('selectValid', 'Please make a selection', value => {
-      return !!value && value !== '-1'
-    })
-    .required('Please make a selection'),
-  geographyId: yup.string().required('Please make a selection'),
-})
 
 class AdvancedSearchForm extends React.PureComponent {
   constructor(props) {
@@ -73,7 +64,27 @@ class AdvancedSearchForm extends React.PureComponent {
     })
   }
 
+  geographyValid() {
+    return (
+      (this.props.geographyType && this.props.geographyId) || this.props.geographyType === b.CITY_GEOGRAPHY.constant
+    )
+  }
+
   render() {
+    const schema = yup.object({
+      geographyType: yup
+        .string()
+        .test('selectValid', 'Please make a selection', value => {
+          return !!value && value !== '-1'
+        })
+        .required('Please make a selection'),
+      // disable geoId validation for city geo
+      geographyId:
+        this.props.geographyType !== b.CITY_GEOGRAPHY.constant || !!this.props.changingGeographyType
+          ? yup.string().required('Please make a selection')
+          : null,
+    })
+
     return (
       <Formik
         enableReinitialize={true}
@@ -115,7 +126,7 @@ class AdvancedSearchForm extends React.PureComponent {
                 withBoroughs={true}
               />
             </div>
-            {this.props.geographyType && this.props.geographyId && (
+            {this.geographyValid() && (
               <div>
                 <div className="advanced-search-form__section advanced-search-form__housingtype-select">
                   <h4 className="advanced-search-form__heading">2) Select a housing type</h4>

@@ -30,7 +30,14 @@ class GeographySelect extends React.Component {
     if (this.props.handleChange) this.props.handleChange(e)
   }
 
+  showGeographyId() {
+    if (this.props.changingGeographyType) return true
+
+    return !!(this.props.currentGeographyType && this.props.currentGeographyType !== b.CITY_GEOGRAPHY.constant)
+  }
+
   render() {
+    console.log(this.props.errors)
     return (
       <div data-test-id="geography-select" className="geography-select">
         <ConfigContext.Consumer>
@@ -57,14 +64,15 @@ class GeographySelect extends React.Component {
                 <option disabled value={-1} key={'select-a-geography--nil'}>
                   {this.props.placeholder || 'Select a geography'}
                 </option>
-                {this.props.withBoroughs && (
-                  <option value={b.BOROUGH_GEOGRAPHY.constant}>{b.BOROUGH_GEOGRAPHY.name}</option>
-                )}
                 <option value={b.COUNCIL_GEOGRAPHY.constant}>{b.COUNCIL_GEOGRAPHY.name}</option>
                 <option value={b.COMMUNITY_GEOGRAPHY.constant}>{b.COMMUNITY_GEOGRAPHY.name}</option>
                 <option value={b.STATE_ASSEMBLY_GEOGRAPHY.constant}>{b.STATE_ASSEMBLY_GEOGRAPHY.name}</option>
                 <option value={b.STATE_SENATE_GEOGRAPHY.constant}>{b.STATE_SENATE_GEOGRAPHY.name}</option>
                 <option value={b.ZIPCODE_GEOGRAPHY.constant}>{b.ZIPCODE_GEOGRAPHY.name}</option>
+                {this.props.withBoroughs && (
+                  <option value={b.BOROUGH_GEOGRAPHY.constant}>{b.BOROUGH_GEOGRAPHY.name}</option>
+                )}
+                {this.props.withBoroughs && <option value={b.CITY_GEOGRAPHY.constant}>{b.CITY_GEOGRAPHY.name}</option>}
               </Form.Control>
               <FormError
                 show={
@@ -75,7 +83,7 @@ class GeographySelect extends React.Component {
                 }
                 message={(this.props.errors || {}).geographyType}
               />
-              {!!(this.props.currentGeographyType || this.props.changingGeographyType) && (
+              {this.showGeographyId() && (
                 <div id="geography-id-select" className={classnames(this.props.selectClass)}>
                   {this.props.changingGeographyType === b.ZIPCODE_GEOGRAPHY.constant ||
                   (this.props.currentGeographyType === b.ZIPCODE_GEOGRAPHY.constant &&

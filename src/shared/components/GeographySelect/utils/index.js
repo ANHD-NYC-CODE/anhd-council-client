@@ -21,14 +21,18 @@ export const getGeographyIdOptions = (
   type = type.toUpperCase()
   const boroughs = ['MN', 'BX', 'BK', 'QN', 'SI']
   switch (type) {
+    case 'CITY':
+      return [
+        <option value={'*'} key={`geography-id-option-*`}>
+          All
+        </option>,
+      ]
     case 'BOROUGH':
       return [
         <option disabled value={-1} key={-1}>
           Select...
         </option>,
-        <option value={'*'} key={`geography-id-option-*`}>
-          City-wide
-        </option>,
+
         ...boroughs.map(borough => {
           return (
             <option value={borough} key={`geography-id-option-${borough}`}>

@@ -119,10 +119,33 @@ export class AdvancedSearch extends React.Component {
 
   handleChangeGeographyType(e) {
     e = new StandardizedInput(e)
-    this.setState({
-      changingGeographyType: e.value,
-      changingGeographyId: -1,
-    })
+    const type = e.value
+    if (type === b.CITY_GEOGRAPHY.constant) {
+      // do full update
+      const newAdvancedSearch = { ...this.state.advancedSearch }
+
+      if (!this.state.advancedSearch.geographies.length) {
+        const newGeography = new Geography(type)
+
+        newAdvancedSearch.geographies = [...newAdvancedSearch.geographies, newGeography]
+      } else {
+        newAdvancedSearch.geographies[0].constant = type
+      }
+
+      this.setState({
+        currentGeographyType: type,
+        currentGeographyId: -1,
+        changingGeographyType: null,
+        changingGeographyId: null,
+        advancedSearch: newAdvancedSearch,
+      })
+    } else {
+      // only change state
+      this.setState({
+        changingGeographyType: type,
+        changingGeographyId: -1,
+      })
+    }
   }
 
   changeGeography({ e, geographyType, geographyId } = {}) {
@@ -130,6 +153,7 @@ export class AdvancedSearch extends React.Component {
     const newAdvancedSearch = { ...this.state.advancedSearch }
     const type = geographyType || this.state.changingGeographyType || this.state.currentGeographyType
     const id = geographyId || e.value
+
     if (!this.state.advancedSearch.geographies.length) {
       const newGeography = new Geography(type, id)
 
@@ -228,6 +252,7 @@ export class AdvancedSearch extends React.Component {
                   >
                     <ToggleButton
                       tabIndex="0"
+                      size="sm"
                       className="view-toggle"
                       variant={this.state.displayingList ? 'light' : 'dark'}
                       value={false}
@@ -236,6 +261,7 @@ export class AdvancedSearch extends React.Component {
                     </ToggleButton>
                     <ToggleButton
                       tabIndex="0"
+                      size="sm"
                       className="view-toggle"
                       variant={this.state.displayingList ? 'dark' : 'light'}
                       value={true}
