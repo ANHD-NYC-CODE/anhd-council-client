@@ -1,5 +1,6 @@
 import moment from 'moment'
 import _ from 'lodash'
+import * as b from 'shared/constants/geographies'
 
 import {
   singular,
@@ -8,6 +9,7 @@ import {
   constructDateComparisonString,
   grammaticalNoun,
   stringWithComparisonStringsToSymbol,
+  boroCodeToName,
 } from 'shared/utilities/languageUtils'
 
 ///////////////////
@@ -225,15 +227,19 @@ export const convertConditionMappingToSentence = conditions => {
 }
 
 export const convertGeographiesToSentence = geographies => {
-  return `in ${
-    geographies.length
-      ? geographies
-          .map(geography => `${geography.name.toLowerCase()} ${geography.id ? geography.id : '_'}`)
-          .filter(p => p)
-          .join(' and ')
-          .trim()
-      : '...'
-  }`
+  if (!geographies.length) return
+
+  const geography = geographies[0]
+  let geoString = ''
+  if (geography.constant === b.BOROUGH_GEOGRAPHY.constant) {
+    geoString = boroCodeToName(geography.id)
+  } else if (geography.constant === b.CITY_GEOGRAPHY.constant) {
+    geoString = b.CITY_GEOGRAPHY.name
+  } else {
+    geoString = `${geography.name.toLowerCase()} ${geography.id ? geography.id : '_'}`
+  }
+
+  return `in ${geoString}`
 }
 
 export const convertHousingTypesToSentence = housingTypes => {
