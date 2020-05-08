@@ -42,6 +42,11 @@ const ProgramSection = props => {
             })}
         </div>
         <div className="lookup-profile-summary__group">
+          {!!props.profile.legalclassb && (
+            <div className="text-danger font-weight-bold">
+              This property has {props.profile.legalclassb} Single Room Occupancy (SRO) units.
+            </div>
+          )}
           {props.profile.nycha && (
             <div className="text-danger font-weight-bold">
               This property is a{' '}
