@@ -10,6 +10,7 @@ import {
   grammaticalNoun,
   stringWithComparisonStringsToSymbol,
   boroCodeToName,
+  communityIdToString,
 } from 'shared/utilities/languageUtils'
 
 ///////////////////
@@ -235,6 +236,8 @@ export const convertGeographiesToSentence = geographies => {
     geoString = boroCodeToName(geography.id)
   } else if (geography.constant === b.CITY_GEOGRAPHY.constant) {
     geoString = b.CITY_GEOGRAPHY.name
+  } else if (geography.constant === b.COMMUNITY_GEOGRAPHY.constant) {
+    geoString = `${communityIdToString(geography.id)}`
   } else {
     geoString = `${geography.name.toLowerCase()} ${geography.id ? geography.id : '_'}`
   }
