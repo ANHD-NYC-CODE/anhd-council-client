@@ -1,6 +1,19 @@
 @import 'shared/styles/_variables.scss';
 
 .advanced-search-form {
+  // base styles
+  .input-group input[type='number'],
+  .input-group input[type='date'],
+  .input-group select,
+  .new-filter-select select,
+  .textmultiselect-field.form-control {
+    border: 0;
+    border-bottom: 1px solid $dark;
+    border-radius: 0;
+    line-height: 100%;
+    padding-bottom: 0;
+  }
+
   &__heading {
     @extend %p1-font-size;
     color: $black;
@@ -21,10 +34,10 @@
   }
 
   // reduce spacing between housing type param sets
-  &__housingtype-select .filter-component__primary-row .filter-component__paramsets {
-    padding-top: 0;
-    padding-bottom: 0;
-  }
+  // &__housingtype-select .filter-component__primary-row .filter-component__paramsets {
+  //   padding-top: 0;
+  //   padding-bottom: 0;
+  // }
 
   button[type='submit'].btn {
     min-width: 100%;
@@ -35,7 +48,7 @@
   }
 
   .form-control {
-    text-decoration: underline;
+    // text-decoration: underline;
   }
 
   .form-control.is-invalid {
@@ -49,7 +62,7 @@
     @extend %p3-font-size;
     color: $black;
     padding-left: 0px;
-    text-decoration: underline;
+    // text-decoration: underline;
   }
 
   .dropdown.btn-group button,
