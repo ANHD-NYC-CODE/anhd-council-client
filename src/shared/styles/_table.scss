@@ -1,5 +1,7 @@
 table {
   .expandable-cell {
+    cursor: pointer;
+
     @media (hover: hover) {
       &:hover {
         background-color: $secondary;
