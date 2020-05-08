@@ -67,6 +67,7 @@ class AddressSearch extends React.PureComponent {
   }
 
   showSearch() {
+    if (!this.props.search.results.length) return
     this.setState({
       show: true,
     })
@@ -82,17 +83,22 @@ class AddressSearch extends React.PureComponent {
   onKeyDown = e => {
     if (e.keyCode === 38 || (e.shiftKey && e.keyCode == 9)) {
       // up || shift + tab
+      if (!this.state.show) return this.props.handleBlur()
+
       e.stopPropagation()
       e.preventDefault()
       this.setState(prevState => ({
         resultFocusIndex: Math.max(prevState.resultFocusIndex - 1, -1),
       }))
     } else if (e.keyCode === 40 || e.keyCode == 9) {
+      // if (!this.props.search.results.length) return
+      if (!this.state.show) return this.props.handleBlur()
+
       // down || tab
       e.stopPropagation()
       e.preventDefault()
       this.setState(prevState => ({
-        show: this.state.resultFocusIndex < 0 ? true : prevState.show,
+        show: true,
         resultFocusIndex: Math.min(prevState.resultFocusIndex + 1, this.props.search.results.length - 1),
       }))
     } else if (!!this.state.show && this.state.resultFocusIndex >= 0 && e.keyCode === 13) {
@@ -103,6 +109,7 @@ class AddressSearch extends React.PureComponent {
       // space
       this.handleRowClick(e, this.props.search.results[this.state.resultFocusIndex])
     } else if (e.keyCode === 27) {
+      // esc
       this.hideSearch(e, true)
     }
   }
@@ -197,6 +204,7 @@ AddressSearch.propTypes = {
   loading: PropTypes.bool,
   dispatch: PropTypes.func,
   placeholder: PropTypes.string,
+  handleBlur: PropTypes.func,
 }
 
 const loadingSelector = createLoadingSelector([GET_BUILDING_SEARCH])
