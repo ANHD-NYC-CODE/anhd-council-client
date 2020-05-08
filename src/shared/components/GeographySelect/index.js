@@ -37,7 +37,6 @@ class GeographySelect extends React.Component {
   }
 
   render() {
-    console.log(this.props.errors)
     return (
       <div data-test-id="geography-select" className="geography-select">
         <ConfigContext.Consumer>
