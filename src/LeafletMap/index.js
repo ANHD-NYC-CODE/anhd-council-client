@@ -85,6 +85,7 @@ export default class LeafletMap extends React.PureComponent {
 
   getGeographyBounds(type, id) {
     if (type === b.BOROUGH_GEOGRAPHY.constant) return null
+    if (type === b.CITY_GEOGRAPHY.constant) return null
     if (!this.allGeographiesLoaded()) return null
     const geographyDataset = this.props.selectGeographyData(type)
     const selectedGeography = geographyDataset.find(geography => String(geography.id) === String(id))
