@@ -196,6 +196,10 @@ $max-desktop-section-height: 78vh;
     //   max-width: calc((100vw - (100vw - 1044px) / 2) - 400px);
     // }
     // max-width: 100%;
+
+    tr {
+      cursor: pointer;
+    }
   }
 
   .district-dashboard-show__results-container {
