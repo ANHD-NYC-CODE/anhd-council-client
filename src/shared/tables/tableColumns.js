@@ -13,6 +13,7 @@ import {
   dobComplaintCategoryPriorityFormatter,
   sentencesFormatter,
   dobComplaintCategoryDescriptionFormatter,
+  ecbViolationStatusFormatter,
   dobViolationTypeFormatter,
   dobPermitWorkTypeFormatter,
   acrisDocTypeFormatter,
@@ -1029,7 +1030,7 @@ export const getTableColumns = ({
           columnEvent: expandColumnEvent,
           dataField: 'complaintdescription',
           text: 'Description',
-          // formatting occurs in ResourceModel#tabletableResultsConstructor
+          // formatting occurs in ResourceModel#tableResultsConstructor
           // formatter: dobComplaintCategoryDescriptionFormatter,
           // csvFormatter: dobComplaintCategoryDescriptionFormatter,
           classes: 'expandable-cell table-column--description',
@@ -1096,6 +1097,8 @@ export const getTableColumns = ({
           classes: 'expandable-cell',
           dataField: 'sectionlawdescription1',
           text: 'Standard Description',
+          formatter: sentencesFormatter,
+          csvFormatter: sentencesFormatter,
           sort: true,
         }),
         constructStandardColumn({
@@ -1104,6 +1107,8 @@ export const getTableColumns = ({
           text: 'Violation Description',
           filter: constructFilter(textFilter),
           classes: 'expandable-cell table-column--description',
+          formatter: sentencesFormatter,
+          csvFormatter: sentencesFormatter,
         }),
         constructStandardColumn({
           dataField: 'ecbviolationstatus',
@@ -1111,18 +1116,22 @@ export const getTableColumns = ({
           filter: baseTableConfig.filterPrototypes['ECB_VIOLATION_ACTIVE'],
           headerClasses: 'hide-filter',
           sort: true,
-          formatter: capitalizeFormatter,
-          csvFormatter: capitalizeFormatter,
+          formatter: ecbViolationStatusFormatter,
+          csvFormatter: ecbViolationStatusFormatter,
         }),
         constructStandardColumn({
           dataField: 'aggravatedlevel',
           text: 'Aggravated Level',
           sort: true,
+          formatter: capitalizeFormatter,
+          csvFormatter: capitalizeFormatter,
         }),
         constructStandardColumn({
           dataField: 'hearingstatus',
           text: 'Hearing Status',
           sort: true,
+          formatter: capitalizeFormatter,
+          csvFormatter: capitalizeFormatter,
         }),
       ]
       break
@@ -1240,6 +1249,8 @@ export const getTableColumns = ({
           text: 'Description',
           classes: 'expandable-cell table-column--description',
           filter: constructFilter(textFilter),
+          formatter: sentencesFormatter,
+          csvFormatter: sentencesFormatter,
           sort: true,
         }),
         constructStandardColumn({
@@ -1247,6 +1258,8 @@ export const getTableColumns = ({
           classes: 'expandable-cell',
           dataField: 'jobstatus',
           text: 'Status',
+          formatter: sentencesFormatter,
+          csvFormatter: sentencesFormatter,
           sort: true,
         }),
         constructStandardColumn({
