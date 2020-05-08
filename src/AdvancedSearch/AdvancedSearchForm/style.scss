@@ -38,6 +38,11 @@
     text-decoration: underline;
   }
 
+  .form-control.is-invalid {
+    background-image: none; // disabled red X
+    border-bottom-color: $danger;
+  }
+
   .form-control,
   .dropdown.btn-group,
   .dropdown-item {

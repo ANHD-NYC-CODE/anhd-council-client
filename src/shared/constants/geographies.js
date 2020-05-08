@@ -1,5 +1,12 @@
+export const CITY_GEOGRAPHY = {
+  name: 'New York City',
+  constant: 'CITY',
+  frontEndPath: '',
+  queryName: 'city',
+}
+
 export const BOROUGH_GEOGRAPHY = {
-  name: 'City / Boroughs',
+  name: 'Boroughs',
   constant: 'BOROUGH',
   frontEndPath: '',
   queryName: 'borough',

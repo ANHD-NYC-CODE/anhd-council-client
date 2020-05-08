@@ -48,7 +48,7 @@ const AdvancedSearchSentenceEditor = props => {
         </div>
         <span className="advanced-search-sentence-editor__buttons">
           {(props.requestCalledAndNotLoading || props.loadingButDisplayingResults) && (
-            <Button className="advanced-search__toggle-button" variant="dark" onClick={props.toggleForm}>
+            <Button className="advanced-search__toggle-button" variant="dark" size="sm" onClick={props.toggleForm}>
               {props.displayingForm ? 'View Results' : 'Edit Custom Search'}
             </Button>
           )}
@@ -57,6 +57,7 @@ const AdvancedSearchSentenceEditor = props => {
               className="advanced-search__toggle-button"
               onClick={() => props.dispatch(clearAdvancedSearchRequest())}
               variant="danger"
+              size="sm"
             >
               Cancel
             </Button>
