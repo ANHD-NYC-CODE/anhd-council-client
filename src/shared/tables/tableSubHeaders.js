@@ -32,15 +32,20 @@ export const getTableSubheaderLinks = ({ constant = '', property = {}, bin = nul
             Click the Document ID to view the full record and the document icon{' '}
             <img alt="document icon" src={lookupIcon} /> to view the scanned document.
           </div>
-          <div className="text-danger">
-            Note: Staten Island property sales are registered with the Richmond County Clerk and are not currently
-            available via Open Data. You can access this property's records{' '}
-            <BaseLink
-              href="https://www.richmondcountyclerk.com/Search/ShowResultsBlocks?Block=4640&Lot=22&SelectedDocumentIdentifier=0"
-              text="here"
-            />
-            .
-          </div>
+          {property.borough === 'SI' && (
+            <div className="text-danger">
+              Note: Staten Island property sales are registered with the Richmond County Clerk and are not currently
+              available via Open Data. You can access this property's records{' '}
+              <BaseLink
+                href={`https://www.richmondcountyclerk.com/Search/ShowResultsBlocks?Block=${property.bbl.slice(
+                  1,
+                  6
+                )}&Lot=${property.bbl.slice(6, 10)}&SelectedDocumentIdentifier=0`}
+                text="here"
+              />
+              .
+            </div>
+          )}
         </div>
       )
     case 'HPD_VIOLATION':
