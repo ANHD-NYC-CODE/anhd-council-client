@@ -116,6 +116,11 @@ export const dobViolationStatusFormatter = (cell, row, index) => {
   )
 }
 
+export const ecbViolationStatusFormatter = (cell, row, index) => {
+  cell = cell.toLowerCase().replace('resolve', 'resolved')
+  return capitalizeFormatter(cell)
+}
+
 export const dobViolationTypeFormatter = (cell, row, index) => {
   if (!cell) return cell
 
@@ -1218,11 +1223,11 @@ export const acrisDocTypeFormatter = (cell, row, index) => {
 export const dobPermitSourceFormatter = (cell, row, index) => {
   switch (cell) {
     case 'dobpermitissuedlegacy':
-      return 'Legacy'
+      return 'DOB BIS'
     case 'dobpermitissuednow':
       return 'DOB NOW'
     case 'doblegacyfiledpermit':
-      return 'Legacy'
+      return 'DOB BIS'
     case 'dobnowfiledpermit':
       return 'DOB NOW'
   }
