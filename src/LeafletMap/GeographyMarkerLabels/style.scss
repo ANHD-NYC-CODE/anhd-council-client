@@ -1,31 +1,33 @@
 @import 'shared/styles/bootstrap/_variables.scss';
 
-.geography-marker__tooltip--COUNCIL {
-  color: darken($primary, 20%);
-}
+// .geography-marker__tooltip--COUNCIL {
+//   color: darken($primary, 20%);
+// }
 
-.geography-marker__tooltip--COMMUNITY {
-  color: darken($secondary, 20%);
-}
+// .geography-marker__tooltip--COMMUNITY {
+//   color: darken($secondary, 20%);
+// }
 
-.geography-marker__tooltip--ZIPCODE {
-  color: darken($gray-500, 20%);
-}
+// .geography-marker__tooltip--ZIPCODE {
+//   color: darken($gray-500, 20%);
+// }
 
-.geography-marker__tooltip--STATE_ASSEMBLY {
-  color: darken($pink, 20%);
-}
+// .geography-marker__tooltip--STATE_ASSEMBLY {
+//   color: darken($pink, 20%);
+// }
 
-.geography-marker__tooltip--STATE_SENATE {
-  color: darken($purple, 20%);
-}
+// .geography-marker__tooltip--STATE_SENATE {
+//   color: darken($purple, 20%);
+// }
 
 .geography-marker__tooltip,
 .geography-marker__tooltip:before {
   background-color: transparent;
   border: none;
   box-shadow: none;
+  color: white;
   font-size: 18px;
   font-weight: bold;
   letter-spacing: 2px;
+  z-index: 1000000;
 }

@@ -32,7 +32,7 @@ table.table,
   }
 
   tbody tr {
-    cursor: pointer;
+    // cursor: pointer;
     // remove animation expanding
     transition: all 0s linear;
 
@@ -87,7 +87,7 @@ table.table,
     // only clicks to .expandable-cell
     td,
     tbody tr {
-      pointer-events: none;
+      // pointer-events: none;
     }
 
     td a,
