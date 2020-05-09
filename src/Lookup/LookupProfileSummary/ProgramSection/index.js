@@ -47,6 +47,39 @@ const ProgramSection = props => {
               This property has {props.profile.legalclassb} Single Room Occupancy (SRO) units.
             </div>
           )}
+
+          {props.profile.aepstatus.toUpperCase() === 'AEP ACTIVE' && (
+            <div className="text-danger font-weight-bold">
+              This property entered into the{' '}
+              <BaseLink className="text-link" href="https://www1.nyc.gov/site/hpd/owners/AEP.page">
+                Alternative Enforcement Program
+              </BaseLink>
+              on {props.profile.aepstartdate} and is still active in the program.
+            </div>
+          )}
+
+          {props.profile.aepstatus.toUpperCase() === 'AEP DISCHARGED' && (
+            <div className="text-danger font-weight-bold">
+              This property entered into the{' '}
+              <BaseLink className="text-link" href="https://www1.nyc.gov/site/hpd/owners/AEP.page">
+                Alternative Enforcement Program
+              </BaseLink>
+              and was discharged on {props.profile.aepdischargedate}.
+            </div>
+          )}
+
+          {props.profile.managementprogram.toUpperCase() === '7A' && (
+            <div className="text-danger font-weight-bold">
+              This property is managed under the{' '}
+              <BaseLink
+                className="text-link"
+                href="https://www1.nyc.gov/site/hpd/services-and-information/7a-program.page"
+              >
+                7A program.
+              </BaseLink>
+            </div>
+          )}
+
           {props.profile.nycha && (
             <div className="text-danger font-weight-bold">
               This property is a{' '}
