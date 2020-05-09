@@ -1,4 +1,6 @@
-import { constructCountDateParamSet } from 'shared/utilities/filterUtils'
+import { constructSingleMapParamSet, comparisonOptions, constructCountDateParamSet } from 'shared/utilities/filterUtils'
+import GenericFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/GenericFieldSet'
+import TextSelectField from 'AdvancedSearch/FilterComponent/Field/TextSelectField'
 
 const HPDComplaint = databaseObject => ({
   summaryBackgroundColorClass: 'hpd-orange',
@@ -12,6 +14,27 @@ const HPDComplaint = databaseObject => ({
       generatorFunction: resourceModel => {
         return constructCountDateParamSet({
           resourceModel,
+        })
+      },
+    },
+    status: {
+      generatorFunction: resourceModel => {
+        return constructSingleMapParamSet({
+          resourceModel,
+          component: GenericFieldSet,
+          baseComponent: TextSelectField,
+          paramMapValue: 'OPEN',
+          paramMapType: 'SINGLE-TEXT',
+          paramMapComparison: '',
+          paramSetLabel: 'Status',
+          paramMapField: 'status',
+          valuePrefix: 'Status',
+          inputClass: '',
+          defaultOptions: comparisonOptions({
+            name: 'value',
+            comparisonValues: ['OPEN', 'CLOSE'],
+            labels: ['Open', 'Closed'],
+          }),
         })
       },
     },
