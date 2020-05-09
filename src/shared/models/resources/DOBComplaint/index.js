@@ -1,4 +1,6 @@
-import { constructCountDateParamSet } from 'shared/utilities/filterUtils'
+import { constructSingleMapParamSet, comparisonOptions, constructCountDateParamSet } from 'shared/utilities/filterUtils'
+import GenericFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/GenericFieldSet'
+import TextSelectField from 'AdvancedSearch/FilterComponent/Field/TextSelectField'
 
 import { dobComplaintCategoryDescriptionFormatter } from 'shared/utilities/tableUtils'
 
@@ -13,6 +15,27 @@ const DOBComplaint = databaseObject => ({
       generatorFunction: resourceModel => {
         return constructCountDateParamSet({
           resourceModel,
+        })
+      },
+    },
+    status: {
+      generatorFunction: resourceModel => {
+        return constructSingleMapParamSet({
+          resourceModel,
+          component: GenericFieldSet,
+          baseComponent: TextSelectField,
+          paramMapValue: 'ACTIVE',
+          paramMapType: 'SINGLE-TEXT',
+          paramMapComparison: '',
+          paramSetLabel: 'Status',
+          paramMapField: 'status',
+          valuePrefix: 'Status',
+          inputClass: '',
+          defaultOptions: comparisonOptions({
+            name: 'value',
+            comparisonValues: ['ACTIVE', 'CLOSED'],
+            labels: ['Active', 'Closed'],
+          }),
         })
       },
     },

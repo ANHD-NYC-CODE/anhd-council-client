@@ -192,6 +192,10 @@
       margin-left: auto;
     }
 
+    tr {
+      cursor: pointer;
+    }
+
     &.d-none {
       // visible layout on XL
       @include media-breakpoint-up(xl) {

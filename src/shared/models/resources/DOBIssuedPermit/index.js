@@ -1,4 +1,6 @@
-import { constructCountDateParamSet } from 'shared/utilities/filterUtils'
+import { constructSingleMapParamSet, comparisonOptions, constructCountDateParamSet } from 'shared/utilities/filterUtils'
+import GenericFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/GenericFieldSet'
+import TextSelectField from 'AdvancedSearch/FilterComponent/Field/TextSelectField'
 
 const DOBIssuedPermit = databaseObject => ({
   summaryBackgroundColorClass: 'dob-red',
@@ -12,6 +14,27 @@ const DOBIssuedPermit = databaseObject => ({
       generatorFunction: resourceModel => {
         return constructCountDateParamSet({
           resourceModel,
+        })
+      },
+    },
+    jobdescription: {
+      generatorFunction: resourceModel => {
+        return constructSingleMapParamSet({
+          resourceModel,
+          component: GenericFieldSet,
+          baseComponent: TextSelectField,
+          paramMapValue: 'a1',
+          paramMapType: 'SINGLE-TEXT',
+          paramMapComparison: 'icontains',
+          paramMapField: 'jobdescription',
+          paramSetLabel: 'Status',
+          valuePrefix: 'Status',
+          inputClass: '',
+          defaultOptions: comparisonOptions({
+            name: 'value',
+            comparisonValues: ['a1', 'a2', 'a3', 'nb', 'dm'],
+            labels: ['A1', 'A2', 'A3', 'NB', 'DM'],
+          }),
         })
       },
     },
