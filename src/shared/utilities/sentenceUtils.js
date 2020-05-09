@@ -78,7 +78,7 @@ const parseParamMapComparison = (paramMap, nounOverride = undefined) => {
       return [
         paramMap.comparisonPrefix,
         paramMap.valuePrefix,
-        paramMap.options.find(option => option.value === paramMap.value).label.toLowerCase(),
+        paramMap.options.find(option => option.value === paramMap.value).label,
         paramMap.valueSuffix,
         nounOverride || paramMap.paramNoun,
       ]
@@ -156,7 +156,7 @@ const parseRoleGroup = (paramMaps, joiner = ' ') => {
       })
       .join(joiner)
   } else {
-    return paramMaps.map(pm => parseParamMapComparison(pm)).join(' ')
+    return paramMaps.map(pm => parseParamMapComparison(pm)).join(', ')
   }
 }
 

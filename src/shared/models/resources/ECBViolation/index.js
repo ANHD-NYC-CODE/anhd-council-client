@@ -1,4 +1,6 @@
-import { constructCountDateParamSet } from 'shared/utilities/filterUtils'
+import { constructSingleMapParamSet, comparisonOptions, constructCountDateParamSet } from 'shared/utilities/filterUtils'
+import GenericFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/GenericFieldSet'
+import TextSelectField from 'AdvancedSearch/FilterComponent/Field/TextSelectField'
 
 const ECBViolation = databaseObject => ({
   summaryBackgroundColorClass: 'dob-red',
@@ -11,6 +13,27 @@ const ECBViolation = databaseObject => ({
       generatorFunction: resourceModel => {
         return constructCountDateParamSet({
           resourceModel,
+        })
+      },
+    },
+    ecbviolationstatus: {
+      generatorFunction: resourceModel => {
+        return constructSingleMapParamSet({
+          resourceModel,
+          component: GenericFieldSet,
+          baseComponent: TextSelectField,
+          paramMapValue: 'active',
+          paramMapType: 'SINGLE-TEXT',
+          paramMapComparison: 'icontains',
+          paramMapField: 'ecbviolationstatus',
+          paramSetLabel: 'Status',
+          valuePrefix: 'Status',
+          inputClass: '',
+          defaultOptions: comparisonOptions({
+            name: 'value',
+            comparisonValues: ['active', 'resolve'],
+            labels: ['Active', 'Resolved'],
+          }),
         })
       },
     },
