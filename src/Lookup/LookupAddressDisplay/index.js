@@ -37,7 +37,7 @@ class LookupAddressDisplay extends React.PureComponent {
   handleEditClick(e) {
     e.preventDefault()
     this.setState(oldState => ({
-      isEditing: !oldState.isEditing,
+      isEditing: true,
     }))
   }
 
@@ -54,8 +54,15 @@ class LookupAddressDisplay extends React.PureComponent {
   }
 
   handleBlur(e) {
-    if (e.target.closest('.lookup-address-display__displaying') || e.target.closest('.lookup-address-display__editing'))
+    // ignore edit-button or address bar click
+    if (
+      e &&
+      (e.target.classList.contains('lookup-address-display__edit-button') ||
+        e.target.closest('.lookup-address-display__displaying') ||
+        e.target.closest('.lookup-address-display__editing'))
+    )
       return
+
     this.setState({
       isEditing: false,
     })

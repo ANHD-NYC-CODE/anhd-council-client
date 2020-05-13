@@ -2,6 +2,11 @@
 
 .footer {
   height: 24px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
 
   .footer-nav {
     background-color: #c4c4c4;
