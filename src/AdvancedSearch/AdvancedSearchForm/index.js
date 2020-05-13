@@ -110,7 +110,7 @@ class AdvancedSearchForm extends React.PureComponent {
                   this.props.currentGeographyType === b.CITY_GEOGRAPHY.constant ||
                   this.props.currentGeographyType === b.BOROUGH_GEOGRAPHY.constant
                 }
-                message="Warning: Some borough and citywide queries may be too complex for our server to handle. Please allow extra time for queries to finish."
+                message="Warning: Some borough and citywide queries may take a long time to complete. Please allow up to 2 minutes for your query to finish."
               />
 
               <GeographySelect

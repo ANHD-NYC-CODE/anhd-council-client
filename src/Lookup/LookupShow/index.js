@@ -120,7 +120,6 @@ class LookupShow extends React.PureComponent {
   }
 
   render() {
-    console.log(this.props.propertyResult)
     return (
       <LayoutContext.Consumer>
         {layout =>
