@@ -8,91 +8,129 @@ import { spaceEnterKeyDownHandler } from 'shared/utilities/accessibilityUtils'
 
 import './style.scss'
 
-const LookupAddressDisplay = props => {
-  const [isEditing, toggleEditing] = useState(false)
+class LookupAddressDisplay extends React.PureComponent {
+  constructor(props) {
+    super(props)
 
-  const handleEditClick = e => {
+    this.state = {
+      isEditing: false,
+    }
+
+    this.handleEditClick = this.handleEditClick.bind(this)
+    this.handleClear = this.handleClear.bind(this)
+    this.handleBlur = this.handleBlur.bind(this)
+    this.handleKeyDown = this.handleKeyDown.bind(this)
+  }
+
+  componentDidMount() {
+    window.addEventListener('click', this.handleBlur)
+    window.addEventListener('touchstart', this.handleBlur)
+    window.addEventListener('keydown', this.handleKeyDown)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('click', this.handleBlur)
+    window.removeEventListener('touchstart', this.handleBlur)
+    window.removeEventListener('keydown', this.handleKeyDown)
+  }
+
+  handleEditClick(e) {
     e.preventDefault()
-    toggleEditing(!isEditing)
+    this.setState(oldState => ({
+      isEditing: !oldState.isEditing,
+    }))
   }
 
-  const handleClear = e => {
+  handleClear(e) {
     e.preventDefault()
-    props.handleClear()
+    this.props.handleClear()
   }
 
-  const handleBlur = () => {
-    toggleEditing(false)
+  handleKeyDown(e) {
+    if (e.keyCode === 27) {
+      // esc
+      this.handleBlur(e)
+    }
   }
 
-  return (
-    <div className="lookup-address-display">
-      {isEditing && (
-        <div className="lookup-address-display__editing">
-          <ConfigContext.Consumer>
-            {config => {
-              return (
-                <AddressSearch
-                  config={config}
-                  inputClass="home-search-bar"
-                  inputSize="md"
-                  containerClass="lookup-address-search"
-                  handleBlur={handleBlur}
-                />
-              )
-            }}
-          </ConfigContext.Consumer>
-          {/* <button
-            href="#"
-            className="lookup-address-display__button lookup-address-display__cancel-button text-button--default"
-            onClick={handleEditClick}
-          >
-            cancel
-          </button> */}
-        </div>
-      )}
-      {!isEditing && (
-        <div className="lookup-address-display__displaying">
-          {/* <Button
-            className="lookup-address-display__button lookup-address-display__search-button btn--small"
-            variant="dark"
-            onClick={handleEditClick}
-          >
-            <FontAwesomeIcon color="white" className="" size="2x" icon={faSearch} />
-          </Button> */}
-          <div
-            tabIndex="0"
-            role="button"
-            className="lookup-address-display__title"
-            onKeyDown={e => spaceEnterKeyDownHandler(e => handleEditClick(e))}
-            onClick={handleEditClick}
-          >
-            {constructAddressString({
-              street: props.profile.address,
-              borough: boroCodeToName(props.profile.borough),
-              zip: props.profile.zipcode,
-            })}
-            <Button
-              className="lookup-address-display__button lookup-address-display__edit-button"
+  handleBlur(e) {
+    if (e.target.closest('.lookup-address-display__displaying') || e.target.closest('.lookup-address-display__editing'))
+      return
+    this.setState({
+      isEditing: false,
+    })
+  }
+
+  render() {
+    return (
+      <div className="lookup-address-display">
+        {this.state.isEditing && (
+          <div className="lookup-address-display__editing">
+            <ConfigContext.Consumer>
+              {config => {
+                return (
+                  <AddressSearch
+                    config={config}
+                    inputClass="home-search-bar"
+                    inputSize="md"
+                    containerClass="lookup-address-search"
+                    handleBlur={this.handleBlur}
+                  />
+                )
+              }}
+            </ConfigContext.Consumer>
+            {/* <button
+              href="#"
+              className="lookup-address-display__button lookup-address-display__cancel-button text-button--default"
               onClick={handleEditClick}
-              variant="dark"
-              size="sm"
             >
-              EDIT
-            </Button>
-            <Button
-              className="lookup-address-display__button lookup-address-display__clear-button"
-              onClick={handleClear}
-              variant="dark"
-              size="sm"
-            >
-              CLEAR
-            </Button>
+              cancel
+            </button> */}
           </div>
-        </div>
-      )}
-    </div>
-  )
+        )}
+        {!this.state.isEditing && (
+          <div className="lookup-address-display__displaying">
+            {/* <Button
+              className="lookup-address-display__button lookup-address-display__search-button btn--small"
+              variant="dark"
+              onClick={handleEditClick}
+            >
+              <FontAwesomeIcon color="white" className="" size="2x" icon={faSearch} />
+            </Button> */}
+            <div
+              tabIndex="0"
+              role="button"
+              className="lookup-address-display__title"
+              onKeyDown={e => spaceEnterKeyDownHandler(e => this.handleEditClick(e))}
+              onClick={this.handleEditClick}
+            >
+              {constructAddressString({
+                street: this.props.profile.address,
+                borough: boroCodeToName(this.props.profile.borough),
+                zip: this.props.profile.zipcode,
+              })}
+              <Button
+                className="lookup-address-display__button lookup-address-display__edit-button"
+                onClick={this.handleEditClick}
+                variant="dark"
+                size="sm"
+              >
+                EDIT
+              </Button>
+              <Button
+                className="lookup-address-display__button lookup-address-display__clear-button"
+                onClick={this.handleClear}
+                variant="dark"
+                size="sm"
+              >
+                CLEAR
+              </Button>
+            </div>
+          </div>
+        )}
+      </div>
+    )
+  }
 }
 
 LookupAddressDisplay.propTypes = {
