@@ -167,7 +167,7 @@ class AdvancedSearchForm extends React.PureComponent {
                       show={!!this.state.hasErrors || !!Object.keys(errors).length}
                       message="Please correct errors before proceeding."
                     />
-                    <Button disabled={this.props.loading} size="lg" type="submit" variant="primary">
+                    <Button disabled={this.props.loading} size="default" type="submit" variant="primary">
                       Submit
                     </Button>
                   </div>
