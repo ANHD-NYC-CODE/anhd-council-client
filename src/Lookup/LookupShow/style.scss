@@ -15,6 +15,7 @@ $unopened-width: 660px;
     align-items: flex-start;
     justify-content: flex-start;
     margin: 1rem 0;
+    margin-bottom: 0;
     flex-wrap: wrap;
 
     @include media-breakpoint-up(md) {
