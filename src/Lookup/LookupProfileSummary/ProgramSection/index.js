@@ -66,7 +66,7 @@ const ProgramSection = props => {
             <div className="text-danger font-weight-bold">
               This property entered into the{' '}
               <BaseLink className="text-link" href="https://www1.nyc.gov/site/hpd/owners/AEP.page">
-                Alternative Enforcement Program
+                Alternative Enforcement Program{' '}
               </BaseLink>
               and was discharged on {props.profile.aepdischargedate}.
             </div>
