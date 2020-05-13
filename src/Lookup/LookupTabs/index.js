@@ -27,10 +27,10 @@ const LookupTabs = props => {
   return (
     <div className="lookup-tabs">
       <div className="lookup-tabs__header">
-        <span>Click to view different data about this property</span>
-        <button className="text-button--smaller" onClick={() => toggleOpen(!isOpen)}>
+        <button className="btn-link text-button--smaller" onClick={() => toggleOpen(!isOpen)}>
           {isOpen ? 'Collapse' : 'Expand Datasets'} <FontAwesomeIcon icon={isOpen ? faChevronUp : faChevronDown} />
         </button>
+        {isOpen && <span>Click to view different data about this property</span>}
       </div>
       <div className={classnames('lookup-tabs__tabs', { open: isOpen })}>
         {props.lookupRequests.map((request, index) => {
