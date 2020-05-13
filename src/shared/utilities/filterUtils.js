@@ -88,6 +88,9 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
     {
       resourceModel: resourceModels['CONH_RECORD'],
     },
+    {
+      resourceModel: resourceModels['AEP_BUILDING'],
+    },
   ]
 }
 

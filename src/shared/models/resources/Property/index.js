@@ -29,37 +29,37 @@ const Property = databaseObject => {
         case 'all':
           return Object.keys(paramSets)
             .filter(key => !key.match(/(housingType)/))
-            .concat('housingType_all_1')
+            .concat('housingType_all_1', 'housingType_all_sro', 'housingType_all_7a')
             .filter(p => p)
             .reduce((ps, key) => ((ps[key] = paramSets[key]), ps), {})
         case 'rs':
           return Object.keys(paramSets)
             .filter(key => !key.match(/(housingType)/))
-            .concat('housingType_rs_1', 'housingType_rs_2')
+            .concat('housingType_rs_1', 'housingType_rs_2', 'housingType_rs_sro')
             .filter(p => p)
             .reduce((ps, key) => ((ps[key] = paramSets[key]), ps), {})
         case 'rr':
           return Object.keys(paramSets)
             .filter(key => !key.match(/(housingType)/))
-            .concat('housingType_rr_1', 'housingType_rr_2', 'housingType_rr_3')
+            .concat('housingType_rr_1', 'housingType_rr_2', 'housingType_rr_3', 'housingType_rr_sro')
             .filter(p => p)
             .reduce((ps, key) => ((ps[key] = paramSets[key]), ps), {})
         case 'sh':
           return Object.keys(paramSets)
             .filter(key => !key.match(/(housingType)/))
-            .concat('housingType_sh')
+            .concat('housingType_sh', 'housingType_sh_sro')
             .filter(p => p)
             .reduce((ps, key) => ((ps[key] = paramSets[key]), ps), {})
         case 'mr':
           return Object.keys(paramSets)
             .filter(key => !key.match(/(housingType)/))
-            .concat('housingType_mr')
+            .concat('housingType_mr', 'housingType_mr_sro')
             .filter(p => p)
             .reduce((ps, key) => ((ps[key] = paramSets[key]), ps), {})
         case 'ph':
           return Object.keys(paramSets)
             .filter(key => !key.match(/(housingType)/))
-            .concat('housingType_ph')
+            .concat('housingType_ph', 'housingType_ph_sro')
             .filter(p => p)
             .reduce((ps, key) => ((ps[key] = paramSets[key]), ps), {})
         default:
@@ -166,6 +166,7 @@ const Property = databaseObject => {
       },
 
       housingType_all_1: {
+        // residential units
         generatorFunction: resourceModel => {
           return constructSingleMapParamSet({
             resourceModel,
@@ -179,6 +180,52 @@ const Property = databaseObject => {
             validations: {
               min: 1,
             },
+          })
+        },
+      },
+      housingType_all_sro: {
+        // SRO units
+        generatorFunction: resourceModel => {
+          return constructSingleMapParamSet({
+            resourceModel,
+            component: GenericFieldSet,
+            baseComponent: TextSelectField,
+            paramSetLabel: 'SRO Units',
+            paramMapType: 'BOOL',
+            paramMapRole: 'MODIFIER',
+            valuePrefix: 'Has SRO units?',
+            paramMapField: 'propertyannotation__legalclassb',
+            paramMapComparison: 'gte',
+            paramMapValue: '1',
+            paramNoun: 'with SRO units',
+            defaultOptions: comparisonOptions({
+              name: 'value',
+              comparisonValues: ['0', '1'],
+              labels: ['No', 'Yes'],
+            }),
+          })
+        },
+      },
+      housingType_all_7a: {
+        // SRO units
+        generatorFunction: resourceModel => {
+          return constructSingleMapParamSet({
+            resourceModel,
+            component: GenericFieldSet,
+            baseComponent: TextSelectField,
+            paramSetLabel: '7A Program',
+            paramMapType: 'BOOL',
+            paramMapRole: 'MODIFIER',
+            valuePrefix: 'Is 7A program?',
+            paramMapField: 'propertyannotation__managementprogram',
+            paramMapComparison: '',
+            paramMapValue: '7A',
+            paramNoun: 'with SRO units',
+            defaultOptions: comparisonOptions({
+              name: 'value',
+              comparisonValues: ['7A'],
+              labels: ['Yes'],
+            }),
           })
         },
       },
@@ -235,6 +282,29 @@ const Property = databaseObject => {
           })
         },
       },
+      housingType_rs_sro: {
+        // SRO units
+        generatorFunction: resourceModel => {
+          return constructSingleMapParamSet({
+            resourceModel,
+            component: GenericFieldSet,
+            baseComponent: TextSelectField,
+            paramSetLabel: 'SRO Units',
+            paramMapType: 'BOOL',
+            paramMapRole: 'MODIFIER',
+            valuePrefix: 'Has SRO units?',
+            paramMapField: 'propertyannotation__legalclassb',
+            paramMapComparison: 'gte',
+            paramMapValue: '1',
+            paramNoun: 'with SRO units',
+            defaultOptions: comparisonOptions({
+              name: 'value',
+              comparisonValues: ['0', '1'],
+              labels: ['No', 'Yes'],
+            }),
+          })
+        },
+      },
 
       // rent regulated
       housingType_rr_1: {
@@ -284,6 +354,29 @@ const Property = databaseObject => {
           })
         },
       },
+      housingType_rr_sro: {
+        // SRO units
+        generatorFunction: resourceModel => {
+          return constructSingleMapParamSet({
+            resourceModel,
+            component: GenericFieldSet,
+            baseComponent: TextSelectField,
+            paramSetLabel: 'SRO Units',
+            paramMapType: 'BOOL',
+            paramMapRole: 'MODIFIER',
+            valuePrefix: 'Has SRO units?',
+            paramMapField: 'propertyannotation__legalclassb',
+            paramMapComparison: 'gte',
+            paramMapValue: '1',
+            paramNoun: 'with SRO units',
+            defaultOptions: comparisonOptions({
+              name: 'value',
+              comparisonValues: ['0', '1'],
+              labels: ['No', 'Yes'],
+            }),
+          })
+        },
+      },
 
       // small homes
       housingType_sh: {
@@ -301,6 +394,29 @@ const Property = databaseObject => {
               min: 1,
               max: 4,
             },
+          })
+        },
+      },
+      housingType_sh_sro: {
+        // SRO units
+        generatorFunction: resourceModel => {
+          return constructSingleMapParamSet({
+            resourceModel,
+            component: GenericFieldSet,
+            baseComponent: TextSelectField,
+            paramSetLabel: 'SRO Units',
+            paramMapType: 'BOOL',
+            paramMapRole: 'MODIFIER',
+            valuePrefix: 'Has SRO units?',
+            paramMapField: 'propertyannotation__legalclassb',
+            paramMapComparison: 'gte',
+            paramMapValue: '1',
+            paramNoun: 'with SRO units',
+            defaultOptions: comparisonOptions({
+              name: 'value',
+              comparisonValues: ['0', '1'],
+              labels: ['No', 'Yes'],
+            }),
           })
         },
       },
@@ -322,6 +438,29 @@ const Property = databaseObject => {
           })
         },
       },
+      housingType_mr_sro: {
+        // SRO units
+        generatorFunction: resourceModel => {
+          return constructSingleMapParamSet({
+            resourceModel,
+            component: GenericFieldSet,
+            baseComponent: TextSelectField,
+            paramSetLabel: 'SRO Units',
+            paramMapType: 'BOOL',
+            paramMapRole: 'MODIFIER',
+            valuePrefix: 'Has SRO units?',
+            paramMapField: 'propertyannotation__legalclassb',
+            paramMapComparison: 'gte',
+            paramMapValue: '1',
+            paramNoun: 'with SRO units',
+            defaultOptions: comparisonOptions({
+              name: 'value',
+              comparisonValues: ['0', '1'],
+              labels: ['No', 'Yes'],
+            }),
+          })
+        },
+      },
       housingType_ph: {
         generatorFunction: resourceModel => {
           return constructSingleMapParamSet({
@@ -336,6 +475,29 @@ const Property = databaseObject => {
             validations: {
               min: 1,
             },
+          })
+        },
+      },
+      housingType_ph_sro: {
+        // SRO units
+        generatorFunction: resourceModel => {
+          return constructSingleMapParamSet({
+            resourceModel,
+            component: GenericFieldSet,
+            baseComponent: TextSelectField,
+            paramSetLabel: 'SRO Units',
+            paramMapType: 'BOOL',
+            paramMapRole: 'MODIFIER',
+            valuePrefix: 'Has SRO units?',
+            paramMapField: 'propertyannotation__legalclassb',
+            paramMapComparison: 'gte',
+            paramMapValue: '1',
+            paramNoun: 'with SRO units',
+            defaultOptions: comparisonOptions({
+              name: 'value',
+              comparisonValues: ['0', '1'],
+              labels: ['No', 'Yes'],
+            }),
           })
         },
       },
@@ -360,6 +522,7 @@ const Property = databaseObject => {
       PSFORECLOSURE: 'psforeclosures',
       TAX_LIEN: 'taxliens',
       CONH_RECORD: 'conhrecords',
+      AEP_BUILDING: 'aepbuildings',
     },
   }
 }

@@ -65,7 +65,7 @@ export const handleCatchError = (error, type, dispatch, requestId) => {
   } else {
     errorStatus = error.response.status
     if (error.response.status === 500) {
-      errorMessage = error.response.data.results
+      errorMessage = error.response.data.results || error.response.data.detail
     } else if (error.response.status > 200) {
       errorMessage = findErrorKeyValue(error.response.status, error.response.data)
     }

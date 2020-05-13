@@ -14,3 +14,4 @@ export { default as HOUSING_LITIGATION } from 'shared/models/resources/HousingLi
 export { default as ACRIS_REAL_MASTER } from 'shared/models/resources/AcrisRealMaster'
 export { default as TAX_LIEN } from 'shared/models/resources/TaxLien'
 export { default as CONH_RECORD } from 'shared/models/resources/ConhRecord'
+export { default as AEP_BUILDING } from 'shared/models/resources/AepBuilding'
