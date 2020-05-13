@@ -1,6 +1,10 @@
 @import 'shared/styles/_variables.scss';
 
 .advanced-search {
+  .form-error {
+    margin-bottom: 5px;
+  }
+
   &.layout-width-wrapper {
     padding: 0 1rem !important;
 
