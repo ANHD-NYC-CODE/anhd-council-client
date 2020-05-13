@@ -41,24 +41,28 @@ const ProgramSection = props => {
               )
             })}
         </div>
-        <div className="lookup-profile-summary__group">
-          {!!props.profile.legalclassb && (
+        {!!props.profile.legalclassb && (
+          <div className="lookup-profile-summary__group">
             <div className="text-danger font-weight-bold">
               This property has {props.profile.legalclassb} Single Room Occupancy (SRO) units.
             </div>
-          )}
+          </div>
+        )}
 
-          {props.profile.aepstatus.toUpperCase() === 'AEP ACTIVE' && (
+        {props.profile.aepstatus.toUpperCase() === 'AEP ACTIVE' && (
+          <div className="lookup-profile-summary__group">
             <div className="text-danger font-weight-bold">
               This property entered into the{' '}
               <BaseLink className="text-link" href="https://www1.nyc.gov/site/hpd/owners/AEP.page">
                 Alternative Enforcement Program
-              </BaseLink>
+              </BaseLink>{' '}
               on {props.profile.aepstartdate} and is still active in the program.
             </div>
-          )}
+          </div>
+        )}
 
-          {props.profile.aepstatus.toUpperCase() === 'AEP DISCHARGED' && (
+        {props.profile.aepstatus.toUpperCase() === 'AEP DISCHARGED' && (
+          <div className="lookup-profile-summary__group">
             <div className="text-danger font-weight-bold">
               This property entered into the{' '}
               <BaseLink className="text-link" href="https://www1.nyc.gov/site/hpd/owners/AEP.page">
@@ -66,9 +70,11 @@ const ProgramSection = props => {
               </BaseLink>
               and was discharged on {props.profile.aepdischargedate}.
             </div>
-          )}
+          </div>
+        )}
 
-          {props.profile.managementprogram.toUpperCase() === '7A' && (
+        {props.profile.managementprogram.toUpperCase() === '7A' && (
+          <div className="lookup-profile-summary__group">
             <div className="text-danger font-weight-bold">
               This property is managed under the{' '}
               <BaseLink
@@ -78,40 +84,42 @@ const ProgramSection = props => {
                 7A program.
               </BaseLink>
             </div>
-          )}
+          </div>
+        )}
 
-          {props.profile.nycha && (
+        {props.profile.nycha && (
+          <div className="lookup-profile-summary__group">
             <div className="text-danger font-weight-bold">
               This property is a{' '}
               <BaseLink className="text-link" href="https://www1.nyc.gov/site/nycha/about/developments.page">
                 NYCHA development.
               </BaseLink>
             </div>
-          )}
-        </div>
-        <div className="lookup-profile-summary__group">
-          {props.profile.conhrecord && (
+          </div>
+        )}
+
+        {props.profile.conhrecord && (
+          <div className="lookup-profile-summary__group">
             <div className="text-danger font-weight-bold">
               A building on this property is eligible for the{' '}
               <BaseLink className="text-link" href="https://anhd.org/project/coalition-against-tenant-harassment-cath">
                 Certificate of No Harassment Pilot Program.
               </BaseLink>
             </div>
-          )}
-        </div>
-        <div>
-          <div className="lookup-profile-summary__group">
-            {props.profile.taxlien && (
-              <div className="text-danger font-weight-bold">
-                This property is subject to a{' '}
-                <BaseLink className="text-link" href="https://www1.nyc.gov/site/finance/taxes/property-lien-sales.page">
-                  tax lien
-                </BaseLink>{' '}
-                as of the most recent data.
-              </div>
-            )}
           </div>
-        </div>
+        )}
+
+        {props.profile.taxlien && (
+          <div className="lookup-profile-summary__group">
+            <div className="text-danger font-weight-bold">
+              This property is subject to a{' '}
+              <BaseLink className="text-link" href="https://www1.nyc.gov/site/finance/taxes/property-lien-sales.page">
+                tax lien
+              </BaseLink>{' '}
+              as of the most recent data.
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )
