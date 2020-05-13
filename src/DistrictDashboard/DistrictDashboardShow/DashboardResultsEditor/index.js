@@ -13,7 +13,7 @@ import {
 import StandardizedInput from 'shared/classes/StandardizedInput'
 import { Button, Overlay, Tooltip } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faQuestion } from '@fortawesome/free-solid-svg-icons'
+import { faExclamation } from '@fortawesome/free-solid-svg-icons'
 import { mapFilterDateToLabel, longAmountComparisonString } from 'shared/utilities/languageUtils'
 import AmountFilterInput from 'DistrictDashboard/AmountFilterInput'
 import { spaceEnterKeyDownHandler } from 'shared/utilities/accessibilityUtils'
@@ -96,7 +96,7 @@ const DashboardResultsEditor = props => {
             onMouseEnter={e => setShow(true)}
             onMouseLeave={e => setShow(false)}
           >
-            <FontAwesomeIcon className="info-modal-button info-modal-button--tooltip" icon={faQuestion} size="sm" />
+            <FontAwesomeIcon className="info-modal-button info-modal-button--tooltip" icon={faExclamation} size="sm" />
           </button>
           <Overlay placement="top" show={show} target={tooltipRef.current}>
             {props => {

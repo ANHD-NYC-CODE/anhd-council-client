@@ -10,12 +10,11 @@
     justify-content: flex-start;
 
     & > * {
-      margin-right: 40px;
+      margin-right: 10px;
     }
     margin-bottom: 10px;
 
-    span,
-    button {
+    span {
       @extend %text-black;
     }
 

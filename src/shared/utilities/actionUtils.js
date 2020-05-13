@@ -8,7 +8,8 @@ const ERROR_401_MESSAGE = 'Please login for access.'
 const ERROR_404_MESSAGE = 'Not found.'
 const ERROR_500_MESSAGE = 'Oops, something went wrong.'
 const ERROR_502_MESSAGE = 'The app is temporarily down for maintenance.'
-const ERROR_408_MESSAGE = 'Try again? Your query may run faster a second time, so try again or simplify your query.'
+const ERROR_408_MESSAGE =
+  'Your search timed out after two minutes. Your query may run faster a second time, so try again or simplify your query.'
 
 export const handleActionDispatch = (dispatch, constant, requestId) => {
   dispatch(loadingActions.handleRequest(constant, requestId))

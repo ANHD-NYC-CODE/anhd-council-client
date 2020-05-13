@@ -27,6 +27,10 @@ class AdvancedSearchForm extends React.PureComponent {
     this.validateForm = this.validateForm.bind(this)
   }
 
+  componentDidUpdate() {
+    this.validateForm()
+  }
+
   validateForm() {
     const allParamMaps = getAdvancedSearchParamMaps(this.props.advancedSearch)
     const allConditions = [
