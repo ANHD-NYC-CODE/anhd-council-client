@@ -52,6 +52,7 @@ export class AdvancedSearch extends React.Component {
     const searchGeography = props.advancedSearch.geographies[0]
 
     this.state = {
+      error: null,
       currentGeographyType: searchGeography ? searchGeography.constant : this.props.appState.currentGeographyType,
       currentGeographyId: searchGeography ? searchGeography.id : this.props.appState.currentGeographyId,
       changingGeographyType: undefined,
@@ -105,6 +106,13 @@ export class AdvancedSearch extends React.Component {
         geographyId: this.props.appState.currentGeographyId,
       })
     }
+
+    // set state error
+    if (!this.state.error && this.props.error) {
+      this.setState({
+        error: this.props.error,
+      })
+    }
   }
 
   componentWillUnmount() {
@@ -116,6 +124,17 @@ export class AdvancedSearch extends React.Component {
     if (this.props.advancedSearchRequest && !this.props.advancedSearchRequest.called) {
       this.loadRequest(this.props.advancedSearchRequest)
       this.setState({ displayingForm: false })
+    }
+    // if timed out request, clear it
+    if (this.props.advancedSearchRequest && (this.props.error || {}).status === 408) {
+      this.cancelSearch()
+    }
+
+    // set state error
+    if (!this.state.error && this.props.error) {
+      this.setState({
+        error: this.props.error,
+      })
     }
   }
 
@@ -203,11 +222,15 @@ export class AdvancedSearch extends React.Component {
   cancelSearch() {
     this.setState({
       displayingForm: true,
+      error: this.props.error,
     })
     this.props.dispatch(clearAdvancedSearchRequest())
   }
 
   submitSearch() {
+    this.setState({
+      error: null,
+    })
     this.props.dispatch(fireAdvancedSearchSubmitEvent(this.state.advancedSearch))
 
     const newAdvancedSearch = this.cloneAdvancedSearchInstance(this.state.advancedSearch)
@@ -237,7 +260,9 @@ export class AdvancedSearch extends React.Component {
         <div className="advanced-search__content">
           {requestCalledAndNotLoading && (
             <div>
-              <FormError show={!!this.props.error} message={(this.props.error || {}).message} />
+              {!this.state.displayingForm && (
+                <FormError show={!!this.state.error} message={(this.state.error || {}).message} />
+              )}
               <AdvancedSearchSentenceEditor
                 advancedSearch={this.props.advancedSearch}
                 changeGeography={this.props.changeGeography}
@@ -325,8 +350,8 @@ export class AdvancedSearch extends React.Component {
                     globalTableState={this.state.tableState}
                     datasetModelName={this.props.advancedSearchRequest.resourceModel.resourceConstant}
                     dispatch={this.props.dispatch}
-                    error={this.props.error}
-                    errorAction={(this.props.error || {}).status === 504 ? this.retryRequest : null}
+                    error={this.state.error}
+                    errorAction={(this.state.error || {}).status === 504 ? this.retryRequest : null}
                     expandable={false}
                     loading={this.props.loading}
                     recordsSize={this.props.advancedSearch.results.length}
@@ -351,7 +376,7 @@ export class AdvancedSearch extends React.Component {
                 geographyId={this.state.currentGeographyId}
                 config={this.props.config}
                 dispatch={this.props.dispatch}
-                error={this.props.error}
+                error={this.state.error}
                 loading={this.props.loading}
                 loggedIn={this.props.loggedIn}
                 showPopups={this.state.view === 2}
