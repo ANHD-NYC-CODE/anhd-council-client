@@ -93,6 +93,15 @@ $lookup-sidebar-width: 333px;
   }
 }
 
+%p4-font-size {
+  font-size: 11px;
+  line-height: 16px;
+
+  @include media-breakpoint-up(md) {
+    font-size: 12px;
+  }
+}
+
 %small-font-size {
   font-size: 12px;
   line-height: 16px;
