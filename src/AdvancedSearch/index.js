@@ -16,7 +16,7 @@ import { connect } from 'react-redux'
 import { Events, animateScroll as scroll, scrollSpy } from 'react-scroll'
 import * as advancedSearchReducer from 'Store/AdvancedSearch/reducers'
 import Helmet from 'react-helmet'
-import { ButtonToolbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
+import { Button, ButtonToolbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
 import LeafletMap from 'LeafletMap'
 import SpinnerLoader from 'shared/components/Loaders/SpinnerLoader'
 import BaseTable from 'shared/components/BaseTable'
@@ -31,7 +31,12 @@ import {
   updateGeography,
   forceUpdateSearch,
 } from 'Store/AdvancedSearch/actions'
-import { setAppState, setGeographyAndRequestsAndRedirect, setAdvancedSearchRequest } from 'Store/AppState/actions'
+import {
+  clearAdvancedSearchRequest,
+  setAppState,
+  setGeographyAndRequestsAndRedirect,
+  setAdvancedSearchRequest,
+} from 'Store/AppState/actions'
 
 import AdvancedSearchForm from 'AdvancedSearch/AdvancedSearchForm'
 import AdvancedSearchSentenceEditor from 'AdvancedSearch/AdvancedSearchSentenceEditor'
@@ -65,6 +70,7 @@ export class AdvancedSearch extends React.Component {
     this.cancelChangeGeography = this.cancelChangeGeography.bind(this)
     this.pageForceUpdate = this.pageForceUpdate.bind(this)
     this.submitSearch = this.submitSearch.bind(this)
+    this.cancelSearch = this.cancelSearch.bind(this)
 
     if (this.props.appState.changingGeography) {
       this.props.dispatch(
@@ -194,6 +200,13 @@ export class AdvancedSearch extends React.Component {
     this.props.dispatch(forceUpdateSearch())
   }
 
+  cancelSearch() {
+    this.setState({
+      displayingForm: true,
+    })
+    this.props.dispatch(clearAdvancedSearchRequest())
+  }
+
   submitSearch() {
     this.props.dispatch(fireAdvancedSearchSubmitEvent(this.state.advancedSearch))
 
@@ -243,6 +256,9 @@ export class AdvancedSearch extends React.Component {
           {!this.state.displayingForm && (
             <div className="advanced-search__results">
               <div className="advanced-search__results-header">
+                <Button className="advanced-search__cancel" onClick={this.cancelSearch} size="sm">
+                  Clear
+                </Button>
                 <ButtonToolbar className="d-flex view-toggle__container">
                   <ToggleButtonGroup
                     name="view"

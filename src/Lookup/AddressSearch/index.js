@@ -40,10 +40,6 @@ class AddressSearch extends React.PureComponent {
   componentDidMount() {
     this.addressRef.current.addEventListener('focus', this.showSearch)
     this.searchBarRef.current.addEventListener('focus', this.showSearch)
-    this.addressRef.current.addEventListener('blur', () => {
-      if (this.state.show) return
-      this.handleBlur()
-    })
 
     window.addEventListener('click', this.hideSearch)
     window.addEventListener('touchstart', this.hideSearch)
