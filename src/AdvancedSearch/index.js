@@ -135,6 +135,10 @@ export class AdvancedSearch extends React.Component {
       this.setState({
         error: this.props.error,
       })
+    } else if (this.state.error && !this.props.error) {
+      this.setState({
+        error: null,
+      })
     }
   }
 
@@ -366,6 +370,7 @@ export class AdvancedSearch extends React.Component {
           {this.state.displayingForm && (
             <div className="advanced-search-form--container">
               <AdvancedSearchForm
+                key={`logged-in: ${this.props.loggedIn}`}
                 advancedSearch={this.state.advancedSearch}
                 appState={this.props.appState}
                 changingGeographyType={this.state.changingGeographyType}
