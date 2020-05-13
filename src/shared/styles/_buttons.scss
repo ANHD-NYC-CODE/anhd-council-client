@@ -47,6 +47,9 @@ button.btn-primary:disabled {
   color: white;
 }
 
+.btn-link {
+  color: $text-link;
+}
 a.btn-link:hover {
   text-decoration: none;
 }
