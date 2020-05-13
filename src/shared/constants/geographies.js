@@ -6,7 +6,7 @@ export const CITY_GEOGRAPHY = {
 }
 
 export const BOROUGH_GEOGRAPHY = {
-  name: 'Boroughs',
+  name: 'Borough',
   constant: 'BOROUGH',
   frontEndPath: '',
   queryName: 'borough',
