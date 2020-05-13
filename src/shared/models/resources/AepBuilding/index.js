@@ -1,13 +1,15 @@
+// propertyannotation__legalclassb__gte = 1
+
 import { comparisonOptions, constructSingleMapParamSet } from 'shared/utilities/filterUtils'
 import ParamMap from 'shared/classes/ParamMap'
 import GenericFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/GenericFieldSet'
 import TextSelectField from 'AdvancedSearch/FilterComponent/Field/TextSelectField'
 
-const ConhRecord = databaseObject => ({
-  resourceConstant: 'CONH_RECORD',
-  urlPath: 'conhrecords',
-  label: 'Certificate of No Harassment',
-  sentenceNoun: 'eligibility for certificate of no harassment',
+const AEPBuilding = databaseObject => ({
+  resourceConstant: 'AEP_BUILDING',
+  urlPath: 'aepbuildings',
+  label: 'AEP Records',
+  sentenceNoun: 'an AEP building record',
   ownResourceFilters: {
     initial: {
       generatorFunction: resourceModel => {
@@ -17,11 +19,11 @@ const ConhRecord = databaseObject => ({
           baseComponent: TextSelectField,
           paramMapType: 'BOOL',
           paramMapRole: 'PRIMARY',
-          valuePrefix: 'Eligible for certificate of no harassment?',
+          valuePrefix: 'has AEP record',
           paramMapField: 'count',
           paramMapComparison: 'gte',
           paramMapValue: '1',
-          paramNoun: 'Has CONH?',
+          paramNoun: 'Has AEP record?',
           defaultOptions: comparisonOptions({
             name: 'value',
             comparisonValues: ['0', '1'],
@@ -33,4 +35,4 @@ const ConhRecord = databaseObject => ({
   },
 })
 
-export default ConhRecord
+export default AEPBuilding
