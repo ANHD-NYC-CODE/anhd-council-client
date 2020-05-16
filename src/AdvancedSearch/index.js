@@ -127,7 +127,10 @@ export class AdvancedSearch extends React.Component {
     }
     // if timed out request, clear it
     if (this.props.advancedSearchRequest && (this.props.error || {}).status === 408) {
-      this.cancelSearch()
+      this.setState({
+        error: this.props.error,
+      })
+      this.cancelSearch(this.props.error)
     }
 
     // set state error
@@ -135,7 +138,7 @@ export class AdvancedSearch extends React.Component {
       this.setState({
         error: this.props.error,
       })
-    } else if (this.state.error && !this.props.error) {
+    } else if (this.state.error && this.state.error.status !== 408 && !this.props.error) {
       this.setState({
         error: null,
       })
@@ -223,10 +226,10 @@ export class AdvancedSearch extends React.Component {
     this.props.dispatch(forceUpdateSearch())
   }
 
-  cancelSearch() {
+  cancelSearch(error = {}) {
     this.setState({
       displayingForm: true,
-      error: this.props.error,
+      error: error || this.props.error,
     })
     this.props.dispatch(clearAdvancedSearchRequest())
   }
