@@ -30,4 +30,11 @@
   font-weight: bold;
   letter-spacing: 2px;
   z-index: 1000000;
+  pointer-events: none;
+  display: none;
+
+  @include media-breakpoint-up(md) {
+    display: block;
+    pointer-events: all;
+  }
 }
