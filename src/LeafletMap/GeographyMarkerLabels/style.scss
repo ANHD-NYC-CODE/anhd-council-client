@@ -38,3 +38,10 @@
     pointer-events: all;
   }
 }
+
+// disable on mobile
+@media (hover: none) {
+  .leaflet-tooltip-pane {
+    display: none;
+  }
+}
