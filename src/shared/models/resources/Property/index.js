@@ -35,7 +35,7 @@ const Property = databaseObject => {
         case 'rs':
           return Object.keys(paramSets)
             .filter(key => !key.match(/(housingType)/))
-            .concat('housingType_rs_1', 'housingType_rs_2', 'housingType_rs_sro')
+            .concat('housingType_rs_1', 'housingType_rs_2', 'housingType_rs_sro', 'housingType_rs_7a')
             .filter(p => p)
             .reduce((ps, key) => ((ps[key] = paramSets[key]), ps), {})
         case 'rr':
@@ -220,7 +220,7 @@ const Property = databaseObject => {
             paramMapField: 'propertyannotation__managementprogram',
             paramMapComparison: '',
             paramMapValue: '7A',
-            paramNoun: 'with SRO units',
+            paramNoun: 'with 7A program',
             defaultOptions: comparisonOptions({
               name: 'value',
               comparisonValues: ['7A'],
@@ -301,6 +301,29 @@ const Property = databaseObject => {
               name: 'value',
               comparisonValues: ['0', '1'],
               labels: ['No', 'Yes'],
+            }),
+          })
+        },
+      },
+      housingType_rs_7a: {
+        // SRO units
+        generatorFunction: resourceModel => {
+          return constructSingleMapParamSet({
+            resourceModel,
+            component: GenericFieldSet,
+            baseComponent: TextSelectField,
+            paramSetLabel: '7A Program',
+            paramMapType: 'BOOL',
+            paramMapRole: 'MODIFIER',
+            valuePrefix: 'Is 7A program?',
+            paramMapField: 'propertyannotation__managementprogram',
+            paramMapComparison: '',
+            paramMapValue: '7A',
+            paramNoun: 'with 7A program',
+            defaultOptions: comparisonOptions({
+              name: 'value',
+              comparisonValues: ['7A'],
+              labels: ['Yes'],
             }),
           })
         },
