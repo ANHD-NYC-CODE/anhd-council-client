@@ -1,6 +1,6 @@
 @import 'shared/styles/_variables.scss';
 
-$max-desktop-section-height: 78vh;
+$max-desktop-section-height: calc(100vh - 126px - 28px); // nav is 126px footer is 28px
 
 .district-dashboard-show {
   margin-bottom: 40px;
@@ -230,7 +230,7 @@ $max-desktop-section-height: 78vh;
     width: 100%;
 
     @include media-breakpoint-up(sm) {
-      height: 48vh;
+      height: 550px;
     }
   }
 
