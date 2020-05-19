@@ -157,7 +157,7 @@ class AdvancedSearchForm extends React.PureComponent {
                   <h4 className="advanced-search-form__heading">3) Add filters</h4>
                   <ConditionComponent
                     conditions={this.props.advancedSearch.conditions}
-                    condition={this.props.advancedSearch.conditions[0]}
+                    condition={this.props.advancedSearch.conditions['0']}
                     config={this.props.config}
                     dispatch={this.props.dispatch}
                     dispatchAction={this.props.forceUpdate}
