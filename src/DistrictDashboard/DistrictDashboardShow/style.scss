@@ -171,6 +171,10 @@ $max-desktop-section-height: calc(100vh - 126px - 28px); // nav is 126px footer 
       overflow: auto;
       margin-right: 20px;
     }
+
+    &.full-height {
+      max-height: none;
+    }
   }
 
   .district-dashboard-show__results-section {
