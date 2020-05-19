@@ -91,10 +91,6 @@ export default class Condition {
 
   removeFilter({ dispatchAction, filterIndex } = {}) {
     this._filters = this._filters.filter((f, index) => index !== filterIndex)
-    // Reset condition 0 type to 'AND' if only 1 filter exists
-    if (this.key === '0' && this._filters.length <= 1) {
-      this._type = 'AND'
-    }
 
     if (dispatchAction) {
       dispatchAction()
