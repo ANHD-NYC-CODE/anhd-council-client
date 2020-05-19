@@ -8,8 +8,8 @@ import TextSelectField from 'AdvancedSearch/FilterComponent/Field/TextSelectFiel
 const AEPBuilding = databaseObject => ({
   resourceConstant: 'AEP_BUILDING',
   urlPath: 'aepbuildings',
-  label: 'AEP Enforcement Program',
-  sentenceNoun: 'an AEP building record',
+  label: 'Alternative Enforcement Program',
+  sentenceNoun: 'an Alternative Enforcement Program record',
   ownResourceFilters: {
     initial: {
       generatorFunction: resourceModel => {
