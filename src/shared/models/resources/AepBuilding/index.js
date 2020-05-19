@@ -19,7 +19,7 @@ const AEPBuilding = databaseObject => ({
           baseComponent: TextSelectField,
           paramMapType: 'BOOL',
           paramMapRole: 'PRIMARY',
-          valuePrefix: 'has AEP record',
+          valuePrefix: 'In Alternative Enforcement Program?',
           paramMapField: 'count',
           paramMapComparison: 'gte',
           paramMapValue: '1',
@@ -28,6 +28,27 @@ const AEPBuilding = databaseObject => ({
             name: 'value',
             comparisonValues: ['0', '1'],
             labels: ['No', 'Yes'],
+          }),
+        })
+      },
+    },
+    currentstatus: {
+      generatorFunction: resourceModel => {
+        return constructSingleMapParamSet({
+          resourceModel,
+          component: GenericFieldSet,
+          baseComponent: TextSelectField,
+          paramMapValue: 'Active',
+          paramMapType: 'SINGLE-TEXT',
+          paramMapComparison: '',
+          paramSetLabel: 'Current Status',
+          paramMapField: 'currentstatus__icontains',
+          valuePrefix: 'Current Status',
+          inputClass: '',
+          defaultOptions: comparisonOptions({
+            name: 'value',
+            comparisonValues: ['Active', 'Discharged'],
+            labels: ['Active', 'Discharged'],
           }),
         })
       },
