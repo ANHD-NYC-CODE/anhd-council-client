@@ -8,7 +8,7 @@ import TextSelectField from 'AdvancedSearch/FilterComponent/Field/TextSelectFiel
 const AEPBuilding = databaseObject => ({
   resourceConstant: 'AEP_BUILDING',
   urlPath: 'aepbuildings',
-  label: 'AEP Records',
+  label: 'AEP Enforcement Program',
   sentenceNoun: 'an AEP building record',
   ownResourceFilters: {
     initial: {
@@ -23,7 +23,7 @@ const AEPBuilding = databaseObject => ({
           paramMapField: 'count',
           paramMapComparison: 'gte',
           paramMapValue: '1',
-          paramNoun: 'Has AEP record?',
+          paramNoun: 'In Alternative Enforcement Program?',
           defaultOptions: comparisonOptions({
             name: 'value',
             comparisonValues: ['0', '1'],

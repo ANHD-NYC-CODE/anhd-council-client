@@ -33,6 +33,10 @@ class DistrictDashboardShow extends React.Component {
     this.constructBaseCsvFileName = this.constructBaseCsvFileName.bind(this)
     this.getGeographySummaryResultsFilter = this.getGeographySummaryResultsFilter.bind(this)
     this.handleClearDashboard = this.handleClearDashboard.bind(this)
+
+    this.state = {
+      fullHeight: false,
+    }
   }
 
   componentDidUpdate() {
@@ -41,6 +45,18 @@ class DistrictDashboardShow extends React.Component {
       this.props.appState.changingGeographyId === this.props.appState.currentGeographyId
     ) {
       this.props.cancelChangeGeography()
+    }
+
+    const showFullHeight =
+      (document.querySelector('.district-dashboard-show__results-section') || {}).offsetHeight > window.innerHeight
+    if (showFullHeight && !this.state.fullHeight) {
+      this.setState({
+        fullHeight: showFullHeight,
+      })
+    } else if (!showFullHeight && this.state.fullHeight) {
+      this.setState({
+        fullHeight: showFullHeight,
+      })
     }
   }
 
@@ -90,10 +106,15 @@ class DistrictDashboardShow extends React.Component {
 
   render() {
     const resultRecords = this.props.dashboardState.resultRecords
+
     return (
       <div className="district-dashboard-show">
         <div className="district-dashboard-show__content layout-width-wrapper district-dashboard-container">
-          <div className="district-dashboard-show__sidebar">
+          <div
+            className={classnames('district-dashboard-show__sidebar', {
+              'full-height': this.state.fullHeight,
+            })}
+          >
             <div className="district-dashboard-show__date-section">
               <Form>
                 <div className="district-dashboard-show__date-label-row">
