@@ -163,18 +163,19 @@ $max-desktop-section-height: calc(100vh - 126px - 28px); // nav is 126px footer 
     align-items: flex-start;
     display: flex;
     flex-direction: column;
+    padding-bottom: 40px;
 
-    @include media-breakpoint-up(sm) {
-      flex: 0 0 333px;
-      width: 333px;
-      max-height: $max-desktop-section-height;
-      overflow: auto;
-      margin-right: 20px;
-    }
+    // @include media-breakpoint-up(sm) {
+    //   flex: 0 0 333px;
+    //   width: 333px;
+    //   max-height: $max-desktop-section-height;
+    //   overflow: auto;
+    //   margin-right: 20px;
+    // }
 
-    &.full-height {
-      max-height: none;
-    }
+    // &.full-height {
+    //   max-height: none;
+    // }
   }
 
   .district-dashboard-show__results-section {
