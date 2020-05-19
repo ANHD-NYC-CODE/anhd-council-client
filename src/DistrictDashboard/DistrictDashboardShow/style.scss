@@ -166,8 +166,8 @@ $max-desktop-section-height: calc(100vh - 126px - 28px); // nav is 126px footer 
     padding-bottom: 40px;
 
     @include media-breakpoint-up(sm) {
-      flex: 0 0 333px;
-      width: 333px;
+      flex: 0 0 300px;
+      width: 300px;
       // max-height: $max-desktop-section-height;
       overflow: auto;
       margin-right: 20px;
