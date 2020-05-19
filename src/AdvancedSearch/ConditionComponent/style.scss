@@ -21,6 +21,12 @@
   .switch-condition-row {
     margin: 0 auto 20px;
     margin-left: 25%;
+
+    .dropdown-menu {
+      min-width: 80px;
+      max-width: 80px;
+      padding-left: 10px;
+    }
   }
 
   .new-filter-row {
@@ -34,7 +40,7 @@
     }
 
     .new-filter__either {
-      margin: 0 auto 0 25%;
+      margin: 0 auto 0 calc(25% - 12px);
     }
 
     .btn-group {
@@ -69,8 +75,8 @@
     line-height: 38px;
 
     @include media-breakpoint-up(sm) {
-      min-width: 100px;
-      max-width: 120px;
+      // min-width: 100px;
+      // max-width: 120px;
       font-size: 25px;
       line-height: 38px;
     }
