@@ -41,6 +41,10 @@
     text-decoration: none;
   }
 
+  .geography-select__row select {
+    margin-left: 0;
+  }
+
   // reduce spacing between housing type param sets
   // &__housingtype-select .filter-component__primary-row .filter-component__paramsets {
   //   padding-top: 0;
