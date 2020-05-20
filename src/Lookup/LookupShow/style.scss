@@ -1,15 +1,117 @@
-@import 'shared/styles/bootstrap/_variables.scss';
+@import 'shared/styles/_variables.scss';
+$unopened-width: 660px;
 
 .lookup-show {
-  .summary-result-card {
-    min-height: 80px;
-    height: 80px;
+  .lookup-show__row-wrapper {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    @include media-breakpoint-up(xxl) {
+      // max-width: 1200px;
+    }
   }
-  //
-  // .building-card,
-  // .building-card * {
-  //   color: white;
-  // }
+
+  .lookup-show__top-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    margin: 1rem 0;
+    margin-bottom: 0;
+    flex-wrap: wrap;
+
+    @include media-breakpoint-up(md) {
+      // flex-wrap: nowrap;
+    }
+    // AddressDisplay
+    > div:first-child {
+      // max-width: 760px;
+      // width: 100%;
+      // width: auto;
+
+      @include media-breakpoint-up(sm) {
+        margin-right: auto;
+      }
+    }
+
+    // Back to dashboard button
+    > div:last-child:not(:first-child) {
+      // margin-left: $lookup-padding-size;
+      @include media-breakpoint-up(md) {
+        margin-left: auto;
+      }
+    }
+
+    button {
+      white-space: pre;
+    }
+  }
+
+  .lookup-address-search {
+    @extend %address-search;
+    margin-left: 0;
+    margin-bottom: 10px;
+    margin-right: 0;
+    max-width: none;
+
+    @include media-breakpoint-up(sm) {
+      margin-bottom: 0;
+      max-width: 360px;
+      margin-right: 10px;
+    }
+
+    @include media-breakpoint-up(md) {
+      width: 100%;
+      max-width: none;
+    }
+
+    .search-results__wrapper {
+      margin-left: 0;
+      width: calc(100% - 68px);
+    }
+
+    .btn {
+      font-size: 1rem;
+      text-transform: uppercase;
+    }
+
+    .btn,
+    input {
+      border-radius: 4px;
+    }
+  }
+
+  .lookup-show__content-wrapper {
+    display: block;
+
+    @include media-breakpoint-up(sm) {
+      display: flex;
+    }
+  }
+
+  .lookup-show__content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin-bottom: 40px;
+    overflow: hidden;
+
+    @include media-breakpoint-up(sm) {
+      padding: 0 $lookup-padding-size;
+    }
+  }
+
+  .lookup-table {
+    margin-bottom: 20px;
+  }
+
+  .lookup-table-tab,
+  .result-card {
+    border-radius: 6px;
+    max-height: 50px;
+    min-height: 0;
+    height: 50px;
+    flex: 0 0 160px;
+    width: 160px;
+  }
 
   .lookup-show__data-address {
     border-bottom: 1px dotted $black;

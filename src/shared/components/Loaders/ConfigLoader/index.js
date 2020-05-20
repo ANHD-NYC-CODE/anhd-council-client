@@ -8,7 +8,7 @@ import InnerLoader from 'shared/components/Loaders/InnerLoader'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
-import logo from 'shared/images/dapportal_beta.png'
+import logo from 'shared/images/portallogo-2020.png'
 
 import classnames from 'classnames'
 import './style.scss'
@@ -69,7 +69,7 @@ class ConfigLoader extends React.Component {
             <div className="loading__logo-container">
               <img
                 src={logo}
-                className="sub-header__logo d-inline-block align-top mb-2"
+                className="sub-header__logo d-inline-block align-top"
                 alt="Displacement Alert Portal Logo"
               />
             </div>

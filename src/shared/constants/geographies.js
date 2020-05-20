@@ -1,3 +1,17 @@
+export const CITY_GEOGRAPHY = {
+  name: 'New York City',
+  constant: 'CITY',
+  frontEndPath: '',
+  queryName: 'city',
+}
+
+export const BOROUGH_GEOGRAPHY = {
+  name: 'Borough',
+  constant: 'BOROUGH',
+  frontEndPath: '',
+  queryName: 'borough',
+}
+
 export const COUNCIL_GEOGRAPHY = {
   name: 'Council District',
   constant: 'COUNCIL',

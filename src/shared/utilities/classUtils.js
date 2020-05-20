@@ -1,7 +1,43 @@
 import ApiMap from 'shared/classes/ApiMap'
+import ParamMap from 'shared/classes/ParamMap'
+import ParamSet from 'shared/classes/ParamSet'
+import Filter from 'shared/classes/Filter'
 
 export const cloneInstance = classInstance => {
+  if (!classInstance) return classInstance
+  if (typeof classInstance !== 'object') return classInstance
   return Object.assign(Object.create(Object.getPrototypeOf(classInstance)), classInstance)
+}
+
+export const deepCloneObject = (object = {}) => {
+  if (!object) return object
+  if (typeof object === 'object') {
+    if (object.constructor.name === 'Object') {
+      Object.keys(object).forEach(key => {
+        if (Array.isArray(object[key])) {
+          object[key] = object[key]
+            .map(el => {
+              return deepCloneObject[el]
+            })
+            .filter(e => e)
+        } else {
+          object[key] = deepCloneObject(object[key])
+        }
+      })
+    } else if (object.constructor.name === 'Filter') {
+      object = object.clone()
+    } else if (object.constructor.name === 'ParamSet') {
+      object = object.clone()
+    } else if (object.constructor.name === 'ParamMap') {
+      object = object.clone()
+    }
+  } else if (typeof object === 'function') {
+    object
+  } else {
+    object = cloneInstance(object)
+  }
+
+  return object
 }
 
 export const getApiMap = resourceConstant => {
@@ -24,6 +60,8 @@ export const getApiMap = resourceConstant => {
       return new ApiMap({ constant: 'LISPENDEN' })
     case 'FORECLOSURE':
       return new ApiMap({ constant: 'FORECLOSURE' })
+    case 'PSFORECLOSURE':
+      return new ApiMap({ constant: 'PSFORECLOSURE', queryName: 'foreclosure-auctions' })
     case 'PROPERTY_SALE_BY_AMOUNT':
       return new ApiMap({ constant: 'ACRIS_REAL_LEGAL' })
     case 'PROPERTY_SALE_BY_COUNT':

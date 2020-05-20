@@ -2,6 +2,7 @@ import configureStore from 'Store/configureStore'
 import { setupResourceModels } from 'shared/utilities/configUtils'
 import * as resources from 'shared/models/resources'
 import Resource from 'shared/classes/Resource'
+import * as dashboardReducer from 'Store/DashboardState/reducers'
 
 export const mockSetupResourceModels = () => {
   let loadedResources = {}
@@ -78,6 +79,7 @@ export const configuredState = state => {
   const stateAssembly = { districts: [mockGeography(1)] }
   const stateSenate = { districts: [mockGeography(1)] }
   const zipCode = { districts: [mockGeography(1)] }
+  const dashboardState = dashboardReducer.initialState
 
-  return { dataset, council, community, stateAssembly, stateSenate, zipCode, ...state }
+  return { dataset, council, community, stateAssembly, stateSenate, zipCode, dashboardState, ...state }
 }

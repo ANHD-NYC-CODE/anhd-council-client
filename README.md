@@ -36,3 +36,8 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 1. Merge to master on github
 2. run command: `ssh -t anhd@45.55.44.160 "cd /var/www/anhd-council-client && sudo sh pull.sh"`
+
+## Staging Deployment:
+
+1. Merge to staging branch on github and push
+2. run command: `ssh -t anhd@45.55.44.160 "cd /var/www/staging-anhd-council-client && sudo sh pull_staging.sh"`

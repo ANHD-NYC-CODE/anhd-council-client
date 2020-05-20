@@ -1,0 +1,33 @@
+@import 'shared/styles/_variables.scss';
+
+.map-alert-modal {
+  position: absolute !important;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(100, 100, 100, 0.5);
+  pointer-events: none;
+
+  .map-alert-modal__alert {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 300px;
+    pointer-events: all;
+    text-align: left;
+  }
+
+  .map-alert-modal__text {
+    @extend %p3-font-size;
+    color: $black;
+    text-align: left;
+  }
+}

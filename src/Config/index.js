@@ -20,12 +20,7 @@ import Filter from 'shared/classes/Filter'
 import { removeRequestType } from 'Store/AppState/actions'
 import { loadResultFilters, setDashboardCustomView } from 'Store/DashboardState/actions'
 
-import {
-  newMapRequests,
-  newMapResultFilters,
-  newLookupRequests,
-  newAdvancedSearchRequest,
-} from 'shared/utilities/configUtils'
+import { newMapRequests, newMapResultFilters, newLookupRequests } from 'shared/utilities/configUtils'
 import { setupResourceModels } from 'shared/utilities/configUtils'
 import { createAdvancedSearchFilters } from 'shared/utilities/filterUtils'
 import { resetAdvancedSearchReducer, replacePropertyFilter } from 'Store/AdvancedSearch/actions'
@@ -72,7 +67,6 @@ class Config extends React.PureComponent {
     this.createMapRequests = this.createMapRequests.bind(this)
     this.createMapResultFilters = this.createMapResultFilters
     this.createLookupRequests = this.createLookupRequests.bind(this)
-    this.createAdvancedSearchRequest = this.createAdvancedSearchRequest.bind(this)
     this.clearAdvancedSearch = this.clearAdvancedSearch.bind(this)
     this.newPropertyFilter = this.newPropertyFilter.bind(this)
     this.state = {
@@ -169,15 +163,6 @@ class Config extends React.PureComponent {
     return newLookupRequests({ bbl, bin, resourceModels: this.props.resourceModels })
   }
 
-  createAdvancedSearchRequest(geographyType, geographyId, advancedSearch) {
-    return newAdvancedSearchRequest({
-      geographyType,
-      geographyId,
-      advancedSearch,
-      resourceModels: this.props.resourceModels,
-    })
-  }
-
   render() {
     return this.props.error ? (
       <PageError title="Oops, an error occured" message="Sorry, we couldn't load the page." />
@@ -187,7 +172,6 @@ class Config extends React.PureComponent {
           clearAdvancedSearch: this.clearAdvancedSearch,
           createMapRequests: this.createMapRequests,
           createLookupRequests: this.createLookupRequests,
-          createAdvancedSearchRequest: this.createAdvancedSearchRequest,
           datasets: this.props.datasets,
           resourceModels: this.props.resourceModels,
           communityDistricts: this.props.communityDistricts,
@@ -206,7 +190,10 @@ class Config extends React.PureComponent {
         !(
           !!this.props.datasets.length &&
           !!this.props.councilDistricts.length &&
-          !!this.props.communityDistricts.length
+          !!this.props.communityDistricts.length &&
+          !!this.props.stateAssemblies.length &&
+          !!this.props.stateSenates.length &&
+          !!this.props.zipCodes.length
         ) ? (
           <ConfigLoader monitoredRequests={Config.MonitoredRequests} />
         ) : (

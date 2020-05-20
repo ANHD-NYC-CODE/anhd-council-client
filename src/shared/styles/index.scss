@@ -1,11 +1,12 @@
 @import './bootstrap/index.scss';
+@import './bootstrap/_bootstrap2toggle.scss';
 @import './_layout.scss';
 @import './_table.scss';
 @import './_print.scss';
 @import './_form.scss';
 @import './_buttons.scss';
-
 @import './_utility_classes.scss';
+@import './_typography.scss';
 
 body {
   padding: 0 !important;
@@ -19,4 +20,32 @@ body {
 
 ul {
   margin-bottom: 0;
+}
+
+.view-toggle {
+  border: 1px solid $dark;
+  cursor: pointer;
+  text-transform: uppercase;
+
+  &.btn-dark:not(:disabled):not(.disabled).active {
+    background-color: $dark;
+  }
+}
+
+a {
+  font-weight: bold;
+  color: $text-link;
+
+  &:hover,
+  &:focus {
+    color: darken($text-link, 10%);
+    text-decoration: underline;
+    outline: none;
+  }
+}
+
+// dropdowns
+
+.dropdown-item {
+  @extend %p3-font-size;
 }

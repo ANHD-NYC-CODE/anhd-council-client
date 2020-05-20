@@ -7,7 +7,6 @@ import './style.scss'
 const SearchResults = props => {
   return (
     <div ref={props.searchResultsRef} className="search-results">
-      {props.error && <div className="text-danger">{props.error.message}</div>}
       <div className="search-results__wrapper" size="sm">
         {props.show && !!props.results.length && (
           <div>

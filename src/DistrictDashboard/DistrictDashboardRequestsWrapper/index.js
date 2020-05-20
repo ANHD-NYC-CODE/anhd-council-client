@@ -3,13 +3,17 @@ import PropTypes from 'prop-types'
 import * as c from 'shared/constants'
 import { setAppState } from 'Store/AppState/actions'
 import { getDefaultRequest, getRequestType, getManyRequestTypes, getRequestByConstant } from 'Store/AppState/selectors'
-import { fireMapDateRangeSelectEvent } from 'Store/Analytics/actions'
+import {
+  fireFilterSelectEvent,
+  fireMapDateRangeSelectEvent,
+  fireDashboardToggleConditionEvent,
+} from 'Store/Analytics/actions'
 import { requestWithAuth } from 'shared/utilities/authUtils'
 import { makeRequest } from 'Store/Request/actions'
 import DistrictDashboardShow from 'DistrictDashboard/DistrictDashboardShow'
 import InnerLoader from 'shared/components/Loaders/InnerLoader'
-import { fireFilterSelectEvent } from 'Store/Analytics/actions'
-import { setHousingTypeResultFilter, setMapFilterDate } from 'Store/DashboardState/actions'
+import { setHousingTypeResultsIndex, setHousingTypeResultFilter, setMapFilterDate } from 'Store/DashboardState/actions'
+import { setDashboardFilterCondition } from 'Store/DashboardState/actions'
 
 class DistrictDashboardRequestsWrapper extends React.PureComponent {
   constructor(props) {
@@ -20,10 +24,12 @@ class DistrictDashboardRequestsWrapper extends React.PureComponent {
     this.getInitialRequest = this.getInitialRequest.bind(this)
     this.switchSelectedFilter = this.switchSelectedFilter.bind(this)
     this.endChangingState = this.endChangingState.bind(this)
+    this.toggleFilterCondition = this.toggleFilterCondition.bind(this)
   }
 
   componentDidMount() {
-    if (this.props.mapRequests.length) {
+    const uncalledRequests = this.props.mapRequests.filter(r => !r.called)
+    if (this.props.mapRequests.length && uncalledRequests.length) {
       this.loadRequests(this.props.mapRequests)
     }
   }
@@ -45,7 +51,6 @@ class DistrictDashboardRequestsWrapper extends React.PureComponent {
     requests.forEach(request => {
       this.props.dispatch(requestWithAuth(makeRequest(request)))
     })
-
     this.props.dispatch(
       setHousingTypeResultFilter(
         this.props.dashboardState.housingTypeResultFilter || this.props.dashboardState.resultFilters[0]
@@ -74,10 +79,16 @@ class DistrictDashboardRequestsWrapper extends React.PureComponent {
     )
   }
 
-  switchSelectedFilter(filter) {
+  switchSelectedFilter(filter, index) {
     this.endChangingState()
     this.props.dispatch(setHousingTypeResultFilter(filter))
+    this.props.dispatch(setHousingTypeResultsIndex(index))
     this.props.dispatch(fireFilterSelectEvent(filter))
+  }
+
+  toggleFilterCondition(value) {
+    this.props.dispatch(fireDashboardToggleConditionEvent(value))
+    this.props.dispatch(setDashboardFilterCondition(value))
   }
 
   render() {
@@ -89,6 +100,7 @@ class DistrictDashboardRequestsWrapper extends React.PureComponent {
         propertySummaryRequest={getRequestByConstant(this.props.mapRequests, c.GEOGRAPHY_HOUSING_TYPE_ALL)[0]}
         toggleDateRange={this.toggleDateRange}
         switchSelectedFilter={this.switchSelectedFilter}
+        toggleFilterCondition={this.toggleFilterCondition}
         housingTypeResultFilter={this.props.dashboardState.housingTypeResultFilter}
         {...this.props}
       />

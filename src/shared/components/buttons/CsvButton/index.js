@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFileCsv } from '@fortawesome/free-solid-svg-icons'
+import { Button } from 'react-bootstrap'
 import classnames from 'classnames'
 import './style.scss'
 
@@ -20,14 +21,16 @@ class CsvButton extends React.Component {
 
   render() {
     return (
-      <this.props.ExportCSVButton
-        className={classnames('link-button csv-button')}
+      <Button
+        size={this.props.size}
+        variant="dark"
+        className={classnames('csv-button')}
         onClick={this.handleClick}
         {...this.props.csvProps}
       >
-        <FontAwesomeIcon icon={faFileCsv} />
         Export CSV
-      </this.props.ExportCSVButton>
+        <FontAwesomeIcon icon={faFileCsv} />
+      </Button>
     )
   }
 }
@@ -35,6 +38,7 @@ class CsvButton extends React.Component {
 CsvButton.defaultProps = {
   error: null,
   loading: false,
+  size: 'sm',
 }
 
 CsvButton.propTypes = {
@@ -43,6 +47,7 @@ CsvButton.propTypes = {
   onClick: PropTypes.func,
   ExportCSVButton: PropTypes.func,
   csvProps: PropTypes.object,
+  size: PropTypes.string,
 }
 
 export default CsvButton

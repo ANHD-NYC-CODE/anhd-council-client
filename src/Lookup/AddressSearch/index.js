@@ -9,8 +9,9 @@ import { createErrorSelector } from 'Store/Error/selectors'
 import { GET_BUILDING_SEARCH } from 'shared/constants/actions'
 import { handleClearErrors } from 'Store/Error/actions'
 import { setSearchValue } from 'Store/Search/actions'
-
+import classnames from 'classnames'
 import { setLookupAndRequestsAndRedirect } from 'Store/AppState/actions'
+import { setAppState } from 'Store/AppState/actions'
 
 import './style.scss'
 
@@ -39,6 +40,7 @@ class AddressSearch extends React.PureComponent {
   componentDidMount() {
     this.addressRef.current.addEventListener('focus', this.showSearch)
     this.searchBarRef.current.addEventListener('focus', this.showSearch)
+
     window.addEventListener('click', this.hideSearch)
     window.addEventListener('touchstart', this.hideSearch)
   }
@@ -66,6 +68,7 @@ class AddressSearch extends React.PureComponent {
   }
 
   showSearch() {
+    if (!this.props.search.results.length) return
     this.setState({
       show: true,
     })
@@ -81,17 +84,22 @@ class AddressSearch extends React.PureComponent {
   onKeyDown = e => {
     if (e.keyCode === 38 || (e.shiftKey && e.keyCode == 9)) {
       // up || shift + tab
+      if (!this.state.show) return this.props.handleBlur()
+
       e.stopPropagation()
       e.preventDefault()
       this.setState(prevState => ({
         resultFocusIndex: Math.max(prevState.resultFocusIndex - 1, -1),
       }))
     } else if (e.keyCode === 40 || e.keyCode == 9) {
+      // if (!this.props.search.results.length) return
+      if (!this.state.show) return this.props.handleBlur()
+
       // down || tab
       e.stopPropagation()
       e.preventDefault()
       this.setState(prevState => ({
-        show: this.state.resultFocusIndex < 0 ? true : prevState.show,
+        show: true,
         resultFocusIndex: Math.min(prevState.resultFocusIndex + 1, this.props.search.results.length - 1),
       }))
     } else if (!!this.state.show && this.state.resultFocusIndex >= 0 && e.keyCode === 13) {
@@ -102,6 +110,7 @@ class AddressSearch extends React.PureComponent {
       // space
       this.handleRowClick(e, this.props.search.results[this.state.resultFocusIndex])
     } else if (e.keyCode === 27) {
+      // esc
       this.hideSearch(e, true)
     }
   }
@@ -130,6 +139,7 @@ class AddressSearch extends React.PureComponent {
 
     this.props.dispatch(setSearchValue(searchString))
     this.hideSearch(e, true)
+    this.props.dispatch(setAppState({ linkLookupBackToDashboard: false }))
     this.props.dispatch(
       setLookupAndRequestsAndRedirect({
         bbl: result.bbl,
@@ -141,12 +151,13 @@ class AddressSearch extends React.PureComponent {
 
   render() {
     return (
-      <div className="address-search mb-2" ref={this.addressRef}>
+      <div className={classnames('address-search', this.props.containerClass)} ref={this.addressRef}>
         <SearchBar
           onKeyDown={this.onKeyDown}
           loading={this.props.loading}
           searchBarRef={this.searchBarRef}
           inputClass={this.props.inputClass}
+          inputSize={this.props.inputSize}
           clearSelectedSearch={this.clearSelectedSearch}
           dispatch={this.props.dispatch}
           placeholder={this.props.placeholder}
@@ -179,10 +190,14 @@ class AddressSearch extends React.PureComponent {
 
 AddressSearch.defaultProps = {
   inputClass: '',
+  inputSize: 'lg',
+  containerClass: '',
 }
 
 AddressSearch.propTypes = {
   inputClass: PropTypes.string,
+  inputSize: PropTypes.string,
+  containerClass: PropTypes.string,
   config: PropTypes.object,
   setViewCoordinates: PropTypes.func,
   search: PropTypes.object,
@@ -190,6 +205,7 @@ AddressSearch.propTypes = {
   loading: PropTypes.bool,
   dispatch: PropTypes.func,
   placeholder: PropTypes.string,
+  handleBlur: PropTypes.func,
 }
 
 const loadingSelector = createLoadingSelector([GET_BUILDING_SEARCH])

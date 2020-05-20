@@ -3,7 +3,14 @@ import moment from 'moment'
 import { Button } from 'react-bootstrap'
 import BaseLink from 'shared/components/BaseLink'
 import { getLinkId, getLinkProps } from 'shared/tables/tableColumns'
-import { capitalizeWords } from 'shared/utilities/languageUtils'
+import {
+  capitalizeSentences,
+  capitalizeString,
+  capitalizeWords,
+  preserveUppercaseTerms,
+} from 'shared/utilities/languageUtils'
+
+import lookupIcon from 'shared/images/lookup-document.svg'
 
 export const hpdProblemStatusFormatter = (cell, row, index) => {
   switch (cell) {
@@ -109,6 +116,22 @@ export const dobViolationStatusFormatter = (cell, row, index) => {
   )
 }
 
+export const ecbViolationStatusFormatter = (cell, row, index) => {
+  cell = cell.toLowerCase().replace('resolve', 'resolved')
+  return capitalizeFormatter(cell)
+}
+
+export const dobViolationTypeFormatter = (cell, row, index) => {
+  if (!cell) return cell
+
+  const split = cell.split(/-(.+)/)
+  if (split.length > 1) {
+    return preserveUppercaseTerms(capitalizeString(split[1]))
+  } else {
+    return preserveUppercaseTerms(capitalizeString(cell))
+  }
+}
+
 export const lispendenCleanupFormatter = (cell, row, index) => {
   if (!cell) return cell
   return cell.replace('00000', '')
@@ -129,9 +152,20 @@ export const dateFormatter = (cell, row, index) => {
   }
 }
 
+export const sentencesFormatter = (cell, row, index) => {
+  return capitalizeSentences(cell)
+}
+
 export const dollarFormatter = (cell, row, index) => {
   if (!cell && cell != 0) return ''
-  return parseInt(cell).toLocaleString('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0 })
+  if (typeof cell == 'string') {
+    cell = cell.replace(/(\$|,)/, '')
+  }
+  return parseInt(cell).toLocaleString('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 0,
+  })
 }
 
 export const annotatedColumnFormatter = (cell, row, index) => {
@@ -145,7 +179,25 @@ export const annotatedColumnFormatter = (cell, row, index) => {
 export const linkFormatter = (cell, row, index, constant, id) => {
   const linkProps = getLinkProps(constant)({ linkId: row[getLinkId(constant)], bin: row.bin, type: row.type })
 
-  return <BaseLink href={linkProps.href} text={linkProps.linkText} />
+  return <BaseLink href={linkProps.href}>{linkProps.linkText}</BaseLink>
+}
+
+export const linkWithDocumentFormatter = (cell, row, index, constant, id) => {
+  const linkProps = getLinkProps(constant)({ linkId: row[getLinkId(constant)], bin: row.bin, type: row.type })
+  const scannedProps = getLinkProps(`${constant}_SCANNED`)({
+    linkId: row[getLinkId(constant)],
+    bin: row.bin,
+    type: row.type,
+  })
+
+  return (
+    <span>
+      <BaseLink href={linkProps.href}>{linkProps.linkText}</BaseLink>{' '}
+      <BaseLink href={scannedProps.href}>
+        <img src={lookupIcon} alt="document icon" />
+      </BaseLink>
+    </span>
+  )
 }
 
 export const expandTableFormatter = (cell, row, index) => {
@@ -1171,11 +1223,11 @@ export const acrisDocTypeFormatter = (cell, row, index) => {
 export const dobPermitSourceFormatter = (cell, row, index) => {
   switch (cell) {
     case 'dobpermitissuedlegacy':
-      return 'Legacy'
+      return 'DOB BIS'
     case 'dobpermitissuednow':
       return 'DOB NOW'
     case 'doblegacyfiledpermit':
-      return 'Legacy'
+      return 'DOB BIS'
     case 'dobnowfiledpermit':
       return 'DOB NOW'
   }

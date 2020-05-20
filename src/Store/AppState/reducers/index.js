@@ -5,6 +5,7 @@ export const initialState = {
   currentGeographyType: undefined,
   currentGeographyId: undefined,
   currentProperty: undefined,
+  currentPropertyWowData: undefined,
   currentBuilding: undefined,
   changingGeography: false, // whether or not the user is in the process of changing the geo
   changingGeographyType: undefined, // the geography type the user has currently selected for changing.
@@ -12,6 +13,7 @@ export const initialState = {
   selectedRequests: [],
   selectedRequest: undefined, // DEPRECATED, still used in lookup however
   requests: [],
+  linkLookupBackToDashboard: false, // whether or not to show "back to dashboard button in lookup"
 }
 
 export const appStateReducer = (state = Object.freeze(initialState), action = { data: [] }) => {
@@ -74,6 +76,13 @@ export const appStateReducer = (state = Object.freeze(initialState), action = { 
         requests: [...state.requests, action.advancedSearchRequest],
       }
     }
+    case c.SET_WOW_PROPERTY_DATA: {
+      return {
+        ...state,
+        currentPropertyWowData: action.data,
+      }
+    }
+
     case c.REMOVE_REQUEST_TYPE: {
       return {
         ...state,

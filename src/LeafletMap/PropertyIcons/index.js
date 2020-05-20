@@ -7,22 +7,6 @@ import PropertyIcon from 'LeafletMap/PropertyIcon'
 class PropertyIcons extends React.Component {
   constructor(props) {
     super(props)
-
-    this.handleAlert = this.handleAlert.bind(this)
-    this.handleAlert()
-  }
-
-  componentDidUpdate() {
-    this.handleAlert()
-  }
-
-  handleAlert() {
-    if (!this.props.overrideWarning && this.props.results.length > c.MAP_MARKER_LIMIT) {
-      // this.props.switchView()
-      this.props.setAlertMessage(`Warning - more than ${c.MAP_MARKER_LIMIT} map icons may slow down this page.`)
-    } else {
-      this.props.setAlertMessage('')
-    }
   }
 
   getLatLng(result) {
@@ -41,10 +25,12 @@ class PropertyIcons extends React.Component {
             return (
               <PropertyIcon
                 key={`property-popup-${index}`}
+                page={this.props.page}
                 result={result}
                 interactive={true}
                 handlePropertyAction={this.props.handlePropertyAction}
                 position={this.getLatLng(result)}
+                dispatch={this.props.dispatch}
               />
             )
           } else {
@@ -72,6 +58,7 @@ PropertyIcons.propTypes = {
   dispatch: PropTypes.func,
   results: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
   visible: PropTypes.bool,
+  page: PropTypes.string,
 }
 
 export default PropertyIcons

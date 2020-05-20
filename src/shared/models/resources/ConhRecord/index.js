@@ -5,7 +5,7 @@ import TextSelectField from 'AdvancedSearch/FilterComponent/Field/TextSelectFiel
 
 const ConhRecord = databaseObject => ({
   resourceConstant: 'CONH_RECORD',
-  urlPath: 'taxliens',
+  urlPath: 'conhrecords',
   label: 'Certificate of No Harassment',
   sentenceNoun: 'eligibility for certificate of no harassment',
   ownResourceFilters: {

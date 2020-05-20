@@ -1,11 +1,95 @@
-@import 'shared/styles/bootstrap/_variables.scss';
+@import 'shared/styles/_variables.scss';
 
 .building-select {
-  // .building-select__select {
-  //   width: 100%;
-  //
-  //   @include media-breakpoint-up(xl) {
-  //     width: 70%;
-  //   }
-  // }
+  .building-select__wrapper {
+    display: flex;
+    align-content: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 100%;
+
+    @include media-breakpoint-up(md) {
+      flex-wrap: nowrap;
+    }
+
+    .building-select__text,
+    .building-select__text span {
+      @extend %p3-font-size;
+    }
+
+    .building-select__text,
+    .building-select__select {
+      margin-bottom: 0;
+    }
+
+    .building-select__text {
+      margin-bottom: 0.5rem;
+      @include media-breakpoint-up(sm) {
+        margin-right: 40px;
+        margin-bottom: 0;
+      }
+    }
+
+    .info-modal-button {
+      margin-left: 10px;
+    }
+
+    .building-select__select-group {
+      @extend %p3-font-size;
+
+      display: flex;
+      width: 100%;
+      @include media-breakpoint-up(sm) {
+        max-width: 333px;
+      }
+    }
+
+    .building-select__select {
+      width: 100%;
+
+      @include media-breakpoint-up(sm) {
+        margin-right: 10px;
+      }
+
+      // Control component
+
+      [class*='-control'] {
+        background-color: $light-orange;
+        overflow: hidden;
+      }
+
+      div:nth-of-type(n + 2) {
+        background-color: $light-orange;
+      }
+      [class*='-indicatorContainer'] {
+        color: $dark;
+      }
+
+      [class*='-menu'] {
+        [class*='-option'] {
+          cursor: pointer;
+        }
+
+        [class*='-option']:nth-of-type(1) {
+          background-color: $secondary;
+          color: $black;
+        }
+
+        [class*='-option']:nth-of-type(n + 2) {
+          background-color: $light-orange;
+          color: $black;
+        }
+
+        [class*='-option']:nth-of-type(n + 2):focus,
+        [class*='-option']:nth-of-type(n + 2):hover {
+          background-color: $secondary;
+          color: $white;
+        }
+      }
+    }
+
+    button {
+      max-height: 32px;
+    }
+  }
 }

@@ -1,9 +1,10 @@
+import Axios from 'axios'
 import * as c from 'shared/constants'
 import { push, replace } from 'connected-react-router'
 import { getGeographyPath, addressResultToPath } from 'shared/utilities/routeUtils'
 import { removeRequest, removeManyRequests } from 'Store/Request/actions'
-import { setDashboardCustomView } from 'Store/DashboardState/actions'
-
+import { handleCompletedRequest } from 'Store/Loading/actions'
+import { handleClearErrors } from 'Store/Error/actions'
 export const setAppState = state => ({
   type: c.SET_APP_STATE,
   state,
@@ -38,6 +39,11 @@ export const handleSetAdvancedSearchRequest = advancedSearchRequest => ({
   advancedSearchRequest,
 })
 
+export const handleSetWowPropertyData = data => ({
+  type: c.SET_WOW_PROPERTY_DATA,
+  data,
+})
+
 export const setGeographyAndRequestsAndRedirect = ({
   geographyType,
   geographyId,
@@ -48,7 +54,7 @@ export const setGeographyAndRequestsAndRedirect = ({
   dispatch(removeRequestType('MAP_FILTER'))
   dispatch(removeRequestType('MAP_PROFILE'))
   dispatch(removeRequestType('GEOGRAPHY_HOUSING_TYPE'))
-  dispatch(removeRequestType(c.ADVANCED_SEARCH))
+  dispatch(removeRequestType(c.GET_ADVANCED_SEARCH))
   dispatch(removeManyRequests(requests.map(r => r.requestConstant)))
   dispatch(setAppState({ selectedRequests: [] }))
   dispatch(handleSetGeographyRequests(geographyType, geographyId, requests))
@@ -76,7 +82,7 @@ export const setLookupAndRequestsAndRedirect = ({ bbl, bin, replaceHistory = fal
   dispatch(removeRequestType('LOOKUP_FILTER'))
   dispatch(removeRequestType('LOOKUP_PROFILE'))
   dispatch(removeManyRequests(requests.map(r => r.requestConstant)))
-
+  dispatch(getWowPropertyData(bbl))
   dispatch(handleSetPropertyBuildingLookupRequests(bbl, bin, requests))
   if (replaceHistory) {
     dispatch(replace(addressResultToPath({ bbl, bin })))
@@ -85,24 +91,28 @@ export const setLookupAndRequestsAndRedirect = ({ bbl, bin, replaceHistory = fal
   }
 }
 
-export const setAdvancedSearchRequestAndRedirect = ({
-  redirect = true,
-  replaceHistory = false,
-  advancedSearchRequest,
-} = {}) => (dispatch, getState) => {
-  const appState = getState().appState
-
+export const setAdvancedSearchRequest = ({ advancedSearchRequest } = {}) => (dispatch, getState) => {
   dispatch(removeRequestType(c.ADVANCED_SEARCH))
   dispatch(removeRequest(advancedSearchRequest.requestConstant))
   dispatch(handleSetAdvancedSearchRequest(advancedSearchRequest))
-  dispatch(setDashboardCustomView(true))
+}
 
-  if (redirect) {
-    const path = getGeographyPath(appState.currentGeographyType)
-    if (replaceHistory) {
-      dispatch(replace(`/${path}/${appState.currentGeographyId}`))
-    } else {
-      dispatch(push(`/${path}/${appState.currentGeographyId}`))
-    }
-  }
+export const clearAdvancedSearchRequest = () => dispatch => {
+  dispatch(removeRequestType(c.ADVANCED_SEARCH))
+  dispatch(removeRequest(c.ADVANCED_SEARCH))
+  dispatch(handleCompletedRequest(c.ADVANCED_SEARCH))
+  dispatch(handleClearErrors(c.ADVANCED_SEARCH))
+}
+
+export const getWowPropertyData = bbl => dispatch => {
+  Axios.get('https://whoownswhat.justfix.nyc/api/address/dap-aggregate', { params: { bbl } })
+    .then(response => {
+      const data = response.data.result[0]
+      dispatch(handleSetWowPropertyData(data))
+    })
+    .catch(error => {
+      console.error(error)
+      // silently fail and return blank data
+      dispatch(handleSetWowPropertyData({}))
+    })
 }

@@ -1,6 +1,5 @@
 @import 'shared/styles/bootstrap/_variables.scss';
 
-
 .card-loader-map-icon {
   text-align: center;
   display: flex;
@@ -8,11 +7,11 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  background-color: $primary;
+  background-color: $secondary;
 
   /*Location indicator */
   .location_indicator {
-    background-color: $primary;
+    background-color: $secondary;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -28,7 +27,7 @@
   }
 
   .location_indicator:before {
-    background-color: $primary;
+    background-color: $secondary;
     width: 20px;
     height: 20px;
     border-radius: 100% 100% 100% 0;

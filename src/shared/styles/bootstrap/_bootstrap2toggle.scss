@@ -1,0 +1,247 @@
+/*! ========================================================================
+ * Bootstrap Toggle: bootstrap2-toggle.css v2.2.0
+ * http://www.bootstraptoggle.com
+ * ========================================================================
+ * Copyright 2014 Min Hur, The New York Times Company
+ * Licensed under MIT
+ * ======================================================================== */
+
+label.checkbox .toggle,
+label.checkbox.inline .toggle {
+  margin-left: -20px;
+  margin-right: 5px;
+}
+
+.toggle {
+  min-width: 40px;
+  height: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.toggle-group {
+  position: absolute;
+  width: 200%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  // transition: left 0.35s;
+  // -webkit-transition: left 0.35s;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.toggle.off .toggle-group {
+  left: -100%;
+}
+
+.toggle-on {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 50%;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+}
+
+.toggle-off {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  right: 0;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+}
+
+.toggle-handle {
+  position: relative;
+  margin: 0 auto;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  height: 100%;
+  width: 0px;
+  border-width: 0 1px;
+  top: -5px;
+}
+
+.toggle-handle.btn-mini {
+  top: -2px;
+}
+
+.toggle-handle.btn-xs {
+  top: -2px;
+}
+
+.toggle.btn {
+  min-width: 30px;
+}
+.toggle-on.btn {
+  padding-right: 24px;
+  display: flex;
+  align-items: center;
+}
+.toggle-off.btn {
+  padding-left: 24px;
+  display: flex;
+  align-items: center;
+}
+
+.toggle.btn-large {
+  min-width: 40px;
+}
+.toggle-on.btn-large {
+  padding-right: 35px;
+}
+.toggle-off.btn-large {
+  padding-left: 35px;
+}
+
+.toggle.btn-lg {
+  min-width: 40px;
+}
+.toggle-on.btn-lg {
+  padding-right: 35px;
+}
+.toggle-off.btn-lg {
+  padding-left: 35px;
+}
+
+.toggle.btn-small {
+  min-width: 25px;
+}
+.toggle-on.btn-small {
+  padding-right: 20px;
+}
+.toggle-off.btn-small {
+  padding-left: 20px;
+}
+
+.toggle.btn-sm {
+  min-width: 25px;
+}
+.toggle-on.btn-sm {
+  padding-right: 20px;
+}
+.toggle-off.btn-sm {
+  padding-left: 20px;
+}
+
+.toggle.btn-mini {
+  min-width: 20px;
+}
+.toggle-on.btn-mini {
+  padding-right: 12px;
+}
+.toggle-off.btn-mini {
+  padding-left: 12px;
+}
+
+.toggle.btn-xs {
+  min-width: 20px;
+}
+.toggle-on.btn-xs {
+  padding-right: 12px;
+}
+.toggle-off.btn-xs {
+  padding-left: 12px;
+}
+
+.slow .toggle-group {
+  transition: left 0.7s;
+  -webkit-transition: left 0.7s;
+}
+.fast .toggle-group {
+  transition: left 0.1s;
+  -webkit-transition: left 0.1s;
+}
+.quick .toggle-group {
+  transition: none;
+  -webkit-transition: none;
+}
+
+.toggle-on[disabled],
+.toggle-on.disabled {
+  cursor: not-allowed !important;
+}
+.toggle-off[disabled],
+.toggle-on.disabled {
+  cursor: not-allowed !important;
+}
+
+// Round toggle styles
+
+.round-toggle {
+  border-radius: 24px;
+  border: 1px solid rgba(120, 120, 120, 0.5);
+  cursor: pointer;
+  outline: none;
+
+  &:hover:not([disabled]) .round-toggle-handle,
+  &:focus:not([disabled]) .round-toggle-handle {
+    box-shadow: 1px 1px 2px $secondary;
+  }
+
+  .toggle-handle,
+  .toggle-handle:hover {
+    background-color: white;
+    border-color: $gray-200;
+  }
+  .btn-light.toggle-off {
+    color: transparent;
+    background-color: #e2e6ea;
+    border-color: #dae0e5;
+  }
+
+  &.btn-light:hover {
+  }
+}
+
+.round-toggle-handle {
+  border: 1px solid rgba(120, 120, 120, 0.5);
+  border-radius: 24px;
+  width: 55%;
+  height: 110%;
+  color: transparent;
+
+  &[disabled] {
+    background-color: $gray-400;
+    cursor: not-allowed;
+  }
+}
+
+.round-toggle-on {
+  color: transparent;
+
+  &:hover,
+  &:focus,
+  &:active:not([disabled]),
+  &.btn-light:active:not([disabled]),
+  &.btn-success:active:not([disabled]) {
+    color: transparent;
+  }
+
+  &[disabled] {
+    background-color: $tab-primary;
+  }
+}
+
+.round-toggle-off {
+  color: transparent;
+
+  &:hover,
+  &:focus,
+  &:active:not(:disabled),
+  &.btn-light:active:not([disabled]),
+  &.btn-success:active:not([disabled]) {
+    color: transparent;
+  }
+
+  &[disabled] {
+    background-color: $gray-300;
+  }
+}

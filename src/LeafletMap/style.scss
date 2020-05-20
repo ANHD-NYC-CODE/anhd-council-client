@@ -1,3 +1,5 @@
+@import 'shared/styles/_variables.scss';
+
 .map {
   height: 100%;
   width: 100%;
@@ -11,14 +13,6 @@
   z-index: 1;
 }
 
-.leaflet-map__alert {
-  position: absolute !important;
-  z-index: 2;
-  top: 0;
-  left: 0;
-  width: 100%;
-}
-
 .map-loader {
   background-color: rgba(1, 1, 1, 0.2);
   height: 100%;
@@ -27,4 +21,14 @@
   top: 0;
   left: 0;
   z-index: 2;
+}
+
+.leaflet-popup-content {
+  @extend %p3-font-size;
+  display: flex;
+  flex-direction: column;
+}
+
+.leaflet-popup-title {
+  margin-bottom: 10px;
 }

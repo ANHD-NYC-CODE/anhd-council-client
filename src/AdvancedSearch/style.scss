@@ -1,8 +1,41 @@
 @import 'shared/styles/_variables.scss';
 
 .advanced-search {
+  .form-error {
+    margin-bottom: 5px;
+  }
+
+  &.layout-width-wrapper {
+    padding: 0 1rem !important;
+
+    @include media-breakpoint-up(xl) {
+      padding: 0 4rem !important;
+    }
+  }
+  &__content {
+    position: relative;
+    padding-top: 40px;
+  }
+
   .advanced-search-form--container {
-    overflow-x: auto;
+    overflow-x: hidden;
+    padding: 0;
+    // padding-left: 0;
+  }
+
+  .advanced-search-form__heading {
+    @extend %p1-font-size;
+  }
+
+  .base-table {
+    @include media-breakpoint-up(xl) {
+      // width: 80vw;
+    }
+  }
+
+  .geography-select__row {
+    align-items: flex-start;
+    justify-content: flex-start;
   }
 
   .touch-left {
@@ -14,21 +47,12 @@
     top: 20px;
   }
 
-  .paramset-wrapper,
-  .form-row__container {
-    // margin-bottom: 10px;
-    width: 700px;
-    @include media-breakpoint-up(md) {
-      width: 800px;
-    }
+  .paramset-wrapper {
+    display: flex;
+  }
 
-    @include media-breakpoint-up(lg) {
-      width: 700px;
-    }
-
-    @include media-breakpoint-up(xl) {
-      width: 750px;
-    }
+  .paramset-wrapper:not(.modifying-paramset) {
+    margin-bottom: 0px;
   }
 
   div.condition-control {
@@ -72,10 +96,138 @@
   // FORM COMPONENTS
 
   .input-group {
+    width: auto;
     // margin-top: 10px;
   }
 
   .input-group-text {
     border-bottom: 4px solid transparent;
+    color: $black;
+  }
+
+  // Page
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: 24px;
+    margin-bottom: 40px;
+    position: relative;
+
+    @include media-breakpoint-up(md) {
+      min-height: 40px;
+    }
+  }
+
+  &__toggle-button {
+    flex-shrink: 0;
+  }
+
+  &__results-container {
+    margin-bottom: 40px;
+    position: relative;
+
+    @include media-breakpoint-up(sm) {
+      margin-bottom: 0;
+    }
+
+    @include media-breakpoint-up(xl) {
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-start;
+      min-height: calc(100vh - 400px);
+    }
+  }
+
+  &__results-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+
+    // hide on XL
+    @include media-breakpoint-up(xl) {
+      display: none;
+    }
+  }
+
+  &__map {
+    position: relative;
+    height: 400px;
+
+    @include media-breakpoint-up(lg) {
+      margin: 0 auto;
+      height: 600px;
+      // max-height: 50%;
+      // max-width: 50%;
+    }
+
+    @include media-breakpoint-up(xl) {
+      height: 100%;
+      width: 100%;
+
+      margin-right: 30px;
+      max-width: 33%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+    }
+
+    &.d-none {
+      // visible layout on XL
+      @include media-breakpoint-up(xl) {
+        display: block !important;
+      }
+    }
+  }
+  &__cancel {
+    margin-right: auto;
+  }
+
+  &__table {
+    overflow-x: hidden;
+
+    @include media-breakpoint-up(lg) {
+      width: calc(100vw - ((100vw - 1044px) / 2) - 16px);
+    }
+
+    @include media-breakpoint-up(xl) {
+      width: 100%;
+      max-width: 66%;
+      margin-left: auto;
+    }
+
+    tr {
+      cursor: pointer;
+    }
+
+    &.d-none {
+      // visible layout on XL
+      @include media-breakpoint-up(xl) {
+        display: block !important;
+      }
+    }
+  }
+
+  &__results-header {
+  }
+
+  .view-toggle {
+    border: 2px solid $dark;
+    cursor: pointer;
+    min-width: 100px;
+  }
+
+  &__title {
+    // @extend %heading-md;
+    color: $black;
+    position: absolute;
+    top: 0;
+    margin-top: 12px;
+    text-align: center;
+    width: 100%;
+    pointer-events: none;
   }
 }

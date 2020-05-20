@@ -92,6 +92,22 @@ describe('DashboardState reducer', () => {
     })
   })
 
+  describe('SET_DASHBOARD_FILTER_CONDITION', () => {
+    it('sets the filter condition to AND', () => {
+      expect(r.dashboardStateReducer(undefined, a.setDashboardFilterCondition('AND'))).toEqual({
+        ...r.initialState,
+        filterCondition: 'AND',
+      })
+    })
+
+    it('sets the filter condition to OR', () => {
+      expect(r.dashboardStateReducer(undefined, a.setDashboardFilterCondition('OR'))).toEqual({
+        ...r.initialState,
+        filterCondition: 'OR',
+      })
+    })
+  })
+
   describe('TOGGLE_SELECTED_AMOUNT_FILTER', () => {
     it('sets selectedFilters', () => {
       const filter = 1
@@ -108,6 +124,16 @@ describe('DashboardState reducer', () => {
       ).toEqual({
         ...r.initialState,
         selectedFilters: [],
+      })
+    })
+  })
+
+  describe('RESET_DASHBOARD_STATE', () => {
+    it('resets to initial state', () => {
+      expect(
+        r.dashboardStateReducer({ ...r.initialState, selectedFilters: [1, 2, 3] }, a.resetDashboardState())
+      ).toEqual({
+        ...r.initialState,
       })
     })
   })

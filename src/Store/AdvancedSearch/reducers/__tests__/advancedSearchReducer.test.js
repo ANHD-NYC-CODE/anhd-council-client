@@ -126,7 +126,7 @@ describe('Custom Search reducer', () => {
       conditions: {
         '0': new Condition({ key: '0', type: 'AND', filters: [] }),
       },
-      results: undefined,
+      results: [],
     }
     const conditionId = '0'
     it('replaces with the initial state', () => {
@@ -205,6 +205,20 @@ describe('Custom Search reducer', () => {
       expect(r.advancedSearchReducer(state, a.removeGeography(0))).toEqual({
         ...r.initialState(),
         geographies: expectedGeographies,
+      })
+    })
+  })
+
+  describe('SET_CUSTOM_SEARCH_RESULTS', () => {
+    it('sets results', () => {
+      const state = {
+        ...r.initialState(),
+        results: [],
+      }
+
+      expect(r.advancedSearchReducer(state, a.setCustomSearchResults([1, 2, 3]))).toEqual({
+        ...r.initialState(),
+        results: [1, 2, 3],
       })
     })
   })

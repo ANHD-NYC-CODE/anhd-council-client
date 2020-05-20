@@ -1,0 +1,42 @@
+@import 'shared/styles/_variables.scss';
+
+.housingtype-section {
+  min-width: 240px;
+
+  &__label-row {
+    display: flex;
+    label {
+      margin-right: 15px;
+    }
+  }
+
+  .housingtype-section__label {
+    @extend %p2-font-size;
+
+    color: $black;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+
+  .housingtype-section__section {
+    display: flex;
+    margin-bottom: 5px;
+
+    > :first-child {
+      margin-right: 10px;
+    }
+  }
+
+  .housingtype-section__check,
+  .housingtype-section__check label,
+  .housingtype-section__check input {
+    @extend %p3-font-size;
+    color: $black;
+    cursor: pointer;
+
+    &:focus label,
+    &:hover label {
+      text-decoration: underline;
+    }
+  }
+}

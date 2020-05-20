@@ -9,6 +9,8 @@ import FormError from 'shared/components/FormError'
 import { toast } from 'react-toastify'
 import SpinnerLoader from 'shared/components/Loaders/SpinnerLoader'
 
+import './style.scss'
+
 const schema = yup.object({
   email: yup
     .string()
@@ -34,6 +36,7 @@ const schema = yup.object({
     .string()
     .required()
     .max(120),
+  longDescription: yup.string().max(1000),
 })
 
 class UserRequestForm extends React.Component {
@@ -61,6 +64,7 @@ class UserRequestForm extends React.Component {
       last_name: formData.last_name,
       organization: formData.organization,
       description: formData.position,
+      long_description: formData.longDescription,
     }
 
     this.props.dispatch(postUserRequest(userData, this.handleSuccessfulSubmit))
@@ -71,19 +75,20 @@ class UserRequestForm extends React.Component {
       <Formik onSubmit={e => this.handleSubmit(e)} validationSchema={schema}>
         {({ handleSubmit, handleChange, handleBlur, touched, errors, submitCount }) => {
           return (
-            <Form noValidate className="auth-login-form" validated={this.state.validated} onSubmit={handleSubmit}>
+            <Form
+              noValidate
+              className="user-request-form auth-login-form"
+              validated={this.state.validated}
+              onSubmit={handleSubmit}
+            >
               <FormError show={!!this.props.error} message={(this.props.error || {}).message} />
-              <Form.Text className="text-muted mb-3">
-                An account allows you to view foreclosures data. Accounts are only available to New York City Council
-                and ANHD member and partner organizations.
+              <Form.Text className="user-request-form__text mb-3">
+                Please allow us time to process your request. Once approved, you’ll receive an email containing a
+                temporary password. Please contact <a href={`mailto:${c.CONTACT_EMAIL}`}>{c.CONTACT_EMAIL}</a> with any
+                questions.
               </Form.Text>
-              <Form.Text className="text-muted mb-3">
-                Please allow us time to process your request. Once approved, you'll receive an email containing a
-                temporary password. Please contact <a href={`mailto:${c.CONTACT_EMAIL}`}>{c.CONTACT_EMAIL}</a> if you
-                have any questions.
-              </Form.Text>
-              <Form.Text className="text-muted mb-3">
-                We’ll only use your email and name to maintain your account and we won’t share it with anyone else.
+              <Form.Text className="user-request-form__text mb-3">
+                We’ll only use your name and email to maintain your account and we won’t share it with anyone else.
               </Form.Text>
               <Form.Group controlId="userRequestEmail">
                 <Form.Label>Email *</Form.Label>
@@ -95,10 +100,10 @@ class UserRequestForm extends React.Component {
                   isValid={false}
                   isInvalid={!!this.props.submitCount || (touched.email && errors.email)}
                   type="email"
-                  placeholder="Enter your email"
+                  placeholder=""
                 />
                 <FormError show={!!((submitCount || touched.email) && errors.email)} message={errors.email} />
-                <Form.Text className="text-muted">If applicable, please use your organization's email.</Form.Text>
+                <Form.Text className="text-muted">Please use your organization’s email, if applicable.</Form.Text>
               </Form.Group>
               <Form.Group controlId="userRequestUsername">
                 <Form.Label>Username *</Form.Label>
@@ -109,7 +114,7 @@ class UserRequestForm extends React.Component {
                   onBlur={handleBlur}
                   isValid={false}
                   isInvalid={!!this.props.submitCount || (touched.username && errors.username)}
-                  placeholder="Enter your username"
+                  placeholder=""
                 />
                 <FormError show={!!((submitCount || touched.username) && errors.username)} message={errors.username} />
               </Form.Group>
@@ -122,7 +127,7 @@ class UserRequestForm extends React.Component {
                   onBlur={handleBlur}
                   isValid={false}
                   isInvalid={false}
-                  placeholder="First name"
+                  placeholder=""
                 />
                 <FormError
                   show={!!((submitCount || touched.first_name) && errors.first_name)}
@@ -138,7 +143,7 @@ class UserRequestForm extends React.Component {
                   onBlur={handleBlur}
                   isValid={false}
                   isInvalid={false}
-                  placeholder="Last name"
+                  placeholder=""
                 />
                 <FormError
                   show={!!((submitCount || touched.last_name) && errors.last_name)}
@@ -146,7 +151,7 @@ class UserRequestForm extends React.Component {
                 />
               </Form.Group>
               <Form.Group controlId="userRequestOrganization">
-                <Form.Label>Organization *</Form.Label>
+                <Form.Label>Work/Organization *</Form.Label>
                 <Form.Control
                   required
                   name="organization"
@@ -154,7 +159,7 @@ class UserRequestForm extends React.Component {
                   onBlur={handleBlur}
                   isValid={false}
                   isInvalid={false}
-                  placeholder="Work/Organization"
+                  placeholder=""
                 />
                 <FormError
                   show={!!((submitCount || touched.first_name) && errors.organization)}
@@ -162,7 +167,7 @@ class UserRequestForm extends React.Component {
                 />
               </Form.Group>
               <Form.Group controlId="userRequestDescription">
-                <Form.Label>Position *</Form.Label>
+                <Form.Label>Position/Title *</Form.Label>
                 <Form.Control
                   required
                   name="position"
@@ -171,7 +176,25 @@ class UserRequestForm extends React.Component {
                   onBlur={handleBlur}
                   isValid={false}
                   isInvalid={false}
-                  placeholder="Position"
+                  placeholder=""
+                />
+                <FormError
+                  show={!!((submitCount || touched.first_name) && errors.position)}
+                  message={errors.position}
+                />
+              </Form.Group>
+              <Form.Group controlId="userRequestLongDescription">
+                <Form.Label>Please describe how you'd like to use this tool.</Form.Label>
+                <Form.Control
+                  required
+                  name="longDescription"
+                  as="textarea"
+                  className="valued"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  isValid={false}
+                  isInvalid={false}
+                  placeholder=""
                 />
                 <FormError
                   show={!!((submitCount || touched.first_name) && errors.position)}
@@ -179,7 +202,7 @@ class UserRequestForm extends React.Component {
                 />
               </Form.Group>
 
-              <Button block disabled={this.props.loading} variant="primary" type="submit">
+              <Button className="btn-loader" block disabled={this.props.loading} variant="dark" type="submit">
                 <span>Submit</span>
                 <div className="button-loader__container">{this.props.loading && <SpinnerLoader size="20px" />}</div>
               </Button>

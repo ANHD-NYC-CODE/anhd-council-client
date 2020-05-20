@@ -1,5 +1,7 @@
 import React from 'react'
-import { textFilter } from 'react-bootstrap-table2-filter'
+import { textFilter, multiSelectFilter } from 'react-bootstrap-table2-filter'
+import { Button } from 'react-bootstrap'
+
 import classnames from 'classnames'
 export default class BaseTableConfig {
   constructor({ component = undefined } = {}) {
@@ -7,9 +9,25 @@ export default class BaseTableConfig {
     this._filters = {}
     this._selectedFilters = {}
     this._filterPrototypes = {
+      ...this.createFilterPrototype('ACRIS_REAL_MASTER_DOCUMENT_TYPE', 'multi-select', [
+        'DEED',
+        'AALR',
+        'AGMT',
+        'AL&R',
+        'ASST',
+        'ASPM',
+        'DEMM',
+        'MTGE',
+        'PSAT',
+        'SAT',
+        'SMTG',
+        'WSAT',
+        'M&CON',
+        'SPRD',
+      ]),
       ...this.createFilterPrototype('HPD_VIOLATION_OPEN'),
       ...this.createFilterPrototype('HPD_VIOLATION_CLASS'),
-      ...this.createFilterPrototype('HPD_COMPLAINT_OPEN', true),
+      ...this.createFilterPrototype('HPD_COMPLAINT_OPEN'),
       ...this.createFilterPrototype('DOB_VIOLATION_ACTIVE'),
       ...this.createFilterPrototype('DOB_COMPLAINT_ACTIVE'),
       ...this.createFilterPrototype('ECB_VIOLATION_ACTIVE'),
@@ -17,6 +35,7 @@ export default class BaseTableConfig {
       ...this.createFilterPrototype('DOB_ISSUED_PERMIT_TYPE'),
     }
     this._filterFunctions = {
+      ...this.createFilterFunction('ACRIS_REAL_MASTER_DOCUMENT_TYPE'),
       ...this.createFilterFunction('HPD_VIOLATION_OPEN'),
       ...this.createFilterFunction('HPD_VIOLATION_CLASS'),
       ...this.createFilterFunction('HPD_COMPLAINT_OPEN'),
@@ -27,11 +46,36 @@ export default class BaseTableConfig {
       ...this.createFilterFunction('DOB_ISSUED_PERMIT_TYPE'),
     }
     this.filterButtonSets = {
+      ACRIS_REAL_MASTER: [
+        this.createFilterButtonSet(
+          'ACRIS_REAL_MASTER',
+          'ACRIS_REAL_MASTER_DOCUMENT_TYPE',
+          [
+            this.createFilterItem('Deed', ['DEED']),
+            this.createFilterItem('Mortgages', [
+              'AALR',
+              'AGMT',
+              'AL&R',
+              'ASST',
+              'ASPM',
+              'DEMM',
+              'MTGE',
+              'PSAT',
+              'SAT',
+              'SMTG',
+              'WSAT',
+              'M&CON',
+              'SPRD',
+            ]),
+          ],
+          'All'
+        ),
+      ],
       HPD_VIOLATION: [
         this.createFilterButtonSet(
           'HPD_VIOLATION',
           'HPD_VIOLATION_OPEN',
-          [this.createFilterItem('Open', 'open')],
+          [this.createFilterItem('Open', 'open'), this.createFilterItem('Closed', 'close')],
           'All'
         ),
         this.createFilterButtonSet(
@@ -49,7 +93,7 @@ export default class BaseTableConfig {
         this.createFilterButtonSet(
           'HPD_COMPLAINT',
           'HPD_COMPLAINT_OPEN',
-          [this.createFilterItem('Open', 'open')],
+          [this.createFilterItem('Open', 'open'), this.createFilterItem('Closed', 'close')],
           'All'
         ),
       ],
@@ -57,7 +101,7 @@ export default class BaseTableConfig {
         this.createFilterButtonSet(
           'DOB_COMPLAINT',
           'DOB_COMPLAINT_ACTIVE',
-          [this.createFilterItem('Active', 'active')],
+          [this.createFilterItem('Active', 'active'), this.createFilterItem('Closed', 'close')],
           'All'
         ),
       ],
@@ -66,7 +110,7 @@ export default class BaseTableConfig {
         this.createFilterButtonSet(
           'DOB_VIOLATION',
           'DOB_VIOLATION_ACTIVE',
-          [this.createFilterItem('Active', 'active')],
+          [this.createFilterItem('Active', 'active'), this.createFilterItem('Dismissed', 'dismissed')],
           'All'
         ),
       ],
@@ -74,7 +118,7 @@ export default class BaseTableConfig {
         this.createFilterButtonSet(
           'ECB_VIOLATION',
           'ECB_VIOLATION_ACTIVE',
-          [this.createFilterItem('Active', 'active')],
+          [this.createFilterItem('Active', 'active'), this.createFilterItem('Resolved', 'resolve')],
           'All'
         ),
       ],
@@ -158,16 +202,28 @@ export default class BaseTableConfig {
     })
   }
 
-  createFilterPrototype(constant, forceUpdate = false) {
-    return {
-      [constant]: textFilter({
-        getFilter: filter => {
-          this.filters[constant] = filter
-        },
-        // onFilter: (filter, data) => {
-        //   this.component.forceUpdate()
-        // },
-      }),
+  createFilterPrototype(constant, type = 'text', multiSelectOptions = []) {
+    switch (type) {
+      case 'text':
+        return {
+          [constant]: textFilter({
+            placeholder: 'Search...',
+            getFilter: filter => {
+              this.filters[constant] = filter
+            },
+          }),
+        }
+      case 'multi-select':
+        return {
+          [constant]: multiSelectFilter({
+            options: multiSelectOptions,
+            comparator: 'LIKE',
+            placeholder: 'Search...',
+            getFilter: filter => {
+              this.filters[constant] = filter
+            },
+          }),
+        }
     }
   }
 
@@ -190,33 +246,34 @@ export default class BaseTableConfig {
     return selectedFilters => {
       return (
         <div key={`${filterConstant}`} className="table-filter-button-group">
+          <Button
+            className={`${classnames('table-filter-button')}`}
+            onClick={() => this.clearFilterGroup(filterConstant)}
+            size="sm"
+            variant={
+              !Object.keys(selectedFilters).find(key => key.includes(filterConstant) && selectedFilters[key])
+                ? 'dark'
+                : 'light'
+            }
+          >
+            {clearLabel}
+          </Button>
           {valuesArray.map((item, index) => {
             return (
-              <button
+              <Button
                 key={`button-${filterConstant}-${index}`}
-                className={`${classnames('table-filter-button', 'btn', {
-                  'btn-primary': !!selectedFilters[`${filterConstant}__ ${item.value}`],
-                })}`}
+                className={`${classnames('table-filter-button')}`}
+                variant={selectedFilters[`${filterConstant}__ ${item.value}`] ? 'dark' : 'light'}
+                size="sm"
                 onClick={e => {
                   this.clearFilterGroup(filterConstant)
                   this.filterFunctions[filterConstant](e, item.value)
                 }}
               >
                 {item.label}
-              </button>
+              </Button>
             )
           })}
-
-          <button
-            className={`${classnames('table-filter-button', 'btn', {
-              'btn-primary': !Object.keys(selectedFilters).find(
-                key => key.includes(filterConstant) && selectedFilters[key]
-              ),
-            })}`}
-            onClick={() => this.clearFilterGroup(filterConstant)}
-          >
-            {clearLabel}
-          </button>
         </div>
       )
     }

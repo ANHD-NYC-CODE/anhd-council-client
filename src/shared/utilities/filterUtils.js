@@ -77,6 +77,9 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
       resourceModel: resourceModels['FORECLOSURE'],
     },
     {
+      resourceModel: resourceModels['PSFORECLOSURE'],
+    },
+    {
       resourceModel: resourceModels['ACRIS_REAL_MASTER'],
     },
     {
@@ -84,6 +87,9 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
     },
     {
       resourceModel: resourceModels['CONH_RECORD'],
+    },
+    {
+      resourceModel: resourceModels['AEP_BUILDING'],
     },
   ]
 }
@@ -111,7 +117,7 @@ export const constructCountDateParamSet = ({
   dateHighValue = c.CUSTOM_DEFAULT_END_DATE,
   dateOptions = rangeComparisonOptions({
     comparisonValues: ['gte', 'between', 'lte'],
-    labels: ['After', 'Between', 'Before'],
+    labels: ['Since', 'Between', 'Before'],
     rangeKey: 'DATE',
   }),
   dateValidations = {},
@@ -178,6 +184,7 @@ export const constructSingleMapParamSet = ({
   valuePrefix = undefined,
   valueSuffix = undefined,
   paramNoun,
+  inputClass,
   paramMapType = 'AMOUNT',
   defaultOptions = undefined,
   paramMapRole = 'MODIFIER',
@@ -200,6 +207,7 @@ export const constructSingleMapParamSet = ({
         type: paramMapType,
         role: paramMapRole,
         paramNoun,
+        inputClass,
         comparisonPrefix,
         valuePrefix,
         valueSuffix,
@@ -225,7 +233,7 @@ export const constructDateRangeParamSet = ({
   dateHighValue = c.CUSTOM_DEFAULT_END_DATE,
   dateOptions = rangeComparisonOptions({
     comparisonValues: ['gte', 'between', 'lte'],
-    labels: ['After', 'Between', 'Before'],
+    labels: ['Since', 'Between', 'Before'],
     rangeKey: 'DATE',
   }),
   dateValidations = {},
@@ -382,7 +390,7 @@ export const comparisonOptions = ({ comparisonValues = [], labels = [], name = '
 
 export const rangeComparisonOptions = ({
   comparisonValues = ['gte', 'between', 'lte'],
-  labels = ['After', 'Between', 'Before'],
+  labels = ['Since', 'Between', 'Before'],
   rangeKey,
 } = {}) => {
   return comparisonValues.map((value, index) => ({
@@ -436,6 +444,8 @@ export const getDatasetDateField = datasetConstant => {
       return 'fileddate'
     case 'FORECLOSURE':
       return 'date_added'
+    case 'PSFORECLOSURE':
+      return 'dateadded'
     case 'DOB_ISSUED_PERMIT':
       return 'issuedate'
     case 'DOB_FILED_PERMIT':

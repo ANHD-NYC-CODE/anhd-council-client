@@ -1,0 +1,78 @@
+@import 'shared/styles/_variables.scss';
+
+.lookup-table-tab {
+  border: none;
+  display: flex;
+  align-content: center;
+  height: 100%;
+  text-align: left;
+  padding: 4px 8px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  width: 100%;
+
+  div {
+    margin-bottom: 0;
+  }
+
+  &.btn {
+    border-radius: 6px;
+    padding: 4px 8px;
+    text-align: left;
+  }
+
+  &.btn:not(.active) {
+    color: $black;
+  }
+
+  div,
+  p,
+  span {
+    @extend %small-font-size;
+    font-weight: bold;
+  }
+
+  .error-cta {
+    font-size: 10px;
+    font-weight: bold;
+    font-style: italic;
+    padding: 0;
+  }
+}
+
+@media (hover: hover) {
+  .lookup-table-tab.btn:not(:disabled):hover {
+    box-shadow: 1px 12px 20px $gray-400;
+  }
+}
+
+@media (hover: hover) {
+  .lookup-table-tab.btn-primary:not(:disabled):hover,
+  .lookup-table-tab.btn-primary:not(:disabled).active {
+    box-shadow: 1px 3px 6px $gray-600;
+    border: 1px dashed $white;
+  }
+
+  .summary-result-card__label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+}
+
+.summary-result-card {
+  height: 120px;
+  min-height: 120px;
+  width: 100%;
+
+  .summary-result-card__result {
+    flex-shrink: 0;
+    flex-grow: 1;
+    text-align: right;
+
+    @include media-breakpoint-up(xl) {
+      min-width: 20px;
+    }
+  }
+}

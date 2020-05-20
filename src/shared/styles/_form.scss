@@ -12,22 +12,20 @@ select.form-control.valued {
 .input-group > .form-control {
   box-shadow: none;
   outline: none;
-  border: none;
-  border-radius: 0;
-  border-bottom: $input-border-mobile;
+  // border: none;
+  // border-radius: 0;
+  // border-bottom: $input-border-mobile;
 
-  @include media-breakpoint-up(sm) {
-    border-bottom: $input-border;
-  }
+  // @include media-breakpoint-up(sm) {
+  //   border-bottom: $input-border;
+  // }
 }
 .form-control:focus,
 .form-control:focus-within {
-  outline: none;
-  box-shadow: none;
-  border-bottom: $input-border-focus-mobile;
-
+  outline: $secondary; // box-shadow: none;
+  // border-bottom: $input-border-focus-mobile;
   @include media-breakpoint-up(sm) {
-    border-bottom: $input-border-focus;
+    // border-bottom: $input-border-focus;
   }
 }
 input.form-control:focus,
@@ -36,6 +34,11 @@ input.form-control {
 }
 input.form-control::placeholder {
   color: $gray-500;
+  font-style: italic;
+}
+
+.form-control-lg {
+  @extend %p1-font-size;
 }
 
 .xl-form-control {

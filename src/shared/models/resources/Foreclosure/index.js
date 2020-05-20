@@ -5,8 +5,8 @@ const Foreclosure = databaseObject => ({
 
   resourceConstant: 'FORECLOSURE',
   urlPath: 'foreclosures',
-  label: 'Foreclosures',
-  sentenceNoun: 'foreclosures',
+  label: 'Foreclosure Filings',
+  sentenceNoun: 'foreclosure filings',
   ownResourceFilters: {
     initial: {
       generatorFunction: resourceModel => {

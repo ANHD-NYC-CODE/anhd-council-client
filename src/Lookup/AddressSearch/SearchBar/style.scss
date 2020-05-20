@@ -1,35 +1,26 @@
-@import 'shared/styles/bootstrap/_variables.scss';
+@import 'shared/styles/_variables.scss';
 
 .search-bar {
   z-index: 501;
 
-  input.form-control {
-    padding-right: 50px;
-    border-bottom: 2px solid $info;
-  }
-  input.form-control.valued {
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
+  .home-search-bar {
+    &.form-control:focus,
+    &.form-control:focus-within {
+      border-bottom: 1px solid rgb(181, 206, 239); // Bootstrap style to undo override from .form-control
+    }
+
+    input.form-control {
+      padding-right: 50px;
+    }
   }
 
-  .search-bar__close,
-  .search-bar__loading {
-    position: absolute;
-    right: 5px;
-    top: 0;
-    height: 100%;
-    width: 50px;
-    z-index: 999;
-  }
+  // Legacy style
+  .xl-form-control {
+    border-bottom: 2px solid $secondary;
 
-  .search-bar__close {
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    svg {
-      background-color: transparent;
+    &.form-control:focus,
+    .form-control:focus-within {
+      border-bottom: $input-border-focus-default;
     }
   }
 }

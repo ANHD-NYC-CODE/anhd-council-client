@@ -4,17 +4,13 @@
   min-height: 100px;
 
   .condition {
-    .switch-condition-row {
-      margin-left: 80px;
-    }
-
     .form-row__connection-container:not(.condition-connection) {
       .form-row__connection {
-        border-color: $primary;
+        border-color: $secondary;
       }
 
       .form-row__connection:first-child {
-        border-bottom: 5px double $primary;
+        border-bottom: 5px double $secondary;
       }
     }
     .condition-connection {
@@ -23,13 +19,33 @@
   }
 
   .switch-condition-row {
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin: 0 auto 20px;
+    margin-left: 25%;
+
+    .dropdown-menu {
+      min-width: 80px;
+      max-width: 80px;
+      padding-left: 10px;
+    }
   }
 
   .new-filter-row {
     font-weight: bold;
     justify-content: flex-start;
+
+    .add-filter {
+      margin-left: 0;
+      flex: 0 1 auto;
+      width: auto;
+    }
+
+    .new-filter__either {
+      margin: 0 auto 0 calc(25% - 12px);
+    }
+
+    .btn-group {
+      width: 100%;
+    }
   }
 
   .control-button {
@@ -59,8 +75,8 @@
     line-height: 38px;
 
     @include media-breakpoint-up(sm) {
-      min-width: 100px;
-      max-width: 120px;
+      // min-width: 100px;
+      // max-width: 120px;
       font-size: 25px;
       line-height: 38px;
     }
@@ -70,8 +86,5 @@
     margin: 0;
     padding-left: 0;
     padding-right: 0;
-    a {
-      font-weight: bold;
-    }
   }
 }

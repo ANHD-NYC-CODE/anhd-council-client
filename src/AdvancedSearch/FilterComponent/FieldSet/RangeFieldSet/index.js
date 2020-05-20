@@ -4,6 +4,8 @@ import StandardizedInput from 'shared/classes/StandardizedInput'
 import { Form, Col, InputGroup } from 'react-bootstrap'
 import classnames from 'classnames'
 
+import './style.scss'
+
 const comparisonReconfigure = (props, e) => {
   e = new StandardizedInput(e)
   if (e.value.toUpperCase().match(/(LTE|END)/)) {
@@ -32,11 +34,14 @@ const hasPrefix = props => {
 
 const RangeFieldSet = props => {
   return (
-    <Form.Row>
-      <InputGroup className="fieldset range-fieldset" as={Col} xs={12} sm={12} md={hasPrefix(props) ? 12 : 2}>
-        <InputGroup.Prepend>
-          {!!hasPrefix(props) && <InputGroup.Text>{props.paramMapRangeGroup[0].comparisonPrefix}</InputGroup.Text>}
-        </InputGroup.Prepend>
+    <div className="range-fieldset">
+      <InputGroup className="fieldset range-fieldset">
+        {!!hasPrefix(props) && (
+          <InputGroup.Prepend className="input-group__label">
+            <InputGroup.Text>{props.paramMapRangeGroup[0].comparisonPrefix}</InputGroup.Text>
+          </InputGroup.Prepend>
+        )}
+
         <Form.Control
           name="comparison"
           as="select"
@@ -64,18 +69,14 @@ const RangeFieldSet = props => {
       {props.paramMapRangeGroup
         .sort((a, b) => a.rangePosition - b.rangePosition)
         .map((paramMap, paramMapIndex) => {
-          console.log(paramMap)
           return (
-            <InputGroup
-              as={Col}
-              xs={12}
-              sm={12}
-              md={hasPrefix(props) ? 6 : 5}
-              key={`paramMapRangeGroup-col-${paramMapIndex}`}
-            >
-              <InputGroup.Prepend>
-                <InputGroup.Text>{paramMap.rangePosition == 1 ? 'From' : 'To'}</InputGroup.Text>
-              </InputGroup.Prepend>
+            <InputGroup key={`paramMapRangeGroup-col-${paramMapIndex}`}>
+              {paramMap.rangePosition != 1 && (
+                <InputGroup.Prepend className="input-group__label">
+                  <InputGroup.Text>and</InputGroup.Text>
+                </InputGroup.Prepend>
+              )}
+
               {paramMap.baseComponent({
                 key: `rangeGroup-paramMap-${paramMapIndex}`,
                 dispatchAction: props.dispatchAction,
@@ -85,7 +86,7 @@ const RangeFieldSet = props => {
             </InputGroup>
           )
         })}
-    </Form.Row>
+    </div>
   )
 }
 

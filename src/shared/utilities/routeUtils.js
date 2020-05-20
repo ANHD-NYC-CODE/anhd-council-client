@@ -14,6 +14,7 @@ export const stringifyParamsObject = object => {
 }
 
 export const communityToCommunityProfileLink = id => {
+  id = String(id)
   return `/${boroCodeToName(id.charAt(0))
     .replace(' ', '-')
     .toLowerCase()}/${id.slice(1)}`

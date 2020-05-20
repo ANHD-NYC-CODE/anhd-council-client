@@ -1,7 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Row, Col } from 'react-bootstrap'
+
 import BaseLink from 'shared/components/BaseLink'
+import InfoModalButton from 'shared/components/InfoModalButton'
+
+import './style.scss'
+
 const getSubsidiesText = props => {
   if (props.profile.subsidyprograms) {
     return [...new Set(props.profile.subsidyprograms.split(', '))].join(', ')
@@ -19,82 +23,110 @@ const getSubsidiesText = props => {
 
 const ProgramSection = props => {
   return (
-    <Row className="program-section property-section property-summary-body">
-      <Col>
-        <Row>
-          <Col>
-            <h5 className="font-weight-bold">Programs / Statuses</h5>
-            <hr />
-          </Col>
-        </Row>
-        <Row className="lookup-profile-summary__group">
-          <Col>
-            <label className="profile-summary-body__label">Subsidy Programs </label>
-            <small>
-              (from <BaseLink href="http://app.coredata.nyc">Furman's CoreData</BaseLink> and DOF's{' '}
-              <BaseLink href="https://www1.nyc.gov/site/finance/benefits/benefits-421a.page">421a</BaseLink> and{' '}
-              <BaseLink href="https://www1.nyc.gov/site/finance/benefits/benefits-j51.page">J-51</BaseLink> data)
-            </small>
-            <ul>
-              {getSubsidiesText(props)
-                .split(',')
-                .map(program => {
-                  return (
-                    <li key={`${props.profile.bbl} - ${program}`} className="profile-summary-body__value">
-                      {program}
-                    </li>
-                  )
-                })}
-            </ul>
-          </Col>
-        </Row>
-        <Row className="lookup-profile-summary__group">
-          <Col>
-            <span className="profile-summary-body__value">
-              {props.profile.nycha && (
-                <span className="text-danger font-weight-bold">
-                  This property is a{' '}
-                  <BaseLink href="https://www1.nyc.gov/site/nycha/about/developments.page">NYCHA development.</BaseLink>
-                </span>
-              )}
-            </span>
-          </Col>
-        </Row>
-        <Row className="lookup-profile-summary__group">
-          <Col>
-            <span className="profile-summary-body__value">
-              {props.profile.conhrecord && (
-                <span className="text-danger font-weight-bold">
-                  A building on this property is eligible for the{' '}
-                  <BaseLink href="https://www1.nyc.gov/site/hpd/owners/certification-of-no-harassment.page">
-                    Certificate of No Harassment Pilot Program.
-                  </BaseLink>
-                </span>
-              )}
-            </span>
-          </Col>
-        </Row>
-        <Row>
-          <Col className="lookup-profile-summary__group">
-            {/* <label className="profile-summary-body__label">
-              Tax Lien? ({(props.config.datasets.find(ds => ds.model_name === 'TaxLien') || {}).version})
-            </label> */}
-            <span className="profile-summary-body__value">
-              {props.profile.taxlien && (
-                <span className="text-danger font-weight-bold">
-                  This property is subject to a{' '}
-                  <BaseLink href="https://www1.nyc.gov/site/finance/taxes/property-lien-sales.page">tax lien</BaseLink>{' '}
-                  as of the most recent data.
-                </span>
-              )}
-            </span>
-          </Col>
-        </Row>
-      </Col>
-    </Row>
+    <div className="program-section property-section property-summary-body">
+      <div>
+        <div className="lookup-profile-summary__group">
+          <div className="profile-summary-body__label">
+            Subsidy Programs <InfoModalButton modalConstant="SUBSIDY_PROGRAM_SOURCE" />
+          </div>
+        </div>
+        <div className="lookup-profile-summary__group program-section__list">
+          {getSubsidiesText(props)
+            .split(',')
+            .map(program => {
+              return (
+                <div key={`${props.profile.bbl} - ${program}`} className="profile-summary-body__value">
+                  {program}
+                </div>
+              )
+            })}
+        </div>
+        {!!props.profile.legalclassb && (
+          <div className="lookup-profile-summary__group">
+            <div className="text-danger font-weight-bold">
+              This property has {props.profile.legalclassb} Single Room Occupancy (SRO) units.
+            </div>
+          </div>
+        )}
+
+        {props.profile.aepstatus.toUpperCase() === 'AEP ACTIVE' && (
+          <div className="lookup-profile-summary__group">
+            <div className="text-danger font-weight-bold">
+              This property entered into the{' '}
+              <BaseLink className="text-link" href="https://www1.nyc.gov/site/hpd/owners/AEP.page">
+                Alternative Enforcement Program
+              </BaseLink>{' '}
+              on {props.profile.aepstartdate} and is still active in the program.
+            </div>
+          </div>
+        )}
+
+        {props.profile.aepstatus.toUpperCase() === 'AEP DISCHARGED' && (
+          <div className="lookup-profile-summary__group">
+            <div className="text-danger font-weight-bold">
+              This property entered into the{' '}
+              <BaseLink className="text-link" href="https://www1.nyc.gov/site/hpd/owners/AEP.page">
+                Alternative Enforcement Program{' '}
+              </BaseLink>
+              and was discharged on {props.profile.aepdischargedate}.
+            </div>
+          </div>
+        )}
+
+        {props.profile.managementprogram.toUpperCase() === '7A' && (
+          <div className="lookup-profile-summary__group">
+            <div className="text-danger font-weight-bold">
+              This property is managed under the{' '}
+              <BaseLink
+                className="text-link"
+                href="https://www1.nyc.gov/site/hpd/services-and-information/7a-program.page"
+              >
+                7A program.
+              </BaseLink>
+            </div>
+          </div>
+        )}
+
+        {props.profile.nycha && (
+          <div className="lookup-profile-summary__group">
+            <div className="text-danger font-weight-bold">
+              This property is a{' '}
+              <BaseLink className="text-link" href="https://www1.nyc.gov/site/nycha/about/developments.page">
+                NYCHA development.
+              </BaseLink>
+            </div>
+          </div>
+        )}
+
+        {props.profile.conhrecord && (
+          <div className="lookup-profile-summary__group">
+            <div className="text-danger font-weight-bold">
+              A building on this property is eligible for the{' '}
+              <BaseLink className="text-link" href="https://anhd.org/project/coalition-against-tenant-harassment-cath">
+                Certificate of No Harassment Pilot Program.
+              </BaseLink>
+            </div>
+          </div>
+        )}
+
+        {props.profile.taxlien && (
+          <div className="lookup-profile-summary__group">
+            <div className="text-danger font-weight-bold">
+              This property is subject to a{' '}
+              <BaseLink className="text-link" href="https://www1.nyc.gov/site/finance/taxes/property-lien-sales.page">
+                tax lien
+              </BaseLink>{' '}
+              as of the most recent data.
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
   )
 }
 
-ProgramSection.propTypes = {}
+ProgramSection.propTypes = {
+  profile: PropTypes.object,
+}
 
 export default ProgramSection

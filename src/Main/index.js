@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import Helmet from 'react-helmet'
 import AddressSearch from 'Lookup/AddressSearch'
-import GeographySelect from 'shared/components/GeographySelect'
+import MainGeographySelect from 'shared/components/MainGeographySelect'
 import { setGeographyAndRequestsAndRedirect } from 'Store/AppState/actions'
 import { setAppState } from 'Store/AppState/actions'
 import StandardizedInput from 'shared/classes/StandardizedInput'
@@ -12,9 +12,9 @@ import IntroductionBlock from 'shared/components/IntroductionBlock'
 import LoginModal from 'shared/components/modals/LoginModal'
 import LoginModalFooter from 'shared/components/forms/LoginForm/LoginModalFooter'
 import ConfigContext from 'Config/ConfigContext'
+import BaseLink from 'shared/components/BaseLink'
 
 import { Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
-import * as c from 'shared/constants'
 import { Row, Col } from 'react-bootstrap'
 class Main extends React.Component {
   constructor(props) {
@@ -22,6 +22,7 @@ class Main extends React.Component {
     this.submitGeography = this.submitGeography.bind(this)
     this.cancelChangeGeography = this.cancelChangeGeography.bind(this)
     this.handleChangeGeographyType = this.handleChangeGeographyType.bind(this)
+    this.handleChangeGeographyId = this.handleChangeGeographyId.bind(this)
     this.scrollToControls = this.scrollToControls.bind(this)
     if (this.props.appState.changingGeography) {
       this.props.dispatch(
@@ -81,6 +82,18 @@ class Main extends React.Component {
     this.cancelChangeGeography()
   }
 
+  handleChangeGeographyId(e) {
+    const geographyId = new StandardizedInput(e).value
+    if (parseInt(geographyId) <= 0) return
+    this.props.dispatch(
+      setAppState({
+        changingGeography: true,
+        changingGeographyType: this.props.appState.changingGeographyType || this.props.appState.currentGeographyType,
+        changingGeographyId: String(geographyId),
+      })
+    )
+  }
+
   handleChangeGeographyType(e) {
     this.props.dispatch(
       setAppState({
@@ -103,47 +116,70 @@ class Main extends React.Component {
 
   render() {
     return (
-      <div id="main" className="main">
+      <div id="main" className="main max-width-wrapper">
         <Helmet>
           <title>DAP Portal</title>
         </Helmet>
         <Row>
-          <Col className="layout__left-column touch-left padding-xs-sm-0" xs={12} lg={c.SIDEBAR_COLUMN_SIZE}>
-            <IntroductionBlock scrollToControls={this.scrollToControls} />
+          <Col>
+            <h4 className="text-center text-black mt-4 mb-4">Welcome to the Displacement Alert Portal!</h4>
           </Col>
-          <Col className="px-md-4 py-3 py-lg-6" xs={12} lg={12 - c.SIDEBAR_COLUMN_SIZE}>
-            <p className="text-muted font-weight-bold">Select a district or enter a building address to begin.</p>
+          <Col className="px-md-4 px-0 py-3 py-lg-4" xs={12}>
+            <p className="text-black text-center py-3">Enter an address to find information about a building:</p>
             <Element name="main-controls" />
             <div className="mb-4">
               <div>
                 <ConfigContext.Consumer>
                   {config => {
-                    return <AddressSearch config={config} inputClass="xl-form-control" placeholder="Enter an address" />
+                    return (
+                      <AddressSearch
+                        config={config}
+                        inputClass="home-search-bar"
+                        inputSize="md"
+                        containerClass="main-address-search"
+                        placeholder="Enter an address"
+                      />
+                    )
                   }}
                 </ConfigContext.Consumer>
               </div>
-              <div className="mt-5">
-                <GeographySelect
-                  selectClass="xl-form-control"
-                  cancelChangeGeography={this.cancelChangeGeography}
-                  changingGeographyType={this.props.appState.changingGeographyType}
-                  confirmChange={false}
-                  currentGeographyType={
-                    this.props.appState.changingGeographyType || this.props.appState.currentGeographyType
-                  }
-                  currentGeographyId={this.props.appState.changingGeographyId || this.props.appState.currentGeographyId}
-                  dispatch={this.props.dispatch}
-                  handleChangeGeography={this.submitGeography}
-                  handleChangeGeographyType={this.handleChangeGeographyType}
-                  placeholder="Select a geography"
-                  showSubmit={
-                    !this.props.appState.changingGeography &&
+              <p className="text-black text-center py-4 mb-0">OR</p>
+              <p className="text-black text-center">View data about a district or zip code:</p>
+              <MainGeographySelect
+                appState={this.props.appState}
+                selectClass="main-geography-select"
+                inputSize="md"
+                submitButtonVariant="dark"
+                cancelChangeGeography={this.cancelChangeGeography}
+                changingGeographyType={this.props.appState.changingGeographyType}
+                changingGeographyId={this.props.appState.changingGeographyId}
+                confirmChange={false}
+                currentGeographyType={
+                  this.props.appState.changingGeographyType || this.props.appState.currentGeographyType
+                }
+                currentGeographyId={this.props.appState.currentGeographyId}
+                dispatch={this.props.dispatch}
+                handleChangeGeography={this.submitGeography}
+                handleChangeGeographyType={this.handleChangeGeographyType}
+                handleChangeGeographyId={this.handleChangeGeographyId}
+                placeholder="Select"
+                showSubmit={
+                  (!this.props.appState.changingGeography &&
                     this.props.appState.currentGeographyType &&
-                    this.props.appState.currentGeographyId > 0
-                  }
-                />
-              </div>
+                    this.props.appState.currentGeographyId > 0) ||
+                  (this.props.appState.changingGeographyType && this.props.appState.changingGeographyId > 0)
+                }
+              />
             </div>
+            <p className="text-black text-center my-5">
+              You can also{' '}
+              <BaseLink className="text-link" href="/search">
+                create a Custom Search
+              </BaseLink>
+            </p>
+          </Col>
+          <Col className="layout__left-column padding-xs-sm-0 full-bleed--mobile" xs={12}>
+            <IntroductionBlock scrollToControls={this.scrollToControls} />
           </Col>
         </Row>
       </div>

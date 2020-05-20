@@ -4,11 +4,16 @@ import InnerLoader from 'shared/components/Loaders/InnerLoader'
 import ConfigContext from 'Config/ConfigContext'
 import TableAlert from 'shared/components/BaseTable/TableAlert'
 
-import { Card } from 'react-bootstrap'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons'
+
 import PropertySummaryBody from 'Lookup/LookupProfileSummary/PropertySummaryBody'
 import OwnershipSection from 'Lookup/LookupProfileSummary/OwnershipSection'
 import RentStabilizationSection from 'Lookup/LookupProfileSummary/RentStabilizationSection'
 import ProgramSection from 'Lookup/LookupProfileSummary/ProgramSection'
+import ZoningSection from 'Lookup/LookupProfileSummary/ZoningSection'
+import LocationSection from 'Lookup/LookupProfileSummary/LocationSection'
+import ExpandableSection from 'shared/components/ExpandableSection'
 
 import PrintLookupProfileSummary from 'Lookup/PrintLookupProfileSummary'
 import LayoutContext from 'Layout/LayoutContext'
@@ -18,32 +23,99 @@ const LookupProfileSummary = props => {
   if (props.loading) {
     return <InnerLoader />
   } else if (props.error) {
-    return <TableAlert message={props.error.messge} />
-  } else if (Object.keys(props.records).length) {
-    const profile = props.records
+    return <TableAlert message={props.error.message} />
+  } else if (Object.keys(props.propertyResult).length) {
     return (
       <LayoutContext.Consumer>
         {layout => {
           return layout.print ? (
-            <PrintLookupProfileSummary profile={profile} />
+            <PrintLookupProfileSummary profile={props.propertyResult} />
           ) : (
-            <Card className="lookup-profile-summary p-0 m-0">
-              <Card.Body className="lookup-profile-summary__body p-0">
+            <div className="lookup-profile-summary">
+              <div className="lookup-profile-summary__body">
                 <ConfigContext.Consumer>
                   {config => {
                     return (
                       <div>
-                        <PropertySummaryBody config={config} profile={profile} />
-                        <OwnershipSection profile={profile} request={props.request} />
-                        <ProgramSection config={config} profile={profile} />
-
-                        <RentStabilizationSection config={config} profile={profile} request={props.request} />
+                        <ExpandableSection
+                          aboveFoldElement={
+                            <div className="lookup-sidebar__header">
+                              <h5>Property Info</h5>
+                            </div>
+                          }
+                          className="lookup-profile-summary__section-header"
+                          iconClass="lookup-profile-summary__expandable-icon"
+                          collapseIcon={<FontAwesomeIcon size="lg" icon={faChevronUp} />}
+                          expandIcon={<FontAwesomeIcon size="lg" icon={faChevronDown} />}
+                          startsOpen={window.matchMedia('(min-width: 576px)').matches}
+                        >
+                          <PropertySummaryBody config={config} profile={props.propertyResult} />
+                        </ExpandableSection>
+                        <ExpandableSection
+                          aboveFoldElement={<h5>Rent Stabilization</h5>}
+                          className="lookup-profile-summary__section-header"
+                          iconClass="lookup-profile-summary__expandable-icon"
+                          collapseIcon={<FontAwesomeIcon size="lg" icon={faChevronUp} />}
+                          expandIcon={<FontAwesomeIcon size="lg" icon={faChevronDown} />}
+                        >
+                          <RentStabilizationSection
+                            config={config}
+                            profile={props.propertyResult}
+                            request={props.request}
+                          />
+                        </ExpandableSection>
+                        <ExpandableSection
+                          aboveFoldElement={<h5>Ownership</h5>}
+                          className="lookup-profile-summary__section-header"
+                          iconClass="lookup-profile-summary__expandable-icon"
+                          collapseIcon={<FontAwesomeIcon size="lg" icon={faChevronUp} />}
+                          expandIcon={<FontAwesomeIcon size="lg" icon={faChevronDown} />}
+                        >
+                          <OwnershipSection
+                            profile={props.propertyResult}
+                            wowData={props.appState.currentPropertyWowData}
+                            request={props.request}
+                          />
+                        </ExpandableSection>
+                        <ExpandableSection
+                          aboveFoldElement={<h5>Programs/Statuses</h5>}
+                          className="lookup-profile-summary__section-header"
+                          iconClass="lookup-profile-summary__expandable-icon"
+                          collapseIcon={<FontAwesomeIcon size="lg" icon={faChevronUp} />}
+                          expandIcon={<FontAwesomeIcon size="lg" icon={faChevronDown} />}
+                        >
+                          <ProgramSection config={config} profile={props.propertyResult} />
+                        </ExpandableSection>
+                        <ExpandableSection
+                          aboveFoldElement={<h5>Zoning</h5>}
+                          className="lookup-profile-summary__section-header"
+                          iconClass="lookup-profile-summary__expandable-icon"
+                          collapseIcon={<FontAwesomeIcon size="lg" icon={faChevronUp} />}
+                          expandIcon={<FontAwesomeIcon size="lg" icon={faChevronDown} />}
+                        >
+                          <ZoningSection profile={props.propertyResult} />
+                        </ExpandableSection>
+                        <ExpandableSection
+                          aboveFoldElement={<h5>Location</h5>}
+                          className="lookup-profile-summary__section-header"
+                          iconClass="lookup-profile-summary__expandable-icon"
+                          collapseIcon={<FontAwesomeIcon size="lg" icon={faChevronUp} />}
+                          expandIcon={<FontAwesomeIcon size="lg" icon={faChevronDown} />}
+                          startsOpen={window.matchMedia('(min-width: 576px)').matches}
+                        >
+                          <LocationSection
+                            appState={props.appState}
+                            lat={props.propertyResult.lat}
+                            lng={props.propertyResult.lng}
+                            propertyResult={props.propertyResult}
+                          />
+                        </ExpandableSection>
                       </div>
                     )
                   }}
                 </ConfigContext.Consumer>
-              </Card.Body>
-            </Card>
+              </div>
+            </div>
           )
         }}
       </LayoutContext.Consumer>
@@ -53,11 +125,17 @@ const LookupProfileSummary = props => {
   }
 }
 LookupProfileSummary.propTypes = {
-  records: {},
+  appState: PropTypes.object,
+  loading: PropTypes.bool,
+  error: PropTypes.object,
+  propertyResult: PropTypes.object,
 }
 
-LookupProfileSummary.propTypes = {
-  records: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
+LookupProfileSummary.defaultProps = {
+  appState: {},
+  loading: true,
+  error: null,
+  propertyResult: {},
 }
 
 export default LookupProfileSummary
