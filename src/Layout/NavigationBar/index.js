@@ -6,7 +6,7 @@ import './style.scss'
 const NavigationBar = props => {
   return (
     <div className="navigation-bar">
-      <Navbar bg="dark" variant="dark" expand="lg">
+      <Navbar bg="black" variant="black" expand="lg">
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav.Link as="li">
@@ -57,16 +57,6 @@ const NavigationBar = props => {
               </Nav.Link>
             </div>
           </div>
-          <Nav.Link as="li">
-            <a
-              className="text-muted"
-              target=""
-              rel="noopener noreferrer"
-              href="https://www.displacementalert.org/watchlist"
-            >
-              Watch List
-            </a>
-          </Nav.Link>
           <Nav.Link as="li">
             <a
               className="text-portal-orange"

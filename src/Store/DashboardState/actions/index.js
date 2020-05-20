@@ -1,5 +1,9 @@
 import * as c from 'shared/constants'
 
+export const resetDashboardState = () => ({
+  type: c.RESET_DASHBOARD_STATE,
+})
+
 export const setDashboardMapZoom = dashboardMapZoom => ({
   type: c.SET_DASHBOARD_MAP_ZOOM,
   dashboardMapZoom,
@@ -13,6 +17,11 @@ export const loadResultFilters = resultFilters => ({
 export const setHousingTypeResultFilter = housingTypeResultFilter => ({
   type: c.SET_HOUSING_TYPE_RESULT_FILTER,
   housingTypeResultFilter,
+})
+
+export const setHousingTypeResultsIndex = housingTypeResultsIndex => ({
+  type: c.SET_HOUSING_TYPE_RESULTS_INDEX,
+  housingTypeResultsIndex,
 })
 
 export const setMapFilterDate = date => ({
@@ -40,11 +49,6 @@ export const setTotalPropertyResults = (totalPropertyResults = []) => ({
   totalPropertyResults,
 })
 
-export const setCustomSearchResults = (customSearchResults = []) => ({
-  type: c.SET_CUSTOM_SEARCH_RESULTS,
-  customSearchResults,
-})
-
 export const setDashboardTableView = dashboardTableView => ({
   type: c.SET_DASHBOARD_TABLE_VIEW,
   dashboardTableView,
@@ -53,4 +57,9 @@ export const setDashboardTableView = dashboardTableView => ({
 export const setDashboardTableState = (dashboardTableState = {}) => ({
   type: c.SET_DASHBOARD_TABLE_STATE,
   dashboardTableState,
+})
+
+export const setDashboardFilterCondition = (filterCondition = 'OR') => ({
+  type: c.SET_DASHBOARD_FILTER_CONDITION,
+  filterCondition,
 })

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Button, Overlay, Tooltip } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMinus } from '@fortawesome/free-solid-svg-icons'
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
 class RemoveFilterButton extends React.PureComponent {
   constructor(props) {
     super(props)
@@ -29,9 +29,10 @@ class RemoveFilterButton extends React.PureComponent {
           className="filter-control remove-filter"
           onClick={this.props.removeFilter}
           ref={this.ref}
-          variant="danger"
+          size="sm"
+          variant="link"
         >
-          <FontAwesomeIcon icon={faMinus} />
+          <FontAwesomeIcon icon={faTimes} />
         </Button>
       </div>
     )

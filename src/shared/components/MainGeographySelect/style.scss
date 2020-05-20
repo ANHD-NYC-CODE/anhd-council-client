@@ -1,0 +1,73 @@
+@import 'shared/styles/_variables.scss';
+
+.geography-select {
+  .zip-select {
+    min-width: 170px;
+    max-width: 440px;
+  }
+
+  .geography-select__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 0 auto;
+  }
+
+  .geography-select__row {
+    display: block;
+    width: 100%;
+
+    @include media-breakpoint-up(sm) {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: row;
+    }
+  }
+
+  .main-geography-select {
+    @extend %p3-font-size;
+    min-width: 200px;
+    max-width: $main-input-max-width;
+
+    &.form-control:focus,
+    &.form-control:focus-within {
+      border-bottom: $input-border-focus-default;
+    }
+
+    @include media-breakpoint-up(sm) {
+      max-width: 200px;
+    }
+
+    select {
+      &::placeholder {
+        color: $black;
+      }
+    }
+  }
+
+  .main-geography-select,
+  .main-geography-select + .zip-select {
+    margin: 10px auto;
+    @include media-breakpoint-up(sm) {
+      margin: 0 10px 0 0;
+    }
+  }
+
+  .submit-geography-change,
+  .cancel-geography-change {
+    margin: 0 auto;
+    max-width: $main-input-max-width;
+    @include media-breakpoint-up(sm) {
+      margin: 0;
+      margin-right: 15px;
+      max-width: 80px;
+    }
+  }
+
+  .main-geography-select__map {
+    margin: 0 auto;
+    max-width: $main-input-max-width;
+  }
+}

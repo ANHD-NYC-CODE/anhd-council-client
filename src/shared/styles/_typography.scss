@@ -1,0 +1,36 @@
+@import 'shared/styles/_variables.scss';
+
+/* globals */
+
+p,
+li,
+span,
+div {
+  font-family: $font-family-secondary;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $font-family-primary;
+  margin-bottom: 0;
+}
+
+h5 {
+  font-size: 20px;
+  line-height: 24px;
+}
+
+h6 {
+  font-size: 18px;
+  line-height: 24px;
+  font-weight: bold;
+}
+
+button,
+button.btn {
+  font-family: $font-family-secondary;
+}

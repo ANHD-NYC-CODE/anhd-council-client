@@ -1,4 +1,6 @@
-import { constructCountDateParamSet } from 'shared/utilities/filterUtils'
+import { constructSingleMapParamSet, comparisonOptions, constructCountDateParamSet } from 'shared/utilities/filterUtils'
+import GenericFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/GenericFieldSet'
+import TextSelectField from 'AdvancedSearch/FilterComponent/Field/TextSelectField'
 
 const HPDViolation = databaseObject => ({
   summaryBackgroundColorClass: 'hpd-orange',
@@ -11,6 +13,48 @@ const HPDViolation = databaseObject => ({
       generatorFunction: resourceModel => {
         return constructCountDateParamSet({
           resourceModel,
+        })
+      },
+    },
+    class_name: {
+      generatorFunction: resourceModel => {
+        return constructSingleMapParamSet({
+          resourceModel,
+          component: GenericFieldSet,
+          baseComponent: TextSelectField,
+          paramMapValue: 'A',
+          paramMapType: 'SINGLE-TEXT',
+          paramMapComparison: '',
+          paramSetLabel: 'Class',
+          paramMapField: 'class_name',
+          valuePrefix: 'Class',
+          inputClass: '',
+          defaultOptions: comparisonOptions({
+            name: 'value',
+            comparisonValues: ['A', 'B', 'C'],
+            labels: ['A', 'B', 'C'],
+          }),
+        })
+      },
+    },
+    violationstatus: {
+      generatorFunction: resourceModel => {
+        return constructSingleMapParamSet({
+          resourceModel,
+          component: GenericFieldSet,
+          baseComponent: TextSelectField,
+          paramMapValue: 'Open',
+          paramMapType: 'SINGLE-TEXT',
+          paramMapComparison: '',
+          paramSetLabel: 'Status',
+          paramMapField: 'violationstatus',
+          valuePrefix: 'Status',
+          inputClass: '',
+          defaultOptions: comparisonOptions({
+            name: 'value',
+            comparisonValues: ['Open', 'Close'],
+            labels: ['Open', 'Closed'],
+          }),
         })
       },
     },

@@ -3,11 +3,12 @@ import PropTypes from 'prop-types'
 
 import AddFilterButton from 'AdvancedSearch/ConditionComponent/AddFilterButton'
 import { ButtonGroup } from 'react-bootstrap'
+import classnames from 'classnames'
 
 const AddFilterButtonGroup = props => {
   if (props.condition.key === '0') {
     return (
-      <ButtonGroup>
+      <ButtonGroup className={classnames(props.className)}>
         <AddFilterButton
           createNewFilter={props.createNewFilter}
           showPopups={props.showPopups}
@@ -42,6 +43,7 @@ const AddFilterButtonGroup = props => {
 
 AddFilterButtonGroup.propTypes = {
   createNewFilter: PropTypes.func,
+  className: PropTypes.string,
   condition: PropTypes.object,
   showPopups: PropTypes.bool,
   switchCondition: PropTypes.func,

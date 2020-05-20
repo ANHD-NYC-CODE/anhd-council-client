@@ -1,0 +1,38 @@
+@import 'shared/styles/_variables.scss';
+
+.login-form {
+  &__text {
+    @extend %p3-font-size;
+    color: $black;
+  }
+
+  .form-label {
+    @extend %p3-font-size;
+    font-weight: bold;
+    color: $black;
+  }
+
+  &__submit-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+
+    @include media-breakpoint-up(md) {
+      flex-wrap: nowrap;
+    }
+  }
+
+  &__submit-button {
+    font-weight: bold;
+    min-width: 100%;
+
+    @include media-breakpoint-up(md) {
+      min-width: 200px;
+    }
+  }
+
+  &__request-button {
+    font-weight: bold;
+  }
+}

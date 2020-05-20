@@ -1,21 +1,49 @@
 @import 'shared/styles/bootstrap/_variables.scss';
 
-
 .info-modal-button {
+  background-color: $black;
+  border-radius: 50%;
+  color: $white;
   cursor: pointer;
-  height: 1.5em;
-  width: 1.5em;
+  height: 20px;
+  width: 20px;
+  outline: none;
   padding: 5px;
+
+  &:focus {
+    background-color: $secondary;
+  }
+
+  &--tooltip {
+    background-color: $secondary;
+    margin-left: 8px;
+    outline: none;
+
+    &:focus {
+      background: $secondary;
+    }
+  }
 }
 
-.svg-inline--fa.fa-w-12 {
-  width: 1.5em;
+.tooltip-wrapper {
+  display: inline-block;
+  outline: none;
+}
+
+.svg-inline--fa.fa-w-12,
+.svg-inline--fa.fa-w-6 {
+  height: 16px;
+  width: 16px;
+
+  @include media-breakpoint-up(sm) {
+    height: 20px;
+    width: 20px;
+  }
 }
 
 @media (hover: hover) {
-  .info-modal-button:hover {
-    color: $secondary;
-    border: 1px solid $secondary;
-    border-radius: 50%;
+  .info-modal-button:hover,
+  .info-modal-button:focus {
+    background-color: $gray-400;
   }
 }

@@ -1,20 +1,155 @@
-@import 'shared/styles/bootstrap/_variables.scss';
+@import 'shared/styles/_variables.scss';
 
 .advanced-search-form {
+  // base styles
+  .input-group input[type='number'],
+  .input-group input[type='date'],
+  .input-group select,
+  .new-filter-select select,
+  .textmultiselect-field.form-control {
+    border: 0;
+    border-bottom: 1px solid $dark;
+    border-radius: 0;
+    line-height: 100%;
+    // padding-bottom: 0;
+
+    &:hover {
+      border-bottom-color: $gray-400;
+    }
+  }
+
+  .sales-input {
+    max-width: 140px;
+  }
+
+  &__heading {
+    @extend %p1-font-size;
+    color: $black;
+    font-family: $font-family-secondary;
+    margin-bottom: 20px;
+  }
+
+  &__section {
+    margin-bottom: 20px;
+  }
+
+  // geo and housing selects
+  .geography-select__row select,
+  .advanced-search-form__housingtype-select .filter .paramset-wrapper:first-child .fieldset .form-control {
+    border: 1px solid $gray-400;
+    padding-left: 12px;
+    text-decoration: none;
+  }
+
+  // reduce spacing between housing type param sets
+  // &__housingtype-select .filter-component__primary-row .filter-component__paramsets {
+  //   padding-top: 0;
+  //   padding-bottom: 0;
+  // }
+
   button[type='submit'].btn {
-    font-weight: bold;
-    min-width: 100%;
+    // min-width: 100%;
     @include media-breakpoint-up(lg) {
       min-width: 240px;
       max-width: 240px;
     }
   }
 
+  .form-control {
+    // text-decoration: underline;
+  }
+
+  .form-control.is-invalid {
+    background-image: none; // disabled red X
+    border-bottom-color: $danger;
+  }
+
+  .form-control,
+  .dropdown.btn-group,
+  .dropdown-item {
+    @extend %p3-font-size;
+    color: $black;
+    padding-left: 0px;
+    // text-decoration: underline;
+  }
+
+  .dropdown.btn-group button,
+  .dropdown-item {
+    color: $black;
+    font-weight: bold;
+  }
+
+  .input-group__label .input-group-text {
+    @extend %p3-font-size;
+    background-color: $white;
+    border: 0;
+  }
+
   .fieldset {
-    max-height: 50px;
+    display: flex;
+    flex-wrap: wrap;
+
+    @include media-breakpoint-up(xl) {
+      max-height: 50px;
+    }
+  }
+
+  .form-control {
+    border: 0;
+    margin-right: 10px;
+  }
+
+  .input-group-text {
+    padding: 0;
+    margin-right: 10px;
+
+    &:not(:first-child) {
+    }
   }
 
   .form-group {
     margin-bottom: 0;
+  }
+
+  .input-group {
+    align-items: center;
+    line-height: 100%;
+
+    // date inputs
+    input[type='date'] {
+      max-width: 140px;
+
+      -webkit-appearance: none;
+
+      &::-webkit-clear-button, // X button
+      &::-webkit-inner-spin-button // up/down arrows
+ {
+        display: none; /* Hide the button */
+        -webkit-appearance: none; /* turn off default browser styling */
+      }
+    }
+
+    input[type='number']:not(.sales-input) {
+      max-width: 54px;
+      padding-left: 8px;
+    }
+
+    input[type='number']::-webkit-inner-spin-button,
+    input[type='number']::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    select {
+      line-height: 100%;
+    }
+
+    select[name='newFilter'] {
+      max-width: 240px;
+    }
+  }
+
+  .dropdown.btn-group {
   }
 }

@@ -13,7 +13,7 @@ export const initialState = () => ({
   },
   geographies: [],
   propertyFilter: undefined, // initialize in Config/index.js
-  results: undefined,
+  results: [],
 })
 
 export const advancedSearchReducer = (state = Object.freeze(initialState()), action = { data: [] }) => {
@@ -168,6 +168,12 @@ export const advancedSearchReducer = (state = Object.freeze(initialState()), act
       }
     }
 
+    case c.FORCE_UPDATE_SEARCH: {
+      return {
+        ...state,
+      }
+    }
+
     case c.HANDLE_GET_ADVANCED_SEARCH: {
       return {
         ...state,
@@ -179,6 +185,13 @@ export const advancedSearchReducer = (state = Object.freeze(initialState()), act
       return {
         ...initialState(),
         propertyFilter: action.propertyFilter,
+      }
+    }
+
+    case c.SET_CUSTOM_SEARCH_RESULTS: {
+      return {
+        ...state,
+        results: action.customSearchResults,
       }
     }
 

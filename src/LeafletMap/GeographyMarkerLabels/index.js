@@ -35,6 +35,10 @@ const GeographyMarkerLabels = props => {
     })
 }
 
+GeographyMarkerLabels.defaultProps = {
+  geographies: [],
+}
+
 GeographyMarkerLabels.propTypes = {
   geographies: PropTypes.array,
   currentGeographyType: PropTypes.string,

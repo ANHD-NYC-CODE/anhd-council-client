@@ -71,7 +71,7 @@ describe('Lookup', () => {
       expect(store.getState().appState.currentBuilding).toEqual(undefined)
     })
 
-    it('renders the request wrappers', async () => {
+    it('renders the lookup tabs', async () => {
       mock.onGet('/properties/1/').reply(200, createPropertyRequestMock({ bbl: '1' }))
 
       const [wrapper, store] = setupWrapper({
@@ -80,7 +80,7 @@ describe('Lookup', () => {
       await flushAllPromises()
       wrapper.update()
 
-      expect(wrapper.find('RequestTableWrapper')).toHaveLength(12)
+      expect(wrapper.find('LookupTableTab')).toHaveLength(11)
     })
   })
 
@@ -99,15 +99,26 @@ describe('Lookup', () => {
       expect(store.getState().appState.currentBuilding).toEqual('2')
     })
 
-    it('renders the request wrappers', () => {
+    it('renders the LookupSidebar', () => {
+      const [wrapper, store] = setupWrapper({
+        router: { location: { pathname: '/property/1/building/2' }, action: 'POP' },
+      })
+      expect(wrapper.find('LookupSidebar')).toBeDefined()
+
+      expect(wrapper.findByTestId('lookup-sidebar').hasClass('open')).toEqual(true)
+      wrapper.findByTestId('lookup-sidebar-toggle').simulate('click')
+      expect(wrapper.findByTestId('lookup-sidebar').hasClass('open')).toEqual(false)
+    })
+
+    it('renders the tables', () => {
       const [wrapper] = setupWrapper({
         router: { location: { pathname: '/property/1/building/2' }, action: 'POP' },
       })
 
-      expect(wrapper.find('RequestTableWrapper')).toHaveLength(12)
+      expect(wrapper.find('LookupTable')).toHaveLength(11)
 
-      wrapper.find('RequestTableWrapper').forEach((w, index) => {
-        if (index === 0 || index === 1) {
+      wrapper.find('LookupTable').forEach((w, index) => {
+        if (index === 0) {
           expect(w.props().visible).toEqual(true)
         } else {
           expect(w.props().visible).toEqual(false)
@@ -120,7 +131,7 @@ describe('Lookup', () => {
         router: { location: { pathname: '/property/1/building/2' }, action: 'POP' },
       })
 
-      expect(wrapper.find('RequestSummaryWrapper')).toHaveLength(11)
+      expect(wrapper.find('LookupTableTab')).toHaveLength(11)
     })
 
     it('renders dataset info sentence', () => {
@@ -136,35 +147,44 @@ describe('Lookup', () => {
       ).toEqual("This dataset's range is from 01/01/2018 to 01/01/2019.")
     })
 
-    it('Switches the visible request wrapper', () => {
+    it('Switches the visible request wrapper', async () => {
+      const results = [{ bin: '2' }, { bin: '2' }, { bin: '2' }]
+      mock
+        .onGet('/properties/1/')
+        .reply(200, createPropertyRequestMock({ bbl: '1', buildings: [{ bin: '2' }, { bin: '3' }] }))
+      mock.onGet('/properties/1/acrisrealmasters/').reply(200, [])
+      mock.onGet('/buildings/2/hpdviolations/').reply(200, results)
+      mock.onGet('/buildings/2/hpdcomplaints/').reply(200, results)
+      mock.onGet('/buildings/2/dobviolations/').reply(200, results)
+      mock.onGet('/buildings/2/dobcomplaints/').reply(200, results)
+      mock.onGet('/buildings/2/hpdcomplaints/').reply(200, results)
+      mock.onGet('/buildings/2/ecbviolations/').reply(200, results)
+      mock.onGet('/buildings/2/dobfiledermits/').reply(200, results)
+      mock.onGet('/buildings/2/dobissuedpermits/').reply(200, results)
+      mock.onGet('/buildings/2/housinglitigations/').reply(200, results)
+
       const [wrapper] = setupWrapper({
         router: { location: { pathname: '/property/1/building/2' }, action: 'POP' },
       })
 
+      await flushAllPromises()
+      wrapper.update()
+
       expect(
-        wrapper
-          .findWhere(node => node.key() && node.key().includes('ACRIS_REAL_MASTER'))
-          .find('RequestTableWrapper')
-          .props().visible
+        wrapper.findWhere(node => node.key() && node.key().includes('lookup-table-ACRIS_REAL_MASTER')).props().visible
       ).toEqual(true)
 
-      wrapper
-        .findWhere(node => node.key() && node.key().includes('HPD_VIOLATION'))
-        .find('button.summary-result-card')
-        .simulate('click')
+      wrapper.findWhere(node => node.key() && node.key().includes('tab-HPD_VIOLATION')).simulate('click')
 
+      await flushAllPromises()
       wrapper.update()
+
       expect(
-        wrapper
-          .findWhere(node => node.key() && node.key().includes('ACRIS_REAL_MASTER'))
-          .find('RequestTableWrapper')
-          .props().visible
+        wrapper.findWhere(node => node.key() && node.key().includes('lookup-table-ACRIS_REAL_MASTER')).props().visible
       ).toEqual(false)
+
       expect(
-        wrapper
-          .findWhere(node => node.key() && node.key().includes('HPD_VIOLATION'))
-          .find('RequestTableWrapper')
-          .props().visible
+        wrapper.findWhere(node => node.key() && node.key().includes('lookup-table-HPD_VIOLATION')).props().visible
       ).toEqual(true)
     })
 

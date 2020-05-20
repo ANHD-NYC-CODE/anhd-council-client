@@ -2,12 +2,14 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import * as c from 'shared/constants'
 import { Form, Button } from 'react-bootstrap'
-import { postBugReport } from 'Store/Request/actions'
+import { postUserMessage } from 'Store/Request/actions'
 import { Formik } from 'formik'
 import * as yup from 'yup'
 import FormError from 'shared/components/FormError'
 import { toast } from 'react-toastify'
 import SpinnerLoader from 'shared/components/Loaders/SpinnerLoader'
+
+import './style.scss'
 
 const schema = yup.object({
   email: yup
@@ -20,7 +22,7 @@ const schema = yup.object({
     .required(),
 })
 
-class BugReportForm extends React.Component {
+class UserMessageForm extends React.Component {
   constructor(props) {
     super(props)
 
@@ -34,7 +36,7 @@ class BugReportForm extends React.Component {
 
   handleSuccessfulSubmit() {
     this.props.hideModal()
-    toast.success('Your bug report has been submitted. Thank you!')
+    toast.success('Your message has been submitted. Thank you!')
   }
   handleSubmit(formData) {
     this.setState({ validated: true })
@@ -43,7 +45,7 @@ class BugReportForm extends React.Component {
       description: formData.description,
     }
 
-    this.props.dispatch(postBugReport(bugData, this.handleSuccessfulSubmit))
+    this.props.dispatch(postUserMessage(bugData, this.handleSuccessfulSubmit))
   }
 
   render() {
@@ -51,11 +53,14 @@ class BugReportForm extends React.Component {
       <Formik onSubmit={e => this.handleSubmit(e)} validationSchema={schema}>
         {({ handleSubmit, handleChange, handleBlur, touched, errors, submitCount }) => {
           return (
-            <Form noValidate className="auth-login-form" validated={this.state.validated} onSubmit={handleSubmit}>
+            <Form
+              noValidate
+              className="bug-report-form auth-login-form"
+              validated={this.state.validated}
+              onSubmit={handleSubmit}
+            >
               <FormError show={!!this.props.error} message={(this.props.error || {}).message} />
-              <Form.Text className="text-muted mb-3">
-                We'll only use your email if needed to clarify your report and won't share it with anyone else.
-              </Form.Text>
+
               <Form.Group controlId="userRequestEmail">
                 <Form.Label>Email *</Form.Label>
                 <Form.Control
@@ -66,22 +71,23 @@ class BugReportForm extends React.Component {
                   isValid={false}
                   isInvalid={!!this.props.submitCount || (touched.email && errors.email)}
                   type="email"
-                  placeholder="Enter your email"
+                  placeholder=""
                 />
+                <Form.Text className="bug-report-form__text text-muted mb-3">
+                  We'll only use your email if needed to respond to your message and won't share it with anyone else.
+                </Form.Text>
                 <FormError show={!!((submitCount || touched.email) && errors.email)} message={errors.email} />
               </Form.Group>
+              <Form.Text>
+                If reporting a bug, please provide a detailed description, including:
+                <ol>
+                  <li>The browser you were using.</li>
+                  <li>The url of the page that the bug occured on.</li>
+                  <li>(important!) The steps we'd need to take to see the bug for ourselves.</li>
+                </ol>
+              </Form.Text>
               <Form.Group controlId="userRequestUsername">
-                <Form.Text className="text-primary font-weight-bold">
-                  Please provide a detailed description, including:
-                </Form.Text>
-                <Form.Text className="text-primary font-weight-bold">1) The browser you were using.</Form.Text>
-                <Form.Text className="text-primary font-weight-bold">
-                  2) The url of the page that the bug occured on.
-                </Form.Text>
-                <Form.Text className="mb-3 text-primary font-weight-bold">
-                  3) (important!) The steps we'd need to take to see the bug for ourselves.
-                </Form.Text>
-                <Form.Label>Description *</Form.Label>
+                <Form.Label>Message *</Form.Label>
                 <Form.Control
                   required
                   as="textarea"
@@ -100,7 +106,7 @@ class BugReportForm extends React.Component {
                 />
               </Form.Group>
 
-              <Button block disabled={this.props.loading} variant="primary" type="submit">
+              <Button className="btn-loader" block disabled={this.props.loading} variant="dark" type="submit">
                 <span>Submit</span>
                 <div className="button-loader__container">{this.props.loading && <SpinnerLoader size="20px" />}</div>
               </Button>
@@ -112,14 +118,14 @@ class BugReportForm extends React.Component {
   }
 }
 
-BugReportForm.defaultProps = {
+UserMessageForm.defaultProps = {
   error: null,
 }
 
-BugReportForm.propTypes = {
+UserMessageForm.propTypes = {
   dispatch: PropTypes.func,
   error: PropTypes.object,
   loading: PropTypes.bool,
 }
 
-export default BugReportForm
+export default UserMessageForm

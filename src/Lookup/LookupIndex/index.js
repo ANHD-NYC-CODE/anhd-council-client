@@ -1,45 +1,75 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import Helmet from 'react-helmet'
+import AddressSearch from 'Lookup/AddressSearch'
+import ConfigContext from 'Config/ConfigContext'
+import BaseLink from 'shared/components/BaseLink'
 
 import { Row, Col } from 'react-bootstrap'
-import AddressSearch from 'Lookup/AddressSearch'
-import LeafletMap from 'LeafletMap'
-import { Element } from 'react-scroll'
-import * as c from 'shared/constants'
-import ConfigContext from 'Config/ConfigContext'
 
-import IntroductionBlock from 'shared/components/IntroductionBlock'
-
-const LookupIndex = props => {
-  return (
-    <Row>
-      <Col className="layout__left-column touch-left padding-xs-sm-0" xs={12} lg={c.SIDEBAR_COLUMN_SIZE}>
-        <IntroductionBlock scrollToControls={props.scrollToControls} />
-      </Col>
-      <Col className="px-md-4 py-3 py-lg-6" xs={12} lg={12 - c.SIDEBAR_COLUMN_SIZE}>
-        <Element name="main-controls" />
-        <Row className="mb-4">
-          <Col>
-            <h5 className="font-weight-bold text-muted text-uppercase">Enter a building address to begin.</h5>
-            <ConfigContext.Consumer>
-              {config => {
-                return <AddressSearch config={config} />
-              }}
-            </ConfigContext.Consumer>
-          </Col>
-        </Row>
+class LookupIndex extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+  render() {
+    return (
+      <div id="main" className="main max-width-wrapper">
+        <Helmet>
+          <title>DAP Portal | Property Lookup</title>
+        </Helmet>
         <Row>
           <Col>
-            <LeafletMap appState={props.appState} iconConfig="SINGLE" zoom={15} />
+            <h4 className="text-center text-black mt-4 mb-4">Property Lookup</h4>
+          </Col>
+          <Col className="px-md-4 px-0 py-3 py-lg-4" xs={12}>
+            <p className="text-black text-center py-3">Enter an address to find information about a building:</p>
+            <div className="mb-4">
+              <div>
+                <ConfigContext.Consumer>
+                  {config => {
+                    return (
+                      <AddressSearch
+                        config={config}
+                        inputClass="home-search-bar"
+                        inputSize="md"
+                        containerClass="main-address-search"
+                        placeholder="Enter an address"
+                      />
+                    )
+                  }}
+                </ConfigContext.Consumer>
+              </div>
+            </div>
+            <p className="text-black text-center my-5">
+              You can also{' '}
+              <BaseLink className="text-link" href="/map">
+                view data about a district or zip code
+              </BaseLink>
+              {' or '}
+              <BaseLink className="text-link" href="/search">
+                create a Custom Search
+              </BaseLink>
+            </p>
           </Col>
         </Row>
-      </Col>
-    </Row>
-  )
+      </div>
+    )
+  }
 }
 
 LookupIndex.propTypes = {
   appState: PropTypes.object,
+  auth: PropTypes.object,
+  dispatch: PropTypes.func,
+  showLoginModal: PropTypes.bool,
+  path: PropTypes.string,
 }
 
-export default LookupIndex
+const mapStateToProps = state => {
+  return {
+    appState: state.appState,
+  }
+}
+
+export default connect(mapStateToProps)(LookupIndex)

@@ -1,17 +1,29 @@
+import * as c from 'shared/constants'
+
+export const capitalizeString = string => {
+  if (!string) return ''
+  return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase()
+}
+
 export const capitalizeWords = string => {
   if (!string) return ''
   return preserveUppercaseTerms(
     string
       .split(' ')
       .map(word => {
-        return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+        return capitalizeString(word)
       })
       .join(' ')
   )
 }
 
+export const capitalizeSentences = string => {
+  if (!string) return ''
+  return string.split('.').map(sentence => capitalizeString(sentence))
+}
+
 export const preserveUppercaseTerms = string => {
-  return string.replace(/\bllc\b/i, 'LLC')
+  return string.replace(/\bllc\b/i, 'LLC').replace(/nycha/i, 'NYCHA')
 }
 
 export const splitCamelCase = string => {
@@ -89,9 +101,9 @@ export const longAmountComparisonString = comparison => {
 export const constructDateComparisonString = comparison => {
   switch (comparison) {
     case 'gte':
-      return 'after'
+      return 'since'
     case 'start':
-      return 'after'
+      return 'since'
     case 'lte':
       return 'before'
     case 'end':
@@ -198,4 +210,19 @@ export const councilIdToString = (id, prefix = true) => {
 export const communityIdToString = id => {
   const borough = boroCodeToName(String(id).charAt(0))
   return `${borough} ${String(id).slice(1)}`
+}
+
+export const formatNumber = num => {
+  return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+}
+
+export const mapFilterDateToLabel = token => {
+  switch (token) {
+    case c.DISTRICT_REQUEST_DATE_ONE:
+      return 'last 30 days'
+    case c.DISTRICT_REQUEST_DATE_TWO:
+      return 'last year'
+    case c.DISTRICT_REQUEST_DATE_THREE:
+      return 'last 3 years'
+  }
 }

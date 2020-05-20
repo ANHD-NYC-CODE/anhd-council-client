@@ -9,7 +9,7 @@ const customStyle = size => {
         control: base => ({
           ...base,
           minHeight: '1px',
-          height: '38px',
+          height: '32px',
           boxShadow: 'none',
           outline: 'none',
         }),
@@ -27,7 +27,7 @@ const customStyle = size => {
           ...base,
           marginTop: '0px',
           minHeight: '1px',
-          height: '38px',
+          height: '32px',
         }),
         menu: base => ({
           ...base,
@@ -42,7 +42,7 @@ const customStyle = size => {
           ...base,
           marginTop: '0px',
           minHeight: '1px',
-          height: '38px',
+          height: '32px',
         }),
       }
     case 'multi-sm':
@@ -211,6 +211,48 @@ const customStyle = size => {
           marginTop: '0px',
           minHeight: '1px',
           height: '48px',
+        }),
+      }
+    case 'main-geography-select':
+      return {
+        control: base => ({
+          ...base,
+          minHeight: '1px',
+          height: '38px',
+          border: '1px solid #b9b8b8',
+          boxShadow: 'none',
+          fontSize: '14px',
+        }),
+        dropdownIndicator: base => ({
+          ...base,
+          paddingTop: 0,
+          paddingBottom: 0,
+        }),
+        clearIndicator: base => ({
+          ...base,
+          paddingTop: 0,
+          paddingBottom: 0,
+        }),
+        container: base => ({
+          ...base,
+          marginTop: '0px',
+          minHeight: '1px',
+          height: '38px',
+        }),
+        menu: base => ({
+          ...base,
+          marginTop: '0px',
+          zIndex: '10',
+          fontSize: '14px',
+        }),
+        menuList: base => ({
+          ...base,
+          marginTop: '0px',
+        }),
+        valueContainer: base => ({
+          ...base,
+          marginTop: '0px',
+          minHeight: '1px',
         }),
       }
     default:

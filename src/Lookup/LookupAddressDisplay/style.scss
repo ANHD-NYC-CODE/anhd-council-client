@@ -1,0 +1,62 @@
+@import 'shared/styles/_variables.scss';
+
+.lookup-address-display {
+  flex-grow: 1;
+  margin-right: 20px;
+  margin-bottom: 10px;
+
+  .lookup-address-display__editing {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+
+    @include media-breakpoint-up(sm) {
+      flex-wrap: nowrap;
+    }
+
+    @include media-breakpoint-up(lg) {
+      max-width: 600px;
+    }
+  }
+
+  .lookup-address-display__title {
+    @extend %p3-font-size;
+    display: inline-block;
+    // margin-bottom: 10px;
+    font-weight: bold;
+    outline: none;
+    width: 100%;
+
+    &:hover,
+    &:focus {
+      text-decoration: underline;
+    }
+  }
+
+  .lookup-address-display__button {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+
+    @include media-breakpoint-up(sm) {
+      display: inline-block;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
+    @include media-breakpoint-up(md) {
+      margin-left: 0.5rem;
+    }
+  }
+
+  .lookup-address-display__search-button {
+    color: $gray-900;
+    display: none;
+    margin-right: 20px;
+
+    @include media-breakpoint-up(lg) {
+      display: inline-block;
+    }
+  }
+}

@@ -1,12 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import * as c from 'shared/constants'
+import * as b from 'shared/constants/geographies'
 import L from 'leaflet'
 import { geographySelectionToString } from 'shared/utilities/languageUtils'
 import { setDashboardMapZoom } from 'Store/DashboardState/actions'
 
 import { Map, TileLayer, Popup } from 'react-leaflet'
 import { Jumbotron, Button, Alert } from 'react-bootstrap'
+import MapAlertModal from 'LeafletMap/MapAlertModal'
 import GeographyGeoJson from 'LeafletMap/GeographyGeoJson'
 import GeographyMarkerLabels from 'LeafletMap/GeographyMarkerLabels'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -24,14 +26,12 @@ export default class LeafletMap extends React.PureComponent {
     this.state = {
       height: this.props.height,
       hasError: false,
-      alertMessage: undefined,
       overrideWarning: false,
     }
     this.updateDimensions = this.updateDimensions.bind(this)
     this.centerMapOnGeography = this.centerMapOnGeography.bind(this)
     this.getGeographyBounds = this.getGeographyBounds.bind(this)
     this.getGeographyCenter = this.getGeographyCenter.bind(this)
-    this.setAlertMessage = this.setAlertMessage.bind(this)
     this.onMapZoom = this.onMapZoom.bind(this)
     this.allGeographiesLoaded = this.allGeographiesLoaded.bind(this)
     this.handleMapClick = this.handleMapClick.bind(this)
@@ -62,29 +62,58 @@ export default class LeafletMap extends React.PureComponent {
   componentDidCatch(error, info) {
     return null
   }
-  setAlertMessage(message) {
-    this.setState({ alertMessage: message })
-  }
 
   handleMapClick(e) {
-    this.props.closeGeographyPopup()
+    if (this.props.closeGeographyPopup) {
+      this.props.closeGeographyPopup()
+    }
+  }
+
+  cityBoroughLatLng(changingOrCurrentType, changingOrCurrentId) {
+    if (changingOrCurrentType === b.BOROUGH_GEOGRAPHY.constant) {
+      switch (changingOrCurrentId) {
+        case 'MN':
+          return [40.7677746, -74.0032918]
+        case 'BX':
+          return [40.8489779, -73.8893546]
+        case 'BK':
+          return [40.6394277, -74.011271]
+        case 'QN':
+          return [40.6777619, -73.9721773]
+        case 'SI':
+          return [40.5619124, -74.2069121]
+      }
+    } else if (changingOrCurrentType === b.CITY_GEOGRAPHY.constant) {
+      return [40.6752793, -74.0847861]
+    }
   }
 
   centerMapOnGeography() {
     if (this.mapRef.current) {
-      const changingOrCurrentType = this.props.appState.changingGeographyType || this.props.currentGeographyType
-      const changingOrCurrentId = this.props.appState.changingGeographyId || this.props.appState.currentGeographyId
-      if (!(changingOrCurrentType && changingOrCurrentId)) return
-      const bounds = this.getGeographyBounds(changingOrCurrentType, changingOrCurrentId)
+      const changingOrCurrentType = this.props.changingGeographyType || this.props.currentGeographyType
+      const changingOrCurrentId = this.props.changingGeographyId || this.props.currentGeographyId
+      if (!(changingOrCurrentType && changingOrCurrentId) && changingOrCurrentType !== b.CITY_GEOGRAPHY.constant) return
+      if (
+        changingOrCurrentType !== b.BOROUGH_GEOGRAPHY.constant &&
+        changingOrCurrentType !== b.CITY_GEOGRAPHY.constant
+      ) {
+        const bounds = this.getGeographyBounds(changingOrCurrentType, changingOrCurrentId)
 
-      if (bounds) {
-        this.mapRef.current.leafletElement.fitBounds(bounds, { padding: [-100, 0] })
-        // this.mapRef.current.leafletElement.setZoom(this.props.zoom)
+        if (bounds) {
+          this.mapRef.current.leafletElement.fitBounds(bounds, { padding: [-100, 0] })
+          // this.mapRef.current.leafletElement.setZoom(this.props.zoom)
+        }
+      } else {
+        const latLng = this.cityBoroughLatLng(changingOrCurrentType, changingOrCurrentId)
+        const zoom = changingOrCurrentType === b.BOROUGH_GEOGRAPHY.constant ? 11 : 10
+        this.mapRef.current.leafletElement.setView(latLng, zoom)
       }
     }
   }
 
   getGeographyBounds(type, id) {
+    if (type === b.BOROUGH_GEOGRAPHY.constant) return null
+    if (type === b.CITY_GEOGRAPHY.constant) return null
     if (!this.allGeographiesLoaded()) return null
     const geographyDataset = this.props.selectGeographyData(type)
     const selectedGeography = geographyDataset.find(geography => String(geography.id) === String(id))
@@ -136,26 +165,31 @@ export default class LeafletMap extends React.PureComponent {
       <div
         id="map"
         ref={this.mapContainerRef}
+        className={this.props.className}
         style={{ height: this.props.height || this.state.height, width: this.props.width || '100%' }}
       >
-        {this.state.alertMessage && (
-          <Alert className="leaflet-map__alert" variant="warning">
-            <span>{this.state.alertMessage}</span>
-            <Button
-              block
-              variant="primary"
-              size="sm"
-              onClick={() =>
-                this.setState({
-                  overrideWarning: true,
-                })
-              }
-            >
-              Proceed
-            </Button>
-          </Alert>
+        {!this.state.overrideWarning && this.props.results.length > c.MAP_MARKER_LIMIT && (
+          <MapAlertModal
+            alertMessage={
+              <div>
+                <p>
+                  More than {c.MAP_MARKER_LIMIT} results will slow down this page. Apply a Housing Type and/or one or
+                  more Datasets to narrow down results or click below to proceed. If the page freezes, refresh your
+                  browser to reset.
+                </p>
+              </div>
+            }
+            alertVariant="light"
+            alertCta="Display Anyway"
+            action={() =>
+              this.setState({
+                overrideWarning: true,
+              })
+            }
+          />
         )}
         <Map
+          data-test-id="map"
           boxZoom={this.props.interactive}
           center={this.props.center}
           className="map"
@@ -181,7 +215,8 @@ export default class LeafletMap extends React.PureComponent {
           )}
           <TileLayer
             attribution="mapbox"
-            url="https://api.mapbox.com/styles/v1/anhdnyc/cjtgo9wv009uw1fo0ubm7elun/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYW5oZG55YyIsImEiOiJjanQ0ZWRqaDcxMmRxNDlsbHV1OXN0aGx6In0.i07oerfvXtcRfm3npws7mA"
+            url="https://api.mapbox.com/styles/v1/lblok/cjk4889sb29b12splkdw0pzop/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGJsb2siLCJhIjoiY2o3djQ2ODd4MnVjMjJwbjBxZWZtZDB2ZiJ9.4gctlFUX_n0BzOAwbuL2aw"
+            // url="https://api.mapbox.com/styles/v1/anhdnyc/cjtgo9wv009uw1fo0ubm7elun/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYW5oZG55YyIsImEiOiJjanQ0ZWRqaDcxMmRxNDlsbHV1OXN0aGx6In0.i07oerfvXtcRfm3npws7mA"
           />
           {this.props.currentGeographyType === 'COMMUNITY' && (
             <TileLayer
@@ -213,64 +248,60 @@ export default class LeafletMap extends React.PureComponent {
               url="https://api.mapbox.com/styles/v1/anhdnyc/ck3093t330s3e1cnvcair3d0n/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYW5oZG55YyIsImEiOiJjanQ0ZWRqaDcxMmRxNDlsbHV1OXN0aGx6In0.i07oerfvXtcRfm3npws7mA"
             />
           )}
+
           {this.allGeographiesLoaded() && this.props.currentGeographyType && (
             <div>
               <GeographyGeoJson
                 geoJsonRef={this.geoJsonRef}
                 geographies={this.props.selectGeographyData(
-                  this.props.appState.changingGeographyType || this.props.currentGeographyType
+                  this.props.changingGeographyType || this.props.currentGeographyType
                 )}
-                currentGeographyId={this.props.appState.currentGeographyId}
+                currentGeographyId={this.props.currentGeographyId}
                 currentGeographyType={this.props.currentGeographyType}
-                changingGeographyId={this.props.appState.changingGeographyId}
-                changingGeographyType={this.props.appState.changingGeographyType}
+                changingGeographyId={this.props.changingGeographyId}
+                changingGeographyType={this.props.changingGeographyType}
                 onClick={this.props.handleChangeGeographyId}
               />
               <GeographyMarkerLabels
                 currentGeographyType={this.props.currentGeographyType}
                 geographies={this.props.selectGeographyData(
-                  this.props.appState.changingGeographyType || this.props.currentGeographyType
+                  this.props.changingGeographyType || this.props.currentGeographyType
                 )}
               />
             </div>
           )}
           {this.allGeographiesLoaded() &&
-            this.props.appState.changingGeographyType &&
-            (this.props.appState.currentGeographyId !== this.props.appState.changingGeographyId &&
-              this.props.appState.changingGeographyId > 0) && (
+            this.props.changingGeographyType &&
+            (this.props.currentGeographyId !== this.props.changingGeographyId &&
+              this.props.changingGeographyId > 0) && (
               <Popup
                 key={`${this.changingGeographyType}-${this.changingGeographyId}`}
                 onClose={this.props.closeGeographyPopup}
                 closeOnClick={false}
                 position={
-                  this.getGeographyCenter(
-                    this.props.appState.changingGeographyType,
-                    this.props.appState.changingGeographyId
-                  ) || {}
+                  this.getGeographyCenter(this.props.changingGeographyType, this.props.changingGeographyId) || {}
                 }
               >
                 <p>
                   {geographySelectionToString({
-                    type: this.props.appState.changingGeographyType,
-                    id: this.props.appState.changingGeographyId,
+                    type: this.props.changingGeographyType,
+                    id: this.props.changingGeographyId,
                   })}
                 </p>
                 <Button
-                  onClick={() =>
-                    this.props.handleChangeGeography({ geographyId: this.props.appState.changingGeographyId })
-                  }
+                  onClick={() => this.props.handleChangeGeography({ geographyId: this.props.changingGeographyId })}
                 >
                   Visit
                 </Button>
               </Popup>
             )}
           <PropertyIcons
+            dispatch={this.props.dispatch}
+            page={this.props.page}
             overrideWarning={this.state.overrideWarning}
             results={this.props.results}
             iconConfig={this.props.iconConfig}
-            setAlertMessage={this.setAlertMessage}
-            switchView={this.props.switchView}
-            visible={!(this.props.appState.changingGeographyType && this.props.appState.changingGeographyId)}
+            visible={!(this.props.changingGeographyType && this.props.changingGeographyId)}
           />
         </Map>
       </div>
@@ -294,7 +325,7 @@ LeafletMap.defaultProps = {
 }
 
 LeafletMap.propTypes = {
-  appState: PropTypes.object,
+  className: PropTypes.string,
   communityDistricts: PropTypes.array,
   councilDistricts: PropTypes.array,
   stateAssemblies: PropTypes.array,
@@ -306,4 +337,5 @@ LeafletMap.propTypes = {
   results: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   interactive: PropTypes.bool,
   loading: PropTypes.bool,
+  page: PropTypes.string,
 }

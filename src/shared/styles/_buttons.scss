@@ -16,8 +16,12 @@ button.btn-primary:disabled {
   background-color: lighten($info, 10%);
 }
 
-.btn {
+.btn-loader {
   position: relative;
+}
+
+.btn--small {
+  @extend %small-font-size;
 }
 
 .button-loader__container {
@@ -43,6 +47,9 @@ button.btn-primary:disabled {
   color: white;
 }
 
+.btn-link {
+  color: $text-link;
+}
 a.btn-link:hover {
   text-decoration: none;
 }
@@ -57,4 +64,115 @@ a.btn-link:hover {
   color: $gray-300 !important;
   cursor: initial;
   pointer-events: none;
+}
+
+.tab--disabled {
+  background-color: $tab-disabled;
+  color: $black;
+  outline: none;
+}
+
+.tab--dark-inverse {
+  background-color: $white;
+  color: $gray-900;
+  outline: none;
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: $tab-dark-hover;
+      color: $dark;
+    }
+  }
+
+  &:focus {
+    background-color: $tab-dark-hover;
+    color: $dark;
+    outline: none;
+  }
+
+  &.active {
+    background-color: $dark;
+    color: $white;
+  }
+
+  &:disabled {
+    background-color: $tab-disabled;
+    color: $black;
+  }
+}
+
+.tab--primary {
+  background-color: $tab-primary;
+  color: $gray-900;
+  outline: none;
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: $tab-primary-hover;
+      color: $black;
+    }
+  }
+
+  &:focus {
+    background-color: $tab-primary-hover;
+    color: $black;
+    outline: none;
+  }
+
+  &.active {
+    background-color: $tab-primary-active;
+    color: $black;
+  }
+
+  &:disabled {
+    background-color: $tab-disabled;
+    color: $black;
+  }
+}
+
+.tab--secondary {
+  color: $gray-900;
+  background-color: $tab-secondary;
+
+  @media (hover: hover) {
+    &:hover {
+      background-color: $tab-secondary-hover;
+      color: $black;
+    }
+  }
+
+  &.active {
+    background-color: $tab-secondary-active;
+    color: $black;
+  }
+
+  &:disabled {
+    background-color: $tab-disabled;
+    color: $black;
+  }
+}
+
+// Custom bootstrap radios
+
+.custom-control-input:checked ~ .custom-control-label::before {
+  background-color: $secondary;
+}
+
+.custom-control-label::before,
+.custom-control-label::after {
+  top: 2px;
+}
+
+.ghost-button {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  outline: none;
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+
+  &:focus {
+    outline: none;
+  }
 }

@@ -2,6 +2,11 @@
 
 .navigation-bar {
   height: auto;
+
+  .navbar-black {
+    background-color: black;
+  }
+
   @include media-breakpoint-up(lg) {
     height: 40px;
   }

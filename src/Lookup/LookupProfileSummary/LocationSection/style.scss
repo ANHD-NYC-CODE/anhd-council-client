@@ -1,0 +1,17 @@
+@import 'shared/styles/_variables.scss';
+
+.location-section {
+  background-color: $secondary;
+  min-height: $lookup-sidebar-width * 2;
+  padding: $lookup-sidebar-padding;
+
+  .google-street-view {
+    display: block;
+    height: calc(#{$lookup-sidebar-width} - #{$lookup-sidebar-padding});
+    position: relative;
+  }
+
+  .location-section__map {
+    margin-bottom: 20px;
+  }
+}

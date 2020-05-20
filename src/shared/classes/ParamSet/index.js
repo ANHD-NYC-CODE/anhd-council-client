@@ -1,5 +1,6 @@
 import { cloneInstance } from 'shared/utilities/classUtils'
 import StandardizedInput from 'shared/classes/StandardizedInput'
+import ParamMap from 'shared/classes/ParamMap'
 
 export default class ParamSet {
   constructor({ component = null, paramMaps = [], defaults = [], label = '', createType = 'ALL' } = {}) {
@@ -8,6 +9,21 @@ export default class ParamSet {
     this._defaults = defaults
     this._label = label
     this._createType = createType
+  }
+
+  keys() {
+    return {
+      component: this._component,
+      paramMaps: this.paramMaps.map(pm => pm.clone()),
+      defaults: this._defaults,
+      label: this._label,
+      createType: this._createType,
+    }
+  }
+
+  clone() {
+    const newSelf = new ParamSet({ ...this.keys() })
+    return newSelf
   }
 
   get component() {

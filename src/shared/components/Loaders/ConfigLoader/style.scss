@@ -5,11 +5,16 @@
   transition: 'transform 5000 ease-in-out';
 
   .loading__logo-container {
-    background-color: white;
+    background-color: transparent;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 20px;
+    margin-bottom: 20px;
+
+    img {
+      margin-bottom: 0;
+    }
   }
   img {
     // height: auto;

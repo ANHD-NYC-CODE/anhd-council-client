@@ -1,7 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Form } from 'react-bootstrap'
+import { Button, Form } from 'react-bootstrap'
 import ConfigContext from 'Config/ConfigContext'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
+
 import FormError from 'shared/components/FormError'
 import './style.scss'
 const datasetOptions = advancedSearchFilters => {
@@ -26,7 +29,7 @@ const NewFilterSelect = props => {
     <ConfigContext.Consumer>
       {config => {
         return (
-          <div className="new-filter-select w-100">
+          <div className="new-filter-select">
             <Form.Control
               as="select"
               className="new-filter-select valued"
@@ -37,7 +40,11 @@ const NewFilterSelect = props => {
             >
               {datasetOptions(config.advancedSearchFilters)}
             </Form.Control>
-            <FormError show={!!props.filter.errors.length} message={(props.filter.errors[0] || {}).message} />
+            {props.removeNewFilters && (
+              <Button className="remove-add-filter" size="sm" variant="link" onClick={props.removeNewFilters}>
+                <FontAwesomeIcon icon={faTimes} /> Cancel
+              </Button>
+            )}
           </div>
         )
       }}

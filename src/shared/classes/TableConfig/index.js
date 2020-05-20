@@ -49,8 +49,18 @@ export default class TableConfig {
     return getDescriptionKey(this._resourceConstant)
   }
 
-  getColumns({ expandColumnFunction, constructFilter, baseTableConfig, rowExample, dispatch, annotationStart } = {}) {
+  getColumns({
+    page,
+    expandColumnFunction,
+    constructFilter,
+    baseTableConfig,
+    rowExample,
+    dispatch,
+    annotationStart,
+    advancedSearchDatasets,
+  } = {}) {
     return getTableColumns({
+      page,
       constant: this._resourceConstant,
       columnExpandFunction: expandColumnFunction,
       linkPropsFunction: getLinkProps(this._resourceConstant),
@@ -59,6 +69,7 @@ export default class TableConfig {
       dispatch: dispatch,
       rowExample,
       annotationStart: annotationStart,
+      advancedSearchDatasets,
     })
   }
 

@@ -1,0 +1,73 @@
+@import 'shared/styles/_variables.scss';
+$unopened-width: 660px;
+
+.base-table-header {
+  background-color: $white;
+  border-radius: 6px 6px 0 0;
+  color: $black;
+  padding: 10px 0;
+  position: relative;
+  z-index: 1;
+
+  &__wrapper {
+    display: flex;
+  }
+  .table-header__share-column {
+    cursor: pointer;
+    color: $gray-400;
+    display: none;
+    margin-right: 10px;
+
+    @include media-breakpoint-up(md) {
+      align-items: center;
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  .base-table-header__wrapper {
+    @extend %p3-font-size;
+    display: flex;
+    align-items: center;
+    justify-items: flex-start;
+    flex-wrap: nowrap;
+    // overflow-x: auto;
+    padding: 5px 10px;
+    box-sizing: border-box;
+
+    // total number
+    & > span:first-child {
+      flex: 0 0 auto;
+      margin-right: 10px;
+    }
+
+    & > * {
+      @include media-breakpoint-up(sm) {
+        margin-right: 4px;
+      }
+    }
+  }
+
+  .base-table-header__right-group {
+    display: flex;
+    flex: 0 0 auto;
+    // margin-left: auto;
+  }
+
+  .table-header__share-column:hover {
+    text-decoration: underline;
+  }
+
+  .table-header__pagination_dropdown {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.base-table-header--lookup {
+  background-color: $secondary;
+  padding: 0;
+  width: 100%;
+  min-width: max-content;
+}

@@ -1,5 +1,6 @@
 import moment from 'moment'
 import _ from 'lodash'
+import * as b from 'shared/constants/geographies'
 
 import {
   singular,
@@ -8,6 +9,8 @@ import {
   constructDateComparisonString,
   grammaticalNoun,
   stringWithComparisonStringsToSymbol,
+  boroCodeToName,
+  communityIdToString,
 } from 'shared/utilities/languageUtils'
 
 ///////////////////
@@ -75,7 +78,7 @@ const parseParamMapComparison = (paramMap, nounOverride = undefined) => {
       return [
         paramMap.comparisonPrefix,
         paramMap.valuePrefix,
-        paramMap.options.find(option => option.value === paramMap.value).label.toLowerCase(),
+        paramMap.options.find(option => option.value === paramMap.value).label,
         paramMap.valueSuffix,
         nounOverride || paramMap.paramNoun,
       ]
@@ -153,7 +156,7 @@ const parseRoleGroup = (paramMaps, joiner = ' ') => {
       })
       .join(joiner)
   } else {
-    return paramMaps.map(pm => parseParamMapComparison(pm)).join(' ')
+    return paramMaps.map(pm => parseParamMapComparison(pm)).join(', ')
   }
 }
 
@@ -225,15 +228,21 @@ export const convertConditionMappingToSentence = conditions => {
 }
 
 export const convertGeographiesToSentence = geographies => {
-  return `in ${
-    geographies.length
-      ? geographies
-          .map(geography => `${geography.name.toLowerCase()} ${geography.id ? geography.id : '_'}`)
-          .filter(p => p)
-          .join(' and ')
-          .trim()
-      : '...'
-  }`
+  if (!geographies.length) return
+
+  const geography = geographies[0]
+  let geoString = ''
+  if (geography.constant === b.BOROUGH_GEOGRAPHY.constant) {
+    geoString = boroCodeToName(geography.id)
+  } else if (geography.constant === b.CITY_GEOGRAPHY.constant) {
+    geoString = b.CITY_GEOGRAPHY.name
+  } else if (geography.constant === b.COMMUNITY_GEOGRAPHY.constant) {
+    geoString = `${communityIdToString(geography.id)}`
+  } else {
+    geoString = `${geography.name.toLowerCase()} ${geography.id ? geography.id : '_'}`
+  }
+
+  return `in ${geoString}`
 }
 
 export const convertHousingTypesToSentence = housingTypes => {
@@ -280,6 +289,18 @@ export const convertConditionMappingToCsvFileName = (condition, conditions) => {
 export const constructSentence = advancedSearch => {
   return [
     'Show me',
+    convertFilterToSentence(advancedSearch.propertyFilter),
+    convertGeographiesToSentence(advancedSearch.geographies),
+    convertConditionMappingToSentence(advancedSearch.conditions),
+  ]
+    .filter(p => p)
+    .join(' ')
+    .trim()
+}
+
+export const constructAdvancedSearchSentence = (advancedSearch, loading) => {
+  return [
+    loading ? 'Searching for' : 'Displaying',
     convertFilterToSentence(advancedSearch.propertyFilter),
     convertGeographiesToSentence(advancedSearch.geographies),
     convertConditionMappingToSentence(advancedSearch.conditions),

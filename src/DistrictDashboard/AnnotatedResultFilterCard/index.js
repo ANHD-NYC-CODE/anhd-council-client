@@ -1,17 +1,21 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Card } from 'react-bootstrap'
-import classnames from 'classnames'
+import * as c from 'shared/constants'
 import StandardizedInput from 'shared/classes/StandardizedInput'
 import './style.scss'
 import { updateAmountFilter } from 'Store/DashboardState/actions'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowUp } from '@fortawesome/free-solid-svg-icons'
-import { faArrowDown } from '@fortawesome/free-solid-svg-icons'
-import { faTimes } from '@fortawesome/free-solid-svg-icons'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
+
+import AmountFilterInput from 'DistrictDashboard/AmountFilterInput'
+import ModalContext from 'Modal/ModalContext'
+
+import LoginModal from 'shared/components/modals/LoginModal'
+import LoginModalFooter from 'shared/components/forms/LoginForm/LoginModalFooter'
 import InfoModalButton from 'shared/components/InfoModalButton'
-import WhyLoginButton from 'shared/components/WhyLoginButton'
+import { spaceEnterKeyDownHandler } from 'shared/utilities/accessibilityUtils'
+import { grammaticalNoun } from 'shared/utilities/languageUtils'
+import classnames from 'classnames'
+
+import Toggle from 'react-bootstrap-toggle'
 
 class AnnotatedResultFilterCard extends React.Component {
   constructor(props) {
@@ -19,11 +23,23 @@ class AnnotatedResultFilterCard extends React.Component {
 
     this.increaseAmount = this.increaseAmount.bind(this)
     this.decreaseAmount = this.decreaseAmount.bind(this)
+    this.handleClick = this.handleClick.bind(this)
+    this.handleFilterChange = this.handleFilterChange.bind(this)
+    this.handleLoginClick = this.handleLoginClick.bind(this)
+  }
+
+  handleClick(e, amountFilter) {
+    e.preventDefault()
+    this.props.handleClick(amountFilter)
   }
 
   handleFilterChange(e) {
     e = new StandardizedInput(e)
-    this.props.amountFilter.value = e.value
+    if (e.value || e.value === 0) {
+      if (e.value > 999) e.value = 999 // max
+      this.props.amountFilter.value = e.value
+      this.props.dispatch(updateAmountFilter(this.props.amountFilter))
+    }
   }
 
   increaseAmount() {
@@ -36,58 +52,82 @@ class AnnotatedResultFilterCard extends React.Component {
     this.props.dispatch(updateAmountFilter(this.props.amountFilter))
   }
 
+  handleLoginClick(e, modal) {
+    e.preventDefault()
+    modal.setModal({
+      modalComponent: LoginModal,
+      modalProps: {
+        modalFooter: <LoginModalFooter modal={modal} />,
+      },
+    })
+  }
+
   render() {
+    const isUnauthorized =
+      (this.props.amountFilter.resourceModel.resourceConstant === 'PSFORECLOSURE' ||
+        this.props.amountFilter.resourceModel.resourceConstant === 'FORECLOSURE' ||
+        this.props.amountFilter.resourceModel.resourceConstant === 'LISPENDEN') &&
+      !this.props.auth.user
     return (
-      <div className="amount-result-filter-card--container">
-        <div className={classnames('amount-result-filter-card mb-2', { active: this.props.selected })}>
-          <Card
-            as={'div'}
-            className={classnames(
-              'amount-result-filter-card__body',
-              { disabled: this.props.disabled },
-              this.props.amountFilter.resourceModel.summaryBackgroundColorClass
-            )}
-            disabled={this.props.disabled}
-          >
-            <div
-              onClick={this.props.handleClick}
-              className={classnames('amount-result-filter-card__body--inner-wrapper')}
-            >
-              <div className="amount-result-filter-card__header">
-                <h6 className="amount-result-filter-card__title">
-                  {this.props.amountFilter.resourceModel.dashboardLabel || this.props.amountFilter.resourceModel.label}
-                </h6>
-                <span className="amount-result-filter--deselect">
-                  <FontAwesomeIcon icon={faTimes} size="1x" />
-                </span>
-                <span className="amount-result-filter--select">
-                  <FontAwesomeIcon icon={faPlus} size="1x" />
-                </span>
-              </div>
-              <hr />
-              <div className="amount-result-filter-card__filter">
-                <div className="amount-result-filter-card__input--prefix">
-                  at least: <span className="amount-result-filter-card__input">{this.props.amountFilter.value}</span>
-                </div>
-              </div>
-              <div className="amount-result-filter-card__total">
-                <div className="amount-result-filter-card__total--prefix">Properties:&nbsp;</div>
-                <div className="amount-result-filter-card__total--value">{this.props.calculatedTotal}</div>
-              </div>
-            </div>
-          </Card>
-          <div className="amount-result-filter-card__controls">
-            <div className="amount-result-filter-card__arrow" onClick={this.increaseAmount}>
-              <FontAwesomeIcon icon={faArrowUp} />
-            </div>
-            <div className="amount-result-filter-card__arrow" onClick={this.decreaseAmount}>
-              <FontAwesomeIcon icon={faArrowDown} />
-            </div>
+      <div className="amount-result-filter-card--container" data-test-id="amount-result-filter">
+        <div className="amount-result-filter-card__header">
+          <p className="amount-result-filter-card__label">
+            {this.props.amountFilter.resourceModel.dashboardLabel || this.props.amountFilter.resourceModel.label}
+            <span className="amount-result-filter-card__info info-section">
+              <InfoModalButton modalConstant={this.props.amountFilter.resourceModel.resourceConstant} />
+            </span>
+          </p>
+          <Toggle
+            tabIndex={0}
+            height={20}
+            width={40}
+            data-test-id="amount-toggle"
+            className="round-toggle"
+            handleClassName="round-toggle-handle"
+            on="On"
+            off="Off"
+            onClassName="round-toggle-on"
+            offClassName="round-toggle-off"
+            onKeyDown={e => spaceEnterKeyDownHandler(e, e => this.handleClick(e, this.props.amountFilter))}
+            onClick={(target, value, e) => this.handleClick(e, this.props.amountFilter)}
+            handlestyle="light"
+            onstyle="primary"
+            offstyle="light"
+            active={!isUnauthorized && this.props.selected}
+            disabled={isUnauthorized || this.props.disabled}
+          />
+        </div>
+        {isUnauthorized ? (
+          <ModalContext.Consumer>
+            {modal => {
+              return (
+                <button
+                  className="text-link"
+                  onClick={e => this.handleLoginClick(e, modal)}
+                  onKeyDown={e => spaceEnterKeyDownHandler(e, e => this.handleLoginClick(e, modal))}
+                >
+                  {c.LOGIN_CTA}
+                </button>
+              )
+            }}
+          </ModalContext.Consumer>
+        ) : (
+          <div className={classnames('amount-result-filter-card__filter', { active: this.props.selected })}>
+            There are <span>{this.props.calculatedTotal}</span> properties with at least{' '}
+            {this.props.selected ? (
+              <AmountFilterInput onSubmit={this.handleFilterChange} value={this.props.amountFilter.value} />
+            ) : (
+              <span>{this.props.amountFilter.value}</span>
+            )}{' '}
+            <span>
+              {grammaticalNoun(
+                this.props.amountFilter.resourceModel.dashboardLabel || this.props.amountFilter.resourceModel.label,
+                this.props.amountFilter.value
+              )}
+              .
+            </span>
           </div>
-        </div>
-        <div className="amount-result-filter-card__info info-section">
-          <InfoModalButton modalConstant={this.props.amountFilter.resourceModel.resourceConstant} />
-        </div>
+        )}
       </div>
     )
   }

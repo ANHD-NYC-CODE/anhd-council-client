@@ -2,7 +2,7 @@ import * as resources from 'shared/models/resources'
 import ParamError from 'shared/classes/ParamError'
 import { getApiMap } from 'shared/utilities/classUtils'
 
-import { cloneInstance } from 'shared/utilities/classUtils'
+import { cloneInstance, deepCloneObject } from 'shared/utilities/classUtils'
 
 export default class Filter {
   constructor({
@@ -41,9 +41,32 @@ export default class Filter {
 
     // Post initialize actions
     // Create only paramSets with the "initial" tag.
-    if (this.paramSets['initial']) {
+    if (this.paramSets['initial'] && !this.paramSets['initial'].paramMaps.length) {
       this.paramSets['initial'].create()
     }
+  }
+
+  keys() {
+    return {
+      modelConstant: this.modelConstant,
+      resourceModel: deepCloneObject(this._resourceModel),
+      primaryResourceModel: this.primaryResourceModel,
+      schema: deepCloneObject(this._schema),
+      paramSets: {},
+      errors: this._errors,
+    }
+  }
+
+  clone() {
+    const newSelf = new Filter({ ...this.keys() })
+
+    const paramSets = {}
+    Object.keys(this._paramSets).forEach(key => {
+      paramSets[key] = this._paramSets[key].clone()
+    })
+
+    newSelf.paramSets = paramSets
+    return newSelf
   }
 
   findDataset(modelConstant) {
@@ -54,17 +77,12 @@ export default class Filter {
 
   setParamSets(schema) {
     // Load the schema if no paramSets was directly supplied
-    if (schema && !Object.keys(this.paramSets).length) {
-      Object.keys(schema)
-        .reverse()
-        .map(key => {
-          this._paramSets = {
-            ...{
-              [key]: cloneInstance(schema[key]),
-            },
-            ...this.paramSets,
-          }
-        })
+    if (schema) {
+      Object.keys(schema).map(key => {
+        if (!this._paramSets[key]) {
+          this._paramSets[key] = schema[key].clone()
+        }
+      })
     }
   }
 
@@ -169,10 +187,14 @@ export default class Filter {
     this._errors = []
   }
 
-  validate() {
+  validate(loggedIn = false) {
     this.clearErrors()
     if (this.id === 'NEW_FILTER') {
       this.addError(new ParamError({ message: 'Please make a selection' }))
+    }
+
+    if (!loggedIn && (this.id === 'FORECLOSURE' || this.id === 'PSFORECLOSURE')) {
+      this.addError(new ParamError({ message: 'Please login to search foreclosures.' }))
     }
   }
 }

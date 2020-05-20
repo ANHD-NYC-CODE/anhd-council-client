@@ -1,36 +1,78 @@
-@import 'shared/styles/bootstrap/_variables.scss';
+@import 'shared/styles/_variables.scss';
 
 .property-section {
-  background-color: $info;
+  @extend %p3-font-size;
+  background-color: $secondary;
+  color: $black;
+  padding: $lookup-sidebar-padding;
+}
 
-  a {
-    color: $primary;
+.lookup-profile-summary__section-header {
+  align-items: center;
+  background-color: $dark;
+  color: $white;
+  cursor: pointer;
+  display: flex;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding: 10px $lookup-sidebar-padding;
+
+  h5 {
     font-weight: bold;
-    text-decoration: underline;
   }
+
+  svg {
+    margin-left: auto;
+  }
+
+  &:hover,
+  &:focus {
+    background-color: $gray-400;
+    outline: none;
+  }
+}
+
+.lookup-profile-summary__info {
+  display: inline-block;
+  margin-left: 8px;
+}
+
+.lookup-profile-summary__expandable-icon {
+  color: $white;
+  position: absolute;
+  right: $lookup-sidebar-padding;
+  top: 10px;
+  pointer-events: none;
+}
+
+.lookup-profile-summary__group {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
 }
 
 .property-summary__table-header,
 .property-summary__table {
   padding: 0;
-  // @include media-breakpoint-up(xl) {
-  //   margin-left: -15px;
-  //   margin-right: -15px;
-  // }
 }
 
 .profile-summary-body__label {
-  display: block;
-  font-size: 0.9rem;
+  @extend %p3-font-size;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  color: $black;
   font-weight: bold;
   margin: 0;
+  margin-right: auto;
 }
 
 .profile-summary-body__value {
+  @extend %p3-font-size;
+  color: $black;
   display: block;
-  font-size: 0.9rem;
   font-weight: normal;
-  margin-bottom: 0.5rem;
 }
 
 li.profile-summary-body__value {
@@ -43,13 +85,8 @@ li.profile-summary-body__value {
   background-color: transparent;
 }
 
-.lookup-profile-summary__geography-link {
-  margin-left: -15px;
-}
-
 .lookup-profile-summary {
   .lookup-profile-summary__body {
-    margin: 0 15px;
   }
 
   .table-header {
@@ -60,27 +97,9 @@ li.profile-summary-body__value {
     margin: 0 -15px;
   }
 
-  .lookup-profile-summary__geography-link {
-    a {
-      color: $white;
-      text-transform: uppercase;
-      text-decoration: underline;
-    }
-  }
-
-  .lookup-profile-summary__geography-link:first-child {
-  }
-
-  .base-table {
-    background-color: $white;
-    padding: 0px;
-
-    .expanded-row--wrapper {
-      margin-left: 10px;
-    }
-
-    .expanded-row {
-      overflow: hidden;
+  .expandable-section:first-child {
+    .lookup-profile-summary__expandable-icon {
+      // top: 40px;
     }
   }
 }

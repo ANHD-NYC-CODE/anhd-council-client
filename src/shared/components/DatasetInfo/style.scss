@@ -1,5 +1,10 @@
-@import 'shared/styles/bootstrap/_variables.scss';
+@import 'shared/styles/_variables.scss';
 
 .dataset-info {
-  color: $gray-500;
+  @extend %p3-font-size;
+  color: $dark;
+
+  span {
+    margin-right: 5px;
+  }
 }

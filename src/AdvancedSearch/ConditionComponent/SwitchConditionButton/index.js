@@ -19,9 +19,9 @@ class SwitchConditionButton extends React.Component {
       <DropdownButton
         ref={this.ref}
         as={ButtonGroup}
-        title={this.props.condition.type === 'AND' ? 'all' : 'any'}
+        title={this.props.condition.type === 'AND' ? 'AND' : 'OR'}
         size="sm"
-        variant="success"
+        variant="link"
         id="bg-vertical-dropdown-1"
       >
         <Overlay position={'top'} show={this.props.showPopups} target={this.ref.current}>
@@ -35,7 +35,7 @@ class SwitchConditionButton extends React.Component {
           size="sm"
           onClick={() => this.props.switchCondition('AND')}
         >
-          All
+          AND
         </Dropdown.Item>
         <Dropdown.Item
           className="control-button"
@@ -43,7 +43,7 @@ class SwitchConditionButton extends React.Component {
           size="sm"
           onClick={() => this.props.switchCondition('OR')}
         >
-          Any
+          OR
         </Dropdown.Item>
       </DropdownButton>
     )

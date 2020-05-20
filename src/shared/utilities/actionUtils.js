@@ -8,7 +8,8 @@ const ERROR_401_MESSAGE = 'Please login for access.'
 const ERROR_404_MESSAGE = 'Not found.'
 const ERROR_500_MESSAGE = 'Oops, something went wrong.'
 const ERROR_502_MESSAGE = 'The app is temporarily down for maintenance.'
-const ERROR_408_MESSAGE = 'The request timed out after 2 minutes. Try again?'
+const ERROR_408_MESSAGE =
+  'Your search timed out after two minutes. Your query may run faster a second time, so try again or simplify your query.'
 
 export const handleActionDispatch = (dispatch, constant, requestId) => {
   dispatch(loadingActions.handleRequest(constant, requestId))
@@ -65,7 +66,7 @@ export const handleCatchError = (error, type, dispatch, requestId) => {
   } else {
     errorStatus = error.response.status
     if (error.response.status === 500) {
-      errorMessage = error.response.data.results
+      errorMessage = error.response.data.results || error.response.data.detail
     } else if (error.response.status > 200) {
       errorMessage = findErrorKeyValue(error.response.status, error.response.data)
     }

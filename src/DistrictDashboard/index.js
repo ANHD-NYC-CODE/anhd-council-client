@@ -188,6 +188,7 @@ class DistrictDashboard extends React.PureComponent {
           <DistrictDashboardIndex
             appState={this.props.appState}
             cancelChangeGeography={this.cancelChangeGeography}
+            config={this.props.config}
             dispatch={this.props.dispatch}
             handleChangeGeography={this.submitGeography}
             handleChangeGeographyType={this.handleChangeGeographyType}
@@ -231,7 +232,6 @@ const makeMapStateToProps = () => {
   const mapStateToProps = state => {
     const loadingSelector = createLoadingSelector([
       state.appState.selectedRequests.map(request => request.requestConstant),
-      c.ADVANCED_SEARCH,
     ])
 
     const errorSelector = createErrorSelector([state.appState.selectedRequests.map(request => request.requestConstant)])

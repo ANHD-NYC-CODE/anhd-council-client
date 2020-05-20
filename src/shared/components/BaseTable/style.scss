@@ -1,27 +1,67 @@
-@import 'shared/styles/bootstrap/_variables.scss';
+@import 'shared/styles/_variables.scss';
 
 table.table,
 .base-table,
 .nested-table {
+  width: 100%;
+
+  @include media-breakpoint-up(xl) {
+    width: fit-content;
+    max-width: 100%;
+  }
+
   table {
     background-color: $white;
   }
+
+  thead th {
+    outline: none;
+    padding-top: 10px;
+    vertical-align: top;
+  }
+
   thead th,
   tbody td {
-    font-size: 0.8rem;
+    @extend %p3-font-size;
+    vertical-align: middle;
 
     input {
       height: 30px;
       padding: 0 10px;
     }
   }
+
   tbody tr {
-    cursor: pointer;
+    // cursor: pointer;
+    // remove animation expanding
     transition: all 0s linear;
 
     * {
       transition: all 0s linear;
     }
+  }
+
+  .sortable {
+    span {
+      font-size: 20px;
+    }
+  }
+
+  .sortable:hover {
+    span.order-4 {
+      color: $black;
+      font-weight: bold;
+
+      &::before,
+      &::after {
+        opacity: 1;
+      }
+    }
+  }
+
+  // pagination buttons
+  .page-item {
+    margin-right: 5px;
   }
 
   .table-sm td {
@@ -47,7 +87,7 @@ table.table,
     // only clicks to .expandable-cell
     td,
     tbody tr {
-      pointer-events: none;
+      // pointer-events: none;
     }
 
     td a,
@@ -58,19 +98,19 @@ table.table,
 
   @media (hover: hover) {
     table.no-expand {
-      tr:hover {
-        background-color: $primary;
+      tbody tr:hover {
+        background-color: $secondary;
         color: white;
       }
     }
     // tr:not(.expanding-row) td:not(.table-column--active):not(.react-bs-table-no-data):hover {
-    //   background-color: $primary;
+    //   background-color: $secondary;
     //   color: white;
     // }
   }
 
   .table-column--active {
-    background-color: $primary;
+    background-color: $secondary;
     color: white;
     // text-overflow: inherit;
     // white-space: normal;
@@ -101,6 +141,12 @@ table.table,
     padding: 0;
   }
 
+  // eliminates table animation
+  .row-expand-slide-appear-active,
+  .row-expand-slide-exit-active {
+    transition: none;
+  }
+
   .table-row--nested-bumper {
     padding-left: 10px;
     background-color: $gray-700;
@@ -124,66 +170,93 @@ table.table,
     font-weight: bold;
   }
 
-  .table-header__share-column {
-    cursor: pointer;
-    color: $gray-400;
-  }
-
-  .table-header__share-column:hover {
-    text-decoration: underline;
-  }
-
   .page-link {
     padding: 5px 10px;
   }
 
   .dropdown-toggle {
-    background-color: white;
     padding: 5px 10px;
   }
 
-  .text-filter {
-    margin-bottom: 0;
+  .base-table__select-filters {
+    // background-color: $secondary;
+    align-items: center;
+    justify-items: center;
+    display: flex;
+    flex-wrap: nowrap;
+    // margin-right: 20px;
+    flex: 0 0 auto;
+
+    & > * {
+      margin-right: 20px;
+    }
   }
+
+  .base-table__select-filters__container {
+    flex: 0 0 auto;
+    // margin-bottom: 10px;
+  }
+
+  .text-filter,
+  .text-filter:focus {
+    border: 1px solid $gray-400;
+    font-size: 12px;
+    line-height: 16px;
+    margin-top: 5px;
+    margin-bottom: 0;
+    padding-left: 5px;
+    height: 20px;
+    border-radius: 0;
+  }
+}
+
+.base-table__header-body-wrapper {
+  overflow-x: auto;
+  // width: min-content;
+}
+
+.base-table__header-body-inner-wrapper {
+  width: min-content;
+}
+
+.base-table-header__wrapper {
+  // max-width: 1044px;
+  width: max-content;
+  position: sticky;
+  left: 0;
 }
 
 .base-table .base-table {
   .expanded-row {
-    background-color: $primary;
+    background-color: $secondary;
   }
 }
 .csv-button.btn {
   cursor: pointer;
-  font-size: 16px;
 }
 
 .hide-filter {
-  input {
+  input,
+  select {
     display: none;
   }
 }
 
 .table-filter-button-group {
+  align-items: flex-start;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   flex-wrap: wrap;
-  max-height: 80px;
-  max-width: 220px;
+  justify-content: flex-start;
+  // padding: 10px;
+  // padding-bottom: 0;
+  // max-height: 100px;
+  // max-width: 220px;
 
   .table-filter-button {
-    border-radius: 12px;
-    border: 1px solid $gray-500;
-    padding: 4px;
-    line-height: 100%;
-    margin: 4px 0;
+    margin-right: 5px;
+    min-width: 60px;
     max-width: 100px;
-  }
-
-  @media (hover: hover) {
-    .table-filter-button:hover {
-      background-color: $primary;
-      color: $white;
-    }
   }
 }
 

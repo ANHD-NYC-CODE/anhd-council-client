@@ -31,27 +31,33 @@ describe('Landing page', () => {
     expect(wrapper.find('NavigationBar')).toHaveLength(1)
     expect(wrapper.find('NavigationBar li')).toHaveLength(9)
     expect(wrapper.find('NavigationBar').text()).toMatch(
-      /HomeDAP MapMap TutorialDistrict ReportsReports TutorialWatch ListPortalAboutContact/
+      /HomeDAP MapMap TutorialDistrict ReportsReports TutorialPortalAboutContact/
     )
     expect(wrapper.find('SubHeader')).toHaveLength(1)
-    expect(wrapper.find('SubHeader Link')).toHaveLength(4)
-    expect(wrapper.find('SubHeader').text()).toMatch(/Property LookupDistrict DashboardCustom Search/)
+    expect(wrapper.find('SubHeader Link')).toHaveLength(5)
+    expect(wrapper.find('SubHeader').text()).toMatch(/HomeProperty LookupDistrict DashboardCustom Search/)
     expect(
       wrapper
         .find('SubHeader a')
-        .at(4)
+        .at(2)
+        .props().href
+    ).toEqual('/')
+    expect(
+      wrapper
+        .find('SubHeader a')
+        .at(3)
         .props().href
     ).toEqual('/lookup')
     expect(
       wrapper
         .find('SubHeader a')
-        .at(5)
+        .at(4)
         .props().href
     ).toEqual('/map')
     expect(
       wrapper
         .find('SubHeader a')
-        .at(6)
+        .at(5)
         .props().href
     ).toEqual('/search')
   })
@@ -59,8 +65,8 @@ describe('Landing page', () => {
   describe('geography select', () => {
     it('shows the selected geography values', () => {
       const [wrapper, store] = setupWrapper()
-      expect(wrapper.find('GeographySelect select[name="geographyType"]').props().value).toEqual(-1)
-      expect(wrapper.find('GeographySelect select[name="geographyId"]')).toHaveLength(0)
+      expect(wrapper.find('MainGeographySelect select[name="geographyType"]').props().value).toEqual(-1)
+      expect(wrapper.find('MainGeographySelect select[name="geographyId"]')).toHaveLength(0)
       expect(wrapper.find('button.cancel-geography-change')).toHaveLength(0)
       expect(wrapper.find('button.submit-geography-change')).toHaveLength(0)
     })
@@ -68,12 +74,12 @@ describe('Landing page', () => {
     it('shows changing configuration', () => {
       const [wrapper, store] = setupWrapper()
       wrapper
-        .find('GeographySelect select[name="geographyType"]')
+        .find('MainGeographySelect select[name="geographyType"]')
         .simulate('change', { target: { value: 'COMMUNITY' } })
 
       wrapper.update()
-      expect(wrapper.find('GeographySelect select[name="geographyType"]').props().value).toEqual('COMMUNITY')
-      expect(wrapper.find('GeographySelect select[name="geographyId"]').props().value).toEqual(-1)
+      expect(wrapper.find('MainGeographySelect select[name="geographyType"]').props().value).toEqual('COMMUNITY')
+      expect(wrapper.find('MainGeographySelect select[name="geographyId"]').props().value).toEqual(-1)
       expect(wrapper.find('button.cancel-geography-change')).toHaveLength(1)
       expect(wrapper.find('button.submit-geography-change')).toHaveLength(0)
     })
@@ -81,9 +87,9 @@ describe('Landing page', () => {
     it('submits the change', () => {
       const [wrapper, store] = setupWrapper()
       wrapper
-        .find('GeographySelect select[name="geographyType"]')
+        .find('MainGeographySelect select[name="geographyType"]')
         .simulate('change', { target: { value: 'COMMUNITY' } })
-      wrapper.find('GeographySelect select[name="geographyId"]').simulate('change', { target: { value: '101' } })
+      wrapper.find('MainGeographySelect select[name="geographyId"]').simulate('change', { target: { value: '101' } })
       wrapper.update()
       expect(store.getState().router.location.pathname).toEqual('/community/101')
       expect(wrapper.find('GeographySelect select[name="geographyType"]').props().value).toEqual('COMMUNITY')
@@ -97,11 +103,11 @@ describe('Landing page', () => {
     it('redirects to the map page for the geography', () => {
       const [wrapper, store] = setupWrapper()
       wrapper
-        .find('GeographySelect select')
+        .find('MainGeographySelect select')
         .at(0)
         .simulate('change', { target: { value: 'COMMUNITY' } })
       wrapper
-        .find('GeographySelect select')
+        .find('MainGeographySelect select')
         .at(1)
         .simulate('change', { target: { value: '102' } })
 
@@ -111,7 +117,7 @@ describe('Landing page', () => {
       expect(
         wrapper
           .find('SubHeader a')
-          .at(5)
+          .at(4)
           .props().href
       ).toEqual('/community/102')
     })

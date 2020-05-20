@@ -1,5 +1,5 @@
 import React from 'react'
-import { communityIdToString } from 'shared/utilities/languageUtils'
+import { communityIdToString, boroCodeToName } from 'shared/utilities/languageUtils'
 import { getGeographyObject } from 'shared/utilities/routeUtils'
 
 export const getZipCodeSelectOptions = (zipCodes = []) => {
@@ -19,7 +19,28 @@ export const getGeographyIdOptions = (
 ) => {
   const zipCodeObject = getGeographyObject('ZIPCODE')
   type = type.toUpperCase()
+  const boroughs = ['MN', 'BX', 'BK', 'QN', 'SI']
   switch (type) {
+    case 'CITY':
+      return [
+        <option value={'*'} key={`geography-id-option-*`}>
+          All
+        </option>,
+      ]
+    case 'BOROUGH':
+      return [
+        <option disabled value={-1} key={-1}>
+          Select...
+        </option>,
+
+        ...boroughs.map(borough => {
+          return (
+            <option value={borough} key={`geography-id-option-${borough}`}>
+              {boroCodeToName(borough)}
+            </option>
+          )
+        }),
+      ]
     case 'COUNCIL':
       return [
         <option disabled value={-1} key={-1}>

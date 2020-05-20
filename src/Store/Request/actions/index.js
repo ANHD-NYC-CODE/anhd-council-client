@@ -1,7 +1,8 @@
 import * as c from 'shared/constants'
 import { constructAxiosGet, constructAxiosPost } from 'shared/utilities/Axios'
 import { requestWithAuth } from 'shared/utilities/authUtils'
-import { setTotalPropertyResults, setCustomSearchResults } from 'Store/DashboardState/actions'
+import { setTotalPropertyResults } from 'Store/DashboardState/actions'
+import { setCustomSearchResults } from 'Store/AdvancedSearch/actions'
 
 export const addRequest = requestConstant => ({
   type: c.ADD_REQUEST,
@@ -103,7 +104,7 @@ export const postUserRequest = (userRequestData, hideModal) => (dispatch, getSta
   )
 }
 
-export const postBugReport = (bugData, hideModal) => (dispatch, getState, access_token) => {
+export const postUserMessage = (bugData, hideModal) => (dispatch, getState, access_token) => {
   const requestId = Math.floor(Math.random() * 1000000)
   return constructAxiosPost(
     dispatch,

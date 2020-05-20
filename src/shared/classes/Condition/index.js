@@ -1,4 +1,5 @@
 import ParamError from 'shared/classes/ParamError'
+import moment from 'moment'
 
 export default class Condition {
   constructor({ key = undefined, type = undefined, filters = [], errors = [] } = {}) {
@@ -6,6 +7,21 @@ export default class Condition {
     this._type = type
     this._filters = filters
     this._errors = errors
+  }
+
+  keys() {
+    return {
+      key: this._key,
+      type: this._type,
+      filters: [],
+      errors: this._errors,
+    }
+  }
+
+  clone() {
+    const newSelf = new Condition({ ...this.keys() })
+    this.filters.forEach(filter => newSelf.addFilter({ filter: filter.clone() }))
+    return newSelf
   }
 
   get key() {
@@ -75,10 +91,6 @@ export default class Condition {
 
   removeFilter({ dispatchAction, filterIndex } = {}) {
     this._filters = this._filters.filter((f, index) => index !== filterIndex)
-    // Reset condition 0 type to 'AND' if only 1 filter exists
-    if (this.key === '0' && this._filters.length <= 1) {
-      this._type = 'AND'
-    }
 
     if (dispatchAction) {
       dispatchAction()
@@ -126,6 +138,15 @@ export default class Condition {
 
   clearErrors() {
     this._errors = []
+  }
+
+  getFilterDatasets() {
+    return this.filters.map(f => {
+      const constant = f.resourceModel.resourceConstant.toLowerCase().replace(/_/g, '')
+      const date = (f.paramMaps.find(pm => pm.type === 'DATE') || {}).value
+
+      return `${constant}s__${moment(date).format('MM/DD/YYYY')}`
+    })
   }
 
   validate() {

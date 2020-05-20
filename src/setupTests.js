@@ -1,4 +1,4 @@
-import { configure, mount } from 'enzyme'
+import { configure, mount, ShallowWrapper, ReactWrapper } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
 
 configure({ adapter: new Adapter() })
@@ -19,4 +19,34 @@ window.document.createElementNS = function(namespaceURI, qualifiedName) {
     return element
   }
   return createElementNSOrig.apply(this, arguments)
+}
+
+window.matchMedia = media => ({
+  addListener: () => {},
+  removeListener: () => {},
+  matches: media === '(min-width: 1200px)',
+})
+
+ShallowWrapper.prototype.findByTestId = function(attr) {
+  let wrapper = this.find(`[data-test-id="${attr}"]`)
+  if (Object.keys(arguments).length > 1) {
+    Object.keys(arguments).forEach(key => {
+      if (key == '0') return
+      wrapper = wrapper.find(arguments[key])
+    })
+  }
+
+  return wrapper
+}
+
+ReactWrapper.prototype.findByTestId = function(attr) {
+  let wrapper = this.find(`[data-test-id="${attr}"]`)
+  if (Object.keys(arguments).length > 1) {
+    Object.keys(arguments).forEach(key => {
+      if (key == '0') return
+      wrapper = wrapper.find(arguments[key])
+    })
+  }
+
+  return wrapper
 }

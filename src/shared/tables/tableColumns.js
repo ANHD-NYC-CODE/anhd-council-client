@@ -1,21 +1,25 @@
 import React from 'react'
 import * as c from 'shared/constants'
 import { textFilter } from 'react-bootstrap-table2-filter'
-import TableConfig from 'shared/classes/TableConfig'
 import ExpandedLinkRow from 'shared/components/BaseTable/ExpandedLinkRow'
 import { push } from 'connected-react-router'
 import { addressResultToPath } from 'shared/utilities/routeUtils'
 import BaseTable from 'shared/components/BaseTable'
+
 import {
   dateFormatter,
   hpdProblemStatusFormatter,
   annotatedColumnFormatter,
   dobComplaintCategoryPriorityFormatter,
+  sentencesFormatter,
   dobComplaintCategoryDescriptionFormatter,
+  ecbViolationStatusFormatter,
+  dobViolationTypeFormatter,
   dobPermitWorkTypeFormatter,
   acrisDocTypeFormatter,
   acrisParties1Formatter,
   acrisParties2Formatter,
+  linkWithDocumentFormatter,
   dollarFormatter,
   dobPermitSourceFormatter,
   dobPermitTypeFormatter,
@@ -27,6 +31,8 @@ import {
   dobViolationStatusFormatter,
   capitalizeFormatter,
 } from 'shared/utilities/tableUtils'
+
+import { setAppState } from 'Store/AppState/actions'
 
 export const getKeyField = constant => {
   switch (constant) {
@@ -67,6 +73,8 @@ export const getKeyField = constant => {
     case 'LISPENDEN':
       return 'key'
     case 'FORECLOSURE':
+      return 'key'
+    case 'PSFORECLOSURE':
       return 'key'
     default:
       return 'id'
@@ -143,6 +151,11 @@ export const getLinkProps = constant => {
         href: `https://a836-acris.nyc.gov/DS/DocumentSearch/DocumentDetail?doc_id=${linkId}`,
         linkText: linkId,
       })
+    case 'ACRIS_REAL_MASTER_SCANNED':
+      return ({ linkId }) => ({
+        href: `https://a836-acris.nyc.gov/DS/DocumentSearch/DocumentImageView?doc_id=${linkId}`,
+        linkText: linkId,
+      })
     default:
       return () => null
   }
@@ -168,6 +181,7 @@ export const getDescriptionKey = constant => {
 }
 
 export const getTableColumns = ({
+  page = undefined, // what page is this table on? "DASHBOARD" | "SEARCH"
   constant,
   columnExpandFunction,
   linkPropsFunction = () => null,
@@ -176,9 +190,9 @@ export const getTableColumns = ({
   dispatch,
   rowExample,
   annotationStart = c.DISTRICT_REQUEST_DATE_ONE,
+  advancedSearchDatasets = [],
 } = {}) => {
   let columns
-
   const getAnnotatedDataField = ({ annotationKey = '', rowExample = undefined } = {}) => {
     if (!rowExample) return ''
     const columnKey = Object.keys(rowExample).find(key => key.match(annotationKey))
@@ -213,6 +227,12 @@ export const getTableColumns = ({
   }
 
   const linkToColumnEvent = ({ row } = {}) => {
+    // Lets property rows be clickable and link to their lookup page
+    if (page === 'DASHBOARD') {
+      dispatch(setAppState({ linkLookupBackToDashboard: true }))
+    } else {
+      dispatch(setAppState({ linkLookupBackToDashboard: false }))
+    }
     dispatch(push(addressResultToPath({ bbl: row.bbl })))
   }
 
@@ -229,7 +249,7 @@ export const getTableColumns = ({
   const constructPropertyColumn = ({
     dataField,
     text,
-    sort,
+    sort = true,
     filter,
     classes,
     formatter,
@@ -261,7 +281,7 @@ export const getTableColumns = ({
     key,
     dataField,
     text,
-    sort,
+    sort = true,
     filter,
     classes,
     headerClasses,
@@ -271,6 +291,7 @@ export const getTableColumns = ({
     csvFormatter,
     component = ExpandedLinkRow,
     columnEvent,
+    headerSortingClasses = 'base-table__sorting-header',
   }) => {
     return {
       key,
@@ -284,6 +305,7 @@ export const getTableColumns = ({
       hidden,
       csvExport,
       csvFormatter,
+      headerSortingClasses,
       events: {
         onClick: (e, column, columnIndex, row, rowIndex) => {
           if (columnEvent) return columnEvent({ e, column, row, component })
@@ -325,12 +347,17 @@ export const getTableColumns = ({
     }
   }
 
-  const getAnnotationKey = (datasetKey, annotationStart = undefined) => {
-    if (annotationStart) {
+  const getAnnotationKey = (datasetKey, annotationStart = undefined, advancedSearchDatasets = []) => {
+    if (
+      advancedSearchDatasets.length &&
+      advancedSearchDatasets.some(constantDateKey => constantDateKey.includes(datasetKey))
+    ) {
+      return `${datasetKey}`
+    } else if (annotationStart) {
       return `${datasetKey}_${annotationStart}`
+    } else {
+      return `${datasetKey}`
     }
-
-    return `${datasetKey}`
   }
 
   switch (constant) {
@@ -391,13 +418,13 @@ export const getTableColumns = ({
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
           dataField: getAnnotatedDataField({
-            annotationKey: getAnnotationKey('acrisrealmasters', annotationStart),
+            annotationKey: getAnnotationKey('acrisrealmasters', annotationStart, advancedSearchDatasets),
             rowExample,
           }),
           text: getAnnotatedLabel({
             annotationLabel: 'Sales',
             rowExample,
-            annotationKey: getAnnotationKey('acrisrealmasters', annotationStart),
+            annotationKey: getAnnotationKey('acrisrealmasters', annotationStart, advancedSearchDatasets),
           }),
           sort: true,
           formatter: annotatedColumnFormatter,
@@ -406,13 +433,13 @@ export const getTableColumns = ({
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
           dataField: getAnnotatedDataField({
-            annotationKey: getAnnotationKey('evictions', annotationStart),
+            annotationKey: getAnnotationKey('evictions', annotationStart, advancedSearchDatasets),
             rowExample,
           }),
           text: getAnnotatedLabel({
             annotationLabel: 'Marshal Evictions',
             rowExample,
-            annotationKey: getAnnotationKey('evictions', annotationStart),
+            annotationKey: getAnnotationKey('evictions', annotationStart, advancedSearchDatasets),
           }),
           sort: true,
           formatter: annotatedColumnFormatter,
@@ -422,13 +449,13 @@ export const getTableColumns = ({
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
           dataField: getAnnotatedDataField({
-            annotationKey: getAnnotationKey('foreclosures', annotationStart),
+            annotationKey: getAnnotationKey('foreclosures', annotationStart, advancedSearchDatasets),
             rowExample,
           }),
           text: getAnnotatedLabel({
             annotationLabel: 'Foreclosures',
             rowExample,
-            annotationKey: getAnnotationKey('foreclosures', annotationStart),
+            annotationKey: getAnnotationKey('foreclosures', annotationStart, advancedSearchDatasets),
           }),
           sort: true,
           formatter: annotatedColumnFormatter,
@@ -437,13 +464,13 @@ export const getTableColumns = ({
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
           dataField: getAnnotatedDataField({
-            annotationKey: getAnnotationKey('hpdcomplaints', annotationStart),
+            annotationKey: getAnnotationKey('hpdcomplaints', annotationStart, advancedSearchDatasets),
             rowExample,
           }),
           text: getAnnotatedLabel({
             annotationLabel: 'HPD Complaints',
             rowExample,
-            annotationKey: getAnnotationKey('hpdcomplaints', annotationStart),
+            annotationKey: getAnnotationKey('hpdcomplaints', annotationStart, advancedSearchDatasets),
           }),
           sort: true,
           formatter: annotatedColumnFormatter,
@@ -452,13 +479,13 @@ export const getTableColumns = ({
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
           dataField: getAnnotatedDataField({
-            annotationKey: getAnnotationKey('hpdviolations', annotationStart),
+            annotationKey: getAnnotationKey('hpdviolations', annotationStart, advancedSearchDatasets),
             rowExample,
           }),
           text: getAnnotatedLabel({
             annotationLabel: 'HPD Violations',
             rowExample,
-            annotationKey: getAnnotationKey('hpdviolations', annotationStart),
+            annotationKey: getAnnotationKey('hpdviolations', annotationStart, advancedSearchDatasets),
           }),
           sort: true,
           formatter: annotatedColumnFormatter,
@@ -467,13 +494,13 @@ export const getTableColumns = ({
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
           dataField: getAnnotatedDataField({
-            annotationKey: getAnnotationKey('dobcomplaints', annotationStart),
+            annotationKey: getAnnotationKey('dobcomplaints', annotationStart, advancedSearchDatasets),
             rowExample,
           }),
           text: getAnnotatedLabel({
             annotationLabel: 'DOB Complaints',
             rowExample,
-            annotationKey: getAnnotationKey('dobcomplaints', annotationStart),
+            annotationKey: getAnnotationKey('dobcomplaints', annotationStart, advancedSearchDatasets),
           }),
           sort: true,
           formatter: annotatedColumnFormatter,
@@ -482,13 +509,13 @@ export const getTableColumns = ({
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
           dataField: getAnnotatedDataField({
-            annotationKey: getAnnotationKey('dobviolations', annotationStart),
+            annotationKey: getAnnotationKey('dobviolations', annotationStart, advancedSearchDatasets),
             rowExample,
           }),
           text: getAnnotatedLabel({
             annotationLabel: 'DOB Violations',
             rowExample,
-            annotationKey: getAnnotationKey('dobviolations', annotationStart),
+            annotationKey: getAnnotationKey('dobviolations', annotationStart, advancedSearchDatasets),
           }),
           sort: true,
           formatter: annotatedColumnFormatter,
@@ -497,13 +524,13 @@ export const getTableColumns = ({
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
           dataField: getAnnotatedDataField({
-            annotationKey: getAnnotationKey('ecbviolations', annotationStart),
+            annotationKey: getAnnotationKey('ecbviolations', annotationStart, advancedSearchDatasets),
             rowExample,
           }),
           text: getAnnotatedLabel({
             annotationLabel: 'ECB Violations',
             rowExample,
-            annotationKey: getAnnotationKey('ecbviolations', annotationStart),
+            annotationKey: getAnnotationKey('ecbviolations', annotationStart, advancedSearchDatasets),
           }),
           sort: true,
           formatter: annotatedColumnFormatter,
@@ -512,13 +539,13 @@ export const getTableColumns = ({
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
           dataField: getAnnotatedDataField({
-            annotationKey: getAnnotationKey('dobfiledpermits', annotationStart),
+            annotationKey: getAnnotationKey('dobfiledpermits', annotationStart, advancedSearchDatasets),
             rowExample,
           }),
           text: getAnnotatedLabel({
             annotationLabel: 'DOB Permit Applications',
             rowExample,
-            annotationKey: getAnnotationKey('dobfiledpermits', annotationStart),
+            annotationKey: getAnnotationKey('dobfiledpermits', annotationStart, advancedSearchDatasets),
           }),
           sort: true,
           formatter: annotatedColumnFormatter,
@@ -527,13 +554,13 @@ export const getTableColumns = ({
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
           dataField: getAnnotatedDataField({
-            annotationKey: getAnnotationKey('dobissuedpermits', annotationStart),
+            annotationKey: getAnnotationKey('dobissuedpermits', annotationStart, advancedSearchDatasets),
             rowExample,
           }),
           text: getAnnotatedLabel({
             annotationLabel: 'DOB Permit Issuances',
             rowExample,
-            annotationKey: getAnnotationKey('dobissuedpermits', annotationStart),
+            annotationKey: getAnnotationKey('dobissuedpermits', annotationStart, advancedSearchDatasets),
           }),
           sort: true,
           formatter: annotatedColumnFormatter,
@@ -542,13 +569,13 @@ export const getTableColumns = ({
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
           dataField: getAnnotatedDataField({
-            annotationKey: getAnnotationKey('housinglitigations', annotationStart),
+            annotationKey: getAnnotationKey('housinglitigations', annotationStart, advancedSearchDatasets),
             rowExample,
           }),
           text: getAnnotatedLabel({
             annotationLabel: 'Litigations against landlords',
             rowExample,
-            annotationKey: getAnnotationKey('housinglitigations', annotationStart),
+            annotationKey: getAnnotationKey('housinglitigations', annotationStart, advancedSearchDatasets),
           }),
           sort: true,
           formatter: annotatedColumnFormatter,
@@ -943,6 +970,8 @@ export const getTableColumns = ({
           columnEvent: expandColumnEvent,
           classes: 'expandable-cell',
           dataField: 'violationtype',
+          formatter: dobViolationTypeFormatter,
+          csvFormatter: dateFormatter,
           text: 'Violation Type',
           sort: true,
         }),
@@ -951,6 +980,8 @@ export const getTableColumns = ({
           dataField: 'description',
           text: 'Description',
           filter: constructFilter(textFilter),
+          formatter: sentencesFormatter,
+          csvFormatter: sentencesFormatter,
           classes: 'expandable-cell table-column--description',
         }),
         constructStandardColumn({
@@ -997,10 +1028,11 @@ export const getTableColumns = ({
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
-          dataField: 'complaintcategory',
+          dataField: 'complaintdescription',
           text: 'Description',
-          formatter: dobComplaintCategoryDescriptionFormatter,
-          csvFormatter: dobComplaintCategoryDescriptionFormatter,
+          // formatting occurs in ResourceModel#tableResultsConstructor
+          // formatter: dobComplaintCategoryDescriptionFormatter,
+          // csvFormatter: dobComplaintCategoryDescriptionFormatter,
           classes: 'expandable-cell table-column--description',
           filter: constructFilter(textFilter),
           sort: true,
@@ -1065,6 +1097,8 @@ export const getTableColumns = ({
           classes: 'expandable-cell',
           dataField: 'sectionlawdescription1',
           text: 'Standard Description',
+          formatter: sentencesFormatter,
+          csvFormatter: sentencesFormatter,
           sort: true,
         }),
         constructStandardColumn({
@@ -1073,6 +1107,8 @@ export const getTableColumns = ({
           text: 'Violation Description',
           filter: constructFilter(textFilter),
           classes: 'expandable-cell table-column--description',
+          formatter: sentencesFormatter,
+          csvFormatter: sentencesFormatter,
         }),
         constructStandardColumn({
           dataField: 'ecbviolationstatus',
@@ -1080,18 +1116,22 @@ export const getTableColumns = ({
           filter: baseTableConfig.filterPrototypes['ECB_VIOLATION_ACTIVE'],
           headerClasses: 'hide-filter',
           sort: true,
-          formatter: capitalizeFormatter,
-          csvFormatter: capitalizeFormatter,
+          formatter: ecbViolationStatusFormatter,
+          csvFormatter: ecbViolationStatusFormatter,
         }),
         constructStandardColumn({
           dataField: 'aggravatedlevel',
           text: 'Aggravated Level',
           sort: true,
+          formatter: capitalizeFormatter,
+          csvFormatter: capitalizeFormatter,
         }),
         constructStandardColumn({
           dataField: 'hearingstatus',
           text: 'Hearing Status',
           sort: true,
+          formatter: capitalizeFormatter,
+          csvFormatter: capitalizeFormatter,
         }),
       ]
       break
@@ -1209,6 +1249,8 @@ export const getTableColumns = ({
           text: 'Description',
           classes: 'expandable-cell table-column--description',
           filter: constructFilter(textFilter),
+          formatter: sentencesFormatter,
+          csvFormatter: sentencesFormatter,
           sort: true,
         }),
         constructStandardColumn({
@@ -1216,6 +1258,8 @@ export const getTableColumns = ({
           classes: 'expandable-cell',
           dataField: 'jobstatus',
           text: 'Status',
+          formatter: sentencesFormatter,
+          csvFormatter: sentencesFormatter,
           sort: true,
         }),
         constructStandardColumn({
@@ -1274,7 +1318,8 @@ export const getTableColumns = ({
         constructStandardColumn({
           dataField: 'documentid',
           text: 'Document ID',
-          formatter: (cell, row, index) => linkFormatter(cell, row, index, 'ACRIS_REAL_MASTER', 'documentid'),
+          formatter: (cell, row, index) =>
+            linkWithDocumentFormatter(cell, row, index, 'ACRIS_REAL_MASTER', 'documentid'),
           csvExport: false,
         }),
         constructStandardColumn({
@@ -1302,6 +1347,8 @@ export const getTableColumns = ({
           formatter: acrisDocTypeFormatter,
           csvFormatter: acrisDocTypeFormatter,
           sort: true,
+          filter: baseTableConfig.filterPrototypes['ACRIS_REAL_MASTER_DOCUMENT_TYPE'],
+          headerClasses: 'hide-filter',
         }),
         constructStandardColumn({
           dataField: 'docamount',
@@ -1313,8 +1360,7 @@ export const getTableColumns = ({
         constructStandardColumn({
           columnEvent: expandColumnEvent,
           classes: 'expandable-cell',
-          dataField: 'acrisrealparties',
-          key: 'acrisparties1',
+          dataField: 'partiesFrom',
           text: 'Parties-1 (From)',
           formatter: acrisParties1Formatter,
           csvFormatter: acrisParties1Formatter,
@@ -1323,8 +1369,7 @@ export const getTableColumns = ({
         constructStandardColumn({
           columnEvent: expandColumnEvent,
           classes: 'expandable-cell',
-          dataField: 'acrisrealparties',
-          key: 'acrisparties2',
+          dataField: 'partiesTo',
           text: 'Parties-2 (To)',
           formatter: acrisParties2Formatter,
           csvFormatter: acrisParties2Formatter,
@@ -1543,6 +1588,74 @@ export const getTableColumns = ({
           dataField: 'source',
           text: 'Source',
           sort: true,
+        }),
+      ]
+      break
+    case 'PSFORECLOSURE':
+      columns = [
+        constructStandardColumn({
+          dataField: 'key',
+          text: 'key',
+          hidden: true,
+        }),
+        constructStandardColumn({
+          dataField: 'indexno',
+          text: 'Index No.',
+          hidden: false,
+        }),
+        constructStandardColumn({
+          dataField: 'judgement',
+          text: 'Judgement Date',
+          formatter: dateFormatter,
+          csvFormatter: dateFormatter,
+          sort: true,
+        }),
+        constructStandardColumn({
+          dataField: 'dateadded',
+          text: 'Date Added',
+          formatter: dateFormatter,
+          csvFormatter: dateFormatter,
+          sort: true,
+        }),
+        constructStandardColumn({
+          dataField: 'foreclosuretype',
+          text: 'Foreclosure Type',
+          sort: true,
+        }),
+        constructStandardColumn({
+          dataField: 'lien',
+          text: 'Lien Amount',
+          formatter: dollarFormatter,
+          csvFormatter: annotatedColumnFormatter,
+          sort: true,
+        }),
+        constructStandardColumn({
+          columnEvent: expandColumnEvent,
+          dataField: 'plaintiff',
+          text: 'Plaintiff (Creditor)',
+          sort: true,
+          classes: 'expandable-cell table-column--description',
+        }),
+        constructStandardColumn({
+          dataField: 'defendant',
+          text: 'Defendant (Debtor)',
+          sort: true,
+          columnEvent: expandColumnEvent,
+          classes: 'expandable-cell table-column--description',
+        }),
+        constructStandardColumn({
+          dataField: 'auction',
+          text: 'Auction Date',
+          formatter: dateFormatter,
+          csvFormatter: dateFormatter,
+          sort: true,
+        }),
+        constructStandardColumn({
+          columnEvent: expandColumnEvent,
+          dataField: 'auctionlocation',
+          text: 'Auction Location',
+          sort: true,
+          classes: 'expandable-cell table-column--description',
         }),
       ]
       break
