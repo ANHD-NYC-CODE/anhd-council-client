@@ -7,9 +7,11 @@
 
   &.layout-width-wrapper {
     padding: 0 1rem !important;
+    padding-bottom: 1rem !important;
 
     @include media-breakpoint-up(xl) {
       padding: 0 4rem !important;
+      padding-bottom: 1rem !important;
     }
   }
   &__content {
