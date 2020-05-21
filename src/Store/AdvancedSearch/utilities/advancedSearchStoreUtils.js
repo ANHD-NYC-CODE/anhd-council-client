@@ -68,7 +68,7 @@ export const getUrlFormattedParamMaps = advancedSearch => {
       type: 'TEXT',
       field: 'summary-type',
       comparison: '',
-      value: 'short-annotated', //'custom-search',
+      value: 'custom-search',
     }),
   ]
 
