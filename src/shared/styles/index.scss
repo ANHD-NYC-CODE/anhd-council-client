@@ -48,4 +48,13 @@ a {
 
 .dropdown-item {
   @extend %p3-font-size;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-right: 0;
+
+  a {
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-right: 24px;
+  }
 }

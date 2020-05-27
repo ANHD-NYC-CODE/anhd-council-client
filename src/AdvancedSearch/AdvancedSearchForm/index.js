@@ -48,21 +48,20 @@ class AdvancedSearchForm extends React.PureComponent {
 
     allFilters.forEach(filter => filter.validate(this.props.loggedIn))
     allParamMaps.forEach(paramMap => paramMap.validate())
-    return [allConditions, allFilters, allParamMaps]
+    if (
+      allConditions.some(condition => !!condition.errors.length) ||
+      allFilters.some(filter => !!filter.errors.length) ||
+      allParamMaps.some(paramMap => !!paramMap.errors.length)
+    ) {
+      this.setState({ hasErrors: true })
+    } else {
+      this.setState({ hasErrors: false })
+    }
   }
 
   submitForm(values, formik) {
-    const [allConditions, allFilters, allParamMaps] = this.validateForm()
     formik.validateForm(values).then(() => {
-      if (
-        allConditions.some(condition => !!condition.errors.length) ||
-        allFilters.some(filter => !!filter.errors.length) ||
-        allParamMaps.some(paramMap => !!paramMap.errors.length)
-      ) {
-        this.setState({ hasErrors: true })
-        return
-      } else {
-        this.setState({ hasErrors: false })
+      if (!this.state.hasErrors) {
         this.props.onSubmit()
       }
     })
