@@ -51,7 +51,7 @@ export default class BaseTableConfig {
           'ACRIS_REAL_MASTER',
           'ACRIS_REAL_MASTER_DOCUMENT_TYPE',
           [
-            this.createFilterItem('Deed', ['DEED']),
+            this.createFilterItem('Deeds', ['DEED']),
             this.createFilterItem('Mortgages', [
               'AALR',
               'AGMT',

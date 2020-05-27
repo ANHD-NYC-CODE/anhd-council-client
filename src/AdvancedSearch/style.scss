@@ -157,6 +157,7 @@
   &__map {
     position: relative;
     height: 400px;
+    max-height: 700px;
 
     @include media-breakpoint-up(lg) {
       margin: 0 auto;

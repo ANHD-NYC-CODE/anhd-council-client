@@ -17,7 +17,6 @@ export const maxValidate = paramMap => {
 
 export const requiredValidate = paramMap => {
   if (paramMap.value) return
-
   paramMap.addError(new ParamError({ message: 'Value is required' }))
 }
 

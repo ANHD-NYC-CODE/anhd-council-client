@@ -18,7 +18,7 @@ $unopened-width: 660px;
     display: none;
     margin-right: 10px;
 
-    @include media-breakpoint-up(md) {
+    @include media-breakpoint-up(sm) {
       align-items: center;
       display: flex;
       justify-content: center;
