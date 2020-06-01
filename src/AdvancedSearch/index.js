@@ -23,6 +23,7 @@ import BaseTable from 'shared/components/BaseTable'
 import { requestWithAuth } from 'shared/utilities/authUtils'
 import { makeRequest } from 'Store/Request/actions'
 import FormError from 'shared/components/FormError'
+import { setSearchTableState } from 'Store/AdvancedSearch/actions'
 
 import {
   updateCondition,
@@ -60,7 +61,7 @@ export class AdvancedSearch extends React.Component {
       displayingForm: !this.props.advancedSearch.results.length,
       displayingList: false,
       zoom: 13,
-      tableState: {},
+
       advancedSearch: this.cloneAdvancedSearchInstance(this.props.advancedSearch),
     }
 
@@ -354,7 +355,7 @@ export class AdvancedSearch extends React.Component {
                     key={this.props.advancedSearch.results}
                     advancedSearchDatasets={this.props.advancedSearch.conditions['0'].getFilterDatasets()}
                     csvBaseFileName={constructCsvFileName(this.props.advancedSearch)}
-                    globalTableState={this.state.tableState}
+                    globalTableState={this.props.advancedSearch.searchTableState}
                     datasetModelName={this.props.advancedSearchRequest.resourceModel.resourceConstant}
                     dispatch={this.props.dispatch}
                     error={this.state.error}
@@ -365,6 +366,7 @@ export class AdvancedSearch extends React.Component {
                     records={this.props.loading ? [] : this.props.advancedSearch.results}
                     showUpdate={false}
                     tableConfig={this.props.advancedSearchRequest.tableConfig}
+                    setTableState={tableState => this.props.dispatch(setSearchTableState(tableState))}
                   />
                 </div>
               </div>

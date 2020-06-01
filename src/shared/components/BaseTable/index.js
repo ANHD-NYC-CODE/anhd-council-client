@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { setDashboardTableState } from 'Store/DashboardState/actions'
 
 import BootstrapTable from 'react-bootstrap-table-next'
 import BaseTableConfig from 'shared/classes/BaseTableConfig'
@@ -90,14 +89,12 @@ class BaseTable extends React.Component {
   }
 
   setPage(page, sizePerPage) {
-    if (this.props.globalTableState.page) {
-      this.props.dispatch(
-        setDashboardTableState({
-          ...this.props.globalStableState,
-          sizePerPage,
-          page,
-        })
-      )
+    if (this.props.setTableState) {
+      this.props.setTableState({
+        ...this.props.globalStableState,
+        sizePerPage,
+        page,
+      })
     }
 
     this.setState({
@@ -107,14 +104,12 @@ class BaseTable extends React.Component {
   }
 
   setSizePerPage(page, sizePerPage) {
-    if (this.props.globalTableState.page) {
+    if (this.props.setTableState) {
       const tableState = { ...this.props.globalTableState, sizePerPage }
-      this.props.dispatch(
-        setDashboardTableState({
-          ...tableState,
-          page,
-        })
-      )
+      this.props.setTableState({
+        ...tableState,
+        page,
+      })
     }
 
     this.setState({

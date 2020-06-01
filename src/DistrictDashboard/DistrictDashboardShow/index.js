@@ -12,6 +12,7 @@ import DistrictFilterSection from 'DistrictDashboard/DistrictDashboardShow/Distr
 import DashboardResultsHeader from 'DistrictDashboard/DistrictDashboardShow/DashboardResultsHeader'
 import ConfigContext from 'Config/ConfigContext'
 import { setAppState } from 'Store/AppState/actions'
+import { setDashboardTableState } from 'Store/DashboardState/actions'
 
 import classnames from 'classnames'
 import { shortAmountComparisonString, mapFilterDateToLabel } from 'shared/utilities/languageUtils'
@@ -356,6 +357,7 @@ class DistrictDashboardShow extends React.Component {
                   records={this.props.loading ? [] : resultRecords}
                   showUpdate={false}
                   tableConfig={this.props.propertySummaryRequest.tableConfig}
+                  setTableState={tableState => this.props.dispatch(setDashboardTableState(tableState))}
                 />
               </div>
             </div>
