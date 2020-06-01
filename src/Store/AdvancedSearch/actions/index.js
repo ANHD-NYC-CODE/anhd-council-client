@@ -84,3 +84,8 @@ export const setCustomSearchResults = (customSearchResults = []) => ({
   type: c.SET_CUSTOM_SEARCH_RESULTS,
   customSearchResults,
 })
+
+export const setSearchTableState = (searchTableState = {}) => ({
+  type: c.SET_SEARCH_TABLE_STATE,
+  searchTableState,
+})

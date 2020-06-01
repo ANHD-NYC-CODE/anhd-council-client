@@ -14,6 +14,10 @@ export const initialState = () => ({
   geographies: [],
   propertyFilter: undefined, // initialize in Config/index.js
   results: [],
+  searchTableState: {
+    page: 1,
+    sizePerPage: 10,
+  },
 })
 
 export const advancedSearchReducer = (state = Object.freeze(initialState()), action = { data: [] }) => {
@@ -192,6 +196,13 @@ export const advancedSearchReducer = (state = Object.freeze(initialState()), act
       return {
         ...state,
         results: action.customSearchResults,
+      }
+    }
+
+    case c.SET_SEARCH_TABLE_STATE: {
+      return {
+        ...state,
+        searchTableState: action.searchTableState,
       }
     }
 

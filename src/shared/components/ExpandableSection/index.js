@@ -19,14 +19,14 @@ const ExpandableSection = props => {
 
   return (
     <div className="expandable-section">
-      <div className="expandable-section__above-fold">
-        <div
-          tabIndex="0"
-          role="button"
-          onKeyDown={e => spaceEnterKeyDownHandler(e, e => handleClick(e))}
-          onClick={e => handleClick(e)}
-          className={classnames('expandable-section__above-fold--element', props.className)}
-        >
+      <div
+        tabIndex="0"
+        role="button"
+        onKeyDown={e => spaceEnterKeyDownHandler(e, e => handleClick(e))}
+        onClick={e => handleClick(e)}
+        className="expandable-section__above-fold"
+      >
+        <div className={classnames('expandable-section__above-fold--element', props.className)}>
           {props.aboveFoldElement}
         </div>
         <div className={classnames(props.iconClass)}>&nbsp;{renderIcon()}</div>

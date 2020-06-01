@@ -27,8 +27,8 @@ const DOBIssuedPermit = databaseObject => ({
           paramMapType: 'SINGLE-TEXT',
           paramMapComparison: 'icontains',
           paramMapField: 'jobdescription',
-          paramSetLabel: 'Status',
-          valuePrefix: 'Status',
+          paramSetLabel: 'Type',
+          valuePrefix: 'Type',
           inputClass: '',
           defaultOptions: comparisonOptions({
             name: 'value',
