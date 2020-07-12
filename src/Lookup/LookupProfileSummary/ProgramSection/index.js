@@ -35,8 +35,11 @@ const ProgramSection = props => {
             .split(',')
             .map(program => {
               return (
-                <div key={`${props.profile.bbl} - ${program}`} className="profile-summary-body__value">
-                  {program}
+                <div
+                  key={`${props.profile.bbl} - ${program}`}
+                  className="profile-summary-body__value program-section__program"
+                >
+                  {program.trim()}
                 </div>
               )
             })}

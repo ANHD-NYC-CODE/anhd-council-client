@@ -1,3 +1,15 @@
+#### 1.0.1
+
+- adds `findingofharassment` and `findingdate` columns to Housing Litigations table on PLookup
+- utilize matching label in custom search sentence date comparisons (after, since, etc) to display "after" in subsidized housing expiration dates.
+- updated copy on eviction dataset info popup
+- fix a bug where page crashed if property had no lat/lng (example: `/property/3042719001`)
+- put each subsidy program in the PL section on its own line
+
+#### 1.0.0
+
+- merge redesign work and features
+
 #### 1.0.0b1.0.61
 
 - fix foreclosure custom search lookup

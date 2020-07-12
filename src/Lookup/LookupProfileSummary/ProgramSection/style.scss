@@ -3,5 +3,10 @@
 .program-section {
   .program-section__list {
     // margin-left: $lookup-sidebar-padding;
+    flex-direction: column;
+  }
+
+  .program-section__program {
+    margin-bottom: 8px;
   }
 }

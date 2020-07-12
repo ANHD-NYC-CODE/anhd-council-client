@@ -357,6 +357,11 @@ const Property = databaseObject => {
             dateRole: 'MODIFIER',
             comparisonPrefix: 'expiring',
             dateField: 'coresubsidyrecord__enddate',
+            dateOptions: rangeComparisonOptions({
+              comparisonValues: ['gte', 'between', 'lte'],
+              labels: ['After', 'Between', 'Before'],
+              rangeKey: 'DATE',
+            }),
           })
         },
       },

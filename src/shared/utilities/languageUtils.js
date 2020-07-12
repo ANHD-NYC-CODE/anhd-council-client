@@ -98,16 +98,14 @@ export const longAmountComparisonString = comparison => {
   }
 }
 
-export const constructDateComparisonString = comparison => {
+export const constructDateComparisonString = (comparison, options = []) => {
   switch (comparison) {
-    case 'gte':
-      return 'since'
     case 'start':
       return 'since'
-    case 'lte':
-      return 'before'
     case 'end':
       return 'before'
+    default:
+      return (options.find(option => option.value === comparison) || {}).label || ''
   }
 }
 
