@@ -16,16 +16,21 @@ const LocationSection = props => {
         <GoogleStreetView lat={props.lat} lng={props.lng} />
       </div>
       <div className="location-section__map">
-        <LeafletMap
-          currentGeographyType={props.appState.currentGeographyType}
-          currentGeographyId={props.appState.currentGeographyId}
-          changingGeographyType={props.appState.changingGeographyType}
-          changingGeographyId={props.appState.changingGeographyId}
-          center={[props.lat, props.lng]}
-          results={props.propertyResult}
-          iconConfig="SINGLE"
-          zoom={17}
-        />
+        {props.lat && props.lng ? (
+          <LeafletMap
+            currentGeographyType={props.appState.currentGeographyType}
+            currentGeographyId={props.appState.currentGeographyId}
+            changingGeographyType={props.appState.changingGeographyType}
+            changingGeographyId={props.appState.changingGeographyId}
+            center={[props.lat, props.lng]}
+            results={props.propertyResult}
+            iconConfig="SINGLE"
+            zoom={17}
+          />
+        ) : (
+          <p>No latitude / longitude coordinates were provided for this property.</p>
+        )}
+
         {/* <GoogleMap lat={props.lat} lng={props.lng} /> */}
       </div>
       <div className="text-center">

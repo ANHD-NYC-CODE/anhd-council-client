@@ -511,7 +511,7 @@ export const infoModals = {
   EVICTION: {
     title: 'Marshal Evictions',
     body:
-      'This dataset containts evictions that were executed by court-ordered marshals since 1/1/2017. "Marshal evictions" only occur at the very end of an eviction proceeding, if a judge orders a marshal to physically remove a tenant from their home and change the locks. If a case ends any other way prior to that point, it won\'t be captured in this data. In many of those cases, tenants will still have left their homes. We have de-duplicated the Department of Investgations\' data and matched addresses to BBLs to the best of our ability.',
+      'This dataset containts evictions that were executed by court-ordered marshals since 1/1/2017. "Marshal evictions" only occur at the very end of an eviction proceeding, if a judge orders a marshal to physically remove a tenant from their home and change the locks. If a case ends any other way prior to that point, it won\'t be captured in this data. In many of those cases, tenants will still have left their homes. We have de-duplicated the Department of Investgation\'s data using court marshal last name, eviction address, apartment number, and eviction date and matched addresses to BBLs to the best of our ability.',
     sources: [
       {
         text: 'NYC Open Data - Evictions',

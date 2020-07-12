@@ -104,7 +104,7 @@ describe('process property housing type filter', () => {
       object.paramSets['initial'].paramMaps.find(pm => pm.field === 'housingtype').value = 'rr'
 
       object.paramSets['housingType_rr_2'].create()
-      const result = `subsidized housing properties (expiring since ${startDate})`
+      const result = `subsidized housing properties (expiring after ${startDate})`
 
       expect(a.convertFilterToSentence(object)).toEqual(result)
     })

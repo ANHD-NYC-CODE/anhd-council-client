@@ -1300,6 +1300,16 @@ export const getTableColumns = ({
           sort: true,
         }),
         constructStandardColumn({
+          dataField: 'findingofharassment',
+          text: 'Finding of Harassment',
+          sort: true,
+        }),
+        constructStandardColumn({
+          dataField: 'findingdate',
+          text: 'Finding Date',
+          sort: true,
+        }),
+        constructStandardColumn({
           dataField: 'penalty',
           text: 'Penalty',
           sort: true,

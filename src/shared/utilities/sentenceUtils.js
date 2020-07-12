@@ -46,7 +46,9 @@ const parseParamMapComparison = (paramMap, nounOverride = undefined) => {
       return [
         paramMap.comparisonPrefix.trim(),
         paramMap.valuePrefix.trim(),
-        constructDateComparisonString(paramMap.comparison).trim(),
+        constructDateComparisonString(paramMap.comparison, paramMap.defaultOptions)
+          .trim()
+          .toLowerCase(),
         moment(paramMap.value, 'YYYY-MM-DD')
           .format('MM/DD/YYYY')
           .trim(),
@@ -58,7 +60,9 @@ const parseParamMapComparison = (paramMap, nounOverride = undefined) => {
       return [
         paramMap.comparisonPrefix.trim(),
         paramMap.valuePrefix,
-        constructDateComparisonString(paramMap.comparison).trim(),
+        constructDateComparisonString(paramMap.comparison, paramMap.defaultOptions)
+          .trim()
+          .toLowerCase(),
         paramMap.value,
       ]
         .filter(s => s)
