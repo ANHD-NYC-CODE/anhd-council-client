@@ -1,3 +1,7 @@
+#### 1.0.2
+
+- Updated WhoOwnsWhat api integration url
+
 #### 1.0.1
 
 - adds `findingofharassment` and `findingdate` columns to Housing Litigations table on PLookup
