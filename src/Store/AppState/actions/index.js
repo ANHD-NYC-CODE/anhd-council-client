@@ -105,7 +105,7 @@ export const clearAdvancedSearchRequest = () => dispatch => {
 }
 
 export const getWowPropertyData = bbl => dispatch => {
-  Axios.get('https://whoownswhat.justfix.nyc/api/address/dap-aggregate', { params: { bbl } })
+  Axios.get('https://wow-django.herokuapp.com/api/address/dap-aggregate?', { params: { bbl } })
     .then(response => {
       const data = response.data.result[0]
       dispatch(handleSetWowPropertyData(data))
