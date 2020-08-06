@@ -1,3 +1,8 @@
+#### 1.0.3
+
+- Format & update eviction modal info copy
+- Fix `NaN` custom search sentence units bug.
+
 #### 1.0.2
 
 - Updated WhoOwnsWhat api integration url
