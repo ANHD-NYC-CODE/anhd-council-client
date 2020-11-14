@@ -1,18 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import * as c from 'shared/constants'
 import { formatNumber } from 'shared/utilities/languageUtils'
-
-import StandardizedInput from 'shared/classes/StandardizedInput'
-
-import { mapFilterDateToLabel, longAmountComparisonString } from 'shared/utilities/languageUtils'
 
 import { constructAdvancedSearchSentence } from 'shared/utilities/sentenceUtils'
 import { Button } from 'react-bootstrap'
 import { clearAdvancedSearchRequest } from 'Store/AppState/actions'
-
-import Property from 'shared/models/resources/Property'
 
 import './style.scss'
 
