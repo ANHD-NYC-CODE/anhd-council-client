@@ -6,23 +6,28 @@ In the project directory, you can run:
 
 ### `npm start`
 
-Runs the app in the development mode.<br>
+Runs the app in the development mode.
+
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.<br>
+The page will reload if you make edits.
+
 You will also see any lint errors in the console.
 
 ### `npm test`
 
-Launches the test runner in the interactive watch mode.<br>
+Launches the test runner in the interactive watch mode.
+
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ### `npm run build`
 
-Builds the app for production to the `build` folder.<br>
+Builds the app for production to the `build` folder.
+
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.<br>
+The build is minified and the filenames include the hashes.
+
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
@@ -35,9 +40,11 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 ## Continuous Deployment
 
 1. Merge to master on github
-2. run command: `ssh -t anhd@45.55.44.160 "cd /var/www/anhd-council-client && sudo sh pull.sh"`
+2. run command: `ssh -t anhd@45.55.44.160 "cd /var/www/anhd-council-client && sudo sh pull.sh"` (or run `sh deploy.sh` helper script)
 
 ## Staging Deployment:
 
 1. Merge to staging branch on github and push
-2. run command: `ssh -t anhd@45.55.44.160 "cd /var/www/staging-anhd-council-client && sudo sh pull_staging.sh"`
+2. run command: `ssh -t anhd@45.55.44.160 "cd /var/www/staging-anhd-council-client && sudo sh pull_staging.sh"` (or run `sh deploy_staging.sh` helper script)
+
+The helper scripts automate the deploy process of pulling from github, installing packages, building the bundle, and restarting the nginx server in the backend directory of the server.
