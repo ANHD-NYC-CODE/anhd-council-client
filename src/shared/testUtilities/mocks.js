@@ -100,6 +100,8 @@ export const createPropertyRequestMock = (
     lat = '40.0',
     lng = '-73.0',
     original_address = '123 Fake St',
+    aepstatus = 'False',
+    managementprorgam = 'PVT'
   } = {},
   annotationArgs
 ) => {
@@ -142,6 +144,8 @@ export const createPropertyRequestMock = (
     lat: lat,
     lng: lng,
     original_address: original_address,
+    aepstatus,
+    managementprorgam,
     // 'hpdviolations_recent__01/01/2010-01/01/2019': 0,
     // 'dobviolations_recent__01/01/2010-01/01/2019': 0,
     // 'ecbviolations_recent__01/01/2010-01/01/2019': 0,

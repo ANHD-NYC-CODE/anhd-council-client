@@ -3,20 +3,13 @@ import PropTypes from 'prop-types'
 
 import * as c from 'shared/constants'
 import { formatNumber } from 'shared/utilities/languageUtils'
-import {
-  setDashboardFilterCondition,
-  setMapFilterDate,
-  updateAmountFilter,
-  setHousingTypeResultFilter,
-  setHousingTypeResultsIndex,
-} from 'Store/DashboardState/actions'
+import { updateAmountFilter } from 'Store/DashboardState/actions'
 import StandardizedInput from 'shared/classes/StandardizedInput'
-import { Button, Overlay, Tooltip } from 'react-bootstrap'
+import { Overlay, Tooltip } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExclamation } from '@fortawesome/free-solid-svg-icons'
 import { mapFilterDateToLabel, longAmountComparisonString } from 'shared/utilities/languageUtils'
 import AmountFilterInput from 'DistrictDashboard/AmountFilterInput'
-import { spaceEnterKeyDownHandler } from 'shared/utilities/accessibilityUtils'
 
 import SentenceDropdown from 'shared/components/SentenceDropdown'
 import Property from 'shared/models/resources/Property'

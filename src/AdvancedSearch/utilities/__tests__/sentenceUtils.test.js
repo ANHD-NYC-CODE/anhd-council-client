@@ -6,6 +6,7 @@ import ParamMap from 'shared/classes/ParamMap'
 import Condition from 'shared/classes/Condition'
 import ConditionFilter from 'shared/classes/ConditionFilter'
 import { filterMocks } from 'shared/models/__mocks__/filterMocks'
+import { rangeComparisonOptions } from 'shared/utilities/filterUtils'
 import moment from 'moment'
 
 const rawStartDate = c.CUSTOM_DEFAULT_START_DATE
@@ -43,6 +44,11 @@ describe('convertFilterToSentence', () => {
                 type: 'DATE',
                 role: 'LIMITER',
                 field: 'hpdviolations__approveddate',
+                defaultOptions: rangeComparisonOptions({
+                  comparisonValues: ['gte', 'between', 'lte'],
+                  labels: ['Since', 'Between', 'Before'],
+                  rangeKey: 'DATE',
+                }),
                 comparison: 'gte',
                 value: rawStartDate,
               }),
@@ -76,23 +82,13 @@ describe('convertGeographiesToSentence', () => {
       expect(a.convertGeographiesToSentence(geographies)).toEqual(result)
     })
   })
-
-  describe('2 geographies', () => {
-    it('converts the object into a sentence', () => {
-      const geographies = [new Geography('COUNCIL', 1), new Geography('COMMUNITY', 2)]
-
-      const result = 'in council district 1 and community district 2'
-
-      expect(a.convertGeographiesToSentence(geographies)).toEqual(result)
-    })
-  })
 })
 
 describe('process property housing type filter', () => {
   describe('1 ht', () => {
     it('converts the object into a sentence', () => {
       const object = filterMocks('PROPERTY')
-      const result = 'all properties'
+      const result = 'All properties'
 
       expect(a.convertFilterToSentence(object)).toEqual(result)
     })
@@ -104,7 +100,7 @@ describe('process property housing type filter', () => {
       object.paramSets['initial'].paramMaps.find(pm => pm.field === 'housingtype').value = 'rr'
 
       object.paramSets['housingType_rr_2'].create()
-      const result = `subsidized housing properties (expiring after ${startDate})`
+      const result = `Subsidized Housing properties (expiring after ${startDate})`
 
       expect(a.convertFilterToSentence(object)).toEqual(result)
     })
@@ -115,7 +111,7 @@ describe('process property housing type filter', () => {
 
       object.paramSets['housingType_rr_2'].createAll()
 
-      const result = `subsidized housing properties (expiring between ${startDate} and ${endDate})`
+      const result = `Subsidized Housing properties (expiring between ${startDate} and ${endDate})`
 
       expect(a.convertFilterToSentence(object)).toEqual(result)
     })
@@ -128,7 +124,7 @@ describe('process property housing type filter', () => {
       object.paramSets['housingType_rr_1'].paramMaps.find(pm => pm.field === 'subsidyprograms__programname').value =
         'LIHCT,J-51,421-a'
 
-      const result = `subsidized housing properties (LIHCT, J-51, or 421-a, expiring between ${startDate} and ${endDate})`
+      const result = `Subsidized Housing properties (LIHCT, J-51, or 421-a, expiring between ${startDate} and ${endDate})`
 
       expect(a.convertFilterToSentence(object)).toEqual(result)
     })
@@ -139,9 +135,9 @@ describe('process property housing type filter', () => {
       const object = filterMocks('PROPERTY')
       object.paramSets['initial'].paramMaps.find(pm => pm.field === 'housingtype').value = 'rs'
 
-      object.paramSets['housingType_rs'].createAll()
+      object.paramSets['housingType_rs_1'].createAll()
 
-      const result = 'rent stabilized properties (at least 25% units losts, between 2007 and 2017)'
+      const result = 'Rent Stabilized properties (at least 25% units losts, between 2007 and 2017)'
 
       expect(a.convertFilterToSentence(object)).toEqual(result)
     })
