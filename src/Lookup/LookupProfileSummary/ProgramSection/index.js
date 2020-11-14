@@ -52,7 +52,7 @@ const ProgramSection = props => {
           </div>
         )}
 
-        {props.profile.aepstatus.toUpperCase() === 'AEP ACTIVE' && (
+        {props.profile.aepstatus && props.profile.aepstatus.toUpperCase() === 'AEP ACTIVE' && (
           <div className="lookup-profile-summary__group">
             <div className="text-danger font-weight-bold">
               This property entered into the{' '}
@@ -64,7 +64,7 @@ const ProgramSection = props => {
           </div>
         )}
 
-        {props.profile.aepstatus.toUpperCase() === 'AEP DISCHARGED' && (
+        {props.profile.aepstatus && props.profile.aepstatus.toUpperCase() === 'AEP DISCHARGED' && (
           <div className="lookup-profile-summary__group">
             <div className="text-danger font-weight-bold">
               This property entered into the{' '}
@@ -76,7 +76,7 @@ const ProgramSection = props => {
           </div>
         )}
 
-        {props.profile.managementprogram.toUpperCase() === '7A' && (
+        {props.profile.managementprogram && props.profile.managementprogram.toUpperCase() === '7A' && (
           <div className="lookup-profile-summary__group">
             <div className="text-danger font-weight-bold">
               This property is managed under the{' '}

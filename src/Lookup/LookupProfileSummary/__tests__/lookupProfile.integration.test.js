@@ -130,7 +130,7 @@ describe('LookupProfileSummary', () => {
         expect(wrapper.find('OwnershipSection').text()).toMatch('Last updated 01/01/2018')
 
         expect(wrapper.find('OwnershipSection').text()).toMatch(
-          'The owner on record with the DOF is Test Owner.For more on ownership visit Who Owns What?'
+          "Last updated 01/01/2018The owner on record with the DOF is Test Owner.There are 0 properties associated by ownership with this property.For more on ownership visit Who Owns What?"
         )
 
         expect(wrapper.find('ProgramSection').text()).toMatch(
@@ -181,7 +181,7 @@ describe('LookupProfileSummary', () => {
         expect(ownershipSectionText).toMatch('Last updated 01/01/2018')
 
         expect(ownershipSectionText).toMatch(
-          "This property's ownership type is Co-op.The owner on record with the DOF is Test Owner.For more on ownership visit Who Owns What?"
+          "Last updated 01/01/2018Head Officer:  Title:MemberBusiness Address:Apt #1 123 Fake St., Brooklyn NY 12345This property's ownership type is Co-op.The owner on record with the DOF is Test Owner.There are 0 properties associated by ownership with this property.For more on ownership visit Who Owns What?"
         )
 
         expect(ownershipSectionText).toMatch(
