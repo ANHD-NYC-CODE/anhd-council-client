@@ -130,7 +130,7 @@ describe('LookupProfileSummary', () => {
         expect(wrapper.find('OwnershipSection').text()).toMatch('Last updated 01/01/2018')
 
         expect(wrapper.find('OwnershipSection').text()).toMatch(
-          "Last updated 01/01/2018The owner on record with the DOF is Test Owner.There are 0 properties associated by ownership with this property.For more on ownership visit Who Owns What?"
+          'Last updated 01/01/2018The owner on record with the DOF is Test Owner.There are 0 properties associated by ownership with this property.For more on ownership visit Who Owns What?'
         )
 
         expect(wrapper.find('ProgramSection').text()).toMatch(
