@@ -92,7 +92,6 @@ describe('DistrictDashboard', () => {
       expect(wrapper.find('DistrictDashboardRequestsWrapper')).toHaveLength(1)
       expect(wrapper.find('GeographySelect')).toHaveLength(1)
       expect(wrapper.find('ToggleButtonGroup')).toHaveLength(2)
-      expect(wrapper.find('GeographyProfile')).toHaveLength(1)
       expect(wrapper.find('LeafletMap')).toHaveLength(1)
 
       const housingTypeCards = wrapper.findByTestId('housing-type-radio', 'input')
@@ -110,7 +109,7 @@ describe('DistrictDashboard', () => {
       ).toEqual(true)
 
       // amounts
-      expect(wrapper.findByTestId('amount-result-filter')).toHaveLength(6)
+      expect(wrapper.find('[data-test-id*="annotated-result-filter-card"]')).toHaveLength(6)
       expect(wrapper.findByTestId('dashboard-condition-toggle', 'input')).toHaveLength(2)
       expect(
         wrapper
@@ -140,7 +139,6 @@ describe('DistrictDashboard', () => {
 
       expect(wrapper.findByTestId('map')).toHaveLength(1)
       expect(wrapper.findByTestId('base-table')).toHaveLength(1)
-      expect(wrapper.findByTestId('geography-profile')).toHaveLength(1)
     })
 
     describe('geography select', () => {
@@ -179,6 +177,7 @@ describe('DistrictDashboard', () => {
         expect(wrapper.find('button.submit-geography-change')).toHaveLength(0)
       })
     })
+
     describe('map view', () => {
       it('renders the map', async () => {
         const [wrapper, store] = setupWrapper({
@@ -219,8 +218,9 @@ describe('DistrictDashboard', () => {
         await flushAllPromises()
         wrapper.update()
 
+        // calculation is based of % of units each type has, not the # of properties
         expect(wrapper.findByTestId('housingtype-section', 'form').text()).toMatch(
-          'Housing Type:All Residential HousingRent Stabilized (0.0%)Subsidized Housing (0.0%)Small Homes (33.3%)Market Rate (66.7%)Public Housing (0.0%)'
+          'Housing Type:All Residential HousingRent Stabilized (0.0%)Subsidized Housing (0.0%)Small Homes (9.1%)Market Rate (100.0%)Public Housing (0.0%)'
         )
       })
 
@@ -258,14 +258,15 @@ describe('DistrictDashboard', () => {
 
         await flushAllPromises()
         wrapper.update()
-        const summaryElement = wrapper.findByTestId('amount-toggle', 'ReactBootstrapToggle').at(4)
+        // sales
+        const summaryElement = wrapper.findByTestId(
+          'annotated-result-filter-card--acrisrealmasters',
+          'ReactBootstrapToggle'
+        )
         summaryElement.simulate('click')
         summaryElement.update()
         expect(
-          wrapper
-            .findByTestId('amount-toggle', 'ReactBootstrapToggle')
-            .at(4)
-            .props().active
+          wrapper.findByTestId('annotated-result-filter-card--acrisrealmasters', 'ReactBootstrapToggle').props().active
         ).toEqual(true)
 
         expect(wrapper.find('BaseTable').find('tbody tr')).toHaveLength(1)
@@ -341,11 +342,11 @@ describe('DistrictDashboard', () => {
           createPropertyRequestMock({ bbl: 3, unitsres: 0 }, { 'hpdcomplaints_recent__12/02/2018-01/01/2019': 10 }),
           createPropertyRequestMock(
             { bbl: 4, unitsres: 10 },
-            { 'dobviolations_recent__12/02/2018-01/01/2019': 10, 'hpdcomplaints_recent__12/02/2018-01/01/2019': 1 }
+            { 'dobcomplaints_recent__12/02/2018-01/01/2019': 10, 'hpdcomplaints_recent__12/02/2018-01/01/2019': 1 }
           ),
           createPropertyRequestMock(
             { bbl: 5, unitsres: 10 },
-            { 'dobviolations_recent__12/02/2018-01/01/2019': 10, 'hpdcomplaints_recent__12/02/2018-01/01/2019': 10 }
+            { 'dobcomplaints_recent__12/02/2018-01/01/2019': 10, 'hpdcomplaints_recent__12/02/2018-01/01/2019': 10 }
           ),
         ]
         mock.onGet('/councils/1/properties/').reply(200, results)
@@ -355,12 +356,9 @@ describe('DistrictDashboard', () => {
 
         await flushAllPromises()
 
-        // check hpdcomplaints
+        // toggle hpdcomplaints (w/ at least 5)
 
-        wrapper
-          .findByTestId('amount-toggle', 'ReactBootstrapToggle')
-          .at(0)
-          .simulate('click')
+        wrapper.findByTestId('annotated-result-filter-card--hpdcomplaints', 'ReactBootstrapToggle').simulate('click')
 
         wrapper.update()
 
@@ -376,13 +374,30 @@ describe('DistrictDashboard', () => {
           'Displaying all residential housing with at least HPD complaints  in the  last 30 daysProperties: 2Units: 11'
         )
 
-        // check dovviolations
-        wrapper
-          .findByTestId('amount-toggle', 'ReactBootstrapToggle')
-          .at(1)
-          .simulate('click')
+        // toggle AND dobcomplaints
+        wrapper.findByTestId('annotated-result-filter-card--dobcomplaints', 'ReactBootstrapToggle').simulate('click')
 
         wrapper.update()
+
+        expect(wrapper.find('BaseTable').find('tbody tr')).toHaveLength(1)
+
+        expect(
+          wrapper
+            .find('BaseTable')
+            .props()
+            .records.map(r => r.bbl)
+        ).toEqual([5]) // check bbls
+        expect(wrapper.findByTestId('dashboard-results-editor').text()).toEqual(
+          'Displaying all residential housing with at least HPD complaints AND at least DOB complaints  in the  last 30 daysProperties: 1Units: 10'
+        )
+
+        wrapper.update()
+
+        // toggle OR
+        wrapper
+          .findByTestId('dashboard-condition-toggle', 'input')
+          .at(1)
+          .simulate('change', { target: { value: 'OR' } })
 
         expect(wrapper.find('BaseTable').find('tbody tr')).toHaveLength(3)
         expect(
@@ -390,28 +405,9 @@ describe('DistrictDashboard', () => {
             .find('BaseTable')
             .props()
             .records.map(r => r.bbl)
-        ).toEqual([2, 4, 5])
+        ).toEqual([2, 4, 5]) // check bbls
         expect(wrapper.findByTestId('dashboard-results-editor').text()).toEqual(
-          'Displaying all residential housing with at least HPD complaints OR at least DOB violations  in the  last 30 daysProperties: 3Units: 21'
-        )
-
-        wrapper.update()
-
-        // toggle AND
-        wrapper
-          .findByTestId('dashboard-condition-toggle', 'input')
-          .at(1)
-          .simulate('change', { target: { value: 'AND' } })
-
-        expect(wrapper.find('BaseTable').find('tbody tr')).toHaveLength(1)
-        expect(
-          wrapper
-            .find('BaseTable')
-            .props()
-            .records.map(r => r.bbl)
-        ).toEqual([5])
-        expect(wrapper.findByTestId('dashboard-results-editor').text()).toEqual(
-          'Displaying all residential housing with at least HPD complaints AND at least DOB violations  in the  last 30 daysProperties: 1Units: 10'
+          'Displaying all residential housing with at least HPD complaints OR at least DOB complaints  in the  last 30 daysProperties: 3Units: 21'
         )
 
         MockDate.reset()
@@ -434,10 +430,7 @@ describe('DistrictDashboard', () => {
 
         // check hpdcomplaints
 
-        wrapper
-          .findByTestId('amount-toggle', 'ReactBootstrapToggle')
-          .at(0)
-          .simulate('click')
+        wrapper.findByTestId('annotated-result-filter-card--hpdcomplaints', 'ReactBootstrapToggle').simulate('click')
 
         wrapper.update()
 

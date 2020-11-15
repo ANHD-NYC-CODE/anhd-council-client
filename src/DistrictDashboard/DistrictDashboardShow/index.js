@@ -16,7 +16,6 @@ import { setDashboardTableState } from 'Store/DashboardState/actions'
 
 import classnames from 'classnames'
 import { shortAmountComparisonString, mapFilterDateToLabel } from 'shared/utilities/languageUtils'
-import GeographyProfile from 'DistrictDashboard/GeographyProfile'
 import BaseTable from 'shared/components/BaseTable'
 import InfoModalButton from 'shared/components/InfoModalButton'
 

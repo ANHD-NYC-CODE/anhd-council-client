@@ -90,6 +90,7 @@ const DistrictFilterSection = props => {
               .map((amountFilter, index) => {
                 return (
                   <AnnotatedResultFilterCard
+                    testId={`annotated-result-filter-card--${amountFilter.fieldName}`}
                     key={`request-summary-${amountFilter.category}-${index}`}
                     auth={auth}
                     amountFilter={amountFilter}

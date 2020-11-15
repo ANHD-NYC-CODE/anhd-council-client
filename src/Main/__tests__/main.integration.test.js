@@ -29,37 +29,17 @@ describe('Landing page', () => {
   it('displays the initial navigation', () => {
     const [wrapper, store] = setupWrapper()
     expect(wrapper.find('NavigationBar')).toHaveLength(1)
-    expect(wrapper.find('NavigationBar li')).toHaveLength(9)
+    expect(wrapper.find('NavigationBar li')).toHaveLength(8)
     expect(wrapper.find('NavigationBar').text()).toMatch(
       /HomeDAP MapMap TutorialDistrict ReportsReports TutorialPortalAboutContact/
     )
     expect(wrapper.find('SubHeader')).toHaveLength(1)
     expect(wrapper.find('SubHeader Link')).toHaveLength(5)
     expect(wrapper.find('SubHeader').text()).toMatch(/HomeProperty LookupDistrict DashboardCustom Search/)
-    expect(
-      wrapper
-        .find('SubHeader a')
-        .at(2)
-        .props().href
-    ).toEqual('/')
-    expect(
-      wrapper
-        .find('SubHeader a')
-        .at(3)
-        .props().href
-    ).toEqual('/lookup')
-    expect(
-      wrapper
-        .find('SubHeader a')
-        .at(4)
-        .props().href
-    ).toEqual('/map')
-    expect(
-      wrapper
-        .find('SubHeader a')
-        .at(5)
-        .props().href
-    ).toEqual('/search')
+    expect(wrapper.find('a[data-test-id="subheader__home-link"]').props().href).toEqual('/')
+    expect(wrapper.find('a[data-test-id="subheader__pl-link"]').props().href).toEqual('/lookup')
+    expect(wrapper.find('a[data-test-id="subheader__dd-link"]').props().href).toEqual('/map')
+    expect(wrapper.find('a[data-test-id="subheader__search-link"]').props().href).toEqual('/search')
   })
 
   describe('geography select', () => {
@@ -114,12 +94,7 @@ describe('Landing page', () => {
       wrapper.update()
       expect(wrapper.find('Main')).toHaveLength(0)
       expect(wrapper.find('DistrictDashboard')).toHaveLength(1)
-      expect(
-        wrapper
-          .find('SubHeader a')
-          .at(4)
-          .props().href
-      ).toEqual('/community/102')
+      expect(wrapper.find('a[data-test-id="subheader__dd-link"]').props().href).toEqual('/community/102')
     })
   })
 })
