@@ -45,7 +45,7 @@ export const getAdvancedSearchParamMaps = advancedSearch => {
     Object.keys(advancedSearch.conditions).map(key => advancedSearch.conditions[key].paramMaps)
   )
 
-  const propertyParamMaps = advancedSearch.propertyFilter.paramMaps
+  const propertyParamMaps = (advancedSearch.propertyFilter || {}).paramMaps
 
   return [].concat.apply([], [conditionParamMaps, propertyParamMaps]).filter(p => p)
 }
