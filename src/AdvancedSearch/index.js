@@ -18,7 +18,6 @@ import * as advancedSearchReducer from 'Store/AdvancedSearch/reducers'
 import Helmet from 'react-helmet'
 import { Button, ButtonToolbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
 import LeafletMap from 'LeafletMap'
-import SpinnerLoader from 'shared/components/Loaders/SpinnerLoader'
 import BaseTable from 'shared/components/BaseTable'
 import { requestWithAuth } from 'shared/utilities/authUtils'
 import { makeRequest } from 'Store/Request/actions'
@@ -28,21 +27,14 @@ import { setSearchTableState } from 'Store/AdvancedSearch/actions'
 import {
   updateCondition,
   replacePropertyFilter,
-  addGeography,
   updateGeography,
   forceUpdateSearch,
 } from 'Store/AdvancedSearch/actions'
-import {
-  clearAdvancedSearchRequest,
-  setAppState,
-  setGeographyAndRequestsAndRedirect,
-  setAdvancedSearchRequest,
-} from 'Store/AppState/actions'
+import { clearAdvancedSearchRequest, setAppState, setAdvancedSearchRequest } from 'Store/AppState/actions'
 
 import AdvancedSearchForm from 'AdvancedSearch/AdvancedSearchForm'
 import AdvancedSearchSentenceEditor from 'AdvancedSearch/AdvancedSearchSentenceEditor'
 import { newAdvancedSearchRequest } from 'shared/utilities/configUtils'
-import ConfigContext from 'Config/ConfigContext'
 
 import classnames from 'classnames'
 
@@ -86,7 +78,7 @@ export class AdvancedSearch extends React.Component {
       geographies: advancedSearchObject.geographies.length
         ? [advancedSearchObject.geographies[0].clone()]
         : advancedSearchObject.geographies,
-      propertyFilter: advancedSearchObject.propertyFilter.clone(),
+      propertyFilter: advancedSearchObject.propertyFilter ? advancedSearchObject.propertyFilter.clone() : undefined,
       conditions: {
         '0': advancedSearchObject.conditions['0'].clone(),
       },
@@ -144,6 +136,18 @@ export class AdvancedSearch extends React.Component {
         error: null,
       })
     }
+
+    // if no advancedSearch.propertyFilter was on mount, this component probably hasn't caught up with the store
+    // so sync it to store.
+    if (!this.state.advancedSearch.propertyFilter) {
+      this.syncWithProps()
+    }
+  }
+
+  syncWithProps() {
+    this.setState({
+      advancedSearch: this.props.advancedSearch,
+    })
   }
 
   loadRequest(request) {
@@ -260,6 +264,7 @@ export class AdvancedSearch extends React.Component {
 
   render() {
     const requestCalledAndNotLoading = !!(this.props.advancedSearchRequest || {}).called && !this.props.loading
+
     return (
       <div className="advanced-search layout-width-wrapper">
         <Helmet>

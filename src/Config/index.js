@@ -110,10 +110,23 @@ class Config extends React.PureComponent {
     }
   }
 
+  componentDidMount() {
+    this.ensureAdvancedSearchFilter()
+    this.ensureResultFilters()
+  }
+
   componentDidUpdate() {
+    this.ensureAdvancedSearchFilter()
+    this.ensureResultFilters()
+  }
+
+  ensureAdvancedSearchFilter() {
     if (!this.props.advancedSearch.propertyFilter && !!Object.keys(this.props.resourceModels).length) {
       this.props.dispatch(replacePropertyFilter(this.newPropertyFilter()))
     }
+  }
+
+  ensureResultFilters() {
     if (!this.props.appStateResultFilters.length && !!Object.keys(this.props.resourceModels).length) {
       const mapAmountResultFilters = this.createMapResultFilters()
 

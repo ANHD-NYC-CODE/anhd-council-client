@@ -18,6 +18,7 @@ import './style.scss'
 
 const DashboardResultsEditor = props => {
   const tooltipRef = useRef(null)
+  const [showHousingTooltip, setShowHousingTooltip] = useState(false)
 
   const numberOfUnits = props.filteredResults.reduce(
     (total, result) => parseInt(total) + parseInt(result['unitsres']),
@@ -75,7 +76,6 @@ const DashboardResultsEditor = props => {
     )
 
     const housingToolip = () => {
-      const [show, setShow] = useState(false)
       if (selectedFilters.length) return null
       return (
         <div className="tooltip-wrapper">
@@ -84,14 +84,14 @@ const DashboardResultsEditor = props => {
             href="#"
             tabIndex="0"
             ref={tooltipRef}
-            onFocus={e => setShow(true)}
-            onBlur={e => setShow(false)}
-            onMouseEnter={e => setShow(true)}
-            onMouseLeave={e => setShow(false)}
+            onFocus={e => setShowHousingTooltip(true)}
+            onBlur={e => setShowHousingTooltip(false)}
+            onMouseEnter={e => setShowHousingTooltip(true)}
+            onMouseLeave={e => setShowHousingTooltip(false)}
           >
             <FontAwesomeIcon className="info-modal-button info-modal-button--tooltip" icon={faExclamation} size="sm" />
           </button>
-          <Overlay placement="top" show={show} target={tooltipRef.current}>
+          <Overlay placement="top" show={showHousingTooltip} target={tooltipRef.current}>
             {props => {
               return <Tooltip {...props}>TIP: Apply one or more Datasets to narrow down results</Tooltip>
             }}
