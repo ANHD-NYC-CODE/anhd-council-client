@@ -52,7 +52,7 @@ describe('initial startup', () => {
 
   describe('after completed requests', () => {
     it('Does not display the loading module', () => {
-      mock.onGet('/datasets/').reply(200, mockDatasetsResponse)
+      mock.onGet('/datasets/').reply(200, mockDatasetsResponse())
       mock.onGet('/councils/').reply(200, [1, 2])
       mock.onGet('/communities/').reply(200, [1, 2])
       const wrapper = mount(

@@ -80,7 +80,7 @@ describe('Lookup', () => {
       await flushAllPromises()
       wrapper.update()
 
-      expect(wrapper.find('LookupTableTab')).toHaveLength(11)
+      expect(wrapper.find('LookupTableTab')).toHaveLength(12)
     })
   })
 
@@ -115,7 +115,7 @@ describe('Lookup', () => {
         router: { location: { pathname: '/property/1/building/2' }, action: 'POP' },
       })
 
-      expect(wrapper.find('LookupTable')).toHaveLength(11)
+      expect(wrapper.find('LookupTable')).toHaveLength(12)
 
       wrapper.find('LookupTable').forEach((w, index) => {
         if (index === 0) {
@@ -131,7 +131,7 @@ describe('Lookup', () => {
         router: { location: { pathname: '/property/1/building/2' }, action: 'POP' },
       })
 
-      expect(wrapper.find('LookupTableTab')).toHaveLength(11)
+      expect(wrapper.find('LookupTableTab')).toHaveLength(12)
     })
 
     it('renders dataset info sentence', () => {
