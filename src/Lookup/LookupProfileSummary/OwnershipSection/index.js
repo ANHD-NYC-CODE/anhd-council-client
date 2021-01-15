@@ -4,11 +4,14 @@ import { dateFormatter } from 'shared/utilities/tableUtils'
 import { capitalizeWords, expandHpdRegistrationAbbreviations } from 'shared/utilities/languageUtils'
 import BaseLink from 'shared/components/BaseLink'
 import ContactExpandableSection from 'Lookup/LookupProfileSummary/OwnershipSection/ContactExpandableSection'
+import moment from 'moment'
 
 import './style.scss'
 const getLatestHPDRegistration = hpdRegistrations => {
   if (!hpdRegistrations.length) return
-  return hpdRegistrations.sort((a, b) => b.lastregistrationdate > a.lastregistrationdate)[0]
+  return hpdRegistrations.sort((a, b) => {
+    return moment(b.lastregistrationdate) - moment(a.lastregistrationdate)
+  })[0]
 }
 
 const OwnershipSection = props => {
