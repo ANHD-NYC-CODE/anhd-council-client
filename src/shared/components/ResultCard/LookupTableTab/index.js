@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import * as c from 'shared/constants'
 
-import UserContext from 'Auth/UserContext'
 import ModalContext from 'Modal/ModalContext'
 
 import SpinnerLoader from 'shared/components/Loaders/SpinnerLoader'

@@ -98,7 +98,7 @@ class AdvancedSearchForm extends React.PureComponent {
         onSubmit={this.submitForm}
         validationSchema={schema}
       >
-        {({ handleSubmit, handleChange, handleBlur, touched, errors, submitCount }) => (
+        {({ handleSubmit, handleChange, handleBlur, touched, errors }) => (
           <Form
             noValidate
             className="advanced-search-form mb-5"

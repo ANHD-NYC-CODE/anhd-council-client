@@ -2,7 +2,7 @@ import { constructSingleMapParamSet, comparisonOptions, constructCountDateParamS
 import GenericFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/GenericFieldSet'
 import TextSelectField from 'AdvancedSearch/FilterComponent/Field/TextSelectField'
 
-const DOBFiledPermit = databaseObject => ({
+const DOBFiledPermit = () => ({
   summaryBackgroundColorClass: 'dob-red',
 
   resourceConstant: 'DOB_FILED_PERMIT',

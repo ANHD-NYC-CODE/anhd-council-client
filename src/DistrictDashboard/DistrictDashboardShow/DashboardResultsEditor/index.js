@@ -84,10 +84,10 @@ const DashboardResultsEditor = props => {
             href="#"
             tabIndex="0"
             ref={tooltipRef}
-            onFocus={e => setShowHousingTooltip(true)}
-            onBlur={e => setShowHousingTooltip(false)}
-            onMouseEnter={e => setShowHousingTooltip(true)}
-            onMouseLeave={e => setShowHousingTooltip(false)}
+            onFocus={() => setShowHousingTooltip(true)}
+            onBlur={() => setShowHousingTooltip(false)}
+            onMouseEnter={() => setShowHousingTooltip(true)}
+            onMouseLeave={() => setShowHousingTooltip(false)}
           >
             <FontAwesomeIcon className="info-modal-button info-modal-button--tooltip" icon={faExclamation} size="sm" />
           </button>

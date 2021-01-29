@@ -4,7 +4,7 @@ import { GET_BUILDING_SEARCH } from 'shared/constants/actions'
 
 import * as c from '../constants'
 import AddressResult from 'shared/classes/AddressResult'
-export const handleReadSearchResponse = (response, key = null) => {
+export const handleReadSearchResponse = response => {
   let results = response.data.map(result => new AddressResult({ addressObject: result }))
   if (!results.length) {
     results = [new AddressResult()]

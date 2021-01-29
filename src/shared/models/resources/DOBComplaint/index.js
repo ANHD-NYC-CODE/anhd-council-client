@@ -4,7 +4,7 @@ import TextSelectField from 'AdvancedSearch/FilterComponent/Field/TextSelectFiel
 
 import { dobComplaintCategoryDescriptionFormatter } from 'shared/utilities/tableUtils'
 
-const DOBComplaint = databaseObject => ({
+const DOBComplaint = () => ({
   summaryBackgroundColorClass: 'dob-red',
   resourceConstant: 'DOB_COMPLAINT',
   urlPath: 'dobcomplaints',
