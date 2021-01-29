@@ -2,7 +2,7 @@ import { constructSingleMapParamSet, comparisonOptions, constructCountDateParamS
 import GenericFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/GenericFieldSet'
 import TextSelectField from 'AdvancedSearch/FilterComponent/Field/TextSelectField'
 
-const ECBViolation = databaseObject => ({
+const ECBViolation = () => ({
   summaryBackgroundColorClass: 'dob-red',
   resourceConstant: 'ECB_VIOLATION',
   urlPath: 'ecbviolations',

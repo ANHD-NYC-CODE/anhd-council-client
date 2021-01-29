@@ -4,11 +4,8 @@ import { setSearchTimeout, queryAddress } from 'Store/Search/actions'
 import { requestWithAuth } from 'shared/utilities/authUtils'
 import { Form, InputGroup, Button } from 'react-bootstrap'
 import StandardizedInput from 'shared/classes/StandardizedInput'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTimesCircle } from '@fortawesome/free-regular-svg-icons'
 import classnames from 'classnames'
 import SpinnerLoader from 'shared/components/Loaders/SpinnerLoader'
-import { spaceEnterKeyDownHandler } from 'shared/utilities/accessibilityUtils'
 
 import './style.scss'
 
