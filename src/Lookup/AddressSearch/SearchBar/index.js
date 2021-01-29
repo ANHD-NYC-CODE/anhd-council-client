@@ -22,7 +22,7 @@ export default class SearchBar extends React.PureComponent {
     this.onSearchClick = this.onSearchClick.bind(this)
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.selectedResult) {
       this.props.setSearchValue(
         `${nextProps.selectedResult.housenumber.trim()} ${nextProps.selectedResult.street.trim()}, ${nextProps.selectedResult.boroughName.trim()}`
