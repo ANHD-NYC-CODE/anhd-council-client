@@ -4,26 +4,10 @@ import { GeoJSON } from 'react-leaflet'
 
 const GeographyGeoJson = props => {
   const getGeographyColor = geography => {
-    const displayGeographyType = props.changingGeographyType || props.currentGeographyType
     if (props.currentGeographyId == geography.properties.id) return '#f7f8c6' // yellow
     if (props.changingGeographyId == geography.properties.id) return 'white'
     // selecting
     else return 'transparent'
-  }
-
-  const getGeographyTypeColor = geographyType => {
-    switch (geographyType) {
-      case 'COUNCIL':
-        return '#4c8ad8' // blue
-      case 'COMMUNITY':
-        return '#f5862c' // orange
-      case 'STATE_ASSEMBLY':
-        return 'red' // pink
-      case 'STATE_SENATE':
-        return '#6f42c1' // purple
-      case 'ZIPCODE':
-        return '#b9b8b8' // gray-400
-    }
   }
 
   const getFillOpacity = geography => {

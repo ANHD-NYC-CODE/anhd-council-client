@@ -4,14 +4,10 @@ import Filter from 'shared/classes/Filter'
 import StandardizedInput from 'shared/classes/StandardizedInput'
 import NewFilterSelect from 'AdvancedSearch/FilterComponent/NewFilterSelect'
 import uuidv4 from 'uuid/v4'
-import { addNewConditionGroup, updateCondition, removeConditionGroup } from 'Store/AdvancedSearch/actions'
-import { Form, Button, Col } from 'react-bootstrap'
+import { addNewConditionGroup, removeConditionGroup } from 'Store/AdvancedSearch/actions'
 import FormError from 'shared/components/FormError'
 import FilterComponent from 'AdvancedSearch/FilterComponent'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import AddFilterButtonGroup from 'AdvancedSearch/ConditionComponent/AddFilterButtonGroup'
-import ConditionControlGroup from 'AdvancedSearch/ConditionComponent/ConditionControlGroup'
 import {
   fireCustomSearchSelectFilterEvent,
   fireCustomSearchSwitchConditionEvent,

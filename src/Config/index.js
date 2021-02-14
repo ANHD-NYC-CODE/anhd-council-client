@@ -76,7 +76,7 @@ class Config extends React.PureComponent {
     }
   }
 
-  componentWillReceiveProps(nextProps, nextState) {
+  UNSAFE_componentWillReceiveProps(nextProps, nextState) {
     if (!nextProps.error && !nextProps.loading) {
       if (!nextProps.datasets.length) {
         this.props.dispatch(getDatasets())

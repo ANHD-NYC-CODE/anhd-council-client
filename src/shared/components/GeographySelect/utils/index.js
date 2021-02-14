@@ -23,7 +23,7 @@ export const getGeographyIdOptions = (
   switch (type) {
     case 'CITY':
       return [
-        <option value={'*'} key={`geography-id-option-*`}>
+        <option value={'*'} key={'geography-id-option-*'}>
           All
         </option>,
       ]

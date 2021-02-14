@@ -1,8 +1,6 @@
 import * as resources from 'shared/models/resources'
 import ParamError from 'shared/classes/ParamError'
-import { getApiMap } from 'shared/utilities/classUtils'
-
-import { cloneInstance, deepCloneObject } from 'shared/utilities/classUtils'
+import { deepCloneObject, getApiMap } from 'shared/utilities/classUtils'
 
 export default class Filter {
   constructor({

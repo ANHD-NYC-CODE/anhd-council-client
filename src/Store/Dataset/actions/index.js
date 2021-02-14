@@ -3,7 +3,7 @@ import * as u from 'shared/constants/urls'
 
 import * as c from '../constants'
 
-export const handleGetDatasets = (response, key = null) => {
+export const handleGetDatasets = response => {
   return {
     type: c.HANDLE_GET_DATASETS,
     data: { datasets: response.data },

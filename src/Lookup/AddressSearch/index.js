@@ -32,7 +32,7 @@ class AddressSearch extends React.PureComponent {
     this.state = {
       show: false,
       selectedResult: null,
-      searchValue: undefined,
+      searchValue: '',
       resultFocusIndex: -1,
     }
   }
@@ -150,6 +150,12 @@ class AddressSearch extends React.PureComponent {
   }
 
   render() {
+    // prevents component from flipping from uncontrolled to controlled
+    let { searchValue } = this.state
+    if (!searchValue && typeof this.props.search.searchQuery !== 'undefined') {
+      searchValue = this.props.search.searchQuery
+    }
+
     return (
       <div className={classnames('address-search', this.props.containerClass)} ref={this.addressRef}>
         <SearchBar
@@ -163,10 +169,9 @@ class AddressSearch extends React.PureComponent {
           placeholder={this.props.placeholder}
           searchTimeout={this.props.search.searchTimeout}
           selectedResult={this.state.selectedResult}
-          searchValue={this.state.searchValue || this.props.search.searchQuery}
+          searchValue={searchValue}
           setSearchValue={this.setSearchValue}
           hideSearch={this.hideSearch}
-          show={!!this.props.search.results.length && this.state.show}
         />
 
         <SearchResults
@@ -175,7 +180,7 @@ class AddressSearch extends React.PureComponent {
           error={this.props.error}
           searchResultsRef={this.searchResultsRef}
           currentResultFocusRef={this.currentResultFocusRef}
-          show={this.state.show}
+          show={!!this.props.search.results.length}
           hideSearch={this.hideSearch}
           results={this.props.search.results}
           resultFocusIndex={this.state.resultFocusIndex}

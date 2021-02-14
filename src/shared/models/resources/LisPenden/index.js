@@ -4,9 +4,8 @@ import ParamMap from 'shared/classes/ParamMap'
 import GenericFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/GenericFieldSet'
 import HiddenField from 'AdvancedSearch/FilterComponent/Field/HiddenField'
 
-const LisPenden = databaseObject => ({
+const LisPenden = () => ({
   summaryBackgroundColorClass: 'summary-blue',
-
   resourceConstant: 'LISPENDEN',
   urlPath: 'lispendens',
   label: 'Foreclosures',
