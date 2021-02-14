@@ -278,41 +278,21 @@ export const getTableColumns = ({
   }
 
   const constructStandardColumn = ({
-    key,
-    dataField,
-    text,
     sort = true,
-    filter,
-    classes,
-    headerClasses,
-    formatter,
-    hidden,
-    csvExport,
-    csvFormatter,
     component = ExpandedLinkRow,
-    columnEvent,
     headerSortingClasses = 'base-table__sorting-header',
-  }) => {
-    return {
-      key,
-      dataField,
-      text,
-      sort,
-      filter,
-      classes,
-      headerClasses,
-      formatter,
-      hidden,
-      csvExport,
-      csvFormatter,
-      headerSortingClasses,
-      events: {
-        onClick: (e, column, columnIndex, row, rowIndex) => {
-          if (columnEvent) return columnEvent({ e, column, row, component })
-        },
+    ...props
+  }) => ({
+    ...props,
+    component,
+    headerSortingClasses,
+    sort,
+    events: {
+      onClick: (e, column, columnIndex, row, rowIndex) => {
+        if (props.columnEvent) return props.columnEvent({ e, column, row, component })
       },
-    }
-  }
+    },
+  })
 
   const constructNestedTableColumn = ({
     dataField,
@@ -1142,6 +1122,11 @@ export const getTableColumns = ({
           text: 'Job #',
           formatter: (cell, row, index) => linkFormatter(cell, row, index, 'DOB_ISSUED_PERMIT', 'jobfilingnumber'),
           csvExport: false,
+          sort: true,
+          sortFunc: (a, b, order, dataField, rowA, rowB) => {
+            if (order === 'desc') return rowB.jobfilingnumber - rowA.jobfilingnumber
+            return rowA.jobfilingnumber - rowB.jobfilingnumber // asc
+          },
         }),
         constructStandardColumn({
           dataField: 'key',

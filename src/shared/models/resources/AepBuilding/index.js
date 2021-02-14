@@ -1,11 +1,10 @@
 // propertyannotation__legalclassb__gte = 1
 
 import { comparisonOptions, constructSingleMapParamSet } from 'shared/utilities/filterUtils'
-import ParamMap from 'shared/classes/ParamMap'
 import GenericFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/GenericFieldSet'
 import TextSelectField from 'AdvancedSearch/FilterComponent/Field/TextSelectField'
 
-const AEPBuilding = databaseObject => ({
+const AEPBuilding = () => ({
   resourceConstant: 'AEP_BUILDING',
   urlPath: 'aepbuildings',
   label: 'Alternative Enforcement Program',

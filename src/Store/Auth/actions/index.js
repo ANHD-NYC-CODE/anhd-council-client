@@ -77,7 +77,7 @@ export const refreshTokens = refresh_token => dispatch => {
     })
 }
 
-export const loginUser = (data, postLoginAction) => (dispatch, getState) => {
+export const loginUser = (data, postLoginAction) => dispatch => {
   dispatch(loadingActions.handleRequest(c.GET_TOKEN))
   dispatch(errorActions.handleClearErrors(c.GET_TOKEN))
   return Axios.post(TOKEN_URL, { username: data.username, password: data.password })

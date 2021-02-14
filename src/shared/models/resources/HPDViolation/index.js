@@ -2,7 +2,7 @@ import { constructSingleMapParamSet, comparisonOptions, constructCountDateParamS
 import GenericFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/GenericFieldSet'
 import TextSelectField from 'AdvancedSearch/FilterComponent/Field/TextSelectField'
 
-const HPDViolation = databaseObject => ({
+const HPDViolation = () => ({
   summaryBackgroundColorClass: 'hpd-orange',
   resourceConstant: 'HPD_VIOLATION',
   urlPath: 'hpdviolations',

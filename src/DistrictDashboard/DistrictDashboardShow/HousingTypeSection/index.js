@@ -58,7 +58,7 @@ const HousingTypeSection = props => {
                       checked={props.housingTypeResultFilter.id === ownResultFilter.id}
                       disabled={props.loading}
                       value={index}
-                      onChange={e => handleChange(config, parseInt(index))}
+                      onChange={() => handleChange(config, parseInt(index))}
                     />
                     {!!index && <InfoModalButton modalConstant={ownResultFilter.id} />}
                   </span>
