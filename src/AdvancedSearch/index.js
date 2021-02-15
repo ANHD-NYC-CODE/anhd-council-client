@@ -357,7 +357,6 @@ export class AdvancedSearch extends React.Component {
                   })}
                 >
                   <BaseTable
-                    key={this.props.advancedSearch.results}
                     advancedSearchDatasets={this.props.advancedSearch.conditions['0'].getFilterDatasets()}
                     csvBaseFileName={constructCsvFileName(this.props.advancedSearch)}
                     globalTableState={this.props.advancedSearch.searchTableState}

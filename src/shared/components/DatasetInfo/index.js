@@ -10,7 +10,7 @@ const getUpdateType = dataset => {
 }
 
 const parseDatasetRange = dataset => {
-  const updateSentenceStart = updateSentenceStart => {
+  const updateSentenceStart = () => {
     if (dataset.records_start || dataset.records_end) return 'It was'
     else return 'This dataset was'
   }
