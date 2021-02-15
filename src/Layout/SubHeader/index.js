@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import { Navbar, Nav } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { getGeographyPath, addressResultToPath } from 'shared/utilities/routeUtils'
-// import logo from 'shared/images/portallogo.png'
 import logo from 'shared/images/portallogo-2020.png'
 
 import LoginModal from 'shared/components/modals/LoginModal'
@@ -12,8 +11,8 @@ import LoginModalFooter from 'shared/components/forms/LoginForm/LoginModalFooter
 import UserMessageModal from 'shared/components/modals/UserMessageModal'
 
 import classnames from 'classnames'
-import BaseLink from 'shared/components/BaseLink'
 import './style.scss'
+
 class SubHeader extends React.Component {
   constructor(props) {
     super(props)

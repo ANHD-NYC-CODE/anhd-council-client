@@ -9,22 +9,22 @@ export default class BaseTableConfig {
     this._filters = {}
     this._selectedFilters = {}
     this._filterPrototypes = {
-      ...this.createFilterPrototype('ACRIS_REAL_MASTER_DOCUMENT_TYPE', 'multi-select', [
-        'DEED',
-        'AALR',
-        'AGMT',
-        'AL&R',
-        'ASST',
-        'ASPM',
-        'DEMM',
-        'MTGE',
-        'PSAT',
-        'SAT',
-        'SMTG',
-        'WSAT',
-        'M&CON',
-        'SPRD',
-      ]),
+      ...this.createFilterPrototype('ACRIS_REAL_MASTER_DOCUMENT_TYPE', 'multi-select', {
+        0: 'DEED',
+        1: 'AALR',
+        2: 'AGMT',
+        3: 'AL&R',
+        4: 'ASST',
+        5: 'ASPM',
+        6: 'DEMM',
+        7: 'MTGE',
+        8: 'PSAT',
+        9: 'SAT',
+        10: 'SMTG',
+        11: 'WSAT',
+        12: 'M&CON',
+        13: 'SPRD',
+      }),
       ...this.createFilterPrototype('HPD_VIOLATION_OPEN'),
       ...this.createFilterPrototype('HPD_VIOLATION_CLASS'),
       ...this.createFilterPrototype('HPD_COMPLAINT_OPEN'),
@@ -202,7 +202,7 @@ export default class BaseTableConfig {
     })
   }
 
-  createFilterPrototype(constant, type = 'text', multiSelectOptions = []) {
+  createFilterPrototype(constant, type = 'text', multiSelectOptions = {}) {
     switch (type) {
       case 'text':
         return {

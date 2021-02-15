@@ -15,7 +15,6 @@ import LookupProfileSummary from 'Lookup/LookupProfileSummary'
 
 export const setupResourceModels = datasets => {
   let loadedResources = {}
-  const ro = resources
 
   Object.keys(resources).forEach(constant => {
     let databaseObject

@@ -76,38 +76,40 @@ class Config extends React.PureComponent {
     }
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps, nextState) {
+  static getDerivedStateFromProps(nextProps, prevState) {
     if (!nextProps.error && !nextProps.loading) {
       if (!nextProps.datasets.length) {
-        this.props.dispatch(getDatasets())
+        nextProps.dispatch(getDatasets())
       }
 
       if (!nextProps.councilDistricts.length) {
-        this.props.dispatch(getCouncils())
+        nextProps.dispatch(getCouncils())
       }
       if (!nextProps.communityDistricts.length) {
-        this.props.dispatch(getCommunities())
+        nextProps.dispatch(getCommunities())
       }
       if (!nextProps.stateAssemblies.length) {
-        this.props.dispatch(getStateAssemblies())
+        nextProps.dispatch(getStateAssemblies())
       }
       if (!nextProps.stateSenates.length) {
-        this.props.dispatch(getStateSenates())
+        nextProps.dispatch(getStateSenates())
       }
       if (!nextProps.zipCodes.length) {
-        this.props.dispatch(getZipCodes())
+        nextProps.dispatch(getZipCodes())
       }
     }
 
-    if (nextState.geographyType === 'council') {
-      this.setState({
-        geographyObjects: this.props.councilDistricts,
-      })
-    } else if (nextState.geographyType === 'cd') {
-      this.setState({
-        geographyObjects: this.props.communityDistricts,
-      })
+    if (prevState.geographyType === 'council') {
+      return {
+        geographyObjects: nextProps.councilDistricts,
+      }
+    } else if (prevState.geographyType === 'cd') {
+      return {
+        geographyObjects: nextProps.communityDistricts,
+      }
     }
+
+    return null
   }
 
   componentDidMount() {
