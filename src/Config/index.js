@@ -173,7 +173,12 @@ class Config extends React.PureComponent {
   }
 
   createLookupRequests(bbl, bin) {
-    return newLookupRequests({ bbl, bin, resourceModels: this.props.resourceModels })
+    return newLookupRequests({
+      auth: this.props.auth,
+      bbl,
+      bin,
+      resourceModels: this.props.resourceModels,
+    })
   }
 
   render() {
@@ -243,6 +248,7 @@ const loadingSelector = createLoadingSelector(Config.MonitoredRequests)
 
 const mapStateToProps = state => {
   return {
+    auth: state.auth,
     advancedSearch: state.advancedSearch,
     appStateResultFilters: state.dashboardState.resultFilters,
     datasets: state.dataset.datasets,

@@ -92,7 +92,7 @@ export const newPropertyRequest = ({
   })
 }
 
-export const newLookupRequests = ({ bbl, bin, resourceModels } = {}) => {
+export const newLookupRequests = ({ auth, bbl, bin, resourceModels } = {}) => {
   return [
     newPropertyRequest({
       type: 'LOOKUP_PROFILE',
@@ -246,24 +246,26 @@ export const newLookupRequests = ({ bbl, bin, resourceModels } = {}) => {
           resourceConstant: 'HOUSING_LITIGATION',
           resourceModel: resourceModels['HOUSING_LITIGATION'],
         }),
-    newPropertyRequest({
-      type: 'LOOKUP_FILTER',
-      bbl: bbl,
-      level: 'PROPERTY',
-      resourceConstant: 'FORECLOSURE',
-      resourceModel: resourceModels['FORECLOSURE'],
-      datasetModelName: constantToModelName('FORECLOSURE'),
-      isAuthenticated: true,
-    }),
-    newPropertyRequest({
-      type: 'LOOKUP_FILTER',
-      bbl: bbl,
-      level: 'PROPERTY',
-      resourceConstant: 'PSFORECLOSURE',
-      resourceModel: resourceModels['PSFORECLOSURE'],
-      datasetModelName: constantToModelName('PSFORECLOSURE'),
-      isAuthenticated: true,
-    }),
+    typeof auth.id === 'number' &&
+      newPropertyRequest({
+        type: 'LOOKUP_FILTER',
+        bbl: bbl,
+        level: 'PROPERTY',
+        resourceConstant: 'FORECLOSURE',
+        resourceModel: resourceModels['FORECLOSURE'],
+        datasetModelName: constantToModelName('FORECLOSURE'),
+        isAuthenticated: true,
+      }),
+    typeof auth.id === 'number' &&
+      newPropertyRequest({
+        type: 'LOOKUP_FILTER',
+        bbl: bbl,
+        level: 'PROPERTY',
+        resourceConstant: 'PSFORECLOSURE',
+        resourceModel: resourceModels['PSFORECLOSURE'],
+        datasetModelName: constantToModelName('PSFORECLOSURE'),
+        isAuthenticated: true,
+      }),
   ].filter(r => !!r)
 }
 
