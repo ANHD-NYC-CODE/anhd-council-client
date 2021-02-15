@@ -26,7 +26,7 @@ class CsvButton extends React.Component {
         variant="dark"
         className={classnames('csv-button')}
         onClick={this.handleClick}
-        {...this.props.csvProps}
+        // {...this.props.csvProps}
       >
         Export CSV
         <FontAwesomeIcon icon={faFileCsv} />
