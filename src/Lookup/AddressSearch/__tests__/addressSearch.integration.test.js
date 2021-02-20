@@ -14,6 +14,8 @@ const mock = new MockAdapter(Axios)
 
 import AddressSearch from 'Lookup/AddressSearch'
 
+jest.mock('lodash/debounce', () => jest.fn(fn => fn))
+
 configure({ adapter: new Adapter() })
 beforeEach(() => {
   jest.useFakeTimers()
