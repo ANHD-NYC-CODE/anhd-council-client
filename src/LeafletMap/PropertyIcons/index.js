@@ -10,8 +10,8 @@ class PropertyIcons extends React.Component {
   }
 
   getLatLng(result) {
-    if (result.lat && result.lng) {
-      return [result.lat, result.lng]
+    if (result.latitude && result.longitude) {
+      return [result.latitude, result.longitude]
     }
   }
 
