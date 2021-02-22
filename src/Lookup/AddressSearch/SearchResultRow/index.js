@@ -1,28 +1,26 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 import { addressResultToPath } from 'shared/utilities/routeUtils'
 
 import './style.scss'
 
 const SearchResultRow = props => {
-  if (props.result.number) {
+  const { result } = props
+  if (result.label) {
     return (
-      <div
+      <Link
         role="button"
         ref={props.currentResultFocusRef}
         tabIndex={0}
-        className="search-result-row"
+        className="search-result-row d-flex"
         onKeyDown={props.onKeyDown}
         onFocus={() => props.setResultFocusIndex(props.resultIndex)}
-        onClick={e => props.onClick(e, props.result)}
-        to={addressResultToPath({ bbl: props.result.bbl, bin: props.result.bin })}
+        // onClick={e => props.onClick(e, result)}
+        to={addressResultToPath({ bbl: result.pad_bbl, bin: result.pad_bin })}
       >
-        <div className="d-flex">
-          <span>{`${props.result.number} ${props.result.street ? props.result.street.trim() : ''}, ${
-            props.result.borough
-          }`}</span>
-        </div>
-      </div>
+        {props.result.label}
+      </Link>
     )
   } else {
     return (

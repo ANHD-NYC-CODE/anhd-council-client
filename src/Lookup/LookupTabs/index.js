@@ -55,7 +55,7 @@ const LookupTabs = props => {
 
           return (
             <LookupTableTab
-              className={''}
+              className=""
               dispatch={props.dispatch}
               isBuildingTab={props.isBuildingView && request.level === 'BUILDING'}
               key={`tab-${request.resourceModel.resourceConstant}`}

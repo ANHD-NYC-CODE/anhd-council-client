@@ -4,8 +4,9 @@ import { GET_BUILDING_SEARCH } from 'shared/constants/actions'
 
 import * as c from '../constants'
 import AddressResult from 'shared/classes/AddressResult'
-export const handleReadSearchResponse = response => {
-  let results = response.data.map(result => new AddressResult({ addressObject: result }))
+export const handleReadSearchResponse = resp => {
+  const { data } = resp
+  let results = data.features.map(f => new AddressResult({ addressObject: f.properties }))
   if (!results.length) {
     results = [new AddressResult()]
   }
@@ -29,15 +30,15 @@ export const setSearchTimeout = event => ({
   data: event,
 })
 
-export const queryAddress = value => (dispatch, getState, access_token) => {
+export const queryAddress = value => async (dispatch, getState, access_token) => {
   const requestId = Math.floor(Math.random() * 1000000)
   dispatch(setSearchValue(value))
   return constructAxiosGet(
     dispatch,
     getState,
     requestId,
-    SEARCH_URL,
-    { fts: value },
+    `https://geosearch.planninglabs.nyc/v1/search?text=${value}`,
+    {},
     access_token,
     GET_BUILDING_SEARCH,
     handleReadSearchResponse
