@@ -105,8 +105,8 @@ const LookupProfileSummary = props => {
                         >
                           <LocationSection
                             appState={props.appState}
-                            lat={props.propertyResult.lat}
-                            lng={props.propertyResult.lng}
+                            lat={props.propertyResult.latitude}
+                            lng={props.propertyResult.longitude}
                             propertyResult={props.propertyResult}
                           />
                         </ExpandableSection>
