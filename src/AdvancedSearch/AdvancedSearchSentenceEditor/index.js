@@ -10,7 +10,7 @@ import { clearAdvancedSearchRequest } from 'Store/AppState/actions'
 import './style.scss'
 
 const AdvancedSearchSentenceEditor = props => {
-  const numberOfUnits = props.results.reduce((total, result) => parseInt(total) + parseInt(result['unitsres']), 0)
+  const numberOfUnits = props.results.reduce((total, result) => parseInt(total) + parseInt(result['unitsres'] || 0), 0)
 
   const constructSentenceEditor = () => {
     return constructAdvancedSearchSentence(props.advancedSearch, props.loading)

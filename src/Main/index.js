@@ -14,8 +14,9 @@ import LoginModalFooter from 'shared/components/forms/LoginForm/LoginModalFooter
 import ConfigContext from 'Config/ConfigContext'
 import BaseLink from 'shared/components/BaseLink'
 
-import { Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
+import { Element, Events, scrollSpy, scroller } from 'react-scroll'
 import { Row, Col } from 'react-bootstrap'
+
 class Main extends React.Component {
   constructor(props) {
     super(props)

@@ -7,8 +7,6 @@ import {
   constructCountDateParamSet,
   constructSingleMapParamSet,
   constructDateRangeParamSet,
-  amountComparisonOptions,
-  constructRangeParamSet,
   rentRegulatedProgramOptions,
 } from 'shared/utilities/filterUtils'
 import GenericFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/GenericFieldSet'
@@ -17,7 +15,7 @@ import MultiSelectField from 'AdvancedSearch/FilterComponent/Field/MultiSelectFi
 
 import ComparisonFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/ComparisonFieldSet'
 
-const Property = databaseObject => {
+const Property = () => {
   return {
     resourceConstant: 'PROPERTY',
     urlPath: 'properties',

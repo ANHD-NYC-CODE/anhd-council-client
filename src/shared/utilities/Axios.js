@@ -12,10 +12,17 @@ export const Axios = axios.create({
 export const constructAxiosGet = (dispatch, getState, requestId, url, params, access_token, constant, handleAction) => {
   if (!requestId) throw 'Misconfigured Axios Request (missing id)'
   handleActionDispatch(dispatch, constant, requestId)
-  return Axios.get(url, {
+
+  const isExternal = url.indexOf('https') !== -1
+  let opts = {
     params: { format: 'json', ...params },
     headers: typeof access_token === 'string' ? { authorization: `Bearer ${access_token}` } : null,
-  })
+  }
+  if (isExternal) {
+    opts = {}
+  }
+
+  return Axios.get(url, opts)
     .then(response => {
       const requestIsValid = !!getState().loading.requests.filter(request => request.id === requestId).length
       if (requestIsValid) {
