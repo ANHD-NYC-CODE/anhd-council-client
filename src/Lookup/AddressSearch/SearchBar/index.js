@@ -20,10 +20,10 @@ export default class SearchBar extends React.PureComponent {
     this.debouncedQuery = _.debounce(this.dispatchQuery, 1000)
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    if (nextProps.selectedResult) {
+  componentDidUpdate() {
+    if (this.props.selectedResult) {
       this.props.setSearchValue(
-        `${nextProps.selectedResult.housenumber.trim()} ${nextProps.selectedResult.street.trim()}, ${nextProps.selectedResult.boroughName.trim()}`
+        `${this.props.selectedResult.housenumber.trim()} ${this.props.selectedResult.street.trim()}, ${this.props.selectedResult.boroughName.trim()}`
       )
     }
   }

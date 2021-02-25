@@ -125,17 +125,14 @@ Lookup.propTypes = {
   dispatch: PropTypes.func,
 }
 
-const mapStateToProps = (state, ownProps) => {
-  return {
-    appState: state.appState,
-    error: state.error,
-    loading: state.loading,
-    propertyResult:
-      state.requests[(getRequestType(state.appState.requests, 'LOOKUP_PROFILE')[0] || {}).requestConstant],
-    propertyError: state.error[(getRequestType(state.appState.requests, 'LOOKUP_PROFILE')[0] || {}).requestConstant],
-    router: state.router,
-    requests: state.requests,
-  }
-}
+const mapStateToProps = state => ({
+  appState: state.appState,
+  error: state.error,
+  loading: state.loading,
+  propertyResult: state.requests[(getRequestType(state.appState.requests, 'LOOKUP_PROFILE')[0] || {}).requestConstant],
+  propertyError: state.error[(getRequestType(state.appState.requests, 'LOOKUP_PROFILE')[0] || {}).requestConstant],
+  router: state.router,
+  requests: state.requests,
+})
 
 export default connect(mapStateToProps)(Lookup)

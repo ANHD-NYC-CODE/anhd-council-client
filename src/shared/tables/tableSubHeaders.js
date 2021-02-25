@@ -192,6 +192,6 @@ export const getTableSubheaderLinks = ({ constant = '', property = {}, bin = nul
         </div>
       )
     default:
-      return () => null
+      return null
   }
 }

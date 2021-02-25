@@ -97,7 +97,7 @@ export const loginUser = (data, postLoginAction) => dispatch => {
     })
 }
 
-export const logoutUser = (sentToast = false) => (dispatch, getState) => {
+export const logoutUser = (sentToast = false) => dispatch => {
   removeUserStorageData()
   dispatch(handleUserLogout())
   dispatch(setCustomSearchResults()) // clears search results

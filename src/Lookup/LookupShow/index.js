@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Redirect } from 'react-router-dom'
 import { getCurrentBuilding } from 'Lookup/utilities'
 import LookupTabs from 'Lookup/LookupTabs'
 
@@ -60,13 +61,7 @@ class LookupShow extends React.PureComponent {
       Object.keys(this.props.propertyResult).length &&
       !this.props.propertyResult.buildings.some(b => b.bin === this.props.bin)
     ) {
-      this.props.trigger404Error(
-        <div>
-          {`Building with bin: ${this.props.bin} not found at property with bbl: ${this.props.bbl}.`}
-          <br />
-          <a href={`/property/${this.props.bbl}`}>View property instead.</a>
-        </div>
-      )
+      this.props.changeLookup(this.props.bbl, undefined)
     }
 
     if (this.props.propertyError && this.props.propertyError.status === 404) {

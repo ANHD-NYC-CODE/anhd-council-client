@@ -1,4 +1,5 @@
 import React from 'react'
+import _ from 'lodash'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import SearchBar from './SearchBar'
@@ -43,14 +44,6 @@ class AddressSearch extends React.PureComponent {
 
     window.addEventListener('click', this.hideSearch)
     window.addEventListener('touchstart', this.hideSearch)
-  }
-
-  componentDidUpdate() {
-    if (this.currentResultFocusRef.current) {
-      this.currentResultFocusRef.current.focus()
-    } else if (!!this.state.show && this.state.resultFocusIndex < 0 && this.searchBarRef.current) {
-      this.searchBarRef.current.focus()
-    }
   }
 
   componentWillUnmount() {
@@ -131,22 +124,33 @@ class AddressSearch extends React.PureComponent {
     this.props.dispatch(clearSearch())
   }
 
-  handleRowClick(e, result) {
+  async handleRowClick(e, result) {
     e.preventDefault()
+
+    console.log('result => ', result)
+
     const searchString = `${result.number ? result.number : ''} ${
       result.street ? result.street.trim() : ''
     }, ${result.borough.trim()}`
 
+    // const data = await fetch(`https://geosearch.planninglabs.nyc/v1/search?text=${searchString}`)
+    //   .then(resp => resp.json())
+    //   .catch(console.log)
+
+    // const bbl = data.features[0].properties.pad_bbl
+    // const bin = data.features[0].properties.pad_bin
+
     this.props.dispatch(setSearchValue(searchString))
     this.hideSearch(e, true)
     this.props.dispatch(setAppState({ linkLookupBackToDashboard: false }))
-    this.props.dispatch(
-      setLookupAndRequestsAndRedirect({
-        bbl: result.bbl,
-        bin: result.bin,
-        requests: this.props.config.createLookupRequests(result.bbl, result.bin),
-      })
-    )
+
+    // this.props.dispatch(
+    //   setLookupAndRequestsAndRedirect({
+    //     bbl,
+    //     bin,
+    //     requests: this.props.config.createLookupRequests(bbl, bin),
+    //   })
+    // )
   }
 
   render() {
@@ -217,6 +221,7 @@ const loadingSelector = createLoadingSelector([GET_BUILDING_SEARCH])
 const errorSelector = createErrorSelector([GET_BUILDING_SEARCH])
 const mapStateToProps = state => {
   return {
+    auth: state.auth,
     currentProperty: state.appState.currentProperty,
     currentBuilding: state.appState.currentBuilding,
     search: state.search,

@@ -7,9 +7,9 @@ import InnerLoader from 'shared/components/Loaders/InnerLoader'
 import paginationFactory, { PaginationProvider, PaginationListStandalone } from 'react-bootstrap-table2-paginator'
 import filterFactory from 'react-bootstrap-table2-filter'
 import BaseTableHeader from 'shared/components/BaseTable/BaseTableHeader'
-import { Row, Col, Button } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 import TableAlert from 'shared/components/BaseTable/TableAlert'
-import ToolkitProvider, { CSVExport } from 'react-bootstrap-table2-toolkit'
+import ToolkitProvider from 'react-bootstrap-table2-toolkit'
 
 import classnames from 'classnames'
 import { fireCsvDownloadEvent } from 'Store/Analytics/actions'
@@ -192,14 +192,14 @@ class BaseTable extends React.Component {
     })
   }
 
-  pageButtonRenderer({ page, active, disabled, title, onPageChange }) {
+  pageButtonRenderer({ page, active, onPageChange }) {
     const handleClick = e => {
       e.preventDefault()
       onPageChange(page)
     }
 
     return (
-      <li className="page-item">
+      <li key={page} className="page-item">
         <Button variant={active ? 'dark' : 'light'} onClick={handleClick}>
           {page}
         </Button>
