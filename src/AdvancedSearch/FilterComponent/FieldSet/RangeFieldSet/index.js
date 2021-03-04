@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import StandardizedInput from 'shared/classes/StandardizedInput'
-import { Form, Col, InputGroup } from 'react-bootstrap'
+import { Form, InputGroup } from 'react-bootstrap'
 import classnames from 'classnames'
 
 import './style.scss'

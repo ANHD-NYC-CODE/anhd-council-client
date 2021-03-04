@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import StandardizedInput from 'shared/classes/StandardizedInput'
-import { Form, InputGroup, Col } from 'react-bootstrap'
+import { Form, InputGroup } from 'react-bootstrap'
 import NewFilterSelect from 'AdvancedSearch/FilterComponent/NewFilterSelect'
 import classnames from 'classnames'
 const PrimaryComparisonFieldSet = props => {

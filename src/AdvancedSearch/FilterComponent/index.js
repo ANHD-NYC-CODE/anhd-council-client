@@ -1,16 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-
-import { Form, Col, Button } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 import FormError from 'shared/components/FormError'
-import AddInnerConditionButton from 'AdvancedSearch/FilterComponent/AddInnerConditionButton'
 import RemoveFilterButton from 'AdvancedSearch/FilterComponent/RemoveFilterButton'
-import { removeCondition } from 'Store/AdvancedSearch/actions'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
-
 import classnames from 'classnames'
+
 import './style.scss'
+
 export class FilterComponent extends React.Component {
   constructor(props) {
     super(props)

@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { Navbar, Nav, DropdownButton } from 'react-bootstrap'
+import { Navbar, Nav } from 'react-bootstrap'
 import './style.scss'
-const NavigationBar = props => {
+const NavigationBar = () => {
   return (
     <div className="navigation-bar">
       <Navbar bg="black" variant="black" expand="lg">

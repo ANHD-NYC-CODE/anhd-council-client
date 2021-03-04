@@ -12,7 +12,7 @@ import {
 
 import lookupIcon from 'shared/images/lookup-document.svg'
 
-export const hpdProblemStatusFormatter = (cell, row, index) => {
+export const hpdProblemStatusFormatter = cell => {
   switch (cell) {
     case 'The Department of Housing Preservation and Development responded to a complaint of no heat or hot water and was advised by a tenant in the building that heat and hot water had been restored. If the condition still exists, please file a new complaint.':
       return 'HPD responded to a complaint of no heat or hot water and was advised by a tenant that heat/hot water had been restored.'
@@ -69,7 +69,7 @@ export const hpdProblemStatusFormatter = (cell, row, index) => {
   }
 }
 
-export const acrisParties1Formatter = (cell, row, index) => {
+export const acrisParties1Formatter = cell => {
   if (!cell.length) return ''
   try {
     return cell
@@ -82,7 +82,7 @@ export const acrisParties1Formatter = (cell, row, index) => {
   }
 }
 
-export const acrisParties2Formatter = (cell, row, index) => {
+export const acrisParties2Formatter = cell => {
   if (!cell.length) return ''
   try {
     return cell
@@ -95,17 +95,17 @@ export const acrisParties2Formatter = (cell, row, index) => {
   }
 }
 
-export const lispendenCommentFormatter = (cell, row, index) => {
+export const lispendenCommentFormatter = cell => {
   if (!cell.length) return cell
   return [...new Set(cell.map(comment => comment.datecomments.split('-')[1]).filter(f => f))].join(' || ')
 }
 
-export const capitalizeFormatter = (cell, row, index) => {
+export const capitalizeFormatter = cell => {
   if (!cell) return cell
   return capitalizeWords(cell)
 }
 
-export const dobViolationStatusFormatter = (cell, row, index) => {
+export const dobViolationStatusFormatter = cell => {
   if (!cell) return cell
   return capitalizeWords(
     cell
@@ -116,12 +116,12 @@ export const dobViolationStatusFormatter = (cell, row, index) => {
   )
 }
 
-export const ecbViolationStatusFormatter = (cell, row, index) => {
+export const ecbViolationStatusFormatter = cell => {
   cell = cell.toLowerCase().replace('resolve', 'resolved')
   return capitalizeFormatter(cell)
 }
 
-export const dobViolationTypeFormatter = (cell, row, index) => {
+export const dobViolationTypeFormatter = cell => {
   if (!cell) return cell
 
   const split = cell.split(/-(.+)/)
@@ -132,18 +132,18 @@ export const dobViolationTypeFormatter = (cell, row, index) => {
   }
 }
 
-export const lispendenCleanupFormatter = (cell, row, index) => {
+export const lispendenCleanupFormatter = cell => {
   if (!cell) return cell
   return cell.replace('00000', '')
 }
 
-export const hpdStatusFormatter = (cell, row, index) => {
+export const hpdStatusFormatter = cell => {
   if (!cell) return ''
   if (cell.toLowerCase().includes('close')) return 'Closed'
   if (cell.toLowerCase().includes('open')) return 'Open'
 }
 
-export const dateFormatter = (cell, row, index) => {
+export const dateFormatter = cell => {
   try {
     const date = moment(cell)
     return date.isValid() ? date.format('MM/DD/YYYY') : ''
@@ -152,11 +152,11 @@ export const dateFormatter = (cell, row, index) => {
   }
 }
 
-export const sentencesFormatter = (cell, row, index) => {
+export const sentencesFormatter = cell => {
   return capitalizeSentences(cell)
 }
 
-export const dollarFormatter = (cell, row, index) => {
+export const dollarFormatter = cell => {
   if (!cell && cell != 0) return ''
   if (typeof cell == 'string') {
     cell = cell.replace(/(\$|,)/, '')
@@ -168,7 +168,7 @@ export const dollarFormatter = (cell, row, index) => {
   })
 }
 
-export const annotatedColumnFormatter = (cell, row, index) => {
+export const annotatedColumnFormatter = cell => {
   try {
     return cell ? cell : 0
   } catch (e) {
@@ -200,7 +200,7 @@ export const linkWithDocumentFormatter = (cell, row, index, constant, id) => {
   )
 }
 
-export const expandTableFormatter = (cell, row, index) => {
+export const expandTableFormatter = cell => {
   return (
     <div>
       <span>({cell ? cell.length : ''}) </span>
@@ -211,10 +211,10 @@ export const expandTableFormatter = (cell, row, index) => {
   )
 }
 
-export const nestedDataLengthFormatter = (cell, row, index) => {
+export const nestedDataLengthFormatter = cell => {
   return cell.length
 }
-export const bldgClassFormater = (cell, row, index) => {
+export const bldgClassFormater = cell => {
   switch (cell) {
     case 'A0':
       return `${cell} - CAPE COD`
@@ -651,7 +651,7 @@ export const bldgClassFormater = (cell, row, index) => {
   }
 }
 
-export const dobComplaintCategoryPriorityFormatter = (cell, row, index) => {
+export const dobComplaintCategoryPriorityFormatter = cell => {
   switch (cell) {
     case '01':
       return 'A'
@@ -852,7 +852,7 @@ export const dobComplaintCategoryPriorityFormatter = (cell, row, index) => {
 
 // OLD - https://www1.nyc.gov/assets/buildings/pdf/complaint_category.pdf
 // NEW -  https://data.cityofnewyork.us/api/views/eabe-havv/files/e19c463a-69dd-4810-ae72-3c7c7fc657f8?download=true&filename=DD_DOB_Complaints_Received_2019-08-21.xlsx
-export const dobComplaintCategoryDescriptionFormatter = (cell, row, index) => {
+export const dobComplaintCategoryDescriptionFormatter = cell => {
   switch (cell) {
     case '01':
       return 'Accident – Construction/Plumbing '
@@ -1189,7 +1189,7 @@ export const dobComplaintCategoryDescriptionFormatter = (cell, row, index) => {
   }
 }
 
-export const acrisDocTypeFormatter = (cell, row, index) => {
+export const acrisDocTypeFormatter = cell => {
   switch (cell) {
     case 'AGMT':
       return 'AGREEMENT'
@@ -1220,7 +1220,7 @@ export const acrisDocTypeFormatter = (cell, row, index) => {
   }
 }
 
-export const dobPermitSourceFormatter = (cell, row, index) => {
+export const dobPermitSourceFormatter = cell => {
   switch (cell) {
     case 'dobpermitissuedlegacy':
       return 'DOB BIS'
@@ -1233,7 +1233,7 @@ export const dobPermitSourceFormatter = (cell, row, index) => {
   }
 }
 
-export const dobPermitJobTypeFormatter = (cell, row, index) => {
+export const dobPermitJobTypeFormatter = cell => {
   switch (cell) {
     case 'NB':
       return 'Construction of new structures'
@@ -1248,7 +1248,7 @@ export const dobPermitJobTypeFormatter = (cell, row, index) => {
   }
 }
 
-export const dobPermitWorkTypeFormatter = (cell, row, index) => {
+export const dobPermitWorkTypeFormatter = cell => {
   switch (cell) {
     case 'BL':
       return 'Boiler'
@@ -1281,7 +1281,7 @@ export const dobPermitWorkTypeFormatter = (cell, row, index) => {
   }
 }
 
-export const dobPermitTypeFormatter = (cell, row, index) => {
+export const dobPermitTypeFormatter = cell => {
   switch (cell) {
     case 'AL':
       return 'Alteration'
@@ -1304,7 +1304,7 @@ export const dobPermitTypeFormatter = (cell, row, index) => {
   }
 }
 
-export const dobPermitSubtypeFormatter = (cell, row, index) => {
+export const dobPermitSubtypeFormatter = cell => {
   switch (cell) {
     case 'BL':
       return 'Boiler'
