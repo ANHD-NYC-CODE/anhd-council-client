@@ -1,5 +1,5 @@
 import React from 'react'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import { Button } from 'react-bootstrap'
 import BaseLink from 'shared/components/BaseLink'
 import { getLinkId, getLinkProps } from 'shared/tables/tableColumns'
@@ -145,7 +145,7 @@ export const hpdStatusFormatter = cell => {
 
 export const dateFormatter = cell => {
   try {
-    const date = moment(cell)
+    const date = dayjs(cell)
     return date.isValid() ? date.format('MM/DD/YYYY') : ''
   } catch (e) {
     return ''

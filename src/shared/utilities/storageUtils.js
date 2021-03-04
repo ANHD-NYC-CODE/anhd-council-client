@@ -1,4 +1,4 @@
-import moment from 'moment'
+import dayjs from 'dayjs'
 import * as c from 'shared/constants'
 export const LOCAL_STORAGE = 'anhd-dap-portal'
 export const USER_STORAGE = 'anhd-dap-portal--user'
@@ -17,8 +17,8 @@ export const getStorageDataAction = async (dispatch, constant, requestId, path, 
   handleActionDispatch(dispatch, constant, requestId)
   return get(path)
     .then(storageData => {
-      const now = moment()
-      const expiration = moment(storageData.expires)
+      const now = dayjs()
+      const expiration = dayjs(storageData.expires)
       if (storageData.data && expiration > now) {
         dispatch(handleAction({ data: storageData.data }, null, false))
         dispatch(handleCompletedRequest(constant, requestId))
@@ -62,7 +62,7 @@ export const getZipCodeBoardsData = () => {
 
 const addExpirationDate = data => {
   return {
-    expires: new Date(moment().add('2', 'day')),
+    expires: new Date(dayjs().add('2', 'day')),
     data,
   }
 }
@@ -119,7 +119,7 @@ const storeData = (newData, path) => {
 export const updateLocalStorage = (key, value) => {
   let newData = {
     [key]: value,
-    expiration: moment()
+    expiration: dayjs()
       .add(48, 'hours') // 2 Days
       .format(),
   }
@@ -131,7 +131,7 @@ export const updateAuthLocalStorage = (access = null, refresh = null, user = nul
     if (access) {
       access = {
         token: access,
-        expiration: moment()
+        expiration: dayjs()
           .add(c.TOKEN_EXPIRATIONS.access, 'minutes')
           .format(),
       }
@@ -140,7 +140,7 @@ export const updateAuthLocalStorage = (access = null, refresh = null, user = nul
     if (refresh) {
       refresh = {
         token: refresh,
-        expiration: moment()
+        expiration: dayjs()
           .add(c.TOKEN_EXPIRATIONS.refresh, 'hours')
           .format(),
       }

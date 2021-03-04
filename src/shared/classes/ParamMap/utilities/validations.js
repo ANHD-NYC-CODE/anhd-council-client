@@ -1,5 +1,5 @@
 import ParamError from 'shared/classes/ParamError'
-import moment from 'moment'
+import dayjs from 'dayjs'
 
 export const minValidate = paramMap => {
   if (paramMap._validations.min !== 0 && !paramMap._validations.min) return
@@ -44,7 +44,7 @@ const numberValidate = paramMap => {
 }
 
 const dateValidate = paramMap => {
-  if (moment(paramMap.value, 'YYYY-MM-DD', true).isValid()) return
+  if (dayjs(paramMap.value, 'YYYY-MM-DD', true).isValid()) return
 
   paramMap.addError(new ParamError({ message: 'Value must be a date - MM/DD/YYYY' }))
 }
