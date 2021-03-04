@@ -1,5 +1,4 @@
 import React from 'react'
-import _ from 'lodash'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import SearchBar from './SearchBar'
@@ -11,7 +10,6 @@ import { GET_BUILDING_SEARCH } from 'shared/constants/actions'
 import { handleClearErrors } from 'Store/Error/actions'
 import { setSearchValue } from 'Store/Search/actions'
 import classnames from 'classnames'
-import { setLookupAndRequestsAndRedirect } from 'Store/AppState/actions'
 import { setAppState } from 'Store/AppState/actions'
 
 import './style.scss'
@@ -127,30 +125,13 @@ class AddressSearch extends React.PureComponent {
   async handleRowClick(e, result) {
     e.preventDefault()
 
-    console.log('result => ', result)
-
     const searchString = `${result.number ? result.number : ''} ${
       result.street ? result.street.trim() : ''
     }, ${result.borough.trim()}`
 
-    // const data = await fetch(`https://geosearch.planninglabs.nyc/v1/search?text=${searchString}`)
-    //   .then(resp => resp.json())
-    //   .catch(console.log)
-
-    // const bbl = data.features[0].properties.pad_bbl
-    // const bin = data.features[0].properties.pad_bin
-
     this.props.dispatch(setSearchValue(searchString))
     this.hideSearch(e, true)
     this.props.dispatch(setAppState({ linkLookupBackToDashboard: false }))
-
-    // this.props.dispatch(
-    //   setLookupAndRequestsAndRedirect({
-    //     bbl,
-    //     bin,
-    //     requests: this.props.config.createLookupRequests(bbl, bin),
-    //   })
-    // )
   }
 
   render() {

@@ -1,6 +1,5 @@
 import { constructAxiosGet } from 'shared/utilities/Axios'
 import * as u from 'shared/constants/urls'
-import moment from 'moment'
 import {
   COUNCIL_DISTRICTS_INDEX,
   getStorageDataAction,
