@@ -1,5 +1,5 @@
-import moment from 'moment'
-import _ from 'lodash'
+import dayjs from 'dayjs'
+import groupBy from 'lodash/groupBy'
 import * as b from 'shared/constants/geographies'
 
 import {
@@ -49,7 +49,7 @@ const parseParamMapComparison = (paramMap, nounOverride = undefined) => {
         constructDateComparisonString(paramMap.comparison, paramMap.defaultOptions)
           .trim()
           .toLowerCase(),
-        moment(paramMap.value, 'YYYY-MM-DD')
+        dayjs(paramMap.value, 'YYYY-MM-DD')
           .format('MM/DD/YYYY')
           .trim(),
       ]
@@ -104,12 +104,12 @@ const parseParamMapRangeGroup = paramMapRangeGroup => {
         paramMapRangeGroup[0].comparisonPrefix.trim(),
         'between',
         paramMapRangeGroup[0].valuePrefix.trim(),
-        moment(gte.value)
+        dayjs(gte.value)
           .format('MM/DD/YYYY')
           .trim(),
         'and',
         paramMapRangeGroup[0].valuePrefix.trim(),
-        moment(lte.value)
+        dayjs(lte.value)
           .format('MM/DD/YYYY')
           .trim(),
       ]
@@ -149,7 +149,7 @@ const parseParamMapRangeGroup = paramMapRangeGroup => {
 
 const parseRoleGroup = (paramMaps, joiner = ' ') => {
   if (paramMaps.some(pm => !!pm.rangeKey)) {
-    const rangeGroups = _.groupBy(paramMaps, pm => pm.rangeKey)
+    const rangeGroups = groupBy(paramMaps, pm => pm.rangeKey)
     return Object.values(rangeGroups)
       .map(group => {
         if (group.length === 2) {

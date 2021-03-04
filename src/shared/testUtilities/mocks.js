@@ -1,4 +1,4 @@
-import moment from 'moment'
+import dayjs from 'dayjs'
 
 export const createHpdComplaintProblemMock = ({
   complaintid = '1',
@@ -50,7 +50,7 @@ export const createHPDContactMock = ({
 
 export const createHPDRegistrationMock = ({
   registrationid = '1',
-  lastregistrationdate = moment(moment.now()).format('YYYY-MM-DD'),
+  lastregistrationdate = dayjs().format('YYYY-MM-DD'),
   contacts = [],
 } = {}) => {
   return {

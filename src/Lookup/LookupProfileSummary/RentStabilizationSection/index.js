@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import moment from 'moment'
+import dayjs from 'dayjs'
 import InfoModalButton from 'shared/components/InfoModalButton'
 
 import './style.scss'
@@ -16,7 +16,7 @@ const sortedLimitedYears = props => {
       )
       if (isNaN(maxYear)) {
         maxYear = parseInt(
-          moment(moment.now())
+          dayjs()
             .subtract(1, 'year')
             .year()
         )

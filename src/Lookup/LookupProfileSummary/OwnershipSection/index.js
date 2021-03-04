@@ -1,16 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import dayjs from 'dayjs'
+
 import { dateFormatter } from 'shared/utilities/tableUtils'
 import { capitalizeWords, expandHpdRegistrationAbbreviations } from 'shared/utilities/languageUtils'
 import BaseLink from 'shared/components/BaseLink'
 import ContactExpandableSection from 'Lookup/LookupProfileSummary/OwnershipSection/ContactExpandableSection'
-import moment from 'moment'
 
 import './style.scss'
 const getLatestHPDRegistration = hpdRegistrations => {
   if (!hpdRegistrations.length) return
   return hpdRegistrations.sort((a, b) => {
-    return moment(b.lastregistrationdate) - moment(a.lastregistrationdate)
+    return dayjs(b.lastregistrationdate) - dayjs(a.lastregistrationdate)
   })[0]
 }
 

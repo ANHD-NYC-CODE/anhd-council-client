@@ -1,4 +1,4 @@
-import moment from 'moment'
+import dayjs from 'dayjs'
 import * as c from 'shared/constants'
 import { logoutUser, refreshTokens } from 'Store/Auth/actions'
 
@@ -13,7 +13,7 @@ export const requestMiddleware = () => {
     }
 
     // Refresh token if token has been alive for over 5 min
-    if (moment() > moment(auth.access.expiration)) {
+    if (dayjs() > dayjs(auth.access.expiration)) {
       dispatch(refreshTokens(auth.refresh.token))
         .then(() => {
           auth = getState().auth

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import _ from 'lodash'
+import debounce from 'lodash/debounce'
 import { setSearchTimeout, queryAddress } from 'Store/Search/actions'
 import { requestWithAuth } from 'shared/utilities/authUtils'
 import { Form, InputGroup, Button } from 'react-bootstrap'
@@ -17,7 +17,7 @@ export default class SearchBar extends React.PureComponent {
     this.onChange = this.onChange.bind(this)
     this.onFormSubmit = this.onFormSubmit.bind(this)
     this.onSearchClick = this.onSearchClick.bind(this)
-    this.debouncedQuery = _.debounce(this.dispatchQuery, 1000)
+    this.debouncedQuery = debounce(this.dispatchQuery, 1000)
   }
 
   componentDidUpdate() {

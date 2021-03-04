@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import * as c from 'shared/constants'
 import GeographySelect from 'shared/components/GeographySelect'
 import { Button, Form, ButtonToolbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
@@ -85,11 +85,11 @@ class DistrictDashboardShow extends React.Component {
     const mapFilterDate = () => {
       switch (this.props.dashboardState.mapFilterDate) {
         case c.DISTRICT_REQUEST_DATE_ONE:
-          return moment(c.DISTRICT_RESULTS_DATE_ONE).format('MM/DD/YYYY')
+          return dayjs(c.DISTRICT_RESULTS_DATE_ONE).format('MM/DD/YYYY')
         case c.DISTRICT_REQUEST_DATE_TWO:
-          return moment(c.DISTRICT_RESULTS_DATE_TWO).format('MM/DD/YYYY')
+          return dayjs(c.DISTRICT_RESULTS_DATE_TWO).format('MM/DD/YYYY')
         case c.DISTRICT_REQUEST_DATE_THREE:
-          return moment(c.DISTRICT_RESULTS_DATE_THREE).format('MM/DD/YYYY')
+          return dayjs(c.DISTRICT_RESULTS_DATE_THREE).format('MM/DD/YYYY')
       }
     }
 
@@ -97,7 +97,7 @@ class DistrictDashboardShow extends React.Component {
       housingFilter ? housingFilter.label : 'residential'
     }_properties__${geographyType}${geographyId}__${selectedFilters
       .map(filter => `${filter.fieldName}_${shortAmountComparisonString(filter.comparison, filter.value)}`)
-      .join('_or_')}${mapFilterDate()}-${moment(moment.now()).format('MM/DD/YYYY')}`
+      .join('_or_')}${mapFilterDate()}-${dayjs().format('MM/DD/YYYY')}`
   }
 
   getGeographySummaryResultsFilter() {
@@ -132,7 +132,6 @@ class DistrictDashboardShow extends React.Component {
                   disabled={this.props.loading}
                   variant="outline-primary"
                   label={mapFilterDateToLabel(c.DISTRICT_REQUEST_DATE_ONE)}
-                  // label={`Last 30 Days (${moment(c.DISTRICT_RESULTS_DATE_ONE).format('MM/DD/YYYY')})`}
                   onChange={() => this.props.toggleDateRange(c.DISTRICT_REQUEST_DATE_ONE)}
                   checked={this.props.dashboardState.mapFilterDate === c.DISTRICT_REQUEST_DATE_ONE}
                 />
@@ -146,7 +145,6 @@ class DistrictDashboardShow extends React.Component {
                   disabled={this.props.loading}
                   variant="outline-primary"
                   label={mapFilterDateToLabel(c.DISTRICT_REQUEST_DATE_TWO)}
-                  // label={`Last Year (${moment(c.DISTRICT_RESULTS_DATE_TWO).format('MM/DD/YYYY')})`}
                   onChange={() => this.props.toggleDateRange(c.DISTRICT_REQUEST_DATE_TWO)}
                   checked={this.props.dashboardState.mapFilterDate === c.DISTRICT_REQUEST_DATE_TWO}
                 />
@@ -160,7 +158,6 @@ class DistrictDashboardShow extends React.Component {
                   disabled={this.props.loading}
                   variant="outline-primary"
                   label={mapFilterDateToLabel(c.DISTRICT_REQUEST_DATE_THREE)}
-                  // label={`Last 3 Years (${moment(c.DISTRICT_RESULTS_DATE_THREE).format('MM/DD/YYYY')})`}
                   onChange={() => this.props.toggleDateRange(c.DISTRICT_REQUEST_DATE_THREE)}
                   checked={this.props.dashboardState.mapFilterDate === c.DISTRICT_REQUEST_DATE_THREE}
                 />

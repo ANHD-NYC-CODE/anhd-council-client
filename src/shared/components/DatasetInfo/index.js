@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import ConfigContext from 'Config/ConfigContext'
-import moment from 'moment'
+import dayjs from 'dayjs'
 
 import './style.scss'
 
@@ -19,27 +19,27 @@ const parseDatasetRange = dataset => {
   if (dataset.records_start && !dataset.records_end)
     sentenceArray.push(
       <span key="dataset-info-sentence-item-1">
-        This dataset starts on <b>{moment(dataset.records_start).format('MM/DD/YYYY')}</b>.
+        This dataset starts on <b>{dayjs(dataset.records_start).format('MM/DD/YYYY')}</b>.
       </span>
     )
   else if (!dataset.records_start && dataset.records_end)
     sentenceArray.push(
       <span key="dataset-info-sentence-item-2">
-        This dataset ends on <b>{moment(dataset.records_end).format('MM/DD/YYYY')}</b>.
+        This dataset ends on <b>{dayjs(dataset.records_end).format('MM/DD/YYYY')}</b>.
       </span>
     )
   else if (dataset.records_start && dataset.records_end)
     sentenceArray.push(
       <span key="dataset-info-sentence-item-3">
-        This dataset's range is from <b>{moment(dataset.records_start).format('MM/DD/YYYY')}</b> to{' '}
-        <b>{moment(dataset.records_end).format('MM/DD/YYYY')}</b>.
+        This dataset's range is from <b>{dayjs(dataset.records_start).format('MM/DD/YYYY')}</b> to{' '}
+        <b>{dayjs(dataset.records_end).format('MM/DD/YYYY')}</b>.
       </span>
     )
 
   if (dataset.last_update && dataset.update_schedule)
     sentenceArray.push(
       <span key="dataset-info-sentence-item-4">
-        {updateSentenceStart()} last updated on <b>{moment(dataset.last_update).format('MM/DD/YYYY')}</b> and is on{' '}
+        {updateSentenceStart()} last updated on <b>{dayjs(dataset.last_update).format('MM/DD/YYYY')}</b> and is on{' '}
         {getUpdateType(dataset)} {dataset.update_schedule} update schedule.
       </span>
     )
