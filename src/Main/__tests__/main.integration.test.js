@@ -1,14 +1,9 @@
-import React from 'react'
 import { configure, mount } from 'enzyme'
-import Adapter from 'enzyme-adapter-react-16'
-import { Axios } from 'shared/utilities/Axios'
-import MockAdapter from 'axios-mock-adapter'
-import { setupStore, configuredState } from 'shared/testUtilities'
-import sinon from 'sinon'
 import { Provider } from 'react-redux'
+import Adapter from 'enzyme-adapter-react-16'
+import React from 'react'
 
-const mock = new MockAdapter(Axios)
-
+import { setupStore, configuredState } from 'shared/testUtilities'
 import App from 'App'
 
 configure({ adapter: new Adapter() })
@@ -27,7 +22,7 @@ const setupWrapper = state => {
 
 describe('Landing page', () => {
   it('displays the initial navigation', () => {
-    const [wrapper, store] = setupWrapper()
+    const [wrapper] = setupWrapper()
     expect(wrapper.find('NavigationBar')).toHaveLength(1)
     expect(wrapper.find('NavigationBar li')).toHaveLength(8)
     expect(wrapper.find('NavigationBar').text()).toMatch(
@@ -44,7 +39,7 @@ describe('Landing page', () => {
 
   describe('geography select', () => {
     it('shows the selected geography values', () => {
-      const [wrapper, store] = setupWrapper()
+      const [wrapper] = setupWrapper()
       expect(wrapper.find('MainGeographySelect select[name="geographyType"]').props().value).toEqual(-1)
       expect(wrapper.find('MainGeographySelect select[name="geographyId"]')).toHaveLength(0)
       expect(wrapper.find('button.cancel-geography-change')).toHaveLength(0)
@@ -52,7 +47,7 @@ describe('Landing page', () => {
     })
 
     it('shows changing configuration', () => {
-      const [wrapper, store] = setupWrapper()
+      const [wrapper] = setupWrapper()
       wrapper
         .find('MainGeographySelect select[name="geographyType"]')
         .simulate('change', { target: { value: 'COMMUNITY' } })
@@ -81,7 +76,7 @@ describe('Landing page', () => {
 
   describe('After setting a geography select', () => {
     it('redirects to the map page for the geography', () => {
-      const [wrapper, store] = setupWrapper()
+      const [wrapper] = setupWrapper()
       wrapper
         .find('MainGeographySelect select')
         .at(0)

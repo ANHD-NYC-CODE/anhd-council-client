@@ -1,12 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import * as c from 'shared/constants'
 import { Form, Button } from 'react-bootstrap'
-import { postUserMessage } from 'Store/Request/actions'
 import { Formik } from 'formik'
 import * as yup from 'yup'
-import FormError from 'shared/components/FormError'
 import { toast } from 'react-toastify'
+
+import FormError from 'shared/components/FormError'
+import { postUserMessage } from 'Store/Request/actions'
 import SpinnerLoader from 'shared/components/Loaders/SpinnerLoader'
 
 import './style.scss'

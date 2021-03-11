@@ -1,13 +1,11 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
+
 import UserContext from 'Auth/UserContext'
 import NavigationBar from 'Layout/NavigationBar'
 import SubHeader from 'Layout/SubHeader'
 import Footer from 'Layout/Footer'
 import PrintLayout from 'Layout/PrintLayout'
 import './style.scss'
-import { Container } from 'react-bootstrap'
 import LayoutContext from 'Layout/LayoutContext'
 import ModalContext from 'Modal/ModalContext'
 

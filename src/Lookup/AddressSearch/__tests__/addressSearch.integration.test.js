@@ -1,18 +1,18 @@
 import React from 'react'
 import { configure, mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import { Axios } from 'shared/utilities/Axios'
+import { Provider } from 'react-redux'
+import { ConnectedRouter } from 'connected-react-router'
 import MockAdapter from 'axios-mock-adapter'
+
 import { setupStore, configuredState, flushAllPromises } from 'shared/testUtilities'
 import { history } from 'Store/configureStore'
-import { ConnectedRouter } from 'connected-react-router'
-
-import { Provider } from 'react-redux'
+import { Axios } from 'shared/utilities/Axios'
 import ConfigContext from 'Config/ConfigContext'
 import Config from 'Config'
-const mock = new MockAdapter(Axios)
-
 import AddressSearch from 'Lookup/AddressSearch'
+
+const mock = new MockAdapter(Axios)
 
 jest.mock('lodash/debounce', () => jest.fn(fn => fn))
 
@@ -98,7 +98,7 @@ describe('Address Search Module', () => {
     })
 
     it('handles navigation on result click', async () => {
-      const [wrapper, store] = await searchResultWrapper({ searchValue, results })
+      const [wrapper] = await searchResultWrapper({ searchValue, results })
 
       wrapper
         .find('SearchResultRow')

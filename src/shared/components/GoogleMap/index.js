@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
-import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react'
+import { Map, GoogleApiWrapper } from 'google-maps-react'
 
 export class GoogleMap extends React.Component {
   constructor(props) {

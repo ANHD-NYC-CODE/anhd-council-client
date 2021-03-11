@@ -1,4 +1,5 @@
-/* eslint-disable no-console, no-param-reassign, no-use-before-define */
+/* eslint-disable */
+// @TODO delete? we use offline-plugin
 
 // This optional code is used to register a service worker.
 // register() is not called by default.

@@ -1,11 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Button } from 'react-bootstrap'
-import FormError from 'shared/components/FormError'
-import RemoveFilterButton from 'AdvancedSearch/FilterComponent/RemoveFilterButton'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import classnames from 'classnames'
+
+import FormError from 'shared/components/FormError'
+import RemoveFilterButton from 'AdvancedSearch/FilterComponent/RemoveFilterButton'
 
 import './style.scss'
 

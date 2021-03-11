@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Row, div } from 'react-bootstrap'
+import { div } from 'react-bootstrap'
+
 import { boroughAbbreviationToCode } from 'shared/utilities/languageUtils'
 import BaseLink from 'shared/components/BaseLink'
-
 import { constructDOBLink } from 'shared/utilities/linkUtils'
 
 import './style.scss'

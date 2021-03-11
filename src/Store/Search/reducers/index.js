@@ -1,4 +1,3 @@
-import * as searchActions from '../actions'
 import * as c from '../constants'
 export const initialState = {
   results: [],

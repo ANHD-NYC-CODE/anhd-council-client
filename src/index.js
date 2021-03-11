@@ -1,13 +1,33 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import AppProvider from 'AppProvider'
-import * as serviceWorker from './serviceWorker'
+import * as OfflinePluginRuntime from 'offline-plugin/runtime'
+import { isPrivateMode } from 'shared/utilities/accessibilityUtils'
 
 import './shared/styles/index.scss'
 
-ReactDOM.render(<AppProvider />, document.getElementById('root'))
+const rootNode = document.getElementById('root')
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
-serviceWorker.unregister()
+// mount app on the client
+if (rootNode.hasChildNodes()) {
+  ReactDOM.hydrate(<AppProvider />, rootNode)
+} else {
+  ReactDOM.render(<AppProvider />, rootNode)
+}
+
+(async () => {
+  const browserIsPrivate = await isPrivateMode()
+  // check is necessary for cases where the user has modified their browser
+  // security settings to disallow persistent cookies/storage
+  if (browserIsPrivate) return
+
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      try {
+        OfflinePluginRuntime.install()
+      } catch (err) {
+        console.error(err)
+      }
+    })
+  }
+})()

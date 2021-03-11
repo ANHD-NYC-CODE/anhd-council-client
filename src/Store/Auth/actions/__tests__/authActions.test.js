@@ -3,12 +3,9 @@ import thunk from 'redux-thunk'
 import { Axios } from 'shared/utilities/Axios'
 import * as c from 'shared/constants'
 import { TOKEN_URL, TOKEN_REFRESH_URL } from 'shared/constants/urls'
-import { getUserStorageData } from 'shared/utilities/storageUtils'
 import MockAdapter from 'axios-mock-adapter'
 import * as loadingActions from 'Store/Loading/actions'
 import * as errorActions from 'Store/Error/actions'
-import { push } from 'connected-react-router'
-import { requestWithAuth } from 'shared/utilities/authUtils'
 import { setCustomSearchResults, resetAdvancedSearchReducer } from 'Store/AdvancedSearch/actions'
 
 import { GET_TOKEN, GET_TOKEN_REFRESH } from 'shared/constants/actions'
@@ -16,8 +13,6 @@ import * as u from 'shared/utilities/constantUtils'
 
 import {
   loginUser,
-  getUserProfile,
-  handleSyncStorage,
   handleUserLogout,
   logoutUser,
   refreshTokens,

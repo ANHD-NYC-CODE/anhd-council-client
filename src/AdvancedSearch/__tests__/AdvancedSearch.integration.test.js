@@ -1,21 +1,14 @@
 import React from 'react'
-import moment from 'moment'
-import * as c from 'shared/constants'
 import { configure, mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import { setupStore, configuredState } from 'shared/testUtilities'
 import { Provider } from 'react-redux'
+
+import { setupStore, configuredState } from 'shared/testUtilities'
 import AdvancedSearch from 'AdvancedSearch'
 import ConfigContext from 'Config/ConfigContext'
 import Config from 'Config'
 
 configure({ adapter: new Adapter() })
-
-const rawStartDate = c.CUSTOM_DEFAULT_START_DATE
-const rawEndDate = c.CUSTOM_DEFAULT_END_DATE
-
-const startDate = moment(rawStartDate, 'YYYY-MM-DD').format('MM/DD/YYYY')
-const endDate = moment(rawEndDate, 'YYYY-MM-DD').format('MM/DD/YYYY')
 
 const setupWrapper = state => {
   if (!state) {

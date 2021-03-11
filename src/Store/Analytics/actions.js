@@ -1,7 +1,7 @@
 import ReactGA from 'react-ga'
 import { constructCsvFileName } from 'Store/AdvancedSearch/utilities/advancedSearchStoreUtils'
+
 export const fireCsvDownloadEvent = fileName => () => {
-  // const userId = getState().auth.user ? getState().auth.user.id : undefined
   ReactGA.event({
     category: 'Csv',
     action: 'download',
@@ -9,7 +9,7 @@ export const fireCsvDownloadEvent = fileName => () => {
   })
 }
 
-export const fireUserLoginEvent = userId => (_, getState) => {
+export const fireUserLoginEvent = () => (_, getState) => {
   const userId = getState().auth.user ? getState().auth.user.id : undefined
   ReactGA.event({
     category: 'User',
@@ -19,7 +19,6 @@ export const fireUserLoginEvent = userId => (_, getState) => {
 }
 
 export const fireAdvancedSearchSubmitEvent = advancedSearch => () => {
-  // const userId = getState().auth.user ? getState().auth.user.id : undefined
   ReactGA.event({
     category: 'CustomSearch',
     action: 'submit',
@@ -28,7 +27,6 @@ export const fireAdvancedSearchSubmitEvent = advancedSearch => () => {
 }
 
 export const fireCustomSearchSelectFilterEvent = label => () => {
-  // const userId = getState().auth.user ? getState().auth.user.id : undefined
   ReactGA.event({
     category: 'CustomSearch',
     action: 'select-filter',
@@ -55,15 +53,13 @@ export const fireCustomSearchSwitchConditionEvent = type => (_, getState) => {
 }
 
 export const fireCustomSearchAddConditionGroupEvent = () => () => {
-  // const userId = getState().auth.user ? getState().auth.user.id : undefined
   ReactGA.event({
     category: 'CustomSearch',
     action: 'add-group',
   })
 }
 
-export const fireFilterSelectEvent = filter => (_, getState) => {
-  const userId = getState().auth.user ? getState().auth.user.id : undefined
+export const fireFilterSelectEvent = filter => () => {
   ReactGA.event({
     category: 'DistrictDashboard',
     action: 'select-filter',
@@ -72,7 +68,6 @@ export const fireFilterSelectEvent = filter => (_, getState) => {
 }
 
 export const fireMapDateRangeSelectEvent = value => () => {
-  // const userId = getState().auth.user ? getState().auth.user.id : undefined
   ReactGA.event({
     category: 'DistrictDashboard',
     action: 'select-date',
@@ -81,7 +76,6 @@ export const fireMapDateRangeSelectEvent = value => () => {
 }
 
 export const fireDashboardToggleConditionEvent = value => () => {
-  // const userId = getState().auth.user ? getState().auth.user.id : undefined
   ReactGA.event({
     category: 'DistrictDashboard',
     action: 'toggle-condition',
@@ -90,7 +84,6 @@ export const fireDashboardToggleConditionEvent = value => () => {
 }
 
 export const fireSwitchLookupTableEvent = name => () => {
-  // const userId = getState().auth.user ? getState().auth.user.id : undefined
   ReactGA.event({
     category: 'Lookup',
     action: 'select-table',
@@ -99,7 +92,6 @@ export const fireSwitchLookupTableEvent = name => () => {
 }
 
 export const fireAnalyticsModalOpenEvent = () => () => {
-  // const userId = getState().auth.user ? getState().auth.user.id : undefined
   ReactGA.event({
     category: 'Modal',
     action: 'analytics-information',

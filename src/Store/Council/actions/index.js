@@ -15,7 +15,7 @@ const getCouncilsActionObject = response => ({
   data: response.data,
 })
 
-export const handleGetCouncils = (response, key = null, setStorage = true) => {
+export const handleGetCouncils = (response, _, setStorage = true) => {
   if (setStorage) {
     delCouncilDistrictsData().then(() => {
       setIndexedDataThenUpdateReducer(COUNCIL_DISTRICTS_INDEX, response)
@@ -24,12 +24,12 @@ export const handleGetCouncils = (response, key = null, setStorage = true) => {
   return getCouncilsActionObject(response)
 }
 
-export const handleGetCouncil = (response, key = null) => ({
+export const handleGetCouncil = (response) => ({
   type: c.HANDLE_GET_COUNCIL,
   data: response.data,
 })
 
-export const handleGetCouncilHousing = (response, key = null) => ({
+export const handleGetCouncilHousing = (response) => ({
   type: c.HANDLE_GET_COUNCIL_HOUSING,
   data: response.data,
 })
@@ -37,7 +37,7 @@ export const handleGetCouncilHousing = (response, key = null) => ({
 export const handleGetCouncilPropertySummary = (response, key = null) => ({
   type: c.HANDLE_GET_COUNCIL_PROPERTY_SUMMARY,
   data: response.data,
-  key: key,
+  key,
 })
 
 export const getCouncils = () => (dispatch, getState, access_token) => {
@@ -50,9 +50,7 @@ export const getCouncils = () => (dispatch, getState, access_token) => {
         return councilsAxios(dispatch, getState, access_token, requestId)
       }
     })
-    .catch(error => {
-      return councilsAxios(dispatch, getState, access_token, requestId)
-    })
+    .catch(() => councilsAxios(dispatch, getState, access_token, requestId))
 }
 
 const councilsAxios = (dispatch, getState, access_token, requestId) => {

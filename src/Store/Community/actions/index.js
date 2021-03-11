@@ -15,7 +15,7 @@ const getCommunitiesActionObject = response => ({
   data: response.data,
 })
 
-export const handleGetCommunities = (response, key = null, setStorage = true) => {
+export const handleGetCommunities = (response, _, setStorage = true) => {
   if (setStorage) {
     delCommunityBoardsData().then(() => {
       setIndexedDataThenUpdateReducer(COMMUNITY_BOARDS_INDEX, response)
@@ -24,12 +24,12 @@ export const handleGetCommunities = (response, key = null, setStorage = true) =>
   return getCommunitiesActionObject(response)
 }
 
-export const handleGetCommunity = (response, key = null) => ({
+export const handleGetCommunity = (response) => ({
   type: c.HANDLE_GET_COMMUNITY,
   data: response.data,
 })
 
-export const handleGetCommunityHousing = (response, key = null) => ({
+export const handleGetCommunityHousing = (response) => ({
   type: c.HANDLE_GET_COMMUNITY_HOUSING,
   data: response.data,
 })
@@ -37,7 +37,7 @@ export const handleGetCommunityHousing = (response, key = null) => ({
 export const handleGetCommunityPropertySummary = (response, key = null) => ({
   type: c.HANDLE_GET_COMMUNITY_PROPERTY_SUMMARY,
   data: response.data,
-  key: key,
+  key,
 })
 
 export const getCommunities = () => (dispatch, getState, access_token) => {

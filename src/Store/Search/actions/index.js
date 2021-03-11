@@ -1,5 +1,4 @@
 import { constructAxiosGet } from 'shared/utilities/Axios'
-import { SEARCH_URL } from 'shared/constants/urls'
 import { GET_BUILDING_SEARCH } from 'shared/constants/actions'
 
 import * as c from '../constants'

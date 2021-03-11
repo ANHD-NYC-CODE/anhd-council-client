@@ -1,5 +1,12 @@
 import dayjs from 'dayjs'
+import log from 'loglevel'
+
 import * as c from 'shared/constants'
+import { logoutUser } from 'Store/Auth/actions'
+import { get, set, del } from 'idb-keyval'
+import { handleActionDispatch } from 'shared/utilities/actionUtils'
+import { handleCompletedRequest } from 'Store/Loading/actions'
+
 export const LOCAL_STORAGE = 'anhd-dap-portal'
 export const USER_STORAGE = 'anhd-dap-portal--user'
 export const COUNCIL_DISTRICTS_INDEX = 'councils'
@@ -7,11 +14,6 @@ export const COMMUNITY_BOARDS_INDEX = 'communities'
 export const STATE_ASSEMBLY_INDEX = 'state-assembly'
 export const STATE_SENATE_INDEX = 'state-senate'
 export const ZIPCODE_INDEX = 'zipcode'
-
-import { logoutUser } from 'Store/Auth/actions'
-import { get, set, del } from 'idb-keyval'
-import { handleActionDispatch } from 'shared/utilities/actionUtils'
-import { handleCompletedRequest } from 'Store/Loading/actions'
 
 export const getStorageDataAction = async (dispatch, constant, requestId, path, handleAction) => {
   handleActionDispatch(dispatch, constant, requestId)
@@ -73,9 +75,7 @@ const setIndexedData = (path, data) => {
 }
 
 export const setIndexedDataThenUpdateReducer = (path, response) => {
-  return setIndexedData(path, response.data).catch(error => {
-    console.log(error)
-  })
+  return setIndexedData(path, response.data).catch(log.error)
 }
 
 export const deleteIndexedDate = path => {
@@ -112,7 +112,7 @@ const storeData = (newData, path) => {
   try {
     localStorage.setItem(path, JSON.stringify(storage))
   } catch (e) {
-    console.log('Local Storage is full, Please empty data', e)
+    log.error('Local Storage is full, Please empty data', e)
   }
 }
 

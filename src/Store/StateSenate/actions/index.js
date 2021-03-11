@@ -16,7 +16,7 @@ const getStateSenateActionObject = response => ({
   data: response.data,
 })
 
-export const handleGetStateSenates = (response, key = null, setStorage = true) => {
+export const handleGetStateSenates = (response, _, setStorage = true) => {
   if (setStorage) {
     delStateSenateData().then(() => {
       setIndexedDataThenUpdateReducer(STATE_SENATE_INDEX, response)
@@ -25,12 +25,12 @@ export const handleGetStateSenates = (response, key = null, setStorage = true) =
   return getStateSenateActionObject(response)
 }
 
-export const handleGetStateSenate = (response, key = null) => ({
+export const handleGetStateSenate = (response) => ({
   type: c.HANDLE_GET_STATE_SENATE,
   data: response.data,
 })
 
-export const handleGetStateSenateHousing = (response, key = null) => ({
+export const handleGetStateSenateHousing = (response) => ({
   type: c.HANDLE_GET_STATE_SENATE_HOUSING,
   data: response.data,
 })
@@ -38,7 +38,7 @@ export const handleGetStateSenateHousing = (response, key = null) => ({
 export const handleGetStateSenatePropertySummary = (response, key = null) => ({
   type: c.HANDLE_GET_STATE_SENATE_PROPERTY_SUMMARY,
   data: response.data,
-  key: key,
+  key,
 })
 
 export const getStateSenates = () => (dispatch, getState, access_token) => {
@@ -50,9 +50,7 @@ export const getStateSenates = () => (dispatch, getState, access_token) => {
         return stateSenatesAxios(dispatch, getState, access_token, requestId)
       }
     })
-    .catch(error => {
-      return stateSenatesAxios(dispatch, getState, access_token, requestId)
-    })
+    .catch(() => stateSenatesAxios(dispatch, getState, access_token, requestId))
 }
 
 const stateSenatesAxios = (dispatch, getState, access_token, requestId) => {

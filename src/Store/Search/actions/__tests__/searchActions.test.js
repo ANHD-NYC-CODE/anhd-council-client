@@ -5,7 +5,6 @@ import { SEARCH_URL } from 'shared/constants/urls'
 import MockAdapter from 'axios-mock-adapter'
 import * as loadingActions from 'Store/Loading/actions'
 import * as errorActions from 'Store/Error/actions'
-import * as c from 'Store/Search/constants'
 import * as a from 'Store/Search/actions'
 import { GET_BUILDING_SEARCH } from 'shared/constants/actions'
 

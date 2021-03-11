@@ -1,8 +1,7 @@
 import { constructCountDateParamSet } from 'shared/utilities/filterUtils'
 
-const Eviction = databaseObject => ({
+const Eviction = () => ({
   summaryBackgroundColorClass: 'summary-blue',
-
   resourceConstant: 'EVICTION',
   urlPath: 'evictions',
   label: 'Marshal Evictions',

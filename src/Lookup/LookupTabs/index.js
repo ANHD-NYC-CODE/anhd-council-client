@@ -33,7 +33,7 @@ const LookupTabs = props => {
         {isOpen && <span>Click to view different data about this property</span>}
       </div>
       <div className={classnames('lookup-tabs__tabs', { open: isOpen })}>
-        {props.lookupRequests.map((request, index) => {
+        {props.lookupRequests.map(request => {
           const results = props.requests[request.requestConstant] || []
           const loading = props.loadingState[request.requestConstant]
           const error = props.errorState[request.requestConstant]

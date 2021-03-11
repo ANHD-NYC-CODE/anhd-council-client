@@ -17,6 +17,7 @@ require('../config/env')
 const fs = require('fs')
 const chalk = require('chalk')
 const webpack = require('webpack')
+const log = require('loglevel')
 const WebpackDevServer = require('webpack-dev-server')
 const clearConsole = require('react-dev-utils/clearConsole')
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles')
@@ -44,20 +45,19 @@ const DEFAULT_PORT = parseInt(process.env.PORT, 10) || 3000
 const HOST = process.env.HOST || '0.0.0.0'
 
 if (process.env.HOST) {
-  console.log(
+  log.warn(
     chalk.cyan(
       `Attempting to bind to HOST environment variable: ${chalk.yellow(
         chalk.bold(process.env.HOST)
       )}`
     )
   )
-  console.log(
+  log.warn(
     "If this was unintentional, check that you haven't mistakenly set it in your shell."
   )
-  console.log(
+  log.warn(
     `Learn more here: ${chalk.yellow('http://bit.ly/CRA-advanced-config')}`
   )
-  console.log()
 }
 
 // We require that you explictly set browsers and do not fall back to
@@ -91,13 +91,11 @@ checkBrowsers(paths.appPath, isInteractive)
     const devServer = new WebpackDevServer(compiler, serverConfig)
     // Launch WebpackDevServer.
     devServer.listen(port, HOST, err => {
-      if (err) {
-        return console.log(err)
-      }
+      if (err) return log.error(err)
       if (isInteractive) {
         clearConsole()
       }
-      console.log(chalk.cyan('Starting the development server...\n'))
+      log.info(chalk.cyan('Starting the development server...\n'))
       openBrowser(urls.localUrlForBrowser)
     })
     ;['SIGINT', 'SIGTERM'].forEach(function(sig) {
@@ -109,7 +107,7 @@ checkBrowsers(paths.appPath, isInteractive)
   })
   .catch(err => {
     if (err && err.message) {
-      console.log(err.message)
+      log.error(err.message)
     }
     process.exit(1)
   })

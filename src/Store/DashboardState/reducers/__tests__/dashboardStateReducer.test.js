@@ -1,6 +1,5 @@
 import * as r from '../'
 import * as a from '../../actions'
-import * as c from 'shared/constants'
 
 describe('DashboardState reducer', () => {
   it('should return the initial state', () => {

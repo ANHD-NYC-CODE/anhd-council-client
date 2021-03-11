@@ -1,7 +1,7 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import AddConditionButton from 'AdvancedSearch/ConditionComponent/AddConditionButton'
 import RemoveConditionButton from 'AdvancedSearch/ConditionComponent/RemoveConditionButton'
+
 const ConditionControlGroup = props => {
   if (props.condition.key === '0') {
     return props.condition.filters.filter(f => f.conditionGroup).length === 0 ? (

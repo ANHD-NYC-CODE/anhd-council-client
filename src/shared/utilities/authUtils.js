@@ -19,9 +19,7 @@ export const requestMiddleware = () => {
           auth = getState().auth
           return request(dispatch, getState, auth.access.token)
         })
-        .catch(e => {
-          return dispatch(logoutUser())
-        })
+        .catch(() => dispatch(logoutUser()))
     } else {
       return request(dispatch, getState, auth.access.token)
     }

@@ -16,7 +16,7 @@ const getZipCodeActionObject = response => ({
   data: response.data,
 })
 
-export const handleGetZipCodes = (response, key = null, setStorage = true) => {
+export const handleGetZipCodes = (response, _, setStorage = true) => {
   if (setStorage) {
     delZipCodeData().then(() => {
       setIndexedDataThenUpdateReducer(ZIPCODE_INDEX, response)
@@ -25,12 +25,12 @@ export const handleGetZipCodes = (response, key = null, setStorage = true) => {
   return getZipCodeActionObject(response)
 }
 
-export const handleGetZipCode = (response, key = null) => ({
+export const handleGetZipCode = (response) => ({
   type: c.HANDLE_GET_ZIPCODE,
   data: response.data,
 })
 
-export const handleGetZipCodeHousing = (response, key = null) => ({
+export const handleGetZipCodeHousing = (response) => ({
   type: c.HANDLE_GET_ZIPCODE_HOUSING,
   data: response.data,
 })
@@ -38,7 +38,7 @@ export const handleGetZipCodeHousing = (response, key = null) => ({
 export const handleGetZipCodePropertySummary = (response, key = null) => ({
   type: c.HANDLE_GET_ZIPCODE_PROPERTY_SUMMARY,
   data: response.data,
-  key: key,
+  key,
 })
 
 export const getZipCodes = () => (dispatch, getState, access_token) => {
@@ -50,9 +50,7 @@ export const getZipCodes = () => (dispatch, getState, access_token) => {
         return zipCodesAxios(dispatch, getState, access_token, requestId)
       }
     })
-    .catch(error => {
-      return zipCodesAxios(dispatch, getState, access_token, requestId)
-    })
+    .catch(() => zipCodesAxios(dispatch, getState, access_token, requestId))
 }
 
 const zipCodesAxios = (dispatch, getState, access_token, requestId) => {

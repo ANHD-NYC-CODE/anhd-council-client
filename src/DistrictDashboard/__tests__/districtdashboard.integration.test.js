@@ -1,10 +1,12 @@
 import React from 'react'
 import { configure, mount } from 'enzyme'
-import * as c from 'shared/constants'
-
+import MockDate from 'mockdate'
+import { Provider } from 'react-redux'
 import Adapter from 'enzyme-adapter-react-16'
-import { Axios } from 'shared/utilities/Axios'
 import MockAdapter from 'axios-mock-adapter'
+import { ConnectedRouter } from 'connected-react-router'
+
+import { Axios } from 'shared/utilities/Axios'
 import { setupStore, configuredState, flushAllPromises } from 'shared/testUtilities'
 import { history } from 'Store/configureStore'
 import Config from 'Config'
@@ -12,20 +14,9 @@ import ConfigContext from 'Config/ConfigContext'
 import UserContext from 'Auth/UserContext'
 import LayoutContext from 'Layout/LayoutContext'
 import { createPropertyRequestMock } from 'shared/testUtilities/mocks'
-import { ConnectedRouter } from 'connected-react-router'
-
-import { mockSetupResourceModels } from 'shared/testUtilities/index.js'
-
-import MockDate from 'mockdate'
-
-const resourceModels = mockSetupResourceModels()
-
-import sinon from 'sinon'
-import { Provider } from 'react-redux'
+import DistrictDashboard from 'DistrictDashboard'
 
 const mock = new MockAdapter(Axios)
-
-import DistrictDashboard from 'DistrictDashboard'
 
 configure({ adapter: new Adapter() })
 beforeEach(() => {
@@ -143,7 +134,7 @@ describe('DistrictDashboard', () => {
 
     describe('geography select', () => {
       it('shows the selected geography values', () => {
-        const [wrapper, store] = setupWrapper({
+        const [wrapper] = setupWrapper({
           router: { location: { pathname: '/council/1' }, action: 'POP' },
         })
         expect(wrapper.findByTestId('geography-select--type', 'select').props().value).toEqual('COUNCIL')
@@ -153,7 +144,7 @@ describe('DistrictDashboard', () => {
       })
 
       it('shows changing configuration', () => {
-        const [wrapper, store] = setupWrapper({
+        const [wrapper] = setupWrapper({
           router: { location: { pathname: '/council/1' }, action: 'POP' },
         })
         wrapper.findByTestId('geography-select--type', 'select').simulate('change', { target: { value: 'COMMUNITY' } })
@@ -180,7 +171,7 @@ describe('DistrictDashboard', () => {
 
     describe('map view', () => {
       it('renders the map', async () => {
-        const [wrapper, store] = setupWrapper({
+        const [wrapper] = setupWrapper({
           router: { location: { pathname: '/council/1' }, action: 'POP' },
         })
         expect(wrapper.find('ToggleButtonGroup')).toHaveLength(2)
@@ -190,7 +181,7 @@ describe('DistrictDashboard', () => {
 
     describe('table view', () => {
       it('renders the tables', () => {
-        const [wrapper, store] = setupWrapper({
+        const [wrapper] = setupWrapper({
           router: { location: { pathname: '/council/1' }, action: 'POP' },
         })
 
@@ -211,7 +202,7 @@ describe('DistrictDashboard', () => {
           createPropertyRequestMock({ bbl: 3, unitsres: 10 }),
         ]
         mock.onGet('/councils/1/properties/').reply(200, results)
-        const [wrapper, store] = setupWrapper({
+        const [wrapper] = setupWrapper({
           router: { location: { pathname: '/council/1' }, action: 'POP' },
         })
 
@@ -232,7 +223,7 @@ describe('DistrictDashboard', () => {
           { bbl: 4, unitsres: 1 },
         ]
         mock.onGet('/councils/1/properties/').reply(200, results)
-        const [wrapper, store] = setupWrapper({
+        const [wrapper] = setupWrapper({
           router: { location: { pathname: '/council/1' }, action: 'POP' },
         })
 
@@ -245,7 +236,7 @@ describe('DistrictDashboard', () => {
       it('Switches the visible request wrapper', async () => {
         MockDate.set('01/01/2019')
 
-        const [wrapper, store] = setupWrapper({
+        const [wrapper] = setupWrapper({
           router: { location: { pathname: '/council/1' }, action: 'POP' },
         })
 
@@ -295,7 +286,7 @@ describe('DistrictDashboard', () => {
           createPropertyRequestMock({ bbl: 4, unitsres: 10 }),
         ]
         mock.onGet('/councils/1/properties/').reply(200, results)
-        const [wrapper, store] = setupWrapper({
+        const [wrapper] = setupWrapper({
           router: { location: { pathname: '/council/1' }, action: 'POP' },
         })
 
@@ -350,7 +341,7 @@ describe('DistrictDashboard', () => {
           ),
         ]
         mock.onGet('/councils/1/properties/').reply(200, results)
-        const [wrapper, store] = setupWrapper({
+        const [wrapper] = setupWrapper({
           router: { location: { pathname: '/council/1' }, action: 'POP' },
         })
 
@@ -422,7 +413,7 @@ describe('DistrictDashboard', () => {
           createPropertyRequestMock({ bbl: 2, unitsres: 1 }, { 'hpdcomplaints_recent__12/02/2018-01/01/2019': 6 }),
         ]
         mock.onGet('/councils/1/properties/').reply(200, results)
-        const [wrapper, store] = setupWrapper({
+        const [wrapper] = setupWrapper({
           router: { location: { pathname: '/council/1' }, action: 'POP' },
         })
 
