@@ -176,13 +176,13 @@ export const annotatedColumnFormatter = cell => {
   }
 }
 
-export const linkFormatter = (cell, row, index, constant, id) => {
+export const linkFormatter = (cell, row, index, constant) => {
   const linkProps = getLinkProps(constant)({ linkId: row[getLinkId(constant)], bin: row.bin, type: row.type })
 
   return <BaseLink href={linkProps.href}>{linkProps.linkText}</BaseLink>
 }
 
-export const linkWithDocumentFormatter = (cell, row, index, constant, id) => {
+export const linkWithDocumentFormatter = (cell, row, index, constant) => {
   const linkProps = getLinkProps(constant)({ linkId: row[getLinkId(constant)], bin: row.bin, type: row.type })
   const scannedProps = getLinkProps(`${constant}_SCANNED`)({
     linkId: row[getLinkId(constant)],

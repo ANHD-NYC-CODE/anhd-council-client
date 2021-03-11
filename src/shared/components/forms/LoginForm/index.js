@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Form, Button } from 'react-bootstrap'
-import { loginUser } from 'Store/Auth/actions'
 import { Formik } from 'formik'
 import * as yup from 'yup'
-import BaseLink from 'shared/components/BaseLink'
 
+import BaseLink from 'shared/components/BaseLink'
+import { loginUser } from 'Store/Auth/actions'
 import FormError from 'shared/components/FormError'
 import SpinnerLoader from 'shared/components/Loaders/SpinnerLoader'
 import './style.scss'

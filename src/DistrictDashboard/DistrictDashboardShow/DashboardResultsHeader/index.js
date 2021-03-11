@@ -1,18 +1,15 @@
-import React, { useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
 
 import { formatNumber } from 'shared/utilities/languageUtils'
-
 import './style.scss'
+
 const DashboardResultsHeader = props => {
   const numberOfUnits = props.housingResults.reduce(
     (total, result) => parseInt(total) + parseInt(result['unitsres']),
     0
   )
-  const totalDistrictUnits = props.totalResults.reduce(
-    (total, result) => parseInt(total) + parseInt(result['unitsres']),
-    0
-  )
+
   return (
     <div className="dashboard-results-header" data-test-id="dashboard-results-header">
       <div className="dashboard-results-header__wrapper">

@@ -1,7 +1,4 @@
 import ApiMap from 'shared/classes/ApiMap'
-import ParamMap from 'shared/classes/ParamMap'
-import ParamSet from 'shared/classes/ParamSet'
-import Filter from 'shared/classes/Filter'
 
 export const cloneInstance = classInstance => {
   if (!classInstance) return classInstance

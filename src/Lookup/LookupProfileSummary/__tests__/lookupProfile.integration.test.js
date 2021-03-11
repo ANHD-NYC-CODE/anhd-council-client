@@ -1,19 +1,14 @@
 import React from 'react'
 import { configure, mount } from 'enzyme'
+import { Provider } from 'react-redux'
 import Adapter from 'enzyme-adapter-react-16'
-import { Axios } from 'shared/utilities/Axios'
-import MockAdapter from 'axios-mock-adapter'
-import { setupStore, configuredState, flushAllPromises } from 'shared/testUtilities'
+import { ConnectedRouter } from 'connected-react-router'
+
+import { setupStore, configuredState } from 'shared/testUtilities'
 import { history } from 'Store/configureStore'
 import Config from 'Config'
 import LayoutContext from 'Layout/LayoutContext'
 import { createPropertyRequestMock, createHPDRegistrationMock, createHPDContactMock } from 'shared/testUtilities/mocks'
-import { ConnectedRouter } from 'connected-react-router'
-
-import { Provider } from 'react-redux'
-
-const mock = new MockAdapter(Axios)
-
 import LookupProfileSummary from 'Lookup/LookupProfileSummary'
 
 configure({ adapter: new Adapter() })

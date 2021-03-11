@@ -1,14 +1,10 @@
 import React from 'react'
 import { configure, mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import { Axios } from 'shared/utilities/Axios'
-import MockAdapter from 'axios-mock-adapter'
-import { setupStore, configuredState } from 'shared/testUtilities'
-import * as appStateReducer from 'Store/AppState/reducers'
 import { Provider } from 'react-redux'
 
-const mock = new MockAdapter(Axios)
-
+import { setupStore, configuredState } from 'shared/testUtilities'
+import * as appStateReducer from 'Store/AppState/reducers'
 import App from 'App'
 
 configure({ adapter: new Adapter() })

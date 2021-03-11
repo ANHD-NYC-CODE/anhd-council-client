@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import PropTypes from 'prop-types'
-import { Form, Button } from 'react-bootstrap'
+import { Form } from 'react-bootstrap'
+import classnames from 'classnames'
+
 import StandardizedInput from 'shared/classes/StandardizedInput'
 import { spaceEnterKeyDownHandler } from 'shared/utilities/accessibilityUtils'
-import classnames from 'classnames'
 
 const AmountFilterInput = props => {
   const [value, setValue] = useState(props.value)

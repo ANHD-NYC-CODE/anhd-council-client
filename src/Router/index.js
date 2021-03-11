@@ -1,27 +1,26 @@
+import { ConnectedRouter } from 'connected-react-router'
+import { faMapSigns } from '@fortawesome/free-solid-svg-icons'
+import { Route, Switch } from 'react-router'
 import React from 'react'
-import PropTypes from 'prop-types'
-import * as b from 'shared/constants/geographies'
+import ReactGA from 'react-ga'
 
 import { history } from 'Store/configureStore'
+import * as b from 'shared/constants/geographies'
+import AdvancedSearch from 'AdvancedSearch'
+import ConfigContext from 'Config/ConfigContext'
+import DistrictDashboard from 'DistrictDashboard'
+import Layout from 'Layout'
+import Lookup from 'Lookup'
+import Main from 'Main'
 import ModalContext from 'Modal/ModalContext'
+import PageError from 'shared/components/PageError'
 import UserContext from 'Auth/UserContext'
 
-import { ConnectedRouter } from 'connected-react-router'
-import { Route, Switch } from 'react-router'
-import Main from 'Main'
-import Lookup from 'Lookup'
-import DistrictDashboard from 'DistrictDashboard'
-import AdvancedSearch from 'AdvancedSearch'
-import { faMapSigns } from '@fortawesome/free-solid-svg-icons'
-import ConfigContext from 'Config/ConfigContext'
-import PageError from 'shared/components/PageError'
-import Layout from 'Layout'
-import ReactGA from 'react-ga'
 class Router extends React.Component {
   constructor(props) {
     super(props)
 
-    history.listen((location, action) => {
+    history.listen(() => {
       ReactGA.pageview(window.location.pathname + window.location.search)
     })
   }

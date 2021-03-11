@@ -1,10 +1,8 @@
-import React from 'react'
 import * as c from 'shared/constants'
 import { textFilter } from 'react-bootstrap-table2-filter'
 import ExpandedLinkRow from 'shared/components/BaseTable/ExpandedLinkRow'
 import { push } from 'connected-react-router'
 import { addressResultToPath } from 'shared/utilities/routeUtils'
-import BaseTable from 'shared/components/BaseTable'
 
 import {
   dateFormatter,
@@ -12,7 +10,6 @@ import {
   annotatedColumnFormatter,
   dobComplaintCategoryPriorityFormatter,
   sentencesFormatter,
-  dobComplaintCategoryDescriptionFormatter,
   ecbViolationStatusFormatter,
   dobViolationTypeFormatter,
   dobPermitWorkTypeFormatter,
@@ -241,11 +238,6 @@ export const getTableColumns = ({
     handleColumnEvent({ e, column, row, component })
   }
 
-  const expandNestedColumnEvent = ({ e, column, row, component, dataKey, tableConfig } = {}) => {
-    if (e.target.closest('table').classList.contains('no-expand')) return e
-    handleColumnEvent({ e, column, row, component, dataKey, tableConfig })
-  }
-
   const constructPropertyColumn = ({
     dataField,
     text,
@@ -270,7 +262,7 @@ export const getTableColumns = ({
       csvExport,
       csvFormatter,
       events: {
-        onClick: (e, column, columnIndex, row, rowIndex) => {
+        onClick: (e, column, columnIndex, row) => {
           if (columnEvent) return columnEvent({ row })
         },
       },
@@ -288,44 +280,11 @@ export const getTableColumns = ({
     headerSortingClasses,
     sort,
     events: {
-      onClick: (e, column, columnIndex, row, rowIndex) => {
+      onClick: (e, column, columnIndex, row) => {
         if (props.columnEvent) return props.columnEvent({ e, column, row, component })
       },
     },
   })
-
-  const constructNestedTableColumn = ({
-    dataField,
-    text,
-    sort,
-    filter,
-    classes,
-    formatter,
-    hidden,
-    csvExport,
-    csvFormatter,
-    component = BaseTable,
-    dataKey,
-    tableConfig,
-    columnEvent,
-  }) => {
-    return {
-      dataField,
-      text,
-      sort,
-      filter,
-      classes,
-      formatter,
-      hidden,
-      csvExport,
-      csvFormatter,
-      events: {
-        onClick: (e, column, columnIndex, row, rowIndex) => {
-          if (columnEvent) return columnEvent({ e, column, row, component, dataKey, tableConfig })
-        },
-      },
-    }
-  }
 
   const getAnnotationKey = (datasetKey, annotationStart = undefined, advancedSearchDatasets = []) => {
     if (

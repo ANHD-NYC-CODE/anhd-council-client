@@ -1,17 +1,17 @@
 import React from 'react'
 import { configure, mount } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
-import { Axios } from 'shared/utilities/Axios'
 import MockAdapter from 'axios-mock-adapter'
+import { ConnectedRouter } from 'connected-react-router'
+import { Provider } from 'react-redux'
+
+import { Axios } from 'shared/utilities/Axios'
 import { setupStore, configuredState, flushAllPromises } from 'shared/testUtilities'
 import { history } from 'Store/configureStore'
 import ConfigContext from 'Config/ConfigContext'
 import Config from 'Config'
 import LayoutContext from 'Layout/LayoutContext'
 import { createPropertyRequestMock } from 'shared/testUtilities/mocks'
-import { ConnectedRouter } from 'connected-react-router'
-
-import { Provider } from 'react-redux'
 
 const mock = new MockAdapter(Axios)
 
@@ -74,7 +74,7 @@ describe('Lookup', () => {
     it('renders the lookup tabs', async () => {
       mock.onGet('/properties/1/').reply(200, createPropertyRequestMock({ bbl: '1' }))
 
-      const [wrapper, store] = setupWrapper({
+      const [wrapper] = setupWrapper({
         router: { location: { pathname: '/property/1' }, action: 'POP' },
       })
       await flushAllPromises()
@@ -100,7 +100,7 @@ describe('Lookup', () => {
     })
 
     it('renders the LookupSidebar', () => {
-      const [wrapper, store] = setupWrapper({
+      const [wrapper] = setupWrapper({
         router: { location: { pathname: '/property/1/building/2' }, action: 'POP' },
       })
       expect(wrapper.find('LookupSidebar')).toBeDefined()

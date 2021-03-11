@@ -1,6 +1,6 @@
 import React from 'react'
+
 import PageError from 'shared/components/PageError'
-import Layout from 'Layout'
 
 export default class ErrorBoundary extends React.Component {
   constructor(props) {
@@ -8,11 +8,11 @@ export default class ErrorBoundary extends React.Component {
     this.state = { hasError: false }
   }
 
-  static getDerivedStateFromError(error) {
+  static getDerivedStateFromError() {
     return { hasError: true }
   }
 
-  componentDidCatch(error, info) {}
+  componentDidCatch() {}
 
   render() {
     if (this.state.hasError) {

@@ -1,13 +1,14 @@
-import { configure, mount, ShallowWrapper, ReactWrapper } from 'enzyme'
+import { configure, ShallowWrapper, ReactWrapper } from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16'
+import log from 'loglevel'
 
 configure({ adapter: new Adapter() })
-console.log('------------------------------------------  setting up global envs ')
+log.info('------------------------------------------  setting up global envs ')
 
 window.scrollTo = () => {}
 window.document.childNodes.length === 0
 window.alert = msg => {
-  console.log(msg)
+  log.info(msg)
 }
 window.matchMedia = () => ({})
 

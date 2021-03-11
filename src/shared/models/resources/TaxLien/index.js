@@ -1,9 +1,8 @@
 import { comparisonOptions, constructSingleMapParamSet } from 'shared/utilities/filterUtils'
-import ParamMap from 'shared/classes/ParamMap'
 import GenericFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/GenericFieldSet'
 import TextSelectField from 'AdvancedSearch/FilterComponent/Field/TextSelectField'
 
-const TaxLien = databaseObject => ({
+const TaxLien = () => ({
   summaryBackgroundColorClass: 'summary-blue',
   resourceConstant: 'TAX_LIEN',
   urlPath: 'taxliens',

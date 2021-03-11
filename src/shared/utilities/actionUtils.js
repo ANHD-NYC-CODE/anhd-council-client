@@ -26,9 +26,7 @@ const findErrorKeyValue = (status, data) => {
             c.CONTACT_EMAIL
           } if you need to check your status.`
         } else if (data['errors'] && data['errors'].length) {
-          return data['errors'].map((error, index) => {
-            return `${error}`
-          })
+          return data['errors'].map(error => `${error}`)
         } else {
           return ERROR_400_MESSAGE
         }

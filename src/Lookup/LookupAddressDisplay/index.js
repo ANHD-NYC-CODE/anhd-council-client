@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
+import { Button } from 'react-bootstrap'
+
 import AddressSearch from 'Lookup/AddressSearch'
 import ConfigContext from 'Config/ConfigContext'
-import { Button } from 'react-bootstrap'
 import { boroCodeToName, constructAddressString } from 'shared/utilities/languageUtils'
 import { spaceEnterKeyDownHandler } from 'shared/utilities/accessibilityUtils'
 
@@ -36,7 +37,7 @@ class LookupAddressDisplay extends React.PureComponent {
 
   handleEditClick(e) {
     e.preventDefault()
-    this.setState(oldState => ({
+    this.setState(() => ({
       isEditing: true,
     }))
   }
@@ -108,7 +109,7 @@ class LookupAddressDisplay extends React.PureComponent {
               tabIndex="0"
               role="button"
               className="lookup-address-display__title"
-              onKeyDown={e => spaceEnterKeyDownHandler(e => this.handleEditClick(e))}
+              onKeyDown={ev => spaceEnterKeyDownHandler(ev, this.handleEditClick)}
               onClick={this.handleEditClick}
             >
               {constructAddressString({

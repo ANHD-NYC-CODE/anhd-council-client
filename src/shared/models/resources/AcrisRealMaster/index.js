@@ -1,7 +1,6 @@
-import ParamMap from 'shared/classes/ParamMap'
 import { constructCountDateParamSet, constructSingleMapParamSet } from 'shared/utilities/filterUtils'
 
-const AcrisRealMaster = databaseObject => ({
+const AcrisRealMaster = () => ({
   resourceConstant: 'ACRIS_REAL_MASTER',
   urlPath: 'acrisrealmasters',
   summaryBackgroundColorClass: 'acris-yellow',

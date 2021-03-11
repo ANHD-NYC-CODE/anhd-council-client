@@ -1,6 +1,6 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { ButtonGroup, Overlay, Tooltip, DropdownButton, Dropdown } from 'react-bootstrap'
+
 class SwitchConditionButton extends React.Component {
   constructor(props) {
     super(props)

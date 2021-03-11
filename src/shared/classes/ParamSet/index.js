@@ -1,6 +1,5 @@
 import { cloneInstance } from 'shared/utilities/classUtils'
 import StandardizedInput from 'shared/classes/StandardizedInput'
-import ParamMap from 'shared/classes/ParamMap'
 
 export default class ParamSet {
   constructor({ component = null, paramMaps = [], defaults = [], label = '', createType = 'ALL' } = {}) {

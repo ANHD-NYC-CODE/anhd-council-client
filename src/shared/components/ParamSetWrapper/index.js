@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMinus } from '@fortawesome/free-solid-svg-icons'
-import { Form, Col, ButtonGroup, Button } from 'react-bootstrap'
+import { ButtonGroup, Button } from 'react-bootstrap'
 
 const ParamSetWrapper = props => {
   return (

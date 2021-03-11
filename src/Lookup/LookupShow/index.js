@@ -1,28 +1,24 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Redirect } from 'react-router-dom'
-import { getCurrentBuilding } from 'Lookup/utilities'
-import LookupTabs from 'Lookup/LookupTabs'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
+import { Events, animateScroll as scroll, scrollSpy } from 'react-scroll'
+import { Badge, Button } from 'react-bootstrap'
+import { push } from 'connected-react-router'
 
+import LookupTabs from 'Lookup/LookupTabs'
 import LookupAddressDisplay from 'Lookup/LookupAddressDisplay'
 import BaseLink from 'shared/components/BaseLink'
 import { geographyToLink } from 'shared/utilities/routeUtils'
-
-import { Events, animateScroll as scroll, scrollSpy } from 'react-scroll'
 import { fireSwitchLookupTableEvent } from 'Store/Analytics/actions'
-import { Badge, Button } from 'react-bootstrap'
 import { setAppState } from 'Store/AppState/actions'
 import LookupTable from 'Lookup/LookupTable'
 import BuildingSelect from 'Lookup/BuildingSelect'
 import LookupLinks from 'Lookup/LookupLinks'
-import { push } from 'connected-react-router'
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
-
 import LookupSidebar from 'Lookup/LookupSidebar'
 
 import './style.scss'
+
 class LookupShow extends React.PureComponent {
   constructor(props) {
     super(props)
@@ -145,7 +141,7 @@ class LookupShow extends React.PureComponent {
               switchTable={this.switchTable}
             />
             <div className="lookup-show__tables">
-              {this.props.lookupRequests.map((request, index) => {
+              {this.props.lookupRequests.map(request => {
                 return (
                   <LookupTable
                     badge={

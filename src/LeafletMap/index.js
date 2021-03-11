@@ -7,7 +7,7 @@ import { geographySelectionToString } from 'shared/utilities/languageUtils'
 import { setDashboardMapZoom } from 'Store/DashboardState/actions'
 
 import { Map, TileLayer, Popup } from 'react-leaflet'
-import { Jumbotron, Button, Alert } from 'react-bootstrap'
+import { Jumbotron, Button } from 'react-bootstrap'
 import MapAlertModal from 'LeafletMap/MapAlertModal'
 import GeographyGeoJson from 'LeafletMap/GeographyGeoJson'
 import GeographyMarkerLabels from 'LeafletMap/GeographyMarkerLabels'
@@ -54,16 +54,16 @@ export default class LeafletMap extends React.PureComponent {
     window.removeEventListener('resize', this.updateDimensions)
   }
 
-  static getDerivedStateFromError(error) {
+  static getDerivedStateFromError() {
     // Update state so the next render will show the fallback UI.
     return { hasError: true }
   }
 
-  componentDidCatch(error, info) {
+  componentDidCatch() {
     return null
   }
 
-  handleMapClick(e) {
+  handleMapClick() {
     if (this.props.closeGeographyPopup) {
       this.props.closeGeographyPopup()
     }

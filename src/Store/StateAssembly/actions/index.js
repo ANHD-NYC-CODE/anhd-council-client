@@ -16,7 +16,7 @@ const getStateAssemblyActionObject = response => ({
   data: response.data,
 })
 
-export const handleGetStateAssemblies = (response, key = null, setStorage = true) => {
+export const handleGetStateAssemblies = (response, _, setStorage = true) => {
   if (setStorage) {
     delStateAssemblyData().then(() => {
       setIndexedDataThenUpdateReducer(STATE_ASSEMBLY_INDEX, response)
@@ -25,12 +25,12 @@ export const handleGetStateAssemblies = (response, key = null, setStorage = true
   return getStateAssemblyActionObject(response)
 }
 
-export const handleGetStateAssembly = (response, key = null) => ({
+export const handleGetStateAssembly = (response) => ({
   type: c.HANDLE_GET_STATE_ASSEMBLY,
   data: response.data,
 })
 
-export const handleGetStateAssemblyHousing = (response, key = null) => ({
+export const handleGetStateAssemblyHousing = (response) => ({
   type: c.HANDLE_GET_STATE_ASSEMBLY_HOUSING,
   data: response.data,
 })
@@ -38,7 +38,7 @@ export const handleGetStateAssemblyHousing = (response, key = null) => ({
 export const handleGetStateAssemblyPropertySummary = (response, key = null) => ({
   type: c.HANDLE_GET_STATE_ASSEMBLY_PROPERTY_SUMMARY,
   data: response.data,
-  key: key,
+  key,
 })
 
 export const getStateAssemblies = () => (dispatch, getState, access_token) => {
@@ -56,9 +56,7 @@ export const getStateAssemblies = () => (dispatch, getState, access_token) => {
         return stateAssembliesAxios(dispatch, getState, access_token, requestId)
       }
     })
-    .catch(error => {
-      return stateAssembliesAxios(dispatch, getState, access_token, requestId)
-    })
+    .catch(() => stateAssembliesAxios(dispatch, getState, access_token, requestId))
 }
 
 const stateAssembliesAxios = (dispatch, getState, access_token, requestId) => {

@@ -2,14 +2,14 @@ import { constructAxiosGet } from 'shared/utilities/Axios'
 import * as u from 'shared/constants/urls'
 import * as c from '../constants'
 
-export const handleGetBuilding = (response, key = null) => ({
+export const handleGetBuilding = (response) => ({
   type: c.HANDLE_GET_BUILDING,
   data: response.data,
 })
 
 export const handleGetBuildingResource = (response, key = null) => ({
   type: c.HANDLE_GET_BUILDING_RESOURCE,
-  key: key,
+  key,
   data: response.data,
 })
 
@@ -28,7 +28,7 @@ export const getBuilding = id => (dispatch, getState, access_token) => {
   )
 }
 
-export const getBuildingResource = (dataset, id, params = null, actionKey) => (dispatch, getState, access_token) => {
+export const getBuildingResource = (dataset, id, _, actionKey) => (dispatch, getState, access_token) => {
   const requestId = Math.floor(Math.random() * 1000000)
 
   return constructAxiosGet(

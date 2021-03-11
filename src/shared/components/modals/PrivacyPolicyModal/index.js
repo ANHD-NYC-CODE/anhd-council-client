@@ -1,8 +1,9 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+import { Table } from 'react-bootstrap'
+
 import BaseModal from 'shared/components/BaseModal'
 import * as c from 'shared/constants'
-import { Table } from 'react-bootstrap'
+
 const Component = props => {
   return (
     <BaseModal

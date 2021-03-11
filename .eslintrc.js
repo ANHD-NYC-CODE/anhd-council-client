@@ -16,13 +16,6 @@ module.exports = {
     },
   },
   rules: {
-    'prettier/prettier': [
-      'error',
-      {
-        singleQuote: true,
-        trailingComma: 'es5',
-      },
-    ],
     'no-debugger': ['warn'],
     'no-console': 0,
     quotes: ['warn', 'single', { avoidEscape: true }],
@@ -38,6 +31,6 @@ module.exports = {
     es6: true,
     jest: true,
   },
-  extends: ['eslint:recommended', 'plugin:react/recommended', 'prettier', 'plugin:jsx-a11y/recommended'],
-  plugins: ['react', 'prettier', 'jest', 'jsx-a11y'],
+  extends: ['eslint:recommended', 'plugin:react/recommended', 'plugin:jsx-a11y/recommended'],
+  plugins: ['react', 'jest', 'jsx-a11y'],
 }

@@ -1,11 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import debounce from 'lodash/debounce'
-import { setSearchTimeout, queryAddress } from 'Store/Search/actions'
-import { requestWithAuth } from 'shared/utilities/authUtils'
-import { Form, InputGroup, Button } from 'react-bootstrap'
-import StandardizedInput from 'shared/classes/StandardizedInput'
 import classnames from 'classnames'
+import { Form, InputGroup, Button } from 'react-bootstrap'
+
+import { queryAddress } from 'Store/Search/actions'
+import { requestWithAuth } from 'shared/utilities/authUtils'
 import SpinnerLoader from 'shared/components/Loaders/SpinnerLoader'
 
 import './style.scss'

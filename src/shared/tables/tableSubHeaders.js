@@ -1,15 +1,11 @@
 import React from 'react'
 import BaseLink from 'shared/components/BaseLink'
-import { Col, Row } from 'react-bootstrap'
 import { boroughAbbreviationToCode } from 'shared/utilities/languageUtils'
 import lookupIcon from 'shared/images/lookup-document.svg'
-
 import { constructDOBLink } from 'shared/utilities/linkUtils'
 
-import classnames from 'classnames'
-export const getTableSubheaders = ({ constant, property, bin = null, hideGutters = false } = {}) => {
-  return getTableSubheaderLinks({ constant, property, bin })
-}
+export const getTableSubheaders = ({ constant, property, bin = null } = {}) =>
+  getTableSubheaderLinks({ constant, property, bin })
 
 export const getTableSubheaderLinks = ({ constant = '', property = {}, bin = null } = {}) => {
   switch (constant) {
