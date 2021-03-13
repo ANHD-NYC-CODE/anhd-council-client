@@ -8,6 +8,7 @@ rm -rf build/
 rm -rf build_publish/
 npm run build
 
+mkdir -p ./build_publish
 cp -r build/* build_publish
 
 cd /var/www/anhd-council-backend
