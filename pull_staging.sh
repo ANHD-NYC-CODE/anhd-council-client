@@ -5,7 +5,10 @@ npm install --production --no-optional
 npm audit fix
 
 rm -rf build/
+rm -rf build_publish/
 npm run build
+
+cp -r build/* build_publish
 
 cd /var/www/anhd-council-backend
 sh deploy_nginx.sh
