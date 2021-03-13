@@ -251,11 +251,6 @@ module.exports = function(webpackEnv) {
       // `web` extension prefixes have been added for better support
       // for React Native Web.
       extensions: paths.moduleFileExtensions.map(ext => `.${ext}`).filter(ext => useTypeScript || !ext.includes('ts')),
-      alias: {
-        // Support React Native Web
-        // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
-        'react-native': 'react-native-web',
-      },
       plugins: [
         // Adds support for installing with Plug'n'Play, leading to faster installs and adding
         // guards against forgotten dependencies and such.
@@ -450,9 +445,10 @@ module.exports = function(webpackEnv) {
       ],
     },
     plugins: [
-      isEnvProduction && new BundleAnalyzerPlugin({
-        analyzerMode: 'static',
-      }),
+      // enable when you want to do some bundle debugging/optimizing
+      // isEnvProduction && new BundleAnalyzerPlugin({
+      //   analyzerMode: 'static',
+      // }),
 
       new OfflinePlugin({
         appShell: '/index.html',
