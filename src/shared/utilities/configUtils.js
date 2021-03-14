@@ -245,7 +245,7 @@ export const newLookupRequests = ({ auth, bbl, bin, resourceModels } = {}) => {
           resourceConstant: 'HOUSING_LITIGATION',
           resourceModel: resourceModels['HOUSING_LITIGATION'],
         }),
-    typeof auth.id === 'number' &&
+    typeof auth.user.id === 'number' &&
       newPropertyRequest({
         type: 'LOOKUP_FILTER',
         bbl: bbl,
@@ -255,7 +255,7 @@ export const newLookupRequests = ({ auth, bbl, bin, resourceModels } = {}) => {
         datasetModelName: constantToModelName('FORECLOSURE'),
         isAuthenticated: true,
       }),
-    typeof auth.id === 'number' &&
+    typeof auth.user.id === 'number' &&
       newPropertyRequest({
         type: 'LOOKUP_FILTER',
         bbl: bbl,
