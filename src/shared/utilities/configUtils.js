@@ -1,3 +1,5 @@
+import get from 'lodash/get'
+
 import * as resources from 'shared/models/resources'
 import * as c from 'shared/constants'
 import DataRequest from 'shared/classes/DataRequest'
@@ -92,6 +94,8 @@ export const newPropertyRequest = ({
 }
 
 export const newLookupRequests = ({ auth, bbl, bin, resourceModels } = {}) => {
+  const id = get(auth, 'user.id', null)
+
   return [
     newPropertyRequest({
       type: 'LOOKUP_PROFILE',
@@ -245,7 +249,7 @@ export const newLookupRequests = ({ auth, bbl, bin, resourceModels } = {}) => {
           resourceConstant: 'HOUSING_LITIGATION',
           resourceModel: resourceModels['HOUSING_LITIGATION'],
         }),
-    typeof auth.user.id === 'number' &&
+    typeof id === 'number' &&
       newPropertyRequest({
         type: 'LOOKUP_FILTER',
         bbl: bbl,
@@ -255,7 +259,7 @@ export const newLookupRequests = ({ auth, bbl, bin, resourceModels } = {}) => {
         datasetModelName: constantToModelName('FORECLOSURE'),
         isAuthenticated: true,
       }),
-    typeof auth.user.id === 'number' &&
+    typeof id === 'number' &&
       newPropertyRequest({
         type: 'LOOKUP_FILTER',
         bbl: bbl,
