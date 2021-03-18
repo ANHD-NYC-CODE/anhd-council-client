@@ -12,6 +12,7 @@ const CompressionPlugin = require('compression-webpack-plugin')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 const OfflinePlugin = require('offline-plugin')
+const BrotliPlugin = require('brotli-webpack-plugin')
 
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin')
 const InlineChunkHtmlPlugin = require('react-dev-utils/InlineChunkHtmlPlugin')
@@ -455,6 +456,11 @@ module.exports = function(webpackEnv) {
       }),
 
       new CompressionPlugin(),
+
+      new BrotliPlugin({
+        asset: '[path].br[query]',
+        test: /\.js$|\.ts$|\.tsx$|\.css$|\.html$|\.png$|\.ico$|\.svg$|\.json$/,
+      }),
 
       // Generates an `index.html` file with the <script> injected.
       new HtmlWebpackPlugin(
