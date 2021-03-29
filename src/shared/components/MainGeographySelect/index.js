@@ -64,7 +64,7 @@ class MainGeographySelect extends React.Component {
         <ConfigContext.Consumer>
           {config => (
             <div className="geography-select__wrapper">
-              <div className="geography-select__row">
+              <div className="geography-select__center">
                 <Form.Control
                   required
                   className={classnames(this.props.selectClass, {
