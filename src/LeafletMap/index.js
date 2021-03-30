@@ -38,9 +38,12 @@ export default class LeafletMap extends React.PureComponent {
   }
 
   componentDidUpdate() {
-    if (this.mapRef.current) {
-      this.mapRef.current.leafletElement.invalidateSize()
-    }
+    if (!this.mapRef.current) return
+
+    this.mapRef.current.leafletElement.invalidateSize()
+
+    if (this.props.loading) return
+    this.centerMapOnGeography()
   }
 
   componentDidMount() {
@@ -90,9 +93,17 @@ export default class LeafletMap extends React.PureComponent {
 
   centerMapOnGeography() {
     if (this.mapRef.current) {
+      // type district (assembly, council, senate, etc)
       const changingOrCurrentType = this.props.changingGeographyType || this.props.currentGeographyType
+
+      // distict number
       const changingOrCurrentId = this.props.changingGeographyId || this.props.currentGeographyId
+
+      // const bounds = this.getGeographyBounds(changingOrCurrentType, changingOrCurrentId)
+      // this.mapRef.current.leafletElement.fitBounds(bounds, { padding: [-100, 0] })
+
       if (!(changingOrCurrentType && changingOrCurrentId) && changingOrCurrentType !== b.CITY_GEOGRAPHY.constant) return
+
       if (
         changingOrCurrentType !== b.BOROUGH_GEOGRAPHY.constant &&
         changingOrCurrentType !== b.CITY_GEOGRAPHY.constant
@@ -115,9 +126,13 @@ export default class LeafletMap extends React.PureComponent {
     if (type === b.BOROUGH_GEOGRAPHY.constant) return null
     if (type === b.CITY_GEOGRAPHY.constant) return null
     if (!this.allGeographiesLoaded()) return null
+
     const geographyDataset = this.props.selectGeographyData(type)
     const selectedGeography = geographyDataset.find(geography => String(geography.id) === String(id))
-    if (selectedGeography) return new L.geoJSON(selectedGeography.data.geometry).getBounds()
+
+    if (!selectedGeography) return
+
+    return new L.geoJSON(selectedGeography.data.geometry).getBounds()
   }
 
   getGeographyCenter(type, id) {
@@ -142,6 +157,7 @@ export default class LeafletMap extends React.PureComponent {
 
   allGeographiesLoaded() {
     return (
+      !this.props.loading &&
       !!this.props.communityDistricts.length &&
       !!this.props.councilDistricts.length &&
       !!this.props.stateAssemblies &&
@@ -170,15 +186,7 @@ export default class LeafletMap extends React.PureComponent {
       >
         {!this.state.overrideWarning && this.props.results.length > c.MAP_MARKER_LIMIT && (
           <MapAlertModal
-            alertMessage={
-              <div>
-                <p>
-                  More than {c.MAP_MARKER_LIMIT} results will slow down this page. Apply a Housing Type and/or one or
-                  more Datasets to narrow down results or click below to proceed. If the page freezes, refresh your
-                  browser to reset.
-                </p>
-              </div>
-            }
+            alertMessage={`More than ${c.MAP_MARKER_LIMIT} results will slow down this page. Apply a Housing Type and/or one or more Datasets to narrow down results or click below to proceed. If the page freezes, refresh your browser to reset.`}
             alertVariant="light"
             alertCta="Display Anyway"
             action={() =>
