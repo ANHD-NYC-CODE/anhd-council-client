@@ -4,7 +4,8 @@ import { connect } from 'react-redux'
 import { Navbar, Nav } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { getGeographyPath, addressResultToPath } from 'shared/utilities/routeUtils'
-import logo from 'shared/images/portallogo-2020.png'
+import portalLogo from 'shared/images/portallogo-2020.png'
+import anhdLogo from 'shared/images/anhdlogo.png'
 
 import LoginModal from 'shared/components/modals/LoginModal'
 import LoginModalFooter from 'shared/components/forms/LoginForm/LoginModalFooter'
@@ -27,10 +28,13 @@ class SubHeader extends React.Component {
         <Nav className=" layout-width-wrapper">
           <Navbar className="w-100">
             <Nav className="sub-header__brand">
-              <Navbar.Brand>
+              <Navbar.Brand className="d-flex align-items-center justify-content-center">
                 <Link to="/">
-                  <img src={logo} className="sub-header__logo" alt="Displacement Alert Portal Logo" />
+                  <img src={portalLogo} className="sub-header__logo" alt="Displacement Alert Portal Logo" />
                 </Link>
+                <a href="https://www.anhd.org">
+                  <img src={anhdLogo} className="sub-header__logo" alt="ANHD Logo" />
+                </a>
               </Navbar.Brand>
             </Nav>
           </Navbar>
