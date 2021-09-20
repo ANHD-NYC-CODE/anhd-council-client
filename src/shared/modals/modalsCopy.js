@@ -497,6 +497,31 @@ export const infoModals = {
       },
     ],
   },
+  OCA_HOUSING_COURT: {
+    title: 'Housing Court Cases',
+    body: ReactDOMServer.renderToString(
+      <div>
+        <p>
+          Housing Court Data comes from the New York State Office of Court Administration data on housing court cases.
+          The dataset includes non-payment and holdover evictions, HP (repairs), harassment, and other types of cases 
+          in residential properties and commercial properties, when the case is a tenant/landlord issue. High numbers 
+          of cases can indicate neglect, harassment, or displacement pressure by a landlord.{' '}
+        </p>
+      </div>
+    ),
+    sources: [
+      {
+        text: 'Office of Court Administration via the Housing Data Coalition',
+        url: 'https://github.com/housing-data-coalition/oca',
+      },
+    ],
+    documentationSources: [
+      {
+        text: 'https://github.com/housing-data-coalition/oca/tree/master/docs',
+        url: 'https://github.com/housing-data-coalition/oca/tree/master/docs'
+      }
+    ]
+  },
   LISPENDEN: {
     title: 'Foreclosures',
     body:

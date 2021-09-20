@@ -1613,6 +1613,45 @@ export const getTableColumns = ({
         }),
       ]
       break
+    case 'OCA_HOUSING_COURT':
+      columns = [
+        constructStandardColumn({
+          dataField: 'court',
+          text: 'Court',
+          sort: true,
+        }),
+        constructStandardColumn({
+          dataField: 'propertytype',
+          text: 'Property Type',
+          sort: true,
+        }),
+        constructStandardColumn({
+          dataField: 'fileddate',
+          text: 'Filed Date',
+          sort: true,
+        }),
+        constructStandardColumn({
+          dataField: 'classification',
+          text: 'Classification',
+          sort: true,
+        }),
+        constructStandardColumn({
+          dataField: 'status',
+          text: 'Status',
+          sort: true,
+        }),
+        constructStandardColumn({
+          dataField: 'disposeddate',
+          text: 'Disposed Date',
+          sort: true,
+        }),
+        constructStandardColumn({
+          dataField: 'disposedreason',
+          text: 'Disposed Reason',
+          sort: true,
+        }),
+      ]
+      break
     default:
       columns = [{ dataField: 'id', text: 'ID' }]
   }
