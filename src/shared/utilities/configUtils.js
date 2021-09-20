@@ -124,6 +124,14 @@ export const newLookupRequests = ({ auth, bbl, bin, resourceModels } = {}) => {
       type: 'LOOKUP_FILTER',
       bbl: bbl,
       level: 'PROPERTY',
+      resourceConstant: 'OCA_HOUSING_COURT',
+      resourceModel: resourceModels['OCA_HOUSING_COURT'],
+      isAuthenticated: true
+    }),
+    newPropertyRequest({
+      type: 'LOOKUP_FILTER',
+      bbl: bbl,
+      level: 'PROPERTY',
       resourceConstant: 'EVICTION',
       resourceModel: resourceModels['EVICTION'],
     }),
@@ -249,7 +257,6 @@ export const newLookupRequests = ({ auth, bbl, bin, resourceModels } = {}) => {
           resourceConstant: 'HOUSING_LITIGATION',
           resourceModel: resourceModels['HOUSING_LITIGATION'],
         }),
-    typeof id === 'number' &&
       newPropertyRequest({
         type: 'LOOKUP_FILTER',
         bbl: bbl,
@@ -259,7 +266,6 @@ export const newLookupRequests = ({ auth, bbl, bin, resourceModels } = {}) => {
         datasetModelName: constantToModelName('FORECLOSURE'),
         isAuthenticated: true,
       }),
-    typeof id === 'number' &&
       newPropertyRequest({
         type: 'LOOKUP_FILTER',
         bbl: bbl,
@@ -362,7 +368,7 @@ export const newMapResultFilters = ({ resourceModels } = {}) => {
     generateResultFilter({
       resourceModel: resourceModels['FORECLOSURE'],
       value: 1,
-    }),
+    })
   ]
 }
 
