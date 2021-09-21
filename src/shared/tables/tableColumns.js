@@ -73,6 +73,8 @@ export const getKeyField = constant => {
       return 'key'
     case 'PSFORECLOSURE':
       return 'key'
+    case 'OCA_HOUSING_COURT':
+      return 'bbl'
     default:
       return 'id'
   }
@@ -1632,7 +1634,7 @@ export const getTableColumns = ({
         }),
         constructStandardColumn({
           dataField: 'classification',
-          text: 'Classification',
+          text: 'Case Type',
           sort: true,
         }),
         constructStandardColumn({
