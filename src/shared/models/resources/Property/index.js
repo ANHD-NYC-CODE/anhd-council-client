@@ -549,7 +549,7 @@ const Property = () => {
       TAX_LIEN: 'taxliens',
       CONH_RECORD: 'conhrecords',
       AEP_BUILDING: 'aepbuildings',
-      OCA_HOUSING_COURT: 'oca-housing-court'
+      OCA_HOUSING_COURT: 'ocahousingcourt'
     },
   }
 }
