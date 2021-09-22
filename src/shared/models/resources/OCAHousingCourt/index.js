@@ -26,13 +26,13 @@ const HousingCourtCase = () => ({
           valuePrefix: 'Status',
           paramMapField: 'status',
           paramMapValue: 'status',
-          paramMapType: 'SINGLE-TEXT',
+          paramMapType: 'SINGLE_TEXT',
           paramMapComparison: '',
           paramSetLabel: 'Status',
           inputClass: '',
           defaultOptions: comparisonOptions({
             name: 'status',
-            comparisonValues: ['Disposed', 'Post Disposition'],
+            comparisonValues: ['Disposed', 'Post\\sDisposition'],
             labels: ['Disposed', 'Post Disposition'],
           }),
         })
@@ -47,13 +47,13 @@ const HousingCourtCase = () => ({
           valuePrefix: 'Case Type',
           paramMapField: 'classification',
           paramMapValue: 'classification',
-          paramMapType: 'SINGLE-TEXT',
+          paramMapType: 'SINGLE_TEXT',
           paramMapComparison: '',
           paramSetLabel: 'Case Type',
           inputClass: '',
           defaultOptions: comparisonOptions({
             name: 'classification',
-            comparisonValues: ['Non-Payment', 'HP', 'Holdover', 'Illegal Lockout'],
+            comparisonValues: ['Non-Payment', 'HP', 'Holdover',  'Illegal\\sLockout'],
             labels: ['Non-Payment', 'HP', 'Holdover', 'Illegal Lockout'],
           }),
         })
