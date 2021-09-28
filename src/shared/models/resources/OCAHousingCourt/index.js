@@ -32,7 +32,7 @@ const HousingCourtCase = () => ({
           inputClass: '',
           defaultOptions: comparisonOptions({
             name: 'status',
-            comparisonValues: ['Disposed', 'Post\\sDisposition'],
+            comparisonValues: ['Disposed', 'PostDisposition'],
             labels: ['Disposed', 'Post Disposition'],
           }),
         })
@@ -53,7 +53,7 @@ const HousingCourtCase = () => ({
           inputClass: '',
           defaultOptions: comparisonOptions({
             name: 'classification',
-            comparisonValues: ['Non-Payment', 'HP', 'Holdover',  'Illegal\\sLockout'],
+            comparisonValues: ['Non-Payment', 'HP', 'Holdover',  'IllegalLockout'],
             labels: ['Non-Payment', 'HP', 'Holdover', 'Illegal Lockout'],
           }),
         })
