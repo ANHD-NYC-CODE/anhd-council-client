@@ -20,6 +20,7 @@ import LayoutContext from 'Layout/LayoutContext'
 import './style.scss'
 
 const LookupProfileSummary = props => {
+  console.log(props.propertyResult);
   if (props.loading) {
     return <InnerLoader />
   } else if (props.error) {
