@@ -11,14 +11,15 @@ const LookupTabs = props => {
   const [isOpen, toggleOpen] = useState(true)
 
   const getTabLabel = (error, resourceModel, count1 = '...', count2 = 0) => {
-   
+    
     switch (resourceModel.resourceConstant) {
       case 'ACRIS_REAL_MASTER':
         return `Sales (${count1}) and Financing`
       case 'HPD_COMPLAINT':
         return `HPD Complaints (${count1}) and Problems (${count2})`
       case 'OCA_HOUSING_COURT':
-        return error && error.status === 401 ? `${resourceModel.label}` : `${resourceModel.label} (${count1})`
+        return error && (error.status === 401 || error.status === 403) ? 
+          `${resourceModel.label}` : `${resourceModel.label} (${count1})`;
       case 'FORECLOSURE':
         return error && error.status === 401 ? `${resourceModel.label}` : `${resourceModel.label} (${count1})`
       case 'PSFORECLOSURE':
@@ -39,7 +40,16 @@ const LookupTabs = props => {
         {props.lookupRequests.map(request => {
           const results = props.requests[request.requestConstant] || []
           const loading = props.loadingState[request.requestConstant]
-          const error = props.errorState[request.requestConstant]
+          
+          let error = props.errorState[request.requestConstant];
+          if (request.resourceModel.resourceConstant === 'OCA_HOUSING_COURT' &&
+              props.propertyResult.unitsres < 11 && !error) 
+          {
+            error = {
+              status: 403
+            };
+          }
+          
           const getCount1 = (request, results) => {
             if (request.resourceModel.tableRecordsCountFunction) {
               return request.resourceModel.tableRecordsCountFunction(results)
@@ -92,6 +102,7 @@ LookupTabs.propTypes = {
   requests: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   lookupRequests: PropTypes.array,
   switchTable: PropTypes.func,
+  propertyResult: PropTypes.object,
 }
 LookupTabs.defaultProps = {}
 

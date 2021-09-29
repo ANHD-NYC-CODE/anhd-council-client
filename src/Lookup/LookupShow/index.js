@@ -139,6 +139,7 @@ class LookupShow extends React.PureComponent {
               requests={this.props.requests}
               lookupRequests={this.props.lookupRequests}
               switchTable={this.switchTable}
+              propertyResult={this.props.propertyResult}
             />
             <div className="lookup-show__tables">
               {this.props.lookupRequests.map(request => {
