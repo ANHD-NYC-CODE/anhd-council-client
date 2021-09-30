@@ -194,5 +194,9 @@ export default class Filter {
     if (!loggedIn && (this.id === 'FORECLOSURE' || this.id === 'PSFORECLOSURE')) {
       this.addError(new ParamError({ message: 'Please login to search foreclosures.' }))
     }
+
+    if (!loggedIn && (this.id === 'OCA_HOUSING_COURT' )) {
+      this.addError(new ParamError({ message: 'Please login to search housing court cases.' }))
+    }
   }
 }
