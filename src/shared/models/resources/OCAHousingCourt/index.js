@@ -32,8 +32,8 @@ const HousingCourtCase = () => ({
           inputClass: '',
           defaultOptions: comparisonOptions({
             name: 'status',
-            comparisonValues: ['Disposed', 'PostDisposition'],
-            labels: ['Disposed', 'Post Disposition'],
+            comparisonValues: ['Disposed', 'Post-Disposition', 'Active', 'Active---Pending-Further-Review'],
+            labels: ['Disposed', 'Post Disposition', 'Active - Pending Further Review'],
           }),
         })
       }
@@ -53,8 +53,28 @@ const HousingCourtCase = () => ({
           inputClass: '',
           defaultOptions: comparisonOptions({
             name: 'classification',
-            comparisonValues: ['Non-Payment', 'HP', 'Holdover',  'IllegalLockout'],
-            labels: ['Non-Payment', 'HP', 'Holdover', 'Illegal Lockout'],
+            comparisonValues: [
+              'HP',
+              'Non-Payment',
+              'Holdover',
+              'Illegal-Lockout',
+              'Harassment',
+              'Illegal-Activity',
+              'Article-7A',
+              'HP-with-Harassment',
+              'Breach-of-Warrant-of-Habitability'
+            ],
+            labels: [
+              'HP',
+              'Non-Payment',
+              'Holdover',
+              'Illegal Lockout',
+              'Harassment',
+              'Illegal Activity',
+              'Article 7A',
+              'HP with Harassment',
+              'Breach of Warrant of Habitability'
+            ]
           }),
         })
       }
