@@ -32,8 +32,24 @@ const HousingCourtCase = () => ({
           inputClass: '',
           defaultOptions: comparisonOptions({
             name: 'status',
-            comparisonValues: ['Disposed', 'Post-Disposition', 'Active', 'Active---Pending-Further-Review'],
-            labels: ['Disposed', 'Post Disposition', 'Active - Pending Further Review'],
+            comparisonValues: [
+              'Disposed', 
+              'Post-Disposition', 
+              'Active', 
+              'Active---Pending-Further-Review', 
+              'Active---Restored', 
+              'Active---Appeal Pending',  
+              'Post-Disposition---Appeal-Pending'
+            ],
+            labels: [
+              'Disposed', 
+              'Post Disposition', 
+              'Active', 
+              'Active - Pending Further Review', 
+              'Active - Restored', 
+              'Active- Appeal Pending', 
+              'Post Disposition - Appeal Pending'
+            ]
           }),
         })
       }
@@ -72,7 +88,7 @@ const HousingCourtCase = () => ({
               'Harassment',
               'Illegal Activity',
               'Article 7A',
-              'HP with Harassment',
+              'HP with harassment',
               'Breach of Warrant of Habitability'
             ]
           }),
