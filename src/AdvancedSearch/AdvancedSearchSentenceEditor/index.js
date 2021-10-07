@@ -11,6 +11,19 @@ import './style.scss'
 
 const AdvancedSearchSentenceEditor = props => {
   const numberOfUnits = props.results.reduce((total, result) => parseInt(total) + parseInt(result['unitsres'] || 0), 0)
+  const searchedFilters = [...props.advancedSearch.conditions[0].filters];
+
+  const getFilterLabel = (filter) => {
+    return filter.resourceModel.label
+  }
+
+  const getFilterColumnValue = (filter) => {
+    if (!props.results.length) return 0;
+    const columnKey = Object.keys(props.results[0]).find(column => 
+      column.startsWith(filter.resourceModel.urlPath)
+    );
+    return props.results.reduce((total, result) => parseInt(total) + parseInt(result[columnKey] || 0), 0);
+  }
 
   const constructSentenceEditor = () => {
     return constructAdvancedSearchSentence(props.advancedSearch, props.loading)
@@ -39,6 +52,17 @@ const AdvancedSearchSentenceEditor = props => {
             {props.loading ? null : formatNumber(numberOfUnits)}
           </span>
         </div>
+        {
+          searchedFilters.map(filter => 
+            <div className="advanced-search-sentence-editor__group"
+              key={filter.resourceModel.resourceConstant}>
+              <span className="advanced-search-sentence-editor__label">{getFilterLabel(filter)}:</span>{' '}
+              <span className="advanced-search-sentence-editor__value">
+                {props.loading ? null : formatNumber(getFilterColumnValue(filter))}
+              </span>
+            </div>
+          )
+        }
         <span className="advanced-search-sentence-editor__buttons">
           {(props.requestCalledAndNotLoading || props.loadingButDisplayingResults) && (
             <Button className="advanced-search__toggle-button" variant="dark" size="sm" onClick={props.toggleForm}>
