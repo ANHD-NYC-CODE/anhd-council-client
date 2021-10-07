@@ -1,5 +1,4 @@
 import { ConnectedRouter } from 'connected-react-router'
-import { faMapSigns } from '@fortawesome/free-solid-svg-icons'
 import { Route, Switch } from 'react-router'
 import React from 'react'
 import ReactGA from 'react-ga'
@@ -9,11 +8,11 @@ import * as b from 'shared/constants/geographies'
 import AdvancedSearch from 'AdvancedSearch'
 import ConfigContext from 'Config/ConfigContext'
 import DistrictDashboard from 'DistrictDashboard'
+import MyDashboard from 'MyDashboard'
 import Layout from 'Layout'
 import Lookup from 'Lookup'
 import Main from 'Main'
 import ModalContext from 'Modal/ModalContext'
-import PageError from 'shared/components/PageError'
 import UserContext from 'Auth/UserContext'
 
 class Router extends React.Component {
@@ -73,6 +72,7 @@ class Router extends React.Component {
                     )
                   })}
                   <Route exact path="/search" render={() => <AdvancedSearch config={config} />} />
+                  <Route exact path="/me" render={() => <MyDashboard config={config}/>} />
                   <Route
                     render={() => (
                       <PageError
