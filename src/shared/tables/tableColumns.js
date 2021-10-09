@@ -27,6 +27,8 @@ import {
   lispendenCommentFormatter,
   dobViolationStatusFormatter,
   capitalizeFormatter,
+  ocaHousingCourtClassificationFormatter,
+  ocaHousingCourtStatusFormatter
 } from 'shared/utilities/tableUtils'
 
 import { setAppState } from 'Store/AppState/actions'
@@ -1634,11 +1636,13 @@ export const getTableColumns = ({
         }),
         constructStandardColumn({
           dataField: 'classification',
+          formatter: ocaHousingCourtClassificationFormatter,
           text: 'Case Type',
           sort: true,
         }),
         constructStandardColumn({
           dataField: 'status',
+          formatter: ocaHousingCourtStatusFormatter,
           text: 'Status',
           sort: true,
         }),
