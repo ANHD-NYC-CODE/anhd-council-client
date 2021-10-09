@@ -38,7 +38,7 @@ const HousingCourtCase = () => ({
               'Active', 
               'Active---Pending-Further-Review', 
               'Active---Restored', 
-              'Active---Appeal Pending',  
+              'Active---Appeal-Pending',  
               'Post-Disposition---Appeal-Pending'
             ],
             labels: [
