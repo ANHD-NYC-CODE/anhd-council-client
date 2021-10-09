@@ -38,17 +38,9 @@ const LookupTabs = props => {
       </div>
       <div className={classnames('lookup-tabs__tabs', { open: isOpen })}>
         {props.lookupRequests.map(request => {
-          const results = props.requests[request.requestConstant] || []
-          const loading = props.loadingState[request.requestConstant]
-          
-          let error = props.errorState[request.requestConstant];
-          if (request.resourceModel.resourceConstant === 'OCA_HOUSING_COURT' &&
-              props.propertyResult.unitsres < 11 && !error) 
-          {
-            error = {
-              status: 403
-            };
-          }
+          const results = props.requests[request.requestConstant] || [];
+          const loading = props.loadingState[request.requestConstant];
+          const error = props.errorState[request.requestConstant];
           
           const getCount1 = (request, results) => {
             if (request.resourceModel.tableRecordsCountFunction) {
