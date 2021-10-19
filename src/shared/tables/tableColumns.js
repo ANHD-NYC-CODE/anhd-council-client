@@ -524,6 +524,21 @@ export const getTableColumns = ({
           formatter: annotatedColumnFormatter,
           csvFormatter: annotatedColumnFormatter,
         }),
+        constructPropertyColumn({
+          columnEvent: linkToColumnEvent,
+          dataField: getAnnotatedDataField({
+            annotationKey: getAnnotationKey('ocahousingcourts', annotationStart, advancedSearchDatasets),
+            rowExample,
+          }),
+          text: getAnnotatedLabel({
+            annotationLabel: 'OCA Housing Court Cases',
+            rowExample,
+            annotationKey: getAnnotationKey('ocahousingcourts', annotationStart, advancedSearchDatasets),
+          }),
+          sort: true,
+          formatter: annotatedColumnFormatter,
+          csvFormatter: annotatedColumnFormatter,
+        })
       ].filter(c => c)
       break
     case 'HPD_REGISTRATION':
