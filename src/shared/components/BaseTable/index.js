@@ -244,6 +244,8 @@ class BaseTable extends React.Component {
               columns={columns}
               exportCSV={{
                 fileName: this.constructCsvFilename(this.baseTableConfig.selectedFilters),
+                exportAll: false,
+                onlyExportFiltered: true
               }}
               bootstrap4={true}
             >

@@ -95,7 +95,7 @@ export const postUserRequest = (userRequestData, hideModal) => (dispatch, getSta
     getState,
     requestId,
     '/user-requests/',
-    JSON.stringify(userRequestData), // Body
+    userRequestData, // Body
     { format: null },
     access_token,
     'POST_USER_REQUEST',

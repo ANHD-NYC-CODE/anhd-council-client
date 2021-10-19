@@ -74,10 +74,6 @@
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-
-    > div:first-child {
-      margin-right: 16px;
-    }
   }
 
   &__buttons {
@@ -92,7 +88,8 @@
 
   &__group {
     display: flex;
-
+    margin-right: 16px;
+    
     > :first-child {
       margin-right: 5px;
     }
