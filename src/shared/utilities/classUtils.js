@@ -58,7 +58,7 @@ export const getApiMap = resourceConstant => {
     case 'FORECLOSURE':
       return new ApiMap({ constant: 'FORECLOSURE' })
     case 'OCA_HOUSING_COURT':
-      return new ApiMap({ constant: 'OCA_HOUSING_COURT', queryName: 'oca-housing-court' })
+      return new ApiMap({ constant: 'OCA_HOUSING_COURT', queryName: 'ocahousingcourts' })
     case 'PSFORECLOSURE':
       return new ApiMap({ constant: 'PSFORECLOSURE', queryName: 'foreclosure-auctions' })
     case 'PROPERTY_SALE_BY_AMOUNT':

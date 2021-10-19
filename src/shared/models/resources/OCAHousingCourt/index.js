@@ -5,7 +5,7 @@ import TextSelectField from 'AdvancedSearch/FilterComponent/Field/TextSelectFiel
 const HousingCourtCase = () => ({
   summaryBackgroundColorClass: 'summary-blue',
   resourceConstant: 'OCA_HOUSING_COURT',
-  urlPath: 'oca-housing-court',
+  urlPath: 'ocahousingcourts',
   label: 'Housing Court Cases',
   sentenceNoun: 'housing court cases',
   ownResourceFilters: {
