@@ -15,3 +15,4 @@ export { default as ACRIS_REAL_MASTER } from 'shared/models/resources/AcrisRealM
 export { default as TAX_LIEN } from 'shared/models/resources/TaxLien'
 export { default as CONH_RECORD } from 'shared/models/resources/ConhRecord'
 export { default as AEP_BUILDING } from 'shared/models/resources/AepBuilding'
+export { default as OCA_HOUSING_COURT } from 'shared/models/resources/OCAHousingCourt'

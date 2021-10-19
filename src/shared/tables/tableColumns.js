@@ -27,6 +27,8 @@ import {
   lispendenCommentFormatter,
   dobViolationStatusFormatter,
   capitalizeFormatter,
+  ocaHousingCourtClassificationFormatter,
+  ocaHousingCourtStatusFormatter
 } from 'shared/utilities/tableUtils'
 
 import { setAppState } from 'Store/AppState/actions'
@@ -73,6 +75,8 @@ export const getKeyField = constant => {
       return 'key'
     case 'PSFORECLOSURE':
       return 'key'
+    case 'OCA_HOUSING_COURT':
+      return 'bbl'
     default:
       return 'id'
   }
@@ -520,6 +524,21 @@ export const getTableColumns = ({
           formatter: annotatedColumnFormatter,
           csvFormatter: annotatedColumnFormatter,
         }),
+        constructPropertyColumn({
+          columnEvent: linkToColumnEvent,
+          dataField: getAnnotatedDataField({
+            annotationKey: getAnnotationKey('ocahousingcourts', annotationStart, advancedSearchDatasets),
+            rowExample,
+          }),
+          text: getAnnotatedLabel({
+            annotationLabel: 'OCA Housing Court Cases',
+            rowExample,
+            annotationKey: getAnnotationKey('ocahousingcourts', annotationStart, advancedSearchDatasets),
+          }),
+          sort: true,
+          formatter: annotatedColumnFormatter,
+          csvFormatter: annotatedColumnFormatter,
+        })
       ].filter(c => c)
       break
     case 'HPD_REGISTRATION':
@@ -1610,6 +1629,47 @@ export const getTableColumns = ({
           text: 'Auction Location',
           sort: true,
           classes: 'expandable-cell table-column--description',
+        }),
+      ]
+      break
+    case 'OCA_HOUSING_COURT':
+      columns = [
+        constructStandardColumn({
+          dataField: 'court',
+          text: 'Court',
+          sort: true,
+        }),
+        constructStandardColumn({
+          dataField: 'propertytype',
+          text: 'Property Type',
+          sort: true,
+        }),
+        constructStandardColumn({
+          dataField: 'fileddate',
+          text: 'Filed Date',
+          sort: true,
+        }),
+        constructStandardColumn({
+          dataField: 'classification',
+          formatter: ocaHousingCourtClassificationFormatter,
+          text: 'Case Type',
+          sort: true,
+        }),
+        constructStandardColumn({
+          dataField: 'status',
+          formatter: ocaHousingCourtStatusFormatter,
+          text: 'Status',
+          sort: true,
+        }),
+        constructStandardColumn({
+          dataField: 'disposeddate',
+          text: 'Disposed Date',
+          sort: true,
+        }),
+        constructStandardColumn({
+          dataField: 'disposedreason',
+          text: 'Disposed Reason',
+          sort: true,
         }),
       ]
       break

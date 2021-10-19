@@ -7,6 +7,9 @@ import { constructAdvancedSearchSentence } from 'shared/utilities/sentenceUtils'
 import { Button } from 'react-bootstrap'
 import { clearAdvancedSearchRequest } from 'Store/AppState/actions'
 
+import ConfigContext from 'Config/ConfigContext'
+import ModalContext from 'Modal/ModalContext'
+
 import './style.scss'
 
 const AdvancedSearchSentenceEditor = props => {
@@ -15,6 +18,10 @@ const AdvancedSearchSentenceEditor = props => {
 
   const getFilterLabel = (filter) => {
     return filter.resourceModel.label
+  }
+
+  const getFilterResourceConstant = (filter) => {
+    return filter.resourceModel.resourceConstant;
   }
 
   const getFilterColumnValue = (filter) => {
@@ -39,6 +46,56 @@ const AdvancedSearchSentenceEditor = props => {
           props.filterCondition
         )}
       </div>
+      {
+        searchedFilters.some(filter => getFilterResourceConstant(filter) === "OCA_HOUSING_COURT") &&
+        <div className="advanced-search-sentence-editor__disclaimer-section">
+          <ConfigContext.Consumer>
+            {config => {
+              return (
+                <ModalContext.Consumer>
+                  {modal => {
+                    return (
+                      <button
+                        className="error-cta text-link"
+                        onClick={e => {
+                          e.preventDefault()
+                          modal.setModal({
+                            modalProps: {
+                              title: config.infoModals["OCA_DATA_UNAVAILABLE"].title,
+                              body: config.infoModals["OCA_DATA_UNAVAILABLE"].body,
+                              sources: config.infoModals["OCA_DATA_UNAVAILABLE"].sources,
+                              documentationBody: config.infoModals["OCA_DATA_UNAVAILABLE"].documentationBody,
+                              documentationSources: config.infoModals["OCA_DATA_UNAVAILABLE"].documentationSources,
+                              size: 'lg',
+                            },
+                          })
+                        }}
+                        onKeyDown={e =>
+                          spaceEnterKeyDownHandler(e, e => {
+                            e.preventDefault()
+                            modal.setModal({
+                              modalProps: {
+                                title: config.infoModals["OCA_DATA_UNAVAILABLE"].title,
+                                body: config.infoModals["OCA_DATA_UNAVAILABLE"].body,
+                                sources: config.infoModals["OCA_DATA_UNAVAILABLE"].sources,
+                                documentationBody: config.infoModals["OCA_DATA_UNAVAILABLE"].documentationBody,
+                                documentationSources: config.infoModals["OCA_DATA_UNAVAILABLE"].documentationSources,
+                                size: 'lg',
+                              },
+                            })
+                          })
+                        }
+                      >
+                        Housing court case data not available for properties with fewer than 11 residential units. See why.
+                      </button>
+                    )
+                  }}
+                </ModalContext.Consumer>
+              )
+            }}
+            </ConfigContext.Consumer>
+        </div>
+      }
       <div className="advanced-search-sentence-editor__inner-wrapper">
         <div className="advanced-search-sentence-editor__group">
           <span className="advanced-search-sentence-editor__label">Properties:</span>{' '}
