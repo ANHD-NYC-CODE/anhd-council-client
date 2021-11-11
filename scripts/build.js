@@ -8,7 +8,7 @@ process.env.NODE_ENV = 'production'
 const fs = require('fs-extra')
 const log = require('loglevel')
 
-const sitePaths = ['/', '/map', '/lookup', '/search']
+const sitePaths = ['/', '/district-dashboard', '/lookup', '/search']
 // const Sitemap = require('react-router-sitemap').default
 const hostname = 'https://portal.displacementalert.org'
 
