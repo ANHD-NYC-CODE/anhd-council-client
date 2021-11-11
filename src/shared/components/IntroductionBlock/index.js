@@ -19,7 +19,7 @@ const IntroductionBlock = () => (
       possible.
     </p>
     <p>
-      The <BaseLink href="/map">District Dashboard</BaseLink> allows you to apply displacement threat indicators
+      The <BaseLink href="/district-dashboard">District Dashboard</BaseLink> allows you to apply displacement threat indicators
       across districts or zip codes to see a broader snapshot of threats by neighborhood, and produce maps and lists
       of buildings that might not be on your radar for outreach and organizing.
     </p>

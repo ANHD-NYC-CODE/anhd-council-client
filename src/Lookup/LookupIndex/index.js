@@ -43,7 +43,7 @@ class LookupIndex extends React.Component {
             </div>
             <p className="text-black text-center my-5">
               You can also{' '}
-              <BaseLink className="text-link" href="/map">
+              <BaseLink className="text-link" href="/district-dashboard">
                 view data about a district or zip code
               </BaseLink>
               {' or '}
