@@ -7,6 +7,7 @@ import { getRequestType } from 'Store/AppState/selectors'
 
 import LookupShow from 'Lookup/LookupShow'
 import InnerLoader from 'shared/components/Loaders/InnerLoader'
+import { propTypes } from 'react-bootstrap/esm/Image'
 
 class LookupRequestsWrapper extends React.Component {
   constructor(props) {
@@ -49,6 +50,8 @@ LookupRequestsWrapper.propTypes = {
   dispatch: PropTypes.func,
   loadingState: PropTypes.object,
   propertyResult: PropTypes.object,
+  loggedIn: PropTypes.bool,
+  isBookmarked: PropTypes.bool
 }
 
 export default LookupRequestsWrapper

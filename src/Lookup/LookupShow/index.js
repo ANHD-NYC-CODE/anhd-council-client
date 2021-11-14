@@ -16,6 +16,7 @@ import LookupTable from 'Lookup/LookupTable'
 import BuildingSelect from 'Lookup/BuildingSelect'
 import LookupLinks from 'Lookup/LookupLinks'
 import LookupSidebar from 'Lookup/LookupSidebar'
+import BookmarkButton from 'shared/components/buttons/BookmarkButton'
 
 import './style.scss'
 
@@ -26,9 +27,18 @@ class LookupShow extends React.PureComponent {
     if (this.props.propertyError && this.props.propertyError.status === 404) {
       this.props.trigger404Error(`Property with bbl: ${this.props.bbl} not found.`)
     }
+    
+    this.state = {
+      bookmarked: this.props.isBookmarked
+    }
 
     this.switchTable = this.switchTable.bind(this)
     this.handleClearLookup = this.handleClearLookup.bind(this)
+    this.bookmarkClicked = this.bookmarkClicked.bind(this)
+  }
+
+  bookmarkClicked() {
+    this.setState({bookmarked: !this.state.bookmarked})
   }
 
   componentDidMount() {
@@ -107,6 +117,16 @@ class LookupShow extends React.PureComponent {
             <div className="lookup-show__row-wrapper">
               <div className="lookup-show__top-row">
                 <LookupAddressDisplay handleClear={this.handleClearLookup} profile={this.props.propertyResult} />
+                { this.props.loggedIn && (
+                  <div className="lookup-show__bookmark-section">
+                    <BookmarkButton 
+                      active={this.state.bookmarked} 
+                      activeText="You have bookmarked this property"
+                      text="Bookmark this property"
+                      onBookmark={this.bookmarkClicked}
+                    />
+                  </div>
+                )}
                 {this.props.appState.linkLookupBackToDashboard && (
                   <BaseLink
                     className="lookup-show__back-to-dashboard"
@@ -120,6 +140,7 @@ class LookupShow extends React.PureComponent {
                     </Button>
                   </BaseLink>
                 )}
+                
               </div>
               <div className="lookup-show__building-row">
                 <BuildingSelect
@@ -186,6 +207,8 @@ LookupShow.propTypes = {
   changeLookup: PropTypes.func,
   propertyResult: PropTypes.object,
   profileRequest: PropTypes.object,
+  loggedIn: PropTypes.bool,
+  isBookmarked: PropTypes.bool
 }
 
 export default LookupShow
