@@ -12,6 +12,7 @@ import Helmet from 'react-helmet'
 import LookupIndex from 'Lookup/LookupIndex'
 import LookupRequestsWrapper from 'Lookup/LookupRequestsWrapper'
 import InnerLoader from 'shared/components/Loaders/InnerLoader'
+
 class Lookup extends React.Component {
   constructor(props) {
     super(props)
@@ -20,11 +21,17 @@ class Lookup extends React.Component {
     this.syncLookup = this.syncLookup.bind(this)
     this.needsLookupSync = this.needsLookupSync.bind(this)
     this.getPathMatch = this.getPathMatch.bind(this)
+
+    const match = this.getPathMatch();
+    
     this.state = {
       error404: false,
       error404Message: 'Sorry, an error has occured. Page not found!',
+      loggedIn: this.props.loggedIn,
+      isBookmarked: !!match.params.bbl && !!this.props.userBookmarks[match.params.bbl]
     }
 
+    console.log(this.state.isBookmarked)
     this.syncLookup(props)
   }
 
@@ -106,6 +113,8 @@ class Lookup extends React.Component {
             propertyError={this.props.propertyError}
             trigger404Error={this.trigger404Error}
             requests={this.props.requests}
+            loggedIn={this.props.loggedIn}
+            isBookmarked={this.state.isBookmarked}
           />
         ) : (
           <LookupIndex appState={this.props.appState} />
@@ -125,14 +134,19 @@ Lookup.propTypes = {
   dispatch: PropTypes.func,
 }
 
-const mapStateToProps = state => ({
-  appState: state.appState,
-  error: state.error,
-  loading: state.loading,
-  propertyResult: state.requests[(getRequestType(state.appState.requests, 'LOOKUP_PROFILE')[0] || {}).requestConstant],
-  propertyError: state.error[(getRequestType(state.appState.requests, 'LOOKUP_PROFILE')[0] || {}).requestConstant],
-  router: state.router,
-  requests: state.requests,
-})
+const mapStateToProps = state => {
+  const loggedIn = !!state.auth.user;
+  return {
+    appState: state.appState,
+    error: state.error,
+    loading: state.loading,
+    propertyResult: state.requests[(getRequestType(state.appState.requests, 'LOOKUP_PROFILE')[0] || {}).requestConstant],
+    propertyError: state.error[(getRequestType(state.appState.requests, 'LOOKUP_PROFILE')[0] || {}).requestConstant],
+    router: state.router,
+    requests: state.requests,
+    userBookmarks: loggedIn ? state.myDashboard.userBookmarks : {},
+    loggedIn
+  }
+}
 
 export default connect(mapStateToProps)(Lookup)
