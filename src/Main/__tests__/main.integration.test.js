@@ -33,7 +33,7 @@ describe('Landing page', () => {
     expect(wrapper.find('SubHeader').text()).toMatch(/HomeProperty LookupDistrict DashboardCustom Search/)
     expect(wrapper.find('a[data-test-id="subheader__home-link"]').props().href).toEqual('/')
     expect(wrapper.find('a[data-test-id="subheader__pl-link"]').props().href).toEqual('/lookup')
-    expect(wrapper.find('a[data-test-id="subheader__dd-link"]').props().href).toEqual('/map')
+    expect(wrapper.find('a[data-test-id="subheader__dd-link"]').props().href).toEqual('/district-dashboard')
     expect(wrapper.find('a[data-test-id="subheader__search-link"]').props().href).toEqual('/search')
   })
 

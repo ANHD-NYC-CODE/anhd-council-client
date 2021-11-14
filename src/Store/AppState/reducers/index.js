@@ -73,6 +73,9 @@ export const appStateReducer = (state = Object.freeze(initialState), action = { 
     case c.SET_ADVANCED_SEARCH_REQUEST: {
       return {
         ...state,
+        customSearchGeographyType: action.geographyType,
+        customSearchGeographyId: action.geographyId,
+        advancedSearch: action.advancedSearch,
         requests: [...state.requests, action.advancedSearchRequest],
       }
     }

@@ -1,6 +1,6 @@
 import { boroCodeToName } from 'shared/utilities/languageUtils'
 import * as b from 'shared/constants/geographies'
-
+import { convertConditionMappingToQ } from 'AdvancedSearch/utilities/advancedSearchUtils'
 export const resourceRouteChanged = (oldProps, newProps) => {
   return oldProps.id !== newProps.id
 }
@@ -33,6 +33,17 @@ export const getGeographyPath = constant => {
   if (!geographyObject) return ''
   return `${geographyObject.frontEndPath}`
 }
+
+export const getCustomSearchPath = (advancedSearch, geographyType, geographyId) => {
+  let q = convertConditionMappingToQ(advancedSearch.conditions);
+  const conditionQuery = q ? `&q=${q}` : "";
+  const propertyParams = advancedSearch.propertyFilter.paramMaps.map(param => 
+    `${param.field}${param.comparison === "" ? "" : "__" + param.comparison}=${param.value}`  
+  ).join("&")
+  const geographyTypeKey = Object.keys(b).find(gKey => b[gKey].constant === geographyType);
+  return `/${b[geographyTypeKey].frontEndPath}/${geographyId}?${propertyParams}${conditionQuery}`;
+}
+
 
 export const addressResultToPath = ({ bbl, bin } = {}) => {
   if (bbl && bin) {
