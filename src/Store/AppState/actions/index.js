@@ -34,9 +34,12 @@ export const handleSetPropertyBuildingLookupRequests = (bbl, bin, requests) => (
   requests,
 })
 
-export const handleSetAdvancedSearchRequest = advancedSearchRequest => ({
+export const handleSetAdvancedSearchRequest = (advancedSearchRequest, advancedSearch, geographyType, geographyId) => ({
   type: c.SET_ADVANCED_SEARCH_REQUEST,
   advancedSearchRequest,
+  advancedSearch,
+  geographyType,
+  geographyId
 })
 
 export const handleSetWowPropertyData = data => ({
@@ -62,9 +65,9 @@ export const setGeographyAndRequestsAndRedirect = ({
   if (redirect) {
     const path = getGeographyPath(geographyType)
     if (replaceHistory) {
-      dispatch(replace(`/${path}/${geographyId}`))
+      dispatch(replace(`/district-dashboard/${path}/${geographyId}`))
     } else {
-      dispatch(push(`/${path}/${geographyId}`))
+      dispatch(push(`/district-dashboard/${path}/${geographyId}`))
     }
   }
 }
@@ -91,10 +94,10 @@ export const setLookupAndRequestsAndRedirect = ({ bbl, bin, replaceHistory = fal
   }
 }
 
-export const setAdvancedSearchRequest = ({ advancedSearchRequest } = {}) => dispatch => {
+export const setAdvancedSearchRequest = ({ advancedSearchRequest, geographyType, geographyId, advancedSearch } = {}) => dispatch => {
   dispatch(removeRequestType(c.ADVANCED_SEARCH))
   dispatch(removeRequest(advancedSearchRequest.requestConstant))
-  dispatch(handleSetAdvancedSearchRequest(advancedSearchRequest))
+  dispatch(handleSetAdvancedSearchRequest(advancedSearchRequest, advancedSearch, geographyType, geographyId))
 }
 
 export const clearAdvancedSearchRequest = () => dispatch => {
