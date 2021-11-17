@@ -51,7 +51,7 @@ LookupRequestsWrapper.propTypes = {
   loadingState: PropTypes.object,
   propertyResult: PropTypes.object,
   loggedIn: PropTypes.bool,
-  isBookmarked: PropTypes.bool
+  userBookmarks: PropTypes.object
 }
 
 export default LookupRequestsWrapper

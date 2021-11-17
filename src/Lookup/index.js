@@ -22,16 +22,13 @@ class Lookup extends React.Component {
     this.needsLookupSync = this.needsLookupSync.bind(this)
     this.getPathMatch = this.getPathMatch.bind(this)
 
-    const match = this.getPathMatch();
-    
     this.state = {
       error404: false,
       error404Message: 'Sorry, an error has occured. Page not found!',
       loggedIn: this.props.loggedIn,
-      isBookmarked: !!match.params.bbl && !!this.props.userBookmarks[match.params.bbl]
+      userBookmarks: this.props.userBookmarks
     }
 
-    console.log(this.state.isBookmarked)
     this.syncLookup(props)
   }
 
@@ -114,7 +111,7 @@ class Lookup extends React.Component {
             trigger404Error={this.trigger404Error}
             requests={this.props.requests}
             loggedIn={this.props.loggedIn}
-            isBookmarked={this.state.isBookmarked}
+            userBookmarks={this.props.userBookmarks}
           />
         ) : (
           <LookupIndex appState={this.props.appState} />
@@ -136,6 +133,7 @@ Lookup.propTypes = {
 
 const mapStateToProps = state => {
   const loggedIn = !!state.auth.user;
+  console.log(state.myDashboard.userBookmarks)
   return {
     appState: state.appState,
     error: state.error,
