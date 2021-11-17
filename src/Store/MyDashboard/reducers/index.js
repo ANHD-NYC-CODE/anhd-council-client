@@ -1,14 +1,27 @@
-import * as actions from '../actions'
+import * as actions from "../actions"
+import * as c from "../constants"
 
 export const initialState = {
-    userBookmarks: {
-        "2024590034": true
-    }
+    userBookmarks: {}
 }
 
 export const myDashboardReducer = (state = Object.freeze(initialState), action = { data: [] }) => {
     switch (action.type) {
-        default:
+        case c.GET_USER_BOOKMARKED_PROPERTIES:
+            let bookmarks = {};
+            action.data.forEach(userBookmark => 
+                bookmarks[userBookmark.bbl] = userBookmark
+            );
+            return {
+                ...state,
+                userBookmarks: bookmarks
+            }
+        case c.CLEAR_USER_BOOKMARKED_PROPERTIES:
+            return {
+                ...state,
+                userBookmarks: {}
+            }
+        default: 
             return state
     }
 }
