@@ -24,6 +24,8 @@ import { newMapRequests, newMapResultFilters, newLookupRequests } from 'shared/u
 import { setupResourceModels } from 'shared/utilities/configUtils'
 import { createAdvancedSearchFilters } from 'shared/utilities/filterUtils'
 import { resetAdvancedSearchReducer, replacePropertyFilter } from 'Store/AdvancedSearch/actions'
+import { getUserBookmarkedProperties } from 'Store/MyDashboard/actions'
+import { requestWithAuth } from 'shared/utilities/authUtils'
 
 class Config extends React.PureComponent {
   static get MonitoredRequests() {
@@ -61,6 +63,12 @@ class Config extends React.PureComponent {
 
     if (!props.zipCodes.length) {
       this.props.dispatch(getZipCodes())
+    }
+
+    if (props.auth.user) {
+      this.props.dispatch(
+        requestWithAuth(getUserBookmarkedProperties()
+      ));
     }
 
     this.selectGeographyData = this.selectGeographyData.bind(this)
