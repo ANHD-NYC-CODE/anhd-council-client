@@ -59,20 +59,31 @@ class Router extends React.Component {
                   <Route exact path="/property/:bbl/building/:bin" render={() => <Lookup config={config} />} />
                   <Route exact path="/property/:bbl" render={() => <Lookup config={config} />} />
                   <Route exact path="/building/:bin" render={() => <Lookup config={config} />} />
-                  <Route exact path="/map" render={() => <DistrictDashboard config={config} />} />
-                  {Object.keys(b).map((gKey, index) => {
+                  <Route exact path="/district-dashboard" render={() => <DistrictDashboard config={config} />} />
+                  {Object.keys(b).filter(key => key !== "CITY_GEOGRAPHY" || key !== "BOROUGH_GEOGRAPHY").map((gKey, index) => {
                     const geography = b[gKey]
                     return (
                       <Route
-                        key={`geography-route-${index}`}
+                        key={`district-dashboard-geography-route-${index}`}
                         exact
-                        path={`/${geography.frontEndPath}/:id`}
+                        path={`/district-dashboard/${geography.frontEndPath}/:id`}
                         render={() => <DistrictDashboard config={config} />}
                       />
                     )
                   })}
-                  <Route exact path="/search" render={() => <AdvancedSearch config={config} />} />
                   <Route exact path="/me" render={() => <MyDashboard config={config}/>} />
+                  <Route exact path="/search" render={() => <AdvancedSearch config={config} search={true} />} />
+                  {Object.keys(b).map((gKey, index) => {
+                    const geography = b[gKey]
+                    return (
+                      <Route
+                        key={`search-geography-route-${index}`}
+                        exact
+                        path={`/search/${geography.frontEndPath}/:id`}
+                        render={() => <AdvancedSearch config={config} />}
+                      />
+                    )
+                  })}
                   <Route
                     render={() => (
                       <PageError

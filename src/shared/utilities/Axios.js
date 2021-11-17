@@ -80,3 +80,45 @@ export const constructAxiosPost = (
       handleCatchError(error, constant, dispatch, requestId)
     })
 }
+
+export const constructAxiosDelete = (
+  dispatch,
+  getState,
+  requestId,
+  url,
+  body,
+  params,
+  access_token,
+  constant,
+  dispatchAction,
+  handleAction
+) => {
+  if (!requestId) throw 'Misconfigured Axios Request (missing id)'
+  handleActionDispatch(dispatch, constant, requestId)
+  return Axios.delete(url,
+  {
+    params: { format: 'json', ...params },
+    data: body,
+    headers: typeof access_token === 'string' ? { authorization: `Bearer ${access_token}` } : null,
+  })
+    .then(response => {
+      const requestIsValid = !!getState().loading.requests.filter(request => request.id === requestId).length
+      if (requestIsValid) {
+        if (dispatchAction) {
+          dispatch(dispatchAction(response, constant))
+        }
+
+        if (handleAction) {
+          handleAction()
+        }
+        dispatch(handleCompletedRequest(constant, requestId))
+
+        if (response.headers && response.headers['content-type'].match(/csv/)) {
+          FileDownload(response.data, response.config.params.filename)
+        }
+      }
+    })
+    .catch(error => {
+      handleCatchError(error, constant, dispatch, requestId)
+    })
+}

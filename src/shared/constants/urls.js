@@ -9,6 +9,6 @@ export const COUNCIL_URL = '/councils/'
 export const STATE_ASSEMBLY_URL = '/stateassemblies/'
 export const STATE_SENATE_URL = '/statesenates/'
 export const ZIPCODE_URL = '/zipcodes/'
-
+export const BOOKMARKS_URL = '/users/bookmarks/'
 export const BUILDING_URL = '/buildings/'
 export const PROPERTY_URL = '/properties/'
