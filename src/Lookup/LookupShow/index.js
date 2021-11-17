@@ -18,6 +18,9 @@ import LookupLinks from 'Lookup/LookupLinks'
 import LookupSidebar from 'Lookup/LookupSidebar'
 import BookmarkButton from 'shared/components/buttons/BookmarkButton'
 
+import { bookmarkProperty, unBookmarkProperty, getUserBookmarkedProperties } from 'Store/MyDashboard/actions'
+import { requestWithAuth } from 'shared/utilities/authUtils'
+
 import './style.scss'
 
 class LookupShow extends React.PureComponent {
@@ -29,7 +32,8 @@ class LookupShow extends React.PureComponent {
     }
     
     this.state = {
-      bookmarked: this.props.isBookmarked
+      userBookmarks: this.props.userBookmarks,
+      bookmarked: this.props.userBookmarks && !!this.props.userBookmarks[this.props.bbl]
     }
 
     this.switchTable = this.switchTable.bind(this)
@@ -37,8 +41,33 @@ class LookupShow extends React.PureComponent {
     this.bookmarkClicked = this.bookmarkClicked.bind(this)
   }
 
-  bookmarkClicked() {
-    this.setState({bookmarked: !this.state.bookmarked})
+  static getDerivedStateFromProps(nextProps, prevState) {
+    console.log(nextProps.userBookmarks, prevState.userBookmarks);
+    if (nextProps.userBookmarks !== prevState.userBookmarks) {
+      return {
+        userBookmarks: nextProps.userBookmarks,
+        bookmarked: nextProps.userBookmarks && nextProps.userBookmarks[nextProps.bbl]
+      }
+    }
+  }
+
+  async bookmarkClicked() {
+    let requestPromise;
+    if (!this.state.bookmarked) {
+      requestPromise = this.props.dispatch(requestWithAuth(bookmarkProperty(
+        this.props.bbl, 
+        this.props.propertyResult.address
+      )));
+    }
+    else {
+      requestPromise = this.props.dispatch(requestWithAuth(unBookmarkProperty(
+        this.props.userBookmarks[this.props.bbl].id
+      )));
+    }
+
+    Promise.resolve(requestPromise).then(() => {
+      this.props.dispatch(requestWithAuth(getUserBookmarkedProperties()))
+    })
   }
 
   componentDidMount() {
@@ -208,7 +237,7 @@ LookupShow.propTypes = {
   propertyResult: PropTypes.object,
   profileRequest: PropTypes.object,
   loggedIn: PropTypes.bool,
-  isBookmarked: PropTypes.bool
+  userBookmarks: PropTypes.object,
 }
 
 export default LookupShow
