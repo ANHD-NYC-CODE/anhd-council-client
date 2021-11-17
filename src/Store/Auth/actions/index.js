@@ -13,6 +13,7 @@ import { updateAuthLocalStorage } from 'shared/utilities/storageUtils'
 
 import { toast } from 'react-toastify'
 import { fireUserLoginEvent } from 'Store/Analytics/actions'
+import { getUserBookmarkedProperties, clearUserBookmarkedProperties } from 'Store/MyDashboard/actions'
 
 export const handleSyncStorage = (storage, dispatch) => {
   return {
@@ -88,6 +89,7 @@ export const loginUser = (data, postLoginAction) => dispatch => {
 
       dispatch(handleSyncStorage(getUserStorageData(), dispatch))
       dispatch(requestWithAuth(getUserProfile()))
+      dispatch(requestWithAuth(getUserBookmarkedProperties()))
 
       dispatch(retryAuthenticatedRequests())
       if (postLoginAction) postLoginAction()
@@ -102,6 +104,7 @@ export const logoutUser = (sentToast = false) => dispatch => {
   dispatch(handleUserLogout())
   dispatch(setCustomSearchResults()) // clears search results
   dispatch(resetAdvancedSearchReducer()) // clears search form
+  dispatch(clearUserBookmarkedProperties())
   if (sentToast) {
     toast.info("You've been logged out.")
   }

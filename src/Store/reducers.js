@@ -17,6 +17,7 @@ import { buildingReducer } from 'Store/Building/reducers'
 import { appStateReducer } from 'Store/AppState/reducers'
 import { advancedSearchReducer } from 'Store/AdvancedSearch/reducers'
 import { dashboardStateReducer } from 'Store/DashboardState/reducers'
+import { myDashboardReducer } from 'Store/MyDashboard/reducers'
 
 export default history =>
   combineReducers({
@@ -37,4 +38,5 @@ export default history =>
     zipCode: zipCodeReducer,
     building: buildingReducer,
     advancedSearch: advancedSearchReducer,
+    myDashboard: myDashboardReducer
   })
