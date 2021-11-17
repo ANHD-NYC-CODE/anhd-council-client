@@ -133,7 +133,6 @@ Lookup.propTypes = {
 
 const mapStateToProps = state => {
   const loggedIn = !!state.auth.user;
-  console.log(state.myDashboard.userBookmarks)
   return {
     appState: state.appState,
     error: state.error,

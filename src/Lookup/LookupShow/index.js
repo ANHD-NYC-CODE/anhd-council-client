@@ -42,7 +42,6 @@ class LookupShow extends React.PureComponent {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    console.log(nextProps.userBookmarks, prevState.userBookmarks);
     if (nextProps.userBookmarks !== prevState.userBookmarks) {
       return {
         userBookmarks: nextProps.userBookmarks,
