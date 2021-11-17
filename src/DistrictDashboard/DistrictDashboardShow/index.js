@@ -70,7 +70,7 @@ class DistrictDashboardShow extends React.Component {
       })
     )
     this.props.dispatch(resetDashboardState())
-    this.props.dispatch(push('/map'))
+    this.props.dispatch(push('/district-dashboard'))
   }
 
   setTableView(value) {

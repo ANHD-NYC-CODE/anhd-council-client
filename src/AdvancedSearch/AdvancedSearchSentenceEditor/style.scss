@@ -15,7 +15,13 @@
     align-items: center;
     justify-content: flex-start;
     min-height: 32px;
-    margin-bottom: 10px;
+  }
+
+  &__disclaimer-section {
+    display: flex;
+    align-items: left;
+    justify-content: flex-start;
+    @extend %p4-font-size;
   }
 
   .housing-type-dropdown,
@@ -74,6 +80,7 @@
     display: flex;
     align-items: center;
     flex-wrap: wrap;
+    margin-top: 10px;
   }
 
   &__buttons {

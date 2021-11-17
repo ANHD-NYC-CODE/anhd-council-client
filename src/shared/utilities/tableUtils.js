@@ -1340,3 +1340,47 @@ export const dobPermitSubtypeFormatter = cell => {
       return cell
   }
 }
+
+export const ocaHousingCourtClassificationFormatter = cell => {
+  switch(cell) {
+    case 'HP':
+      return 'HP';
+    case'Non-Payment':
+      return 'Non Payment';
+    case'Holdover':
+      return 'Holdover';
+    case'Illegal-Lockout':
+      return 'Illegal Lockout';
+    case'Harassment':
+      return 'Harassment';
+    case'Illegal-Activity':
+      return 'Illegal Activity';
+    case'Article-7A':
+      return 'Article 7A';
+    case'HP-with-harassment':
+      return 'HP with harassment';
+    case'Breach-of-Warrant-of-Habitability':
+      return 'Breach of Warrant of Habitability';
+    default:
+      return cell;
+  }
+}
+
+export const ocaHousingCourtStatusFormatter = cell => {
+  switch(cell) {
+    case 'Disposed':
+      return 'Disposed';
+    case 'Post-Disposition':
+      return 'Post Disposition'; 
+    case 'Active':
+      return 'Active';
+    case 'Active---Pending-Further-Review':
+      return 'Active - Pending Further Review';
+    case 'Active---Restored':
+      return 'Active - Restored';
+    case 'Active---Appeal-Pending':
+      return 'Active - Appeal Pending';
+    case 'Post-Disposition---Appeal-Pending':
+      return 'Post Disposition - Appeal Pending';
+  }
+}
