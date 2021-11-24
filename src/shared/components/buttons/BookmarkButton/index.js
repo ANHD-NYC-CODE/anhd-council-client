@@ -12,7 +12,7 @@ const BookmarkButton = props => {
                 icon={faBookmark}
                 size="lg"
             />
-            { props.text && (<span>{props.active ? props.activeText || props.text : props.text}</span>) }
+            { props.text && (<span className="ml-2">{props.active ? props.activeText || props.text : props.text}</span>) }
         </div>
     )
 }
