@@ -24,7 +24,7 @@ import { newMapRequests, newMapResultFilters, newLookupRequests } from 'shared/u
 import { setupResourceModels } from 'shared/utilities/configUtils'
 import { createAdvancedSearchFilters } from 'shared/utilities/filterUtils'
 import { resetAdvancedSearchReducer, replacePropertyFilter } from 'Store/AdvancedSearch/actions'
-import { getUserBookmarkedProperties } from 'Store/MyDashboard/actions'
+import { getUserBookmarkedProperties, getUserSavedCustomSearches } from 'Store/MyDashboard/actions'
 import { requestWithAuth } from 'shared/utilities/authUtils'
 
 class Config extends React.PureComponent {
@@ -67,8 +67,11 @@ class Config extends React.PureComponent {
 
     if (props.auth.user) {
       this.props.dispatch(
-        requestWithAuth(getUserBookmarkedProperties()
-      ));
+        requestWithAuth(getUserBookmarkedProperties())
+      );
+      this.props.dispatch(
+        requestWithAuth(getUserSavedCustomSearches())
+      );
     }
 
     this.selectGeographyData = this.selectGeographyData.bind(this)
