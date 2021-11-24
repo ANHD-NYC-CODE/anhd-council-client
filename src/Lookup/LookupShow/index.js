@@ -19,6 +19,7 @@ import LookupSidebar from 'Lookup/LookupSidebar'
 import BookmarkButton from 'shared/components/buttons/BookmarkButton'
 
 import { bookmarkProperty, unBookmarkProperty, getUserBookmarkedProperties } from 'Store/MyDashboard/actions'
+import { boroCodeToName, constructAddressString } from 'shared/utilities/languageUtils'
 import { requestWithAuth } from 'shared/utilities/authUtils'
 
 import './style.scss'
@@ -53,19 +54,25 @@ class LookupShow extends React.PureComponent {
   async bookmarkClicked() {
     let requestPromise;
     if (!this.state.bookmarked) {
+      const address = constructAddressString({
+        street: this.props.propertyResult.address,
+        borough: boroCodeToName(this.props.propertyResult.borough),
+        zip: this.props.propertyResult.zipcode,
+      });
       requestPromise = this.props.dispatch(requestWithAuth(bookmarkProperty(
-        this.props.bbl, 
-        this.props.propertyResult.address
+        this.props.bbl, address
       )));
     }
     else {
+      const areYouSure = confirm("Are you sure you want to delete this bookmark?");
+      if (!areYouSure) return;
       requestPromise = this.props.dispatch(requestWithAuth(unBookmarkProperty(
         this.props.userBookmarks[this.props.bbl].id
       )));
     }
 
-    Promise.resolve(requestPromise).then(() => {
-      this.props.dispatch(requestWithAuth(getUserBookmarkedProperties()))
+    Promise.resolve(requestPromise).then(async () => {
+      await this.props.dispatch(requestWithAuth(getUserBookmarkedProperties()));
     })
   }
 
