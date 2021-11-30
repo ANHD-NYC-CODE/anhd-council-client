@@ -1,0 +1,13 @@
+@import 'shared/styles/_variables.scss';
+
+a:hover {
+    text-decoration: underline !important;
+    cursor: pointer;
+}
+
+.request-access-modal {
+  &__text {
+    @extend %p3-font-size;
+    color: $black;
+  }
+}

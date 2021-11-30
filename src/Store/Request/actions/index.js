@@ -104,6 +104,38 @@ export const postUserRequest = (userRequestData, hideModal) => (dispatch, getSta
   )
 }
 
+export const postUserAccessRequest = (userAccessRequestData, hideModal) => (dispatch, getState, access_token) => {
+  const requestId = Math.floor(Math.random() * 1000000)
+  return constructAxiosPost(
+    dispatch,
+    getState,
+    requestId,
+    'users/access-request/',
+    userAccessRequestData, // Body
+    { format: null },
+    access_token,
+    'POST_USER_ACCESS_REQUEST',
+    undefined,
+    hideModal
+  )
+}
+
+export const postUserRegister = (userRegisterData, hideModal) => (dispatch, getState, access_token) => {
+  const requestId = Math.floor(Math.random() * 1000000)
+  return constructAxiosPost(
+    dispatch,
+    getState,
+    requestId,
+    '/users/register/',
+    userRegisterData, // Body
+    { format: null },
+    access_token,
+    'POST_USER_REGISTER',
+    undefined,
+    hideModal
+  )
+}
+
 export const postUserMessage = (bugData, hideModal) => (dispatch, getState, access_token) => {
   const requestId = Math.floor(Math.random() * 1000000)
   return constructAxiosPost(
