@@ -1,20 +1,29 @@
-.my_dashboard__container {
-    padding: 25px 50px 50px 25px;
+.my_dashboard {
+    &__container {
+        padding: 25px 50px 50px 25px;
 
-    a {
-        color: black
+        a {
+            color: black
+        }
     }
 
-    .my_dashboard__welcome_message {
+    &__top_section {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
         margin-bottom: 30px;
+
+        button {
+            width: 250px;
+        }
     }
 
-    .my_dashboard__section_header {
+    &__section_header {
         margin-bottom: 10px;
     }
 
-    .my_dashboard__bookmark_section {
-        margin-bottom: 30px;
+    &__bookmark_section {
+        margin-bottom: 45px;
         width: 100%;
     }
 }

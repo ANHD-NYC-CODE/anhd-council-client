@@ -12,6 +12,9 @@ import { requestWithAuth } from 'shared/utilities/authUtils'
 import SaveSearchButton from 'shared/components/buttons/SaveSearchButton'
 import ModalContext from 'Modal/ModalContext'
 import SaveOrEditCustomSearch from 'shared/components/modals/SaveCustomSearchModal'
+import InfoModalButton from 'shared/components/InfoModalButton'
+import RequestAccessModal from 'shared/components/modals/RequestAccessModal'
+import { TRUSTED_GROUP } from 'shared/constants/groups'
 
 import './style.scss'
 
@@ -50,10 +53,40 @@ class MyDashboard extends React.Component {
         })
     }
 
+    onRequestAccess(e, modal) {
+        e.preventDefault()
+        modal.setModal({
+            modalComponent: RequestAccessModal
+        })
+    }
+
     render() {
         return (
             <div className="my_dashboard__container container-fluid">
-                <h4 className="my_dashboard__welcome_message">Welcome, <b>{this.props.user && this.props.user.username}</b></h4>
+                <div className="my_dashboard__top_section">
+                    <div className="my_dashboard__welcome_message">
+                        <h4>
+                            Welcome, <b>{this.props.user && this.props.user.username}</b>
+                        </h4>
+                        {!!this.props.user && this.props.user.groups.includes(TRUSTED_GROUP) && (
+                            <p>You are a trusted member</p>
+                        )}
+                    </div>
+                    {!!this.props.user && !this.props.user.groups.includes(TRUSTED_GROUP) &&
+                        <ModalContext.Consumer>
+                        {modal => 
+                            <div className="d-flex align-items-center">
+                                <button className="btn-sm btn-dark mr-3" onClick={e => this.onRequestAccess(e, modal)}>
+                                    Request access to housing court and foreclosures data
+                                </button>
+                                <InfoModalButton 
+                                    modalComponent={RequestAccessModal}
+                                    modalProps={{viewPolicy: true}}/>
+                            </div>
+                        }                        
+                        </ModalContext.Consumer>
+                    }
+                </div>
                 <div className="my_dashboard__bookmark_section">
                     <h5 className="my_dashboard__section_header"><b>Bookmarked Properties</b></h5>
                     <table className="table table-striped table-sm">
@@ -156,6 +189,7 @@ MyDashboard.propTypes = {
 }
 
 const mapStateToProps = state => {
+    console.log(state.auth.user);
     return {
         appState: state.appState,
         userBookmarks: state.myDashboard.userBookmarks,

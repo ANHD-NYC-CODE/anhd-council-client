@@ -12,21 +12,29 @@ const InfoModalButton = props => {
   const handleClick = (e, modal, config) => {
     e.preventDefault()
 
-    modal.setModal({
-      modalProps: {
-        title: config.infoModals[props.modalConstant].title,
-        body: config.infoModals[props.modalConstant].body,
-        sources: config.infoModals[props.modalConstant].sources,
-        documentationBody: config.infoModals[props.modalConstant].documentationBody,
-        documentationSources: config.infoModals[props.modalConstant].documentationSources,
-        size: 'lg',
-      },
-    })
+    if (props.modalComponent) {
+      modal.setModal({
+        modalComponent: props.modalComponent,
+        modalProps: props.modalProps 
+      })
+    }
+    else {
+      modal.setModal({
+        modalProps: {
+          title: config.infoModals[props.modalConstant].title,
+          body: config.infoModals[props.modalConstant].body,
+          sources: config.infoModals[props.modalConstant].sources,
+          documentationBody: config.infoModals[props.modalConstant].documentationBody,
+          documentationSources: config.infoModals[props.modalConstant].documentationSources,
+          size: 'lg',
+        },
+      })
+    } 
   }
   return (
     <ConfigContext.Consumer>
       {config => {
-        if (!config.infoModals[props.modalConstant])
+        if (!config.infoModals[props.modalConstant] && !props.modalComponent)
           return <div className={classnames('info-modal-button', props.className)} />
         return (
           <ModalContext.Consumer>
@@ -51,6 +59,8 @@ const InfoModalButton = props => {
 InfoModalButton.propTypes = {
   className: PropTypes.string,
   modalConstant: PropTypes.string,
+  modalComponent: PropTypes.any,
+  modalProps: PropTypes.object
 }
 
 export default InfoModalButton
