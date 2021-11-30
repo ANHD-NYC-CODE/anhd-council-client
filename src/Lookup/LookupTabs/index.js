@@ -18,12 +18,12 @@ const LookupTabs = props => {
       case 'HPD_COMPLAINT':
         return `HPD Complaints (${count1}) and Problems (${count2})`
       case 'OCA_HOUSING_COURT':
-        return error && (error.status === 401 || error.status === 403) ? 
+        return error && (error.status === 401 || error.status === 403 || error.status === 409) ? 
           `${resourceModel.label}` : `${resourceModel.label} (${count1})`;
       case 'FORECLOSURE':
-        return error && error.status === 401 ? `${resourceModel.label}` : `${resourceModel.label} (${count1})`
+        return error && error.status === 403 ? `${resourceModel.label}` : `${resourceModel.label} (${count1})`
       case 'PSFORECLOSURE':
-        return error && error.status === 401 ? `${resourceModel.label}` : `${resourceModel.label} (${count1})`
+        return error && error.status === 403 ? `${resourceModel.label}` : `${resourceModel.label} (${count1})`
       default:
         return `${resourceModel.label} (${count1})`
     }
