@@ -1,6 +1,14 @@
 @import 'shared/styles/_variables.scss';
 
 .login-form {
+  a {
+    text-decoration: underline;
+  }
+
+  a:hover {
+    cursor: pointer;
+  }
+
   &__text {
     @extend %p3-font-size;
     color: $black;

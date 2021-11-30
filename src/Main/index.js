@@ -42,7 +42,8 @@ class Main extends React.Component {
             this.props.modal.hideModal()
             this.props.dispatch(push('/'))
           },
-          modalFooter: <LoginModalFooter />,
+          modalFooter: <LoginModalFooter modal={this.props.modal} />,
+          modal: this.props.modal
         },
       })
     }
