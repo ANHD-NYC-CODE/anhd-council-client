@@ -52,6 +52,19 @@ class SubHeader extends React.Component {
                   <Nav.Item>Home</Nav.Item>
                 </div>
               </Link>
+              {this.props.auth.user ? 
+                (<Link
+                  data-test-id="subheader__home-link"
+                  className={classnames('sub-header__nav-tab tab--dark-inverse', {
+                    active: this.props.pathname.match(/me/),
+                  })}
+                  to={'/me'}
+                >
+                  <div className="sub-header__nav-tab--inner">
+                    <Nav.Item>My Dashboard</Nav.Item>
+                  </div>
+                </Link>) : ("")
+              }
               <Link
                 data-test-id="subheader__pl-link"
                 className={classnames('sub-header__nav-tab tab--dark-inverse', {
