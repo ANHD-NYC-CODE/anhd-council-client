@@ -12,8 +12,8 @@
   &__sentence-section {
     @extend %p3-font-size;
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: flex-start;
     min-height: 32px;
   }
 

@@ -1,15 +1,15 @@
 import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBookmark } from '@fortawesome/free-solid-svg-icons'
+import { faStar } from '@fortawesome/free-solid-svg-icons'
 
 import './style.scss';
 
-const BookmarkButton = props => {
+const SaveSearchButton = props => {
     return (
-        <div className="bookmark-button__container" onClick={props.onBookmark}>
+        <div className="save-search-button__container" onClick={props.onSave}>
             <FontAwesomeIcon 
-                className={`bookmark-button__icon_${props.active ? "active" : "inactive"}`}
-                icon={faBookmark}
+                className={`save-search-button__icon_${props.active ? "active" : "inactive"}`}
+                icon={faStar}
                 size="lg"
             />
             { props.text && (<span className="ml-2">{props.active ? props.activeText || props.text : props.text}</span>) }
@@ -17,4 +17,4 @@ const BookmarkButton = props => {
     )
 }
 
-export default BookmarkButton;
+export default SaveSearchButton;

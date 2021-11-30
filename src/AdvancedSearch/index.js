@@ -262,6 +262,10 @@ export class AdvancedSearch extends React.Component {
                 requestCalledAndNotLoading={requestCalledAndNotLoading}
                 loadingButDisplayingResults={!!this.props.loading && !this.state.displayingForm}
                 loadingButDisplayingForm={this.props.loading && this.state.displayingForm}
+                user={this.props.user}
+                savedSearches={this.props.savedSearches}
+                geographyId={this.state.geographyId}
+                geographyType={this.state.geographyType}
               />
             </div>
           )}
@@ -399,7 +403,7 @@ const mapStateToProps = state => {
 
   const loadingSelector = createLoadingSelector([c.ADVANCED_SEARCH])
   const errorSelector = createErrorSelector([c.ADVANCED_SEARCH])
-
+  
   return {
     appState: state.appState,
     advancedSearch: state.advancedSearch,
@@ -408,7 +412,9 @@ const mapStateToProps = state => {
     loading: loadingSelector(state),
     advancedSearchRequest: getSingleRequest(state.appState.requests, c.ADVANCED_SEARCH),
     geographyId,
-    geographyType
+    geographyType,
+    savedSearches: state.myDashboard.customSearches,
+    user: state.auth.user
   }
 }
 

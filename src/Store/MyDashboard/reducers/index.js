@@ -2,7 +2,8 @@ import * as actions from "../actions"
 import * as c from "../constants"
 
 export const initialState = {
-    userBookmarks: {}
+    userBookmarks: {},
+    customSearches: {}
 }
 
 export const myDashboardReducer = (state = Object.freeze(initialState), action = { data: [] }) => {
@@ -16,10 +17,20 @@ export const myDashboardReducer = (state = Object.freeze(initialState), action =
                 ...state,
                 userBookmarks: bookmarks
             }
-        case c.CLEAR_USER_BOOKMARKED_PROPERTIES:
+        case c.GET_USER_SAVED_CUSTOM_SEARCHES:
+            let searches = {};
+            action.data.forEach(search => 
+                searches[search.custom_search_view] = search
+            );
             return {
                 ...state,
-                userBookmarks: {}
+                customSearches: searches
+            }
+        case c.CLEAR_MY_DASHBOARD:
+            return {
+                ...state,
+                userBookmarks: {},
+                customSearches: {}
             }
         default: 
             return state
