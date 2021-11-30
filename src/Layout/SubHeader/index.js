@@ -162,6 +162,7 @@ class SubHeader extends React.Component {
                         modalComponent: LoginModal,
                         modalProps: {
                           modalFooter: <LoginModalFooter modal={this.props.modal} />,
+                          modal: this.props.modal
                         },
                       })
                     }}
