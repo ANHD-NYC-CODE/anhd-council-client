@@ -29,6 +29,7 @@ const Component = props => {
                     modalComponent: LoginModal,
                     modalProps: {
                       modalFooter: <LoginModalFooter modal={modal} />,
+                      modal: modal
                     },
                   })
                 }}

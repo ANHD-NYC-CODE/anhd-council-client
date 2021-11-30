@@ -29,6 +29,7 @@ const LoginModal = props => {
               loading={auth.loginLoading}
               postLoginAction={props.postLoginAction}
               user={auth.user}
+              modal={props.modal}
             />
           </BaseModal>
         )
