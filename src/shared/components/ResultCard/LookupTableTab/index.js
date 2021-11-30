@@ -5,6 +5,7 @@ import * as c from 'shared/constants'
 import ModalContext from 'Modal/ModalContext'
 
 import SpinnerLoader from 'shared/components/Loaders/SpinnerLoader'
+import RequestAccessModal from 'shared/components/modals/RequestAccessModal'
 import LoginModal from 'shared/components/modals/LoginModal'
 import LoginModalFooter from 'shared/components/forms/LoginForm/LoginModalFooter'
 import ConfigContext from 'Config/ConfigContext'
@@ -48,43 +49,9 @@ const retryRequest = props => {
 
 const LookupTableTab = props => {
   const renderErrorButton = () => {
-    if (props.error.status === 401) {
-      return (
-        <ModalContext.Consumer>
-          {modal => {
-            return (
-              <button
-                className="error-cta text-link"
-                onClick={e => {
-                  e.preventDefault()
-                  modal.setModal({
-                    modalComponent: LoginModal,
-                    modalProps: {
-                      modalFooter: <LoginModalFooter modal={modal} />,
-                    },
-                  })
-                }}
-                onKeyDown={e =>
-                  spaceEnterKeyDownHandler(e, e => {
-                    e.preventDefault()
-                    modal.setModal({
-                      modalComponent: LoginModal,
-                      modalProps: {
-                        modalFooter: <LoginModalFooter modal={modal} />,
-                      },
-                    })
-                  })
-                }
-              >
-                {c.LOGIN_CTA}
-              </button>
-            )
-          }}
-        </ModalContext.Consumer>
-      )
-    } 
-    if (props.error.status === 403 && 
-        props.request.resourceModel.resourceConstant === "OCA_HOUSING_COURT") {
+    if (props.error.status === 409 && 
+        props.request.resourceModel.resourceConstant === "OCA_HOUSING_COURT") 
+    {
       return (
         <ConfigContext.Consumer>
         {config => {
@@ -135,17 +102,66 @@ const LookupTableTab = props => {
         </ConfigContext.Consumer>
       )
     }
-    else {
+    if (props.error.status === 403 || props.error.status === 401) {
       return (
-        <button
-          className="error-cta text-link"
-          onClick={() => retryRequest(props)}
-          onKeyDown={e => spaceEnterKeyDownHandler(e, () => retryRequest(props))}
-        >
-          (!) Retry
-        </button>
+        <ModalContext.Consumer>
+          {modal => {
+            return (
+              <button
+                className="error-cta text-link"
+                onClick={e => {
+                  e.preventDefault()
+                  if (props.error.status === 403) {
+                    modal.setModal({
+                      modalComponent: RequestAccessModal
+                    })
+                  }
+                  else {
+                    modal.setModal({
+                      modalComponent: LoginModal,
+                      modalProps: {
+                        modalFooter: <LoginModalFooter modal={modal} />,
+                        modal
+                      },
+                    })
+                  }
+                }}
+                onKeyDown={e =>
+                  spaceEnterKeyDownHandler(e, e => {
+                    e.preventDefault()
+                    if (props.error.status === 403) {
+                      modal.setModal({
+                        modalComponent: RequestAccessModal
+                      })
+                    }
+                    else {
+                      modal.setModal({
+                        modalComponent: LoginModal,
+                        modalProps: {
+                          modalFooter: <LoginModalFooter modal={modal} />,
+                          modal
+                        },
+                      })
+                    }
+                  })
+                }
+              >
+                {props.error.status === 403 ? c.REQUEST_CTA : c.LOGIN_CTA}
+              </button>
+            )
+          }}
+        </ModalContext.Consumer>
       )
-    }
+    } 
+    return (
+      <button
+        className="error-cta text-link"
+        onClick={() => retryRequest(props)}
+        onKeyDown={e => spaceEnterKeyDownHandler(e, () => retryRequest(props))}
+      >
+        (!) Retry
+      </button>
+    )
   }
 
   const renderComponentInside = () => {
