@@ -9,10 +9,12 @@ import AmountFilterInput from 'DistrictDashboard/AmountFilterInput'
 import ModalContext from 'Modal/ModalContext'
 
 import LoginModal from 'shared/components/modals/LoginModal'
+import RequestAccessModal from 'shared/components/modals/RequestAccessModal'
 import LoginModalFooter from 'shared/components/forms/LoginForm/LoginModalFooter'
 import InfoModalButton from 'shared/components/InfoModalButton'
 import { spaceEnterKeyDownHandler } from 'shared/utilities/accessibilityUtils'
 import { grammaticalNoun } from 'shared/utilities/languageUtils'
+import { TRUSTED_GROUP } from 'shared/constants/groups'
 import classnames from 'classnames'
 
 import Toggle from 'react-bootstrap-toggle'
@@ -54,12 +56,20 @@ class AnnotatedResultFilterCard extends React.Component {
 
   handleLoginClick(e, modal) {
     e.preventDefault()
-    modal.setModal({
-      modalComponent: LoginModal,
-      modalProps: {
-        modalFooter: <LoginModalFooter modal={modal} />,
-      },
-    })
+    if (this.props.auth.user) {
+      modal.setModal({
+        modalComponent: RequestAccessModal,
+      })
+    }
+    else {
+      modal.setModal({
+        modalComponent: LoginModal,
+        modalProps: {
+          modalFooter: <LoginModalFooter modal={modal} />,
+          modal: modal
+        },
+      })
+    } 
   }
 
   render() {
@@ -68,7 +78,7 @@ class AnnotatedResultFilterCard extends React.Component {
         this.props.amountFilter.resourceModel.resourceConstant === 'FORECLOSURE' ||
         this.props.amountFilter.resourceModel.resourceConstant === 'OCA_HOUSING_COURT' ||
         this.props.amountFilter.resourceModel.resourceConstant === 'LISPENDEN') &&
-      !this.props.auth.user
+        (!this.props.auth.user || (!!this.props.auth.user && !this.props.auth.user.groups.includes(TRUSTED_GROUP)))
     return (
       <div className="amount-result-filter-card--container" data-test-id={this.props.testId}>
         <div className="amount-result-filter-card__header">
@@ -107,7 +117,7 @@ class AnnotatedResultFilterCard extends React.Component {
                   onClick={e => this.handleLoginClick(e, modal)}
                   onKeyDown={e => spaceEnterKeyDownHandler(e, e => this.handleLoginClick(e, modal))}
                 >
-                  {c.LOGIN_CTA}
+                  {!this.props.auth.user ? c.LOGIN_CTA : c.REQUEST_CTA}
                 </button>
               )
             }}
