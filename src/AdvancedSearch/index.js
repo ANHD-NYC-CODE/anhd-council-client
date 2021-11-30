@@ -36,6 +36,7 @@ import { clearAdvancedSearchRequest, setAppState, setAdvancedSearchRequest } fro
 import AdvancedSearchForm from 'AdvancedSearch/AdvancedSearchForm'
 import AdvancedSearchSentenceEditor from 'AdvancedSearch/AdvancedSearchSentenceEditor'
 import { newAdvancedSearchRequest } from 'shared/utilities/configUtils'
+import { TRUSTED_GROUP } from 'shared/constants/groups'
 
 import classnames from 'classnames'
 
@@ -367,6 +368,7 @@ export class AdvancedSearch extends React.Component {
                 error={this.state.error}
                 loading={this.props.loading}
                 loggedIn={this.props.loggedIn}
+                trusted={this.props.trusted}
                 showPopups={this.state.view === 2}
                 onSubmit={this.onSubmit}
                 cancelChangeGeography={this.cancelChangeGeography}
@@ -414,7 +416,8 @@ const mapStateToProps = state => {
     geographyId,
     geographyType,
     savedSearches: state.myDashboard.customSearches,
-    user: state.auth.user
+    user: state.auth.user,
+    trusted: !!state.auth.user && state.auth.user.groups.includes(TRUSTED_GROUP)
   }
 }
 

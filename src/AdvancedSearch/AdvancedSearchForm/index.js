@@ -55,7 +55,7 @@ class AdvancedSearchForm extends React.PureComponent {
       )
       .filter(f => f)
 
-    allFilters.forEach(filter => filter.validate(this.props.loggedIn))
+    allFilters.forEach(filter => filter.validate(this.props.trusted))
     allParamMaps.forEach(paramMap => paramMap.validate())
     if (
       allConditions.some(condition => !!condition.errors.length) ||
@@ -257,6 +257,7 @@ AdvancedSearchForm.propTypes = {
   error: PropTypes.object,
   loading: PropTypes.bool,
   loggedIn: PropTypes.bool,
+  trusted: PropTypes.bool
 }
 
 export default AdvancedSearchForm
