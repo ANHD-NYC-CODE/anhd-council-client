@@ -56,7 +56,10 @@ class MyDashboard extends React.Component {
     onRequestAccess(e, modal) {
         e.preventDefault()
         modal.setModal({
-            modalComponent: RequestAccessModal
+            modalComponent: RequestAccessModal,
+            modalProps: {
+                userAccessRequestStatus: this.props.user.accessRequestStatus
+            }
         })
     }
 
@@ -69,7 +72,10 @@ class MyDashboard extends React.Component {
                             Welcome, <b>{this.props.user && this.props.user.username}</b>
                         </h4>
                         {!!this.props.user && this.props.user.groups.includes(TRUSTED_GROUP) && (
-                            <p>You are a trusted member</p>
+                            <p>
+                                You have access to protected housing court and foreclosures data.
+                                <a href="https://portal.displacementalert.org/policies/data-access-policy"> View the full data access policy</a>
+                            </p>
                         )}
                     </div>
                     {!!this.props.user && !this.props.user.groups.includes(TRUSTED_GROUP) &&
@@ -81,7 +87,7 @@ class MyDashboard extends React.Component {
                                 </button>
                                 <InfoModalButton 
                                     modalComponent={RequestAccessModal}
-                                    modalProps={{viewPolicy: true}}/>
+                                    modalProps={{viewPolicy: true, userAccessRequestStatus: this.props.user.accessRequestStatus}}/>
                             </div>
                         }                        
                         </ModalContext.Consumer>
@@ -189,7 +195,6 @@ MyDashboard.propTypes = {
 }
 
 const mapStateToProps = state => {
-    console.log(state.auth.user);
     return {
         appState: state.appState,
         userBookmarks: state.myDashboard.userBookmarks,

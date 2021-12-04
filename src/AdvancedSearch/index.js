@@ -208,6 +208,9 @@ export class AdvancedSearch extends React.Component {
     this.setState({
       displayingForm: true,
       error: error || this.props.error,
+      geographyType: undefined,
+      geographyId: undefined,
+      formSubmitted: false
     })
     this.props.dispatch(clearAdvancedSearchRequest())
   }

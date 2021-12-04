@@ -13,6 +13,7 @@ import { getCommunities } from 'Store/Community/actions'
 import { getStateAssemblies } from 'Store/StateAssembly/actions'
 import { getStateSenates } from 'Store/StateSenate/actions'
 import { getZipCodes } from 'Store/ZipCode/actions'
+import { getUserProfile } from 'Store/Auth/actions'
 import { infoModals } from 'shared/modals/modalsCopy'
 import ConfigLoader from 'shared/components/Loaders/ConfigLoader'
 import PageError from 'shared/components/PageError'
@@ -71,6 +72,9 @@ class Config extends React.PureComponent {
       );
       this.props.dispatch(
         requestWithAuth(getUserSavedCustomSearches())
+      );
+      this.props.dispatch(
+        requestWithAuth(getUserProfile())
       );
     }
 

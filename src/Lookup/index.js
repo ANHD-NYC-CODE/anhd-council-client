@@ -12,6 +12,9 @@ import Helmet from 'react-helmet'
 import LookupIndex from 'Lookup/LookupIndex'
 import LookupRequestsWrapper from 'Lookup/LookupRequestsWrapper'
 import InnerLoader from 'shared/components/Loaders/InnerLoader'
+import { createLoadingSelector } from 'Store/Loading/selectors'
+import { createErrorSelector } from 'Store/Error/selectors'
+import * as c from "Store/MyDashboard/constants";
 
 class Lookup extends React.Component {
   constructor(props) {
@@ -101,6 +104,10 @@ class Lookup extends React.Component {
             appState={this.props.appState}
             errorState={this.props.error}
             loadingState={this.props.loading}
+            bookmarkError={this.props.bookmarkError}
+            bookmarkDeleteError={this.props.bookmarkDeleteError}
+            bookmarkLoading={this.props.bookmarkLoading}
+            bookmarkDeleteLoading={this.props.bookmarkDeleteLoading}
             bbl={match.params.bbl}
             bin={match.params.bin}
             key={`${this.props.appState.currentProperty}${this.props.appState.currentBuilding}`}
@@ -133,10 +140,18 @@ Lookup.propTypes = {
 
 const mapStateToProps = state => {
   const loggedIn = !!state.auth.user;
+  const bookmarkError = createErrorSelector([c.BOOKMARK_PROPERTY]);
+  const bookmarkLoading = createLoadingSelector([c.BOOKMARK_PROPERTY]);
+  const bookmarkDeleteError = createErrorSelector([c.UNBOOKMARK_PROPERTY]);
+  const bookmarkDeleteLoading = createLoadingSelector([c.UNBOOKMARK_PROPERTY]);
   return {
     appState: state.appState,
     error: state.error,
     loading: state.loading,
+    bookmarkError: bookmarkError(state),
+    bookmarkLoading: bookmarkLoading(state),
+    bookmarkDeleteError: bookmarkDeleteError(state),
+    bookmarkDeleteLoading: bookmarkDeleteLoading(state),
     propertyResult: state.requests[(getRequestType(state.appState.requests, 'LOOKUP_PROFILE')[0] || {}).requestConstant],
     propertyError: state.error[(getRequestType(state.appState.requests, 'LOOKUP_PROFILE')[0] || {}).requestConstant],
     router: state.router,

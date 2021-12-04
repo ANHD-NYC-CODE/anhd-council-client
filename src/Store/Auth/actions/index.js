@@ -13,7 +13,7 @@ import { updateAuthLocalStorage } from 'shared/utilities/storageUtils'
 
 import { toast } from 'react-toastify'
 import { fireUserLoginEvent } from 'Store/Analytics/actions'
-import { getUserBookmarkedProperties, clearMyDashboard } from 'Store/MyDashboard/actions'
+import { getUserBookmarkedProperties, getUserSavedCustomSearches, clearMyDashboard } from 'Store/MyDashboard/actions'
 
 export const handleSyncStorage = (storage, dispatch) => {
   return {
@@ -90,6 +90,7 @@ export const loginUser = (data, postLoginAction) => dispatch => {
       dispatch(handleSyncStorage(getUserStorageData(), dispatch))
       dispatch(requestWithAuth(getUserProfile()))
       dispatch(requestWithAuth(getUserBookmarkedProperties()))
+      dispatch(requestWithAuth(getUserSavedCustomSearches()))
 
       dispatch(retryAuthenticatedRequests())
       if (postLoginAction) postLoginAction()

@@ -1,5 +1,5 @@
 import * as c from 'shared/constants'
-import { constructAxiosGet, constructAxiosPost } from 'shared/utilities/Axios'
+import { constructAxiosGet, constructAxiosPost, constructAxiosDelete } from 'shared/utilities/Axios'
 import { requestWithAuth } from 'shared/utilities/authUtils'
 import { setTotalPropertyResults } from 'Store/DashboardState/actions'
 import { setCustomSearchResults } from 'Store/AdvancedSearch/actions'
@@ -117,6 +117,22 @@ export const postUserAccessRequest = (userAccessRequestData, hideModal) => (disp
     'POST_USER_ACCESS_REQUEST',
     undefined,
     hideModal
+  )
+}
+
+export const deleteUserAccessRequest = (postDelete) => (dispatch, getState, access_token) => {
+  const requestId = Math.floor(Math.random() * 1000000)
+  return constructAxiosDelete(
+    dispatch,
+    getState,
+    requestId,
+    'users/access-request/',
+    null, // Body
+    { format: null },
+    access_token,
+    'DELETE_USER_ACCESS_REQUEST',
+    undefined,
+    postDelete
   )
 }
 
