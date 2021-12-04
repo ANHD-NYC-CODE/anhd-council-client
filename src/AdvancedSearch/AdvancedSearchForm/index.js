@@ -99,7 +99,7 @@ class AdvancedSearchForm extends React.PureComponent {
     } else {
       this.setState({
         changingGeographyType: type,
-        changingGeographyId: -1,
+        changingGeographyId: null,
       })
     }
   }
@@ -144,10 +144,10 @@ class AdvancedSearchForm extends React.PureComponent {
         })
         .required('Please make a selection'),
       // disable geoId validation for city geo
-      geographyId:
-        this.state.currentGeographyType !== b.CITY_GEOGRAPHY.constant || !!this.state.changingGeographyType
-          ? yup.string().required('Please make a selection')
-          : null,
+      // geographyId:
+      //   this.state.currentGeographyType !== b.CITY_GEOGRAPHY.constant || !!this.state.changingGeographyType
+      //     ? yup.string().required('Please make a selection')
+      //     : null,
     })
 
     return (
