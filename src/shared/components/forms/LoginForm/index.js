@@ -65,7 +65,7 @@ class LoginForm extends React.Component {
                 <a onClick={e => this.openSignUp(e)}> sign up </a>
                 for one now.
               </p>
-              <FormError show={!!this.props.error} message={(this.props.error || {}).message} />
+              <FormError show={!!this.props.error && this.props.error.status !== 500} message={(this.props.error || {}).message} />
               <Form.Group controlId="loginUsername">
                 <Form.Label>Username</Form.Label>
                 <Form.Control

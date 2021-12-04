@@ -1,10 +1,6 @@
 .my_dashboard {
     &__container {
         padding: 25px 50px 50px 25px;
-
-        a {
-            color: black
-        }
     }
 
     &__top_section {
@@ -25,5 +21,14 @@
     &__bookmark_section {
         margin-bottom: 45px;
         width: 100%;
+        a {
+            color: black
+        }
+    }
+
+    &__search_section {
+        a {
+            color: black
+        }
     }
 }

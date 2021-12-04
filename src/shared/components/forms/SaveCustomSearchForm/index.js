@@ -5,7 +5,9 @@ import { Formik } from 'formik'
 import * as yup from 'yup'
 
 import FormError from 'shared/components/FormError'
+import SpinnerLoader from 'shared/components/Loaders/SpinnerLoader'
 import { requestWithAuth } from 'shared/utilities/authUtils'
+import { toast } from 'react-toastify'
 import { 
   saveUserCustomSearch, 
   getUserSavedCustomSearches,
@@ -24,7 +26,7 @@ const schema = yup.object({
 class SaveCustomSearchForm extends React.Component {
   constructor(props) {
     super(props)
-
+    
     this.state = {
       validated: false,
       notifications: this.props.notifications,
@@ -32,56 +34,71 @@ class SaveCustomSearchForm extends React.Component {
     }
 
     this.handleSubmit = this.handleSubmit.bind(this)
-    this.handleDeleteBookmark = this.handleDeleteBookmark.bind(this);
+    this.handleDeleteSearch = this.handleDeleteSearch.bind(this);
     this.handleChangeNotifications = this.handleChangeNotifications.bind(this);
+    this.handleSuccessfulDelete = this.handleSuccessfulDelete.bind(this);
+    this.handleSuccessfulSubmit = this.handleSuccessfulSubmit.bind(this);
+    this.showSuccessMessage = this.showSuccessMessage.bind(this);
   }
 
   handleChangeNotifications() {
     this.setState({notifications : !this.state.notifications})
   }
 
-  async handleDeleteBookmark() {
+  showSuccessMessage(verb) {
+    toast.success(`Successfully ${verb} custom search!`);
+    if (this.props.postSave()) {
+      this.props.postSave();
+    }
+  }
+
+  handleSuccessfulDelete() {
+    this.props.dispatch(requestWithAuth(
+      getUserSavedCustomSearches(() => this.showSuccessMessage("deleted"))
+    ))
+  }
+
+  handleSuccessfulSubmit() {
+    const verb = this.props.editing ? "updated" : "saved"
+    this.props.dispatch(requestWithAuth(
+      getUserSavedCustomSearches(() => this.showSuccessMessage(verb))
+    ))
+  }
+
+  handleDeleteSearch() {
     const areYouSure = confirm("Are you sure you want to delete this saved custom search?");
     if (!areYouSure) return;
 
-    await this.props.dispatch(requestWithAuth(
-      deleteUserCustomSearch(this.props.id)
+    this.props.dispatch(requestWithAuth(
+      deleteUserCustomSearch(this.props.id, 
+        this.handleSuccessfulDelete
+      )
     ));
-    await this.props.dispatch(requestWithAuth(
-      getUserSavedCustomSearches()
-    ))
-    this.props.postSave();
   }
 
-  async handleSubmit(formData) {
+  handleSubmit(formData) {
     this.setState({ validated: true })
     const frequency = this.state.notifications ? formData.notificationFrequency || "N" : "N";
     
     if (!this.state.editing) {
-      await this.props.dispatch(requestWithAuth(
+      this.props.dispatch(requestWithAuth(
         saveUserCustomSearch(
           formData.queryName, 
           frequency, 
-          this.props.url
+          this.props.url,
+          this.handleSuccessfulSubmit
         )
       ));
     }
     else {
-      await this.props.dispatch(requestWithAuth(
+      this.props.dispatch(requestWithAuth(
         updateSavedCustomSearch(
           this.props.id,
           formData.queryName,
-          frequency
+          frequency,
+          this.handleSuccessfulSubmit
         )
       ))
-    }
-    
-    await this.props.dispatch(requestWithAuth(
-      getUserSavedCustomSearches()
-    ))
-
-    if (this.props.postSave) {
-      this.props.postSave();
     }
   }
 
@@ -94,7 +111,7 @@ class SaveCustomSearchForm extends React.Component {
           notifications: this.props.notifications,
           notificationFrequency: this.props.notificationFrequency || "D"
         }}
-        onSubmit={async(e) => await this.handleSubmit(e)} 
+        onSubmit={(e) => this.handleSubmit(e)} 
         validationSchema={schema}>
         {({ handleSubmit, handleChange, handleBlur, touched, errors, submitCount }) => {
           return (
@@ -103,6 +120,7 @@ class SaveCustomSearchForm extends React.Component {
               validated={this.state.validated}
               onSubmit={handleSubmit}
             >
+              <FormError show={!!this.props.error||!!this.props.deleteError} message={(this.props.error || this.props.deleteError || {}).message} />
               <Form.Group controlId="customSearchQueryName" className="mb-5">
                 <Form.Label>Query Name</Form.Label>
                 <Form.Control
@@ -117,11 +135,11 @@ class SaveCustomSearchForm extends React.Component {
               <Form.Group controlId="customSearchNotification" className="mb-3">
                 <div className="save-custom-search__notifications">
                   <Form.Label>Would you like to be notified for changes to this search?</Form.Label>
-                  <Form.Switch
+                  <Form.Check
+                    type="switch"
                     name="notifications"
                     onChange={this.handleChangeNotifications}
                     onBlur={handleBlur}
-                    type="text"
                     defaultChecked={this.props.notifications}
                   />
                 </div>
@@ -138,7 +156,6 @@ class SaveCustomSearchForm extends React.Component {
                         onBlur={handleBlur}
                         type="radio"
                         value="D"
-                        defaultChecked={this.props.notificationFrequency || "D" === "D"}
                       />
                       <Form.Check
                         inline
@@ -148,7 +165,6 @@ class SaveCustomSearchForm extends React.Component {
                         onBlur={handleBlur}
                         type="radio"
                         value="W"
-                        defaultChecked={this.props.notificationFrequency === "W"}
                       />
                       <Form.Check
                         inline
@@ -158,7 +174,6 @@ class SaveCustomSearchForm extends React.Component {
                         onBlur={handleBlur}
                         type="radio"
                         value="M"
-                        defaultChecked={this.props.notificationFrequency === "M"}
                       />
                   </div>
                 </Form.Group>
@@ -166,22 +181,26 @@ class SaveCustomSearchForm extends React.Component {
               <div className="container mb-3">
                 <Button
                   className="col-12"
+                  block disabled={this.props.deleteLoading || this.props.loading}
                   variant="dark"
                   type="submit"
                   size="md"
                 >
                   <span>Save</span>
+                  <div className="button-loader__container">{this.props.loading && <SpinnerLoader size="20px" />}</div>
                 </Button>
               </div>
               {this.state.editing && 
                 <div className="container">
                   <Button
-                    className="col-12"
+                    className="btn-loader col-12"
+                    block disabled={this.props.deleteLoading || this.props.loading}
                     variant="outline-dark"
                     size="md"
-                    onClick={async() => await this.handleDeleteBookmark()}
+                    onClick={this.handleDeleteSearch}
                   >
                     <span>Delete</span>
+                    <div className="button-loader__container">{this.props.deleteLoading && <SpinnerLoader size="20px" />}</div>
                   </Button>
                 </div>
               }
@@ -200,7 +219,11 @@ SaveCustomSearchForm.propTypes = {
   url: PropTypes.string,
   notifications: PropTypes.bool,
   notificationFrequency: PropTypes.string,
-  id: PropTypes.string
+  id: PropTypes.string,
+  error: PropTypes.object,
+  loading: PropTypes.bool,
+  deleteError: PropTypes.object,
+  deleteLoading: PropTypes.bool
 }
 
 export default SaveCustomSearchForm

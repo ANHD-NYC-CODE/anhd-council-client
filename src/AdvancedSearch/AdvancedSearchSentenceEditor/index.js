@@ -22,6 +22,7 @@ import './style.scss'
 const AdvancedSearchSentenceEditor = props => {
   const numberOfUnits = props.results.reduce((total, result) => parseInt(total) + parseInt(result['unitsres'] || 0), 0)
   const searchedFilters = [...props.advancedSearch.conditions[0].filters];
+
   const loggedIn = !!props.user;
   const thisUrl = getCustomSearchPath(
     props.advancedSearch, 
@@ -37,6 +38,10 @@ const AdvancedSearchSentenceEditor = props => {
   const getFilterResourceConstant = (filter) => {
     return filter.resourceModel.resourceConstant;
   }
+
+  let filtersHash = {};
+  searchedFilters.forEach(v => filtersHash[getFilterLabel(v)] = v);
+  const uniqueSearchedFilters = Object.values(filtersHash);
 
   const getFilterColumnValue = (filter) => {
     if (!props.results.length) return 0;
@@ -120,7 +125,7 @@ const AdvancedSearchSentenceEditor = props => {
         </ModalContext.Consumer>
       </div>
       {
-        searchedFilters.some(filter => getFilterResourceConstant(filter) === "OCA_HOUSING_COURT") &&
+        uniqueSearchedFilters.some(filter => getFilterResourceConstant(filter) === "OCA_HOUSING_COURT") &&
         <div className="advanced-search-sentence-editor__disclaimer-section">
           <ConfigContext.Consumer>
             {config => {
@@ -157,7 +162,7 @@ const AdvancedSearchSentenceEditor = props => {
           </span>
         </div>
         {
-          searchedFilters.map(filter => 
+          uniqueSearchedFilters.map(filter => 
             <div className="advanced-search-sentence-editor__group"
               key={filter.resourceModel.resourceConstant}>
               <span className="advanced-search-sentence-editor__label">{getFilterLabel(filter)}:</span>{' '}

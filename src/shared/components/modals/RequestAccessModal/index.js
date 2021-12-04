@@ -3,9 +3,15 @@ import PropTypes from 'prop-types'
 import BaseModal from 'shared/components/BaseModal'
 import ModalContext from 'Modal/ModalContext'
 import RequestAccessForm from 'shared/components/forms/RequestAccessForm'
+import { deleteUserAccessRequest } from 'Store/Request/actions'
+import { getUserProfile } from 'Store/Auth/actions'
+import { requestWithAuth } from 'shared/utilities/authUtils'
+import FormError from 'shared/components/FormError'
+import SpinnerLoader from 'shared/components/Loaders/SpinnerLoader'
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
 import { connect } from 'react-redux'
+import { toast } from 'react-toastify'
 
 import "./style.scss"
 
@@ -18,6 +24,7 @@ class RequestAccessModal extends React.Component{
     }
 
     this.toggleViewPolicy = this.toggleViewPolicy.bind(this);
+    this.deleteRequest = this.deleteRequest.bind(this);
   }
 
   resetStateThenHideModal(modal) {
@@ -32,6 +39,23 @@ class RequestAccessModal extends React.Component{
     this.setState({
       switchedToForm: true
     })
+  }
+
+  handleSuccessfulDelete(modal) {
+    this.props.dispatch(
+      requestWithAuth(getUserProfile())
+    );
+    toast.success("Access request deleted. You can now submit a new one!")
+    modal.hideModal();
+  }
+
+  deleteRequest(modal) {
+    const areYouSure = confirm("Are you sure you want to delete your pending access request?");
+    if (!areYouSure) return;
+
+    this.props.dispatch(requestWithAuth(deleteUserAccessRequest(
+      () => this.handleSuccessfulDelete(modal)
+    )));
   }
 
   render() {
@@ -80,13 +104,34 @@ class RequestAccessModal extends React.Component{
                   </a></p>
                 </div>
               )}
-              {(!this.props.viewPolicy || this.state.switchedToForm) && (
+              {(!this.props.viewPolicy || this.state.switchedToForm) && this.props.userAccessRequestStatus !== "pending" && (
                 <RequestAccessForm 
                   dispatch={this.props.dispatch}
                   loading={this.props.loading}
                   error={this.props.error}
                   modal={modal}
                 />
+              )}
+              {(!this.props.viewPolicy || this.state.switchedToForm) && this.props.userAccessRequestStatus === "pending" && (
+                <div className="request-access-modal__pending">
+                  <FormError show={!!this.props.deleteError && this.props.deleteError.status !== 500} message={(this.props.deleteError || {}).message} />
+                  <p className="request-access-modal__text">
+                    You have already submitted a request. If you need to change the 
+                    information you submitted, click below to delete that request, 
+                    which will allow you to submit a new request.
+                  </p>
+                  <button
+                    className="btn btn-dark btn-loader col-12"
+                    block 
+                    disabled={this.props.deleteLoading}
+                    variant="outline-dark"
+                    size="md"
+                    onClick={() => this.deleteRequest(modal)}
+                  >
+                    <span>Delete pending access request</span>
+                    <div className="button-loader__container">{this.props.loading && <SpinnerLoader size="20px" />}</div>
+                  </button>
+                </div>
               )}
             </BaseModal>
           )
@@ -115,10 +160,13 @@ RequestAccessModal.propTypes = {
 const mapStateToProps = state => {
   const errorSelector = createErrorSelector(['POST_USER_ACCESS_REQUEST'])
   const loadingSelector = createLoadingSelector(['POST_USER_ACCESS_REQUEST'])
-
+  const deleteErrorSelector = createErrorSelector(['DELETE_USER_ACCESS_REQUEST'])
+  const deleteLoadingSelector = createLoadingSelector(['DELETE_USER_ACCESS_REQUEST'])
   return {
     error: errorSelector(state),
     loading: loadingSelector(state),
+    deleteError: deleteErrorSelector(state),
+    deleteLoading: deleteLoadingSelector(state),
     user: state.auth.user
   }
 }
