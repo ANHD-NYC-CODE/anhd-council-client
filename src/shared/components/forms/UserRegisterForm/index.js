@@ -14,18 +14,18 @@ const schema = yup.object({
   email: yup
     .string()
     .email()
-    .required(),
+    .required("Email is a required field"),
   username: yup
     .string()
     .max(64)
-    .required(),
+    .required("Username is a required field"),
   first_name: yup
     .string()
-    .required()
+    .required("First Name is a required field")
     .max(120),
   last_name: yup
     .string()
-    .required()
+    .required("Last Name is a required field")
     .max(120)
 })
 

@@ -15,6 +15,9 @@
 
   &__text {
     @extend %p3-font-size;
-    color: $black;
+  }
+
+  &__text, a {
+    cursor: pointer;
   }
 }

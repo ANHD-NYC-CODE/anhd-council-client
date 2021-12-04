@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Form, Button } from 'react-bootstrap'
 import { postUserAccessRequest } from 'Store/Request/actions'
+import { getUserProfile } from 'Store/Auth/actions'
 import { requestWithAuth } from 'shared/utilities/authUtils'
 import { Formik } from 'formik'
 import { toast } from 'react-toastify'
@@ -13,24 +14,23 @@ import './style.scss'
 
 const schema = yup.object({
   needEmail: yup
-    .string()
-    .required(),
+    .string(),
   email: yup
     .string()
     .email()
     .when("needEmail", {
       is: "yes",
-      then: yup.string().required()
+      then: yup.string().required("Email is a required field")
     }),
   description: yup
     .string(),
   organization: yup
     .string()
     .max(120)
-    .required(),
+    .required("Organization is a required field"),
   position: yup
     .string()
-    .required()
+    .required("Position is a required field")
     .max(120),
   term1: yup
     .boolean()
@@ -74,13 +74,15 @@ class RequestAccessForm extends React.Component {
   }
 
   handleSuccessfulSubmit() {
+    this.props.dispatch(
+      requestWithAuth(getUserProfile())
+    );
     this.props.modal.hideModal()
     toast.success("Request made successfully. You will receive an email upon approval of your request.");
   }
 
   handleSubmit(formData) {
     this.setState({ validated: true })
-    console.log(formData);
     let data = {
       access_type: this.state.page,
       organization_email: formData.needEmail === "yes" ? formData.email : undefined,
@@ -154,14 +156,15 @@ class RequestAccessForm extends React.Component {
           <p className="request-access-form__text mb-3">
             Please allow at least one business day for ANHD to 
             review your request. You can email 
-            <a href="mailto:dapadmin@anhd.org">dapadmin@anhd.org</a> 
+            <a href="mailto:dapadmin@anhd.org"> dapadmin@anhd.org </a> 
             with questions.
           </p>
         )}
         {this.state.page === Page.Personal && (
           <p className="request-access-form__text mb-3">
-            Please allow at least one business day for ANHD to 
-            review your request. You can email dapadmin@anhd.org 
+            Please allow at least 3-5 business days for ANHD to 
+            review your request. You can email
+            <a href="mailto:dapadmin@anhd.org"> dapadmin@anhd.org </a> 
             with questions.
           </p>
         )}
@@ -214,7 +217,7 @@ class RequestAccessForm extends React.Component {
         {this.state.page === Page.Select && (
           <div className="request-access-form__select">
             <p><a onClick={() => this.setPage(Page.Anhd)} className="request-access-form__text mb-3">
-              <b>I am a staff member of an <u>ANHD member organization.</u></b>
+              <b>I am a staff member of an ANHD member organization.</b>
             </a></p>
             <p><a onClick={() => this.setPage(Page.Government)} className="request-access-form__text mb-3">
               <b>
@@ -237,7 +240,9 @@ class RequestAccessForm extends React.Component {
           <div>
             {this.state.page === Page.Anhd && (
               <p className="request-access-form__text mb-4">
-                <b>I am a staff member of an <u>ANHD member organization.</u></b>
+                <b>I am a staff member of an <a href="https://anhd.org/members" target="_blank" className="request-access-form__text mb-3">
+                  ANHD member organization.
+                </a></b>
               </p>
             )}
             {this.state.page === Page.Government && (
@@ -255,7 +260,7 @@ class RequestAccessForm extends React.Component {
                   I am an employee or member of an organization or 
                   an individual who will use this data for the purposes 
                   of stopping speculation and displacement and/or 
-                  furthering tenant and smallhomeowner rights. 
+                  furthering tenant and small homeowner rights. 
                 </b>
               </p>
             )}
@@ -325,7 +330,9 @@ class RequestAccessForm extends React.Component {
                         {this.state.page === Page.Anhd && (
                           <Form.Text className="text-muted">
                             Should be an ANHD member organization <a href="https://anhd.org/members" target="_blank">(view list of ANHD members)</a>. 
-                            If not, please <a onClick={() => this.setPage(Page.Personal)}>request access through this form</a>.
+                            If not, please <a className="request-access-form__text" onClick={() => this.setPage(Page.Personal)}>
+                              request access through this form
+                            </a>.
                           </Form.Text>
                         )}
                       </Form.Group>
@@ -368,7 +375,7 @@ class RequestAccessForm extends React.Component {
                       </Form.Group>
                       )}
                       {this.renderTerms(errors, submitCount, touched, handleChange, handleBlur)}
-                      <Button className="btn-loader" onClick={() => console.log(errors, values)} block disabled={this.props.loading} variant="dark" type="submit">
+                      <Button className="btn-loader" block disabled={this.props.loading} variant="dark" type="submit">
                         <span>Submit</span>
                         <div className="button-loader__container">{this.props.loading && <SpinnerLoader size="20px" />}</div>
                       </Button>
