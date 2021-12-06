@@ -21,7 +21,7 @@ export const clearMyDashboard = () => ({
     type: c.CLEAR_MY_DASHBOARD
 })
 
-export const bookmarkProperty = (bbl, name) => (dispatch, getState, access_token) => {
+export const bookmarkProperty = (bbl, name, postBookmark) => (dispatch, getState, access_token) => {
     const requestId = Math.floor(Math.random() * 1000000)
 
     return constructAxiosPost(
@@ -35,11 +35,12 @@ export const bookmarkProperty = (bbl, name) => (dispatch, getState, access_token
         null,
         access_token,
         c.BOOKMARK_PROPERTY,
-        undefined
+        undefined,
+        postBookmark
     )
 } 
 
-export const unBookmarkProperty = (id) => (dispatch, getState, access_token) => {
+export const unBookmarkProperty = (id, postUnbookmark) => (dispatch, getState, access_token) => {
     const requestId = Math.floor(Math.random() * 1000000)
 
     return constructAxiosDelete(
@@ -51,7 +52,8 @@ export const unBookmarkProperty = (id) => (dispatch, getState, access_token) => 
         null,
         access_token,
         c.UNBOOKMARK_PROPERTY,
-        undefined
+        undefined,
+        postUnbookmark
     )
 } 
 

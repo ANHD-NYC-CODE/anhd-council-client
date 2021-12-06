@@ -2,6 +2,11 @@
 $unopened-width: 660px;
 
 .lookup-show {
+  &__bookmark-error {
+    @extend %p3-font-size;
+    color: $red;
+  }
+
   .lookup-show__row-wrapper {
     margin-top: 1rem;
     margin-bottom: 1rem;
