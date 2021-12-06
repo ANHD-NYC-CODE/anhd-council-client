@@ -24,11 +24,20 @@
         a {
             color: black
         }
+
+        .btn-light {
+            background-color: transparent;
+            border-color: transparent;
+        }
     }
 
     &__search_section {
         a {
             color: black
+        }
+        .btn-light {
+            background-color: transparent;
+            border-color: transparent;
         }
     }
 }

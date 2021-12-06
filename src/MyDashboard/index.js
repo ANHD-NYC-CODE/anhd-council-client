@@ -15,12 +15,20 @@ import SaveOrEditCustomSearch from 'shared/components/modals/SaveCustomSearchMod
 import InfoModalButton from 'shared/components/InfoModalButton'
 import RequestAccessModal from 'shared/components/modals/RequestAccessModal'
 import { TRUSTED_GROUP } from 'shared/constants/groups'
+import SpinnerLoader from 'shared/components/Loaders/SpinnerLoader'
+import * as c from "Store/MyDashboard/constants";
+import { createLoadingSelector } from 'Store/Loading/selectors'
+import { createErrorSelector } from 'Store/Error/selectors'
+import { toast } from 'react-toastify'
 
 import './style.scss'
 
 class MyDashboard extends React.Component {
     constructor(props) {
         super(props);
+
+        this.onBookmarkDelete = this.onBookmarkDelete.bind(this);
+        this.onSuccessfulBookmarkDelete = this.onSuccessfulBookmarkDelete.bind(this);
     }
 
     componentDidUpdate() {
@@ -29,12 +37,17 @@ class MyDashboard extends React.Component {
         }
     }
 
-    async onBookmarkDelete(id) {
+    onSuccessfulBookmarkDelete() {
+        toast.success("Successfuly deleted bookmarked property");
+        this.props.dispatch(requestWithAuth(getUserBookmarkedProperties()))
+    }
+
+    onBookmarkDelete(id) {
         const areYouSure = confirm("Are you sure you want to delete this bookmark?");
         if (!areYouSure) return;
-        
-        await this.props.dispatch(requestWithAuth(unBookmarkProperty(id)));
-        await this.props.dispatch(requestWithAuth(getUserBookmarkedProperties()))
+        this.props.dispatch(requestWithAuth(unBookmarkProperty(
+            id, this.onSuccessfulBookmarkDelete
+        )));
     }
 
     onEditSavedCustomSearch(e, modal, search) {
@@ -94,7 +107,17 @@ class MyDashboard extends React.Component {
                     }
                 </div>
                 <div className="my_dashboard__bookmark_section">
-                    <h5 className="my_dashboard__section_header"><b>Bookmarked Properties</b></h5>
+                    <div className="d-flex flex-row justify-content-">
+                        <div><h5 className="my_dashboard__section_header"><b>Bookmarked Properties</b></h5></div>
+                        {(this.props.bookmarkDeleteLoading) && 
+                            <div><SpinnerLoader size="20px" className="ml-3"/></div>
+                        }
+                        {(this.props.bookmarkDeleteError) && (
+                            <div className="lookup-show__bookmark-error ml-3">
+                                {this.props.bookmarkDeleteError.message}
+                            </div>
+                        )}
+                    </div>
                     <table className="table table-striped table-sm">
                         <thead className="">
                             <tr className="">
@@ -117,8 +140,9 @@ class MyDashboard extends React.Component {
                                                 {bookmark.bbl}
                                             </td>
                                             <td>
-                                                <button className="btn btn-light" onClick={async() => 
-                                                    await this.onBookmarkDelete(bookmark.id)}
+                                                <button className="btn btn-light" onClick={() => 
+                                                    this.onBookmarkDelete(bookmark.id)}
+                                                    disabled={this.props.bookmarkDeleteLoading}
                                                 >
                                                     <FontAwesomeIcon icon={faTrash} size="lg" />
                                                 </button>
@@ -195,11 +219,16 @@ MyDashboard.propTypes = {
 }
 
 const mapStateToProps = state => {
+    const bookmarkDeleteError = createErrorSelector([c.UNBOOKMARK_PROPERTY]);
+    const bookmarkDeleteLoading = createLoadingSelector([c.UNBOOKMARK_PROPERTY]);
+
     return {
         appState: state.appState,
         userBookmarks: state.myDashboard.userBookmarks,
         savedCustomSearches: state.myDashboard.customSearches,
         user: state.auth.user,
+        bookmarkDeleteError: bookmarkDeleteError(state),
+        bookmarkDeleteLoading: bookmarkDeleteLoading(state),
     }
 }
 
