@@ -21,6 +21,8 @@ import BookmarkButton from 'shared/components/buttons/BookmarkButton'
 import { bookmarkProperty, unBookmarkProperty, getUserBookmarkedProperties } from 'Store/MyDashboard/actions'
 import { boroCodeToName, constructAddressString } from 'shared/utilities/languageUtils'
 import { requestWithAuth } from 'shared/utilities/authUtils'
+import SpinnerLoader from 'shared/components/Loaders/SpinnerLoader'
+import { toast } from 'react-toastify'
 
 import './style.scss'
 
@@ -40,6 +42,7 @@ class LookupShow extends React.PureComponent {
     this.switchTable = this.switchTable.bind(this)
     this.handleClearLookup = this.handleClearLookup.bind(this)
     this.bookmarkClicked = this.bookmarkClicked.bind(this)
+    this.handleSuccessfulBookmarkAction = this.handleSuccessfulBookmarkAction.bind(this)
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
@@ -49,31 +52,35 @@ class LookupShow extends React.PureComponent {
         bookmarked: nextProps.userBookmarks && nextProps.userBookmarks[nextProps.bbl]
       }
     }
+    return null;
   }
 
-  async bookmarkClicked() {
-    let requestPromise;
+  handleSuccessfulBookmarkAction(verb) {
+    toast.success(`Successfully ${verb} this property`)
+    this.props.dispatch(requestWithAuth(getUserBookmarkedProperties()));
+  }
+
+  bookmarkClicked() {
+    if (this.props.bookmarkLoading || this.props.bookmarkDeleteLoading) return;
+
     if (!this.state.bookmarked) {
       const address = constructAddressString({
         street: this.props.propertyResult.address,
         borough: boroCodeToName(this.props.propertyResult.borough),
         zip: this.props.propertyResult.zipcode,
       });
-      requestPromise = this.props.dispatch(requestWithAuth(bookmarkProperty(
-        this.props.bbl, address
+      this.props.dispatch(requestWithAuth(bookmarkProperty(
+        this.props.bbl, address, () => this.handleSuccessfulBookmarkAction("bookmarked")
       )));
     }
     else {
       const areYouSure = confirm("Are you sure you want to delete this bookmark?");
       if (!areYouSure) return;
-      requestPromise = this.props.dispatch(requestWithAuth(unBookmarkProperty(
-        this.props.userBookmarks[this.props.bbl].id
+      this.props.dispatch(requestWithAuth(unBookmarkProperty(
+        this.props.userBookmarks[this.props.bbl].id, 
+        () => this.handleSuccessfulBookmarkAction("unbookmarked")
       )));
     }
-
-    Promise.resolve(requestPromise).then(async () => {
-      await this.props.dispatch(requestWithAuth(getUserBookmarkedProperties()));
-    })
   }
 
   componentDidMount() {
@@ -159,7 +166,21 @@ class LookupShow extends React.PureComponent {
                       activeText="You have bookmarked this property"
                       text="Bookmark this property"
                       onBookmark={this.bookmarkClicked}
+                      disabled={this.props.bookmarkLoading || this.props.bookmarkDeleteLoading}
                     />
+                  </div>
+                )}
+                {(this.props.bookmarkLoading || this.props.bookmarkDeleteLoading) && 
+                  <div><SpinnerLoader size="20px" /></div>
+                }
+                {(this.props.bookmarkError) && (
+                  <div className="lookup-show__bookmark-error">
+                    {this.props.bookmarkError.message}
+                  </div>
+                )}
+                {(this.props.bookmarkDeleteError) && (
+                  <div className="lookup-show__bookmark-error">
+                    {this.props.bookmarkDeleteError.message}
                   </div>
                 )}
                 {this.props.appState.linkLookupBackToDashboard && (
