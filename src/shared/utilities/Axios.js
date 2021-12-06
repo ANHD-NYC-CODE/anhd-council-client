@@ -119,7 +119,6 @@ export const constructAxiosDelete = (
       }
     })
     .catch(error => {
-      console.log(error);
       handleCatchError(error, constant, dispatch, requestId)
     })
 }
