@@ -13,6 +13,7 @@ import { getCommunities } from 'Store/Community/actions'
 import { getStateAssemblies } from 'Store/StateAssembly/actions'
 import { getStateSenates } from 'Store/StateSenate/actions'
 import { getZipCodes } from 'Store/ZipCode/actions'
+import { getUserProfile } from 'Store/Auth/actions'
 import { infoModals } from 'shared/modals/modalsCopy'
 import ConfigLoader from 'shared/components/Loaders/ConfigLoader'
 import PageError from 'shared/components/PageError'
@@ -24,6 +25,8 @@ import { newMapRequests, newMapResultFilters, newLookupRequests } from 'shared/u
 import { setupResourceModels } from 'shared/utilities/configUtils'
 import { createAdvancedSearchFilters } from 'shared/utilities/filterUtils'
 import { resetAdvancedSearchReducer, replacePropertyFilter } from 'Store/AdvancedSearch/actions'
+import { getUserBookmarkedProperties, getUserSavedCustomSearches } from 'Store/MyDashboard/actions'
+import { requestWithAuth } from 'shared/utilities/authUtils'
 
 class Config extends React.PureComponent {
   static get MonitoredRequests() {
@@ -61,6 +64,18 @@ class Config extends React.PureComponent {
 
     if (!props.zipCodes.length) {
       this.props.dispatch(getZipCodes())
+    }
+
+    if (props.auth.user) {
+      this.props.dispatch(
+        requestWithAuth(getUserBookmarkedProperties())
+      );
+      this.props.dispatch(
+        requestWithAuth(getUserSavedCustomSearches())
+      );
+      this.props.dispatch(
+        requestWithAuth(getUserProfile())
+      );
     }
 
     this.selectGeographyData = this.selectGeographyData.bind(this)

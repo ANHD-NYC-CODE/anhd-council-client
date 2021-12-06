@@ -11,15 +11,19 @@ const LookupTabs = props => {
   const [isOpen, toggleOpen] = useState(true)
 
   const getTabLabel = (error, resourceModel, count1 = '...', count2 = 0) => {
+    
     switch (resourceModel.resourceConstant) {
       case 'ACRIS_REAL_MASTER':
         return `Sales (${count1}) and Financing`
       case 'HPD_COMPLAINT':
         return `HPD Complaints (${count1}) and Problems (${count2})`
+      case 'OCA_HOUSING_COURT':
+        return error && (error.status === 401 || error.status === 403 || error.status === 409) ? 
+          `${resourceModel.label}` : `${resourceModel.label} (${count1})`;
       case 'FORECLOSURE':
-        return error && error.status === 401 ? `${resourceModel.label}` : `${resourceModel.label} (${count1})`
+        return error && error.status === 403 ? `${resourceModel.label}` : `${resourceModel.label} (${count1})`
       case 'PSFORECLOSURE':
-        return error && error.status === 401 ? `${resourceModel.label}` : `${resourceModel.label} (${count1})`
+        return error && error.status === 403 ? `${resourceModel.label}` : `${resourceModel.label} (${count1})`
       default:
         return `${resourceModel.label} (${count1})`
     }
@@ -34,9 +38,10 @@ const LookupTabs = props => {
       </div>
       <div className={classnames('lookup-tabs__tabs', { open: isOpen })}>
         {props.lookupRequests.map(request => {
-          const results = props.requests[request.requestConstant] || []
-          const loading = props.loadingState[request.requestConstant]
-          const error = props.errorState[request.requestConstant]
+          const results = props.requests[request.requestConstant] || [];
+          const loading = props.loadingState[request.requestConstant];
+          const error = props.errorState[request.requestConstant];
+          
           const getCount1 = (request, results) => {
             if (request.resourceModel.tableRecordsCountFunction) {
               return request.resourceModel.tableRecordsCountFunction(results)
@@ -89,6 +94,7 @@ LookupTabs.propTypes = {
   requests: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),
   lookupRequests: PropTypes.array,
   switchTable: PropTypes.func,
+  propertyResult: PropTypes.object,
 }
 LookupTabs.defaultProps = {}
 

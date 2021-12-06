@@ -1,0 +1,23 @@
+@import 'shared/styles/_variables.scss';
+
+.request-access-form {
+  .form-label {
+    @extend %p3-font-size;
+    color: $black;
+    font-weight: bold;
+  }
+
+  &__back {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+
+  &__text {
+    @extend %p3-font-size;
+  }
+
+  &__text, a {
+    cursor: pointer;
+  }
+}

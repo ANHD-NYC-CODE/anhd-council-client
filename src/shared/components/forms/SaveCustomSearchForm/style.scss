@@ -1,0 +1,25 @@
+.save-custom-search {
+  &__notifications {
+    display: flex;
+    align-items: left;
+  }
+
+  &__frequency {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  &__block {
+    display: flex;
+    align-items: left;
+    vertical-align: middle;
+    
+    input {
+      width: 15px;
+    }
+
+    span {
+      padding-top: 7px;
+    }
+  }
+}

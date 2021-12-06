@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { Navbar, Nav } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { getGeographyPath, addressResultToPath } from 'shared/utilities/routeUtils'
+import { getGeographyPath, getCustomSearchPath, addressResultToPath } from 'shared/utilities/routeUtils'
 import portalLogo from 'shared/images/portallogo-2020.png'
 import anhdLogo from 'shared/images/anhdlogo.png'
 
@@ -52,6 +52,19 @@ class SubHeader extends React.Component {
                   <Nav.Item>Home</Nav.Item>
                 </div>
               </Link>
+              {this.props.auth.user ? 
+                (<Link
+                  data-test-id="subheader__home-link"
+                  className={classnames('sub-header__nav-tab tab--dark-inverse', {
+                    active: this.props.pathname.match(/me/),
+                  })}
+                  to={'/me'}
+                >
+                  <div className="sub-header__nav-tab--inner">
+                    <Nav.Item>My Dashboard</Nav.Item>
+                  </div>
+                </Link>) : ("")
+              }
               <Link
                 data-test-id="subheader__pl-link"
                 className={classnames('sub-header__nav-tab tab--dark-inverse', {
@@ -73,12 +86,12 @@ class SubHeader extends React.Component {
               <Link
                 data-test-id="subheader__dd-link"
                 className={classnames('sub-header__nav-tab tab--dark-inverse', {
-                  active: this.props.pathname.match(/(map|council|community|state-assembly|state-senate|zipcode)/),
+                  active: this.props.pathname.match(/(district-dashboard)/),
                 })}
                 to={`${
                   this.props.currentGeographyType && this.props.currentGeographyId
-                    ? '/' + getGeographyPath(this.props.currentGeographyType) + '/' + this.props.currentGeographyId
-                    : '/map'
+                    ? '/district-dashboard/' + getGeographyPath(this.props.currentGeographyType) + '/' + this.props.currentGeographyId
+                    : '/district-dashboard'
                 }`}
               >
                 <div className="sub-header__nav-tab--inner">
@@ -87,7 +100,15 @@ class SubHeader extends React.Component {
               </Link>
               <Link
                 data-test-id="subheader__search-link"
-                to="/search"
+                to={`${
+                  this.props.advancedSearch && this.props.customSearchGeographyType && this.props.customSearchGeographyId
+                  ? '/search' + getCustomSearchPath(
+                      this.props.advancedSearch, 
+                      this.props.customSearchGeographyType, 
+                      this.props.customSearchGeographyId
+                    )
+                  : '/search'
+                }`}
                 className={classnames('sub-header__nav-tab tab--dark-inverse', {
                   active: this.props.pathname.match(/(search)/),
                 })}
@@ -141,6 +162,7 @@ class SubHeader extends React.Component {
                         modalComponent: LoginModal,
                         modalProps: {
                           modalFooter: <LoginModalFooter modal={this.props.modal} />,
+                          modal: this.props.modal
                         },
                       })
                     }}
@@ -172,6 +194,10 @@ const mapStateToProps = state => {
     currentGeographyId: state.appState.currentGeographyId,
     currentProperty: state.appState.currentProperty,
     currentBuilding: state.appState.currentBuilding,
+    customSearchGeographyId: state.appState.customSearchGeographyId,
+    customSearchGeographyType: state.appState.customSearchGeographyType,
+    advancedSearchRequest: state.appState.advancedSearchRequest,
+    advancedSearch: state.appState.advancedSearch,
     pathname: state.router.location.pathname,
   }
 }

@@ -16,6 +16,13 @@ import LookupTable from 'Lookup/LookupTable'
 import BuildingSelect from 'Lookup/BuildingSelect'
 import LookupLinks from 'Lookup/LookupLinks'
 import LookupSidebar from 'Lookup/LookupSidebar'
+import BookmarkButton from 'shared/components/buttons/BookmarkButton'
+
+import { bookmarkProperty, unBookmarkProperty, getUserBookmarkedProperties } from 'Store/MyDashboard/actions'
+import { boroCodeToName, constructAddressString } from 'shared/utilities/languageUtils'
+import { requestWithAuth } from 'shared/utilities/authUtils'
+import SpinnerLoader from 'shared/components/Loaders/SpinnerLoader'
+import { toast } from 'react-toastify'
 
 import './style.scss'
 
@@ -26,9 +33,54 @@ class LookupShow extends React.PureComponent {
     if (this.props.propertyError && this.props.propertyError.status === 404) {
       this.props.trigger404Error(`Property with bbl: ${this.props.bbl} not found.`)
     }
+    
+    this.state = {
+      userBookmarks: this.props.userBookmarks,
+      bookmarked: this.props.userBookmarks && !!this.props.userBookmarks[this.props.bbl]
+    }
 
     this.switchTable = this.switchTable.bind(this)
     this.handleClearLookup = this.handleClearLookup.bind(this)
+    this.bookmarkClicked = this.bookmarkClicked.bind(this)
+    this.handleSuccessfulBookmarkAction = this.handleSuccessfulBookmarkAction.bind(this)
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.userBookmarks !== prevState.userBookmarks) {
+      return {
+        userBookmarks: nextProps.userBookmarks,
+        bookmarked: nextProps.userBookmarks && nextProps.userBookmarks[nextProps.bbl]
+      }
+    }
+    return null;
+  }
+
+  handleSuccessfulBookmarkAction(verb) {
+    toast.success(`Successfully ${verb} this property`)
+    this.props.dispatch(requestWithAuth(getUserBookmarkedProperties()));
+  }
+
+  bookmarkClicked() {
+    if (this.props.bookmarkLoading || this.props.bookmarkDeleteLoading) return;
+
+    if (!this.state.bookmarked) {
+      const address = constructAddressString({
+        street: this.props.propertyResult.address,
+        borough: boroCodeToName(this.props.propertyResult.borough),
+        zip: this.props.propertyResult.zipcode,
+      });
+      this.props.dispatch(requestWithAuth(bookmarkProperty(
+        this.props.bbl, address, () => this.handleSuccessfulBookmarkAction("bookmarked")
+      )));
+    }
+    else {
+      const areYouSure = confirm("Are you sure you want to delete this bookmark?");
+      if (!areYouSure) return;
+      this.props.dispatch(requestWithAuth(unBookmarkProperty(
+        this.props.userBookmarks[this.props.bbl].id, 
+        () => this.handleSuccessfulBookmarkAction("unbookmarked")
+      )));
+    }
   }
 
   componentDidMount() {
@@ -107,6 +159,30 @@ class LookupShow extends React.PureComponent {
             <div className="lookup-show__row-wrapper">
               <div className="lookup-show__top-row">
                 <LookupAddressDisplay handleClear={this.handleClearLookup} profile={this.props.propertyResult} />
+                { this.props.loggedIn && (
+                  <div className="lookup-show__bookmark-section">
+                    <BookmarkButton 
+                      active={this.state.bookmarked} 
+                      activeText="You have bookmarked this property"
+                      text="Bookmark this property"
+                      onBookmark={this.bookmarkClicked}
+                      disabled={this.props.bookmarkLoading || this.props.bookmarkDeleteLoading}
+                    />
+                  </div>
+                )}
+                {(this.props.bookmarkLoading || this.props.bookmarkDeleteLoading) && 
+                  <div><SpinnerLoader size="20px" /></div>
+                }
+                {(this.props.bookmarkError) && (
+                  <div className="lookup-show__bookmark-error">
+                    {this.props.bookmarkError.message}
+                  </div>
+                )}
+                {(this.props.bookmarkDeleteError) && (
+                  <div className="lookup-show__bookmark-error">
+                    {this.props.bookmarkDeleteError.message}
+                  </div>
+                )}
                 {this.props.appState.linkLookupBackToDashboard && (
                   <BaseLink
                     className="lookup-show__back-to-dashboard"
@@ -120,6 +196,7 @@ class LookupShow extends React.PureComponent {
                     </Button>
                   </BaseLink>
                 )}
+                
               </div>
               <div className="lookup-show__building-row">
                 <BuildingSelect
@@ -139,6 +216,7 @@ class LookupShow extends React.PureComponent {
               requests={this.props.requests}
               lookupRequests={this.props.lookupRequests}
               switchTable={this.switchTable}
+              propertyResult={this.props.propertyResult}
             />
             <div className="lookup-show__tables">
               {this.props.lookupRequests.map(request => {
@@ -185,6 +263,8 @@ LookupShow.propTypes = {
   changeLookup: PropTypes.func,
   propertyResult: PropTypes.object,
   profileRequest: PropTypes.object,
+  loggedIn: PropTypes.bool,
+  userBookmarks: PropTypes.object,
 }
 
 export default LookupShow

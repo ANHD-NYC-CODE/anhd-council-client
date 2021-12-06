@@ -1,5 +1,6 @@
 import * as c from '../constants'
 import Condition from 'shared/classes/Condition'
+import Geography from 'shared/classes/Geography'
 import ConditionFilter from 'shared/classes/ConditionFilter'
 import { cloneInstance } from 'shared/utilities/classUtils'
 
@@ -19,6 +20,10 @@ export const initialState = () => ({
     sizePerPage: 10,
   },
 })
+
+export const initialStateToSearchWithParams = (geographyType, geographyId, advancedSearch) => {
+  advancedSearch.geographies = [new Geography(geographyType, geographyId)];
+}
 
 export const advancedSearchReducer = (state = Object.freeze(initialState()), action = { data: [] }) => {
   let newConditions
