@@ -34,16 +34,16 @@ const schema = yup.object({
     .max(120),
   term1: yup
     .boolean()
-    .required(),
+    .oneOf([true]),
   term2: yup
     .boolean()
-    .required(),
+    .oneOf([true]),
   term3: yup
     .boolean()
-    .required(),
+    .oneOf([true]),
   term4: yup
     .boolean()
-    .required()
+    .oneOf([true])
 })
 
 const Page = {
