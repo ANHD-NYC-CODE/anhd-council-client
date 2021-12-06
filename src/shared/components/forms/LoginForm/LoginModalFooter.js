@@ -1,7 +1,7 @@
 import React from 'react'
 import { Modal, Row, Col, Button } from 'react-bootstrap'
 
-import UserRequestModal from 'shared/components/modals/UserRequestModal'
+import UserRegisterModal from 'shared/components/modals/UserRegisterModal'
 
 const LoginModalFooter = props => (
   <Modal.Footer as={Row}>
@@ -14,14 +14,14 @@ const LoginModalFooter = props => (
         onClick={ev => {
           ev.preventDefault()
           props.modal.setModal({
-            modalComponent: UserRequestModal,
+            modalComponent: UserRegisterModal,
             modalProps: {
               size: 'lg',
             },
           })
         }}
       >
-        Request an account
+        Register for an account
       </Button>
     </Col>
   </Modal.Footer>

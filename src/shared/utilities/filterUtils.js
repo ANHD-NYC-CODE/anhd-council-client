@@ -91,6 +91,9 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
     {
       resourceModel: resourceModels['AEP_BUILDING'],
     },
+    {
+      resourceModel: resourceModels['OCA_HOUSING_COURT'],
+    }  
   ]
 }
 
@@ -446,6 +449,8 @@ export const getDatasetDateField = datasetConstant => {
       return 'date_added'
     case 'PSFORECLOSURE':
       return 'dateadded'
+    case 'OCA_HOUSING_COURT':
+      return 'fileddate';
     case 'DOB_ISSUED_PERMIT':
       return 'issuedate'
     case 'DOB_FILED_PERMIT':

@@ -9,7 +9,7 @@ export const Axios = axios.create({
   headers: { 'Content-type': 'application/json' },
 })
 
-export const constructAxiosGet = (dispatch, getState, requestId, url, params, access_token, constant, handleAction) => {
+export const constructAxiosGet = (dispatch, getState, requestId, url, params, access_token, constant, dispatchAction, handleAction) => {
   if (!requestId) throw 'Misconfigured Axios Request (missing id)'
   handleActionDispatch(dispatch, constant, requestId)
 
@@ -26,8 +26,12 @@ export const constructAxiosGet = (dispatch, getState, requestId, url, params, ac
     .then(response => {
       const requestIsValid = !!getState().loading.requests.filter(request => request.id === requestId).length
       if (requestIsValid) {
+        if (dispatchAction) {
+          dispatch(dispatchAction(response, constant, dispatch))
+        }
+
         if (handleAction) {
-          dispatch(handleAction(response, constant, dispatch))
+          handleAction()
         }
         dispatch(handleCompletedRequest(constant, requestId))
 
@@ -56,6 +60,84 @@ export const constructAxiosPost = (
   if (!requestId) throw 'Misconfigured Axios Request (missing id)'
   handleActionDispatch(dispatch, constant, requestId)
   return Axios.post(url, body, {
+    params: { format: 'json', ...params },
+    headers: typeof access_token === 'string' ? { authorization: `Bearer ${access_token}` } : null,
+  })
+    .then(response => {
+      const requestIsValid = !!getState().loading.requests.filter(request => request.id === requestId).length
+      if (requestIsValid) {
+        if (dispatchAction) {
+          dispatch(dispatchAction(response, constant))
+        }
+
+        if (handleAction) {
+          handleAction()
+        }
+        dispatch(handleCompletedRequest(constant, requestId))
+
+        if (response.headers && response.headers['content-type'].match(/csv/)) {
+          FileDownload(response.data, response.config.params.filename)
+        }
+      }
+    })
+    .catch(error => {
+      handleCatchError(error, constant, dispatch, requestId)
+    })
+}
+
+export const constructAxiosDelete = (
+  dispatch,
+  getState,
+  requestId,
+  url,
+  body,
+  params,
+  access_token,
+  constant,
+  dispatchAction,
+  handleAction
+) => {
+  if (!requestId) throw 'Misconfigured Axios Request (missing id)'
+  handleActionDispatch(dispatch, constant, requestId)
+  return Axios.delete(url,
+  {
+    params: { format: 'json', ...params },
+    data: body,
+    headers: typeof access_token === 'string' ? { authorization: `Bearer ${access_token}` } : null,
+  })
+    .then(response => {
+      const requestIsValid = !!getState().loading.requests.filter(request => request.id === requestId).length
+      if (requestIsValid) {
+        if (dispatchAction) {
+          dispatch(dispatchAction(response, constant))
+        }
+
+        if (handleAction) {
+          handleAction()
+        }
+        dispatch(handleCompletedRequest(constant, requestId))
+      }
+    })
+    .catch(error => {
+      handleCatchError(error, constant, dispatch, requestId)
+    })
+}
+
+export const constructAxiosPatch = (
+  dispatch,
+  getState,
+  requestId,
+  url,
+  body,
+  params,
+  access_token,
+  constant,
+  dispatchAction,
+  handleAction
+) => {
+  if (!requestId) throw 'Misconfigured Axios Request (missing id)'
+  handleActionDispatch(dispatch, constant, requestId)
+  return Axios.patch(url, body, {
     params: { format: 'json', ...params },
     headers: typeof access_token === 'string' ? { authorization: `Bearer ${access_token}` } : null,
   })

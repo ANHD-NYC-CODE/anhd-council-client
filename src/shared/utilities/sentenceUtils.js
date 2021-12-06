@@ -313,3 +313,16 @@ export const constructAdvancedSearchSentence = (advancedSearch, loading) => {
     .join(' ')
     .trim()
 }
+
+export const getNotificationFrequencyString = (f) => {
+  switch(f) {
+    case "D":
+      return "Daily"
+    case "W":
+      return "Weekly"
+    case "M":
+      return "Monthly"
+    default: 
+      return "Never"
+  }
+}

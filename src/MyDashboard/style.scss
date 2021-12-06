@@ -1,0 +1,43 @@
+.my_dashboard {
+    &__container {
+        padding: 25px 50px 50px 25px;
+    }
+
+    &__top_section {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin-bottom: 30px;
+
+        button {
+            width: 250px;
+        }
+    }
+
+    &__section_header {
+        margin-bottom: 10px;
+    }
+
+    &__bookmark_section {
+        margin-bottom: 45px;
+        width: 100%;
+        a {
+            color: black
+        }
+
+        .btn-light {
+            background-color: transparent;
+            border-color: transparent;
+        }
+    }
+
+    &__search_section {
+        a {
+            color: black
+        }
+        .btn-light {
+            background-color: transparent;
+            border-color: transparent;
+        }
+    }
+}

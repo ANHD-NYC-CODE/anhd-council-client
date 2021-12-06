@@ -12,6 +12,10 @@ import Helmet from 'react-helmet'
 import LookupIndex from 'Lookup/LookupIndex'
 import LookupRequestsWrapper from 'Lookup/LookupRequestsWrapper'
 import InnerLoader from 'shared/components/Loaders/InnerLoader'
+import { createLoadingSelector } from 'Store/Loading/selectors'
+import { createErrorSelector } from 'Store/Error/selectors'
+import * as c from "Store/MyDashboard/constants";
+
 class Lookup extends React.Component {
   constructor(props) {
     super(props)
@@ -20,9 +24,12 @@ class Lookup extends React.Component {
     this.syncLookup = this.syncLookup.bind(this)
     this.needsLookupSync = this.needsLookupSync.bind(this)
     this.getPathMatch = this.getPathMatch.bind(this)
+
     this.state = {
       error404: false,
       error404Message: 'Sorry, an error has occured. Page not found!',
+      loggedIn: this.props.loggedIn,
+      userBookmarks: this.props.userBookmarks
     }
 
     this.syncLookup(props)
@@ -97,6 +104,10 @@ class Lookup extends React.Component {
             appState={this.props.appState}
             errorState={this.props.error}
             loadingState={this.props.loading}
+            bookmarkError={this.props.bookmarkError}
+            bookmarkDeleteError={this.props.bookmarkDeleteError}
+            bookmarkLoading={this.props.bookmarkLoading}
+            bookmarkDeleteLoading={this.props.bookmarkDeleteLoading}
             bbl={match.params.bbl}
             bin={match.params.bin}
             key={`${this.props.appState.currentProperty}${this.props.appState.currentBuilding}`}
@@ -106,6 +117,8 @@ class Lookup extends React.Component {
             propertyError={this.props.propertyError}
             trigger404Error={this.trigger404Error}
             requests={this.props.requests}
+            loggedIn={this.props.loggedIn}
+            userBookmarks={this.props.userBookmarks}
           />
         ) : (
           <LookupIndex appState={this.props.appState} />
@@ -125,14 +138,27 @@ Lookup.propTypes = {
   dispatch: PropTypes.func,
 }
 
-const mapStateToProps = state => ({
-  appState: state.appState,
-  error: state.error,
-  loading: state.loading,
-  propertyResult: state.requests[(getRequestType(state.appState.requests, 'LOOKUP_PROFILE')[0] || {}).requestConstant],
-  propertyError: state.error[(getRequestType(state.appState.requests, 'LOOKUP_PROFILE')[0] || {}).requestConstant],
-  router: state.router,
-  requests: state.requests,
-})
+const mapStateToProps = state => {
+  const loggedIn = !!state.auth.user;
+  const bookmarkError = createErrorSelector([c.BOOKMARK_PROPERTY]);
+  const bookmarkLoading = createLoadingSelector([c.BOOKMARK_PROPERTY]);
+  const bookmarkDeleteError = createErrorSelector([c.UNBOOKMARK_PROPERTY]);
+  const bookmarkDeleteLoading = createLoadingSelector([c.UNBOOKMARK_PROPERTY]);
+  return {
+    appState: state.appState,
+    error: state.error,
+    loading: state.loading,
+    bookmarkError: bookmarkError(state),
+    bookmarkLoading: bookmarkLoading(state),
+    bookmarkDeleteError: bookmarkDeleteError(state),
+    bookmarkDeleteLoading: bookmarkDeleteLoading(state),
+    propertyResult: state.requests[(getRequestType(state.appState.requests, 'LOOKUP_PROFILE')[0] || {}).requestConstant],
+    propertyError: state.error[(getRequestType(state.appState.requests, 'LOOKUP_PROFILE')[0] || {}).requestConstant],
+    router: state.router,
+    requests: state.requests,
+    userBookmarks: loggedIn ? state.myDashboard.userBookmarks : {},
+    loggedIn
+  }
+}
 
 export default connect(mapStateToProps)(Lookup)

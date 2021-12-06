@@ -2,6 +2,11 @@
 $unopened-width: 660px;
 
 .lookup-show {
+  &__bookmark-error {
+    @extend %p3-font-size;
+    color: $red;
+  }
+
   .lookup-show__row-wrapper {
     margin-top: 1rem;
     margin-bottom: 1rem;
@@ -13,7 +18,7 @@ $unopened-width: 660px;
   .lookup-show__top-row {
     display: flex;
     align-items: flex-start;
-    justify-content: flex-start;
+    justify-content: left;
     margin: 1rem 0;
     margin-bottom: 0;
     flex-wrap: wrap;
@@ -21,8 +26,8 @@ $unopened-width: 660px;
     @include media-breakpoint-up(md) {
       // flex-wrap: nowrap;
     }
-    // AddressDisplay
-    > div:first-child {
+    // Bookmark
+    > div:nth-child(2) {
       // max-width: 760px;
       // width: 100%;
       // width: auto;
@@ -33,7 +38,7 @@ $unopened-width: 660px;
     }
 
     // Back to dashboard button
-    > div:last-child:not(:first-child) {
+    > div:last-child:not(:nth-child(2)):not(:first-child) {
       // margin-left: $lookup-padding-size;
       @include media-breakpoint-up(md) {
         margin-left: auto;
@@ -43,6 +48,10 @@ $unopened-width: 660px;
     button {
       white-space: pre;
     }
+  }
+
+  .lookup-show__bookmark-section {
+    flex-grow: 1;
   }
 
   .lookup-address-search {

@@ -40,7 +40,7 @@ class DistrictDashboard extends React.PureComponent {
     if (props.geographyType && !isValidGeography(props.config, props.geographyType, props.geographyId)) {
       return
     } else if (!(props.geographyType && props.geographyId)) {
-      props.dispatch(push('/map'))
+      props.dispatch(push('/district-dashboard'))
     } else if (
       !(props.geographyType === props.appState.currentGeographyType) &&
       !(props.geographyId === props.appState.currentGeographyId)
@@ -240,7 +240,7 @@ const makeMapStateToProps = () => {
     const pathMatch = state.router.location.pathname.match(/(council|community|state-assembly|state-senate|zipcode)/)
     const path = pathMatch ? pathMatch[0] : undefined
     const matchSelector = createMatchSelector({
-      path: `/${path}/:id`,
+      path: `/district-dashboard/${path}/:id`,
     })
     const match = matchSelector(state)
     return {

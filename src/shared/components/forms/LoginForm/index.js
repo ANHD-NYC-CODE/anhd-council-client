@@ -4,6 +4,8 @@ import { Form, Button } from 'react-bootstrap'
 import { Formik } from 'formik'
 import * as yup from 'yup'
 
+import UserRegisterModal from 'shared/components/modals/UserRegisterModal'
+
 import BaseLink from 'shared/components/BaseLink'
 import { loginUser } from 'Store/Auth/actions'
 import FormError from 'shared/components/FormError'
@@ -24,12 +26,23 @@ class LoginForm extends React.Component {
     }
 
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.openSignUp = this.openSignUp.bind(this)
   }
 
   handleSubmit(formData) {
     this.setState({ validated: true })
     const userData = { username: formData.username, password: formData.password }
     this.props.dispatch(loginUser(userData, this.props.postLoginAction))
+  }
+
+  openSignUp(e) {
+    e.preventDefault();
+    this.props.modal.setModal({
+      modalComponent: UserRegisterModal,
+      modalProps: {
+        size: 'lg',
+      },
+    })
   }
 
   render() {
@@ -43,12 +56,16 @@ class LoginForm extends React.Component {
               validated={this.state.validated}
               onSubmit={handleSubmit}
             >
-              <p className="login-form__text">
-                An account allows you to view protected foreclosures data. To protect privacy, we only grant accounts to
-                ANHD member organizations, elected officials and their staff, and partners who are committed to ending
-                displacement.
+              <p className="login-form__text mb-3">
+                Log in to your account to bookmark properties, save
+                custom searches, and set up notifications for new data results. 
               </p>
-              <FormError show={!!this.props.error} message={(this.props.error || {}).message} />
+              <p className="login-form__text mb-3">
+                If you do not have an account yet, 
+                <a onClick={e => this.openSignUp(e)}> sign up </a>
+                for one now.
+              </p>
+              <FormError show={!!this.props.error && this.props.error.status !== 500} message={(this.props.error || {}).message} />
               <Form.Group controlId="loginUsername">
                 <Form.Label>Username</Form.Label>
                 <Form.Control

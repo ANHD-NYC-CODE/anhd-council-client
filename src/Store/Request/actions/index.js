@@ -1,5 +1,5 @@
 import * as c from 'shared/constants'
-import { constructAxiosGet, constructAxiosPost } from 'shared/utilities/Axios'
+import { constructAxiosGet, constructAxiosPost, constructAxiosDelete } from 'shared/utilities/Axios'
 import { requestWithAuth } from 'shared/utilities/authUtils'
 import { setTotalPropertyResults } from 'Store/DashboardState/actions'
 import { setCustomSearchResults } from 'Store/AdvancedSearch/actions'
@@ -99,6 +99,54 @@ export const postUserRequest = (userRequestData, hideModal) => (dispatch, getSta
     { format: null },
     access_token,
     'POST_USER_REQUEST',
+    undefined,
+    hideModal
+  )
+}
+
+export const postUserAccessRequest = (userAccessRequestData, hideModal) => (dispatch, getState, access_token) => {
+  const requestId = Math.floor(Math.random() * 1000000)
+  return constructAxiosPost(
+    dispatch,
+    getState,
+    requestId,
+    'users/access-request/',
+    userAccessRequestData, // Body
+    { format: null },
+    access_token,
+    'POST_USER_ACCESS_REQUEST',
+    undefined,
+    hideModal
+  )
+}
+
+export const deleteUserAccessRequest = (postDelete) => (dispatch, getState, access_token) => {
+  const requestId = Math.floor(Math.random() * 1000000)
+  return constructAxiosDelete(
+    dispatch,
+    getState,
+    requestId,
+    'users/access-request/',
+    null, // Body
+    { format: null },
+    access_token,
+    'DELETE_USER_ACCESS_REQUEST',
+    undefined,
+    postDelete
+  )
+}
+
+export const postUserRegister = (userRegisterData, hideModal) => (dispatch, getState, access_token) => {
+  const requestId = Math.floor(Math.random() * 1000000)
+  return constructAxiosPost(
+    dispatch,
+    getState,
+    requestId,
+    '/users/register/',
+    userRegisterData, // Body
+    { format: null },
+    access_token,
+    'POST_USER_REGISTER',
     undefined,
     hideModal
   )
