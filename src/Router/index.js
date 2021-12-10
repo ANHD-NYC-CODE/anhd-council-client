@@ -14,6 +14,7 @@ import Lookup from 'Lookup'
 import Main from 'Main'
 import ModalContext from 'Modal/ModalContext'
 import UserContext from 'Auth/UserContext'
+import DataAccessPolicy from 'policies/DataAccessPolicy'
 
 class Router extends React.Component {
   constructor(props) {
@@ -32,7 +33,7 @@ class Router extends React.Component {
               <Layout>
                 <Switch>
                   <Route exact path="/" render={() => <Main config={config} />} />
-
+                  <Route exact path="/policies/data-access-policy" render={() => <DataAccessPolicy />} />
                   <Route
                     exact
                     path="/login"

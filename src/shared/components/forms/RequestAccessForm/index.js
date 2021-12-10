@@ -88,7 +88,7 @@ class RequestAccessForm extends React.Component {
       organization_email: formData.needEmail === "yes" ? formData.email : undefined,
       organization: formData.organization,
       position: formData.position,
-      description: formData.position
+      description: formData.description
     }
 
     this.props.dispatch(requestWithAuth(
