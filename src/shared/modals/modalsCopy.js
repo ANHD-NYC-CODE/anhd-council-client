@@ -502,10 +502,34 @@ export const infoModals = {
     body: ReactDOMServer.renderToString(
       <div>
         <p>
-          Housing Court Data comes from the New York State Office of Court Administration data on housing court cases.
-          The dataset includes non-payment and holdover evictions, HP (repairs), harassment, and other types of cases 
-          in residential properties and commercial properties, when the case is a tenant/landlord issue. High numbers 
-          of cases can indicate neglect, harassment, or displacement pressure by a landlord.{' '}
+          Housing Court Data comes from the New York State Office of Court Administration 
+          data on housing court cases. The dataset includes non-payment and holdover 
+          evictions, HP (repairs), harassment, and other types of cases in residential 
+          properties and commercial properties, when the case is a tenant/landlord issue.
+          High numbers of cases can indicate neglect, harassment, or displacement 
+          pressure by a landlord.
+        </p>
+        <p>
+          To protect individual privacy, our data sharing agreement restricts sharing
+          information about cases in properties with 10 or fewer residential units. 
+          You will only be able to view data on housing court cases on DAP Portal
+          with approved access via an account and for properties with 11 or more 
+          residential units. 
+        </p>
+        <p>
+          This data has been obtained and made available through the collaborative 
+          efforts of the <a target="_blank" href="https://www.housingdatanyc.org/">Housing Data Coalition</a>, 
+          the <a target="_blank" href="https://www.righttocounselnyc.org/">Right to Counsel Coalition</a>, <a target="_blank" href="https://beta.nyc/">BetaNYC</a>, 
+          the <a target="_blank" href="https://anhd.org/">Association for Neighborhood and Housing Development</a>, 
+          the <a target="_blank" href="https://unhp.org">University Neighborhood Housing Program</a>, 
+          and <a target="_blank" href="https://www.justfix.nyc/">JustFix.nyc</a>. 
+        </p>
+        <p>
+          Use of this data is restricted to the purposes of stopping speculation 
+          and displacement and/or further tenant and small homeowner rights.{' '}
+          <a target="_blank" href="https://portal.displacementalert.org/policies/data-access-policy">
+            View our full data access policy
+          </a>.
         </p>
       </div>
     ),
