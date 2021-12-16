@@ -531,7 +531,7 @@ export const getTableColumns = ({
             rowExample,
           }),
           text: getAnnotatedLabel({
-            annotationLabel: 'OCA Housing Court Cases',
+            annotationLabel: 'Housing Court Cases',
             rowExample,
             annotationKey: getAnnotationKey('ocahousingcourts', annotationStart, advancedSearchDatasets),
           }),
