@@ -76,7 +76,7 @@ export const getKeyField = constant => {
     case 'PSFORECLOSURE':
       return 'key'
     case 'OCA_HOUSING_COURT':
-      return 'bbl'
+      return 'indexnumberid'
     default:
       return 'id'
   }
@@ -1635,6 +1635,11 @@ export const getTableColumns = ({
     case 'OCA_HOUSING_COURT':
       columns = [
         constructStandardColumn({
+          dataField: 'indexnumberid',
+          text: 'Key',
+          hidden: true,
+        }),
+        constructStandardColumn({
           dataField: 'court',
           text: 'Court',
           sort: true,
@@ -1667,9 +1672,13 @@ export const getTableColumns = ({
           sort: true,
         }),
         constructStandardColumn({
+          columnEvent: expandColumnEvent,
+          classes: 'expandable-cell',
           dataField: 'disposedreason',
           text: 'Disposed Reason',
           sort: true,
+          formatter: sentencesFormatter,
+          csvFormatter: sentencesFormatter
         }),
       ]
       break
