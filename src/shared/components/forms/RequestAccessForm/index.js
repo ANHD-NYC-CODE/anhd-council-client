@@ -231,7 +231,7 @@ class RequestAccessForm extends React.Component {
                 I am an employee or member of an organization or 
                 an individual who will use this data for the purposes 
                 of stopping speculation and displacement and/or 
-                furthering tenant and smallhomeowner rights. 
+                furthering tenant and small homeowner rights. 
               </b>
             </a></p>
           </div>
