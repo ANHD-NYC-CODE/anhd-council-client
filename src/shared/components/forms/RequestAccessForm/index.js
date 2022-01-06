@@ -264,21 +264,6 @@ class RequestAccessForm extends React.Component {
                 </b>
               </p>
             )}
-            {this.state.page === Page.Personal && (
-              <p className="request-access-form__text">
-                Select the statement that applies to you:
-              </p>
-            )}
-            {this.state.page === Page.Personal && (
-              <ul className="mb-3">
-                <li className="request-access-form__text ">
-                  Academic or policy research
-                </li>
-                <li className="request-access-form__text">
-                  Community/tenant organizing
-                </li>
-              </ul>
-            )}
             <p className="request-access-form__text mb-4">
               To gain access to protected housing court and 
               foreclosures data, Please provide the following information:
