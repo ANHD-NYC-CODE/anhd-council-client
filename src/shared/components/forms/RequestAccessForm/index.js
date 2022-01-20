@@ -231,7 +231,7 @@ class RequestAccessForm extends React.Component {
                 I am an employee or member of an organization or 
                 an individual who will use this data for the purposes 
                 of stopping speculation and displacement and/or 
-                furthering tenant and smallhomeowner rights. 
+                furthering tenant and small homeowner rights. 
               </b>
             </a></p>
           </div>
@@ -263,21 +263,6 @@ class RequestAccessForm extends React.Component {
                   furthering tenant and small homeowner rights. 
                 </b>
               </p>
-            )}
-            {this.state.page === Page.Personal && (
-              <p className="request-access-form__text">
-                Select the statement that applies to you:
-              </p>
-            )}
-            {this.state.page === Page.Personal && (
-              <ul className="mb-3">
-                <li className="request-access-form__text ">
-                  Academic or policy research
-                </li>
-                <li className="request-access-form__text">
-                  Community/tenant organizing
-                </li>
-              </ul>
             )}
             <p className="request-access-form__text mb-4">
               To gain access to protected housing court and 
