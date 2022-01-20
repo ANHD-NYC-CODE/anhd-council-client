@@ -276,6 +276,9 @@ export class AdvancedSearch extends React.Component {
           {!this.state.displayingForm && (
             <div className="advanced-search__results">
               <div className="advanced-search__results-header">
+                <a type="button" className="advanced-search__cancel btn btn-primary btn-sm" href="/search">
+                  Clear
+                </a>
                 <ButtonToolbar className="d-flex view-toggle__container">
                   <ToggleButtonGroup
                     name="view"
