@@ -167,7 +167,14 @@ const convertQueryStringToCondition = query => {
     let paramSets = {};
     for (let param of params) {
       const [paramKey, paramValue] = param.split("=");
-      const [resourceKey, field, comparison] = paramKey.split("__");
+      let [resourceKey, field, comparison] = paramKey.split("__");
+      
+      if (paramKey.startsWith('acrisreallegals')) {
+        let [rkPart1, rkPart2, f, c] = paramKey.split("__");
+        resourceKey = rkPart1 + "__" + rkPart2;
+        field = f;
+        comparison = c;
+      }
       
       if (!resourceConstant) {
         resourceConstant = Object.keys(
