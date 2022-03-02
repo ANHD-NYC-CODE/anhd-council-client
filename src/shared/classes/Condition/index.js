@@ -160,7 +160,8 @@ export default class Condition {
       }
 
       if (this.type === 'OR' && this.filters.length === 1) {
-        this.addError(new ParamError({ message: 'Please add at least 2 filters to an "OR" condition.' }))
+        this.type = 'AND';
+        this._type = 'AND';
       }
     } else if (this.key !== '0') {
       if (!datasetFilterCount) {
