@@ -12,6 +12,7 @@ const HPDComplaint = () => ({
       generatorFunction: resourceModel => {
         return constructCountDateParamSet({
           resourceModel,
+          amountValue: 1,
         })
       },
     },
