@@ -1,3 +1,4 @@
+@use 'sass:math';
 @import './_colors.scss';
 
 // Buttons + Forms
@@ -190,7 +191,7 @@ $custom-radio-indicator-icon-checked: str-replace(
 ) !default;
 
 $custom-switch-width: $custom-control-indicator-size * 1.75 !default;
-$custom-switch-indicator-border-radius: $custom-control-indicator-size / 2 !default;
+$custom-switch-indicator-border-radius: math.div($custom-control-indicator-size, 2) !default;
 $custom-switch-indicator-size: calc(
   #{$custom-control-indicator-size} - #{$custom-control-indicator-border-width * 4}
 ) !default;
@@ -215,10 +216,10 @@ $custom-select-indicator: str-replace(
 $custom-select-background: $custom-select-indicator no-repeat right $custom-select-padding-x center /
   $custom-select-bg-size !default; // Used so we can have multiple background elements (e.g., arrow and feedback icon)
 
-$custom-select-feedback-icon-padding-right: $input-height-inner * 3 / 4 + $custom-select-padding-x +
+$custom-select-feedback-icon-padding-right: math.div($input-height-inner * 3, 4) + $custom-select-padding-x +
   $custom-select-indicator-padding !default;
 $custom-select-feedback-icon-position: center right ($custom-select-padding-x + $custom-select-indicator-padding) !default;
-$custom-select-feedback-icon-size: ($input-height-inner / 2) ($input-height-inner / 2) !default;
+$custom-select-feedback-icon-size: (math.div($input-height-inner, 2)) (math.div($input-height-inner, 2)) !default;
 
 $custom-select-border-width: $input-border-width !default;
 $custom-select-border-color: $input-border-color !default;
