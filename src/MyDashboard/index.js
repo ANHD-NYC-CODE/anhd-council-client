@@ -172,7 +172,7 @@ class MyDashboard extends React.Component {
                         </thead>
                         <tbody>
                             {!!Object.values(this.props.savedCustomSearches).length && 
-                                Object.values(this.props.savedCustomSearches).map((search) => {
+                                Object.values(this.props.savedCustomSearches).sort((i, j) => { return Date.parse(i.created_date) <= Date.parse(j.created_date) }).map((search) => {
                                     return (
                                         <tr key={search.id}>
                                             <th scope="row">
