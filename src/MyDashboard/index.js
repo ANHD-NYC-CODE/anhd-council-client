@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons"
+import { faTrash, faEdit, faQuestion } from "@fortawesome/free-solid-svg-icons"
 import { getNotificationFrequencyString, getReadableDateTimeString } from 'shared/utilities/sentenceUtils'
 import { unBookmarkProperty, getUserBookmarkedProperties } from 'Store/MyDashboard/actions'
 import { requestWithAuth } from 'shared/utilities/authUtils'
@@ -20,8 +20,11 @@ import * as c from "Store/MyDashboard/constants";
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
 import { toast } from 'react-toastify'
+import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 
 import './style.scss'
+
+const createdDateStartDT = '2022-05-23'
 
 class MyDashboard extends React.Component {
     constructor(props) {
@@ -188,7 +191,19 @@ class MyDashboard extends React.Component {
                                                 {getNotificationFrequencyString(search.notification_frequency)}
                                             </td>
                                             <td>
-                                                {getReadableDateTimeString(search.created_date)}
+                                                {search.created_date.slice(0, 10) === createdDateStartDT ?
+                                                    <OverlayTrigger
+                                                        placement="top"
+                                                        delay={{ show: 250, hide: 400 }}
+                                                        overlay={props => (
+                                                            <Tooltip id="button-tooltip" {...props}>
+                                                              This search was created before we started saving creation date.
+                                                            </Tooltip>
+                                                          )}
+                                                    >
+                                                        <FontAwesomeIcon className="info-modal-button info-modal-button--tooltip" icon={faQuestion} size="sm" />
+                                                    </OverlayTrigger> :
+                                                    getReadableDateTimeString(search.created_date)}
                                             </td>
                                             <td>
                                                 <ModalContext.Consumer>
