@@ -15,6 +15,7 @@ const DOBComplaint = () => ({
       generatorFunction: resourceModel => {
         return constructCountDateParamSet({
           resourceModel,
+          amountValue: 1,
         })
       },
     },

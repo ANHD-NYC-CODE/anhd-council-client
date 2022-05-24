@@ -14,6 +14,7 @@ const DOBIssuedPermit = () => ({
       generatorFunction: resourceModel => {
         return constructCountDateParamSet({
           resourceModel,
+          amountValue: 1,
         })
       },
     },

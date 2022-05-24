@@ -13,7 +13,7 @@ const HousingCourtCase = () => ({
       generatorFunction: resourceModel => {
         return constructCountDateParamSet({
           resourceModel,
-          amountValue: '5',
+          amountValue: '1',
         })
       },
     },
