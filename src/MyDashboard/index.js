@@ -5,8 +5,8 @@ import { connect } from 'react-redux'
 import { push } from 'connected-react-router'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons"
-import { getNotificationFrequencyString } from 'shared/utilities/sentenceUtils'
+import { faTrash, faEdit, faQuestion } from "@fortawesome/free-solid-svg-icons"
+import { getNotificationFrequencyString, getReadableDateTimeString } from 'shared/utilities/sentenceUtils'
 import { unBookmarkProperty, getUserBookmarkedProperties } from 'Store/MyDashboard/actions'
 import { requestWithAuth } from 'shared/utilities/authUtils'
 import SaveSearchButton from 'shared/components/buttons/SaveSearchButton'
@@ -20,8 +20,11 @@ import * as c from "Store/MyDashboard/constants";
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
 import { toast } from 'react-toastify'
+import { OverlayTrigger, Tooltip } from 'react-bootstrap'
 
 import './style.scss'
+
+const createdDateStartDT = '2022-05-23'
 
 class MyDashboard extends React.Component {
     constructor(props) {
@@ -167,12 +170,13 @@ class MyDashboard extends React.Component {
                                 <th scope="col" className="col-8">Query name</th>
                                 <th scope="col" className="col-2">Notifications</th>
                                 <th scope="col" className="col-2">Frequency</th>
+                                <th scope="col" className="col-6">Created at</th>
                                 <th scope="col">Edit</th>
                             </tr>
                         </thead>
                         <tbody>
                             {!!Object.values(this.props.savedCustomSearches).length && 
-                                Object.values(this.props.savedCustomSearches).map((search) => {
+                                Object.values(this.props.savedCustomSearches).sort((i, j) => { return Date.parse(i.created_date) <= Date.parse(j.created_date) }).map((search) => {
                                     return (
                                         <tr key={search.id}>
                                             <th scope="row">
@@ -185,6 +189,21 @@ class MyDashboard extends React.Component {
                                             </td>
                                             <td>
                                                 {getNotificationFrequencyString(search.notification_frequency)}
+                                            </td>
+                                            <td>
+                                                {search.created_date.slice(0, 10) === createdDateStartDT ?
+                                                    <OverlayTrigger
+                                                        placement="top"
+                                                        delay={{ show: 250, hide: 400 }}
+                                                        overlay={props => (
+                                                            <Tooltip id="button-tooltip" {...props}>
+                                                              This search was created before we started saving creation date.
+                                                            </Tooltip>
+                                                          )}
+                                                    >
+                                                        <FontAwesomeIcon className="info-modal-button info-modal-button--tooltip" icon={faQuestion} size="sm" />
+                                                    </OverlayTrigger> :
+                                                    getReadableDateTimeString(search.created_date)}
                                             </td>
                                             <td>
                                                 <ModalContext.Consumer>

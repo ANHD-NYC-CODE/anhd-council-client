@@ -326,3 +326,7 @@ export const getNotificationFrequencyString = (f) => {
       return "Never"
   }
 }
+
+export const getReadableDateTimeString = (f) => {
+  return new Date(f).toDateString()
+}
