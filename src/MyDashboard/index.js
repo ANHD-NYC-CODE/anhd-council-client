@@ -6,7 +6,7 @@ import { push } from 'connected-react-router'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faTrash, faEdit } from "@fortawesome/free-solid-svg-icons"
-import { getNotificationFrequencyString } from 'shared/utilities/sentenceUtils'
+import { getNotificationFrequencyString, getReadableDateTimeString } from 'shared/utilities/sentenceUtils'
 import { unBookmarkProperty, getUserBookmarkedProperties } from 'Store/MyDashboard/actions'
 import { requestWithAuth } from 'shared/utilities/authUtils'
 import SaveSearchButton from 'shared/components/buttons/SaveSearchButton'
@@ -167,12 +167,13 @@ class MyDashboard extends React.Component {
                                 <th scope="col" className="col-8">Query name</th>
                                 <th scope="col" className="col-2">Notifications</th>
                                 <th scope="col" className="col-2">Frequency</th>
+                                <th scope="col" className="col-6">Created at</th>
                                 <th scope="col">Edit</th>
                             </tr>
                         </thead>
                         <tbody>
                             {!!Object.values(this.props.savedCustomSearches).length && 
-                                Object.values(this.props.savedCustomSearches).map((search) => {
+                                Object.values(this.props.savedCustomSearches).sort((i, j) => { return Date.parse(i.created_date) <= Date.parse(j.created_date) }).map((search) => {
                                     return (
                                         <tr key={search.id}>
                                             <th scope="row">
@@ -185,6 +186,9 @@ class MyDashboard extends React.Component {
                                             </td>
                                             <td>
                                                 {getNotificationFrequencyString(search.notification_frequency)}
+                                            </td>
+                                            <td>
+                                                {getReadableDateTimeString(search.created_date)}
                                             </td>
                                             <td>
                                                 <ModalContext.Consumer>
