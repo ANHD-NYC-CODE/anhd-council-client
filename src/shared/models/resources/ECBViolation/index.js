@@ -13,6 +13,7 @@ const ECBViolation = () => ({
       generatorFunction: resourceModel => {
         return constructCountDateParamSet({
           resourceModel,
+          amountValue: 1,
         })
       },
     },
