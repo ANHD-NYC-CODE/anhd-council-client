@@ -328,5 +328,19 @@ export const getNotificationFrequencyString = (f) => {
 }
 
 export const getReadableDateTimeString = (f) => {
-  return new Date(f).toDateString()
+  const date = new Date(f)
+  let dateString = "";
+  const monthNames = ["January", "February", "March", "April", "May", "June",
+                      "July", "August", "September", "October", "November",
+                      "December"];
+  dateString += monthNames[date.getMonth()];
+  dateString += " ";
+  dateString += date.getDate();
+  dateString += " ";
+  dateString += date.getFullYear();
+  dateString += " ";
+  dateString += date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}).slice(0, -2);
+  dateString += " ";
+  dateString += date.toLocaleTimeString().slice(-2).toLowerCase();
+  return dateString;
 }
