@@ -167,11 +167,24 @@ class MyDashboard extends React.Component {
                     <table className="table table-striped table-sm">
                         <thead className="">
                             <tr className="">
-                                <th scope="col" className="col-8">Query name</th>
-                                <th scope="col" className="col-2">Notifications</th>
-                                <th scope="col" className="col-2">Frequency</th>
-                                <th scope="col" className="col-6">Created at</th>
-                                <th scope="col">Edit</th>
+                                <th scope="col" className="col-5">Query name</th>
+                                <th scope="col" className="col-1">Notifications</th>
+                                <th scope="col" className="col-1">Frequency</th>
+                                <th scope="col" className="col-2">
+                                    Saved on
+                                    <OverlayTrigger
+                                        placement="top"
+                                        delay={{ show: 250, hide: 400 }}
+                                        overlay={props => (
+                                            <Tooltip id="button-tooltip" {...props}>
+                                                If a date and time is not available, the search was saved before we added date/times to My Dashboard on May 5 2022.
+                                            </Tooltip>
+                                        )}
+                                    >
+                                        <FontAwesomeIcon className="info-modal-button info-modal-button--tooltip" icon={faQuestion} size="sm" />
+                                    </OverlayTrigger>
+                                </th>
+                                <th scope="col" className="col-1">Edit</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -191,19 +204,7 @@ class MyDashboard extends React.Component {
                                                 {getNotificationFrequencyString(search.notification_frequency)}
                                             </td>
                                             <td>
-                                                {search.created_date.slice(0, 10) === createdDateStartDT ?
-                                                    <OverlayTrigger
-                                                        placement="top"
-                                                        delay={{ show: 250, hide: 400 }}
-                                                        overlay={props => (
-                                                            <Tooltip id="button-tooltip" {...props}>
-                                                              This search was created before we started saving creation date.
-                                                            </Tooltip>
-                                                          )}
-                                                    >
-                                                        <FontAwesomeIcon className="info-modal-button info-modal-button--tooltip" icon={faQuestion} size="sm" />
-                                                    </OverlayTrigger> :
-                                                    getReadableDateTimeString(search.created_date)}
+                                                {search.created_date.slice(0, 10) === createdDateStartDT ? <span class="font-italic">N/A</span> : getReadableDateTimeString(search.created_date)}
                                             </td>
                                             <td>
                                                 <ModalContext.Consumer>
