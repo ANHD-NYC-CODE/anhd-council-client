@@ -204,7 +204,7 @@ class MyDashboard extends React.Component {
                                                 {getNotificationFrequencyString(search.notification_frequency)}
                                             </td>
                                             <td>
-                                                {search.created_date.slice(0, 10) === createdDateStartDT ? <span class="font-italic">N/A</span> : getReadableDateTimeString(search.created_date)}
+                                                {search.created_date.slice(0, 10) === createdDateStartDT ? <span className="font-italic">N/A</span> : getReadableDateTimeString(search.created_date)}
                                             </td>
                                             <td>
                                                 <ModalContext.Consumer>
