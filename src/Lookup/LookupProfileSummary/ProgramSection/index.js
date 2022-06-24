@@ -21,6 +21,74 @@ const getSubsidiesText = props => {
   }
 }
 
+const getTaxLienInfo = props => {
+  if (props.profile.taxlien) {
+    // Get latest tax lien
+    const compareYearMonth = (a, b) => {
+      if (a.year === b.year) {
+        return a.month <= b.month;
+      } else {
+        return a.year <= b.year;
+      }
+    }
+    const toMonthName = (monthNumber) => {
+      const date = new Date();
+      date.setMonth(monthNumber - 1);
+      return date.toLocaleString('en-US', {
+        month: 'long',
+      });
+    }
+
+    const sortedTaxliens = props.profile.taxliens.sort(compareYearMonth);
+    const latestTaxLien = sortedTaxliens[0];
+    let taxLienDataset;
+    for (let i = 0; i < props.config.datasets.length; i++) {
+      if (props.config.datasets[i].model_name == 'TaxLien') {
+        taxLienDataset = props.config.datasets[i];
+      }
+    }
+
+    let info = [];
+    info.push(<div key="TAX_LIEN_UPDATE" className="profile-summary-body__value program-section__program">Data as of {taxLienDataset.last_update}:</div>);
+    info.push(
+      <div key="TAX_LIEN_STANDARD_INFO" className="profile-summary-body__value program-section__program">
+        This property is subject to a{' '}
+        <BaseLink className="text-link" href="https://www1.nyc.gov/site/finance/taxes/property-lien-sales.page">
+          tax lien
+        </BaseLink>
+      </div>
+    )
+
+    if (latestTaxLien.cycle && latestTaxLien.cycle.includes('Notice')) {
+      info.push(
+        <div key="TAX_LIEN_NOTICE" className="profile-summary-body__value program-section__program">
+          As of {toMonthName(parseInt(latestTaxLien.month))}, this property was subject to a lien sale with {latestTaxLien.cycle}.
+        </div>
+      );
+    }
+
+    if (latestTaxLien.cycle && latestTaxLien.cycle.includes('Sale')) {
+      info.push(
+        <div key="TAX_LIEN_SALE" className="profile-summary-body__value program-section__program">
+          As of {toMonthName(parseInt(latestTaxLien.month))}, this property was subject to a final lien sale.
+        </div>
+      );
+    }
+
+    if (latestTaxLien.waterdebtonly) {
+      info.push(
+        <div key="TAX_LIEN_WATERDEBT" className="profile-summary-body__value program-section__program">
+          The lien is due to water debt only.
+        </div>
+      );
+    }
+    return <div className="lookup-profile-summary__group program-section__list">{info}</div>
+  }
+  else {
+    return 'No tax liens found.';
+  }
+}
+
 const ProgramSection = props => {
   return (
     <div className="program-section property-section property-summary-body">
@@ -44,6 +112,16 @@ const ProgramSection = props => {
               )
             })}
         </div>
+
+        <div className="lookup-profile-summary__group">
+          <div className="profile-summary-body__label">
+            Tax Lien Sales <InfoModalButton modalConstant="TAX_LIEN_SALES_SOURCE" />
+          </div>
+        </div>
+        <div className="lookup-profile-summary__group program-section__list">
+          {getTaxLienInfo(props)}
+        </div>
+
         {!!props.profile.legalclassb && (
           <div className="lookup-profile-summary__group">
             <div className="text-danger font-weight-bold">
@@ -108,18 +186,6 @@ const ProgramSection = props => {
               <BaseLink className="text-link" href="https://anhd.org/project/coalition-against-tenant-harassment-cath">
                 Certificate of No Harassment Pilot Program.
               </BaseLink>
-            </div>
-          </div>
-        )}
-
-        {props.profile.taxlien && (
-          <div className="lookup-profile-summary__group">
-            <div className="text-danger font-weight-bold">
-              This property is subject to a{' '}
-              <BaseLink className="text-link" href="https://www1.nyc.gov/site/finance/taxes/property-lien-sales.page">
-                tax lien
-              </BaseLink>{' '}
-              as of the most recent data.
             </div>
           </div>
         )}
