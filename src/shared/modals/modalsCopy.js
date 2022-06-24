@@ -619,7 +619,7 @@ export const infoModals = {
     ],
   },
   SUBSIDY_PROGRAM_SOURCE: {
-    title: 'Subsidy Prorgams',
+    title: 'Subsidy Programs',
     body: "Data comes from Furman's CoreData and DOF's 421-a and J-51 data. ",
     sources: [
       {
@@ -696,5 +696,22 @@ export const infoModals = {
     title: 'OCA Housing Court Data Unavailable',
     body:
       'Housing Court Data comes from the New York State Office of Court Administration data on housing court cases. To protect individual privacy, our data sharing agreement restricts sharing information about cases in properties with 10 or fewer residential units.'
-  }
+  },
+
+  TAX_LIEN_SALES_SOURCE: {
+    title: 'Tax Lien Sale',
+    body: "Data on whether the property was included on the most recent tax lien sale eligibility list. If it was not included on the most recent list, nothing is displayed.",
+    sources: [
+      {
+        text: "NYC Open Data - Tax Lien Sale Lists",
+        url: "https://data.cityofnewyork.us/City-Government/Tax-Lien-Sale-Lists/9rz4-mjek"
+      },
+    ],
+    documentationSources: [
+      {
+        text: "DOF_TaxlienList_Data_Dictionary1__1_.xlsx",
+        url: "https://data.cityofnewyork.us/api/views/9rz4-mjek/files/24a07e68-0ea6-45cf-9b08-bbf0b2628c58?download=true&filename=DOF_TaxlienList_Data_Dictionary1__1_.xlsx"
+      },
+    ],
+  },
 }
