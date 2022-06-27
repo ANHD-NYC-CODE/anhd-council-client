@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import BaseLink from 'shared/components/BaseLink'
 import InfoModalButton from 'shared/components/InfoModalButton'
+import { getReadableDateString } from 'shared/utilities/sentenceUtils'
 
 import './style.scss'
 
@@ -31,13 +32,6 @@ const getTaxLienInfo = props => {
         return a.year <= b.year;
       }
     }
-    const toMonthName = (monthNumber) => {
-      const date = new Date();
-      date.setMonth(monthNumber - 1);
-      return date.toLocaleString('en-US', {
-        month: 'long',
-      });
-    }
 
     const sortedTaxliens = props.profile.taxliens.sort(compareYearMonth);
     const latestTaxLien = sortedTaxliens[0];
@@ -48,8 +42,10 @@ const getTaxLienInfo = props => {
       }
     }
 
+    const latestTaxLienUpdate = new Date(taxLienDataset.last_update);
+
     let info = [];
-    info.push(<div key="TAX_LIEN_UPDATE" className="profile-summary-body__value program-section__program">Data as of {taxLienDataset.last_update}:</div>);
+    info.push(<div key="TAX_LIEN_UPDATE" className="profile-summary-body__value program-section__program">Data as of {getReadableDateString(latestTaxLienUpdate)}:</div>);
     info.push(
       <div key="TAX_LIEN_STANDARD_INFO" className="profile-summary-body__value program-section__program">
         This property is subject to a{' '}
@@ -62,7 +58,7 @@ const getTaxLienInfo = props => {
     if (latestTaxLien.cycle && latestTaxLien.cycle.includes('Notice')) {
       info.push(
         <div key="TAX_LIEN_NOTICE" className="profile-summary-body__value program-section__program">
-          As of {toMonthName(parseInt(latestTaxLien.month))}, this property was subject to a lien sale with {latestTaxLien.cycle}.
+          As of {getReadableDateString(new Date(parseInt(latestTaxLien.year), parseInt(latestTaxLien.month)-1))}, this property was subject to a lien sale with {latestTaxLien.cycle}.
         </div>
       );
     }
@@ -70,7 +66,7 @@ const getTaxLienInfo = props => {
     if (latestTaxLien.cycle && latestTaxLien.cycle.includes('Sale')) {
       info.push(
         <div key="TAX_LIEN_SALE" className="profile-summary-body__value program-section__program">
-          As of {toMonthName(parseInt(latestTaxLien.month))}, this property was subject to a final lien sale.
+          As of {getReadableDateString(new Date(parseInt(latestTaxLien.year), parseInt(latestTaxLien.month)-1))}, this property was subject to a final lien sale.
         </div>
       );
     }
