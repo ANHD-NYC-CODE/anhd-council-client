@@ -700,7 +700,7 @@ export const infoModals = {
 
   TAX_LIEN_SALES_SOURCE: {
     title: 'Tax Lien Sale',
-    body: "Data on whether the property was included on the most recent tax lien sale eligibility list. If it was not included on the most recent list, nothing is displayed.",
+    body: "Data on whether the property has been included in any final tax lien sale. For the most up-to-date information on the tax lien sale, including lien sale notices, visit the Department of Finance Lien Sales website.",
     sources: [
       {
         text: "NYC Open Data - Tax Lien Sale Lists",
@@ -708,6 +708,10 @@ export const infoModals = {
       },
     ],
     documentationSources: [
+      {
+        text: 'Department of Finance Lien Sales',
+        url: 'https://www1.nyc.gov/site/finance/taxes/property-lien-sales.page'
+      },
       {
         text: "DOF_TaxlienList_Data_Dictionary1__1_.xlsx",
         url: "https://data.cityofnewyork.us/api/views/9rz4-mjek/files/24a07e68-0ea6-45cf-9b08-bbf0b2628c58?download=true&filename=DOF_TaxlienList_Data_Dictionary1__1_.xlsx"
