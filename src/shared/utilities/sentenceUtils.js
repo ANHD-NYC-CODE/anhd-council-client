@@ -358,3 +358,15 @@ export const getReadableDateString = (f) => {
   dateString += date.getFullYear();
   return dateString;
 }
+
+export const getReadableMonthString = (f) => {
+  const date = new Date(f)
+  let dateString = "";
+  const monthNames = ["January", "February", "March", "April", "May", "June",
+                      "July", "August", "September", "October", "November",
+                      "December"];
+  dateString += monthNames[date.getMonth()];
+  dateString += " ";
+  dateString += date.getFullYear();
+  return dateString;
+}
