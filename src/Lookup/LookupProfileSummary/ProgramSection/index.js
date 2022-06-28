@@ -36,7 +36,7 @@ const getTaxLienInfo = props => {
     const sortedTaxliens = props.profile.taxliens.sort(compareYearMonth);
     let uniqueFinalSales = [];
     sortedTaxliens.forEach((obj, index) => {
-      if (!obj.waterdebtonly && obj.cycle.includes('Sale')) {
+      if (obj.cycle.includes('Sale')) {
         const finalSaleDate = `${obj.month}/${obj.year}`;
         if (uniqueFinalSales.indexOf(finalSaleDate)) {
           uniqueFinalSales.push(finalSaleDate);
@@ -56,14 +56,14 @@ const getTaxLienInfo = props => {
 
     let info = [];
     info.push(<div key="TAX_LIEN_UPDATE" className="profile-summary-body__value program-section__program">Data as of {getReadableDateString(latestTaxLienUpdate)}:</div>);
-    info.push(
-      <div key="TAX_LIEN_STANDARD_INFO" className="profile-summary-body__value program-section__program">
-        This property is subject to a{' '}
-        <BaseLink className="text-link" href="https://www1.nyc.gov/site/finance/taxes/property-lien-sales.page">
-          tax lien
-        </BaseLink>
-      </div>
-    );
+    // info.push(
+    //   <div key="TAX_LIEN_STANDARD_INFO" className="profile-summary-body__value program-section__program">
+    //     This property is subject to a{' '}
+    //     <BaseLink className="text-link" href="https://www1.nyc.gov/site/finance/taxes/property-lien-sales.page">
+    //       tax lien
+    //     </BaseLink>
+    //   </div>
+    // );
 
     uniqueFinalSales.forEach((obj, index) => {
       let month = parseInt(obj.split('/')[0]) - 1;
