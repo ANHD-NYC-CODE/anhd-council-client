@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 
 import BaseLink from 'shared/components/BaseLink'
 import InfoModalButton from 'shared/components/InfoModalButton'
+import { getReadableDateString, getReadableMonthString } from 'shared/utilities/sentenceUtils'
 
 import './style.scss'
 
@@ -31,15 +32,18 @@ const getTaxLienInfo = props => {
         return a.year <= b.year;
       }
     }
-    const toMonthName = (monthNumber) => {
-      const date = new Date();
-      date.setMonth(monthNumber - 1);
-      return date.toLocaleString('en-US', {
-        month: 'long',
-      });
-    }
 
     const sortedTaxliens = props.profile.taxliens.sort(compareYearMonth);
+    let uniqueFinalSales = [];
+    sortedTaxliens.forEach((obj, index) => {
+      if (obj.cycle.includes('Sale')) {
+        const finalSaleDate = `${obj.month}/${obj.year}`;
+        if (uniqueFinalSales.indexOf(finalSaleDate)) {
+          uniqueFinalSales.push(finalSaleDate);
+        }
+      }
+    });
+
     const latestTaxLien = sortedTaxliens[0];
     let taxLienDataset;
     for (let i = 0; i < props.config.datasets.length; i++) {
@@ -48,41 +52,30 @@ const getTaxLienInfo = props => {
       }
     }
 
+    const latestTaxLienUpdate = new Date(taxLienDataset.last_update);
+
     let info = [];
-    info.push(<div key="TAX_LIEN_UPDATE" className="profile-summary-body__value program-section__program">Data as of {taxLienDataset.last_update}:</div>);
-    info.push(
-      <div key="TAX_LIEN_STANDARD_INFO" className="profile-summary-body__value program-section__program">
-        This property is subject to a{' '}
-        <BaseLink className="text-link" href="https://www1.nyc.gov/site/finance/taxes/property-lien-sales.page">
-          tax lien
-        </BaseLink>
-      </div>
-    )
+    info.push(<div key="TAX_LIEN_UPDATE" className="profile-summary-body__value program-section__program">Data as of {getReadableDateString(latestTaxLienUpdate)}:</div>);
+    // info.push(
+    //   <div key="TAX_LIEN_STANDARD_INFO" className="profile-summary-body__value program-section__program">
+    //     This property is subject to a{' '}
+    //     <BaseLink className="text-link" href="https://www1.nyc.gov/site/finance/taxes/property-lien-sales.page">
+    //       tax lien
+    //     </BaseLink>
+    //   </div>
+    // );
 
-    if (latestTaxLien.cycle && latestTaxLien.cycle.includes('Notice')) {
+    uniqueFinalSales.forEach((obj, index) => {
+      let month = parseInt(obj.split('/')[0]) - 1;
+      let year = parseInt(obj.split('/')[1]);
       info.push(
-        <div key="TAX_LIEN_NOTICE" className="profile-summary-body__value program-section__program">
-          As of {toMonthName(parseInt(latestTaxLien.month))}, this property was subject to a lien sale with {latestTaxLien.cycle}.
+        <div key={`TAX_LIEN_SALE_${index}`} className="profile-summary-body__value program-section__program">
+          As of {getReadableMonthString(new Date(year, month))}, this property was subject to a final lien sale.
         </div>
       );
-    }
+    });
 
-    if (latestTaxLien.cycle && latestTaxLien.cycle.includes('Sale')) {
-      info.push(
-        <div key="TAX_LIEN_SALE" className="profile-summary-body__value program-section__program">
-          As of {toMonthName(parseInt(latestTaxLien.month))}, this property was subject to a final lien sale.
-        </div>
-      );
-    }
-
-    if (latestTaxLien.waterdebtonly) {
-      info.push(
-        <div key="TAX_LIEN_WATERDEBT" className="profile-summary-body__value program-section__program">
-          The lien is due to water debt only.
-        </div>
-      );
-    }
-    return <div className="lookup-profile-summary__group program-section__list">{info}</div>
+    return <div className="lookup-profile-summary__group program-section__list">{info}</div>;
   }
   else {
     return 'No tax liens found.';
@@ -113,14 +106,18 @@ const ProgramSection = props => {
             })}
         </div>
 
-        <div className="lookup-profile-summary__group">
-          <div className="profile-summary-body__label">
-            Tax Lien Sales <InfoModalButton modalConstant="TAX_LIEN_SALES_SOURCE" />
+        {props.profile.taxlien && (
+          <div>
+            <div className="lookup-profile-summary__group">
+              <div className="profile-summary-body__label">
+                Tax Lien Sales <InfoModalButton modalConstant="TAX_LIEN_SALES_SOURCE" />
+              </div>
+            </div>
+            <div className="lookup-profile-summary__group program-section__list">
+              {getTaxLienInfo(props)}
+            </div>
           </div>
-        </div>
-        <div className="lookup-profile-summary__group program-section__list">
-          {getTaxLienInfo(props)}
-        </div>
+        )}
 
         {!!props.profile.legalclassb && (
           <div className="lookup-profile-summary__group">
