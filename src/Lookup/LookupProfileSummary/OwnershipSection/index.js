@@ -88,7 +88,7 @@ const OwnershipSection = props => {
       )}
       <div className="ownership-section__bottom-section">
         <div className="ownership-section__bottom-value">
-          There are <strong>{props.wowData['portfolio_size'] || '0'}</strong> properties associated by ownership with this
+          There are <strong>{props.wowData ? props.wowData.portfolio_size : '0'}</strong> properties associated by ownership with this
           property.
         </div>
         <div className="ownership-section__bottom-value">
