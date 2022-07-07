@@ -49,7 +49,7 @@ const OwnershipSection = props => {
       {latestHPDRegistration ? (
         <div>
           <div className="ownership-section__update-section">
-            Last updated {dateFormatter(latestHPDRegistration.lastregistrationdate)}
+            Date of last registration: {dateFormatter(latestHPDRegistration.lastregistrationdate)}
           </div>
           <div className="ownership-section__contacts-section">
             {headOfficer && <ContactExpandableSection contact={headOfficer} />}
