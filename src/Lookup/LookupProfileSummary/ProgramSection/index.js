@@ -56,14 +56,6 @@ const getTaxLienInfo = props => {
 
     let info = [];
     info.push(<div key="TAX_LIEN_UPDATE" className="profile-summary-body__value program-section__program">Data as of {getReadableDateString(latestTaxLienUpdate)}:</div>);
-    // info.push(
-    //   <div key="TAX_LIEN_STANDARD_INFO" className="profile-summary-body__value program-section__program">
-    //     This property is subject to a{' '}
-    //     <BaseLink className="text-link" href="https://www1.nyc.gov/site/finance/taxes/property-lien-sales.page">
-    //       tax lien
-    //     </BaseLink>
-    //   </div>
-    // );
 
     uniqueFinalSales.forEach((obj, index) => {
       let month = parseInt(obj.split('/')[0]) - 1;
@@ -75,7 +67,7 @@ const getTaxLienInfo = props => {
       );
     });
 
-    return <div className="lookup-profile-summary__group program-section__list">{info}</div>;
+    return info;
   }
   else {
     return 'No tax liens found.';
@@ -109,7 +101,7 @@ const getCONHInfo = props => {
       </div>
     )
 
-    return <div className="lookup-profile-summary__group program-section__list">{info}</div>;
+    return info;
   }
   else {
     return 'No Certificate of No Harassment data found.';
@@ -140,7 +132,7 @@ const ProgramSection = props => {
             })}
         </div>
 
-        {props.profile.taxlien && (
+        {props.profile.taxlien && getTaxLienInfo(props).length > 1 && (
           <div>
             <div className="lookup-profile-summary__group">
               <div className="profile-summary-body__label">
@@ -217,7 +209,9 @@ const ProgramSection = props => {
               Certificate of No Harassment <InfoModalButton modalConstant="CONH_SOURCE" />
               </div>
             </div>
-            {getCONHInfo(props)}
+            <div className="lookup-profile-summary__group program-section__list">
+              {getCONHInfo(props)}
+            </div>
           </div>
         )}
 
