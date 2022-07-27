@@ -718,4 +718,25 @@ export const infoModals = {
       },
     ],
   },
+
+  CONH_SOURCE: {
+    title: 'Certificate of No Harassment Pilot Program',
+    body: "Data on whether the property was included on the most recent Certificate of No Harassment Pilot Program list.",
+    sources: [
+      {
+        text: "NYC Open Data - Certification of No Harassment (CONH) Pilot Building List",
+        url: "https://data.cityofnewyork.us/Housing-Development/Certification-of-No-Harassment-CONH-Pilot-Building/bzxi-2tsw"
+      },
+    ],
+    documentationSources: [
+      {
+        text: 'CONH_Pilot_Building_List_Data_Dictionary.xlsx',
+        url: 'https://data.cityofnewyork.us/api/views/bzxi-2tsw/files/a0734e65-781d-40a2-a6d4-529d5900d1ec?download=true&filename=CONH_Pilot_Building_List_Data_Dictionary.xlsx'
+      },
+      {
+        text: 'Certification of No Harassment',
+        url: 'https://www1.nyc.gov/site/hpd/services-and-information/certification-of-no-harassment-conh.page'
+      },
+    ],
+  },
 }
