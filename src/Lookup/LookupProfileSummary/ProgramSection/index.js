@@ -82,6 +82,40 @@ const getTaxLienInfo = props => {
   }
 }
 
+const getCONHInfo = props => {
+  if (props.profile.conhrecord) {
+    let CONHDataset;
+    for (let i = 0; i < props.config.datasets.length; i++) {
+      if (props.config.datasets[i].model_name == 'CONHRecord') {
+        CONHDataset = props.config.datasets[i];
+      }
+    }
+
+    const latestCONHUpdate = new Date(CONHDataset.last_update);
+
+    let info = [];
+    info.push(
+      <div key="TAX_LIEN_UPDATE" className="profile-summary-body__value program-section__program">
+        Data as of {getReadableDateString(latestCONHUpdate)}:
+      </div>
+    );
+
+    info.push(
+      <div key="TAX_LIEN_STANDARD_INFO" className="profile-summary-body__value program-section__program">
+        A building on this property is eligible for the{' '}
+        <BaseLink className="text-link" href="https://anhd.org/project/coalition-against-tenant-harassment-cath">
+          Certificate of No Harassment Pilot Program.
+        </BaseLink>
+      </div>
+    )
+
+    return <div className="lookup-profile-summary__group program-section__list">{info}</div>;
+  }
+  else {
+    return 'No Certificate of No Harassment data found.';
+  }
+}
+
 const ProgramSection = props => {
   return (
     <div className="program-section property-section property-summary-body">
@@ -177,15 +211,16 @@ const ProgramSection = props => {
         )}
 
         {props.profile.conhrecord && (
-          <div className="lookup-profile-summary__group">
-            <div className="text-danger font-weight-bold">
-              A building on this property is eligible for the{' '}
-              <BaseLink className="text-link" href="https://anhd.org/project/coalition-against-tenant-harassment-cath">
-                Certificate of No Harassment Pilot Program.
-              </BaseLink>
+          <div>
+            <div className="lookup-profile-summary__group">
+              <div className="profile-summary-body__label">
+              Certificate of No Harassment <InfoModalButton modalConstant="CONH_SOURCE" />
+              </div>
             </div>
+            {getCONHInfo(props)}
           </div>
         )}
+
       </div>
     </div>
   )
