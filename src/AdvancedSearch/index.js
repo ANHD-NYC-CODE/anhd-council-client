@@ -91,6 +91,7 @@ export class AdvancedSearch extends React.Component {
   setAdvancedSearchRequestInStore() {
     const newAdvancedSearch = this.cloneAdvancedSearchInstance(this.state.advancedSearch)
     this.props.dispatch(updateGeography(0, newAdvancedSearch.geographies[0].clone()))
+    this.props.dispatch(replacePropertyFilter(newAdvancedSearch.propertyFilter.clone()))
     this.props.dispatch(updateCondition('0', newAdvancedSearch.conditions['0'].clone()))
 
     this.props.dispatch(
@@ -228,10 +229,6 @@ export class AdvancedSearch extends React.Component {
         error: this.props.error,
       })
     }
-
-    // Update the units property filter here so that it only runs on form submission
-    const newAdvancedSearch = this.cloneAdvancedSearchInstance(this.state.advancedSearch)
-    this.props.dispatch(replacePropertyFilter(newAdvancedSearch.propertyFilter.clone()))
   }
 
   componentWillUnmount() {
