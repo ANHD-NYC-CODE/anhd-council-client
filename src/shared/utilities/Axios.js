@@ -75,7 +75,7 @@ export const constructAxiosPost = (
         }
         dispatch(handleCompletedRequest(constant, requestId))
 
-        if (response.headers && response.headers['content-type'].match(/csv/)) {
+        if (response.headers && response.headers['content-type'] && response.headers['content-type'].match(/csv/)) {
           FileDownload(response.data, response.config.params.filename)
         }
       }
