@@ -77,6 +77,7 @@ class AdvancedSearchForm extends React.PureComponent {
           this.state.currentGeographyId
         );
         window.location.assign('/search'+path);
+        // this.props.dispatch(push('/search'+path));
         this.props.onSubmit();
       }
     })

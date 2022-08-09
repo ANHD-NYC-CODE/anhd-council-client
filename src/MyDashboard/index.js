@@ -193,9 +193,9 @@ class MyDashboard extends React.Component {
                                     return (
                                         <tr key={search.id}>
                                             <th scope="row">
-                                                <Link to={"/search"+search.custom_search_view}>
+                                                <a href={"/search"+search.custom_search_view}>
                                                     <SaveSearchButton active={true} text={search.name} />
-                                                </Link>
+                                                </a>
                                             </th>
                                             <td>
                                                 {search.notification_frequency === "N" ? "Off" : "On"}
