@@ -1,7 +1,7 @@
 import React from 'react'
 
 import UserContext from 'Auth/UserContext'
-import NavigationBar from 'Layout/NavigationBar'
+// import NavigationBar from 'Layout/NavigationBar'
 import SubHeader from 'Layout/SubHeader'
 import Footer from 'Layout/Footer'
 import PrintLayout from 'Layout/PrintLayout'
@@ -44,7 +44,7 @@ class Layout extends React.Component {
               <UserContext.Consumer>
                 {auth => (
                   <div>
-                    <NavigationBar />
+                    {/* <NavigationBar /> */}
                     <ModalContext.Consumer>
                       {modal => {
                         return <SubHeader modal={modal} auth={auth} />
