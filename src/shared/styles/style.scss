@@ -1,0 +1,28 @@
+
+/* 
+Overriding bootstrap switch toggle for save custom search 
+*/
+.save-custom-search__notifications .custom-control-input:checked ~ .custom-control-label::before {
+    color: black;
+    background-color: #609bd6;
+}
+
+.save-custom-search__notifications .custom-control-label::before, .custom-control-label::after {
+    top: 3px !important;
+}
+
+.save-custom-search__notifications .custom-switch .custom-control-label::before {
+    left: -2rem !important;
+    width: 33px !important;
+    height: 18px;
+    pointer-events: all;
+    border-radius: 0.5rem;
+}
+
+.save-custom-search__notifications .custom-switch .custom-control-label::after {
+    top: 4px !important;
+    left: calc(-2.25rem + 4px) !important;
+    width: 20px !important; 
+    height: 1rem !important;
+}
+
