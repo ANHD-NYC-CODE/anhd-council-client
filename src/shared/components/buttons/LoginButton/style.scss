@@ -1,0 +1,19 @@
+.bookmark-button__container {
+    stroke: black;
+    stroke-width: 20 !important;
+    cursor: pointer;
+    svg {
+        margin-right: 5px;
+    }
+    .bookmark-button__icon_inactive path {
+        fill: white !important;
+    }
+    
+    .bookmark-button__icon_active path {
+        fill: #424a54 !important;
+    }
+}
+.bookmark-button__container:hover {
+    text-decoration: underline;
+    
+}
