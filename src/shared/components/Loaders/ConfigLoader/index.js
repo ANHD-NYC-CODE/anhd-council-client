@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { createLoadingReducerSelector } from 'Store/Loading/selectors'
 import { ProgressBar } from 'react-bootstrap'
-import NavigationBar from 'Layout/NavigationBar'
+// import NavigationBar from 'Layout/NavigationBar'
 import InnerLoader from 'shared/components/Loaders/InnerLoader'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
@@ -52,7 +52,7 @@ class ConfigLoader extends React.Component {
   render() {
     return (
       <div className="loading">
-        <NavigationBar />
+        {/* <NavigationBar /> */}
         <div className="loading__wrapper d-flex flex-column align-items-center justify-content-center">
           <InnerLoader
             className={classnames('loading__background', {
