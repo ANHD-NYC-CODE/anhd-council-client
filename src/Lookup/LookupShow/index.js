@@ -17,12 +17,14 @@ import BuildingSelect from 'Lookup/BuildingSelect'
 import LookupLinks from 'Lookup/LookupLinks'
 import LookupSidebar from 'Lookup/LookupSidebar'
 import BookmarkButton from 'shared/components/buttons/BookmarkButton'
-
+import LoginButton from '../../shared/components/buttons/LoginButton'
 import { bookmarkProperty, unBookmarkProperty, getUserBookmarkedProperties } from 'Store/MyDashboard/actions'
 import { boroCodeToName, constructAddressString } from 'shared/utilities/languageUtils'
 import { requestWithAuth } from 'shared/utilities/authUtils'
 import SpinnerLoader from 'shared/components/Loaders/SpinnerLoader'
 import { toast } from 'react-toastify'
+import ModalContext from 'Modal/ModalContext'
+import UserContext from 'Auth/UserContext'
 
 import './style.scss'
 
@@ -145,6 +147,42 @@ class LookupShow extends React.PureComponent {
   }
 
   render() {
+
+
+    const isLoggedIn = this.props.loggedIn
+    let bookmark;
+
+    if (isLoggedIn) {
+      bookmark = <BookmarkButton 
+      active={this.state.bookmarked} 
+      activeText="You have bookmarked this property"
+      text="Bookmark this property"
+      onBookmark={this.bookmarkClicked}
+      disabled={this.props.bookmarkLoading || this.props.bookmarkDeleteLoading}
+    />;
+    } else {
+      bookmark = 
+      <UserContext.Consumer>
+      {auth => (
+        <div>
+          <ModalContext.Consumer>
+            {modal => {
+              return <LoginButton 
+              modal={modal} 
+              auth={auth}
+              active={this.state.bookmarked} 
+              activeText="You have bookmarked this property"
+              text="Login to bookmark this property"
+              onBookmark={this.bookmarkClicked}
+              disabled={this.props.bookmarkLoading || this.props.bookmarkDeleteLoading} />
+            }}
+          </ModalContext.Consumer>
+        </div>
+      )}
+    </UserContext.Consumer>
+    }
+
+
     return (
       <div className="lookup-show layout-width-wrapper">
         <div className="lookup-show__content-wrapper">
@@ -159,17 +197,11 @@ class LookupShow extends React.PureComponent {
             <div className="lookup-show__row-wrapper">
               <div className="lookup-show__top-row">
                 <LookupAddressDisplay handleClear={this.handleClearLookup} profile={this.props.propertyResult} />
-                { this.props.loggedIn && (
+                
                   <div className="lookup-show__bookmark-section">
-                    <BookmarkButton 
-                      active={this.state.bookmarked} 
-                      activeText="You have bookmarked this property"
-                      text="Bookmark this property"
-                      onBookmark={this.bookmarkClicked}
-                      disabled={this.props.bookmarkLoading || this.props.bookmarkDeleteLoading}
-                    />
+                   {bookmark}
                   </div>
-                )}
+          
                 {(this.props.bookmarkLoading || this.props.bookmarkDeleteLoading) && 
                   <div><SpinnerLoader size="20px" /></div>
                 }
