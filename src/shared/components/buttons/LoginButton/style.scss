@@ -1,24 +1,19 @@
-.save-search-button__container {
+.bookmark-button__container {
     stroke: black;
     stroke-width: 20 !important;
     cursor: pointer;
-
     svg {
         margin-right: 5px;
     }
-
-    .save-search-button__icon_inactive path {
+    .bookmark-button__icon_inactive path {
         fill: white !important;
     }
     
-    .save-search-button__icon_active path {
-        fill:  #424a54 !important;
+    .bookmark-button__icon_active path {
+        fill: #424a54 !important;
     }
 }
-
-.save-search-button__container:hover {
+.bookmark-button__container:hover {
     text-decoration: underline;
     
 }
-
-
