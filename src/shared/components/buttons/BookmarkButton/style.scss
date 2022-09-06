@@ -12,20 +12,13 @@
     }
     
     .bookmark-button__icon_active path {
-        fill: #6E9AD1 !important;
+        fill: #424a54 !important;
     }
 }
 
 .bookmark-button__container:hover {
     text-decoration: underline;
     
-    .bookmark-button__icon_inactive path {
-        fill: #dddddd !important;
-    }
-
-    .bookmark-button__icon_active path{
-        fill: #4570a5 !important;
-    }
 }
 
 
