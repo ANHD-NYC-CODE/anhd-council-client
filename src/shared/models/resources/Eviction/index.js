@@ -28,7 +28,7 @@ const Eviction = () => ({
         resourceModel,
         component: GenericFieldSet,
         baseComponent: TextSelectField,
-        paramMapValue: 'Commercial',
+        paramMapValue: 'COMMERCIAL',
         paramMapType: 'SINGLE-TEXT',
         paramMapComparison: '',
         paramSetLabel: 'Type',
