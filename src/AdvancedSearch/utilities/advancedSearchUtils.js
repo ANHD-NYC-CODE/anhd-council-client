@@ -55,6 +55,12 @@ const setPropertyFilterParamMapsFromSearchParams = (searchParams, propertyFilter
   const rsUnitsLostTo = searchParams.rsunitslost__end;
   const expiry = searchParams.coresubsidyrecord__enddate__gte || searchParams.coresubsidyrecord__enddate__lte;
   const unitsRes = searchParams.unitsres__lte || searchParams.unitsres__gte || searchParams.unitsres__exact;
+  
+  
+  // try updating unitres to lt and gt 
+
+
+  
   const sroUnits = searchParams.propertyannotation__legalclassb__gte;
 
   propertyFilter.paramSets.initial.paramMaps[0].value = housingType;
