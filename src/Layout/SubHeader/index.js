@@ -56,8 +56,17 @@ class SubHeader extends React.Component {
       jQuery('.hamburger').removeClass('is-active')
       jQuery('.ham-text-2').css('display', 'none')
       jQuery('.ham-text-1').css('display', 'flex')
-    })
+    }
+    )
 
+    jQuery(window).resize(function () {
+      jQuery('.mobile-nav').css('display', 'none')
+      jQuery('.mobile-nav').css('opacity', '0')
+      jQuery('.hamburger').removeClass('is-active')
+      jQuery('.ham-text-2').css('display', 'none')
+      jQuery('.ham-text-1').css('display', 'flex')
+    }
+    )
 
   }
 
