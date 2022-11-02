@@ -1,0 +1,69 @@
+@media only screen and (max-width: 1050px) {
+
+.sub-header .sub-header__wrapper--bottom {
+    display:none
+}
+
+.mobile-nav-hamburger {
+display:unset;	
+position: absolute;
+    left: 1px;
+    top: 0px;
+z-index: 10005; 
+}
+
+.mobile-nav {
+display:flex;
+left: 0; 
+top: 0;  
+width: 100%; 
+max-width: 400px;     
+height: fit-content;     
+padding: 68px 0px 0px;
+background: ghostwhite;     
+border-right: 1px solid gray;   
+border-bottom: 1px solid gray;  
+position: absolute;     
+z-index: 10000; 
+}
+
+.mobile-nav .sub-header__wrapper--top__links {
+    margin-left: 0 !important
+}
+
+
+
+.mobile-nav .sub-header__wrapper--top__links .nav-item:last-child{
+    margin-right: auto
+}
+
+}
+
+
+@media only screen and (max-width: 550px) {
+.sub-header .sub-header__logo {
+    display: block;
+    height: auto;
+    width: 70%;
+    margin: 10px 0 10px auto;
+    display: block;
+    max-width: 180px;
+}
+ 
+.sub-header .sub-header__logo.displace_logo {
+    width: 100%;
+    margin-right: -55px;
+}
+
+}
+
+@media only screen and (max-width: 420px) {
+.sub-header .sub-header__logo.anhd_logo {
+    margin-right: -10px;
+}
+
+.mobile-nav {
+    max-width: 100%;
+} 
+
+}

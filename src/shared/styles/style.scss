@@ -26,3 +26,118 @@ Overriding bootstrap switch toggle for save custom search
     height: 1rem !important;
 }
 
+
+// Mobile Nav and Hamburger Menu Code
+
+.mobile-nav .nav-tabs {
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+    width: 100%;
+border-bottom: none !important;
+}
+
+.mobile-nav .sub-header__nav-tab {
+    width: 100% !important;}
+
+.mobile-nav .sub-header__wrapper--top__links {
+display: flex;
+flex-direction: column;
+    width: 100%;
+    padding: 0px 0 10px 0px;
+justify-content: center;
+align-items: center;
+margin-top: 10px;
+
+}
+
+.mobile-nav {
+    display:none;
+    transition: .25s ease-in-out;
+    opacity: 0;
+    box-shadow: 2px 2px 5px rgb(0 0 0 / 20%);
+}
+
+ .layout-width-wrapper {
+    box-sizing: border-box;
+    margin: 0 auto 6px !important;
+ }
+
+ .sub-header .sub-header__brand .navbar-brand {
+    margin-right: 0;
+    margin-top: 4px;
+    padding-bottom: 0px;
+ }  
+.hamburger-text {
+    position: absolute;
+    left: 1px;
+    top: 26px;
+    font-size: 13px;
+    color: #014c8d;
+    font-weight: 800;
+} 
+
+ .mobile-nav .sub-header__logo {
+    display: block !important;
+    height: auto;
+    width: 100% !important;
+    margin: 0 auto !important;
+    display: block !important;
+    max-width: 180px !important;
+}
+
+.mobile-nav .sub-header__wrapper--top__links .nav-item {
+    padding-left:0 !important;
+    padding-right:0 !important
+}
+
+
+.ham-text-2 {display:none}
+.mobile__logo {
+    position: absolute; 
+    top:18px;
+    right:16px
+}
+
+.mobile-nav .sub-header__nav-tab {
+    height: 50px;
+        padding-top: 11px;
+}
+
+.mobile-nav .tab--dark-inverse.active {
+    border-top: 1px solid #609bd6;
+    border-bottom: 1px solid #609bd6;
+    background: #609bd6;
+}
+
+.mobile-nav .sub-header__nav-tab {  
+align-items: center;
+font-size: 16px;
+border-radius: 0 !important;
+border-left:none;
+border-right:none;
+border-top: 1px solid #424a54;
+border-bottom: 1px solid #424a54;
+}
+
+.mobile-nav .nav-tabs {
+  border-bottom: none !important;
+      height: fit-content;
+}
+
+.mobile-nav-hamburger {
+display:none;
+}
+
+.mobile-nav .nav-item {
+margin: 5px auto 0;
+  font-size: 16px;
+      text-align: center;
+}
+
+.mobile-nav .sub-header__wrapper--top__links .nav-item{
+    margin: 0px auto 0;
+    font-size: 15px;
+        text-align: center;
+}
