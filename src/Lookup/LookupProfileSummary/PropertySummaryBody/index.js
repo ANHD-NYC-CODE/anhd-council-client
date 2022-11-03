@@ -21,10 +21,9 @@ const PropertySummaryBody = props => {
           <div className="lookup-profile-summary__group">
             <span className="profile-summary-body__label">Council District</span>
             <span className="d-flex profile-summary-body__value profile-summary__geography">
-              <BaseLink className="lookup-internal-link" href={'../district-dashboard' + geographyToLink('COUNCIL', props.profile.council)}>
-                {`${communityIdToString(props.profile.council)}`}</BaseLink>
-              (
-              <BaseLink className="lookup-internal-link" target="_blank" href={'https://council.nyc.gov/district-' + props.profile.council + '/'}>Visit</BaseLink>)
+              <BaseLink className="lookup-internal-link" href={'../district-dashboard' + geographyToLink('COUNCIL', props.profile.council)}>{props.profile.council}</BaseLink>
+              <span> (
+                <BaseLink className="lookup-internal-link" target="_blank" href={'https://council.nyc.gov/district-' + props.profile.council + '/'}>Visit</BaseLink>)</span>
             </span>
           </div>
           <div className="lookup-profile-summary__group">
