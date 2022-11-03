@@ -1,5 +1,8 @@
 @import 'shared/styles/bootstrap/_variables.scss';
 
+
+
+
 .property-summary-body.row {
   box-sizing: border-box;
   margin-left: -30px;
@@ -44,3 +47,19 @@
     }
   }
 }
+
+
+
+  .lookup-internal-link{
+    color: #004f9e !important;
+    text-decoration: underline;
+    transition: .25s ease-in-out;
+  }
+    .lookup-internal-link:hover{
+    color: #001e3b !important;
+    text-decoration: underline;
+     transition: .25s ease-in-out;
+  }
+
+    .property-section {    
+    background-color: #a2cffc !important}
