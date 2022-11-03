@@ -21,36 +21,37 @@ const PropertySummaryBody = props => {
           <div className="lookup-profile-summary__group">
             <span className="profile-summary-body__label">Council District</span>
             <span className="d-flex profile-summary-body__value profile-summary__geography">
-              {councilIdToString(props.profile.council, false)} (
-              <BaseLink href={geographyToLink('COUNCIL', props.profile.council)}>Visit</BaseLink>)
+              <BaseLink className="lookup-internal-link" href={'../district-dashboard' + geographyToLink('COUNCIL', props.profile.council)}>
+                {`${communityIdToString(props.profile.council)}`}</BaseLink>
+              (
+              <BaseLink className="lookup-internal-link" target="_blank" href={'https://council.nyc.gov/district-' + props.profile.council + '/'}>Visit</BaseLink>)
             </span>
           </div>
           <div className="lookup-profile-summary__group">
-            <span className="profile-summary-body__label">Community District</span>
-            <span className="d-flex profile-summary-body__value profile-summary__geography">
-              {`${communityIdToString(props.profile.cd)}`} (
-              <BaseLink href={geographyToLink('COMMUNITY', props.profile.cd)}>Visit</BaseLink>)
-            </span>
+            <span className="profile-summary-body__label">
+              Community District</span>
+            <BaseLink className="lookup-internal-link" href={'../district-dashboard' + geographyToLink('COMMUNITY', props.profile.cd)}><span>{`${communityIdToString(props.profile.cd)}`}</span>
+            </BaseLink>
+
           </div>
           <div className="lookup-profile-summary__group">
             <span className="profile-summary-body__label">State Assembly</span>
             <span className="d-flex profile-summary-body__value profile-summary__geography">
-              {props.profile.stateassembly} (
-              <BaseLink href={geographyToLink('STATE_ASSEMBLY', props.profile.stateassembly)}>Visit</BaseLink>)
+              <BaseLink className="lookup-internal-link" href={'../district-dashboard' + geographyToLink('STATE_ASSEMBLY', props.profile.stateassembly)}>{props.profile.stateassembly}</BaseLink>
+
             </span>
           </div>
           <div className="lookup-profile-summary__group">
             <span className="profile-summary-body__label">State Senate</span>
             <span className="d-flex profile-summary-body__value profile-summary__geography">
-              {props.profile.statesenate} (
-              <BaseLink href={geographyToLink('STATE_SENATE', props.profile.statesenate)}>Visit</BaseLink>)
+              <BaseLink className="lookup-internal-link" href={'../district-dashboard' + geographyToLink('STATE_SENATE', props.profile.statesenate)}>{props.profile.statesenate}</BaseLink> (
+              <BaseLink className="lookup-internal-link" target="_blank" href={'https://www.nysenate.gov/district/' + props.profile.statesenate + '/'}>Visit</BaseLink>)
             </span>
           </div>
           <div className="lookup-profile-summary__group">
             <span className="profile-summary-body__label">Zip Code</span>
             <span className="d-flex profile-summary-body__value profile-summary__geography">
-              {props.profile.zipcode} (
-              <BaseLink href={geographyToLink('ZIPCODE', props.profile.zipcode)}>Visit</BaseLink>)
+              <BaseLink className="lookup-internal-link" href={'../district-dashboard' + geographyToLink('ZIPCODE', props.profile.zipcode)}>{props.profile.zipcode}</BaseLink>
             </span>
           </div>
         </div>
