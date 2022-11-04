@@ -50,7 +50,7 @@ z-index: 10000;
 }
  
 .sub-header .sub-header__logo.displace_logo {
-    width: 100%;
+    width: 90%;
     margin-right: -55px;
 }
 
@@ -65,4 +65,12 @@ z-index: 10000;
     max-width: 100%;
 } 
 
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) { 
+  select,
+  textarea,
+  input {
+    font-size: 16px !important;
+  }
 }
