@@ -7,6 +7,10 @@ import {
   grammaticalList,
   longAmountComparisonString,
   constructDateComparisonString,
+
+  constructRangeComparisonString,
+
+
   grammaticalNoun,
   stringWithComparisonStringsToSymbol,
   boroCodeToName,
@@ -56,6 +60,21 @@ const parseParamMapComparison = (paramMap, nounOverride = undefined) => {
         .filter(s => s)
         .join(' ')
         .trim()
+  // TEST /////////////////////////////////////////////////
+    // case 'RANGE':
+    case 'AMOUNTRANGE':
+      return [
+        paramMap.comparisonPrefix.trim(),
+        paramMap.valuePrefix.trim(),
+        constructRangeComparisonString(paramMap.comparison, paramMap.defaultOptions)
+          .trim()
+          .toLowerCase(),
+    
+      ]
+        .filter(s => s)
+        .join(' ')
+        .trim()
+  // TEST /////////////////////////////////////////////////
     case 'YEAR':
       return [
         paramMap.comparisonPrefix.trim(),
@@ -98,6 +117,8 @@ const parseParamMapComparison = (paramMap, nounOverride = undefined) => {
 const parseParamMapRangeGroup = paramMapRangeGroup => {
   const gte = paramMapRangeGroup.find(pm => pm.comparison.match(/(gte|start)/))
   const lte = paramMapRangeGroup.find(pm => pm.comparison.match(/(lte|end)/))
+  const gt = paramMapRangeGroup.find(pm => pm.comparison.match(/(gt)/))
+  const lt = paramMapRangeGroup.find(pm => pm.comparison.match(/(lt)/))
   switch (paramMapRangeGroup[0].type) {
     case 'DATE':
       return [
@@ -135,15 +156,36 @@ const parseParamMapRangeGroup = paramMapRangeGroup => {
         paramMapRangeGroup[0].comparisonPrefix.trim(),
         'between',
         paramMapRangeGroup[0].valuePrefix.trim(),
-        gte.value,
+        // gte.value,
+        gt.value,
         'and',
         paramMapRangeGroup[0].valuePrefix.trim(),
-        lte.value,
-        grammaticalNoun(lte.paramNoun, lte.value),
+        // lte.value,
+        lt.value,
+        // grammaticalNoun(lte.paramNoun, lte.value),
+        grammaticalNoun(lt.paramNoun, lt.value),
       ]
         .filter(s => s)
         .join(' ')
         .trim()
+// TEST
+      case 'AMOUNTRANGE':
+      return [
+        paramMapRangeGroup[0].comparisonPrefix.trim(),
+        'between',
+        paramMapRangeGroup[0].valuePrefix.trim(),
+        gt.value
+          .trim(),
+        'and',
+        paramMapRangeGroup[0].valuePrefix.trim(),
+        lte
+          .trim(),
+      ]
+        .filter(s => s)
+        .join(' ')
+        .trim()
+
+        // TEST
   }
 }
 

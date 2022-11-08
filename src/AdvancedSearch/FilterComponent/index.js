@@ -76,6 +76,7 @@ export class FilterComponent extends React.Component {
                   key={`filter-paramset-${this.props.filter.resourceConstant}-${index}`}
                 >
                   <div className="input-column">
+                    {console.log("filter component key ********** ", key)}
                     {this.props.filter.paramSets[key].component({
                       dispatchAction: this.props.dispatchAction,
                       replaceFilter: this.props.replaceFilter,

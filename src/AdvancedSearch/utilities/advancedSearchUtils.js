@@ -55,12 +55,9 @@ const setPropertyFilterParamMapsFromSearchParams = (searchParams, propertyFilter
   const rsUnitsLostTo = searchParams.rsunitslost__end;
   const expiry = searchParams.coresubsidyrecord__enddate__gte || searchParams.coresubsidyrecord__enddate__lte;
   const unitsRes = searchParams.unitsres__lte || searchParams.unitsres__gte || searchParams.unitsres__exact;
-  
-  
-  // try updating unitres to lt and gt 
+  const unitsResMax = searchParams.unitsres__lt;
+  const unitsResMin = searchParams.unitsres__gt;
 
-
-  
   const sroUnits = searchParams.propertyannotation__legalclassb__gte;
 
   propertyFilter.paramSets.initial.paramMaps[0].value = housingType;
@@ -70,8 +67,20 @@ const setPropertyFilterParamMapsFromSearchParams = (searchParams, propertyFilter
       const field = "unitsres";
       const comparison = searchParams.unitsres__lte && "lte" || 
           searchParams.unitsres__exact && "exact" ||
-          searchParams.unitsres__gte && "gte";
+          searchParams.unitsres__gte && "gte"; 
       setParamSetParamMapsFromDefaults(field, comparison, unitsRes, propertyFilter);
+    }
+
+    if (unitsResMax) {
+      const field = "unitsres";
+      const comparison = searchParams.unitsres__lt && "lt"
+      setParamSetParamMapsFromDefaults(field, comparison, unitsResMax, propertyFilter);
+    }
+
+    if (unitsResMin) {
+      const field = "unitsres";
+      const comparison = searchParams.unitsres__gt && "gt"
+      setParamSetParamMapsFromDefaults(field, comparison, unitsResMin, propertyFilter);
     }
     
     if (rsUnitsLost) {

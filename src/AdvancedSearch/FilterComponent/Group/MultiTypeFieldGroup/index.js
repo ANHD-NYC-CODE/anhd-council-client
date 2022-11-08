@@ -19,14 +19,16 @@ const MultiTypeFieldGroup = props => {
         .sort((a, b) => a.rangePosition - b.rangePosition)
         .forEach(pm => {
           // Set param map comparison values back to default
-          if (pm.rangePosition === 1) {
+          // if (pm.rangePosition === 1) {
+          if (pm.comparison == "lt") {
             pm.update({
               e: new StandardizedInput({
                 name: 'comparison',
                 value: props.paramSet.defaults.find(pm2 => pm2.rangePosition === pm.rangePosition).comparison,
               }),
             })
-          } else if (pm.rangePosition === 2) {
+          // } else if (pm.rangePosition === 2) {
+          } else if (pm.comparison == "gt") {
             pm.update({
               e: new StandardizedInput({
                 name: 'comparison',
@@ -45,6 +47,7 @@ const MultiTypeFieldGroup = props => {
   const renderRangeFields = (props, rangeKey) => {
     const paramMapRangeGroup = props.paramSet.paramMaps.filter(paramMap => paramMap.rangeKey === rangeKey)
     if (paramMapRangeGroup.length === 1) {
+      console.log("length equals 1", paramMapRangeGroup.length)
       return paramMapRangeGroup[0].component({
         key: `paramMap-rangeGroup-${0}`,
         rangeChange: rangeChange,
@@ -55,8 +58,17 @@ const MultiTypeFieldGroup = props => {
         type: paramMapRangeGroup[0].props.type,
       })
     } else if (paramMapRangeGroup.length > 1) {
+
+      const uniqueKey = props.paramSet._paramMaps.map((rangeParam) => (
+        rangeParam._rangePosition
+      ))
+      console.log("new var is", uniqueKey)
+
       return (
-        <div key="rangeFieldSet">
+        // <div key="rangeFieldSet">
+        <div class="test" key={uniqueKey}>
+          {console.log("the props from multi-type-field are here are ", props)}   
+
           <RangeFieldSet
             paramMapRangeGroup={paramMapRangeGroup}
             paramSet={props.paramSet}
@@ -66,24 +78,31 @@ const MultiTypeFieldGroup = props => {
             [].concat(...paramMapRangeGroup.map(paramMap => paramMap.errors)).map((error, index) => {
               return <FormError key={`range-error-${index}`} show={!!error} message={error.message} />
             })}
-        </div>
+        </div> 
       )
     } else {
       return null
     }
   }
 
+
   return (
     <div className="multitype-fieldgroup" key={props.key}>
       {props.paramSet.paramMaps.map((paramMap, paramMapIndex) => {
+        {console.log("compariosn ", paramMap.comparison)}
+        {console.log("range key ", paramMap.rangeKey)}
+        {console.log("parammap render ", paramMap.rangeKey && props.paramSet.paramMaps.filter(paramMap => paramMap.rangeKey))}
         if (paramMap.rangeKey && props.paramSet.paramMaps.filter(paramMap => paramMap.rangeKey).length === 2) {
+          
           // Only render range field once
-          if (paramMap.rangePosition === 1) {
+          // if (paramMap.rangePosition === 1) {
+          if (paramMap.comparison === "gt") {
             return renderRangeFields(props, paramMap.rangeKey)
           } else {
             return null
           }
-        } else {
+        } 
+        else {
           return (
             <div key={`paramSet-${props.paramSetIndex}-paramMap-component-${paramMapIndex}`}>
               {paramMap.component({
