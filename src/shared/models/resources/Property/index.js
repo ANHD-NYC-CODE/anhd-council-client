@@ -327,6 +327,8 @@ const Property = () => {
         },
       },
 
+      // COMPARE HERE //
+      
       // rent regulated
       housingType_rr_1: {
         generatorFunction: resourceModel => {
