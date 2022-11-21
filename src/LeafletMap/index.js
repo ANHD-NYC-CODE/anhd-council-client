@@ -250,10 +250,11 @@ export default class LeafletMap extends React.PureComponent {
               url="https://api.mapbox.com/styles/v1/anhdnyc/cla7cvnlq000h15o9oiftl65e/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYW5oZG55YyIsImEiOiJjanQ0ZWRqaDcxMmRxNDlsbHV1OXN0aGx6In0.i07oerfvXtcRfm3npws7mA&dt"
             />
           )}
+
           {this.props.currentGeographyType === 'ZIPCODE' && (
             <TileLayer
               attribution="mapbox"
-              url="https://api.mapbox.com/styles/v1/anhdnyc/ck3093t330s3e1cnvcair3d0n/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYW5oZG55YyIsImEiOiJjanQ0ZWRqaDcxMmRxNDlsbHV1OXN0aGx6In0.i07oerfvXtcRfm3npws7mA"
+              url="https://api.mapbox.com/styles/v1/anhdnyc/clah97ak5000p16lbtwn31yoz/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYW5oZG55YyIsImEiOiJjanQ0ZWRqaDcxMmRxNDlsbHV1OXN0aGx6In0.i07oerfvXtcRfm3npws7mA"
             />
           )}
 
