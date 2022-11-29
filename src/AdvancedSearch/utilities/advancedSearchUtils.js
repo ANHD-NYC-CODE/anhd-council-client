@@ -55,11 +55,10 @@ const setPropertyFilterParamMapsFromSearchParams = (searchParams, propertyFilter
   const rsUnitsLostTo = searchParams.rsunitslost__end;
   const expiry = searchParams.coresubsidyrecord__enddate__gte || searchParams.coresubsidyrecord__enddate__lte;
   const unitsRes = searchParams.unitsres__lte || searchParams.unitsres__gte || searchParams.unitsres__exact;
-  
-  
-  // try updating unitres to lt and gt 
+  // const ocaHousing = searchParams.ocahousingcourts__status__any;
 
 
+  // console.log("subsidy programs variable is ", ocaHousing)
   
   const sroUnits = searchParams.propertyannotation__legalclassb__gte;
 
@@ -117,6 +116,14 @@ const setPropertyFilterParamMapsFromSearchParams = (searchParams, propertyFilter
       const comparison = "any";
       setParamSetParamMapsFromDefaults(field, comparison, subsidyPrograms, propertyFilter);
     }
+
+
+    // if (ocaHousing) {
+    //   const field = "ocahousingcourts__status;";
+    //   const comparison = "any";
+    //   setParamSetParamMapsFromDefaults(field, comparison, ocaHousing, propertyFilter);
+    // }
+
   }
   catch(e) {
     return false;

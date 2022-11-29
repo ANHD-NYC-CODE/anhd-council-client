@@ -1,6 +1,9 @@
 import { constructCountDateParamSet, constructSingleMapParamSet, comparisonOptions } from 'shared/utilities/filterUtils'
+// import { constructCountDateParamSet, constructSingleMapParamSet, comparisonOptions, ocaProgramOptions } from 'shared/utilities/filterUtils'
+
 import GenericFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/GenericFieldSet'
 import TextSelectField from 'AdvancedSearch/FilterComponent/Field/TextSelectField'
+// import MultiSelectField from 'AdvancedSearch/FilterComponent/Field/MultiSelectField'
 
 const HousingCourtCase = () => ({
   summaryBackgroundColorClass: 'summary-blue',
@@ -54,6 +57,30 @@ const HousingCourtCase = () => ({
         })
       }
     },
+
+    // Tested commenting out above and using the below, following the Property subsidy program name filter that we're tring to mimic***
+    // update imports above for this, ocaProgramOptions are outlined in filterUtils, importing multiselect field
+    // this gets it to show up on the front end but doesn't work
+    
+    // status: {
+    //   generatorFunction: resourceModel => {
+    //     return constructSingleMapParamSet({
+    //       resourceModel,
+    //       paramSetLabel: 'Status',
+    //       component: GenericFieldSet,
+    //       baseComponent: MultiSelectField,
+    //       defaultOptions: ocaProgramOptions(),
+    //       paramMapType: 'MULTI-TEXT',
+    //       paramNoun: 'case type(s)',
+    //       paramMapField: 'ocahousingcourts__status',
+    //       valuePrefix: 'Status',
+    //       paramMapComparison: 'any',
+    //       paramMapValue: '',
+    //     })
+    //   }
+    // },
+
+
     classification: {
       generatorFunction: resourceModel => {
         return constructSingleMapParamSet({

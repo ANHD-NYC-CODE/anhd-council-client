@@ -382,6 +382,23 @@ export const rentRegulatedProgramOptions = () => {
   return rentRegulatedPrograms.map(program => ({ name: 'value', value: program, label: program }))
 }
 
+// testing ---------->
+
+// export const ocaProgramOptions = () => {
+//   const ocaPrograms = [
+//     'Disposed', 
+//     'Post-Disposition', 
+//     'Active', 
+//     'Active---Pending-Further-Review', 
+//     'Active---Restored', 
+//     'Active---Appeal-Pending',  
+//     'Post-Disposition---Appeal-Pending'
+//   ]
+
+//   return ocaPrograms.map(program => ({ name: 'value', value: program, label: program }))
+// }
+// <------------------testing
+
 export const comparisonOptions = ({ comparisonValues = [], labels = [], name = 'comparison', rangeKey } = {}) => {
   return comparisonValues.map((value, index) => ({
     name,
