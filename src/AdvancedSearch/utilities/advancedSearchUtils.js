@@ -123,6 +123,7 @@ const setPropertyFilterParamMapsFromSearchParams = (searchParams, propertyFilter
     //   const comparison = "any";
     //   setParamSetParamMapsFromDefaults(field, comparison, ocaHousing, propertyFilter);
     // }
+    // testing creating a unique oca housing court field similar to the subsidy programname field above 
 
   }
   catch(e) {
