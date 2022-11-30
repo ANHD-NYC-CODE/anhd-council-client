@@ -111,7 +111,7 @@
     "webpack-manifest-plugin": "2.0.4",
     "yup": "^0.26.10"
   },
-  "engines": { "node": "16.14.2" },
+  "engines": { "node": "14.15.1" },
   "scripts": {
     "start": "node scripts/start.js",
     "lint": "npx eslint --ext .jsx,.js,.tsx,.ts --config ./.eslintrc.js --fix src/",
