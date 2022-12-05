@@ -109,7 +109,7 @@
     "webpack-bundle-analyzer": "^4.4.0",
     "webpack-dev-server": "^3.11.2",
     "webpack-manifest-plugin": "2.0.4",
-    "yup": "^0.26.10"
+    "yup": "^0.32.11"
   },
   "engines": {
     "node": "16.x"
