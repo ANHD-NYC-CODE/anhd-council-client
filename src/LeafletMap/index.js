@@ -121,6 +121,7 @@ export default class LeafletMap extends React.PureComponent {
       }
     }
   }
+<<<<<<< HEAD
 
   getGeographyBounds(type, id) {
     if (type === b.BOROUGH_GEOGRAPHY.constant) return null
@@ -155,6 +156,42 @@ export default class LeafletMap extends React.PureComponent {
     }
   }
 
+=======
+
+  getGeographyBounds(type, id) {
+    if (type === b.BOROUGH_GEOGRAPHY.constant) return null
+    if (type === b.CITY_GEOGRAPHY.constant) return null
+    if (!this.allGeographiesLoaded()) return null
+
+    const geographyDataset = this.props.selectGeographyData(type)
+    const selectedGeography = geographyDataset.find(geography => String(geography.id) === String(id))
+
+    if (!selectedGeography) return
+
+    return new L.geoJSON(selectedGeography.data.geometry).getBounds()
+  }
+
+  getGeographyCenter(type, id) {
+    const bounds = this.getGeographyBounds(type, id)
+    if (bounds) return bounds.getCenter()
+    else return this.props.center
+  }
+
+  updateDimensions() {
+    if (this.props.height) return
+    if (this.mapContainerRef.current && this.mapRef.current) {
+      this.mapRef.current.leafletElement.invalidateSize()
+      this.setState({ height: this.mapContainerRef.current.offsetWidth })
+    }
+  }
+
+  onMapZoom() {
+    if (this.props.dispatch) {
+      this.props.dispatch(setDashboardMapZoom(this.mapRef.current.leafletElement.getZoom()))
+    }
+  }
+
+>>>>>>> c212aad5dbe89932a7d158b5a867a1bdc496bcce
   allGeographiesLoaded() {
     return (
       !this.props.loading &&
@@ -250,10 +287,18 @@ export default class LeafletMap extends React.PureComponent {
               url="https://api.mapbox.com/styles/v1/anhdnyc/cla7cvnlq000h15o9oiftl65e/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYW5oZG55YyIsImEiOiJjanQ0ZWRqaDcxMmRxNDlsbHV1OXN0aGx6In0.i07oerfvXtcRfm3npws7mA&dt"
             />
           )}
+<<<<<<< HEAD
           {this.props.currentGeographyType === 'ZIPCODE' && (
             <TileLayer
               attribution="mapbox"
               url="https://api.mapbox.com/styles/v1/anhdnyc/ck3093t330s3e1cnvcair3d0n/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYW5oZG55YyIsImEiOiJjanQ0ZWRqaDcxMmRxNDlsbHV1OXN0aGx6In0.i07oerfvXtcRfm3npws7mA"
+=======
+
+          {this.props.currentGeographyType === 'ZIPCODE' && (
+            <TileLayer
+              attribution="mapbox"
+              url="https://api.mapbox.com/styles/v1/anhdnyc/clah97ak5000p16lbtwn31yoz/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYW5oZG55YyIsImEiOiJjanQ0ZWRqaDcxMmRxNDlsbHV1OXN0aGx6In0.i07oerfvXtcRfm3npws7mA"
+>>>>>>> c212aad5dbe89932a7d158b5a867a1bdc496bcce
             />
           )}
 
