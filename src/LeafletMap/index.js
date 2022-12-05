@@ -250,36 +250,38 @@ export default class LeafletMap extends React.PureComponent {
               url="https://api.mapbox.com/styles/v1/anhdnyc/cla7cvnlq000h15o9oiftl65e/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYW5oZG55YyIsImEiOiJjanQ0ZWRqaDcxMmRxNDlsbHV1OXN0aGx6In0.i07oerfvXtcRfm3npws7mA&dt"
             />
           )}
-
           {this.props.currentGeographyType === 'ZIPCODE' && (
             <TileLayer
               attribution="mapbox"
               url="https://api.mapbox.com/styles/v1/anhdnyc/clah97ak5000p16lbtwn31yoz/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYW5oZG55YyIsImEiOiJjanQ0ZWRqaDcxMmRxNDlsbHV1OXN0aGx6In0.i07oerfvXtcRfm3npws7mA"
             />
-          )}
-
-          {this.allGeographiesLoaded() && this.props.currentGeographyType && (
-            <div>
-              <GeographyGeoJson
-                geoJsonRef={this.geoJsonRef}
-                geographies={this.props.selectGeographyData(
-                  this.props.changingGeographyType || this.props.currentGeographyType
-                )}
-                currentGeographyId={this.props.currentGeographyId}
-                currentGeographyType={this.props.currentGeographyType}
-                changingGeographyId={this.props.changingGeographyId}
-                changingGeographyType={this.props.changingGeographyType}
-                onClick={this.props.handleChangeGeographyId}
-              />
-              <GeographyMarkerLabels
-                currentGeographyType={this.props.currentGeographyType}
-                geographies={this.props.selectGeographyData(
-                  this.props.changingGeographyType || this.props.currentGeographyType
-                )}
-              />
-            </div>
-          )}
-          {this.allGeographiesLoaded() &&
+          )
+          }
+          {
+            this.allGeographiesLoaded() && this.props.currentGeographyType && (
+              <div>
+                <GeographyGeoJson
+                  geoJsonRef={this.geoJsonRef}
+                  geographies={this.props.selectGeographyData(
+                    this.props.changingGeographyType || this.props.currentGeographyType
+                  )}
+                  currentGeographyId={this.props.currentGeographyId}
+                  currentGeographyType={this.props.currentGeographyType}
+                  changingGeographyId={this.props.changingGeographyId}
+                  changingGeographyType={this.props.changingGeographyType}
+                  onClick={this.props.handleChangeGeographyId}
+                />
+                <GeographyMarkerLabels
+                  currentGeographyType={this.props.currentGeographyType}
+                  geographies={this.props.selectGeographyData(
+                    this.props.changingGeographyType || this.props.currentGeographyType
+                  )}
+                />
+              </div>
+            )
+          }
+          {
+            this.allGeographiesLoaded() &&
             this.props.changingGeographyType &&
             (this.props.currentGeographyId !== this.props.changingGeographyId &&
               this.props.changingGeographyId > 0) && (
@@ -303,7 +305,8 @@ export default class LeafletMap extends React.PureComponent {
                   Visit
                 </Button>
               </Popup>
-            )}
+            )
+          }
           <PropertyIcons
             dispatch={this.props.dispatch}
             page={this.props.page}
@@ -312,8 +315,8 @@ export default class LeafletMap extends React.PureComponent {
             iconConfig={this.props.iconConfig}
             visible={!(this.props.changingGeographyType && this.props.changingGeographyId)}
           />
-        </Map>
-      </div>
+        </Map >
+      </div >
     )
   }
 }
