@@ -50,7 +50,7 @@ const PropertySummaryBody = props => {
           <div className="lookup-profile-summary__group">
             <span className="profile-summary-body__label">Zip Code</span>
             <span className="d-flex profile-summary-body__value profile-summary__geography">
-              <BaseLink className="lookup-internal-link" href={'../district-dashboard' + geographyToLink('ZIPCODE', props.profile.zipcode)}>{props.profile.zipcode}</BaseLink>
+              <BaseLink className="lookup-internal-link" href={'../../../../district-dashboard' + geographyToLink('ZIPCODE', props.profile.zipcode)}>{props.profile.zipcode}</BaseLink>
             </span>
           </div>
         </div>
