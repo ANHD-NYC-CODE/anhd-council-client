@@ -32,7 +32,7 @@ export default class LeafletMap extends React.PureComponent {
     this.centerMapOnGeography = this.centerMapOnGeography.bind(this)
     this.getGeographyBounds = this.getGeographyBounds.bind(this)
     this.getGeographyCenter = this.getGeographyCenter.bind(this)
-    this.onMapZoom = this.onMapZoom.bind(this)
+    // this.onMapZoom = this.onMapZoom.bind(this)
     this.allGeographiesLoaded = this.allGeographiesLoaded.bind(this)
     this.handleMapClick = this.handleMapClick.bind(this)
   }
@@ -149,11 +149,11 @@ export default class LeafletMap extends React.PureComponent {
     }
   }
 
-  onMapZoom() {
-    if (this.props.dispatch) {
-      this.props.dispatch(setDashboardMapZoom(this.mapRef.current.leafletElement.getZoom()))
-    }
-  }
+  // onMapZoom() {
+  //   if (this.props.dispatch) {
+  //     this.props.dispatch(setDashboardMapZoom(this.mapRef.current.leafletElement.getZoom()))
+  //   }
+  // }
 
   allGeographiesLoaded() {
     return (
@@ -212,7 +212,7 @@ export default class LeafletMap extends React.PureComponent {
           scrollWheelZoom={this.props.interactive}
           tap={this.props.interactive}
           touchZoom={this.props.interactive}
-          onZoom={this.onMapZoom}
+          // onZoom={this.onMapZoom}
           zoom={this.props.zoom}
           zoomControl={this.props.interactive}
         >
