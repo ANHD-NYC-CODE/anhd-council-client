@@ -405,21 +405,21 @@ export const getTableColumns = ({
           csvFormatter: annotatedColumnFormatter,
         }),
         // TEST //////
-        constructPropertyColumn({
-          columnEvent: linkToColumnEvent,
-          dataField: getAnnotatedDataField({
-            annotationKey: getAnnotationKey('psforeclosures', annotationStart, advancedSearchDatasets),
-            rowExample,
-          }),
-          text: getAnnotatedLabel({
-            annotationLabel: 'Foreclosure Auctions',
-            rowExample,
-            annotationKey: getAnnotationKey('psforeclosures', annotationStart, advancedSearchDatasets),
-          }),
-          sort: true,
-          formatter: annotatedColumnFormatter,
-          csvFormatter: annotatedColumnFormatter,
-        }),
+        // constructPropertyColumn({
+        //   columnEvent: linkToColumnEvent,
+        //   dataField: getAnnotatedDataField({
+        //     annotationKey: getAnnotationKey('psforeclosures', annotationStart, advancedSearchDatasets),
+        //     rowExample,
+        //   }),
+        //   text: getAnnotatedLabel({
+        //     annotationLabel: 'Foreclosure Auctions',
+        //     rowExample,
+        //     annotationKey: getAnnotationKey('psforeclosures', annotationStart, advancedSearchDatasets),
+        //   }),
+        //   sort: true,
+        //   formatter: annotatedColumnFormatter,
+        //   csvFormatter: annotatedColumnFormatter,
+        // }),
         //test
 
         constructPropertyColumn({

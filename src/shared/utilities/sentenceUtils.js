@@ -7,10 +7,7 @@ import {
   grammaticalList,
   longAmountComparisonString,
   constructDateComparisonString,
-
   constructRangeComparisonString,
-
-
   grammaticalNoun,
   stringWithComparisonStringsToSymbol,
   boroCodeToName,
@@ -39,13 +36,11 @@ const parseParamMapComparison = (paramMap, nounOverride = undefined) => {
   if (!paramMap || !paramMap.value) return
   switch (paramMap.type) {
     case 'AMOUNT':
-      return `${paramMap.comparisonPrefix} ${longAmountComparisonString(paramMap.comparison)} ${paramMap.valuePrefix}${
-        paramMap.value
-      }${paramMap.valueSuffix}${grammaticalNoun(nounOverride || paramMap.paramNoun, paramMap.value)}`.trim()
+      return `${paramMap.comparisonPrefix} ${longAmountComparisonString(paramMap.comparison)} ${paramMap.valuePrefix}${paramMap.value
+        }${paramMap.valueSuffix}${grammaticalNoun(nounOverride || paramMap.paramNoun, paramMap.value)}`.trim()
     case 'PERCENT':
-      return `${paramMap.comparisonPrefix} ${longAmountComparisonString(paramMap.comparison)} ${paramMap.valuePrefix}${
-        paramMap.value
-      }${paramMap.valueSuffix}${grammaticalNoun(nounOverride || paramMap.paramNoun, paramMap.value)}`.trim()
+      return `${paramMap.comparisonPrefix} ${longAmountComparisonString(paramMap.comparison)} ${paramMap.valuePrefix}${paramMap.value
+        }${paramMap.valueSuffix}${grammaticalNoun(nounOverride || paramMap.paramNoun, paramMap.value)}`.trim()
     case 'DATE':
       return [
         paramMap.comparisonPrefix.trim(),
@@ -60,7 +55,7 @@ const parseParamMapComparison = (paramMap, nounOverride = undefined) => {
         .filter(s => s)
         .join(' ')
         .trim()
-  // TEST /////////////////////////////////////////////////
+    // TEST /////////////////////////////////////////////////
     // case 'RANGE':
     case 'AMOUNTRANGE':
       return [
@@ -69,12 +64,12 @@ const parseParamMapComparison = (paramMap, nounOverride = undefined) => {
         constructRangeComparisonString(paramMap.comparison, paramMap.defaultOptions)
           .trim()
           .toLowerCase(),
-    
+
       ]
         .filter(s => s)
         .join(' ')
         .trim()
-  // TEST /////////////////////////////////////////////////
+    // TEST /////////////////////////////////////////////////
     case 'YEAR':
       return [
         paramMap.comparisonPrefix.trim(),
@@ -168,8 +163,8 @@ const parseParamMapRangeGroup = paramMapRangeGroup => {
         .filter(s => s)
         .join(' ')
         .trim()
-// TEST
-      case 'AMOUNTRANGE':
+    // TEST
+    case 'AMOUNTRANGE':
       return [
         paramMapRangeGroup[0].comparisonPrefix.trim(),
         'between',
@@ -185,7 +180,7 @@ const parseParamMapRangeGroup = paramMapRangeGroup => {
         .join(' ')
         .trim()
 
-        // TEST
+    // TEST
   }
 }
 
@@ -242,13 +237,11 @@ export const convertConditionToSentence = (conditions, condition) => {
   const conditionFilterSegments = condition.filters
     .map((filter, index) => {
       if (filter.conditionGroup) {
-        return `${convertConditionToSentence(conditions, conditions[filter.conditionGroup])}${
-          condition.filters[index + 1] ? addNextFilterFill(condition, condition.filters[index + 1]) : ''
-        }`.trim()
+        return `${convertConditionToSentence(conditions, conditions[filter.conditionGroup])}${condition.filters[index + 1] ? addNextFilterFill(condition, condition.filters[index + 1]) : ''
+          }`.trim()
       } else {
-        return `${convertFilterToSentence(filter)}${
-          condition.filters[index + 1] ? addNextFilterFill(condition, condition.filters[index + 1]) : ''
-        }`.trim()
+        return `${convertFilterToSentence(filter)}${condition.filters[index + 1] ? addNextFilterFill(condition, condition.filters[index + 1]) : ''
+          }`.trim()
       }
     })
     .join(' ')
@@ -357,14 +350,14 @@ export const constructAdvancedSearchSentence = (advancedSearch, loading) => {
 }
 
 export const getNotificationFrequencyString = (f) => {
-  switch(f) {
+  switch (f) {
     case "D":
       return "Daily"
     case "W":
       return "Weekly"
     case "M":
       return "Monthly"
-    default: 
+    default:
       return "Never"
   }
 }
@@ -373,15 +366,15 @@ export const getReadableDateTimeString = (f) => {
   const date = new Date(f)
   let dateString = "";
   const monthNames = ["January", "February", "March", "April", "May", "June",
-                      "July", "August", "September", "October", "November",
-                      "December"];
+    "July", "August", "September", "October", "November",
+    "December"];
   dateString += monthNames[date.getMonth()];
   dateString += " ";
   dateString += date.getDate();
   dateString += " ";
   dateString += date.getFullYear();
   dateString += " ";
-  dateString += date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}).slice(0, -2);
+  dateString += date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }).slice(0, -2);
   dateString += " ";
   dateString += date.toLocaleTimeString().slice(-2).toLowerCase();
   return dateString;
@@ -391,8 +384,8 @@ export const getReadableDateString = (f) => {
   const date = new Date(f)
   let dateString = "";
   const monthNames = ["January", "February", "March", "April", "May", "June",
-                      "July", "August", "September", "October", "November",
-                      "December"];
+    "July", "August", "September", "October", "November",
+    "December"];
   dateString += monthNames[date.getMonth()];
   dateString += " ";
   dateString += date.getDate();
@@ -405,8 +398,8 @@ export const getReadableMonthString = (f) => {
   const date = new Date(f)
   let dateString = "";
   const monthNames = ["January", "February", "March", "April", "May", "June",
-                      "July", "August", "September", "October", "November",
-                      "December"];
+    "July", "August", "September", "October", "November",
+    "December"];
   dateString += monthNames[date.getMonth()];
   dateString += " ";
   dateString += date.getFullYear();
