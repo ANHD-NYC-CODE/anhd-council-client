@@ -27,7 +27,7 @@ const MultiTypeFieldGroup = props => {
                 value: props.paramSet.defaults.find(pm2 => pm2.rangePosition === pm.rangePosition).comparison,
               }),
             })
-          // } else if (pm.rangePosition === 2) {
+            // } else if (pm.rangePosition === 2) {
           } else if (pm.comparison == "gt") {
             pm.update({
               e: new StandardizedInput({
@@ -66,8 +66,8 @@ const MultiTypeFieldGroup = props => {
 
       return (
         // <div key="rangeFieldSet">
-        <div class="test" key={uniqueKey}>
-          {console.log("the props from multi-type-field are here are ", props)}   
+        <div className="test" key={uniqueKey}>
+          {console.log("the props from multi-type-field are here are ", props)}
 
           <RangeFieldSet
             paramMapRangeGroup={paramMapRangeGroup}
@@ -78,7 +78,7 @@ const MultiTypeFieldGroup = props => {
             [].concat(...paramMapRangeGroup.map(paramMap => paramMap.errors)).map((error, index) => {
               return <FormError key={`range-error-${index}`} show={!!error} message={error.message} />
             })}
-        </div> 
+        </div>
       )
     } else {
       return null
@@ -89,11 +89,11 @@ const MultiTypeFieldGroup = props => {
   return (
     <div className="multitype-fieldgroup" key={props.key}>
       {props.paramSet.paramMaps.map((paramMap, paramMapIndex) => {
-        {console.log("compariosn ", paramMap.comparison)}
-        {console.log("range key ", paramMap.rangeKey)}
-        {console.log("parammap render ", paramMap.rangeKey && props.paramSet.paramMaps.filter(paramMap => paramMap.rangeKey))}
+        { console.log("compariosn ", paramMap.comparison) }
+        { console.log("range key ", paramMap.rangeKey) }
+        { console.log("parammap render ", paramMap.rangeKey && props.paramSet.paramMaps.filter(paramMap => paramMap.rangeKey)) }
         if (paramMap.rangeKey && props.paramSet.paramMaps.filter(paramMap => paramMap.rangeKey).length === 2) {
-          
+
           // Only render range field once
           // if (paramMap.rangePosition === 1) {
           if (paramMap.comparison === "gt") {
@@ -101,7 +101,7 @@ const MultiTypeFieldGroup = props => {
           } else {
             return null
           }
-        } 
+        }
         else {
           return (
             <div key={`paramSet-${props.paramSetIndex}-paramMap-component-${paramMapIndex}`}>

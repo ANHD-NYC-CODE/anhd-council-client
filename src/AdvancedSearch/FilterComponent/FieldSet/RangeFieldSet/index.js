@@ -7,8 +7,7 @@ import classnames from 'classnames'
 import './style.scss'
 
 const comparisonReconfigure = (props, e) => {
-  e = new StandardizedInput(e)
-  
+
   console.log("e.value is ", e.value)
 
   if (e.value.toUpperCase().match(/(LTE|END)/)) {
@@ -18,15 +17,18 @@ const comparisonReconfigure = (props, e) => {
         paramMap => paramMap.rangeKey === e.rangeKey && paramMap.comparison.toUpperCase().match(/(GTE|START)/)
       ),
     })
+
+  } else if (e.value.toUpperCase().match(/(LT)/)) {
+    props.paramSet.deleteAll({
+      dispatchAction: props.dispatchAction,
+    })
+
   } else if (e.value.toUpperCase().match(/(GT)/)) {
     props.paramSet.deleteAll({
       dispatchAction: props.dispatchAction,
     })
-  }  else if (e.value.toUpperCase().match(/(LT)/)) {
-    props.paramSet.deleteAll({
-      dispatchAction: props.dispatchAction,
-    })
-  } 
+
+  }
   else if (e.value.toUpperCase().match(/(GTE|START)/)) {
     props.paramSet.deleteSpecific({
       dispatchAction: props.dispatchAction,
@@ -35,8 +37,8 @@ const comparisonReconfigure = (props, e) => {
       ),
     })
     props.dispatchAction()
-  } 
-  
+  }
+
   else {
     return
   }
@@ -86,8 +88,10 @@ const RangeFieldSet = props => {
         .sort((a, b) => a.rangePosition - b.rangePosition)
         .map((paramMap, paramMapIndex) => {
           return (
-            <InputGroup key={`paramMapRangeGroup-col-${paramMapIndex}`}>
-              {paramMap.rangePosition != 1 && (
+            <InputGroup
+              className={`paramMapRangeGroup-col-${paramMapIndex}`}
+              key={`paramMapRangeGroup-col-${paramMapIndex}`}>
+              {paramMap.comparison == 'lt' && (
                 <InputGroup.Prepend className="input-group__label">
                   <InputGroup.Text>and</InputGroup.Text>
                 </InputGroup.Prepend>
