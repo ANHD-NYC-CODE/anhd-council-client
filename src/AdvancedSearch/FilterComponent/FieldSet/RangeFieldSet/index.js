@@ -91,7 +91,7 @@ const RangeFieldSet = props => {
             <InputGroup
               className={`paramMapRangeGroup-col-${paramMapIndex}`}
               key={`paramMapRangeGroup-col-${paramMapIndex}`}>
-              {paramMap.comparison == 'lt' && (
+              {paramMap.comparison != 1 && (
                 <InputGroup.Prepend className="input-group__label">
                   <InputGroup.Text>and</InputGroup.Text>
                 </InputGroup.Prepend>
