@@ -4,6 +4,7 @@ const ForeclosureAuction = () => ({
   summaryBackgroundColorClass: 'summary-blue',
   resourceConstant: 'PSFORECLOSURE',
   urlPath: 'foreclosure-auctions',
+  // urlPath: 'psforeclosures',
   label: 'Foreclosure Auctions',
   sentenceNoun: 'foreclosure auctions',
   ownResourceFilters: {
