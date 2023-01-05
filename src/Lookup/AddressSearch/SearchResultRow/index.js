@@ -5,6 +5,8 @@ import { addressResultToPath } from 'shared/utilities/routeUtils'
 
 import './style.scss'
 
+// https://github.com/NYCPlanning/labs-geosearch-docker/blob/master/MIGRATING.md
+
 const SearchResultRow = props => {
   const { result } = props
   if (result.label) {
@@ -17,7 +19,7 @@ const SearchResultRow = props => {
         onKeyDown={props.onKeyDown}
         onFocus={() => props.setResultFocusIndex(props.resultIndex)}
         // onClick={e => props.onClick(e, result)}
-        to={addressResultToPath({ bbl: result.pad_bbl, bin: result.pad_bin })}
+        to={addressResultToPath({ bbl: result.addendum.pad.bbl, bin: result.addendum.pad.bin })}
       >
         {props.result.label}
       </Link>
