@@ -36,7 +36,7 @@ export const queryAddress = value => async (dispatch, getState, access_token) =>
     dispatch,
     getState,
     requestId,
-    `https://geosearch.planninglabs.nyc/v1/search?text=${value}`,
+    `https://geosearch.planninglabs.nyc/v2/search?text=${value}`,
     {},
     access_token,
     GET_BUILDING_SEARCH,
