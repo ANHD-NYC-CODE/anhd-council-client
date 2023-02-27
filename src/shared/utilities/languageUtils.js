@@ -48,6 +48,7 @@ export const grammaticalNoun = (noun, value) => {
 export const grammaticalList = (array, conjunction = 'and') => {
   let lastItem
   let sentence
+  console.log("array:".array)
   if (array.length === 2) {
     sentence = array.join(` ${conjunction} `)
   } else if (array.length > 2) {
@@ -94,7 +95,7 @@ export const longAmountComparisonString = comparison => {
     case 'exact':
       return 'exactly'
     case 'lte':
-      return 'at most'
+      return 'between'
     case 'lt':
       return 'less than'
     case 'gt':
@@ -215,9 +216,8 @@ export const boroCodeToName = code => {
 }
 
 export const constructAddressString = ({ number, street, borough, zip } = {}) => {
-  return `${number ? `${number} ` : ''}${street ? `${borough ? `${street}, ` : `${street}`}` : ''}${
-    borough ? `${borough} ` : ''
-  }${zip ? `${zip} ` : ''}`
+  return `${number ? `${number} ` : ''}${street ? `${borough ? `${street}, ` : `${street}`}` : ''}${borough ? `${borough} ` : ''
+    }${zip ? `${zip} ` : ''}`
 }
 
 export const councilIdToString = (id, prefix = true) => {

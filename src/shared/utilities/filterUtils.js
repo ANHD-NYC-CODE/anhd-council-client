@@ -95,7 +95,7 @@ export const createAdvancedSearchFilters = ({ resourceModels } = {}) => {
     },
     {
       resourceModel: resourceModels['OCA_HOUSING_COURT'],
-    }  
+    }
   ]
 }
 

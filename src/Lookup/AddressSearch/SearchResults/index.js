@@ -23,6 +23,8 @@ const SearchResults = props => {
                   resultIndex={index}
                 />
               ))}
+            {console.log("props.show:" + props.show)}
+            {console.log("props.results.length:" + props.results.length)}
           </div>
         )}
       </div>
