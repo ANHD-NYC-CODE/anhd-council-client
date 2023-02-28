@@ -395,8 +395,9 @@ export const getTableColumns = ({
             annotationKey: getAnnotationKey('foreclosures', annotationStart, advancedSearchDatasets),
             rowExample,
           }),
+          // changing "Foreclosures" label to Foreclosure Filings per Lucy
           text: getAnnotatedLabel({
-            annotationLabel: 'Foreclosures',
+            annotationLabel: 'Foreclosure Filings',
             rowExample,
             annotationKey: getAnnotationKey('foreclosures', annotationStart, advancedSearchDatasets),
           }),
