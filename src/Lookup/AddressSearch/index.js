@@ -125,9 +125,8 @@ class AddressSearch extends React.PureComponent {
   async handleRowClick(e, result) {
     e.preventDefault()
 
-    const searchString = `${result.number ? result.number : ''} ${
-      result.street ? result.street.trim() : ''
-    }, ${result.borough.trim()}`
+    const searchString = `${result.number ? result.number : ''} ${result.street ? result.street.trim() : ''
+      }, ${result.borough.trim()}`
 
     this.props.dispatch(setSearchValue(searchString))
     this.hideSearch(e, true)
@@ -158,6 +157,7 @@ class AddressSearch extends React.PureComponent {
           setSearchValue={this.setSearchValue}
           hideSearch={this.hideSearch}
         />
+
 
         <SearchResults
           config={this.props.config}

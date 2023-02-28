@@ -29,6 +29,8 @@ export const setSearchTimeout = event => ({
   data: event,
 })
 
+// Altering v2 api from search endpoint to autocomplete. On v2, search should only be used for PRECISE addresses. ANHD would like to use partial matching in the search.
+
 export const queryAddress = value => async (dispatch, getState, access_token) => {
   const requestId = Math.floor(Math.random() * 1000000)
   dispatch(setSearchValue(value))

@@ -23,14 +23,13 @@ const SearchResults = props => {
                   resultIndex={index}
                 />
               ))}
+            {console.log("props.results.length:" + props.results.length)}
           </div>
         )}
       </div>
     </div>
   )
 }
-
-// {//console.log("props.show:" + props.show)}
 
 SearchResults.propTypes = {
   error: PropTypes.object,
