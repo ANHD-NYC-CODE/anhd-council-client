@@ -30,6 +30,8 @@ const SearchResults = props => {
   )
 }
 
+// {//console.log("props.show:" + props.show)}
+
 SearchResults.propTypes = {
   error: PropTypes.object,
   selectBuildingResult: PropTypes.func,
