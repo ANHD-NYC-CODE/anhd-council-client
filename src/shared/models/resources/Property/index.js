@@ -529,7 +529,7 @@ const Property = () => {
       },
     },
 
-    // Map constant to api property_set query path
+    // Map constant to backend api property_set query path
     relatedResourceMappings: {
       ACRIS_REAL_MASTER: 'acrisreallegals__documentid',
       PROPERTY_SALE_BY_AMOUNT: 'acrisreallegals__documentid',

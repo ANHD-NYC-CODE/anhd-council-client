@@ -3,7 +3,7 @@ import { constructCountDateParamSet } from 'shared/utilities/filterUtils'
 const Foreclosure = () => ({
   summaryBackgroundColorClass: 'summary-blue',
   resourceConstant: 'FORECLOSURE',
-  urlPath: 'foreclosures',
+  urlPath: '',
   label: 'Foreclosure Filings',
   sentenceNoun: 'foreclosure filings',
   ownResourceFilters: {

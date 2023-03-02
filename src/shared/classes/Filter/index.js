@@ -195,7 +195,7 @@ export default class Filter {
       this.addError(new ParamError({ message: 'Please login with a trusted account to search foreclosures.' }))
     }
 
-    if (!loggedIn && (this.id === 'OCA_HOUSING_COURT' )) {
+    if (!loggedIn && (this.id === 'OCA_HOUSING_COURT')) {
       this.addError(new ParamError({ message: 'Please login with a trusted account to search foreclosures.' }))
     }
   }

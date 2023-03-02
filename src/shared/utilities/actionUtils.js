@@ -22,9 +22,8 @@ const findErrorKeyValue = (status, data) => {
     switch (status) {
       case 400:
         if (data['email'] && data['email'].includes('user request with this email already exists.')) {
-          return `We already have an account request for this email. Please email ${
-            c.CONTACT_EMAIL
-          } if you need to check your status.`
+          return `We already have an account request for this email. Please email ${c.CONTACT_EMAIL
+            } if you need to check your status.`
         } else if (data['errors'] && data['errors'].length) {
           return data['errors'].map(error => `${error}`)
         } else {

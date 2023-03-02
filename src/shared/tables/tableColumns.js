@@ -389,13 +389,35 @@ export const getTableColumns = ({
           csvFormatter: annotatedColumnFormatter,
         }),
 
+
+        // Auction Testing
+        constructPropertyColumn({
+          columnEvent: linkToColumnEvent,
+          dataField: getAnnotatedDataField({
+            annotationKey: getAnnotationKey('psforeclosures', annotationStart, advancedSearchDatasets),
+            rowExample,
+          }),
+
+          text: getAnnotatedLabel({
+            annotationLabel: 'Foreclosure Filings',
+            rowExample,
+            annotationKey: getAnnotationKey('psforeclosures', annotationStart, advancedSearchDatasets),
+          }),
+          sort: true,
+          formatter: annotatedColumnFormatter,
+          csvFormatter: annotatedColumnFormatter,
+        }),
+
+
+
+        // changing "Foreclosures" label to "Foreclosure Filings" per Lucy
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
           dataField: getAnnotatedDataField({
             annotationKey: getAnnotationKey('foreclosures', annotationStart, advancedSearchDatasets),
             rowExample,
           }),
-          // changing "Foreclosures" label to Foreclosure Filings per Lucy
+
           text: getAnnotatedLabel({
             annotationLabel: 'Foreclosure Filings',
             rowExample,
@@ -405,6 +427,7 @@ export const getTableColumns = ({
           formatter: annotatedColumnFormatter,
           csvFormatter: annotatedColumnFormatter,
         }),
+        // 
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
           dataField: getAnnotatedDataField({

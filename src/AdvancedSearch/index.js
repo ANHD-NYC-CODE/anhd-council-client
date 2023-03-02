@@ -7,13 +7,11 @@ import Geography from 'shared/classes/Geography'
 import { getSingleRequest } from 'Store/AppState/selectors'
 import { constructCsvFileName } from 'Store/AdvancedSearch/utilities/advancedSearchStoreUtils'
 import { fireAdvancedSearchSubmitEvent } from 'Store/Analytics/actions'
-
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
 import { connect } from 'react-redux'
 import { Events, animateScroll as scroll, scrollSpy } from 'react-scroll'
 import * as advancedSearchReducer from 'Store/AdvancedSearch/reducers'
-
 import { Button, ButtonToolbar, ToggleButtonGroup, ToggleButton } from 'react-bootstrap'
 import LeafletMap from 'LeafletMap'
 import BaseTable from 'shared/components/BaseTable'
@@ -21,10 +19,8 @@ import { requestWithAuth } from 'shared/utilities/authUtils'
 import { makeRequest } from 'Store/Request/actions'
 import FormError from 'shared/components/FormError'
 import { setSearchTableState } from 'Store/AdvancedSearch/actions'
-
 import { push, createMatchSelector } from 'connected-react-router'
 import { parseUrlSearchParams } from "AdvancedSearch/utilities/advancedSearchUtils";
-
 import {
   updateCondition,
   replacePropertyFilter,
@@ -32,7 +28,6 @@ import {
   forceUpdateSearch,
 } from 'Store/AdvancedSearch/actions'
 import { clearAdvancedSearchRequest, setAppState, setAdvancedSearchRequest } from 'Store/AppState/actions'
-
 import AdvancedSearchForm from 'AdvancedSearch/AdvancedSearchForm'
 import AdvancedSearchSentenceEditor from 'AdvancedSearch/AdvancedSearchSentenceEditor'
 import { newAdvancedSearchRequest } from 'shared/utilities/configUtils'
@@ -75,7 +70,7 @@ export class AdvancedSearch extends React.Component {
     this.cancelSearch = this.cancelSearch.bind(this);
   }
 
-  parseSearchParams() { 
+  parseSearchParams() {
     const fromSearchParams = parseUrlSearchParams(this.state.searchParams, this.state.advancedSearch);
 
     if (this.state.geographyId && this.state.geographyType && fromSearchParams) {
@@ -105,7 +100,7 @@ export class AdvancedSearch extends React.Component {
         geographyId: this.state.geographyId
       })
     )
-    
+
     this.props.dispatch(fireAdvancedSearchSubmitEvent(this.state.advancedSearch))
     this.pageForceUpdate()
   }
@@ -139,7 +134,7 @@ export class AdvancedSearch extends React.Component {
     // Request set, make the request
     if (this.props.advancedSearchRequest && !this.props.advancedSearchRequest.called && !this.formSubmitted) {
       this.loadRequest(this.props.advancedSearchRequest);
-      this.setState({ displayingForm: false, formSubmitted: false});
+      this.setState({ displayingForm: false, formSubmitted: false });
     }
   }
 
@@ -153,11 +148,11 @@ export class AdvancedSearch extends React.Component {
     );
 
     let keysNext = Object.keys(searchParams);
-    let keysPrev = Object.keys(prevState.searchParams);    
+    let keysPrev = Object.keys(prevState.searchParams);
 
     if (
       (nextProps.advancedSearch.geographies[0] &&
-      nextProps.advancedSearch.geographies[0].geographyType.constant !== prevState.geographyType) ||
+        nextProps.advancedSearch.geographies[0].geographyType.constant !== prevState.geographyType) ||
       nextProps.geographyId !== prevState.geographyId
     ) {
       return {
@@ -167,8 +162,7 @@ export class AdvancedSearch extends React.Component {
         searchParams
       }
     }
-    else if (keysNext.length !== keysPrev.length)
-    {
+    else if (keysNext.length !== keysPrev.length) {
       return {
         geographyId: nextProps.geographyId,
         geographyType: nextProps.geographyType,
@@ -191,7 +185,7 @@ export class AdvancedSearch extends React.Component {
 
     return null;
   }
-  
+
   cloneAdvancedSearchInstance(advancedSearchObject) {
     return {
       geographies: advancedSearchObject.geographies.length
@@ -311,9 +305,8 @@ export class AdvancedSearch extends React.Component {
                   })}
                 >
                   <LeafletMap
-                    key={`${(this.props.advancedSearch.geographies[0] || {}).constant}-${
-                      (this.props.advancedSearch.geographies[0] || {}).id
-                    }-${this.state.displayingList}`}
+                    key={`${(this.props.advancedSearch.geographies[0] || {}).constant}-${(this.props.advancedSearch.geographies[0] || {}).id
+                      }-${this.state.displayingList}`}
                     currentGeographyType={(this.props.advancedSearch.geographies[0] || {}).constant}
                     currentGeographyId={(this.props.advancedSearch.geographies[0] || {}).id}
                     councilDistricts={this.props.config.councilDistricts}
@@ -405,7 +398,7 @@ const mapStateToProps = state => {
 
   const loadingSelector = createLoadingSelector([c.ADVANCED_SEARCH])
   const errorSelector = createErrorSelector([c.ADVANCED_SEARCH])
-  
+
   return {
     appState: state.appState,
     advancedSearch: state.advancedSearch,

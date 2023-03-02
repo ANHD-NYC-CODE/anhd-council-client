@@ -11,14 +11,14 @@ const LookupTabs = props => {
   const [isOpen, toggleOpen] = useState(true)
 
   const getTabLabel = (error, resourceModel, count1 = '...', count2 = 0) => {
-    
+
     switch (resourceModel.resourceConstant) {
       case 'ACRIS_REAL_MASTER':
         return `Sales (${count1}) and Financing`
       case 'HPD_COMPLAINT':
         return `HPD Complaints (${count1}) and Problems (${count2})`
       case 'OCA_HOUSING_COURT':
-        return error && (error.status === 401 || error.status === 403 || error.status === 409) ? 
+        return error && (error.status === 401 || error.status === 403 || error.status === 409) ?
           `${resourceModel.label}` : `${resourceModel.label} (${count1})`;
       case 'FORECLOSURE':
         return error && error.status === 403 ? `${resourceModel.label}` : `${resourceModel.label} (${count1})`
@@ -41,7 +41,7 @@ const LookupTabs = props => {
           const results = props.requests[request.requestConstant] || [];
           const loading = props.loadingState[request.requestConstant];
           const error = props.errorState[request.requestConstant];
-          
+
           const getCount1 = (request, results) => {
             if (request.resourceModel.tableRecordsCountFunction) {
               return request.resourceModel.tableRecordsCountFunction(results)
