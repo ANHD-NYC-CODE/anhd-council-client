@@ -115,6 +115,32 @@ class DistrictDashboardShow extends React.Component {
               'full-height': this.state.fullHeight,
             })}
           >
+            <div className="district-dashboard-show__housing-type-section">
+              <HousingTypeSection
+                dispatch={this.props.dispatch}
+                propertySummaryRequest={this.props.propertySummaryRequest}
+                switchSelectedFilter={this.props.switchSelectedFilter}
+                housingTypeResults={this.props.dashboardState.housingTypeResults}
+                housingTypeResultFilter={this.props.housingTypeResultFilter}
+                housingTypeResultsIndex={this.props.dashboardState.housingTypeResultsIndex}
+                totalPropertyResults={this.props.totalPropertyResults}
+                loading={this.props.loading}
+              />
+            </div>
+            <div className="district-dashboard-show__filter-section">
+              <DistrictFilterSection
+                appState={this.props.appState}
+                dashboardState={this.props.dashboardState}
+                dispatch={this.props.dispatch}
+                endChangingState={this.props.endChangingState}
+                geographyRequests={this.props.geographyRequests}
+                housingTypeResultFilter={this.getGeographySummaryResultsFilter()}
+                loading={this.props.loading}
+                resendPropertyRequest={this.props.resendPropertyRequest}
+                totalPropertyResults={this.props.totalPropertyResults}
+                toggleFilterCondition={this.props.toggleFilterCondition}
+              />
+            </div>
             <div className="district-dashboard-show__date-section">
               <Form>
                 <div className="district-dashboard-show__date-label-row">
@@ -162,32 +188,6 @@ class DistrictDashboardShow extends React.Component {
                   checked={this.props.dashboardState.mapFilterDate === c.DISTRICT_REQUEST_DATE_THREE}
                 />
               </Form>
-            </div>
-            <div className="district-dashboard-show__housing-type-section">
-              <HousingTypeSection
-                dispatch={this.props.dispatch}
-                propertySummaryRequest={this.props.propertySummaryRequest}
-                switchSelectedFilter={this.props.switchSelectedFilter}
-                housingTypeResults={this.props.dashboardState.housingTypeResults}
-                housingTypeResultFilter={this.props.housingTypeResultFilter}
-                housingTypeResultsIndex={this.props.dashboardState.housingTypeResultsIndex}
-                totalPropertyResults={this.props.totalPropertyResults}
-                loading={this.props.loading}
-              />
-            </div>
-            <div className="district-dashboard-show__filter-section">
-              <DistrictFilterSection
-                appState={this.props.appState}
-                dashboardState={this.props.dashboardState}
-                dispatch={this.props.dispatch}
-                endChangingState={this.props.endChangingState}
-                geographyRequests={this.props.geographyRequests}
-                housingTypeResultFilter={this.getGeographySummaryResultsFilter()}
-                loading={this.props.loading}
-                resendPropertyRequest={this.props.resendPropertyRequest}
-                totalPropertyResults={this.props.totalPropertyResults}
-                toggleFilterCondition={this.props.toggleFilterCondition}
-              />
             </div>
           </div>
           <div className="district-dashboard-show__results-section">

@@ -1,76 +1,137 @@
+@media only screen and (max-width: 1100px) {
+    .lookup-show .lookup-show__top-row {
+        flex-wrap: wrap;
+    }
+    .lookup-show .lookup-show__bookmark-section {
+        margin-bottom: 10px;
+        width: 100%;
+    }
+    .bookmark-button__container {
+        text-align: left;
+    }
+}
 @media only screen and (max-width: 1050px) {
-
-.sub-header .sub-header__wrapper--bottom {
-    display:none
+    .sub-header .sub-header__wrapper--bottom {
+        display:none
+    }
+    .mobile-nav-hamburger {
+        display:unset;	
+        position: absolute;
+        left: 1px;
+        top: 0px;
+        z-index: 10005; 
+    }
+    .mobile-nav {
+        left: 0; 
+        top: 0;  
+        width: 100%; 
+        max-width: 400px;     
+        height: fit-content;     
+        padding: 68px 0px 0px;
+        background: ghostwhite;     
+        border-right: 1px solid gray;   
+        border-bottom: 1px solid gray;  
+        position: absolute;     
+        z-index: 10000; 
+    }
+    .mobile-nav .sub-header__wrapper--top__links {
+        margin-left: 0 !important
+    }
+    .mobile-nav .sub-header__wrapper--top__links .nav-item:last-child{
+        margin-right: auto
+    }
 }
 
-.mobile-nav-hamburger {
-display:unset;	
-position: absolute;
-    left: 1px;
-    top: 0px;
-z-index: 10005; 
+@media only screen and (max-width: 575px) {
+    .base-table-header .base-table-header__wrapper {
+        width: 100%;
+    }
+    .district-dashboard-show .district-dashboard-show__sidebar {
+        padding-bottom: 0;
+    }
+    .district-dashboard-show .geography-select-row .geography-select__row {
+        flex-wrap: wrap;
+    }
+    .district-dashboard-show .geography-select-row .main-geography-select:not(.zip-select),
+    .district-dashboard-show .geography-select-row #geography-id-select:not(.zip-select), 
+    .district-dashboard-show .geography-select-row #geography-id-select:not(.zip-select) select {
+        margin: 5px 0;
+        width: 100%;
+    }
+    .lookup-show.layout-width-wrapper .lookup-show .lookup-show__row-wrapper {
+        margin-top: 0;
+    }
+    .lookup-show.layout-width-wrapper .lookup-address-display .lookup-address-display__button {
+        display: inline-block;
+        margin: 5px 5px 0 0;
+    }
+    .lookup-show.layout-width-wrapper .lookup-address-display__title p {
+        margin-bottom: 0;
+    }
+    .lookup-show.layout-width-wrapper .lookup-address-display {
+        margin-right: 0;
+    }
+    .lookup-tabs .lookup-table-tab, 
+    .lookup-tabs .result-card {
+        flex: 0 0 98%;
+        height: 44px;
+        height: auto;
+        margin: 1px 1%;
+    }
+    .lookup-show.layout-width-wrapper .property-section {
+        padding: 15px 25px 10px;
+    }
+    .lookup-show .lookup-show__bookmark-section {
+        float: right;
+        width: 20px;
+    }
+    .lookup-show__bookmark-section div {
+        text-align: right;
+        float: right;
+        width: 20px;
+    }
+    span.mobile-hide {
+        display: none;
+    }
+    .lookup-tabs .lookup-tabs__header button {
+        font-size: 15px;
+    }
+    .lookup-show .lookup-show__row-wrapper {
+        margin-top: 0;
+    }
+    .lookup-show .lookup-show__top-row {
+        margin: 0;
+    }
 }
-
-.mobile-nav {
-left: 0; 
-top: 0;  
-width: 100%; 
-max-width: 400px;     
-height: fit-content;     
-padding: 68px 0px 0px;
-background: ghostwhite;     
-border-right: 1px solid gray;   
-border-bottom: 1px solid gray;  
-position: absolute;     
-z-index: 10000; 
-}
-
-.mobile-nav .sub-header__wrapper--top__links {
-    margin-left: 0 !important
-}
-
-
-
-.mobile-nav .sub-header__wrapper--top__links .nav-item:last-child{
-    margin-right: auto
-}
-
-}
-
 
 @media only screen and (max-width: 550px) {
-.sub-header .sub-header__logo {
-    display: block;
-    height: auto;
-    width: 70%;
-    margin: 10px 0 10px auto;
-    display: block;
-    max-width: 180px;
-}
- 
-.sub-header .sub-header__logo.displace_logo {
-    width: 90%;
-    margin-right: -55px;
-}
-
+    .sub-header .sub-header__logo {
+        display: block;
+        height: auto;
+        width: 70%;
+        margin: 10px 0 10px auto;
+        display: block;
+        max-width: 180px;
+    }
+    .sub-header .sub-header__logo.displace_logo {
+        width: 90%;
+        margin-right: -55px;
+    }
 }
 
 @media only screen and (max-width: 420px) {
-.sub-header .sub-header__logo.anhd_logo {
-    margin-right: -10px;
-}
-
-.mobile-nav {
-    max-width: 100%;
-} 
-
+    .sub-header .sub-header__logo.anhd_logo {
+        margin-right: -10px;
+    }
+    .mobile-nav {
+        max-width: 100%;
+    } 
 }
 
 @media screen and (-webkit-min-device-pixel-ratio:0) { 
-  select,
-  textarea,
-  input {
-    font-size: 16px !important;
-  }
+    select,
+    textarea,
+    input {
+        font-size: 16px !important;
+    }
 }
