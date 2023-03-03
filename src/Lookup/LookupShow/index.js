@@ -196,11 +196,11 @@ class LookupShow extends React.PureComponent {
           <div className="lookup-show__content">
             <div className="lookup-show__row-wrapper">
               <div className="lookup-show__top-row">
-                <LookupAddressDisplay handleClear={this.handleClearLookup} profile={this.props.propertyResult} />
-                
                   <div className="lookup-show__bookmark-section">
                    {bookmark}
                   </div>
+                <LookupAddressDisplay handleClear={this.handleClearLookup} profile={this.props.propertyResult} />
+                
           
                 {(this.props.bookmarkLoading || this.props.bookmarkDeleteLoading) && 
                   <div><SpinnerLoader size="20px" /></div>

@@ -34,7 +34,9 @@ class LoginButton extends React.Component {
                             icon={faBookmark}
                             size="lg"
                         />
+                      <span className="mobile-hide">
                       Login to bookmark this property
+                      </span>
                   </div>
       </div>
     )
