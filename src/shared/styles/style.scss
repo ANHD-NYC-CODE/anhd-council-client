@@ -26,6 +26,39 @@ Overriding bootstrap switch toggle for save custom search
     height: 1rem !important;
 }
 
+// district
+.district-dashboard-show .district-dashboard-show__housing-type-section {
+    margin-top: 30px;
+}
+// Filters
+.lookup-profile-summary__section-header h5 {
+    font-size: 17px;
+    line-height: 19px;
+}
+.lookup-show.layout-width-wrapper .lookup-address-display__title p {
+    cursor: default;
+}
+.lookup-address-display .pencil-icon {
+    height: auto;
+    width: 15px;
+}
+.lookup-address-display p.address {
+    display: inline-block;
+}
+.lookup-address-display__button.lookup-address-display__edit-button {
+    background: transparent;
+    border: none;
+    margin-left: 0;
+    padding-left: 6px;
+    margin-top: 0 !important;
+    padding-top: 0;
+}
+.lookup-show .lookup-show__top-row {
+    flex-direction: row-reverse;
+}
+.bookmark-button__container {
+    text-align: right;
+}
 
 // Mobile Nav and Hamburger Menu Code
 

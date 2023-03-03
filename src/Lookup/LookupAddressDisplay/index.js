@@ -6,6 +6,7 @@ import AddressSearch from 'Lookup/AddressSearch'
 import ConfigContext from 'Config/ConfigContext'
 import { boroCodeToName, constructAddressString } from 'shared/utilities/languageUtils'
 import { spaceEnterKeyDownHandler } from 'shared/utilities/accessibilityUtils'
+import pencil from 'shared/images/pencil-edit.svg'
 
 import './style.scss'
 
@@ -110,20 +111,23 @@ class LookupAddressDisplay extends React.PureComponent {
               role="button"
               className="lookup-address-display__title"
               onKeyDown={ev => spaceEnterKeyDownHandler(ev, this.handleEditClick)}
-              onClick={this.handleEditClick}
+              // onClick={this.handleEditClick}
             >
-              {constructAddressString({
-                street: this.props.profile.address,
-                borough: boroCodeToName(this.props.profile.borough),
-                zip: this.props.profile.zipcode,
-              })}
+              <p className="address">
+                {constructAddressString({
+                  street: this.props.profile.address,
+                  borough: boroCodeToName(this.props.profile.borough),
+                  zip: this.props.profile.zipcode,
+                })}
+              </p>
               <Button
                 className="lookup-address-display__button lookup-address-display__edit-button"
                 onClick={this.handleEditClick}
                 variant="dark"
                 size="sm"
               >
-                EDIT
+                <img src={pencil} className="pencil-icon" alt="Pencil Icon" />
+                {/* EDIT */}
               </Button>
               <Button
                 className="lookup-address-display__button lookup-address-display__clear-button"
@@ -131,7 +135,8 @@ class LookupAddressDisplay extends React.PureComponent {
                 variant="dark"
                 size="sm"
               >
-                CLEAR
+                {/* CLEAR */}
+                BACK
               </Button>
             </div>
           </div>
