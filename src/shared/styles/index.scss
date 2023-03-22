@@ -15,6 +15,48 @@ body {
   padding: 0 !important;
 }
 
+.modalCloseButton {
+  position: absolute;
+     margin-top: -15px;
+  padding: 2px;
+  top:0px;
+  right:-12px;
+  color: black;
+  z-index: 10;
+  cursor: pointer;
+  background-color: white;
+  line-height: 0.1px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 2px solid black;
+  box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.706);
+  z-index: 1000;
+
+  transition: .5s ease-in-out;
+}
+
+.map-alert-modal__alert { 
+  box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.706) !important;
+}
+
+
+.modalCloseButton:hover {
+    transition: .5s ease-in-out;
+        border-color: white !important;
+
+ 
+}
+
+.modalCloseButtonText {
+    margin-top: -1px;
+    font-family: Roboto;
+    margin-left: 0px;
+    transform: scaleY(.8);
+    font-size: 20px;
+   cursor: pointer;
+  z-index: 1000;
+}
 .leaflet-container {
   a.btn-primary {
     color: white;

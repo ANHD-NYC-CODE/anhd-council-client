@@ -186,9 +186,10 @@ export default class LeafletMap extends React.PureComponent {
       >
         {!this.state.overrideWarning && this.props.results.length > c.MAP_MARKER_LIMIT && (
           <MapAlertModal
-            alertMessage={`More than ${c.MAP_MARKER_LIMIT} results will slow down this page. Apply a Housing Type and/or one or more Datasets to narrow down results or click below to proceed. If the page freezes, refresh your browser to reset.`}
+            alertMessage={`More than ${c.MAP_MARKER_LIMIT} properties are selected. Displaying all of them on the map may cause poor browser performance. If the page freezes, refresh your browser to reset.`}
             alertVariant="light"
-            alertCta="Display Anyway"
+            alertCta="Dismiss"
+            alertCta2="Display All Properties Anyways"
             action={() =>
               this.setState({
                 overrideWarning: true,
