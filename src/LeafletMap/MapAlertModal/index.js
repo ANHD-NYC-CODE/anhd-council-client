@@ -41,19 +41,22 @@ const MapAlertModal = props => {
             X
           </h3>
         </Button>
-        <span className="map-alert-modal__text" style={{
-          'text-align': 'center',
-          'margin-top': '5px'
-        }}>{props.alertMessage}</span>
+        <span className="map-alert-modal__text">{props.alertMessage}</span>
+        <span className="map-alert-modal__text">{props.alertMessagePt2}</span>
         <div
-          className="btn-box"
-          style={{
-            display: 'flex',
-            width: 'fit-content',
-            margin: '10px auto 5px',
-            'flex-direction': 'column',
-            'justify-content': 'center'
-          }}>
+          className="btn-box modal-btn-box"
+        >
+          <Button
+            style={{ margin: '5px' }}
+            className="btn-loader"
+            variant="primary"
+            size="sm"
+            onClick={handleClick}
+            onKeyDown={e => spaceEnterKeyDownHandler(e, e => handleClick(e))}
+          >
+            {props.alertCta2}
+            <div className="button-loader__container">{isLoading && <SpinnerLoader size="20px" />}</div>
+          </Button>
           <Button
             className="btn-loader"
             style={{ margin: '5px' }}
@@ -66,17 +69,7 @@ const MapAlertModal = props => {
             <div className="button-loader__container">{isLoading && <SpinnerLoader size="20px" />}</div>
           </Button>
 
-          <Button
-            style={{ margin: '5px' }}
-            className="btn-loader"
-            variant="primary"
-            size="sm"
-            onClick={handleClick}
-            onKeyDown={e => spaceEnterKeyDownHandler(e, e => handleClick(e))}
-          >
-            {props.alertCta2}
-            <div className="button-loader__container">{isLoading && <SpinnerLoader size="20px" />}</div>
-          </Button>
+
         </div>
       </Alert>
     </div>
@@ -86,6 +79,7 @@ const MapAlertModal = props => {
 MapAlertModal.propTypes = {
   action: PropTypes.func,
   alertMessage: PropTypes.string,
+  alertMessagePt2: PropTypes.string,
   alertVariant: PropTypes.string,
   alertCta: PropTypes.string,
 }

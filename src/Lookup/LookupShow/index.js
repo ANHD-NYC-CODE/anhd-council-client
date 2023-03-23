@@ -1,7 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
+// import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
+
 import { Events, animateScroll as scroll, scrollSpy } from 'react-scroll'
 import { Badge, Button } from 'react-bootstrap'
 import { push } from 'connected-react-router'
@@ -218,7 +220,7 @@ class LookupShow extends React.PureComponent {
                 {this.props.appState.linkLookupBackToDashboard && (
                   <BaseLink
                     className="lookup-show__back-to-dashboard"
-                    href={'../../../../district-dashboard'.
+                    href={`../../../../district-dashboard` +
                       geographyToLink(
                         this.props.appState.currentGeographyType,
                         this.props.appState.currentGeographyId
@@ -226,7 +228,7 @@ class LookupShow extends React.PureComponent {
                     }
                   >
                     <Button className="icon-button--right" variant="dark" size="sm">
-                      Back to dashboard <FontAwesomeIcon icon={faChevronRight} size="sm" />
+                      Back to dashboard <FontAwesomeIcon icon={faChevronLeft} size="sm" />
                     </Button>
                   </BaseLink>
                 )}
