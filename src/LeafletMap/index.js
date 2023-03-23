@@ -187,7 +187,7 @@ export default class LeafletMap extends React.PureComponent {
         {!this.state.overrideWarning && this.props.results.length > c.MAP_MARKER_LIMIT && (
           <MapAlertModal
             alertMessage={`More than ${c.MAP_MARKER_LIMIT} properties are selected. Displaying all of them on the map may cause poor browser performance.`}
-            alertMessagePt2={'Apply filters to reduce the number of properties selected or dismiss this message to display the blank map. If the page freezes, refresh your browser to reset.'}
+            alertMessagePt2={'Apply filters to reduce the number of properties selected to fewer than 1000 or dismiss this message to display the blank map.'}
             alertMessagePt3={'If the page freezes, refresh your browser to reset.'}
             alertVariant="light"
             alertCta2="Proceed Anyway"
