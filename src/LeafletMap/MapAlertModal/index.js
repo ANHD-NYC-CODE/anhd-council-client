@@ -43,6 +43,7 @@ const MapAlertModal = props => {
         </Button>
         <span className="map-alert-modal__text">{props.alertMessage}</span>
         <span className="map-alert-modal__text">{props.alertMessagePt2}</span>
+        <span className="map-alert-modal__text">{props.alertMessagePt3}</span>
         <div
           className="btn-box modal-btn-box"
         >
@@ -80,6 +81,7 @@ MapAlertModal.propTypes = {
   action: PropTypes.func,
   alertMessage: PropTypes.string,
   alertMessagePt2: PropTypes.string,
+  alertMessagePt3: PropTypes.string,
   alertVariant: PropTypes.string,
   alertCta: PropTypes.string,
 }
