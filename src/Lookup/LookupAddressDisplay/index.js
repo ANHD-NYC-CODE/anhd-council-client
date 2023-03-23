@@ -111,7 +111,7 @@ class LookupAddressDisplay extends React.PureComponent {
               role="button"
               className="lookup-address-display__title"
               onKeyDown={ev => spaceEnterKeyDownHandler(ev, this.handleEditClick)}
-              // onClick={this.handleEditClick}
+            // onClick={this.handleEditClick}
             >
               <p className="address">
                 {constructAddressString({
@@ -129,15 +129,7 @@ class LookupAddressDisplay extends React.PureComponent {
                 <img src={pencil} className="pencil-icon" alt="Pencil Icon" />
                 {/* EDIT */}
               </Button>
-              <Button
-                className="lookup-address-display__button lookup-address-display__clear-button"
-                onClick={this.handleClear}
-                variant="dark"
-                size="sm"
-              >
-                {/* CLEAR */}
-                BACK
-              </Button>
+
             </div>
           </div>
         )}
