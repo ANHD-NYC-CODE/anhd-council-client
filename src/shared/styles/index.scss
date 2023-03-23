@@ -44,17 +44,32 @@ body {
 .modalCloseButton:hover {
     transition: .5s ease-in-out;
         border-color: white !important;
-
- 
 }
 
+.modal-btn-box { 
+  display:flex;
+  width: fit-content;
+  margin:10px auto 5px;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.lookup-show__back-to-dashboard {margin-right:20px;}
+
+.map-alert-modal__text {  text-align: center !important;;
+  margin-top:5px;}
+.district-dashboard-show__filter-section {
+    margin-bottom: 30px;}
+
 .modalCloseButtonText {
-    margin-top: -1px;
-    font-family: Roboto;
-    margin-left: 0px;
+margin-top: -2px;
+    font-family: 'Open Sans';
+    margin-left: 0;
+    -webkit-transform: scaleY(.8);
+    -ms-transform: scaleY(.8);
     transform: scaleY(.8);
     font-size: 20px;
-   cursor: pointer;
+    cursor: pointer;
   z-index: 1000;
 }
 .leaflet-container {
