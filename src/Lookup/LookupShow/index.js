@@ -227,7 +227,7 @@ class LookupShow extends React.PureComponent {
                       )
                     }
                   >
-                    <Button className="icon-button--right" variant="dark" size="sm">
+                    <Button className="icon-button--right backtodashboard" variant="dark" size="sm">
                       Back to dashboard <FontAwesomeIcon icon={faChevronLeft} size="sm" />
                     </Button>
                   </BaseLink>

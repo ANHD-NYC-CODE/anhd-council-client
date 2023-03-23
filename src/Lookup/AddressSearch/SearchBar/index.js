@@ -67,13 +67,13 @@ export default class SearchBar extends React.PureComponent {
             value={this.props.searchValue}
           />
           {// only include button on legacy config
-          this.props.inputClass !== 'xl-form-control' && (
-            <InputGroup.Append className="input-group__label">
-              <Button onClick={this.onSearchClick} variant="dark">
-                Search
-              </Button>
-            </InputGroup.Append>
-          )}
+            this.props.inputClass !== 'xl-form-control' && (
+              <InputGroup.Append className="input-group__label">
+                <Button onClick={this.onSearchClick} variant="dark">
+                  SEARCH
+                </Button>
+              </InputGroup.Append>
+            )}
         </InputGroup>
         <div className="search-bar__loading">{this.props.loading && <SpinnerLoader size="25px" />}</div>
       </Form>

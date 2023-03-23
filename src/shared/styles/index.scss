@@ -40,11 +40,77 @@ body {
   box-shadow: 0px 0px 1px 1px rgba(0, 0, 0, 0.706) !important;
 }
 
+.table-row--collapsed img {width:16px}
 
 .modalCloseButton:hover {
     transition: .5s ease-in-out;
-        border-color: white !important;
+    border-color: white !important;
 }
+
+.react-bootstrap-table-page-btns-ul {margin-top:5px;}
+
+.react-bootstrap-table th .order-4:after {
+
+    opacity: .7;
+}
+.react-bootstrap-table th .order-4:before {
+
+    opacity: .7;
+}
+.lookup-sidebar .lookup-sidebar__content::-webkit-scrollbar-track-piece {background:lightgray}
+.btn-sm {    line-height: 1.45;}
+.table-header__share-column .svg-inline--fa.fa-w-12 {
+    height: 15px !important;
+    width: 20px !important}
+#pageDropDown {height:30px}
+.backtodashboard {display:none !important}
+
+.base-table .dropdown-toggle {
+    padding: 4px 10px 5px;
+}
+
+// .bookmark-button__container div:hover .bookmark-button__container svg {
+//   filter: invert(1) opacity(0.7);
+//   transition: .25s ease-in-out;
+// }
+
+.bookmark-button__container {cursor: default;
+    width: fit-content;
+    margin: 0 0 0 auto;
+  }
+.bookmark-button__container div * {cursor: pointer;
+}
+
+.bookmark-button__container div  {cursor: pointer;
+    width: fit-content;
+    margin: 0 0 0 auto;}
+
+// .bookmark-button__container span:hover .bookmark-button__container svg {
+//   filter: invert(1) opacity(0.7);
+//   transition: .25s ease-in-out;
+// }
+
+// .bookmark-button__container svg:hover {
+//   transition: .25s ease-in-out;
+// }
+
+.location-section {    
+padding-bottom: 120px;
+min-height: 350px}
+
+.home-search-bar {
+  border-radius:0px !important
+}
+
+.btn-default {text-transform: uppercase !important;}
+ .input-group__label .btn-dark {
+  border-radius:0px !important;
+}
+
+.select {border-radius: 0px !important;}
+.geography-select .main-geography-select, .geography-select .main-geography-select + .zip-select {
+
+    border-radius: 0px;}
 
 .modal-btn-box { 
   display:flex;
@@ -72,6 +138,10 @@ margin-top: -2px;
     cursor: pointer;
   z-index: 1000;
 }
+
+.layout .footer-push {
+ padding-bottom: 0px !important;}
+
 .leaflet-container {
   a.btn-primary {
     color: white;
@@ -103,6 +173,12 @@ a {
     outline: none;
   }
 }
+
+@media (min-width: 576px) and (min-width: 576px){
+
+.lookup-sidebar .lookup-sidebar__content {
+ padding-bottom: 0px !important
+}}
 
 // dropdowns
 
