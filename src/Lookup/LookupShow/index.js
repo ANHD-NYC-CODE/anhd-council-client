@@ -1,7 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
+// import { faChevronRight } from '@fortawesome/free-solid-svg-icons'
+import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
+
 import { Events, animateScroll as scroll, scrollSpy } from 'react-scroll'
 import { Badge, Button } from 'react-bootstrap'
 import { push } from 'connected-react-router'
@@ -35,7 +37,7 @@ class LookupShow extends React.PureComponent {
     if (this.props.propertyError && this.props.propertyError.status === 404) {
       this.props.trigger404Error(`Property with bbl: ${this.props.bbl} not found.`)
     }
-    
+
     this.state = {
       userBookmarks: this.props.userBookmarks,
       bookmarked: this.props.userBookmarks && !!this.props.userBookmarks[this.props.bbl]
@@ -79,7 +81,7 @@ class LookupShow extends React.PureComponent {
       const areYouSure = confirm("Are you sure you want to delete this bookmark?");
       if (!areYouSure) return;
       this.props.dispatch(requestWithAuth(unBookmarkProperty(
-        this.props.userBookmarks[this.props.bbl].id, 
+        this.props.userBookmarks[this.props.bbl].id,
         () => this.handleSuccessfulBookmarkAction("unbookmarked")
       )));
     }
@@ -153,33 +155,33 @@ class LookupShow extends React.PureComponent {
     let bookmark;
 
     if (isLoggedIn) {
-      bookmark = <BookmarkButton 
-      active={this.state.bookmarked} 
-      activeText="You have bookmarked this property"
-      text="Bookmark this property"
-      onBookmark={this.bookmarkClicked}
-      disabled={this.props.bookmarkLoading || this.props.bookmarkDeleteLoading}
-    />;
+      bookmark = <BookmarkButton
+        active={this.state.bookmarked}
+        activeText="You have bookmarked this property"
+        text="Bookmark this property"
+        onBookmark={this.bookmarkClicked}
+        disabled={this.props.bookmarkLoading || this.props.bookmarkDeleteLoading}
+      />;
     } else {
-      bookmark = 
-      <UserContext.Consumer>
-      {auth => (
-        <div>
-          <ModalContext.Consumer>
-            {modal => {
-              return <LoginButton 
-              modal={modal} 
-              auth={auth}
-              active={this.state.bookmarked} 
-              activeText="You have bookmarked this property"
-              text="Login to bookmark this property"
-              onBookmark={this.bookmarkClicked}
-              disabled={this.props.bookmarkLoading || this.props.bookmarkDeleteLoading} />
-            }}
-          </ModalContext.Consumer>
-        </div>
-      )}
-    </UserContext.Consumer>
+      bookmark =
+        <UserContext.Consumer>
+          {auth => (
+            <div>
+              <ModalContext.Consumer>
+                {modal => {
+                  return <LoginButton
+                    modal={modal}
+                    auth={auth}
+                    active={this.state.bookmarked}
+                    activeText="You have bookmarked this property"
+                    text="Login to bookmark this property"
+                    onBookmark={this.bookmarkClicked}
+                    disabled={this.props.bookmarkLoading || this.props.bookmarkDeleteLoading} />
+                }}
+              </ModalContext.Consumer>
+            </div>
+          )}
+        </UserContext.Consumer>
     }
 
 
@@ -196,13 +198,13 @@ class LookupShow extends React.PureComponent {
           <div className="lookup-show__content">
             <div className="lookup-show__row-wrapper">
               <div className="lookup-show__top-row">
+                <div className="lookup-show__bookmark-section">
+                  {bookmark}
+                </div>
                 <LookupAddressDisplay handleClear={this.handleClearLookup} profile={this.props.propertyResult} />
-                
-                  <div className="lookup-show__bookmark-section">
-                   {bookmark}
-                  </div>
-          
-                {(this.props.bookmarkLoading || this.props.bookmarkDeleteLoading) && 
+
+
+                {(this.props.bookmarkLoading || this.props.bookmarkDeleteLoading) &&
                   <div><SpinnerLoader size="20px" /></div>
                 }
                 {(this.props.bookmarkError) && (
@@ -218,17 +220,19 @@ class LookupShow extends React.PureComponent {
                 {this.props.appState.linkLookupBackToDashboard && (
                   <BaseLink
                     className="lookup-show__back-to-dashboard"
-                    href={geographyToLink(
-                      this.props.appState.currentGeographyType,
-                      this.props.appState.currentGeographyId
-                    )}
+                    href={`../../../../district-dashboard` +
+                      geographyToLink(
+                        this.props.appState.currentGeographyType,
+                        this.props.appState.currentGeographyId
+                      )
+                    }
                   >
-                    <Button className="icon-button--right" variant="dark" size="sm">
-                      Back to dashboard <FontAwesomeIcon icon={faChevronRight} size="sm" />
+                    <Button className="icon-button--right backtodashboard" variant="dark" size="sm">
+                      Back to dashboard <FontAwesomeIcon icon={faChevronLeft} size="sm" />
                     </Button>
                   </BaseLink>
                 )}
-                
+
               </div>
               <div className="lookup-show__building-row">
                 <BuildingSelect
@@ -277,7 +281,7 @@ class LookupShow extends React.PureComponent {
             </div>
           </div>
         </div>
-      </div>
+      </div >
     )
   }
 }
