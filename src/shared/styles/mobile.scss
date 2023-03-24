@@ -4,14 +4,27 @@
     }
     .lookup-show .lookup-show__bookmark-section {
         margin-bottom: 10px;
-        width: 100%;
+        width: fit-content;
     }
     .bookmark-button__container {
         text-align: left;
     }
+
+            .mobile-hide {display: none;}
+
+
+    .mobile-address .lookup-show__row-wrapper {margin-bottom: 0px !important;;}
+
+    
+    .mobile-address  .lookup-address-search {
+     margin-bottom: 0px !important}
+
+    .mobile-address {    
+    background: #d8e3f1;
+    padding: 5px 20px 0px;
+}
 }
 @media only screen and (max-width: 1050px) {
-        .mobile-hide {display: none;}
 
     .sub-header .sub-header__wrapper--bottom {
         display:none

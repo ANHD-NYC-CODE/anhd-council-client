@@ -7,7 +7,7 @@ import { faChevronLeft } from '@fortawesome/free-solid-svg-icons'
 import { Events, animateScroll as scroll, scrollSpy } from 'react-scroll'
 import { Badge, Button } from 'react-bootstrap'
 import { push } from 'connected-react-router'
-
+import jQuery from 'jquery'
 import LookupTabs from 'Lookup/LookupTabs'
 import LookupAddressDisplay from 'Lookup/LookupAddressDisplay'
 import BaseLink from 'shared/components/BaseLink'
@@ -88,18 +88,43 @@ class LookupShow extends React.PureComponent {
   }
 
   componentDidMount() {
+
+
     scrollSpy.update()
     scroll.scrollToTop({
       duration: 500,
       delay: 0,
       smooth: 'easeInOutQuart',
     })
+
     this.props.dispatch(
       setAppState({
         selectedRequest: this.props.lookupRequests[0],
       })
     )
+
+    // Decide position of Address/Bookmark based on screen width
+    if (window.innerWidth > 575) {
+      jQuery('.lookup-show__row-wrapper').prependTo('.lookup-show__content')
+    }
+    else {
+      jQuery('.lookup-show__row-wrapper').appendTo('.mobile-address')
+    }
+
+    // Decide position of Address/Bookmark based on screen width on resize
+    window.addEventListener("resize", updateLayout, false);
+
+    function updateLayout() {
+      if (window.innerWidth > 575) {
+        jQuery('.lookup-show__row-wrapper').prependTo('.lookup-show__content')
+      }
+      else {
+        jQuery('.lookup-show__row-wrapper').appendTo('.mobile-address')
+        // }
+      }
+    }
   }
+
 
   componentWillUnmount() {
     Events.scrollEvent.remove('begin')
@@ -188,6 +213,7 @@ class LookupShow extends React.PureComponent {
     return (
       <div className="lookup-show layout-width-wrapper">
         <div className="lookup-show__content-wrapper">
+          {/*Insert Address Here*/}
           <LookupSidebar
             appState={this.props.appState}
             error={this.props.errorState[this.props.profileRequest.requestConstant]}
