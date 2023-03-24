@@ -27,7 +27,7 @@ class PropertyIcon extends React.Component {
 
   handleClick() {
     if (this.props.page === 'DASHBOARD') {
-      this.props.dispatch(setAppState({ linkLookupBackToDashboard: true }))
+      this.props.dispatch(setAppState({ linkLookupBackToDashboard: false }))
     }
     this.props.dispatch(push(`/property/${this.props.result.bbl}`))
   }
