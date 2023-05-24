@@ -1,17 +1,37 @@
+
+@media only screen and (max-width: 1200px) {
+    .lookup-show .lookup-address-search input {min-width:300px !important;}
+    .lookup-show .lookup-show__content {
+    padding: 0 0px 0 45px !important}
+}
 @media only screen and (max-width: 1100px) {
+
     .lookup-show .lookup-show__top-row {
         flex-wrap: wrap;
     }
     .lookup-show .lookup-show__bookmark-section {
         margin-bottom: 10px;
-        width: 100%;
+        width: fit-content;
     }
     .bookmark-button__container {
         text-align: left;
     }
+
+            .mobile-hide {display: none;}
+
+
+    .mobile-address .lookup-show__row-wrapper {margin-bottom: 0px !important;;}
+
+    
+    .mobile-address  .lookup-address-search {
+     margin-bottom: 0px !important}
+
+    .mobile-address {    
+    background: #d8e3f1;
+        padding: 10px 20px 2px;
+}
 }
 @media only screen and (max-width: 1050px) {
-        .mobile-hide {display: none;}
 
     .sub-header .sub-header__wrapper--bottom {
         display:none
@@ -45,6 +65,17 @@
 }
 
 @media only screen and (max-width: 575px) {
+
+
+  .lookup-show .lookup-show__top-row  .form-control {
+font-size: 17px !important;
+    height: 1.75rem;}
+
+
+    .lookup-show .search-result-row {
+    background-color: #fff;
+    cursor: pointer;
+    padding: 7px 10px;}
     .base-table-header .base-table-header__wrapper {
         width: 100%;
     }
@@ -104,6 +135,11 @@
     .lookup-show .lookup-show__top-row {
         margin: 0;
     }
+
+.lookup-show .input-group .btn {padding: 0px 12px;    font-size: 14px;transition: .25s ease-in-out;}
+.lookup-show .input-group .btn:hover {filter: invert(1); border:1px solid white;
+transition: .25s ease-in-out;}
+
 }
 
 @media only screen and (max-width: 550px) {
@@ -119,15 +155,34 @@
         width: 90%;
         margin-right: -55px;
     }
+
+.location-section {    
+padding-bottom: 30px !important;
+min-height: 350px;
+height:fit-content;}
+
+.search-result-row {
+    font-size: 13px !important
+
+}
+
 }
 
 @media only screen and (max-width: 420px) {
+      .lookup-show .lookup-show__top-row  .form-control {
+font-size: 14px !important}
+
     .sub-header .sub-header__logo.anhd_logo {
         margin-right: -10px;
     }
     .mobile-nav {
         max-width: 100%;
     } 
+    .lookup-show .lookup-show__top-row .form-control {
+    font-size: 12px !important;
+}
+.lookup-show .input-group .btn { font-size: 13px;}
+
 }
 
 @media screen and (-webkit-min-device-pixel-ratio:0) { 

@@ -15,6 +15,9 @@ body {
   padding: 0 !important;
 }
 
+// Hiding Foreclosure Auction Tally in Custom Search Results as it's not functional (and would likely require annotating all properties - as it looks like it's currently only listing the auctions and not tallying them to each property)
+.advanced-search-sentence-editor__group.foreclosure-auctions-label {display: none !important;}
+
 .modalCloseButton {
   position: absolute;
      margin-top: -15px;
@@ -95,12 +98,26 @@ body {
 // }
 
 .location-section {    
-padding-bottom: 120px;
+padding-bottom: 100px;
 min-height: 350px}
 
 .home-search-bar {
   border-radius:0px !important
 }
+
+// select:after{
+//     content: '\f078';
+//     font: normal normal normal 17px/1 FontAwesome;
+//     color: #0ebeff;
+//     right: 11px;
+//     top: 6px;
+//     height: 34px;
+//     padding: 15px 0px 0px 8px;
+//     border-left: 1px solid #0ebeff;
+//     position: absolute;
+//     pointer-events: none;
+
+// }
 
 .btn-default {text-transform: uppercase !important;}
  .input-group__label .btn-dark {
@@ -148,10 +165,29 @@ margin-top: -2px;
   }
 }
 
+
+
+.lookup-tabs .tab--primary.active{
+background-color:#a2cffc !important}
+.base-table-header--lookup {
+  background-color:#a2cffc !important}
+
+  .search-result-row {
+ 
+    padding-left: 13px;}
 ul {
   margin-bottom: 0;
 }
 
+.search-results__wrapper a{
+  text-transform: uppercase !important;
+}
+
+
+
+
+
+.lookup-show .lookup-address-search input {min-width:400px}
 .view-toggle {
   border: 1px solid $dark;
   cursor: pointer;
@@ -160,6 +196,13 @@ ul {
   &.btn-dark:not(:disabled):not(.disabled).active {
     background-color: $dark;
   }
+}
+
+.btn-dark:hover {
+    background-color: rgb(100,100,100);
+    color: white !important;
+    border-color: #2c3137
+    ;transition: .25s ease-in-out;
 }
 
 a {

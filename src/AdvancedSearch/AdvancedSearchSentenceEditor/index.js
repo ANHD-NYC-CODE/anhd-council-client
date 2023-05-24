@@ -8,9 +8,9 @@ import { getCustomSearchPath } from 'shared/utilities/routeUtils'
 import { Button } from 'react-bootstrap'
 import { clearAdvancedSearchRequest } from 'Store/AppState/actions'
 import { requestWithAuth } from 'shared/utilities/authUtils'
-import { 
-  getUserSavedCustomSearches, 
-  deleteUserCustomSearch 
+import {
+  getUserSavedCustomSearches,
+  deleteUserCustomSearch
 } from 'Store/MyDashboard/actions'
 
 import ConfigContext from 'Config/ConfigContext'
@@ -26,14 +26,20 @@ const AdvancedSearchSentenceEditor = props => {
 
   const loggedIn = !!props.user;
   const thisUrl = getCustomSearchPath(
-    props.advancedSearch, 
-    props.geographyType, 
+    props.advancedSearch,
+    props.geographyType,
     props.geographyId
   );
   const isSaved = !!props.savedSearches[thisUrl];
 
   const getFilterLabel = (filter) => {
     return filter.resourceModel.label
+  }
+
+  function getLowerCaseFilterLabel(filter) {
+    const originalLabel = getFilterLabel(filter);
+    const lowercaseLabel = originalLabel.toLowerCase().replace(/\s+/g, '-');
+    return lowercaseLabel;
   }
 
   const getFilterResourceConstant = (filter) => {
@@ -51,7 +57,7 @@ const AdvancedSearchSentenceEditor = props => {
     // console.log("the column headers ", Object.keys(props.results[0]))
     // console.log("the filter url path ", filter.resourceModel.urlPath)
     if (!props.results.length) return 0;
-    const columnKey = Object.keys(props.results[0]).find(column => 
+    const columnKey = Object.keys(props.results[0]).find(column =>
       column.startsWith(filter.resourceModel.urlPath)
       );
       console.log("the column key ", columnKey)
@@ -90,7 +96,7 @@ const AdvancedSearchSentenceEditor = props => {
       )).then(() => {
         props.dispatch(requestWithAuth(getUserSavedCustomSearches()));
       });
-    }    
+    }
   }
 
   const openOCAModal = (e, modal, config) => {
@@ -108,7 +114,7 @@ const AdvancedSearchSentenceEditor = props => {
   }
 
   return (
-    
+
     <div className="advanced-search-sentence-editor">
       <div className="advanced-search-sentence-editor__sentence-section">
         {constructSentenceEditor(
@@ -118,18 +124,18 @@ const AdvancedSearchSentenceEditor = props => {
           props.filterCondition
         )}
         <ModalContext.Consumer>
-        {modal => {
-          return loggedIn && (
-            <div className="advanced-search-sentence-editor__search">
-              <SaveSearchButton 
-                active={isSaved} 
-                activeText = "You have saved this search"
-                text="Save this search" 
-                onSave={e => onSaveSearch(e, modal)}
-              />
-            </div>
-          )
-        }}
+          {modal => {
+            return loggedIn && (
+              <div className="advanced-search-sentence-editor__search">
+                <SaveSearchButton
+                  active={isSaved}
+                  activeText="You have saved this search"
+                  text="Save this search"
+                  onSave={e => onSaveSearch(e, modal)}
+                />
+              </div>
+            )
+          }}
         </ModalContext.Consumer>
       </div>
       {
@@ -153,7 +159,7 @@ const AdvancedSearchSentenceEditor = props => {
                 </ModalContext.Consumer>
               )
             }}
-            </ConfigContext.Consumer>
+          </ConfigContext.Consumer>
         </div>
       }
       <div className="advanced-search-sentence-editor__inner-wrapper">
@@ -174,7 +180,7 @@ const AdvancedSearchSentenceEditor = props => {
             const binaryFilterIds = ['TAX_LIEN', 'CONH_RECORD', 'AEP_BUILDING'];
             if (!binaryFilterIds.includes(filter.id)) {
               return (
-                <div className="advanced-search-sentence-editor__group"
+                <div className={`advanced-search-sentence-editor__group ${getLowerCaseFilterLabel(filter)}-label`}
                   key={filter.resourceModel.resourceConstant}>
                   <span className="advanced-search-sentence-editor__label">{getFilterLabel(filter)}:</span>{' '}
                   <span className="advanced-search-sentence-editor__value">
