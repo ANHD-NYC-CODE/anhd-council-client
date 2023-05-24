@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import SearchResultRow from 'Lookup/AddressSearch/SearchResultRow'
-
+import jQuery from 'jquery'
 import './style.scss'
 
 const SearchResults = props => {
@@ -23,6 +23,7 @@ const SearchResults = props => {
                   resultIndex={index}
                 />
               ))}
+
             {console.log("props.results.length:" + props.results.length)}
           </div>
         )}
