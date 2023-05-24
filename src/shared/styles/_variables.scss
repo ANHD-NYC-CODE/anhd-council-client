@@ -30,10 +30,12 @@ $lookup-sidebar-width: 333px;
     overflow: hidden;
   }
 
-  .search-results__wrapper {
-    margin-left: 15px;
-    width: calc(100% - 30px);
-  }
+    .search-results__wrapper a:hover {
+    transition: .25s ease-in-out;}
+ 
+    .search-results__wrapper a {color:black;
+    transition: .25s ease-in-out;}
+  
 
   .search-bar__close,
   .search-bar__loading {
