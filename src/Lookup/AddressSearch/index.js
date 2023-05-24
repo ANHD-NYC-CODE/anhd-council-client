@@ -11,6 +11,7 @@ import { handleClearErrors } from 'Store/Error/actions'
 import { setSearchValue } from 'Store/Search/actions'
 import classnames from 'classnames'
 import { setAppState } from 'Store/AppState/actions'
+import jQuery from 'jquery'
 
 import './style.scss'
 
@@ -73,6 +74,7 @@ class AddressSearch extends React.PureComponent {
   }
 
   onKeyDown = e => {
+
     if (e.keyCode === 38 || (e.shiftKey && e.keyCode == 9)) {
       // up || shift + tab
       if (!this.state.show) return this.props.handleBlur()
@@ -104,6 +106,7 @@ class AddressSearch extends React.PureComponent {
       // esc
       this.hideSearch(e, true)
     }
+
   }
 
   setSearchValue(value) {
