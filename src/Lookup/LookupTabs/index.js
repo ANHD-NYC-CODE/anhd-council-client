@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import LookupTableTab from 'shared/components/ResultCard/LookupTableTab'
 
@@ -9,6 +9,22 @@ import './style.scss'
 
 const LookupTabs = props => {
   const [isOpen, toggleOpen] = useState(true)
+  
+  // This allows for dynamic calls to the tabs using "?active_tab=1". This useEffect will run once when the component mounts. 
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    var tab = params.get('active_tab');
+    
+    // This checks if there's a selectedRequest already. If not, it sets the first lookupRequest as the default.
+    if(!props.appState.selectedRequest && props.lookupRequests.length > 0) {
+      if(tab) {
+        if(tab > 0 && tab <= props.lookupRequests.length) {
+          tab--;
+          props.switchTable(props.lookupRequests[tab]);
+        }
+      }
+    }
+  }, []);
 
   const getTabLabel = (error, resourceModel, count1 = '...', count2 = 0) => {
     
@@ -58,6 +74,7 @@ const LookupTabs = props => {
             }
           }
 
+    
           return (
             <LookupTableTab
               className=""
