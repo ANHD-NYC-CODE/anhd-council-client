@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import LookupTableTab from 'shared/components/ResultCard/LookupTableTab'
+import { history } from 'Store/configureStore'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronUp, faChevronDown } from '@fortawesome/free-solid-svg-icons'
@@ -53,7 +54,7 @@ const LookupTabs = props => {
         {isOpen && <span>Click to view different data about this property</span>}
       </div>
       <div className={classnames('lookup-tabs__tabs', { open: isOpen })}>
-        {props.lookupRequests.map(request => {
+        {props.lookupRequests.map((request, index) => {
           const results = props.requests[request.requestConstant] || [];
           const loading = props.loadingState[request.requestConstant];
           const error = props.errorState[request.requestConstant];
@@ -81,7 +82,17 @@ const LookupTabs = props => {
               dispatch={props.dispatch}
               isBuildingTab={props.isBuildingView && request.level === 'BUILDING'}
               key={`tab-${request.resourceModel.resourceConstant}`}
-              onClick={() => props.switchTable(request)}
+              onClick={() => {
+                // Default behavior
+                props.switchTable(request);
+                
+                // Get the current URL
+                const currentPath = window.location.pathname;
+                var human_index = index + 1;
+                var newURL = currentPath + '?active_tab='+human_index;
+                // Change the URL to the new URL
+                history.push(newURL);
+              }}
               selected={props.appState.selectedRequest === request}
               request={request}
               error={error}
