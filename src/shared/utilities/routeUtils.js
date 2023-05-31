@@ -46,11 +46,23 @@ export const getCustomSearchPath = (advancedSearch, geographyType, geographyId) 
 
 
 export const addressResultToPath = ({ bbl, bin } = {}) => {
-  if (bbl && bin) {
-    return `/property/${bbl}/building/${bin}`
-  } else if (bbl && !bin) {
-    return `/property/${bbl}`
+  const params = new URLSearchParams(window.location.search);
+  const page = params.get('active_tab');
+
+  if(page) {
+    if (bbl && bin) {
+      return `/property/${bbl}/building/${bin}?active_tab=${page}`
+    } else if (bbl && !bin) {
+      return `/property/${bbl}?active_tab=${page}`
+    }
+  } else {
+    if (bbl && bin) {
+      return `/property/${bbl}/building/${bin}`
+    } else if (bbl && !bin) {
+      return `/property/${bbl}`
+    }
   }
+  
 }
 
 export const isValidGeography = (config, constant, id) => {
