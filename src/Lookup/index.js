@@ -16,6 +16,8 @@ import { createLoadingSelector } from 'Store/Loading/selectors'
 import { createErrorSelector } from 'Store/Error/selectors'
 import * as c from "Store/MyDashboard/constants";
 
+import { history } from 'Store/configureStore'
+
 class Lookup extends React.Component {
   constructor(props) {
     super(props)
@@ -82,6 +84,14 @@ class Lookup extends React.Component {
         replaceHistory,
       })
     )
+
+    if(replaceHistory == "override") {
+      // Get the current URL
+      const currentPath = window.location.pathname;
+      var newURL = currentPath;
+      // Change the URL to the new URL
+      history.push(newURL);
+    }
 
     this.props.dispatch(clearSearch())
   }
