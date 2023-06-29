@@ -24,7 +24,8 @@ class LookupLinks extends React.Component {
           buildingid = building.buildingid;
         }
       }
-      console.log(buildingid);
+    } else if(this.props.property.hpdregistrations){
+      buildingid = this.props.property.hpdregistrations[0].buildingid;
     }
     
     return Object.keys(this.props.property).length ? (

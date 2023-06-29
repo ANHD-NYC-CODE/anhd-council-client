@@ -18,7 +18,8 @@ export const getTableSubheaderLinks = ({ constant = '', property = {}, bin = nul
         buildingid = building.buildingid;
       }
     }
-    console.log(buildingid);
+  } else if(property.hpdregistrations){
+    buildingid = property.hpdregistrations[0].buildingid;
   }
 
   switch (constant) {
