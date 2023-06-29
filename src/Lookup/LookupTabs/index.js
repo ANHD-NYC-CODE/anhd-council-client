@@ -15,13 +15,32 @@ const LookupTabs = props => {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     var tab = params.get('active_tab');
+    // tabs
+    const tabs = [
+      "sales",
+      "oca",
+      "evictions",
+      "hpd_complaints",
+      "hpd_violations",
+      "dob_complaints",
+      "dob_violations",
+      "ecb_violations",
+      "dob_permit_applications",
+      "dob_permits_issued",
+      "litigations_against_landlord",
+      "foreclosure_filings",
+      "foreclosure_auctions"
+    ];
+    
     
     // This checks if there's a selectedRequest already. If not, it sets the first lookupRequest as the default.
     if(!props.appState.selectedRequest && props.lookupRequests.length > 0) {
       if(tab) {
-        if(tab > 0 && tab <= props.lookupRequests.length) {
-          tab--;
-          props.switchTable(props.lookupRequests[tab]);
+        const tabindex = tabs.indexOf(tab);
+        if(tabindex) {
+          if(tabindex > 0 && tabindex <= props.lookupRequests.length) {
+            props.switchTable(props.lookupRequests[tabindex]);
+          }
         }
       }
     }
@@ -45,6 +64,40 @@ const LookupTabs = props => {
         return `${resourceModel.label} (${count1})`
     }
   }
+
+  const getTabClass = (resourceModel) => {
+    switch (resourceModel.resourceConstant) {
+      case 'ACRIS_REAL_MASTER':
+        return "sales"
+      case 'OCA_HOUSING_COURT':
+        return "oca"
+      case 'EVICTION':
+        return "evictions"
+      case 'HPD_COMPLAINT':
+        return "hpd_complaints"
+      case 'HPD_VIOLATION':
+        return "hpd_violations"
+      case 'DOB_COMPLAINT':
+        return "dob_complaint"
+      case 'DOB_VIOLATION':
+        return "dob_violations"
+      case 'ECB_VIOLATION':
+        return "ecb_violations"
+      case 'DOB_FILED_PERMIT':
+        return "dob_permit_applications"
+      case 'DOB_ISSUED_PERMIT':
+        return "dob_permits_issued"
+      case 'HOUSING_LITIGATION':
+        return "litigations_against_landlord"
+      case 'FORECLOSURE':
+        return "foreclosure_filings"
+      case 'PSFORECLOSURE':
+        return "foreclosure_auctions"
+      default:
+        "none"
+    }
+  }
+
   return (
     <div className="lookup-tabs">
       <div className="lookup-tabs__header">
@@ -74,24 +127,30 @@ const LookupTabs = props => {
               return results.length
             }
           }
-
     
           return (
             <LookupTableTab
+              tabid={getTabClass(
+                request.resourceModel
+              )}
               className=""
               dispatch={props.dispatch}
               isBuildingTab={props.isBuildingView && request.level === 'BUILDING'}
               key={`tab-${request.resourceModel.resourceConstant}`}
-              onClick={() => {
+              onClick={(event) => {
                 // Default behavior
                 props.switchTable(request);
                 
-                // Get the current URL
-                const currentPath = window.location.pathname;
-                var human_index = index + 1;
-                var newURL = currentPath + '?active_tab='+human_index;
-                // Change the URL to the new URL
-                history.push(newURL);
+                const parentButton = event.target.closest('button');
+                if (parentButton) {
+                  const tabid = parentButton.getAttribute('data-tabid');
+                  // Get the current URL
+                  const currentPath = window.location.pathname;
+                  var newURL = currentPath + '?active_tab='+tabid;
+                  // Change the URL to the new URL
+                  history.push(newURL);
+                }
+
               }}
               selected={props.appState.selectedRequest === request}
               request={request}
