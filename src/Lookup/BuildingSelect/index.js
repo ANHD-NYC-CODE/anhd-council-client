@@ -54,7 +54,7 @@ class BuildingSelect extends React.Component {
             <CustomSelect
               className={classnames('building-select__select', { valued: this.props.bin })}
               size="sm"
-              onChange={e => this.props.changeLookup(this.props.bbl, new StandardizedInput(e).value, false)}
+              onChange={e => this.props.changeLookup(this.props.bbl, new StandardizedInput(e).value, "override")}
               options={this.getBuildingOptions()}
               value={
                 this.props.bin

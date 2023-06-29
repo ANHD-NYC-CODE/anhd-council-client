@@ -179,8 +179,8 @@ const LookupTableTab = props => {
   }
 
   return !props.error ? (
-    <button
-      className={classnames('lookup-table-tab', props.isBuildingTab ? 'tab--secondary' : 'tab--primary', {
+    <button data-tabid={props.tabid}
+      className={classnames('lookup-table-tab '+props.className, props.isBuildingTab ? 'tab--secondary' : 'tab--primary', {
         active: props.selected,
       })}
       disabled={props.loading || props.error}
