@@ -18,11 +18,11 @@ const LookupTabs = props => {
     // tabs
     const tabs = [
       "sales",
-      "oca",
+      "housing-court-cases",
       "evictions",
       "hpd_complaints",
       "hpd_violations",
-      "dob_complaints",
+      "dob_complaint",
       "dob_violations",
       "ecb_violations",
       "dob_permit_applications",
@@ -70,7 +70,7 @@ const LookupTabs = props => {
       case 'ACRIS_REAL_MASTER':
         return "sales"
       case 'OCA_HOUSING_COURT':
-        return "oca"
+        return "housing-court-cases"
       case 'EVICTION':
         return "evictions"
       case 'HPD_COMPLAINT':
