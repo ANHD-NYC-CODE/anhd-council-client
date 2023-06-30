@@ -59,9 +59,17 @@ export const constructAxiosPost = (
 ) => {
   if (!requestId) throw 'Misconfigured Axios Request (missing id)'
   handleActionDispatch(dispatch, constant, requestId)
+  const headers = {
+    'Content-Type': 'application/json',
+  };
+
+  if (typeof access_token === 'string') {
+    headers['authorization'] = `Bearer ${access_token}`;
+  }
+
   return Axios.post(url, body, {
     params: { format: 'json', ...params },
-    headers: typeof access_token === 'string' ? { authorization: `Bearer ${access_token}` } : null,
+    headers: headers,
   })
     .then(response => {
       const requestIsValid = !!getState().loading.requests.filter(request => request.id === requestId).length
