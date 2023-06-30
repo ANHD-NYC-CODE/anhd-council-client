@@ -22,7 +22,7 @@ const LookupTabs = props => {
       "evictions",
       "hpd_complaints",
       "hpd_violations",
-      "dob_complaints",
+      "dob_complaint",
       "dob_violations",
       "ecb_violations",
       "dob_permit_applications",
