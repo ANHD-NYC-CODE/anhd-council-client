@@ -14,6 +14,20 @@ class LookupLinks extends React.Component {
   }
 
   render() {
+    var buildingid = ""
+    if(this.props.bin) {
+      buildingid = "";
+
+      if (this.props.property.hpdregistrations && Array.isArray(this.props.property.hpdregistrations)) {
+        const building = this.props.property.hpdregistrations.find((item) => item.bin === this.props.bin);
+        if (building) {
+          buildingid = building.buildingid;
+        }
+      }
+    } else if(this.props.property.hpdregistrations && this.props.property.hpdregistrations.length > 0){
+      buildingid = this.props.property.hpdregistrations[0].buildingid;
+    }
+    
     return Object.keys(this.props.property).length ? (
       <div className="lookup-links">
         <div>
@@ -29,14 +43,7 @@ class LookupLinks extends React.Component {
           />
           <BaseLink
             className="lookup-links__link"
-            href={`https://hpdonline.hpdnyc.org/HPDonline/Provide_address.aspx?p1=${boroughAbbreviationToCode(
-              this.props.property.borough
-            )}&p2=${(this.props.property.original_address || this.props.property.address).split(' ')[0]}&p3=${(
-              this.props.property.original_address || this.props.property.address
-            )
-              .split(' ')
-              .slice(1)
-              .join(' ')}&SearchButton=Search`}
+            href={`https://hpdonline.nyc.gov/hpdonline/building/${buildingid}/overview`}
             text="HPD Property Overview"
           />
           <BaseLink

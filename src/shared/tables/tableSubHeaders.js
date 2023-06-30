@@ -8,6 +8,20 @@ export const getTableSubheaders = ({ constant, property, bin = null } = {}) =>
   getTableSubheaderLinks({ constant, property, bin })
 
 export const getTableSubheaderLinks = ({ constant = '', property = {}, bin = null } = {}) => {
+  var buildingid = ""
+  if(bin) {
+    buildingid = "";
+
+    if (property.hpdregistrations && Array.isArray(property.hpdregistrations)) {
+      const building = property.hpdregistrations.find((item) => item.bin === bin);
+      if (building) {
+        buildingid = building.buildingid;
+      }
+    }
+  } else if(property.hpdregistrations && property.hpdregistrations.length > 0){
+    buildingid = property.hpdregistrations[0].buildingid;
+  }
+
   switch (constant) {
     case 'ACRIS_REAL_MASTER':
       return (
@@ -51,12 +65,7 @@ export const getTableSubheaderLinks = ({ constant = '', property = {}, bin = nul
             <div>
               <BaseLink
                 className="lookup-links__link"
-                href={`https://hpdonline.hpdnyc.org/HPDonline/Provide_address.aspx?p1=${boroughAbbreviationToCode(
-                  property.borough
-                )}&p2=${property.address.split(' ')[0]}&p3=${property.address
-                  .split(' ')
-                  .slice(1)
-                  .join(' ')}&SearchButton=Search`}
+                href={`https://hpdonline.nyc.gov/hpdonline/building/${buildingid}/overview`}
               >
                 Visit this property’s HPD page
               </BaseLink>
@@ -71,12 +80,7 @@ export const getTableSubheaderLinks = ({ constant = '', property = {}, bin = nul
             <div>
               <BaseLink
                 className="lookup-links__link"
-                href={`https://hpdonline.hpdnyc.org/HPDonline/Provide_address.aspx?p1=${boroughAbbreviationToCode(
-                  property.borough
-                )}&p2=${property.address.split(' ')[0]}&p3=${property.address
-                  .split(' ')
-                  .slice(1)
-                  .join(' ')}&SearchButton=Search`}
+                href={`https://hpdonline.nyc.gov/hpdonline/building/${buildingid}/overview`}
               >
                 Visit this property’s HPD page
               </BaseLink>
@@ -97,12 +101,7 @@ export const getTableSubheaderLinks = ({ constant = '', property = {}, bin = nul
             <div>
               <BaseLink
                 className="lookup-links__link"
-                href={`https://hpdonline.hpdnyc.org/HPDonline/Provide_address.aspx?p1=${boroughAbbreviationToCode(
-                  property.borough
-                )}&p2=${property.address.split(' ')[0]}&p3=${property.address
-                  .split(' ')
-                  .slice(1)
-                  .join(' ')}&SearchButton=Search`}
+                href={`https://hpdonline.nyc.gov/hpdonline/building/${buildingid}/overview`}
               >
                 Visit this property’s HPD page
               </BaseLink>

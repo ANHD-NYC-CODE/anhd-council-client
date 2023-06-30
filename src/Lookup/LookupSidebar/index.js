@@ -30,6 +30,7 @@ const LookupSidebar = props => {
   return (
     <div data-test-id="lookup-sidebar" className={classnames('lookup-sidebar full-bleed--mobile', { open })}>
       <div className="lookup-sidebar__wrapper">
+
         <div
           tabIndex="0"
           data-test-id="lookup-sidebar-toggle"
@@ -41,8 +42,13 @@ const LookupSidebar = props => {
         >
           <FontAwesomeIcon icon={open ? faChevronLeft : faChevronRight} size="1x" />
         </div>
+
         <div className="lookup-sidebar__body">
+          <div className="mobile-address" >
+            {/* Insert Address Here */}
+          </div>
           <div className="lookup-sidebar__content">
+
             <LookupProfileSummary
               appState={props.appState}
               error={props.error}
