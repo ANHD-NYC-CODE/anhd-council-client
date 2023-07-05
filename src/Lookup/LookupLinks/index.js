@@ -41,11 +41,15 @@ class LookupLinks extends React.Component {
             )}&block=${this.props.property.bbl.slice(1, 6)}&lot=${this.props.property.bbl.slice(6, 10)}`}
             text="ACRIS Documents"
           />
-          <BaseLink
-            className="lookup-links__link"
-            href={`https://hpdonline.nyc.gov/hpdonline/building/${buildingid}/overview`}
-            text="HPD Property Overview"
-          />
+          {buildingid ? (
+            <BaseLink
+              className="lookup-links__link"
+              href={`https://hpdonline.nyc.gov/hpdonline/building/${buildingid}/overview`}
+              text="HPD Property Overview"
+            />
+          ) : (
+            <p>No HPD property overview available. <a href="https://hpdonline.nyc.gov/hpdonline" target="_blank">Search here</a>.</p>
+          )}
           <BaseLink
             className="lookup-links__link"
             href={constructDOBLink(this.props.property.bbl, this.props.bin)}
