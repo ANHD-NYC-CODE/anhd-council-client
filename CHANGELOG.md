@@ -177,7 +177,7 @@
 4/30/19
 
 - change contact email
-- create conjoined HPDComplaint & HPDProblem table, remove nesting.
+- create coned HPDComplaint & HPDProblem table, remove nesting.
 
 #### 1.0.0b1.0.32
 
