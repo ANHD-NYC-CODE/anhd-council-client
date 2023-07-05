@@ -78,12 +78,16 @@ export const getTableSubheaderLinks = ({ constant = '', property = {}, bin = nul
         <div>
           {!!Object.keys(property).length && (
             <div>
-              <BaseLink
-                className="lookup-links__link"
-                href={`https://hpdonline.nyc.gov/hpdonline/building/${buildingid}/overview`}
-              >
-                Visit this property’s HPD page
-              </BaseLink>
+              {buildingid ? (
+                <BaseLink
+                  className="lookup-links__link"
+                  href={`https://hpdonline.nyc.gov/hpdonline/building/${buildingid}/overview`}
+                >
+                  Visit this property’s HPD page
+                </BaseLink>
+              ) : (
+                <p>No HPD property overview available. <a href="https://hpdonline.nyc.gov/hpdonline" target="_blank">Search here</a>.</p>
+              )}
             </div>
           )}
           <div>One complaint can include multiple problems.</div>
