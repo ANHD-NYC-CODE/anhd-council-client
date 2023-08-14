@@ -67,9 +67,9 @@ const AdvancedSearchSentenceEditor = props => {
     if (!props.results.length) return 0;
     const columnKey = Object.keys(props.results[0]).find(column =>
       column.startsWith(filter.resourceModel.urlPath)
-      );
-      console.log("the column key ", columnKey)
-      console.log("within function /////////")
+    );
+    console.log("the column key ", columnKey)
+    console.log("within function /////////")
     return props.results.reduce((total, result) => parseInt(total) + parseInt(result[columnKey] || 0), 0);
   }
 
@@ -186,7 +186,6 @@ const AdvancedSearchSentenceEditor = props => {
         {
           uniqueSearchedFilters.map((filter, index) => {
             const binaryFilterIds = ['TAX_LIEN', 'CONH_RECORD', 'AEP_BUILDING'];
-<<<<<<< HEAD
             if (!binaryFilterIds.includes(filter.id)) {
               return (
                 <div className={`advanced-search-sentence-editor__group ${getLowerCaseFilterLabel(filter)}-label`}
@@ -199,10 +198,7 @@ const AdvancedSearchSentenceEditor = props => {
                   </span>
                 </div>
               )
-=======
-            if (binaryFilterIds.includes(filter.id)) {
-              return null;
->>>>>>> 0a5c2d484aeeb800083260b8698e47bcf4c732d3
+
             }
             const key = filter.resourceModel.resourceConstant || `filter-${index}`;
             return (
