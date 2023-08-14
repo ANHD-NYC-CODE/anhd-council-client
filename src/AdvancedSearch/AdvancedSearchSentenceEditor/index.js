@@ -176,19 +176,21 @@ const AdvancedSearchSentenceEditor = props => {
           </span>
         </div>
         {
-          uniqueSearchedFilters.map(filter => {
+          uniqueSearchedFilters.map((filter, index) => {
             const binaryFilterIds = ['TAX_LIEN', 'CONH_RECORD', 'AEP_BUILDING'];
-            if (!binaryFilterIds.includes(filter.id)) {
-              return (
-                <div className={`advanced-search-sentence-editor__group ${getLowerCaseFilterLabel(filter)}-label`}
-                  key={filter.resourceModel.resourceConstant}>
-                  <span className="advanced-search-sentence-editor__label">{getFilterLabel(filter)}:</span>{' '}
-                  <span className="advanced-search-sentence-editor__value">
-                    {props.loading ? null : formatNumber(getFilterColumnValue(filter))}
-                  </span>
-                </div>
-              )
+            if (binaryFilterIds.includes(filter.id)) {
+              return null;
             }
+            const key = filter.resourceModel.resourceConstant || `filter-${index}`;
+            return (
+              <div className={`advanced-search-sentence-editor__group ${getLowerCaseFilterLabel(filter)}-label`}
+                key={key}>
+                <span className="advanced-search-sentence-editor__label">{getFilterLabel(filter)}:</span>{' '}
+                <span className="advanced-search-sentence-editor__value">
+                  {props.loading ? null : formatNumber(getFilterColumnValue(filter))}
+                </span>
+              </div>
+            )
           })
         }
         <span className="advanced-search-sentence-editor__buttons">
