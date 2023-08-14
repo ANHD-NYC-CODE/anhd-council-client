@@ -68,6 +68,7 @@ const AdvancedSearchSentenceEditor = props => {
     const columnKey = Object.keys(props.results[0]).find(column =>
       column.startsWith(filter.resourceModel.urlPath)
     );
+
     return props.results.reduce((total, result) => parseInt(total) + parseInt(result[columnKey] || 0), 0);
   }
 
@@ -190,8 +191,8 @@ const AdvancedSearchSentenceEditor = props => {
               return null;
             }
 
-
-            const key = filter.resourceModel.resourceConstant;
+            // Generate a key that combines both the resourceConstant and the index to ensure uniqueness
+            const key = filter.resourceModel.resourceConstant || `filter-${index}`;
 
             return (
               <div className={`advanced-search-sentence-editor__group ${getLowerCaseFilterLabel(filter)}-label`}
