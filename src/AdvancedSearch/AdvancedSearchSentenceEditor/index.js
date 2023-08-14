@@ -32,11 +32,19 @@ const AdvancedSearchSentenceEditor = props => {
   const isSaved = !!props.savedSearches[thisUrl];
 
   const getFilterLabel = (filter) => {
-    return filter.resourceModel.label
+    if (!filter) {
+      console.warn("Filter is undefined.");
+      return "Unknown Filter";
+    }
+    if (!filter.resourceModel) {
+      console.warn("Filter's resourceModel is undefined. Filter:", filter);
+      return "Unknown Filter";
+    }
+    return filter.resourceModel.label;
   }
 
   function getLowerCaseFilterLabel(filter) {
-    const originalLabel = getFilterLabel(filter);
+    const originalLabel = getFilterLabel(filter) || ""; // default to empty string if undefined
     const lowercaseLabel = originalLabel.toLowerCase().replace(/\s+/g, '-');
     return lowercaseLabel;
   }
