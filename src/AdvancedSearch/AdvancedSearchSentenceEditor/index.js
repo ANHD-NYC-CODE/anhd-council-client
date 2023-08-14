@@ -33,11 +33,19 @@ const AdvancedSearchSentenceEditor = props => {
   const isSaved = !!props.savedSearches[thisUrl];
 
   const getFilterLabel = (filter) => {
-    return filter.resourceModel.label
+    if (!filter) {
+      console.warn("Filter is undefined.");
+      return "Unknown Filter";
+    }
+    if (!filter.resourceModel) {
+      console.warn("Filter's resourceModel is undefined. Filter:", filter);
+      return "Unknown Filter";
+    }
+    return filter.resourceModel.label;
   }
 
   function getLowerCaseFilterLabel(filter) {
-    const originalLabel = getFilterLabel(filter);
+    const originalLabel = getFilterLabel(filter) || ""; // default to empty string if undefined
     const lowercaseLabel = originalLabel.toLowerCase().replace(/\s+/g, '-');
     return lowercaseLabel;
   }
@@ -176,8 +184,9 @@ const AdvancedSearchSentenceEditor = props => {
           </span>
         </div>
         {
-          uniqueSearchedFilters.map(filter => {
+          uniqueSearchedFilters.map((filter, index) => {
             const binaryFilterIds = ['TAX_LIEN', 'CONH_RECORD', 'AEP_BUILDING'];
+<<<<<<< HEAD
             if (!binaryFilterIds.includes(filter.id)) {
               return (
                 <div className={`advanced-search-sentence-editor__group ${getLowerCaseFilterLabel(filter)}-label`}
@@ -190,7 +199,21 @@ const AdvancedSearchSentenceEditor = props => {
                   </span>
                 </div>
               )
+=======
+            if (binaryFilterIds.includes(filter.id)) {
+              return null;
+>>>>>>> 0a5c2d484aeeb800083260b8698e47bcf4c732d3
             }
+            const key = filter.resourceModel.resourceConstant || `filter-${index}`;
+            return (
+              <div className={`advanced-search-sentence-editor__group ${getLowerCaseFilterLabel(filter)}-label`}
+                key={key}>
+                <span className="advanced-search-sentence-editor__label">{getFilterLabel(filter)}:</span>{' '}
+                <span className="advanced-search-sentence-editor__value">
+                  {props.loading ? null : formatNumber(getFilterColumnValue(filter))}
+                </span>
+              </div>
+            )
           })
         }
         <span className="advanced-search-sentence-editor__buttons">
