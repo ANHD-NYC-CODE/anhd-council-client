@@ -68,8 +68,6 @@ const AdvancedSearchSentenceEditor = props => {
     const columnKey = Object.keys(props.results[0]).find(column =>
       column.startsWith(filter.resourceModel.urlPath)
     );
-    console.log("the column key ", columnKey)
-    console.log("within function /////////")
     return props.results.reduce((total, result) => parseInt(total) + parseInt(result[columnKey] || 0), 0);
   }
 
@@ -192,7 +190,8 @@ const AdvancedSearchSentenceEditor = props => {
               return null;
             }
 
-            const key = filter.resourceModel.resourceConstant || `filter-${index}`;
+
+            const key = filter.resourceModel.resourceConstant;
 
             return (
               <div className={`advanced-search-sentence-editor__group ${getLowerCaseFilterLabel(filter)}-label`}
@@ -212,7 +211,6 @@ const AdvancedSearchSentenceEditor = props => {
                 Clear
               </a>
               <Button className="advanced-search__toggle-button" variant="dark" size="sm" onClick={props.toggleForm}>
-                {console.log("toggleForm,", props.toggleForm)}
                 {props.displayingForm ? 'View Results' : 'Edit Custom Search'}
               </Button>
             </div>
