@@ -48,3 +48,9 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 2. run command: `ssh -t anhd@45.55.44.160 "cd /var/www/staging-anhd-council-client && sudo sh pull_staging.sh"` (or run `sh deploy_staging.sh` helper script)
 
 The helper scripts automate the deploy process of pulling from github, installing packages, building the bundle, and restarting the nginx server in the backend directory of the server.
+
+## Further instructions and FAQ:
+
+DAP Portal Documentation
+Frontend
+Start with ‘npm run start’ command in the root client directory. Make sure env.development.locais included in root directory and accurate paths are set depending on your desired dev environment.
