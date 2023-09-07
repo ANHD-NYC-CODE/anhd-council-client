@@ -6,6 +6,8 @@ import PrimaryComparisonFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/P
 
 import ComparisonFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/ComparisonFieldSet'
 
+import RangeFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/RangeFieldSet'
+
 import DateField from 'AdvancedSearch/FilterComponent/Field/DateField'
 import IntegerField from 'AdvancedSearch/FilterComponent/Field/IntegerField'
 
@@ -224,6 +226,7 @@ export const constructSingleMapParamSet = ({
   })
 }
 
+//comparehere
 export const constructDateRangeParamSet = ({
   resourceModel,
   paramSetLabel = '',
@@ -295,8 +298,8 @@ export const constructRangeParamSet = ({
   lowValue = c.CUSTOM_DEFAULT_START_DATE,
   highValue = c.CUSTOM_DEFAULT_END_DATE,
   defaultOptions = rangeComparisonOptions({
-    comparisonValues: ['gte', 'between', 'lte'],
-    labels: ['At least', 'Between', 'At most'],
+    comparisonValues: ['gte', 'between', 'lte', 'gt', 'lt'],
+    labels: ['At least', 'Between', 'At most', 'Greater than', 'Less than'],
     rangeKey: 'RANGE',
   }),
   comparisonPrefix = '',
@@ -347,6 +350,93 @@ export const constructRangeParamSet = ({
     ].filter(m => m),
   })
 }
+
+
+// TEST ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+//comparehere
+
+
+export const constructAmountRangeParamSet = ({
+  resourceModel,
+  // component = ComparisonFieldSet,
+  paramSetLabel = '',
+  paramNoun = '',
+  paramType = 'AMOUNT',
+  paramMapRole = 'LIMITER',
+  paramMapField = undefined,
+  lowComparison = 'gt',
+  highComparison = 'lt',
+  // lowComparison = 'gte',
+  // highComparison = 'lte',
+  lowValue = 1,
+  highValue = 5,
+  amountOptions = rangeComparisonOptions({
+    comparisonValues: ['gt', 'between', 'lt'],
+    labels: ['Greater than', 'Between', 'Less than'],
+    // rangeKey: 'RANGE',
+    rangeKey: 'AMOUNTRANGE',
+  }),
+  comparisonPrefix = '',
+  valuePrefix = '',
+  validations = {},
+} = {}) => {
+  return new ParamSet({
+    component: MultiTypeFieldGroup,
+    createType: 'ALL_RANGE_ONE',
+    label: paramSetLabel,
+    defaults: [
+      new ParamMap({
+        resourceModel,
+        type: paramType,
+        role: paramMapRole,
+        field: paramMapField,
+        // component: component,
+        component: ComparisonFieldSet,
+        baseComponent: IntegerField,
+        rangeKey: `${paramSetLabel}-${resourceModel.urlPath}-Range`,
+        rangePosition: 1,
+        defaultOptions: amountOptions,
+        paramMapField,
+        paramNoun,
+        comparison: lowComparison,
+        comparisonPrefix,
+        value: lowValue,
+        valuePrefix: valuePrefix,
+        validations,
+      }),
+      new ParamMap({
+        resourceModel,
+        type: paramType,
+        role: paramMapRole,
+        field: paramMapField,
+        // component: component,
+        component: ComparisonFieldSet,
+        baseComponent: IntegerField,
+        rangeKey: `${paramSetLabel}-${resourceModel.urlPath}-Range`,
+        rangePosition: 2,
+        defaultOptions: amountOptions,
+        paramMapField,
+        paramNoun,
+        comparison: highComparison,
+        comparisonPrefix,
+        value: highValue,
+        valuePrefix: valuePrefix,
+        validations,
+      }),
+    ].filter(m => m),
+  })
+}
+
+
+//ABOVE TEST ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 
 export const rentRegulatedProgramOptions = () => {
   const rentRegulatedPrograms = [
@@ -405,8 +495,8 @@ export const rangeComparisonOptions = ({
 }
 
 export const amountComparisonOptions = ({
-  comparisonValues = ['gte', 'exact', 'lte'],
-  labels = ['At least', 'Exactly', 'At most'],
+  comparisonValues = ['gte', 'exact', 'lte', 'gt', 'lt'],
+  labels = ['At least', 'Exactly', 'At most', 'Greater than', 'Less than'],
   rangeKey,
 } = {}) => {
   return comparisonValues.map((value, index) => ({

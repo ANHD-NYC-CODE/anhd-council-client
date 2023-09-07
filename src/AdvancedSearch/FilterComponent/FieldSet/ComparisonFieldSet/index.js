@@ -7,8 +7,12 @@ import classnames from 'classnames'
 import './style.scss'
 
 const ComparisonFieldSet = props => {
+
+  
   return (
     <div className="fieldset comparison-fieldset" key={props.key}>
+      {console.log("props key", props.key)}
+      {console.log("props paramMap rangeKey from comparison fieldset", props.paramMap.rangeKey)}
       <InputGroup>
         {props.paramMap.comparisonPrefix && (
           <InputGroup.Prepend className="input-group__label">

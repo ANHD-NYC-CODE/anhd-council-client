@@ -14,9 +14,8 @@ export const convertDatasetFilterToParams = filter => {
         .map(paramMap => {
           const primaryModelFieldPath =
             filter.primaryResourceModel.relatedResourceMappings[filter.resourceModel.resourceConstant] + '__'
-          return `${primaryModelFieldPath}${paramMap.field}${paramMap.comparison ? '__' + paramMap.comparison : ''}=${
-            paramMap.type === 'PERCENT' ? paramMap.value / 100 : paramMap.value
-          }`
+          return `${primaryModelFieldPath}${paramMap.field}${paramMap.comparison ? '__' + paramMap.comparison : ''}=${paramMap.type === 'PERCENT' ? paramMap.value / 100 : paramMap.value
+            }`
         })
         .filter(p => p)
         .join(',')
@@ -34,17 +33,16 @@ export const parseUrlSearchParams = (searchParams, advancedSearch) => {
     catch (e) {
       return false;
     }
-  } 
-  if (!searchParams.housingtype || 
+  }
+  if (!searchParams.housingtype ||
     !setPropertyFilterParamMapsFromSearchParams(
       searchParams, advancedSearch.propertyFilter
-    ))
-  {
+    )) {
     return false;
   }
-  
+
   return true;
-} 
+}
 
 const setPropertyFilterParamMapsFromSearchParams = (searchParams, propertyFilter) => {
   const housingType = searchParams.housingtype;
@@ -55,12 +53,10 @@ const setPropertyFilterParamMapsFromSearchParams = (searchParams, propertyFilter
   const rsUnitsLostTo = searchParams.rsunitslost__end;
   const expiry = searchParams.coresubsidyrecord__enddate__gte || searchParams.coresubsidyrecord__enddate__lte;
   const unitsRes = searchParams.unitsres__lte || searchParams.unitsres__gte || searchParams.unitsres__exact;
-  
-  
-  // try updating unitres to lt and gt 
+  const unitsResMin = searchParams.unitsres__gt;
+  const unitsResMax = searchParams.unitsres__lt;
 
 
-  
   const sroUnits = searchParams.propertyannotation__legalclassb__gte;
 
   propertyFilter.paramSets.initial.paramMaps[0].value = housingType;
@@ -68,15 +64,29 @@ const setPropertyFilterParamMapsFromSearchParams = (searchParams, propertyFilter
   try {
     if (unitsRes) {
       const field = "unitsres";
-      const comparison = searchParams.unitsres__lte && "lte" || 
-          searchParams.unitsres__exact && "exact" ||
-          searchParams.unitsres__gte && "gte";
+      const comparison = searchParams.unitsres__lte && "lte" ||
+        searchParams.unitsres__exact && "exact" ||
+        searchParams.unitsres__gte && "gte";
       setParamSetParamMapsFromDefaults(field, comparison, unitsRes, propertyFilter);
     }
-    
+
+
+
+    if (unitsResMin) {
+      const field = "unitsres";
+      const comparison = searchParams.unitsres__gt && "gt"
+      setParamSetParamMapsFromDefaults(field, comparison, unitsResMin, propertyFilter);
+    }
+
+    if (unitsResMax) {
+      const field = "unitsres";
+      const comparison = searchParams.unitsres__lt && "lt"
+      setParamSetParamMapsFromDefaults(field, comparison, unitsResMax, propertyFilter);
+    }
+
     if (rsUnitsLost) {
       const field = "rsunitslost";
-      const comparison = searchParams.rsunitslost__lte && "lte" || 
+      const comparison = searchParams.rsunitslost__lte && "lte" ||
         searchParams.rsunitslost__exact && "exact" ||
         searchParams.rsunitslost__gte && "gte";
       setParamSetParamMapsFromDefaults(field, comparison, rsUnitsLost, propertyFilter);
@@ -118,33 +128,33 @@ const setPropertyFilterParamMapsFromSearchParams = (searchParams, propertyFilter
       setParamSetParamMapsFromDefaults(field, comparison, subsidyPrograms, propertyFilter);
     }
   }
-  catch(e) {
+  catch (e) {
     return false;
   }
 
-  return true 
+  return true
 }
 
 const setParamSetParamMapsFromDefaults = (field, comparison, value, propertyFilter) => {
-  let targetParamSetKey = Object.keys(propertyFilter.paramSets).filter(paramSetKey => 
+  let targetParamSetKey = Object.keys(propertyFilter.paramSets).filter(paramSetKey =>
     propertyFilter.paramSets[paramSetKey].defaults.some(paramMap => paramMap.field === field)
   )[0];
 
   let targetParamMap;
   if (field === "rsunitslost") {
-    let targetComaparison = comparison === "lte" || 
+    let targetComaparison = comparison === "lte" ||
       comparison === "gte" || comparison === "exact" ? "gte" : comparison;
-    targetParamMap = propertyFilter.paramSets[targetParamSetKey].defaults.find(paramMap => 
+    targetParamMap = propertyFilter.paramSets[targetParamSetKey].defaults.find(paramMap =>
       paramMap.field === field && paramMap.comparison === targetComaparison
     );
   }
   else if (field === "coresubsidyrecord__enddate") {
-    targetParamMap = propertyFilter.paramSets[targetParamSetKey].defaults.find(paramMap => 
+    targetParamMap = propertyFilter.paramSets[targetParamSetKey].defaults.find(paramMap =>
       paramMap.field === field && paramMap.comparison === comparison
     );
   }
   else {
-    targetParamMap = propertyFilter.paramSets[targetParamSetKey].defaults.find(paramMap => 
+    targetParamMap = propertyFilter.paramSets[targetParamSetKey].defaults.find(paramMap =>
       paramMap.field === field
     );
   }
@@ -157,7 +167,7 @@ const setParamSetParamMapsFromDefaults = (field, comparison, value, propertyFilt
 
 const convertQueryStringToCondition = query => {
   const querySplit = query.split(" ");
-  
+
   const conditionSplit = querySplit[0].split("=");
   const conditionKey = conditionSplit[0].split("_")[1];
   const conditionType = conditionSplit[1];
@@ -166,7 +176,7 @@ const convertQueryStringToCondition = query => {
   for (let i = 1; i < querySplit.length; i++) {
     const thisFilterSplit = querySplit[i].split("=");
     const thisFilterKey = thisFilterSplit[0].split("_")[1];
-    
+
     const params = thisFilterSplit.slice(1).join("=").split(",");
     let resourceConstant;
     let resourceModel
@@ -174,27 +184,27 @@ const convertQueryStringToCondition = query => {
     for (let param of params) {
       const [paramKey, paramValue] = param.split("=");
       let [resourceKey, field, comparison] = paramKey.split("__");
-      
+
       if (paramKey.startsWith('acrisreallegals')) {
         let [rkPart1, rkPart2, f, c] = paramKey.split("__");
         resourceKey = rkPart1 + "__" + rkPart2;
         field = f;
         comparison = c;
       }
-      
+
       if (!resourceConstant) {
         resourceConstant = Object.keys(
-          Resources.PROPERTY().relatedResourceMappings).find((key) => 
+          Resources.PROPERTY().relatedResourceMappings).find((key) =>
             Resources.PROPERTY().relatedResourceMappings[key] === resourceKey
           );
         resourceModel = Resources[resourceConstant]();
-        Object.keys(resourceModel.ownResourceFilters).forEach(setKey => 
-          paramSets[setKey] = 
-            resourceModel.ownResourceFilters[setKey]
-              .generatorFunction(resourceModel)
+        Object.keys(resourceModel.ownResourceFilters).forEach(setKey =>
+          paramSets[setKey] =
+          resourceModel.ownResourceFilters[setKey]
+            .generatorFunction(resourceModel)
         );
 
-        Object.keys(paramSets).forEach(paramSetKey => 
+        Object.keys(paramSets).forEach(paramSetKey =>
           paramSets[paramSetKey].paramMaps = []
         );
       }
