@@ -95,8 +95,27 @@ export const longAmountComparisonString = comparison => {
       return 'exactly'
     case 'lte':
       return 'at most'
+    case 'lt':
+      return 'less than'
+    case 'gt':
+      return 'greater than'
   }
 }
+
+// TEST ///////////////////////////////
+
+export const constructRangeComparisonString = (comparison, options = []) => {
+  switch (comparison) {
+    case 'lt':
+      return 'less than'
+    case 'gt':
+      return 'greater than'
+    default:
+      return (options.find(option => option.value === comparison) || {}).label || ''
+  }
+}
+
+// ///////////////////////////////
 
 export const constructDateComparisonString = (comparison, options = []) => {
   switch (comparison) {

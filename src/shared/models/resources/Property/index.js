@@ -8,6 +8,7 @@ import {
   constructSingleMapParamSet,
   constructDateRangeParamSet,
   rentRegulatedProgramOptions,
+  constructAmountRangeParamSet,
 } from 'shared/utilities/filterUtils'
 import GenericFieldSet from 'AdvancedSearch/FilterComponent/FieldSet/GenericFieldSet'
 import TextSelectField from 'AdvancedSearch/FilterComponent/Field/TextSelectField'
@@ -163,24 +164,71 @@ const Property = () => {
         },
       },
 
+      // housingType_all_1: {
+      //   // residential units
+      //   generatorFunction: resourceModel => {
+      //     return constructSingleMapParamSet({
+      //       resourceModel,
+      //       paramSetLabel: 'Residential Units',
+      //       paramMapField: 'unitsres',
+      //       paramMapRole: 'MODIFIER',
+      //       lowValue: '1',
+      //       highValue: '5',
+      //       paramMapComparison: 'lte',
+      //       paramNoun: 'units',
+      //       validations: {
+      //         min: 1,
+      //       },
+      //     })
+      //   },
+      // },
+
+      // REVERT TO ABOVE COMMENTED OUT
+      // TEST ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+      //comparehere
+
       housingType_all_1: {
         // residential units
         generatorFunction: resourceModel => {
-          return constructSingleMapParamSet({
+          return constructAmountRangeParamSet({
             resourceModel,
+            component: ComparisonFieldSet,
             paramSetLabel: 'Residential Units',
-            paramMapField: 'unitsres',
-            paramMapRole: 'MODIFIER',
-            lowValue: '1',
-            highValue: '5',
-            paramMapComparison: 'lte',
             paramNoun: 'units',
+            // paramMapRole: 'LIMITER',
+            paramMapRole: 'MODIFIER',
+            paramMapField: 'unitsres',
+            lowComparison: 'gt',
+            highComparison: 'lt',
+            lowValue: 1,
+            highValue: 5,
+            amountOptions: rangeComparisonOptions({
+              comparisonValues: ['gte', 'between', 'lte', 'exact'],
+              labels: ['At Least', 'Between', 'At Most', 'Exactly'],
+              // rangeKey: 'AMOUNT',
+              // rangeKey: 'RANGE',
+              rangeKey: 'AMOUNTRANGE',
+            }),
+            comparisonPrefix: '',
+            valuePrefix: '',
             validations: {
               min: 1,
             },
           })
         },
       },
+
+
+
+      // TEST ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+      ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
       housingType_all_sro: {
         // SRO units
         generatorFunction: resourceModel => {
@@ -344,7 +392,7 @@ const Property = () => {
           })
         },
       },
-
+      //comparehere
       // rent regulated
       housingType_rr_2: {
         generatorFunction: resourceModel => {

@@ -18,6 +18,7 @@ import ModalContext from 'Modal/ModalContext'
 import SaveSearchButton from 'shared/components/buttons/SaveSearchButton'
 import SaveOrEditCustomSearch from 'shared/components/modals/SaveCustomSearchModal'
 import './style.scss'
+// import { constantToModelName } from '../../shared/utilities/filterUtils'
 
 const AdvancedSearchSentenceEditor = props => {
   const numberOfUnits = props.results.reduce((total, result) => parseInt(total) + parseInt(result['unitsres'] || 0), 0)
@@ -32,11 +33,19 @@ const AdvancedSearchSentenceEditor = props => {
   const isSaved = !!props.savedSearches[thisUrl];
 
   const getFilterLabel = (filter) => {
-    return filter.resourceModel.label
+    if (!filter) {
+      console.warn("Filter is undefined.");
+      return "Unknown Filter";
+    }
+    if (!filter.resourceModel) {
+      console.warn("Filter's resourceModel is undefined. Filter:", filter);
+      return "Unknown Filter";
+    }
+    return filter.resourceModel.label;
   }
 
   function getLowerCaseFilterLabel(filter) {
-    const originalLabel = getFilterLabel(filter);
+    const originalLabel = getFilterLabel(filter) || ""; // default to empty string if undefined
     const lowercaseLabel = originalLabel.toLowerCase().replace(/\s+/g, '-');
     return lowercaseLabel;
   }
@@ -50,10 +59,16 @@ const AdvancedSearchSentenceEditor = props => {
   const uniqueSearchedFilters = Object.values(filtersHash);
 
   const getFilterColumnValue = (filter) => {
+    // console.log("within function /////////")
+    // console.log("the filter ", filter)
+    // console.log("length", props.results.length)
+    // console.log("the column headers ", Object.keys(props.results[0]))
+    // console.log("the filter url path ", filter.resourceModel.urlPath)
     if (!props.results.length) return 0;
     const columnKey = Object.keys(props.results[0]).find(column =>
       column.startsWith(filter.resourceModel.urlPath)
     );
+
     return props.results.reduce((total, result) => parseInt(total) + parseInt(result[columnKey] || 0), 0);
   }
 
@@ -168,19 +183,26 @@ const AdvancedSearchSentenceEditor = props => {
           </span>
         </div>
         {
-          uniqueSearchedFilters.map(filter => {
+          uniqueSearchedFilters.map((filter, index) => {
             const binaryFilterIds = ['TAX_LIEN', 'CONH_RECORD', 'AEP_BUILDING'];
-            if (!binaryFilterIds.includes(filter.id)) {
-              return (
-                <div className={`advanced-search-sentence-editor__group ${getLowerCaseFilterLabel(filter)}-label`}
-                  key={filter.resourceModel.resourceConstant}>
-                  <span className="advanced-search-sentence-editor__label">{getFilterLabel(filter)}:</span>{' '}
-                  <span className="advanced-search-sentence-editor__value">
-                    {props.loading ? null : formatNumber(getFilterColumnValue(filter))}
-                  </span>
-                </div>
-              )
+
+            // If the filter is in the binaryFilterIds list, we don't render anything for it
+            if (binaryFilterIds.includes(filter.id)) {
+              return null;
             }
+
+            // Generate a key that combines both the resourceConstant and the index to ensure uniqueness
+            const key = filter.resourceModel.resourceConstant || `filter-${index}`;
+
+            return (
+              <div className={`advanced-search-sentence-editor__group ${getLowerCaseFilterLabel(filter)}-label`}
+                key={key}>
+                <span className="advanced-search-sentence-editor__label">{getFilterLabel(filter)}:</span>{' '}
+                <span className="advanced-search-sentence-editor__value">
+                  {props.loading ? null : formatNumber(getFilterColumnValue(filter))}
+                </span>
+              </div>
+            );
           })
         }
         <span className="advanced-search-sentence-editor__buttons">
