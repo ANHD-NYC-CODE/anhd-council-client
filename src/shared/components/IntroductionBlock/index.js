@@ -58,7 +58,7 @@ const IntroductionBlock = () => (
       <BaseLink href="https://anhd.org">Association for Neighborhood and Housing Development (ANHD)</BaseLink>.
     </p>
     <p>
-      Developed by <BaseLink href="https://data.automatica.love">Data Automatica</BaseLink>.
+      Developed by <BaseLink href="https://blueprintinteractive.com">Blueprint Interactive</BaseLink>.
     </p>
   </Jumbotron>
 )
