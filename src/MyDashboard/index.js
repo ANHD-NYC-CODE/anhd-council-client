@@ -126,7 +126,7 @@ class MyDashboard extends React.Component {
                             <tr className="">
                                 <th scope="col" className="col-10">Property Address</th>
                                 <th scope="col" className="col-2">BBL</th>
-                                <th scope="col">Edit</th>
+                                <th scope="col">Delete</th>
                             </tr>
                         </thead>
                         <tbody>
