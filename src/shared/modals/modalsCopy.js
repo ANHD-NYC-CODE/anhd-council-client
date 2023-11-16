@@ -593,10 +593,7 @@ export const infoModals = {
     body: ReactDOMServer.renderToString(
       <div>
         <p>
-          This dataset contains records of litigations that the Department of Housing Preservation and Development (HPD)
-          or tenants initiate in Housing Court against landlords. These cases can result in enforceable orders to
-          correct, civil penalties (fines), and contempt sanctions. A history of litigation can indicate harassment or
-          negligence by landlords, poor building conditions, and/or a history of tenant organizing.
+          This dataset contains records of litigations that the Department of Housing Preservation and Development (HPD) or tenants initiate in Housing Court against landlords. These cases can result in enforceable orders to correct, civil penalties (fines), and contempt sanctions. A history of litigation can indicate harassment or negligence by landlords, poor building conditions, and/or a history of tenant organizing. This dataset does not include Supreme Court cases.
         </p>
       </div>
     ),
