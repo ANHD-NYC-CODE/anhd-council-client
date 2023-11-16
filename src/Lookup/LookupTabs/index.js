@@ -10,7 +10,7 @@ import './style.scss'
 
 const LookupTabs = props => {
   const [isOpen, toggleOpen] = useState(true)
-  
+
   // This allows for dynamic calls to the tabs using "?active_tab=1". This useEffect will run once when the component mounts. 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -31,14 +31,14 @@ const LookupTabs = props => {
       "foreclosure_filings",
       "foreclosure_auctions"
     ];
-    
-    
+
+
     // This checks if there's a selectedRequest already. If not, it sets the first lookupRequest as the default.
-    if(!props.appState.selectedRequest && props.lookupRequests.length > 0) {
-      if(tab) {
+    if (!props.appState.selectedRequest && props.lookupRequests.length > 0) {
+      if (tab) {
         const tabindex = tabs.indexOf(tab);
-        if(tabindex) {
-          if(tabindex > 0 && tabindex <= props.lookupRequests.length) {
+        if (tabindex) {
+          if (tabindex > 0 && tabindex <= props.lookupRequests.length) {
             props.switchTable(props.lookupRequests[tabindex]);
           }
         }
@@ -47,14 +47,15 @@ const LookupTabs = props => {
   }, []);
 
   const getTabLabel = (error, resourceModel, count1 = '...', count2 = 0) => {
-    
+
     switch (resourceModel.resourceConstant) {
       case 'ACRIS_REAL_MASTER':
         return `Sales (${count1}) and Financing`
       case 'HPD_COMPLAINT':
-        return `HPD Complaints (${count1}) and Problems (${count2})`
+        // return `HPD Complaints (${count1}) and Problems (${count2})`
+        return `HPD Complaints and Problems (${count1})`
       case 'OCA_HOUSING_COURT':
-        return error && (error.status === 401 || error.status === 403 || error.status === 409) ? 
+        return error && (error.status === 401 || error.status === 403 || error.status === 409) ?
           `${resourceModel.label}` : `${resourceModel.label} (${count1})`;
       case 'FORECLOSURE':
         return error && error.status === 403 ? `${resourceModel.label}` : `${resourceModel.label} (${count1})`
@@ -111,7 +112,7 @@ const LookupTabs = props => {
           const results = props.requests[request.requestConstant] || [];
           const loading = props.loadingState[request.requestConstant];
           const error = props.errorState[request.requestConstant];
-          
+
           const getCount1 = (request, results) => {
             if (request.resourceModel.tableRecordsCountFunction) {
               return request.resourceModel.tableRecordsCountFunction(results)
@@ -127,7 +128,7 @@ const LookupTabs = props => {
               return results.length
             }
           }
-    
+
           return (
             <LookupTableTab
               tabid={getTabClass(
@@ -140,13 +141,13 @@ const LookupTabs = props => {
               onClick={(event) => {
                 // Default behavior
                 props.switchTable(request);
-                
+
                 const parentButton = event.target.closest('button');
                 if (parentButton) {
                   const tabid = parentButton.getAttribute('data-tabid');
                   // Get the current URL
                   const currentPath = window.location.pathname;
-                  var newURL = currentPath + '?active_tab='+tabid;
+                  var newURL = currentPath + '?active_tab=' + tabid;
                   // Change the URL to the new URL
                   history.push(newURL);
                 }
