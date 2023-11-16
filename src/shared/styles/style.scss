@@ -4,7 +4,7 @@ Overriding bootstrap switch toggle for save custom search
 */
 .save-custom-search__notifications .custom-control-input:checked ~ .custom-control-label::before {
     color: black;
-    background-color: #609bd6;
+    background-color: #1465b7;
 }
 
 .save-custom-search__notifications .custom-control-label::before, .custom-control-label::after {
@@ -143,7 +143,7 @@ margin-top: 10px;
 .mobile-nav .tab--dark-inverse.active {
     border-top: 1px solid #609bd6;
     border-bottom: 1px solid #609bd6;
-    background: #609bd6;
+    background: #1465b7;
 }
 
 .mobile-nav .sub-header__nav-tab {  
@@ -174,9 +174,17 @@ margin: 5px auto 0;
 .mobile-nav .sub-header__wrapper--top__links .nav-item{
     margin: 0px auto 0;
     font-size: 15px;
-        text-align: center;
+    text-align: center;
 }
 
 .css-17zmrss {
     width: 220px !important;
 }
+
+.layout__left-column a {
+    color: #ffffff;
+    text-decoration:underline;
+}
+
+
+
