@@ -13,8 +13,12 @@ import './style.scss'
 const schema = yup.object({
   email: yup
     .string()
-    .email()
+    .email("Invalid email format")
     .required("Email is a required field"),
+  confirmEmail: yup
+    .string()
+    .oneOf([yup.ref('email'), null], 'Emails must match')
+    .required("Please confirm your email"),
   username: yup
     .string()
     .max(64)
@@ -56,7 +60,7 @@ class UserRegisterForm extends React.Component {
     }
 
     this.props.dispatch(postUserRegister(userData,
-        () => this.handleSuccessfulSubmit(formData.email)));
+      () => this.handleSuccessfulSubmit(formData.email)));
   }
 
   render() {
@@ -72,14 +76,14 @@ class UserRegisterForm extends React.Component {
             >
               <FormError show={!!this.props.error} message={(this.props.error || {}).message} />
               <Form.Text className="user-register-form__text mb-3">
-                An account allows you to bookmark properties, save custom searches, 
-                and set up notifications for new data results. 
+                An account allows you to bookmark properties, save custom searches,
+                and set up notifications for new data results.
               </Form.Text>
               <Form.Text className="user-register-form__text mb-3">
-                To create an account, enter the following information:              
+                To create an account, enter the following information:
               </Form.Text>
               <Form.Group controlId="userRegisterEmail">
-                <Form.Label>Email *</Form.Label>
+                <Form.Label>Email Address*</Form.Label>
                 <Form.Control
                   required
                   name="email"
@@ -92,6 +96,19 @@ class UserRegisterForm extends React.Component {
                 />
                 <FormError show={!!((submitCount || touched.email) && errors.email)} message={errors.email} />
                 <Form.Text className="text-muted">Please use your organization’s email, if applicable.</Form.Text>
+              </Form.Group>
+              <Form.Group controlId="userRegisterConfirmEmail">
+                <Form.Label>Confirm Email Address *</Form.Label>
+                <Form.Control
+                  required
+                  name="confirmEmail"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  isInvalid={!!((submitCount || touched.confirmEmail) && errors.confirmEmail)}
+                  type="email"
+                  placeholder="Please confirm your email"
+                />
+                <FormError show={!!((submitCount || touched.confirmEmail) && errors.confirmEmail)} message={errors.confirmEmail} />
               </Form.Group>
               <Form.Group controlId="userRegisterUsername">
                 <Form.Label>Username *</Form.Label>
