@@ -80,6 +80,7 @@ const DashboardResultsEditor = props => {
       return (
         <div className="tooltip-wrapper">
           <button
+            aria-label="tooltip_button"
             className="ghost-button"
             href="#"
             tabIndex="0"
