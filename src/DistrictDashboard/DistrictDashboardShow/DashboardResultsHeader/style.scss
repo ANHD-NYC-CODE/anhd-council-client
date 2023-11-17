@@ -5,7 +5,7 @@
   border: 1px solid $dark;
   border-radius: 2px;
   box-sizing: border-box;
-  color: $black;
+  color: #ffffff;
   background-color: $secondary;
   padding: 16px;
   margin-bottom: 10px;
@@ -22,7 +22,7 @@
 
   .dashboard-results-header__title {
     @extend %p1-font-size;
-    color: $black;
+    color: #ffffff;
     font-weight: bold;
     text-transform: uppercase;
     margin-bottom: 0;
@@ -68,7 +68,7 @@
 
   .dashboard-results-header__label {
     @extend %p3-font-size;
-    color: $black;
+    color: #ffffff;
     display: block;
 
     @include media-breakpoint-up(lg) {
