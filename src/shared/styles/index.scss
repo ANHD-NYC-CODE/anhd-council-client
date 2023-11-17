@@ -81,6 +81,12 @@ body {
     width: fit-content;
     margin: 0 0 0 auto;
   }
+
+  table.table-striped.table-sm .bookmark-button__container {cursor: default;
+    width: fit-content;
+  margin: 0 10px 0 0;
+  padding-top:5px;
+}
 .bookmark-button__container div * {cursor: pointer;
 }
 
