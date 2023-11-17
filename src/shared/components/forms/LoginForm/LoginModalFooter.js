@@ -11,7 +11,6 @@ const LoginModalFooter = props => (
         block
         variant="dark"
         size="md"
-        style="margin-top:-20px"
         onClick={ev => {
           ev.preventDefault()
           props.modal.setModal({
