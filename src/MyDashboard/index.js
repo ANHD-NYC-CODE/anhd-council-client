@@ -35,7 +35,7 @@ class MyDashboard extends React.Component {
     }
 
     componentDidUpdate() {
-        if(!this.props.user) {
+        if (!this.props.user) {
             this.props.dispatch(push("/"));
         }
     }
@@ -57,15 +57,15 @@ class MyDashboard extends React.Component {
         e.preventDefault()
         const notifications = search.notification_frequency !== "N";
         modal.setModal({
-          modalComponent: SaveOrEditCustomSearch,
-          modalProps: {
-            editing: true,
-            id: search.id,
-            url: search.custom_search_view,
-            notificationFrequency: notifications ? search.notification_frequency : undefined,
-            queryName: search.name,
-            notifications
-          }
+            modalComponent: SaveOrEditCustomSearch,
+            modalProps: {
+                editing: true,
+                id: search.id,
+                url: search.custom_search_view,
+                notificationFrequency: notifications ? search.notification_frequency : undefined,
+                queryName: search.name,
+                notifications
+            }
         })
     }
 
@@ -96,24 +96,24 @@ class MyDashboard extends React.Component {
                     </div>
                     {!!this.props.user && !this.props.user.groups.includes(TRUSTED_GROUP) &&
                         <ModalContext.Consumer>
-                        {modal => 
-                            <div className="d-flex align-items-center">
-                                <button className="btn-sm btn-dark mr-3" onClick={e => this.onRequestAccess(e, modal)}>
-                                    Request access to housing court and foreclosures data
-                                </button>
-                                <InfoModalButton 
-                                    modalComponent={RequestAccessModal}
-                                    modalProps={{viewPolicy: true, userAccessRequestStatus: this.props.user.accessRequestStatus}}/>
-                            </div>
-                        }                        
+                            {modal =>
+                                <div className="d-flex align-items-center">
+                                    <button className="btn-sm btn-dark mr-3" onClick={e => this.onRequestAccess(e, modal)}>
+                                        Request access to housing court and foreclosures data
+                                    </button>
+                                    <InfoModalButton
+                                        modalComponent={RequestAccessModal}
+                                        modalProps={{ viewPolicy: true, userAccessRequestStatus: this.props.user.accessRequestStatus }} />
+                                </div>
+                            }
                         </ModalContext.Consumer>
                     }
                 </div>
                 <div className="my_dashboard__bookmark_section">
                     <div className="d-flex flex-row justify-content-">
                         <div><h5 className="my_dashboard__section_header"><b>Bookmarked Properties</b></h5></div>
-                        {(this.props.bookmarkDeleteLoading) && 
-                            <div><SpinnerLoader size="20px" className="ml-3"/></div>
+                        {(this.props.bookmarkDeleteLoading) &&
+                            <div><SpinnerLoader size="20px" className="ml-3" /></div>
                         }
                         {(this.props.bookmarkDeleteError) && (
                             <div className="lookup-show__bookmark-error ml-3">
@@ -135,7 +135,7 @@ class MyDashboard extends React.Component {
                                     return (
                                         <tr key={bookmark.bbl}>
                                             <th scope="row">
-                                                <Link to={"/property/"+bookmark.bbl}>
+                                                <Link to={"/property/" + bookmark.bbl} style={{ margin: '0 auto 0 0' }}>
                                                     <BookmarkButton active={true} text={bookmark.name} />
                                                 </Link>
                                             </th>
@@ -143,7 +143,7 @@ class MyDashboard extends React.Component {
                                                 {bookmark.bbl}
                                             </td>
                                             <td>
-                                                <button className="btn btn-light" onClick={() => 
+                                                <button className="btn btn-light" onClick={() =>
                                                     this.onBookmarkDelete(bookmark.id)}
                                                     disabled={this.props.bookmarkDeleteLoading}
                                                 >
@@ -188,12 +188,12 @@ class MyDashboard extends React.Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {!!Object.values(this.props.savedCustomSearches).length && 
+                            {!!Object.values(this.props.savedCustomSearches).length &&
                                 Object.values(this.props.savedCustomSearches).sort((i, j) => { return Date.parse(i.created_date) <= Date.parse(j.created_date) }).map((search) => {
                                     return (
                                         <tr key={search.id}>
                                             <th scope="row">
-                                                <a href={"/search"+search.custom_search_view}>
+                                                <a href={"/search" + search.custom_search_view}>
                                                     <SaveSearchButton active={true} text={search.name} />
                                                 </a>
                                             </th>
@@ -208,13 +208,13 @@ class MyDashboard extends React.Component {
                                             </td>
                                             <td>
                                                 <ModalContext.Consumer>
-                                                {modal => 
-                                                    <button className="btn btn-light" onClick={(e) => 
-                                                        this.onEditSavedCustomSearch(e, modal, search)
-                                                    }>
-                                                        <FontAwesomeIcon icon={faEdit} size="lg" />
-                                                    </button>
-                                                }
+                                                    {modal =>
+                                                        <button className="btn btn-light" onClick={(e) =>
+                                                            this.onEditSavedCustomSearch(e, modal, search)
+                                                        }>
+                                                            <FontAwesomeIcon icon={faEdit} size="lg" />
+                                                        </button>
+                                                    }
                                                 </ModalContext.Consumer>
                                             </td>
                                         </tr>
