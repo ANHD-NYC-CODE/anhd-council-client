@@ -7,12 +7,21 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
 import './style.scss'
 const datasetOptions = advancedSearchFilters => {
+  console.log("Advanced Search Filters:", advancedSearchFilters);
+  if (!Array.isArray(advancedSearchFilters)) {
+    console.error("advancedSearchFilters is not an array");
+    return []; // Return an empty array if the input is not valid
+  }
   return [
     <option disabled key={'new-filter-option-disabled'} value={-1}>
       New Filter
     </option>,
     advancedSearchFilters
+      .filter(filter => filter.resourceModel !== undefined)
+
+
       .map((filter, index) => {
+
         return (
           <option key={`new-filter-option-${index}`} value={filter.resourceModel.resourceConstant}>
             {filter.resourceModel.label}

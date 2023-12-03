@@ -6,9 +6,9 @@ const HPDComplaint = () => ({
   summaryBackgroundColorClass: 'hpd-orange',
   resourceConstant: 'HPD_COMPLAINT',
   urlPath: 'hpdcomplaints',
-  label: 'HPD Complaints & Problems',
-  dashboardLabel: 'HPD Complaints',
-  sentenceNoun: 'HPD complaints',
+  label: 'HPD Complaints / Problems',
+  dashboardLabel: 'HPD Complaints & Problems',
+  sentenceNoun: 'HPD complaints & problems',
   ownResourceFilters: {
     initial: {
       generatorFunction: resourceModel => {
@@ -41,33 +41,28 @@ const HPDComplaint = () => ({
     },
   },
   tableResultsConstructor: results => {
-    // Counts all the HPD complaints + Problems together
-    return [].concat(
-      ...results.map(complaint => {
-        if (!complaint.hpdproblems) return
-        return complaint.hpdproblems.map(problem => {
-          problem.receiveddate = complaint.receiveddate
-          problem.apartment = complaint.apartment
-          return problem
-        })
-      })
-    )
+    // Directly process each record, as each record is a different problem (sometimes same complaint #)
+    // No need to map over 'problems' specifically anymore as each record in this table is a standalone problem
+
+    return results.map(record => ({
+      ...record,
+    }));
   },
 
   tableRecordsCountFunction2: results => {
-    const problems = [].concat(
-      ...results.map(complaint => {
-        {
-          if (!complaint.hpdproblems) return
-          return complaint.hpdproblems.map(problem => {
-            return problem
-          })
-        }
-      })
-    )
+    // Create a new Set to store unique complaint IDs
+    const uniqueComplaintIds = new Set();
 
-    return problems.length
+    // Iterate over the results and add each complaint ID to the Set
+    results.forEach(record => {
+      uniqueComplaintIds.add(record.complaintid);
+    });
+
+    // The size of the Set represents the number of unique complaints (length also an option)
+    return uniqueComplaintIds.size;
   },
+
+
 })
 
 export default HPDComplaint

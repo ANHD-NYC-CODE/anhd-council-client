@@ -47,10 +47,11 @@ export const getKeyField = constant => {
       return 'registrationcontactid'
     case 'HPD_VIOLATION':
       return 'violationid'
+    // using problemid as the unique key for complaints in new merged table
     case 'HPD_COMPLAINT':
       return 'problemid'
-    case 'HPD_PROBLEM':
-      return 'problemid'
+    // case 'HPD_PROBLEM':
+    //   return 'problemid'
     case 'DOB_VIOLATION':
       return 'isndobbisviol'
     case 'DOB_COMPLAINT':
@@ -801,6 +802,11 @@ export const getTableColumns = ({
         constructStandardColumn({
           dataField: 'complaintid',
           text: 'Complaint ID',
+          sort: true,
+        }),
+        constructStandardColumn({
+          dataField: 'problemid',
+          text: 'Problem ID',
           sort: true,
         }),
         constructStandardColumn({
