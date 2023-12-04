@@ -33,6 +33,7 @@ Your app is ready to be deployed!
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
 ## PreSetup
+
 1. Make sure python version is below 3.0
 
 ## Setup
@@ -51,3 +52,8 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 2. run command: `ssh -t anhd@45.55.44.160 "cd /var/www/staging-anhd-council-client && sudo sh pull_staging.sh"` (or run `sh deploy_staging.sh` helper script)
 
 The helper scripts automate the deploy process of pulling from github, installing packages, building the bundle, and restarting the nginx server in the backend directory of the server.
+
+## Error 'failed to solve: python:3.6.14: error getting credentials - err: exec: "docker-credential-desktop": executable file not found in \$PATH, out...' when trying to make dev build or restart it.
+
+1. Please make sure you have the correct Dockerfile in your backend root directory
+2. If the issue persists and your Dockerfile and env are correct, navigate to ~/.docker/config.json change `credsStore` to `credStore` (plural to singular)
