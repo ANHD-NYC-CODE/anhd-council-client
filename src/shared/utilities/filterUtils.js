@@ -506,13 +506,10 @@ export const getDatasetDateField = datasetConstant => {
       return 'issuedate'
     case 'ECB_VIOLATION':
       return 'issuedate'
-    // Using problemid instead of complaint id date since now merged with HPD complaint
     case 'HPD_COMPLAINT':
-      // return 'receiveddate'
-      return 'problemid'
-    // Removed HPD problem from filter since now merged with HPD complaint
-    // case 'HPD_PROBLEM':
-    //   return 'problemid'
+      return 'receiveddate'
+    case 'HPD_PROBLEM':
+      return 'receiveddate'
     case 'DOB_COMPLAINT':
       return 'dateentered'
     case 'EVICTION':

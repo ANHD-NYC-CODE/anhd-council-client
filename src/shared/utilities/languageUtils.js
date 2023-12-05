@@ -60,10 +60,11 @@ export const grammaticalList = (array, conjunction = 'and') => {
 }
 
 export const singular = string => {
-  if (string.charAt(string.length - 1).toLowerCase() === 's') {
-    return string.slice(0, -1)
+  console.log(string);
+  if ((string.charAt(string.length - 1).toLowerCase() === 's') && (string !== 'HPD complaints & problems')) {
+    return string.slice(0, -1);
   } else {
-    return string
+    return string;
   }
 }
 
@@ -215,9 +216,8 @@ export const boroCodeToName = code => {
 }
 
 export const constructAddressString = ({ number, street, borough, zip } = {}) => {
-  return `${number ? `${number} ` : ''}${street ? `${borough ? `${street}, ` : `${street}`}` : ''}${
-    borough ? `${borough} ` : ''
-  }${zip ? `${zip} ` : ''}`
+  return `${number ? `${number} ` : ''}${street ? `${borough ? `${street}, ` : `${street}`}` : ''}${borough ? `${borough} ` : ''
+    }${zip ? `${zip} ` : ''}`
 }
 
 export const councilIdToString = (id, prefix = true) => {

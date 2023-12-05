@@ -6,7 +6,7 @@ const HPDComplaint = () => ({
   summaryBackgroundColorClass: 'hpd-orange',
   resourceConstant: 'HPD_COMPLAINT',
   urlPath: 'hpdcomplaints',
-  label: 'HPD Complaints / Problems',
+  label: 'HPD Complaints & Problems',
   dashboardLabel: 'HPD Complaints & Problems',
   sentenceNoun: 'HPD complaints & problems',
   ownResourceFilters: {
