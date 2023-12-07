@@ -306,6 +306,7 @@ export const getTableColumns = ({
 
   switch (constant) {
     case 'PROPERTY':
+      // For custom search results table 
       columns = [
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
@@ -406,24 +407,6 @@ export const getTableColumns = ({
           formatter: annotatedColumnFormatter,
           csvFormatter: annotatedColumnFormatter,
         }),
-        // TEST //////
-        // constructPropertyColumn({
-        //   columnEvent: linkToColumnEvent,
-        //   dataField: getAnnotatedDataField({
-        //     annotationKey: getAnnotationKey('psforeclosures', annotationStart, advancedSearchDatasets),
-        //     rowExample,
-        //   }),
-        //   text: getAnnotatedLabel({
-        //     annotationLabel: 'Foreclosure Auctions',
-        //     rowExample,
-        //     annotationKey: getAnnotationKey('psforeclosures', annotationStart, advancedSearchDatasets),
-        //   }),
-        //   sort: true,
-        //   formatter: annotatedColumnFormatter,
-        //   csvFormatter: annotatedColumnFormatter,
-        // }),
-        //test
-
         constructPropertyColumn({
           columnEvent: linkToColumnEvent,
           dataField: getAnnotatedDataField({
@@ -431,7 +414,7 @@ export const getTableColumns = ({
             rowExample,
           }),
           text: getAnnotatedLabel({
-            annotationLabel: 'HPD Complaints',
+            annotationLabel: 'HPD Problems',
             rowExample,
             annotationKey: getAnnotationKey('hpdcomplaints', annotationStart, advancedSearchDatasets),
           }),
@@ -561,6 +544,7 @@ export const getTableColumns = ({
         })
       ].filter(c => c)
       break
+    // The following are for individual tables on property lookup
     case 'HPD_REGISTRATION':
       columns = [
         // constructStandardColumn({
@@ -874,61 +858,61 @@ export const getTableColumns = ({
         // }),
       ]
       break
-    case 'HPD_PROBLEM':
-      columns = [
-        constructStandardColumn({
-          dataField: 'problemid',
-          text: 'Problem ID',
-        }),
-        constructStandardColumn({
-          dataField: 'type',
-          text: 'Urgency',
-          sort: true,
-        }),
-        constructStandardColumn({
-          dataField: 'unittype',
-          text: 'Unit Type',
-          sort: true,
-        }),
-        constructStandardColumn({
-          columnEvent: expandColumnEvent,
-          classes: 'expandable-cell',
-          dataField: 'spacetype',
-          text: 'Space Type',
-          sort: true,
-        }),
-        constructStandardColumn({
-          columnEvent: expandColumnEvent,
-          classes: 'expandable-cell',
-          dataField: 'majorcategory',
-          text: 'Major Category',
-          sort: true,
-        }),
-        constructStandardColumn({
-          columnEvent: expandColumnEvent,
-          classes: 'expandable-cell',
-          dataField: 'minorcategory',
-          text: 'Minor Category',
-          sort: true,
-        }),
-        constructStandardColumn({
-          columnEvent: expandColumnEvent,
-          classes: 'expandable-cell',
-          dataField: 'code',
-          text: 'Descriptor',
-          filter: constructFilter(textFilter),
-          sort: true,
-        }),
-        constructStandardColumn({
-          columnEvent: expandColumnEvent,
-          classes: 'expandable-cell',
-          dataField: 'statusdescription',
-          text: 'Full Description',
-          filter: constructFilter(textFilter),
-          sort: true,
-        }),
-      ]
-      break
+    // case 'HPD_PROBLEM':
+    //   columns = [
+    //     constructStandardColumn({
+    //       dataField: 'problemid',
+    //       text: 'Problem ID',
+    //     }),
+    //     constructStandardColumn({
+    //       dataField: 'type',
+    //       text: 'Urgency',
+    //       sort: true,
+    //     }),
+    //     constructStandardColumn({
+    //       dataField: 'unittype',
+    //       text: 'Unit Type',
+    //       sort: true,
+    //     }),
+    //     constructStandardColumn({
+    //       columnEvent: expandColumnEvent,
+    //       classes: 'expandable-cell',
+    //       dataField: 'spacetype',
+    //       text: 'Space Type',
+    //       sort: true,
+    //     }),
+    //     constructStandardColumn({
+    //       columnEvent: expandColumnEvent,
+    //       classes: 'expandable-cell',
+    //       dataField: 'majorcategory',
+    //       text: 'Major Category',
+    //       sort: true,
+    //     }),
+    //     constructStandardColumn({
+    //       columnEvent: expandColumnEvent,
+    //       classes: 'expandable-cell',
+    //       dataField: 'minorcategory',
+    //       text: 'Minor Category',
+    //       sort: true,
+    //     }),
+    //     constructStandardColumn({
+    //       columnEvent: expandColumnEvent,
+    //       classes: 'expandable-cell',
+    //       dataField: 'code',
+    //       text: 'Descriptor',
+    //       filter: constructFilter(textFilter),
+    //       sort: true,
+    //     }),
+    //     constructStandardColumn({
+    //       columnEvent: expandColumnEvent,
+    //       classes: 'expandable-cell',
+    //       dataField: 'statusdescription',
+    //       text: 'Full Description',
+    //       filter: constructFilter(textFilter),
+    //       sort: true,
+    //     }),
+    //   ]
+    //   break
     case 'DOB_VIOLATION':
       columns = [
         constructStandardColumn({
