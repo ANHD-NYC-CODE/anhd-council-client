@@ -52,3 +52,6 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 2. run command: `ssh -t anhd@45.55.44.160 "cd /var/www/staging-anhd-council-client && sudo sh pull_staging.sh"` (or run `sh deploy_staging.sh` helper script)
 
 The helper scripts automate the deploy process of pulling from github, installing packages, building the bundle, and restarting the nginx server in the backend directory of the server.
+
+## ITLORB ERROR ON DEPLOYMENT:
+You may get an error like "gyp ERR! stack Error: EACCES: permission denied, mkdir '/var/www/anhd-council-client/node_modules/iltorb/build' on deployment. You may ignore it and just wait for the deployment to continue.
