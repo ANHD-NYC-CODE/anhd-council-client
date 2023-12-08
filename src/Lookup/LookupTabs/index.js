@@ -47,13 +47,16 @@ const LookupTabs = props => {
   }, []);
 
   const getTabLabel = (error, resourceModel, count1 = '...', count2 = 0) => {
-
+    if (!resourceModel) {
+      console.error('Error: resourceModel is undefined or null', { error, resourceModel, count1, count2 });
+      return 'Unknown Tab'; // or some other default label
+    }
     switch (resourceModel.resourceConstant) {
       case 'ACRIS_REAL_MASTER':
         return `Sales (${count1}) and Financing`
       case 'HPD_COMPLAINT':
-        // return `HPD Complaints (${count1}) and Problems (${count2})`
-        return `HPD Complaints and Problems (${count1})`
+        return `HPD Complaints (${count2}) and Problems (${count1})`
+      // return `Total HPD Complaints and Problems (${count1})`
       case 'OCA_HOUSING_COURT':
         return error && (error.status === 401 || error.status === 403 || error.status === 409) ?
           `${resourceModel.label}` : `${resourceModel.label} (${count1})`;
@@ -67,6 +70,9 @@ const LookupTabs = props => {
   }
 
   const getTabClass = (resourceModel) => {
+    if (!resourceModel || !resourceModel.resourceConstant) {
+      return 'undefined-resource-class'; // or handle this scenario differently
+    }
     switch (resourceModel.resourceConstant) {
       case 'ACRIS_REAL_MASTER':
         return "sales"
@@ -95,7 +101,7 @@ const LookupTabs = props => {
       case 'PSFORECLOSURE':
         return "foreclosure_auctions"
       default:
-        "none"
+        return "undefined-class"
     }
   }
 
@@ -114,7 +120,7 @@ const LookupTabs = props => {
           const error = props.errorState[request.requestConstant];
 
           const getCount1 = (request, results) => {
-            if (request.resourceModel.tableRecordsCountFunction) {
+            if (request.resourceModel && request.resourceModel.tableRecordsCountFunction) {
               return request.resourceModel.tableRecordsCountFunction(results)
             } else {
               return results.length
@@ -122,7 +128,7 @@ const LookupTabs = props => {
           }
 
           const getCount2 = (request, results) => {
-            if (request.resourceModel.tableRecordsCountFunction2) {
+            if (request.resourceModel && request.resourceModel.tableRecordsCountFunction2) {
               return request.resourceModel.tableRecordsCountFunction2(results)
             } else {
               return results.length
@@ -137,7 +143,7 @@ const LookupTabs = props => {
               className=""
               dispatch={props.dispatch}
               isBuildingTab={props.isBuildingView && request.level === 'BUILDING'}
-              key={`tab-${request.resourceModel.resourceConstant}`}
+              key={`tab-${request.resourceModel ? request.resourceModel.resourceConstant : 'default-key'}`}
               onClick={(event) => {
                 // Default behavior
                 props.switchTable(request);

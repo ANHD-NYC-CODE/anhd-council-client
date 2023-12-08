@@ -282,6 +282,8 @@ class LookupShow extends React.PureComponent {
             />
             <div className="lookup-show__tables">
               {this.props.lookupRequests.map(request => {
+                const resourceConstant = request.resourceModel && request.resourceModel.resourceConstant ? request.resourceModel.resourceConstant : 'undefined_constant';
+
                 return (
                   <LookupTable
                     badge={
@@ -294,8 +296,8 @@ class LookupShow extends React.PureComponent {
                     loading={this.props.loadingState[request.requestConstant]}
                     property={this.props.propertyResult}
                     bin={this.props.appState.currentBuilding}
-                    caption={request.resourceModel.label}
-                    key={`lookup-table-${request.resourceModel.resourceConstant}`}
+                    caption={request.resourceModel ? request.resourceModel.label : 'Default Label'}
+                    key={`lookup-table-${resourceConstant}`}
                     visible={this.props.appState.selectedRequest === request}
                     request={request}
                   />
@@ -307,13 +309,20 @@ class LookupShow extends React.PureComponent {
             </div>
           </div>
         </div>
-      </div >
+      </div>
     )
   }
 }
 
 LookupShow.defaultProps = {
   propertyResult: {},
+  lookupRequests: [
+    {
+      resourceModel: {
+        label: 'Undefined Label',
+      },
+    },
+  ]
 }
 
 LookupShow.propTypes = {

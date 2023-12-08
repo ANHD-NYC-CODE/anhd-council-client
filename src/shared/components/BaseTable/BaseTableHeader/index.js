@@ -8,6 +8,7 @@ import classnames from 'classnames'
 import './style.scss'
 
 const BaseTableHeader = props => {
+
   const getTableSize = (paginationProps, recordsSize = undefined) => {
     const getDefaultSize = () => {
       const totalSize = recordsSize || paginationProps.totalSize
@@ -16,19 +17,36 @@ const BaseTableHeader = props => {
         : `${paginationProps.dataSize}/${totalSize}`
     }
 
+    //  Removing pagination as a method to count as it's no longer sufficient 
+    //  Total Problems: {
+    //   paginationProps.dataSize === paginationProps.totalSize ? paginationProps.totalSize
+    //   : `${paginationProps.dataSize}/${paginationProps.totalSize}`
+    // }
+
+
     switch (props.resourceConstant) {
       case 'HPD_COMPLAINT': {
+        // Assuming props.request contains an array of records
+        if (!props.records || !Array.isArray(props.records)) {
+          console.error('Error: props.records is undefined or not an array');
+          return <span className="text-left">Data not available</span>;
+        }
+
+        const uniqueComplaintIds = new Set(props.records.map(record => record.complaintid));
+        const totalUniqueComplaints = uniqueComplaintIds.size;
+        const totalProblems = props.records.length;  // Total number of problems
+
         return (
           <span className="text-left">
-            <div>Total Complaints: {String(recordsSize)}</div>
             <div>
-              Total Problems:{' '}
-              {paginationProps.dataSize === paginationProps.totalSize
-                ? paginationProps.totalSize
-                : `${paginationProps.dataSize}/${paginationProps.totalSize}`}
+              Total Complaints: {totalUniqueComplaints}
             </div>
+            <div>
+              Total Problems: {totalProblems}
+            </div>
+
           </span>
-        )
+        );
       }
 
       case 'DOB_ISSUED_PERMIT': {
