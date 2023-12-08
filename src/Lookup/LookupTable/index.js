@@ -51,10 +51,10 @@ class LookupTable extends React.Component {
   }
 
   renderSpecificResults(results) {
-    if (this.props.request.resourceModel.tableResultsConstructor) {
-      return this.props.request.resourceModel.tableResultsConstructor(results)
+    if (this.props.request.resourceModel && this.props.request.resourceModel.tableResultsConstructor) {
+      return this.props.request.resourceModel.tableResultsConstructor(results);
     } else {
-      return results
+      return results;
     }
   }
 

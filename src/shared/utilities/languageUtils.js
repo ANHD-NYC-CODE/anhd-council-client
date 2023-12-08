@@ -38,9 +38,17 @@ export const addStringIfPresent = (primaryString, addedString) => {
 
 export const grammaticalNoun = (noun, value) => {
   if (!noun) return ''
-  if (value > 1) {
+  if ((value > 1) && (noun !== 'HPD Complaints & Problems') && (noun !== 'HPD complaints & problems')) {
     return ` ${noun.endsWith('s') ? noun : noun + 's'}`
-  } else {
+  }
+  if ((noun === 'HPD Complaints & Problems') || (noun === 'HPD complaints & problems')) {
+    if (value > 1) {
+      return ' HPD complaints & problems'
+    } else {
+      return ' HPD complaint & problem'
+    }
+  }
+  else {
     return ` ${noun.endsWith('s') ? noun.substring(0, noun.length - 1) : noun}`
   }
 }
@@ -61,9 +69,9 @@ export const grammaticalList = (array, conjunction = 'and') => {
 
 export const singular = string => {
   if (string.charAt(string.length - 1).toLowerCase() === 's') {
-    return string.slice(0, -1)
+    return string.slice(0, -1);
   } else {
-    return string
+    return string;
   }
 }
 
@@ -215,9 +223,8 @@ export const boroCodeToName = code => {
 }
 
 export const constructAddressString = ({ number, street, borough, zip } = {}) => {
-  return `${number ? `${number} ` : ''}${street ? `${borough ? `${street}, ` : `${street}`}` : ''}${
-    borough ? `${borough} ` : ''
-  }${zip ? `${zip} ` : ''}`
+  return `${number ? `${number} ` : ''}${street ? `${borough ? `${street}, ` : `${street}`}` : ''}${borough ? `${borough} ` : ''
+    }${zip ? `${zip} ` : ''}`
 }
 
 export const councilIdToString = (id, prefix = true) => {
