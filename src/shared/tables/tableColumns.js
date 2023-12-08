@@ -789,9 +789,23 @@ export const getTableColumns = ({
           sort: true,
         }),
         constructStandardColumn({
+          dataField: 'status',
+          text: 'Complaint Status',
+          sort: true,
+          formatter: hpdStatusFormatter,
+        }),
+        constructStandardColumn({
           dataField: 'problemid',
           text: 'Problem ID',
           sort: true,
+        }),
+        constructStandardColumn({
+          dataField: 'problemstatus',
+          text: 'Problem Status',
+          filter: baseTableConfig.filterPrototypes['HPD_COMPLAINT_OPEN'],
+          headerClasses: 'hide-filter',
+          sort: true,
+          formatter: hpdStatusFormatter,
         }),
         constructStandardColumn({
           dataField: 'receiveddate',
@@ -805,14 +819,7 @@ export const getTableColumns = ({
           text: 'Apt.',
           sort: true,
         }),
-        constructStandardColumn({
-          dataField: 'status',
-          text: 'Status',
-          filter: baseTableConfig.filterPrototypes['HPD_COMPLAINT_OPEN'],
-          headerClasses: 'hide-filter',
-          sort: true,
-          formatter: hpdStatusFormatter,
-        }),
+
         constructStandardColumn({
           dataField: 'type',
           text: 'Urgency',

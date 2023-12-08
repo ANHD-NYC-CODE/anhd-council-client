@@ -17,6 +17,13 @@ const BaseTableHeader = props => {
         : `${paginationProps.dataSize}/${totalSize}`
     }
 
+    //  Removing pagination as a method to count as it's no longer sufficient 
+    //  Total Problems: {
+    //   paginationProps.dataSize === paginationProps.totalSize ? paginationProps.totalSize
+    //   : `${paginationProps.dataSize}/${paginationProps.totalSize}`
+    // }
+
+
     switch (props.resourceConstant) {
       case 'HPD_COMPLAINT': {
         // Assuming props.request contains an array of records
@@ -27,6 +34,7 @@ const BaseTableHeader = props => {
 
         const uniqueComplaintIds = new Set(props.records.map(record => record.complaintid));
         const totalUniqueComplaints = uniqueComplaintIds.size;
+        const totalProblems = props.records.length;  // Total number of problems
 
         return (
           <span className="text-left">
@@ -34,9 +42,7 @@ const BaseTableHeader = props => {
               Total Complaints: {totalUniqueComplaints}
             </div>
             <div>
-              Total Problems: {paginationProps.dataSize === paginationProps.totalSize
-                ? paginationProps.totalSize
-                : `${paginationProps.dataSize}/${paginationProps.totalSize}`}
+              Total Problems: {totalProblems}
             </div>
 
           </span>

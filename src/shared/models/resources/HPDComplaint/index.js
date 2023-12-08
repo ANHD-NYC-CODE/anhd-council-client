@@ -27,8 +27,8 @@ const HPDComplaint = () => ({
           paramMapValue: 'OPEN',
           paramMapType: 'SINGLE-TEXT',
           paramMapComparison: '',
-          paramSetLabel: 'Status',
-          paramMapField: 'status',
+          paramSetLabel: 'Problem Status',
+          paramMapField: 'problemstatus',
           valuePrefix: 'Status',
           inputClass: '',
           defaultOptions: comparisonOptions({
@@ -39,6 +39,7 @@ const HPDComplaint = () => ({
         })
       },
     },
+
   },
   tableResultsConstructor: results => {
     // Directly process each record, as each record is a different problem (sometimes same complaint #)
