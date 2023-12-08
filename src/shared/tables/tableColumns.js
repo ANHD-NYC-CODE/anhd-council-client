@@ -795,6 +795,11 @@ export const getTableColumns = ({
           formatter: hpdStatusFormatter,
         }),
         constructStandardColumn({
+          dataField: 'apartment',
+          text: 'Apt.',
+          sort: true,
+        }),
+        constructStandardColumn({
           dataField: 'problemid',
           text: 'Problem ID',
           sort: true,
@@ -814,11 +819,7 @@ export const getTableColumns = ({
           csvFormatter: dateFormatter,
           sort: true,
         }),
-        constructStandardColumn({
-          dataField: 'apartment',
-          text: 'Apt.',
-          sort: true,
-        }),
+
 
         constructStandardColumn({
           dataField: 'type',
