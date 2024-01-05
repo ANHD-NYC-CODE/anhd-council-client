@@ -238,7 +238,7 @@ export default class LeafletMap extends React.PureComponent {
           {this.props.currentGeographyType === 'COUNCIL' && (
             <TileLayer
               attribution="mapbox"
-              url="https://api.mapbox.com/styles/v1/anhdnyc/clqze37bt00rl01qrbpju47fw/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYW5oZG55YyIsImEiOiJjanQ0ZWRqaDcxMmRxNDlsbHV1OXN0aGx6In0.i07oerfvXtcRfm3npws7mA"
+              url="https://api.mapbox.com/styles/v1/anhdnyc/cjtgmvhfl6nw01fs8sqjifqni/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoiYW5oZG55YyIsImEiOiJjanQ0ZWRqaDcxMmRxNDlsbHV1OXN0aGx6In0.i07oerfvXtcRfm3npws7mA"
             />
           )}
           {this.props.currentGeographyType === 'STATE_ASSEMBLY' && (
