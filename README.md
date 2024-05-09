@@ -54,4 +54,13 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 The helper scripts automate the deploy process of pulling from github, installing packages, building the bundle, and restarting the nginx server in the backend directory of the server.
 
 ## ITLORB ERROR ON DEPLOYMENT:
+
 You may get an error like "gyp ERR! stack Error: EACCES: permission denied, mkdir '/var/www/anhd-council-client/node_modules/iltorb/build' on deployment. You may ignore it and just wait for the deployment to continue.
+
+### Version Check: Ensure your NPM, Python, and Node versions match the server
+
+ie. "node -v" should be v14.21.1
+"npm -v" should be 6.14.17
+Python-2.7.18 installed via pyenv 2.4.0
+node-gyp may need to be rebuilt.
+may also have to 'npm config set legacy-peer-deps true"
