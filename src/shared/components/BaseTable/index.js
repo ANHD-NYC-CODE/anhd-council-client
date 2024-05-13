@@ -256,6 +256,14 @@ class BaseTable extends React.Component {
                     data-test-id="base-table"
                     key={`table-${this.props.tableConfig.keyField}`}
                   >
+                    {this.props.error && (
+                      <TableAlert
+                        variant="danger"
+                        textType="text-danger"
+                        message={this.props.error.message}
+                        action={this.props.errorAction}
+                      />
+                    )}
                     {!this.props.nested && !!this.props.includeHeader && <div>{HeaderComponent}</div>}
                     <div className="base-table__header-body-wrapper">
                       <div className="base-table__header-body-inner-wrapper">
@@ -303,14 +311,7 @@ class BaseTable extends React.Component {
                     </div>
 
                     {this.props.loading && <InnerLoader />}
-                    {this.props.error && (
-                      <TableAlert
-                        variant="danger"
-                        textType="text-danger"
-                        message={this.props.error.message}
-                        action={this.props.errorAction}
-                      />
-                    )}
+
                     {!this.props.nested &&
                       !!this.props.includeHeader &&
                       paginationProps.sizePerPage < this.props.records.length && (

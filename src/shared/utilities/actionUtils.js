@@ -4,7 +4,8 @@ import * as c from 'shared/constants'
 import { toast } from 'react-toastify'
 
 const ERROR_400_MESSAGE = 'Incorrect username or password.'
-const ERROR_401_MESSAGE = 'Please login for access.'
+const ERROR_401_MESSAGE = 'Please login for access. You will need approval to view protected data.'
+const ERROR_403_MESSAGE = 'You do not have permission to perform this action. Request access via the "My Dashboard" tab to protected data.'
 const ERROR_404_MESSAGE = 'Not found.'
 const ERROR_500_MESSAGE = 'Oops, something went wrong.'
 const ERROR_502_MESSAGE = 'The app is temporarily down for maintenance.'
@@ -22,9 +23,8 @@ const findErrorKeyValue = (status, data) => {
     switch (status) {
       case 400:
         if (data['email'] && data['email'].includes('user request with this email already exists.')) {
-          return `We already have an account request for this email. Please email ${
-            c.CONTACT_EMAIL
-          } if you need to check your status.`
+          return `We already have an account request for this email. Please email ${c.CONTACT_EMAIL
+            } if you need to check your status.`
         } else if (data['errors'] && data['errors'].length) {
           return data['errors'].map(error => `${error}`)
         } else {
@@ -33,6 +33,8 @@ const findErrorKeyValue = (status, data) => {
 
       case 401:
         return ERROR_401_MESSAGE
+      case 403:
+        return ERROR_403_MESSAGE
       case 404:
         return ERROR_404_MESSAGE
       case 500:
