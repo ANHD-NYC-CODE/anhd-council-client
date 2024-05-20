@@ -256,6 +256,14 @@ class BaseTable extends React.Component {
                     data-test-id="base-table"
                     key={`table-${this.props.tableConfig.keyField}`}
                   >
+                    {this.props.error && (
+                      <TableAlert
+                        variant="danger"
+                        textType="text-danger"
+                        message={this.props.error.message}
+                        action={this.props.errorAction}
+                      />
+                    )}
                     {!this.props.nested && !!this.props.includeHeader && <div>{HeaderComponent}</div>}
                     {this.props.error && (
                       <TableAlert
