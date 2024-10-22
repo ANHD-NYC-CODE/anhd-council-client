@@ -9,7 +9,7 @@ export const getTableSubheaders = ({ constant, property, bin = null } = {}) =>
 
 export const getTableSubheaderLinks = ({ constant = '', property = {}, bin = null } = {}) => {
   var buildingid = ""
-  if(bin) {
+  if (bin) {
     buildingid = "";
 
     if (property.hpdregistrations && Array.isArray(property.hpdregistrations)) {
@@ -18,7 +18,7 @@ export const getTableSubheaderLinks = ({ constant = '', property = {}, bin = nul
         buildingid = building.buildingid;
       }
     }
-  } else if(property.hpdregistrations && property.hpdregistrations.length > 0){
+  } else if (property.hpdregistrations && property.hpdregistrations.length > 0) {
     buildingid = property.hpdregistrations[0].buildingid;
   }
 
@@ -63,16 +63,20 @@ export const getTableSubheaderLinks = ({ constant = '', property = {}, bin = nul
         <div>
           {!!Object.keys(property).length && (
             <div>
-              <BaseLink
-                className="lookup-links__link"
-                href={`https://hpdonline.nyc.gov/hpdonline/building/${buildingid}/overview`}
-              >
-                Visit this property’s HPD page
-              </BaseLink>
+              {buildingid ? (
+                <BaseLink
+                  className="lookup-links__link"
+                  href={`https://hpdonline.nyc.gov/hpdonline/building/${buildingid}/overview`}
+                >
+                  Visit this property’s HPD page
+                </BaseLink>
+              ) : (
+                <p>No HPD property overview available. <a href="https://hpdonline.nyc.gov/hpdonline" target="_blank" rel="noreferrer">Search here</a>.</p>
+              )}
             </div>
           )}
         </div>
-      )
+      );
     case 'HPD_COMPLAINT':
       return (
         <div>
@@ -86,7 +90,7 @@ export const getTableSubheaderLinks = ({ constant = '', property = {}, bin = nul
                   Visit this property’s HPD page
                 </BaseLink>
               ) : (
-                <p>No HPD property overview available. <a href="https://hpdonline.nyc.gov/hpdonline" target="_blank">Search here</a>.</p>
+                <p>No HPD property overview available. <a href="https://hpdonline.nyc.gov/hpdonline" target="_blank" rel="noreferrer">Search here</a>.</p>
               )}
             </div>
           )}
