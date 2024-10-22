@@ -265,6 +265,14 @@ class BaseTable extends React.Component {
                       />
                     )}
                     {!this.props.nested && !!this.props.includeHeader && <div>{HeaderComponent}</div>}
+                    {this.props.error && (
+                      <TableAlert
+                        variant="danger"
+                        textType="text-danger"
+                        message={this.props.error.message}
+                        action={this.props.errorAction}
+                      />
+                    )}
                     <div className="base-table__header-body-wrapper">
                       <div className="base-table__header-body-inner-wrapper">
                         <BaseTableHeader
