@@ -254,6 +254,7 @@ class BaseTable extends React.Component {
                   <div
                     className={`base-table ${this.props.wrapperClasses}`}
                     data-test-id="base-table"
+                    data-resource={this.props.tableConfig.resourceConstant}
                     key={`table-${this.props.tableConfig.keyField}`}
                   >
                     {this.props.error && (

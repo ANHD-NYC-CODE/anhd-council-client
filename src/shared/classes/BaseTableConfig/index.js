@@ -1,6 +1,6 @@
 import React from 'react'
 import { textFilter, multiSelectFilter } from 'react-bootstrap-table2-filter'
-import { Button } from 'react-bootstrap'
+import { Button, Dropdown } from 'react-bootstrap'
 
 import classnames from 'classnames'
 export default class BaseTableConfig {
@@ -129,13 +129,17 @@ export default class BaseTableConfig {
           'DOB_FILED_PERMIT',
           'DOB_FILED_PERMIT_TYPE',
           [
-            this.createFilterItem('A1', 'a1'),
-            this.createFilterItem('A2', 'a2'),
-            this.createFilterItem('A3', 'a3'),
-            this.createFilterItem('NB', 'nb'),
-            this.createFilterItem('DM', 'dm'),
+            this.createFilterItem('ALT-CO (A1)'),
+            this.createFilterItem('Alteration (A2)'),
+            this.createFilterItem('Full Demolition (DM)'),
+            this.createFilterItem('New Building (NB)'),
+            this.createFilterItem('No Work (PA)'),
+            this.createFilterItem('ALT-CO: New Building with Existing Elements to Remain'),
+            this.createFilterItem('A3'),
+            this.createFilterItem('SC'),
+            this.createFilterItem('SI'),
           ],
-          'All'
+          'All Job Types'
         ),
       ],
       DOB_ISSUED_PERMIT: [
@@ -245,6 +249,75 @@ export default class BaseTableConfig {
   }
 
   createFilterButtonSet(resourceConstant, filterConstant, valuesArray, clearLabel) {
+    if (filterConstant === 'DOB_FILED_PERMIT_TYPE') {
+      return selectedFilters => {
+        const selectedKey = Object.keys(selectedFilters).find(key => 
+          key.includes(filterConstant) && selectedFilters[key] === true
+        );
+        const selectedValue = selectedKey ? selectedKey.split('__ ')[1] : '';
+        const foundItem = selectedValue ? valuesArray.find(item => item.value === selectedValue) : null;
+        const selectedLabel = foundItem ? foundItem.label : 'All Job Types';
+
+        const handleSelect = (e, label, value) => {
+          e.preventDefault();
+          this.clearFilterGroup(filterConstant);
+          if (value) {
+            this.filterFunctions[filterConstant](e, value);
+          }
+          // Update the dropdown label directly
+          const dropdownToggle = e.currentTarget.closest('.dropdown').querySelector('.dropdown-toggle');
+          if (dropdownToggle) {
+            dropdownToggle.textContent = label;
+            // Close the dropdown
+            dropdownToggle.click();
+          }
+        };
+
+        const dropdownItems = [
+          { label: 'All Job Types', value: '' },
+          { label: 'ALT-CO (A1)', value: 'ALT-CO (A1)' },
+          { label: 'Alteration (A2)', value: 'Alteration (A2)' },
+          { label: 'Full Demolition (DM)', value: 'Full Demolition (DM)' },
+          { label: 'New Building (NB)', value: 'New Building (NB)' },
+          { label: 'No Work (PA)', value: 'No Work (PA)' },
+          { label: 'ALT-CO: New Building w/ Existing Elements', value: 'ALT-CO: New Building with Existing Elements to Remain' },
+          { label: 'A3 (Legacy)', value: 'A3' },
+          { label: 'SC (Legacy)', value: 'SC' },
+          { label: 'SI (Legacy)', value: 'SI' }
+        ];
+
+        return (
+          <div className="base-table__header-body-wrapper" style={{ overflow: 'visible' }}>
+            <div style={{ display: 'flex', gap: '10px' }}>
+              <Dropdown>
+                <Dropdown.Toggle 
+                  variant={selectedValue ? 'dark' : 'light'} 
+                  size="sm" 
+                  id="dropdown-basic"
+                >
+                  {selectedLabel}
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                  {dropdownItems.map((item, index) => (
+                    <li role="presentation" className="dropdown-item" key={`dropdown-${filterConstant}-${index}`}>
+                      <button
+                        type="button"
+                        className="btn btn-link"
+                        style={{ padding: '0.15rem' }}
+                        onClick={e => handleSelect(e, item.label, item.value)}
+                      >
+                        {item.label}
+                      </button>
+                    </li>
+                  ))}
+                </Dropdown.Menu>
+              </Dropdown>
+            </div>
+          </div>
+        );
+      };
+    }
     return selectedFilters => {
       return (
         <div key={`${filterConstant}`} className="table-filter-button-group">
