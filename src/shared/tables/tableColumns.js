@@ -1218,13 +1218,12 @@ export const getTableColumns = ({
           text: 'Job Type',
           filter: baseTableConfig.filterPrototypes['DOB_FILED_PERMIT_TYPE'],
           headerClasses: 'hide-filter',
-          sort: true,
-          formatter: (cell, row) => row.job_type || cell,
+          hidden: true,
         }),
         constructStandardColumn({
           dataField: 'job_type',
-          text: 'Original Type',
-          hidden: true,
+          text: 'Job Type',
+          sort: true,
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,
