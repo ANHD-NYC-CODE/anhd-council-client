@@ -210,13 +210,29 @@ table.table,
   }
 }
 
+.base-table {
 .base-table__header-body-wrapper {
   overflow-x: auto;
-  // width: min-content;
+    position: relative;
+    z-index: 1;
+
+    .base-table[data-resource="DOB_FILED_PERMIT"] & {
+      .base-table__header-body-inner-wrapper {
+        min-height: 370px;
+      }
+    }
+
+    // Prevent nested wrappers from affecting dropdown
+    .base-table__header-body-wrapper {
+      overflow: visible;
+      min-height: auto;
+    }
+  }
 }
 
 .base-table__header-body-inner-wrapper {
   width: min-content;
+  min-height: 370px;
 }
 
 .base-table-header__wrapper {
@@ -242,6 +258,14 @@ table.table,
   }
 }
 
+.hidden-column,
+th[data-field="jobtype"],
+td[data-field="jobtype"],
+th.hide-filter[data-field="jobtype"],
+th.sortable.hide-filter {
+  display: none !important;
+}
+
 .table-filter-button-group {
   align-items: flex-start;
   display: flex;
@@ -262,6 +286,8 @@ table.table,
 
 // Size per page dropdown
 .dropdown-menu {
+  z-index: 1000;
+  position: absolute;
   .dropdown-item {
     padding-left: 0;
     a {
@@ -270,5 +296,35 @@ table.table,
       padding-left: 15px;
       width: 100%;
     }
+  }
+}
+
+.base-table[data-resource="DOB_FILED_PERMIT"] {
+  .table.table-bordered.table-sm {
+    min-height: 370px;
+  }
+
+  @media (max-width: 900px) {
+    .table.table-bordered.table-sm {
+      min-height: 320px;
+    }
+
+    .base-table__header-body-inner-wrapper {
+      min-height: 320px;
+    }
+
+    .dropdown-toggle {
+      font-size: 13px;
+    }
+
+    .dropdown-item .btn-link {
+      font-size: 13px;
+    }
+  }
+}
+
+@media (max-width: 575px) {
+  .lookup-show .lookup-show__content {
+    padding: 0 0px 0 5px !important;
   }
 }

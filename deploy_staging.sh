@@ -1,1 +1,1 @@
-ssh -t root@138.197.79.10 "cd /var/www/staging-anhd-council-client && sudo sh pull_staging.sh"
+ssh -t root@138.197.79.10 "cd /var/www/staging-anhd-council-client && /root/.nvm/versions/node/v16.20.2/bin/npm ci --production --no-optional --legacy-peer-deps && /root/.nvm/versions/node/v16.20.2/bin/npm run publish"

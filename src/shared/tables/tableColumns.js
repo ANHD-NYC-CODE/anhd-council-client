@@ -32,6 +32,7 @@ import {
 } from 'shared/utilities/tableUtils'
 
 import { setAppState } from 'Store/AppState/actions'
+import { dobPermitJobTypeFormatter } from 'shared/utilities/tableUtils'
 
 export const getKeyField = constant => {
   switch (constant) {
@@ -1190,20 +1191,20 @@ export const getTableColumns = ({
     case 'DOB_FILED_PERMIT':
       columns = [
         constructStandardColumn({
-          dataField: 'id',
+          dataField: 'jobfilingnumber',
           text: 'Job Filing #',
-          formatter: (cell, row, index) => linkFormatter(cell, row, index, 'DOB_FILED_PERMIT', 'jobfilingnumber'),
+          formatter: (cell, row, index) => linkFormatter(cell, row, index, 'DOB_FILED_PERMIT'),
           csvExport: false,
+          sort: true,
+          sortFunc: (a, b, order, dataField, rowA, rowB) => {
+            if (order === 'desc') return rowB.jobfilingnumber - rowA.jobfilingnumber
+            return rowA.jobfilingnumber - rowB.jobfilingnumber // asc
+          },
         }),
         constructStandardColumn({
           dataField: 'key',
           text: 'KEY',
           csvExport: false,
-          hidden: true,
-        }),
-        constructStandardColumn({
-          dataField: 'jobfilingnumber',
-          text: 'Job Filing #',
           hidden: true,
         }),
         constructStandardColumn({
@@ -1216,10 +1217,16 @@ export const getTableColumns = ({
         constructStandardColumn({
           dataField: 'jobtype',
           text: 'Job Type',
+          classes: 'hidden-column',
+          csvExport: false,
           filter: baseTableConfig.filterPrototypes['DOB_FILED_PERMIT_TYPE'],
           headerClasses: 'hide-filter',
+        }),
+        constructStandardColumn({
+          dataField: 'job_type',
+          text: 'Job Type',
           sort: true,
-          // formatter: dobPermitWorkTypeFormatter,
+          csvExport: true,
         }),
         constructStandardColumn({
           columnEvent: expandColumnEvent,

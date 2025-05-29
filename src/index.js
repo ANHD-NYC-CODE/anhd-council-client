@@ -1,8 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import AppProvider from 'AppProvider'
+import AppProvider from './AppProvider'
 import * as OfflinePluginRuntime from 'offline-plugin/runtime'
-import { isPrivateMode } from 'shared/utilities/accessibilityUtils'
+import { isPrivateMode } from './shared/utilities/accessibilityUtils'
 
 import './shared/styles/index.scss'
 
