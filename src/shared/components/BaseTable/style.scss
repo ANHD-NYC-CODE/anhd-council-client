@@ -211,8 +211,8 @@ table.table,
 }
 
 .base-table {
-  .base-table__header-body-wrapper {
-    overflow-x: auto;
+.base-table__header-body-wrapper {
+  overflow-x: auto;
     position: relative;
     z-index: 1;
 
@@ -256,6 +256,14 @@ table.table,
   select {
     display: none;
   }
+}
+
+.hidden-column,
+th[data-field="jobtype"],
+td[data-field="jobtype"],
+th.hide-filter[data-field="jobtype"],
+th.sortable.hide-filter {
+  display: none !important;
 }
 
 .table-filter-button-group {

@@ -129,15 +129,15 @@ export default class BaseTableConfig {
           'DOB_FILED_PERMIT',
           'DOB_FILED_PERMIT_TYPE',
           [
-            this.createFilterItem('ALT-CO (A1)'),
-            this.createFilterItem('Alteration (A2)'),
-            this.createFilterItem('Full Demolition (DM)'),
-            this.createFilterItem('New Building (NB)'),
-            this.createFilterItem('No Work (PA)'),
-            this.createFilterItem('ALT-CO: New Building with Existing Elements to Remain'),
-            this.createFilterItem('A3'),
-            this.createFilterItem('SC'),
-            this.createFilterItem('SI'),
+            this.createFilterItem('ALT-CO (A1)', 'ALT-CO (A1)'),
+            this.createFilterItem('Alteration (A2)', 'Alteration (A2)'),
+            this.createFilterItem('Full Demolition (DM)', 'Full Demolition (DM)'),
+            this.createFilterItem('New Building (NB)', 'New Building (NB)'),
+            this.createFilterItem('No Work (PA)', 'No Work (PA)'),
+            this.createFilterItem('ALT-CO: New Building w/ Existing Elements', 'ALT-CO: New Building with Existing Elements to Remain'),
+            this.createFilterItem('A3 (Legacy)', 'A3'),
+            this.createFilterItem('SC (Legacy)', 'SC'),
+            this.createFilterItem('SI (Legacy)', 'SI'),
           ],
           'All Job Types'
         ),
@@ -236,9 +236,11 @@ export default class BaseTableConfig {
   createFilterFunction(constant) {
     return {
       [constant]: (e, value) => {
-        this.filters[constant](value)
-        if (value) {
-          this.selectedFilters = { ...this.selectedFilters, [`${constant}__ ${value}`]: true }
+        if (this.filters[constant]) {
+          this.filters[constant](value)
+          if (value) {
+            this.selectedFilters = { ...this.selectedFilters, [`${constant}__ ${value}`]: true }
+          }
         }
       },
     }
