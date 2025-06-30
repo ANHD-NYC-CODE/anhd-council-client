@@ -1184,9 +1184,9 @@ export const getTableColumns = ({
           dataField: 'filing_reason',
           text: 'Type',
           formatter: (cell, row) => {
-            // For DOB NOW entries, show permit_type (which contains the filing reason)
+            // For DOB NOW entries, show filing_reason (which contains meaningful values like "Initial Permit", "Renewal Permit Without Changes")
             if (row.type && row.type !== 'dobpermitissuedlegacy' && row.type !== 'doblegacyfiledpermit') {
-              return row.permit_type || row.filing_status || ''
+              return row.filing_reason || row.filing_status || ''
             } else {
               // For DOB BIS entries, show filing_status
               return row.filing_status || ''
@@ -1194,7 +1194,7 @@ export const getTableColumns = ({
           },
           csvFormatter: (cell, row) => {
             if (row.type && row.type !== 'dobpermitissuedlegacy' && row.type !== 'doblegacyfiledpermit') {
-              return row.permit_type || row.filing_status || ''
+              return row.filing_reason || row.filing_status || ''
             } else {
               return row.filing_status || ''
             }
@@ -1280,9 +1280,9 @@ export const getTableColumns = ({
           dataField: 'filing_reason',
           text: 'Type',
           formatter: (cell, row) => {
-            // For DOB NOW entries, show permit_type (which contains the filing reason)
+            // For DOB NOW entries, show filing_reason (which contains meaningful values like "Initial Permit", "Renewal Permit Without Changes")
             if (row.type && row.type !== 'dobpermitissuedlegacy' && row.type !== 'doblegacyfiledpermit') {
-              return row.permit_type || row.filing_status || ''
+              return row.filing_reason || row.filing_status || ''
             } else {
               // For DOB BIS entries, show filing_status
               return row.filing_status || ''
@@ -1290,7 +1290,7 @@ export const getTableColumns = ({
           },
           csvFormatter: (cell, row) => {
             if (row.type && row.type !== 'dobpermitissuedlegacy' && row.type !== 'doblegacyfiledpermit') {
-              return row.permit_type || row.filing_status || ''
+              return row.filing_reason || row.filing_status || ''
             } else {
               return row.filing_status || ''
             }
