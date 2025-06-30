@@ -50,8 +50,8 @@ const BaseTableHeader = props => {
       }
 
       case 'DOB_ISSUED_PERMIT': {
-        // Use default aggregated total like other datasets
-        return <span>Total: {getDefaultSize()}</span>
+        // Use simple total count like other datasets
+        return <span>Total: {recordsSize}</span>
       }
 
       default:
