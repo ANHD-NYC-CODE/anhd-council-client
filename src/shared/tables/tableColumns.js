@@ -313,22 +313,72 @@ export const getTableColumns = ({
       const code = data.worktype || '';
       const label = dobPermitWorkTypeFormatter(code) || '';
       
-      // Map common search terms to codes
+      // Map common search terms to codes - comprehensive mapping based on actual database values
       const searchMappings = {
-        'plumbing': 'PL',
+        // Codes
+        'bl': 'BL',
+        'cc': 'CC',
+        'eq': 'EQ',
+        'fa': 'FA',
+        'fb': 'FB',
+        'fp': 'FP',
+        'fs': 'FS',
+        'mh': 'MH',
+        'nb': 'NB',
+        'ot': 'OT',
+        'pl': 'PL',
+        'sd': 'SD',
+        'sp': 'SP',
+        
+        // Full descriptions
+        'antenna': 'Antenna',
         'boiler': 'BL',
+        'boiler equipment': 'Boiler Equipment',
         'curb cut': 'CC',
+        'construction fence': 'Construction Fence',
+        'earth work': 'Earth Work',
         'construction equipment': 'EQ',
         'fire alarm': 'FA',
         'fuel burning': 'FB',
+        'foundation': 'Foundation',
         'fire suppression': 'FP',
         'fuel storage': 'FS',
+        'full demolition': 'Full Demolition',
+        'general construction': 'General Construction',
+        'green roof': 'Green Roof',
         'mechanical': 'MH',
+        'mechanical systems': 'Mechanical Systems',
         'hvac': 'MH',
         'new building': 'NB',
         'other': 'OT',
+        'plumbing': 'PL',
+        'protection and mechanical methods': 'Protection and Mechanical Methods',
         'standpipe': 'SD',
-        'sprinkler': 'SP'
+        'sidewalk shed': 'Sidewalk Shed',
+        'sign': 'Sign',
+        'solar': 'Solar',
+        'sprinkler': 'SP',
+        'sprinklers': 'Sprinklers',
+        'structural': 'Structural',
+        'supported scaffold': 'Supported Scaffold',
+        'support of excavation': 'Support of Excavation',
+        'suspended scaffold': 'Suspended Scaffold',
+        
+        // Partial matches
+        'scaffold': 'Supported Scaffold', // Will match both supported and suspended
+        'demolition': 'Full Demolition',
+        'equipment': 'EQ',
+        'alarm': 'FA',
+        'burning': 'FB',
+        'suppression': 'FP',
+        'storage': 'FS',
+        'construction': 'General Construction',
+        'roof': 'Green Roof',
+        'systems': 'Mechanical Systems',
+        'building': 'NB',
+        'protection': 'Protection and Mechanical Methods',
+        'shed': 'Sidewalk Shed',
+        'excavation': 'Support of Excavation'
       };
       
       const searchTerm = filterVal.toLowerCase();
