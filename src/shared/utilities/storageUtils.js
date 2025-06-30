@@ -15,6 +15,47 @@ export const STATE_ASSEMBLY_INDEX = 'state-assembly'
 export const STATE_SENATE_INDEX = 'state-senate'
 export const ZIPCODE_INDEX = 'zipcode'
 
+// Cross-tab synchronization
+let storageEventListeners = new Set()
+let isRefreshingToken = false
+let refreshPromise = null
+
+export const addStorageEventListener = (listener) => {
+  storageEventListeners.add(listener)
+}
+
+export const removeStorageEventListener = (listener) => {
+  storageEventListeners.delete(listener)
+}
+
+export const setTokenRefreshState = (refreshing, promise = null) => {
+  isRefreshingToken = refreshing
+  refreshPromise = promise
+}
+
+export const isTokenRefreshing = () => isRefreshingToken
+
+export const getRefreshPromise = () => refreshPromise
+
+// Initialize storage event listener for cross-tab synchronization
+if (typeof window !== 'undefined') {
+  window.addEventListener('storage', (event) => {
+    if (event.key === USER_STORAGE) {
+      try {
+        const newData = event.newValue ? JSON.parse(event.newValue) : null
+        const oldData = event.oldValue ? JSON.parse(event.oldValue) : null
+        
+        // Notify all listeners about the storage change
+        storageEventListeners.forEach(listener => {
+          listener(newData, oldData, event)
+        })
+      } catch (error) {
+        log.error('Error parsing storage event data:', error)
+      }
+    }
+  })
+}
+
 export const getStorageDataAction = async (dispatch, constant, requestId, path, handleAction) => {
   handleActionDispatch(dispatch, constant, requestId)
   return get(path)

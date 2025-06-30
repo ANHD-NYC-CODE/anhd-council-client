@@ -5,7 +5,7 @@ export const ENABLE_GOOGLE_ANALYTICS = process.env.REACT_APP_ENABLE_ANALYTICS ==
 // Generic
 export const CONTACT_EMAIL = 'dapadmin@anhd.org'
 export const TOKEN_EXPIRATIONS = {
-  access: 5, // minutes
+  access: 30, // minutes (increased from 5 to reduce refresh frequency)
   refresh: 10, // hours
 }
 

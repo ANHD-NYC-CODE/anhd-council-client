@@ -6,6 +6,8 @@ import { createErrorSelector } from 'Store/Error/selectors'
 import { createLoadingSelector } from 'Store/Loading/selectors'
 import { GET_TOKEN, GET_USER_PROFILE } from 'shared/constants/actions'
 import { logoutUser } from 'Store/Auth/actions'
+import { addStorageEventListener, removeStorageEventListener } from 'shared/utilities/storageUtils'
+import { handleSyncStorage } from 'Store/Auth/actions'
 
 import UserContext from 'Auth/UserContext'
 
@@ -16,6 +18,36 @@ class Auth extends React.Component {
     // Refresh the access token on app load
     if (props.auth && props.auth.refresh) {
       props.dispatch(refreshTokens(props.auth.refresh.token))
+    }
+  }
+
+  componentDidMount() {
+    // Listen for storage events to sync authentication across tabs
+    this.handleStorageChange = this.handleStorageChange.bind(this)
+    addStorageEventListener(this.handleStorageChange)
+  }
+
+  componentWillUnmount() {
+    // Clean up storage event listener
+    removeStorageEventListener(this.handleStorageChange)
+  }
+
+  handleStorageChange = (newData, oldData, event) => {
+    // Only handle authentication data changes
+    if (!newData || !oldData) return
+
+    const { dispatch } = this.props
+
+    // Check if authentication data changed
+    const authChanged = (
+      JSON.stringify(newData.access) !== JSON.stringify(oldData.access) ||
+      JSON.stringify(newData.refresh) !== JSON.stringify(oldData.refresh) ||
+      JSON.stringify(newData.user) !== JSON.stringify(oldData.user)
+    )
+
+    if (authChanged) {
+      // Sync the new authentication state to this tab's Redux store
+      dispatch(handleSyncStorage(newData, dispatch))
     }
   }
 
