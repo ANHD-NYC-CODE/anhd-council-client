@@ -11,6 +11,18 @@ import { handleSyncStorage } from 'Store/Auth/actions'
 
 import UserContext from 'Auth/UserContext'
 
+// Debug logging - only in development or staging
+const isDebugMode = () => {
+  return process.env.NODE_ENV === 'development' || 
+         (typeof window !== 'undefined' && window.location.hostname.includes('staging'))
+}
+
+const debugLog = (...args) => {
+  if (isDebugMode()) {
+    console.log(...args)
+  }
+}
+
 class Auth extends React.Component {
   constructor(props) {
     super(props)
@@ -33,7 +45,7 @@ class Auth extends React.Component {
   }
 
   handleStorageChange = (newData, oldData, event) => {
-    console.log('🔐 Auth: Storage change detected:', {
+    debugLog('🔐 Auth: Storage change detected:', {
       hasNewData: !!newData,
       hasOldData: !!oldData,
       newDataKeys: newData ? Object.keys(newData) : [],
@@ -48,11 +60,11 @@ class Auth extends React.Component {
     if (!oldData && newData) {
       // First time login - new data exists but no old data
       authChanged = true
-      console.log('🔐 Auth: First time login detected')
+      debugLog('🔐 Auth: First time login detected')
     } else if (oldData && !newData) {
       // Logout - old data exists but no new data
       authChanged = true
-      console.log('🔐 Auth: Logout detected')
+      debugLog('🔐 Auth: Logout detected')
     } else if (oldData && newData) {
       // Data update - check if authentication data actually changed
       authChanged = (
@@ -60,15 +72,15 @@ class Auth extends React.Component {
         JSON.stringify(newData.refresh) !== JSON.stringify(oldData.refresh) ||
         JSON.stringify(newData.user) !== JSON.stringify(oldData.user)
       )
-      console.log('🔐 Auth: Data update detected, changed:', authChanged)
+      debugLog('🔐 Auth: Data update detected, changed:', authChanged)
     }
 
     if (authChanged) {
-      console.log('🔐 Auth: Syncing authentication state from storage event')
+      debugLog('🔐 Auth: Syncing authentication state from storage event')
       // Sync the new authentication state to this tab's Redux store
       dispatch(handleSyncStorage(newData, dispatch))
     } else {
-      console.log('🔐 Auth: No authentication change detected, ignoring storage event')
+      debugLog('🔐 Auth: No authentication change detected, ignoring storage event')
     }
   }
 

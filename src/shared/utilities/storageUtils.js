@@ -20,14 +20,26 @@ let isRefreshingToken = false
 let refreshPromise = null
 let storageEventListenerInitialized = false
 
+// Debug logging - only in development or staging
+const isDebugMode = () => {
+  return process.env.NODE_ENV === 'development' || 
+         (typeof window !== 'undefined' && window.location.hostname.includes('staging'))
+}
+
+const debugLog = (...args) => {
+  if (isDebugMode()) {
+    console.log(...args)
+  }
+}
+
 export const addStorageEventListener = (listener) => {
   storageEventListeners.add(listener)
-  console.log('📡 Storage listener added, total listeners:', storageEventListeners.size)
+  debugLog('📡 Storage listener added, total listeners:', storageEventListeners.size)
 }
 
 export const removeStorageEventListener = (listener) => {
   storageEventListeners.delete(listener)
-  console.log('📡 Storage listener removed, total listeners:', storageEventListeners.size)
+  debugLog('📡 Storage listener removed, total listeners:', storageEventListeners.size)
 }
 
 export const setTokenRefreshState = (refreshing, promise = null) => {
@@ -46,10 +58,10 @@ const initializeStorageEventListener = () => {
   }
 
   try {
-    console.log('🔧 Initializing storage event listener...')
+    debugLog('🔧 Initializing storage event listener...')
     
     const storageEventHandler = (event) => {
-      console.log('🔄 Raw storage event received:', {
+      debugLog('🔄 Raw storage event received:', {
         key: event.key,
         oldValue: event.oldValue ? 'exists' : 'null',
         newValue: event.newValue ? 'exists' : 'null',
@@ -59,7 +71,7 @@ const initializeStorageEventListener = () => {
       
       if (event.key === USER_STORAGE) {
         try {
-          console.log('🔄 Storage event detected for USER_STORAGE:', {
+          debugLog('🔄 Storage event detected for USER_STORAGE:', {
             key: event.key,
             oldValue: event.oldValue ? 'exists' : 'null',
             newValue: event.newValue ? 'exists' : 'null',
@@ -69,19 +81,19 @@ const initializeStorageEventListener = () => {
           const newData = event.newValue ? JSON.parse(event.newValue) : null
           const oldData = event.oldValue ? JSON.parse(event.oldValue) : null
           
-          console.log('📡 Notifying', storageEventListeners.size, 'storage listeners...');
+          debugLog('📡 Notifying', storageEventListeners.size, 'storage listeners...');
           
           // Notify all listeners about the storage change
           storageEventListeners.forEach((listener, index) => {
             try {
-              console.log(`📡 Calling listener ${index + 1}/${storageEventListeners.size}...`);
+              debugLog(`📡 Calling listener ${index + 1}/${storageEventListeners.size}...`);
               listener(newData, oldData, event)
             } catch (listenerError) {
               console.error(`❌ Error in storage listener ${index + 1}:`, listenerError)
             }
           })
           
-          console.log('✅ Storage event processed successfully');
+          debugLog('✅ Storage event processed successfully');
         } catch (error) {
           log.error('Error parsing storage event data:', error)
           console.error('❌ Storage event error:', error);
@@ -96,20 +108,22 @@ const initializeStorageEventListener = () => {
     window.addEventListener('storage', storageEventHandler, false)
     
     storageEventListenerInitialized = true
-    console.log('✅ Storage event listener initialized successfully')
+    debugLog('✅ Storage event listener initialized successfully')
     
-    // Test the listener is working
-    setTimeout(() => {
-      console.log('🧪 Testing storage event listener...')
-      try {
-        const testKey = 'test-storage-event-' + Date.now()
-        localStorage.setItem(testKey, 'test')
-        localStorage.removeItem(testKey)
-        console.log('✅ Storage event listener test completed')
-      } catch (e) {
-        console.log('⚠️ Storage event listener test failed:', e)
-      }
-    }, 1000)
+    // Test the listener is working (only in debug mode)
+    if (isDebugMode()) {
+      setTimeout(() => {
+        debugLog('🧪 Testing storage event listener...')
+        try {
+          const testKey = 'test-storage-event-' + Date.now()
+          localStorage.setItem(testKey, 'test')
+          localStorage.removeItem(testKey)
+          debugLog('✅ Storage event listener test completed')
+        } catch (e) {
+          debugLog('⚠️ Storage event listener test failed:', e)
+        }
+      }, 1000)
+    }
     
   } catch (error) {
     console.error('❌ Failed to initialize storage event listener:', error)
