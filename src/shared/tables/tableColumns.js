@@ -1149,20 +1149,7 @@ export const getTableColumns = ({
           text: 'Work Type',
           formatter: dobPermitWorkTypeFormatter,
           csvFormatter: dobPermitWorkTypeFormatter,
-          filter: textFilter({
-            placeholder: 'Search...',
-            filterFunc: (filterVal, data) => {
-              console.log('Work Type filter called:', { filterVal, data });
-              if (!filterVal) return true;
-              const code = data.worktype || '';
-              const label = dobPermitWorkTypeFormatter(code) || '';
-              const codeMatch = code.toLowerCase().includes(filterVal.toLowerCase());
-              const labelMatch = label.toLowerCase().includes(filterVal.toLowerCase());
-              const matches = codeMatch || labelMatch;
-              console.log('Work Type filter result:', { code, label, filterVal, codeMatch, labelMatch, matches });
-              return matches;
-            },
-          }),
+          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
@@ -1170,20 +1157,7 @@ export const getTableColumns = ({
           text: 'Permit Type',
           formatter: dobPermitTypeFormatter,
           csvFormatter: dobPermitTypeFormatter,
-          filter: textFilter({
-            placeholder: 'Search...',
-            filterFunc: (filterVal, data) => {
-              console.log('Permit Type filter called:', { filterVal, data });
-              if (!filterVal) return true;
-              const code = data.permit_type || '';
-              const label = dobPermitTypeFormatter(code) || '';
-              const codeMatch = code.toLowerCase().includes(filterVal.toLowerCase());
-              const labelMatch = label.toLowerCase().includes(filterVal.toLowerCase());
-              const matches = codeMatch || labelMatch;
-              console.log('Permit Type filter result:', { code, label, filterVal, codeMatch, labelMatch, matches });
-              return matches;
-            },
-          }),
+          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
