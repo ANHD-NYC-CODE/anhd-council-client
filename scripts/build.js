@@ -17,6 +17,16 @@ const sitemap = sitemapBuilder(hostname, sitePaths)
 
 fs.writeFileSync('public/sitemap.xml', sitemap.toString())
 
+// Generate build timestamp
+const buildTimestamp = new Date().toISOString().replace('T', ' ').substring(0, 19)
+const buildTimestampContent = `// This file is auto-generated during the build process
+// It contains the timestamp of when the build was created
+export const BUILD_TIMESTAMP = '${buildTimestamp}'
+`
+
+fs.writeFileSync('src/buildTimestamp.js', buildTimestampContent)
+log.info(`Build timestamp generated: ${buildTimestamp}`)
+
 // Makes the script crash on unhandled rejections instead of silently
 // ignoring them. In the future, promise rejections that are not handled will
 // terminate the Node.js process with a non-zero exit code.

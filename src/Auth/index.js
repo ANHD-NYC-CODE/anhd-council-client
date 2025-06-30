@@ -33,21 +33,42 @@ class Auth extends React.Component {
   }
 
   handleStorageChange = (newData, oldData, event) => {
-    // Only handle authentication data changes
-    if (!newData || !oldData) return
+    console.log('🔐 Auth: Storage change detected:', {
+      hasNewData: !!newData,
+      hasOldData: !!oldData,
+      newDataKeys: newData ? Object.keys(newData) : [],
+      oldDataKeys: oldData ? Object.keys(oldData) : []
+    })
 
     const { dispatch } = this.props
 
-    // Check if authentication data changed
-    const authChanged = (
-      JSON.stringify(newData.access) !== JSON.stringify(oldData.access) ||
-      JSON.stringify(newData.refresh) !== JSON.stringify(oldData.refresh) ||
-      JSON.stringify(newData.user) !== JSON.stringify(oldData.user)
-    )
+    // Handle all authentication data changes, including first-time login and logout
+    let authChanged = false
+    
+    if (!oldData && newData) {
+      // First time login - new data exists but no old data
+      authChanged = true
+      console.log('🔐 Auth: First time login detected')
+    } else if (oldData && !newData) {
+      // Logout - old data exists but no new data
+      authChanged = true
+      console.log('🔐 Auth: Logout detected')
+    } else if (oldData && newData) {
+      // Data update - check if authentication data actually changed
+      authChanged = (
+        JSON.stringify(newData.access) !== JSON.stringify(oldData.access) ||
+        JSON.stringify(newData.refresh) !== JSON.stringify(oldData.refresh) ||
+        JSON.stringify(newData.user) !== JSON.stringify(oldData.user)
+      )
+      console.log('🔐 Auth: Data update detected, changed:', authChanged)
+    }
 
     if (authChanged) {
+      console.log('🔐 Auth: Syncing authentication state from storage event')
       // Sync the new authentication state to this tab's Redux store
       dispatch(handleSyncStorage(newData, dispatch))
+    } else {
+      console.log('🔐 Auth: No authentication change detected, ignoring storage event')
     }
   }
 

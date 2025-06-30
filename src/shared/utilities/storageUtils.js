@@ -18,13 +18,16 @@ export const ZIPCODE_INDEX = 'zipcode'
 let storageEventListeners = new Set()
 let isRefreshingToken = false
 let refreshPromise = null
+let storageEventListenerInitialized = false
 
 export const addStorageEventListener = (listener) => {
   storageEventListeners.add(listener)
+  console.log('📡 Storage listener added, total listeners:', storageEventListeners.size)
 }
 
 export const removeStorageEventListener = (listener) => {
   storageEventListeners.delete(listener)
+  console.log('📡 Storage listener removed, total listeners:', storageEventListeners.size)
 }
 
 export const setTokenRefreshState = (refreshing, promise = null) => {
@@ -37,22 +40,94 @@ export const isTokenRefreshing = () => isRefreshingToken
 export const getRefreshPromise = () => refreshPromise
 
 // Initialize storage event listener for cross-tab synchronization
-if (typeof window !== 'undefined') {
-  window.addEventListener('storage', (event) => {
-    if (event.key === USER_STORAGE) {
-      try {
-        const newData = event.newValue ? JSON.parse(event.newValue) : null
-        const oldData = event.oldValue ? JSON.parse(event.oldValue) : null
-        
-        // Notify all listeners about the storage change
-        storageEventListeners.forEach(listener => {
-          listener(newData, oldData, event)
-        })
-      } catch (error) {
-        log.error('Error parsing storage event data:', error)
+const initializeStorageEventListener = () => {
+  if (storageEventListenerInitialized || typeof window === 'undefined') {
+    return
+  }
+
+  try {
+    console.log('🔧 Initializing storage event listener...')
+    
+    const storageEventHandler = (event) => {
+      console.log('🔄 Raw storage event received:', {
+        key: event.key,
+        oldValue: event.oldValue ? 'exists' : 'null',
+        newValue: event.newValue ? 'exists' : 'null',
+        url: event.url,
+        storageArea: event.storageArea
+      })
+      
+      if (event.key === USER_STORAGE) {
+        try {
+          console.log('🔄 Storage event detected for USER_STORAGE:', {
+            key: event.key,
+            oldValue: event.oldValue ? 'exists' : 'null',
+            newValue: event.newValue ? 'exists' : 'null',
+            timestamp: new Date().toISOString()
+          });
+          
+          const newData = event.newValue ? JSON.parse(event.newValue) : null
+          const oldData = event.oldValue ? JSON.parse(event.oldValue) : null
+          
+          console.log('📡 Notifying', storageEventListeners.size, 'storage listeners...');
+          
+          // Notify all listeners about the storage change
+          storageEventListeners.forEach((listener, index) => {
+            try {
+              console.log(`📡 Calling listener ${index + 1}/${storageEventListeners.size}...`);
+              listener(newData, oldData, event)
+            } catch (listenerError) {
+              console.error(`❌ Error in storage listener ${index + 1}:`, listenerError)
+            }
+          })
+          
+          console.log('✅ Storage event processed successfully');
+        } catch (error) {
+          log.error('Error parsing storage event data:', error)
+          console.error('❌ Storage event error:', error);
+        }
       }
     }
-  })
+
+    // Remove any existing listener first
+    window.removeEventListener('storage', storageEventHandler)
+    
+    // Add the new listener
+    window.addEventListener('storage', storageEventHandler, false)
+    
+    storageEventListenerInitialized = true
+    console.log('✅ Storage event listener initialized successfully')
+    
+    // Test the listener is working
+    setTimeout(() => {
+      console.log('🧪 Testing storage event listener...')
+      try {
+        const testKey = 'test-storage-event-' + Date.now()
+        localStorage.setItem(testKey, 'test')
+        localStorage.removeItem(testKey)
+        console.log('✅ Storage event listener test completed')
+      } catch (e) {
+        console.log('⚠️ Storage event listener test failed:', e)
+      }
+    }, 1000)
+    
+  } catch (error) {
+    console.error('❌ Failed to initialize storage event listener:', error)
+    log.error('Failed to initialize storage event listener:', error)
+  }
+}
+
+// Initialize immediately when module is loaded
+initializeStorageEventListener()
+
+// Also initialize when the module is imported (in case it's loaded before DOM is ready)
+if (typeof window !== 'undefined') {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeStorageEventListener)
+  } else {
+    // DOM is already ready, initialize immediately
+    initializeStorageEventListener()
+  }
 }
 
 export const getStorageDataAction = async (dispatch, constant, requestId, path, handleAction) => {
