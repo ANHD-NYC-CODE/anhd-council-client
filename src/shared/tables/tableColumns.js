@@ -1149,6 +1149,7 @@ export const getTableColumns = ({
           text: 'Work Type',
           formatter: dobPermitWorkTypeFormatter,
           csvFormatter: dobPermitWorkTypeFormatter,
+          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
@@ -1161,6 +1162,7 @@ export const getTableColumns = ({
           text: 'Permit Type',
           formatter: dobPermitTypeFormatter,
           csvFormatter: dobPermitTypeFormatter,
+          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
