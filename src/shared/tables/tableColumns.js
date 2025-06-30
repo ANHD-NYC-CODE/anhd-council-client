@@ -305,6 +305,70 @@ export const getTableColumns = ({
     }
   }
 
+  // Custom filter function for Work Type that transforms search input
+  const workTypeFilter = textFilter({
+    placeholder: 'Search...',
+    getFilter: (filter) => {
+      return (value) => {
+        // Transform search terms to map labels to codes
+        const searchMappings = {
+          'plumbing': 'PL',
+          'boiler': 'BL',
+          'curb cut': 'CC',
+          'construction equipment': 'EQ',
+          'fire alarm': 'FA',
+          'fuel burning': 'FB',
+          'fire suppression': 'FP',
+          'fuel storage': 'FS',
+          'mechanical': 'MH',
+          'hvac': 'MH',
+          'new building': 'NB',
+          'other': 'OT',
+          'standpipe': 'SD',
+          'sprinkler': 'SP',
+          'equipment work': 'EW',
+          'alteration': 'AL',
+          'demolition': 'DM',
+          'foundation': 'FO',
+          'sign': 'SG'
+        };
+        
+        const searchTerm = value.toLowerCase();
+        const mappedCode = searchMappings[searchTerm];
+        
+        // Apply the original filter with either the mapped code or original value
+        filter(mappedCode || value);
+      };
+    },
+  });
+
+  // Custom filter function for Permit Type that transforms search input
+  const permitTypeFilter = textFilter({
+    placeholder: 'Search...',
+    getFilter: (filter) => {
+      return (value) => {
+        // Transform search terms to map labels to codes
+        const searchMappings = {
+          'plumbing': 'PL',
+          'equipment work': 'EW',
+          'construction equipment': 'EQ',
+          'alteration': 'AL',
+          'new building': 'NB',
+          'sign': 'SG',
+          'foundation': 'FO',
+          'demolition': 'DM',
+          'other': 'OT'
+        };
+        
+        const searchTerm = value.toLowerCase();
+        const mappedCode = searchMappings[searchTerm];
+        
+        // Apply the original filter with either the mapped code or original value
+        filter(mappedCode || value);
+      };
+    },
+  });
+
   switch (constant) {
     case 'PROPERTY':
       // For custom search results table 
@@ -1149,7 +1213,7 @@ export const getTableColumns = ({
           text: 'Work Type',
           formatter: dobPermitWorkTypeFormatter,
           csvFormatter: dobPermitWorkTypeFormatter,
-          filter: constructFilter(textFilter),
+          filter: workTypeFilter,
           sort: true,
         }),
         constructStandardColumn({
@@ -1157,7 +1221,7 @@ export const getTableColumns = ({
           text: 'Permit Type',
           formatter: dobPermitTypeFormatter,
           csvFormatter: dobPermitTypeFormatter,
-          filter: constructFilter(textFilter),
+          filter: permitTypeFilter,
           sort: true,
         }),
         constructStandardColumn({
