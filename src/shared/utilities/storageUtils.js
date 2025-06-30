@@ -2,7 +2,6 @@ import dayjs from 'dayjs'
 import log from 'loglevel'
 
 import * as c from 'shared/constants'
-import { logoutUser } from 'Store/Auth/actions'
 import { get, set, del } from 'idb-keyval'
 import { handleActionDispatch } from 'shared/utilities/actionUtils'
 import { handleCompletedRequest } from 'Store/Loading/actions'
@@ -197,7 +196,9 @@ export const updateAuthLocalStorage = (access = null, refresh = null, user = nul
 
     storeData(newData, USER_STORAGE)
   } catch (error) {
-    dispatch(logoutUser())
+    log.error('Error updating auth localStorage:', error)
+    // Note: logoutUser call removed due to circular dependency
+    // The calling code should handle logout if needed
   }
 }
 
