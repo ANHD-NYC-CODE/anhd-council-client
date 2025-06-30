@@ -400,8 +400,20 @@ export const getTableColumns = ({
       const code = data.permit_type || '';
       const label = dobPermitTypeFormatter(code) || '';
       
-      // Map common search terms to codes
+      // Map common search terms to codes - comprehensive mapping based on actual database values
       const searchMappings = {
+        // Codes
+        'al': 'AL',
+        'dm': 'DM',
+        'eq': 'EQ',
+        'ew': 'EW',
+        'fo': 'FO',
+        'nb': 'NB',
+        'pl': 'PL',
+        'sg': 'SG',
+        'ot': 'OT',
+        
+        // Full descriptions
         'alteration': 'AL',
         'demolition': 'DM',
         'construction equipment': 'EQ',
@@ -409,7 +421,16 @@ export const getTableColumns = ({
         'foundation': 'FO',
         'new building': 'NB',
         'plumbing': 'PL',
-        'sign': 'SG'
+        'sign': 'SG',
+        'other': 'OT',
+        
+        // Partial matches
+        'equipment': 'EQ',
+        'work': 'EW',
+        'building': 'NB',
+        'alter': 'AL',
+        'demo': 'DM',
+        'found': 'FO'
       };
       
       const searchTerm = filterVal.toLowerCase();
