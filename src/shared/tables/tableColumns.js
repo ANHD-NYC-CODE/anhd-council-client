@@ -1149,13 +1149,18 @@ export const getTableColumns = ({
           text: 'Work Type',
           formatter: dobPermitWorkTypeFormatter,
           csvFormatter: dobPermitWorkTypeFormatter,
-          filter: constructFilter(textFilter),
-          sort: true,
-        }),
-        constructStandardColumn({
-          dataField: 'jobdescription',
-          text: 'Description',
-          filter: constructFilter(textFilter),
+          filter: textFilter({
+            placeholder: 'Search...',
+            onFilter: (filterVal, row) => {
+              if (!filterVal) return true;
+              const code = row.worktype || '';
+              const label = dobPermitWorkTypeFormatter(code) || '';
+              return (
+                code.toLowerCase().includes(filterVal.toLowerCase()) ||
+                label.toLowerCase().includes(filterVal.toLowerCase())
+              );
+            },
+          }),
           sort: true,
         }),
         constructStandardColumn({
@@ -1163,14 +1168,24 @@ export const getTableColumns = ({
           text: 'Permit Type',
           formatter: dobPermitTypeFormatter,
           csvFormatter: dobPermitTypeFormatter,
-          filter: constructFilter(textFilter),
+          filter: textFilter({
+            placeholder: 'Search...',
+            onFilter: (filterVal, row) => {
+              if (!filterVal) return true;
+              const code = row.permit_type || '';
+              const label = dobPermitTypeFormatter(code) || '';
+              return (
+                code.toLowerCase().includes(filterVal.toLowerCase()) ||
+                label.toLowerCase().includes(filterVal.toLowerCase())
+              );
+            },
+          }),
           sort: true,
         }),
         constructStandardColumn({
-          dataField: 'permit_subtype',
-          text: 'Permit Subtype',
-          formatter: dobPermitSubtypeFormatter,
-          csvFormatter: dobPermitSubtypeFormatter,
+          dataField: 'jobdescription',
+          text: 'Description',
+          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
