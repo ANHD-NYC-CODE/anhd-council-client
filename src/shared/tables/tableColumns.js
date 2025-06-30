@@ -1152,13 +1152,15 @@ export const getTableColumns = ({
           filter: textFilter({
             placeholder: 'Search...',
             filterFunc: (filterVal, data) => {
+              console.log('Work Type filter called:', { filterVal, data });
               if (!filterVal) return true;
               const code = data.worktype || '';
               const label = dobPermitWorkTypeFormatter(code) || '';
-              return (
-                code.toLowerCase().includes(filterVal.toLowerCase()) ||
-                label.toLowerCase().includes(filterVal.toLowerCase())
-              );
+              const codeMatch = code.toLowerCase().includes(filterVal.toLowerCase());
+              const labelMatch = label.toLowerCase().includes(filterVal.toLowerCase());
+              const matches = codeMatch || labelMatch;
+              console.log('Work Type filter result:', { code, label, filterVal, codeMatch, labelMatch, matches });
+              return matches;
             },
           }),
           sort: true,
@@ -1171,13 +1173,15 @@ export const getTableColumns = ({
           filter: textFilter({
             placeholder: 'Search...',
             filterFunc: (filterVal, data) => {
+              console.log('Permit Type filter called:', { filterVal, data });
               if (!filterVal) return true;
               const code = data.permit_type || '';
               const label = dobPermitTypeFormatter(code) || '';
-              return (
-                code.toLowerCase().includes(filterVal.toLowerCase()) ||
-                label.toLowerCase().includes(filterVal.toLowerCase())
-              );
+              const codeMatch = code.toLowerCase().includes(filterVal.toLowerCase());
+              const labelMatch = label.toLowerCase().includes(filterVal.toLowerCase());
+              const matches = codeMatch || labelMatch;
+              console.log('Permit Type filter result:', { code, label, filterVal, codeMatch, labelMatch, matches });
+              return matches;
             },
           }),
           sort: true,
