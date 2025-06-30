@@ -1151,9 +1151,9 @@ export const getTableColumns = ({
           csvFormatter: dobPermitWorkTypeFormatter,
           filter: textFilter({
             placeholder: 'Search...',
-            onFilter: (filterVal, row) => {
+            filterFunc: (filterVal, data) => {
               if (!filterVal) return true;
-              const code = row.worktype || '';
+              const code = data.worktype || '';
               const label = dobPermitWorkTypeFormatter(code) || '';
               return (
                 code.toLowerCase().includes(filterVal.toLowerCase()) ||
@@ -1170,9 +1170,9 @@ export const getTableColumns = ({
           csvFormatter: dobPermitTypeFormatter,
           filter: textFilter({
             placeholder: 'Search...',
-            onFilter: (filterVal, row) => {
+            filterFunc: (filterVal, data) => {
               if (!filterVal) return true;
-              const code = row.permit_type || '';
+              const code = data.permit_type || '';
               const label = dobPermitTypeFormatter(code) || '';
               return (
                 code.toLowerCase().includes(filterVal.toLowerCase()) ||
