@@ -305,6 +305,74 @@ export const getTableColumns = ({
     }
   }
 
+  // Custom filter function for Work Type that matches both codes and labels
+  const workTypeFilter = textFilter({
+    placeholder: 'Search...',
+    onFilter: (filterVal, data) => {
+      if (!filterVal) return true;
+      const code = data.worktype || '';
+      const label = dobPermitWorkTypeFormatter(code) || '';
+      
+      // Map common search terms to codes
+      const searchMappings = {
+        'plumbing': 'PL',
+        'boiler': 'BL',
+        'curb cut': 'CC',
+        'construction equipment': 'EQ',
+        'fire alarm': 'FA',
+        'fuel burning': 'FB',
+        'fire suppression': 'FP',
+        'fuel storage': 'FS',
+        'mechanical': 'MH',
+        'hvac': 'MH',
+        'new building': 'NB',
+        'other': 'OT',
+        'standpipe': 'SD',
+        'sprinkler': 'SP'
+      };
+      
+      const searchTerm = filterVal.toLowerCase();
+      const mappedCode = searchMappings[searchTerm];
+      
+      return (
+        code.toLowerCase().includes(searchTerm) ||
+        label.toLowerCase().includes(searchTerm) ||
+        (mappedCode && code === mappedCode)
+      );
+    },
+  });
+
+  // Custom filter function for Permit Type that matches both codes and labels
+  const permitTypeFilter = textFilter({
+    placeholder: 'Search...',
+    onFilter: (filterVal, data) => {
+      if (!filterVal) return true;
+      const code = data.permit_type || '';
+      const label = dobPermitTypeFormatter(code) || '';
+      
+      // Map common search terms to codes
+      const searchMappings = {
+        'alteration': 'AL',
+        'demolition': 'DM',
+        'construction equipment': 'EQ',
+        'equipment work': 'EW',
+        'foundation': 'FO',
+        'new building': 'NB',
+        'plumbing': 'PL',
+        'sign': 'SG'
+      };
+      
+      const searchTerm = filterVal.toLowerCase();
+      const mappedCode = searchMappings[searchTerm];
+      
+      return (
+        code.toLowerCase().includes(searchTerm) ||
+        label.toLowerCase().includes(searchTerm) ||
+        (mappedCode && code === mappedCode)
+      );
+    },
+  });
+
   switch (constant) {
     case 'PROPERTY':
       // For custom search results table 
@@ -1149,7 +1217,7 @@ export const getTableColumns = ({
           text: 'Work Type',
           formatter: dobPermitWorkTypeFormatter,
           csvFormatter: dobPermitWorkTypeFormatter,
-          filter: constructFilter(textFilter),
+          filter: workTypeFilter,
           sort: true,
         }),
         constructStandardColumn({
@@ -1157,7 +1225,7 @@ export const getTableColumns = ({
           text: 'Permit Type',
           formatter: dobPermitTypeFormatter,
           csvFormatter: dobPermitTypeFormatter,
-          filter: constructFilter(textFilter),
+          filter: permitTypeFilter,
           sort: true,
         }),
         constructStandardColumn({
