@@ -21,8 +21,8 @@ export const handleSyncStorage = (storage, dispatch) => {
     data: storage,
     refreshTimeout: setTimeout(
       () => dispatch(refreshTokens(storage.refresh.token)),
-      (c.TOKEN_EXPIRATIONS.access - 5) * 60000
-    ), // 25 minutes (5 minutes before 30-minute expiration)
+      (c.TOKEN_EXPIRATIONS.access - 60) * 60000
+    ), // 11 hours (60 minutes before 12-hour expiration)
   }
 }
 
