@@ -1155,6 +1155,7 @@ export const getTableColumns = ({
         constructStandardColumn({
           dataField: 'jobdescription',
           text: 'Description',
+          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
@@ -1180,10 +1181,31 @@ export const getTableColumns = ({
           csvFormatter: capitalizeFormatter,
         }),
         constructStandardColumn({
+          dataField: 'filing_reason',
+          text: 'Type',
+          formatter: (cell, row) => {
+            // For DOB NOW, use the type field directly since it contains the filing reason
+            if (row.type && row.type !== 'dobpermitissuedlegacy' && row.type !== 'doblegacyfiledpermit') {
+              return row.type || ''
+            } else {
+              // For DOB BIS, show filing_status
+              return row.filing_status || ''
+            }
+          },
+          csvFormatter: (cell, row) => {
+            if (row.type && row.type !== 'dobpermitissuedlegacy' && row.type !== 'doblegacyfiledpermit') {
+              return row.type || ''
+            } else {
+              return row.filing_status || ''
+            }
+          },
+          sort: true,
+        }),
+        constructStandardColumn({
           dataField: 'type',
           text: 'Source',
-          formatter: dobPermitSourceFormatter,
-          csvFormatter: dobPermitSourceFormatter,
+          formatter: (cell, row, index) => dobPermitSourceFormatter(cell, row),
+          csvFormatter: (cell, row, index) => dobPermitSourceFormatter(cell, row),
           sort: true,
         }),
       ]
@@ -1248,10 +1270,38 @@ export const getTableColumns = ({
           sort: true,
         }),
         constructStandardColumn({
+          dataField: 'filing_status',
+          text: 'Filing Status',
+          sort: true,
+          formatter: capitalizeFormatter,
+          csvFormatter: capitalizeFormatter,
+        }),
+        constructStandardColumn({
+          dataField: 'filing_reason',
+          text: 'Type',
+          formatter: (cell, row) => {
+            // For DOB NOW, use the type field directly since it contains the filing reason
+            if (row.type && row.type !== 'dobpermitissuedlegacy' && row.type !== 'doblegacyfiledpermit') {
+              return row.type || ''
+            } else {
+              // For DOB BIS, show filing_status
+              return row.filing_status || ''
+            }
+          },
+          csvFormatter: (cell, row) => {
+            if (row.type && row.type !== 'dobpermitissuedlegacy' && row.type !== 'doblegacyfiledpermit') {
+              return row.type || ''
+            } else {
+              return row.filing_status || ''
+            }
+          },
+          sort: true,
+        }),
+        constructStandardColumn({
           dataField: 'type',
-          text: 'Source',
-          formatter: dobPermitSourceFormatter,
-          csvFormatter: dobPermitSourceFormatter,
+          text: 'Type/Source',
+          formatter: (cell, row, index) => dobPermitSourceFormatter(cell, row),
+          csvFormatter: (cell, row, index) => dobPermitSourceFormatter(cell, row),
           sort: true,
         }),
       ]
