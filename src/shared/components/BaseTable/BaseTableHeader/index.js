@@ -50,13 +50,8 @@ const BaseTableHeader = props => {
       }
 
       case 'DOB_ISSUED_PERMIT': {
-        const totalInitial = props.request.resourceModel.tableRecordsCountFunction(props.records)
-        return (
-          <span className="text-left">
-            <div>Total initial: {totalInitial}</div>
-            <div>Total renewed: {recordsSize - totalInitial}</div>
-          </span>
-        )
+        // Use default aggregated total like other datasets
+        return <span>Total: {getDefaultSize()}</span>
       }
 
       default:
