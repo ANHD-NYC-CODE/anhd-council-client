@@ -310,8 +310,31 @@ export const getTableColumns = ({
     placeholder: 'Search...',
     getFilter: (filter) => {
       return (value) => {
+        console.log('Work Type filter input:', value);
+        
         // Transform search terms to map labels to codes
         const searchMappings = {
+          // Codes
+          'pl': 'PL',
+          'bl': 'BL',
+          'cc': 'CC',
+          'eq': 'EQ',
+          'fa': 'FA',
+          'fb': 'FB',
+          'fp': 'FP',
+          'fs': 'FS',
+          'mh': 'MH',
+          'nb': 'NB',
+          'ot': 'OT',
+          'sd': 'SD',
+          'sp': 'SP',
+          'ew': 'EW',
+          'al': 'AL',
+          'dm': 'DM',
+          'fo': 'FO',
+          'sg': 'SG',
+          
+          // Full descriptions
           'plumbing': 'PL',
           'boiler': 'BL',
           'curb cut': 'CC',
@@ -330,11 +353,31 @@ export const getTableColumns = ({
           'alteration': 'AL',
           'demolition': 'DM',
           'foundation': 'FO',
-          'sign': 'SG'
+          'sign': 'SG',
+          
+          // Additional mappings from database
+          'antenna': 'Antenna',
+          'boiler equipment': 'Boiler Equipment',
+          'construction fence': 'Construction Fence',
+          'earth work': 'Earth Work',
+          'full demolition': 'Full Demolition',
+          'general construction': 'General Construction',
+          'green roof': 'Green Roof',
+          'mechanical systems': 'Mechanical Systems',
+          'protection and mechanical methods': 'Protection and Mechanical Methods',
+          'sidewalk shed': 'Sidewalk Shed',
+          'solar': 'Solar',
+          'sprinklers': 'Sprinklers',
+          'structural': 'Structural',
+          'supported scaffold': 'Supported Scaffold',
+          'support of excavation': 'Support of Excavation',
+          'suspended scaffold': 'Suspended Scaffold'
         };
         
         const searchTerm = value.toLowerCase();
         const mappedCode = searchMappings[searchTerm];
+        
+        console.log('Work Type filter mapping:', { searchTerm, mappedCode, finalValue: mappedCode || value });
         
         // Apply the original filter with either the mapped code or original value
         filter(mappedCode || value);
@@ -347,8 +390,22 @@ export const getTableColumns = ({
     placeholder: 'Search...',
     getFilter: (filter) => {
       return (value) => {
+        console.log('Permit Type filter input:', value);
+        
         // Transform search terms to map labels to codes
         const searchMappings = {
+          // Codes
+          'pl': 'PL',
+          'ew': 'EW',
+          'eq': 'EQ',
+          'al': 'AL',
+          'nb': 'NB',
+          'sg': 'SG',
+          'fo': 'FO',
+          'dm': 'DM',
+          'ot': 'OT',
+          
+          // Full descriptions
           'plumbing': 'PL',
           'equipment work': 'EW',
           'construction equipment': 'EQ',
@@ -362,6 +419,8 @@ export const getTableColumns = ({
         
         const searchTerm = value.toLowerCase();
         const mappedCode = searchMappings[searchTerm];
+        
+        console.log('Permit Type filter mapping:', { searchTerm, mappedCode, finalValue: mappedCode || value });
         
         // Apply the original filter with either the mapped code or original value
         filter(mappedCode || value);
