@@ -305,145 +305,6 @@ export const getTableColumns = ({
     }
   }
 
-  // Custom filter function for Work Type that matches both codes and labels
-  const workTypeFilter = textFilter({
-    placeholder: 'Search...',
-    onFilter: (filterVal, data) => {
-      if (!filterVal) return true;
-      const code = data.worktype || '';
-      const label = dobPermitWorkTypeFormatter(code) || '';
-      
-      // Map common search terms to codes - comprehensive mapping based on actual database values
-      const searchMappings = {
-        // Codes
-        'bl': 'BL',
-        'cc': 'CC',
-        'eq': 'EQ',
-        'fa': 'FA',
-        'fb': 'FB',
-        'fp': 'FP',
-        'fs': 'FS',
-        'mh': 'MH',
-        'nb': 'NB',
-        'ot': 'OT',
-        'pl': 'PL',
-        'sd': 'SD',
-        'sp': 'SP',
-        
-        // Full descriptions
-        'antenna': 'Antenna',
-        'boiler': 'BL',
-        'boiler equipment': 'Boiler Equipment',
-        'curb cut': 'CC',
-        'construction fence': 'Construction Fence',
-        'earth work': 'Earth Work',
-        'construction equipment': 'EQ',
-        'fire alarm': 'FA',
-        'fuel burning': 'FB',
-        'foundation': 'Foundation',
-        'fire suppression': 'FP',
-        'fuel storage': 'FS',
-        'full demolition': 'Full Demolition',
-        'general construction': 'General Construction',
-        'green roof': 'Green Roof',
-        'mechanical': 'MH',
-        'mechanical systems': 'Mechanical Systems',
-        'hvac': 'MH',
-        'new building': 'NB',
-        'other': 'OT',
-        'plumbing': 'PL',
-        'protection and mechanical methods': 'Protection and Mechanical Methods',
-        'standpipe': 'SD',
-        'sidewalk shed': 'Sidewalk Shed',
-        'sign': 'Sign',
-        'solar': 'Solar',
-        'sprinkler': 'SP',
-        'sprinklers': 'Sprinklers',
-        'structural': 'Structural',
-        'supported scaffold': 'Supported Scaffold',
-        'support of excavation': 'Support of Excavation',
-        'suspended scaffold': 'Suspended Scaffold',
-        
-        // Partial matches
-        'scaffold': 'Supported Scaffold', // Will match both supported and suspended
-        'demolition': 'Full Demolition',
-        'equipment': 'EQ',
-        'alarm': 'FA',
-        'burning': 'FB',
-        'suppression': 'FP',
-        'storage': 'FS',
-        'construction': 'General Construction',
-        'roof': 'Green Roof',
-        'systems': 'Mechanical Systems',
-        'building': 'NB',
-        'protection': 'Protection and Mechanical Methods',
-        'shed': 'Sidewalk Shed',
-        'excavation': 'Support of Excavation'
-      };
-      
-      const searchTerm = filterVal.toLowerCase();
-      const mappedCode = searchMappings[searchTerm];
-      
-      return (
-        code.toLowerCase().includes(searchTerm) ||
-        label.toLowerCase().includes(searchTerm) ||
-        (mappedCode && code === mappedCode)
-      );
-    },
-  });
-
-  // Custom filter function for Permit Type that matches both codes and labels
-  const permitTypeFilter = textFilter({
-    placeholder: 'Search...',
-    onFilter: (filterVal, data) => {
-      if (!filterVal) return true;
-      const code = data.permit_type || '';
-      const label = dobPermitTypeFormatter(code) || '';
-      
-      // Map common search terms to codes - comprehensive mapping based on actual database values
-      const searchMappings = {
-        // Codes
-        'al': 'AL',
-        'dm': 'DM',
-        'eq': 'EQ',
-        'ew': 'EW',
-        'fo': 'FO',
-        'nb': 'NB',
-        'pl': 'PL',
-        'sg': 'SG',
-        'ot': 'OT',
-        
-        // Full descriptions
-        'alteration': 'AL',
-        'demolition': 'DM',
-        'construction equipment': 'EQ',
-        'equipment work': 'EW',
-        'foundation': 'FO',
-        'new building': 'NB',
-        'plumbing': 'PL',
-        'sign': 'SG',
-        'other': 'OT',
-        
-        // Partial matches
-        'equipment': 'EQ',
-        'work': 'EW',
-        'building': 'NB',
-        'alter': 'AL',
-        'demo': 'DM',
-        'found': 'FO'
-      };
-      
-      const searchTerm = filterVal.toLowerCase();
-      const mappedCode = searchMappings[searchTerm];
-      
-      return (
-        code.toLowerCase().includes(searchTerm) ||
-        label.toLowerCase().includes(searchTerm) ||
-        (mappedCode && code === mappedCode)
-      );
-    },
-  });
-
   switch (constant) {
     case 'PROPERTY':
       // For custom search results table 
@@ -1288,7 +1149,7 @@ export const getTableColumns = ({
           text: 'Work Type',
           formatter: dobPermitWorkTypeFormatter,
           csvFormatter: dobPermitWorkTypeFormatter,
-          filter: workTypeFilter,
+          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
@@ -1296,7 +1157,7 @@ export const getTableColumns = ({
           text: 'Permit Type',
           formatter: dobPermitTypeFormatter,
           csvFormatter: dobPermitTypeFormatter,
-          filter: permitTypeFilter,
+          filter: constructFilter(textFilter),
           sort: true,
         }),
         constructStandardColumn({
