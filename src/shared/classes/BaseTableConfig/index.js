@@ -142,20 +142,7 @@ export default class BaseTableConfig {
           'All Job Types'
         ),
       ],
-      DOB_ISSUED_PERMIT: [
-        this.createFilterButtonSet(
-          'DOB_ISSUED_PERMIT',
-          'DOB_ISSUED_PERMIT_TYPE',
-          [
-            this.createFilterItem('A1', 'a1'),
-            this.createFilterItem('A2', 'a2'),
-            this.createFilterItem('A3', 'a3'),
-            this.createFilterItem('NB', 'nb'),
-            this.createFilterItem('DM', 'dm'),
-          ],
-          'All'
-        ),
-      ],
+      DOB_ISSUED_PERMIT: [],
     }
   }
 

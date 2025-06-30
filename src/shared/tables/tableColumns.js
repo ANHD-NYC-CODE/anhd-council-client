@@ -1154,8 +1154,6 @@ export const getTableColumns = ({
         constructStandardColumn({
           dataField: 'jobdescription',
           text: 'Description',
-          filter: baseTableConfig.filterPrototypes['DOB_ISSUED_PERMIT_TYPE'],
-          headerClasses: 'hide-filter',
           sort: true,
         }),
         constructStandardColumn({
