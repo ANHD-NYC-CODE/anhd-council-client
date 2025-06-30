@@ -1184,17 +1184,17 @@ export const getTableColumns = ({
           dataField: 'filing_reason',
           text: 'Type',
           formatter: (cell, row) => {
-            // For DOB NOW, use the type field directly since it contains the filing reason
+            // For DOB NOW entries, show permit_type (which contains the filing reason)
             if (row.type && row.type !== 'dobpermitissuedlegacy' && row.type !== 'doblegacyfiledpermit') {
-              return row.type || ''
+              return row.permit_type || row.filing_status || ''
             } else {
-              // For DOB BIS, show filing_status
+              // For DOB BIS entries, show filing_status
               return row.filing_status || ''
             }
           },
           csvFormatter: (cell, row) => {
             if (row.type && row.type !== 'dobpermitissuedlegacy' && row.type !== 'doblegacyfiledpermit') {
-              return row.type || ''
+              return row.permit_type || row.filing_status || ''
             } else {
               return row.filing_status || ''
             }
@@ -1280,17 +1280,17 @@ export const getTableColumns = ({
           dataField: 'filing_reason',
           text: 'Type',
           formatter: (cell, row) => {
-            // For DOB NOW, use the type field directly since it contains the filing reason
+            // For DOB NOW entries, show permit_type (which contains the filing reason)
             if (row.type && row.type !== 'dobpermitissuedlegacy' && row.type !== 'doblegacyfiledpermit') {
-              return row.type || ''
+              return row.permit_type || row.filing_status || ''
             } else {
-              // For DOB BIS, show filing_status
+              // For DOB BIS entries, show filing_status
               return row.filing_status || ''
             }
           },
           csvFormatter: (cell, row) => {
             if (row.type && row.type !== 'dobpermitissuedlegacy' && row.type !== 'doblegacyfiledpermit') {
-              return row.type || ''
+              return row.permit_type || row.filing_status || ''
             } else {
               return row.filing_status || ''
             }
