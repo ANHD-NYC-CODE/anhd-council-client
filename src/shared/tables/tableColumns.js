@@ -1293,12 +1293,6 @@ export const getTableColumns = ({
           dataField: 'filing_status',
           text: 'Filing Status',
           sort: true,
-          formatter: capitalizeFormatter,
-          csvFormatter: capitalizeFormatter,
-        }),
-        constructStandardColumn({
-          dataField: 'filing_reason',
-          text: 'Type',
           formatter: (cell, row) => {
             // For DOB NOW entries, show filing_reason (which contains meaningful values like "Initial Permit", "Renewal Permit Without Changes")
             if (row.type && row.type !== 'dobpermitissuedlegacy' && row.type !== 'doblegacyfiledpermit') {
@@ -1315,7 +1309,6 @@ export const getTableColumns = ({
               return row.filing_status || ''
             }
           },
-          sort: true,
         }),
         constructStandardColumn({
           dataField: 'type',
@@ -1389,12 +1382,6 @@ export const getTableColumns = ({
           dataField: 'filing_status',
           text: 'Filing Status',
           sort: true,
-          formatter: capitalizeFormatter,
-          csvFormatter: capitalizeFormatter,
-        }),
-        constructStandardColumn({
-          dataField: 'filing_reason',
-          text: 'Type',
           formatter: (cell, row) => {
             // For DOB NOW entries, show filing_reason (which contains meaningful values like "Initial Permit", "Renewal Permit Without Changes")
             if (row.type && row.type !== 'dobpermitissuedlegacy' && row.type !== 'doblegacyfiledpermit') {
@@ -1411,7 +1398,6 @@ export const getTableColumns = ({
               return row.filing_status || ''
             }
           },
-          sort: true,
         }),
         constructStandardColumn({
           dataField: 'type',
