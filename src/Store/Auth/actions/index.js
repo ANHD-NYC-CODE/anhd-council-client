@@ -71,27 +71,27 @@ export const refreshTokens = refresh_token => dispatch => {
   const refreshPromise = new Promise((resolve, reject) => {
     setTokenRefreshState(true, refreshPromise)
     
-    dispatch(loadingActions.handleRequest(c.GET_TOKEN_REFRESH))
-    dispatch(errorActions.handleClearErrors(c.GET_TOKEN_REFRESH))
+  dispatch(loadingActions.handleRequest(c.GET_TOKEN_REFRESH))
+  dispatch(errorActions.handleClearErrors(c.GET_TOKEN_REFRESH))
     
     Axios.post(TOKEN_REFRESH_URL, { refresh: refresh_token })
-      .then(response => {
-        updateAuthLocalStorage(response.data.access, response.data.refresh, null, dispatch)
-        dispatch(loadingActions.handleCompletedRequest(c.GET_TOKEN_REFRESH))
+    .then(response => {
+      updateAuthLocalStorage(response.data.access, response.data.refresh, null, dispatch)
+      dispatch(loadingActions.handleCompletedRequest(c.GET_TOKEN_REFRESH))
 
-        const storage = getUserStorageData()
+      const storage = getUserStorageData()
 
-        dispatch(handleSyncStorage(storage, dispatch))
+      dispatch(handleSyncStorage(storage, dispatch))
         setTokenRefreshState(false, null)
         resolve(storage)
-      })
-      .catch(error => {
-        handleCatchError(error, c.GET_TOKEN_REFRESH, dispatch)
-        dispatch(logoutUser())
+    })
+    .catch(error => {
+      handleCatchError(error, c.GET_TOKEN_REFRESH, dispatch)
+      dispatch(logoutUser())
         setTokenRefreshState(false, null)
         reject(error)
       })
-  })
+    })
 
   return refreshPromise
 }

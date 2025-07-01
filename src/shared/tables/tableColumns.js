@@ -1284,9 +1284,13 @@ export const getTableColumns = ({
           sort: true,
         }),
         constructStandardColumn({
+          columnEvent: expandColumnEvent,
           dataField: 'jobdescription',
           text: 'Description',
+          classes: 'expandable-cell table-column--description',
           filter: constructFilter(textFilter),
+          formatter: sentencesFormatter,
+          csvFormatter: sentencesFormatter,
           sort: true,
         }),
         constructStandardColumn({
@@ -1298,15 +1302,15 @@ export const getTableColumns = ({
             if (row.type && row.type !== 'dobpermitissuedlegacy' && row.type !== 'doblegacyfiledpermit') {
               return row.filing_reason || row.filing_status || ''
             } else {
-              // For DOB BIS entries, show filing_status
-              return row.filing_status || ''
+              // For DOB BIS entries, show filing_status with first letter capitalized
+              return capitalizeFormatter(row.filing_status || '')
             }
           },
           csvFormatter: (cell, row) => {
             if (row.type && row.type !== 'dobpermitissuedlegacy' && row.type !== 'doblegacyfiledpermit') {
               return row.filing_reason || row.filing_status || ''
             } else {
-              return row.filing_status || ''
+              return capitalizeFormatter(row.filing_status || '')
             }
           },
         }),
@@ -1387,15 +1391,15 @@ export const getTableColumns = ({
             if (row.type && row.type !== 'dobpermitissuedlegacy' && row.type !== 'doblegacyfiledpermit') {
               return row.filing_reason || row.filing_status || ''
             } else {
-              // For DOB BIS entries, show filing_status
-              return row.filing_status || ''
+              // For DOB BIS entries, show filing_status with first letter capitalized
+              return capitalizeFormatter(row.filing_status || '')
             }
           },
           csvFormatter: (cell, row) => {
             if (row.type && row.type !== 'dobpermitissuedlegacy' && row.type !== 'doblegacyfiledpermit') {
               return row.filing_reason || row.filing_status || ''
             } else {
-              return row.filing_status || ''
+              return capitalizeFormatter(row.filing_status || '')
             }
           },
         }),
