@@ -1384,7 +1384,7 @@ export const getTableColumns = ({
         }),
         constructStandardColumn({
           dataField: 'type',
-          text: 'Type/Source',
+          text: 'Source',
           formatter: (cell, row, index) => dobPermitSourceFormatter(cell, row),
           csvFormatter: (cell, row, index) => dobPermitSourceFormatter(cell, row),
           sort: true,
