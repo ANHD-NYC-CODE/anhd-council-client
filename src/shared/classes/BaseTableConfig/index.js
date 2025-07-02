@@ -34,6 +34,21 @@ export default class BaseTableConfig {
       ...this.createFilterPrototype('ECB_VIOLATION_ACTIVE'),
       ...this.createFilterPrototype('DOB_FILED_PERMIT_TYPE'),
       ...this.createFilterPrototype('DOB_ISSUED_PERMIT_TYPE'),
+      ...this.createFilterPrototype('DOB_ISSUED_PERMIT_WORK_TYPE', 'multi-select', {
+        BL: 'Boiler',
+        CC: 'Curb Cut',
+        EQ: 'Construction Equipment',
+        FA: 'Fire Alarm',
+        FB: 'Fuel Burning',
+        FP: 'Fire Suppression',
+        FS: 'Fuel Storage',
+        MH: 'Mechanical/HVAC',
+        NB: 'New Building',
+        OT: 'Other',
+        PL: 'Plumbing',
+        SD: 'Standpipe',
+        SP: 'Sprinkler',
+      }),
     }
     this._filterFunctions = {
       ...this.createFilterFunction('ACRIS_REAL_MASTER_DOCUMENT_TYPE'),
@@ -142,20 +157,7 @@ export default class BaseTableConfig {
           'All Job Types'
         ),
       ],
-      DOB_ISSUED_PERMIT: [
-        this.createFilterButtonSet(
-          'DOB_ISSUED_PERMIT',
-          'DOB_ISSUED_PERMIT_TYPE',
-          [
-            this.createFilterItem('A1', 'a1'),
-            this.createFilterItem('A2', 'a2'),
-            this.createFilterItem('A3', 'a3'),
-            this.createFilterItem('NB', 'nb'),
-            this.createFilterItem('DM', 'dm'),
-          ],
-          'All'
-        ),
-      ],
+      DOB_ISSUED_PERMIT: [],
     }
   }
 

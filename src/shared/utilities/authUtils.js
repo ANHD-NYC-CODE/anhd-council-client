@@ -12,7 +12,7 @@ export const requestMiddleware = () => {
       return request(dispatch, getState)
     }
 
-    // Refresh token if token has been alive for over 5 min
+    // Refresh token if it has expired
     if (dayjs() > dayjs(auth.access.expiration)) {
       dispatch(refreshTokens(auth.refresh.token))
         .then(() => {

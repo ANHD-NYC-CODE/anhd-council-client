@@ -305,6 +305,129 @@ export const getTableColumns = ({
     }
   }
 
+  // Custom filter function for Work Type that transforms search input
+  const workTypeFilter = textFilter({
+    placeholder: 'Search...',
+    getFilter: (filter) => {
+      return (value) => {
+        console.log('Work Type filter input:', value);
+        
+        // Transform search terms to map labels to codes
+        const searchMappings = {
+          // Codes
+          'pl': 'PL',
+          'bl': 'BL',
+          'cc': 'CC',
+          'eq': 'EQ',
+          'fa': 'FA',
+          'fb': 'FB',
+          'fp': 'FP',
+          'fs': 'FS',
+          'mh': 'MH',
+          'nb': 'NB',
+          'ot': 'OT',
+          'sd': 'SD',
+          'sp': 'SP',
+          'ew': 'EW',
+          'al': 'AL',
+          'dm': 'DM',
+          'fo': 'FO',
+          'sg': 'SG',
+          
+          // Full descriptions
+          'plumbing': 'PL',
+          'boiler': 'BL',
+          'curb cut': 'CC',
+          'construction equipment': 'EQ',
+          'fire alarm': 'FA',
+          'fuel burning': 'FB',
+          'fire suppression': 'FP',
+          'fuel storage': 'FS',
+          'mechanical': 'MH',
+          'hvac': 'MH',
+          'new building': 'NB',
+          'other': 'OT',
+          'standpipe': 'SD',
+          'sprinkler': 'SP',
+          'equipment work': 'EW',
+          'alteration': 'AL',
+          'demolition': 'DM',
+          'foundation': 'FO',
+          'sign': 'SG',
+          
+          // Additional mappings from database
+          'antenna': 'Antenna',
+          'boiler equipment': 'Boiler Equipment',
+          'construction fence': 'Construction Fence',
+          'earth work': 'Earth Work',
+          'full demolition': 'Full Demolition',
+          'general construction': 'General Construction',
+          'green roof': 'Green Roof',
+          'mechanical systems': 'Mechanical Systems',
+          'protection and mechanical methods': 'Protection and Mechanical Methods',
+          'sidewalk shed': 'Sidewalk Shed',
+          'solar': 'Solar',
+          'sprinklers': 'Sprinklers',
+          'structural': 'Structural',
+          'supported scaffold': 'Supported Scaffold',
+          'support of excavation': 'Support of Excavation',
+          'suspended scaffold': 'Suspended Scaffold'
+        };
+        
+        const searchTerm = value.toLowerCase();
+        const mappedCode = searchMappings[searchTerm];
+        
+        console.log('Work Type filter mapping:', { searchTerm, mappedCode, finalValue: mappedCode || value });
+        
+        // Apply the original filter with either the mapped code or original value
+        filter(mappedCode || value);
+      };
+    },
+  });
+
+  // Custom filter function for Permit Type that transforms search input
+  const permitTypeFilter = textFilter({
+    placeholder: 'Search...',
+    getFilter: (filter) => {
+      return (value) => {
+        console.log('Permit Type filter input:', value);
+        
+        // Transform search terms to map labels to codes
+        const searchMappings = {
+          // Codes
+          'pl': 'PL',
+          'ew': 'EW',
+          'eq': 'EQ',
+          'al': 'AL',
+          'nb': 'NB',
+          'sg': 'SG',
+          'fo': 'FO',
+          'dm': 'DM',
+          'ot': 'OT',
+          
+          // Full descriptions
+          'plumbing': 'PL',
+          'equipment work': 'EW',
+          'construction equipment': 'EQ',
+          'alteration': 'AL',
+          'new building': 'NB',
+          'sign': 'SG',
+          'foundation': 'FO',
+          'demolition': 'DM',
+          'other': 'OT'
+        };
+        
+        const searchTerm = value.toLowerCase();
+        const mappedCode = searchMappings[searchTerm];
+        
+        console.log('Permit Type filter mapping:', { searchTerm, mappedCode, finalValue: mappedCode || value });
+        
+        // Apply the original filter with either the mapped code or original value
+        filter(mappedCode || value);
+      };
+    },
+  });
+
   switch (constant) {
     case 'PROPERTY':
       // For custom search results table 
@@ -1149,13 +1272,7 @@ export const getTableColumns = ({
           text: 'Work Type',
           formatter: dobPermitWorkTypeFormatter,
           csvFormatter: dobPermitWorkTypeFormatter,
-          sort: true,
-        }),
-        constructStandardColumn({
-          dataField: 'jobdescription',
-          text: 'Description',
-          filter: baseTableConfig.filterPrototypes['DOB_ISSUED_PERMIT_TYPE'],
-          headerClasses: 'hide-filter',
+          // filter: workTypeFilter,
           sort: true,
         }),
         constructStandardColumn({
@@ -1163,27 +1280,45 @@ export const getTableColumns = ({
           text: 'Permit Type',
           formatter: dobPermitTypeFormatter,
           csvFormatter: dobPermitTypeFormatter,
+          // filter: permitTypeFilter,
           sort: true,
         }),
         constructStandardColumn({
-          dataField: 'permit_subtype',
-          text: 'Permit Subtype',
-          formatter: dobPermitSubtypeFormatter,
-          csvFormatter: dobPermitSubtypeFormatter,
+          columnEvent: expandColumnEvent,
+          dataField: 'jobdescription',
+          text: 'Description',
+          classes: 'expandable-cell table-column--description',
+          filter: constructFilter(textFilter),
+          formatter: sentencesFormatter,
+          csvFormatter: sentencesFormatter,
           sort: true,
         }),
         constructStandardColumn({
           dataField: 'filing_status',
           text: 'Filing Status',
           sort: true,
-          formatter: capitalizeFormatter,
-          csvFormatter: capitalizeFormatter,
+          formatter: (cell, row) => {
+            // For DOB NOW entries, show filing_reason (which contains meaningful values like "Initial Permit", "Renewal Permit Without Changes")
+            if (row.type && row.type !== 'dobpermitissuedlegacy' && row.type !== 'doblegacyfiledpermit') {
+              return row.filing_reason || row.filing_status || ''
+            } else {
+              // For DOB BIS entries, show filing_status with first letter capitalized
+              return capitalizeFormatter(row.filing_status || '')
+            }
+          },
+          csvFormatter: (cell, row) => {
+            if (row.type && row.type !== 'dobpermitissuedlegacy' && row.type !== 'doblegacyfiledpermit') {
+              return row.filing_reason || row.filing_status || ''
+            } else {
+              return capitalizeFormatter(row.filing_status || '')
+            }
+          },
         }),
         constructStandardColumn({
           dataField: 'type',
           text: 'Source',
-          formatter: dobPermitSourceFormatter,
-          csvFormatter: dobPermitSourceFormatter,
+          formatter: (cell, row, index) => dobPermitSourceFormatter(cell, row),
+          csvFormatter: (cell, row, index) => dobPermitSourceFormatter(cell, row),
           sort: true,
         }),
       ]
@@ -1250,8 +1385,8 @@ export const getTableColumns = ({
         constructStandardColumn({
           dataField: 'type',
           text: 'Source',
-          formatter: dobPermitSourceFormatter,
-          csvFormatter: dobPermitSourceFormatter,
+          formatter: (cell, row, index) => dobPermitSourceFormatter(cell, row),
+          csvFormatter: (cell, row, index) => dobPermitSourceFormatter(cell, row),
           sort: true,
         }),
       ]

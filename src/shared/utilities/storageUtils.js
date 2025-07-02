@@ -2,7 +2,6 @@ import dayjs from 'dayjs'
 import log from 'loglevel'
 
 import * as c from 'shared/constants'
-import { logoutUser } from 'Store/Auth/actions'
 import { get, set, del } from 'idb-keyval'
 import { handleActionDispatch } from 'shared/utilities/actionUtils'
 import { handleCompletedRequest } from 'Store/Loading/actions'
@@ -14,6 +13,136 @@ export const COMMUNITY_BOARDS_INDEX = 'communities'
 export const STATE_ASSEMBLY_INDEX = 'state-assembly'
 export const STATE_SENATE_INDEX = 'state-senate'
 export const ZIPCODE_INDEX = 'zipcode'
+
+// Cross-tab synchronization
+let storageEventListeners = new Set()
+let isRefreshingToken = false
+let refreshPromise = null
+let storageEventListenerInitialized = false
+
+// Debug logging - only in development or staging
+const isDebugMode = () => {
+  return process.env.NODE_ENV === 'development' || 
+         (typeof window !== 'undefined' && window.location.hostname.includes('staging'))
+}
+
+const debugLog = (...args) => {
+  if (isDebugMode()) {
+    console.log(...args)
+  }
+}
+
+export const addStorageEventListener = (listener) => {
+  storageEventListeners.add(listener)
+  debugLog('📡 Storage listener added, total listeners:', storageEventListeners.size)
+}
+
+export const removeStorageEventListener = (listener) => {
+  storageEventListeners.delete(listener)
+  debugLog('📡 Storage listener removed, total listeners:', storageEventListeners.size)
+}
+
+export const setTokenRefreshState = (refreshing, promise = null) => {
+  isRefreshingToken = refreshing
+  refreshPromise = promise
+}
+
+export const isTokenRefreshing = () => isRefreshingToken
+
+export const getRefreshPromise = () => refreshPromise
+
+// Initialize storage event listener for cross-tab synchronization
+const initializeStorageEventListener = () => {
+  if (storageEventListenerInitialized || typeof window === 'undefined') {
+    return
+  }
+
+  try {
+    debugLog('🔧 Initializing storage event listener...')
+    
+    const storageEventHandler = (event) => {
+      debugLog('🔄 Raw storage event received:', {
+        key: event.key,
+        oldValue: event.oldValue ? 'exists' : 'null',
+        newValue: event.newValue ? 'exists' : 'null',
+        url: event.url,
+        storageArea: event.storageArea
+      })
+      
+      if (event.key === USER_STORAGE) {
+        try {
+          debugLog('🔄 Storage event detected for USER_STORAGE:', {
+            key: event.key,
+            oldValue: event.oldValue ? 'exists' : 'null',
+            newValue: event.newValue ? 'exists' : 'null',
+            timestamp: new Date().toISOString()
+          });
+          
+          const newData = event.newValue ? JSON.parse(event.newValue) : null
+          const oldData = event.oldValue ? JSON.parse(event.oldValue) : null
+          
+          debugLog('📡 Notifying', storageEventListeners.size, 'storage listeners...');
+          
+          // Notify all listeners about the storage change
+          storageEventListeners.forEach((listener, index) => {
+            try {
+              debugLog(`📡 Calling listener ${index + 1}/${storageEventListeners.size}...`);
+              listener(newData, oldData, event)
+            } catch (listenerError) {
+              console.error(`❌ Error in storage listener ${index + 1}:`, listenerError)
+            }
+          })
+          
+          debugLog('✅ Storage event processed successfully');
+        } catch (error) {
+          log.error('Error parsing storage event data:', error)
+          console.error('❌ Storage event error:', error);
+        }
+      }
+    }
+
+    // Remove any existing listener first
+    window.removeEventListener('storage', storageEventHandler)
+    
+    // Add the new listener
+    window.addEventListener('storage', storageEventHandler, false)
+    
+    storageEventListenerInitialized = true
+    debugLog('✅ Storage event listener initialized successfully')
+    
+    // Test the listener is working (only in debug mode)
+    if (isDebugMode()) {
+      setTimeout(() => {
+        debugLog('🧪 Testing storage event listener...')
+        try {
+          const testKey = 'test-storage-event-' + Date.now()
+          localStorage.setItem(testKey, 'test')
+          localStorage.removeItem(testKey)
+          debugLog('✅ Storage event listener test completed')
+        } catch (e) {
+          debugLog('⚠️ Storage event listener test failed:', e)
+        }
+      }, 1000)
+    }
+    
+  } catch (error) {
+    console.error('❌ Failed to initialize storage event listener:', error)
+    log.error('Failed to initialize storage event listener:', error)
+  }
+}
+
+// Initialize immediately when module is loaded
+initializeStorageEventListener()
+
+// Also initialize when the module is imported (in case it's loaded before DOM is ready)
+if (typeof window !== 'undefined') {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeStorageEventListener)
+  } else {
+    // DOM is already ready, initialize immediately
+    initializeStorageEventListener()
+  }
+}
 
 export const getStorageDataAction = async (dispatch, constant, requestId, path, handleAction) => {
   handleActionDispatch(dispatch, constant, requestId)
@@ -156,7 +285,9 @@ export const updateAuthLocalStorage = (access = null, refresh = null, user = nul
 
     storeData(newData, USER_STORAGE)
   } catch (error) {
-    dispatch(logoutUser())
+    log.error('Error updating auth localStorage:', error)
+    // Note: logoutUser call removed due to circular dependency
+    // The calling code should handle logout if needed
   }
 }
 

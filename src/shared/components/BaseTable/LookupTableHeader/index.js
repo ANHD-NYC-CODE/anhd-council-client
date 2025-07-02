@@ -19,6 +19,20 @@ const LookupTableHeader = props => {
         {props.badge && <div className="table-header__badge">{props.badge}</div>}
       </div>
 
+      {props.resourceConstant === 'DOB_ISSUED_PERMIT' && (
+        <div style={{ marginTop: '0.5em', marginBottom: '0.5em' }}>
+          <a
+            href="/Data-Glossary-DOB-Permit-Applications-DAP-Portal-ANHD.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-link"
+            style={{ fontSize: '0.9em' }}
+          >
+            Understanding Permit Application Types in DOB NOW & BIS
+          </a>
+        </div>
+      )}
+
       <div className="table-header__dataset-info">
         <DatasetInfo datasetModelName={constantToModelName(props.resourceConstant)} showUpdate={props.showUpdate} />
       </div>

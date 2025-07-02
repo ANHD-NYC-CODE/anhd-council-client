@@ -7,6 +7,7 @@ import { Navbar } from 'react-bootstrap'
 import PrivacyPolicyModal from 'shared/components/modals/PrivacyPolicyModal'
 import ModalContext from 'Modal/ModalContext'
 import { fireAnalyticsModalOpenEvent } from 'Store/Analytics/actions'
+import { BUILD_TIMESTAMP } from '../../buildTimestamp'
 
 import './style.scss'
 
@@ -15,7 +16,13 @@ class Footer extends React.Component {
     super(props)
   }
 
+  isStaging = () => {
+    return window.location.hostname.includes('staging')
+  }
+
   render() {
+    const isStaging = this.isStaging()
+    
     return (
       <ModalContext.Consumer>
         {modal => {
@@ -25,6 +32,11 @@ class Footer extends React.Component {
                 <div className="layout-width-wrapper">
                   <div className="footer-text">
                     <p className="text-black">
+                      {isStaging && (
+                        <span style={{ color: '#ff6b35', fontWeight: 'bold' }}>
+                          [STAGING - Built: {BUILD_TIMESTAMP}]{' '}
+                        </span>
+                      )}
                       This site uses{' '}
                       <a
                         className="text-link"

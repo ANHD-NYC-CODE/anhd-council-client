@@ -3,7 +3,7 @@ import * as loadingActions from 'Store/Loading/actions'
 import * as errorActions from 'Store/Error/actions'
 import * as c from 'shared/constants'
 import { TOKEN_URL, TOKEN_REFRESH_URL, CURRENT_USER_URL } from 'shared/constants/urls'
-import { getUserStorageData, removeUserStorageData } from 'shared/utilities/storageUtils'
+import { getUserStorageData, removeUserStorageData, setTokenRefreshState, isTokenRefreshing, getRefreshPromise } from 'shared/utilities/storageUtils'
 import { retryAuthenticatedRequests } from 'Store/Request/actions'
 import { setCustomSearchResults, resetAdvancedSearchReducer } from 'Store/AdvancedSearch/actions'
 
@@ -21,8 +21,8 @@ export const handleSyncStorage = (storage, dispatch) => {
     data: storage,
     refreshTimeout: setTimeout(
       () => dispatch(refreshTokens(storage.refresh.token)),
-      (c.TOKEN_EXPIRATIONS.access - 1) * 60000
-    ), // 4 minutes
+      (c.TOKEN_EXPIRATIONS.access - 60) * 60000
+    ), // 11 hours (60 minutes before 12-hour expiration)
   }
 }
 
@@ -59,9 +59,22 @@ export const getUserProfile = () => (dispatch, getState, access_token) => {
 }
 
 export const refreshTokens = refresh_token => dispatch => {
+  // Check if another tab is already refreshing the token
+  if (isTokenRefreshing()) {
+    const existingPromise = getRefreshPromise()
+    if (existingPromise) {
+      return existingPromise
+    }
+  }
+
+  // Set the refresh state to prevent other tabs from refreshing simultaneously
+  const refreshPromise = new Promise((resolve, reject) => {
+    setTokenRefreshState(true, refreshPromise)
+    
   dispatch(loadingActions.handleRequest(c.GET_TOKEN_REFRESH))
   dispatch(errorActions.handleClearErrors(c.GET_TOKEN_REFRESH))
-  return Axios.post(TOKEN_REFRESH_URL, { refresh: refresh_token })
+    
+    Axios.post(TOKEN_REFRESH_URL, { refresh: refresh_token })
     .then(response => {
       updateAuthLocalStorage(response.data.access, response.data.refresh, null, dispatch)
       dispatch(loadingActions.handleCompletedRequest(c.GET_TOKEN_REFRESH))
@@ -69,13 +82,18 @@ export const refreshTokens = refresh_token => dispatch => {
       const storage = getUserStorageData()
 
       dispatch(handleSyncStorage(storage, dispatch))
-
-      return storage
+        setTokenRefreshState(false, null)
+        resolve(storage)
     })
     .catch(error => {
       handleCatchError(error, c.GET_TOKEN_REFRESH, dispatch)
       dispatch(logoutUser())
+        setTokenRefreshState(false, null)
+        reject(error)
+      })
     })
+
+  return refreshPromise
 }
 
 export const loginUser = (data, postLoginAction) => dispatch => {

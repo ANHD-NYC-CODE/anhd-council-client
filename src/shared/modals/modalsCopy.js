@@ -23,7 +23,7 @@ export const infoModals = {
     body: ReactDOMServer.renderToString(
       <div>
         <p>
-          An apartment may be regulated under New York State’s system of Rent Stabilization if it is in a property that
+          An apartment may be regulated under New York State's system of Rent Stabilization if it is in a property that
           was built before 1974 and has six or more units or if the property has benefitted from certain regulatory
           programs like 421a or J-51. All properties classified in DAP Portal as rent stabilized included at least one
           rent stabilized unit beginning in 2007, the first year for which we have data. We base stabilized unit numbers
@@ -88,7 +88,7 @@ export const infoModals = {
     ),
     sources: [
       {
-        text: 'New York University Furman Center’s CoreData.nyc',
+        text: 'New York University Furman Center\'s CoreData.nyc',
         url: 'http://coredata.nyc/',
       },
     ],
@@ -280,6 +280,16 @@ export const infoModals = {
     title: 'DOB Issued Permits',
     body: ReactDOMServer.renderToString(
       <div>
+        <div style={{ marginBottom: '1em' }}>
+          <a
+            href="/Data-Glossary-DOB-Permit-Applications-DAP-Portal-ANHD.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-link"
+          >
+            Understanding Permit Application Types in DOB NOW & BIS
+          </a>
+        </div>
         <p>
           Construction permits issued by the Department of Buildings show that a landlord has permission to do
           construction and renovations, which can indicate displacement pressure. While the{' '}
@@ -391,7 +401,7 @@ export const infoModals = {
     body: ReactDOMServer.renderToString(
       <div>
         <p>
-          Sales come from the Department of Finance’s ACRIS database and include all deeds recorded. The sale price of a
+          Sales come from the Department of Finance's ACRIS database and include all deeds recorded. The sale price of a
           building matters because speculative investment is one of the key underlying threats to existing affordable
           housing. A high sale price can mean a new owner must raise rents to make large profits. While the{' '}
           <a href="https://www.nysenate.gov/legislation/bills/2019/s6458" target="_blank" rel="noopener noreferrer">

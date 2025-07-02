@@ -1093,7 +1093,7 @@ export const dobComplaintCategoryDescriptionFormatter = cell => {
     case '2C':
       return 'Smoking Ban – Smoking on Construction Site '
     case '2D':
-      return 'Smoking Signs – ‘No Smoking Signs’ Not Observed on Construction Site '
+      return 'Smoking Signs – No Smoking Signs Not Observed on Construction Site '
     case '2E':
       return 'Demolition Notification Received '
     case '2F':
@@ -1220,7 +1220,20 @@ export const acrisDocTypeFormatter = cell => {
   }
 }
 
-export const dobPermitSourceFormatter = cell => {
+export const dobPermitSourceFormatter = (cell, row) => {
+  // If we have row data, use the new logic
+  if (row) {
+    // Check if this is a DOB NOW entry
+    if (cell === 'dobpermitissuednow' || cell === 'dobnowfiledpermit') {
+      // For DOB NOW entries, show "DOB NOW"
+      return 'DOB NOW'
+    } else {
+      // For DOB BIS entries, show "DOB BIS"
+      return 'DOB BIS'
+    }
+  }
+  
+  // Fallback to original logic if no row data
   switch (cell) {
     case 'dobpermitissuedlegacy':
       return 'DOB BIS'
@@ -1230,6 +1243,8 @@ export const dobPermitSourceFormatter = cell => {
       return 'DOB BIS'
     case 'dobnowfiledpermit':
       return 'DOB NOW'
+    default:
+      return cell
   }
 }
 
