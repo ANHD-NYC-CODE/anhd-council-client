@@ -1272,7 +1272,7 @@ export const getTableColumns = ({
           text: 'Work Type',
           formatter: dobPermitWorkTypeFormatter,
           csvFormatter: dobPermitWorkTypeFormatter,
-          filter: workTypeFilter,
+          // filter: workTypeFilter,
           sort: true,
         }),
         constructStandardColumn({
@@ -1280,7 +1280,7 @@ export const getTableColumns = ({
           text: 'Permit Type',
           formatter: dobPermitTypeFormatter,
           csvFormatter: dobPermitTypeFormatter,
-          filter: permitTypeFilter,
+          // filter: permitTypeFilter,
           sort: true,
         }),
         constructStandardColumn({
@@ -1381,27 +1381,6 @@ export const getTableColumns = ({
           formatter: sentencesFormatter,
           csvFormatter: sentencesFormatter,
           sort: true,
-        }),
-        constructStandardColumn({
-          dataField: 'filing_status',
-          text: 'Filing Status',
-          sort: true,
-          formatter: (cell, row) => {
-            // For DOB NOW entries, show filing_reason (which contains meaningful values like "Initial Permit", "Renewal Permit Without Changes")
-            if (row.type && row.type !== 'dobpermitissuedlegacy' && row.type !== 'doblegacyfiledpermit') {
-              return row.filing_reason || row.filing_status || ''
-            } else {
-              // For DOB BIS entries, show filing_status with first letter capitalized
-              return capitalizeFormatter(row.filing_status || '')
-            }
-          },
-          csvFormatter: (cell, row) => {
-            if (row.type && row.type !== 'dobpermitissuedlegacy' && row.type !== 'doblegacyfiledpermit') {
-              return row.filing_reason || row.filing_status || ''
-            } else {
-              return capitalizeFormatter(row.filing_status || '')
-            }
-          },
         }),
         constructStandardColumn({
           dataField: 'type',
