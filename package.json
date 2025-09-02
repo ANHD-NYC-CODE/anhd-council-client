@@ -19,7 +19,7 @@
     "babel-plugin-named-asset-import": "^0.3.7",
     "babel-preset-react-app": "^7.0.2",
     "bfj": "6.1.1",
-    "bootstrap": "^4.6.2",
+    "bootstrap": "^4.6.1",
     "brotli-webpack-plugin": "^1.1.0",
     "case-sensitive-paths-webpack-plugin": "2.1.2",
     "chalk": "2.4.1",
@@ -55,6 +55,8 @@
     "js-file-download": "^0.4.12",
     "leaflet": "^1.7.1",
     "leaflet-utfgrid": "^0.3.0",
+    "leaflet.markercluster": "^1.5.3",
+    "lodash": "^4.17.21",
     "lodash-webpack-plugin": "^0.11.6",
     "loglevel": "^1.7.1",
     "mini-css-extract-plugin": "0.4.3",
@@ -70,7 +72,7 @@
     "postcss-nested": "^4.2.3",
     "postcss-preset-env": "6.3.1",
     "postcss-safe-parser": "4.0.1",
-    "react": "^16.14.0",
+    "react": "^18.3.1",
     "react-app-polyfill": "^0.2.2",
     "react-bootstrap": "^1.5.1",
     "react-bootstrap-table-next": "3.1.7",
@@ -79,7 +81,7 @@
     "react-bootstrap-table2-toolkit": "1.4.2",
     "react-bootstrap-toggle": "^2.3.2",
     "react-dev-utils": "^7.0.5",
-    "react-dom": "^16.14.0",
+    "react-dom": "^18.3.1",
     "react-ga": "^2.7.0",
     "react-helmet": "^5.2.1",
     "react-leaflet": "^2.8.0",
@@ -113,10 +115,11 @@
     "yup": "^0.32.11"
   },
   "engines": {
-    "node": "16.x"
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
   },
   "scripts": {
-    "start": "node scripts/start.js",
+    "start": "node --openssl-legacy-provider scripts/start.js",
     "lint": "npx eslint --ext .jsx,.js,.tsx,.ts --config ./.eslintrc.js --fix src/",
     "build": "node scripts/build.js",
     "publish": "node scripts/build.js && sh publish.sh",

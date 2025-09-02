@@ -45,6 +45,12 @@ export const parseUrlSearchParams = (searchParams, advancedSearch) => {
 }
 
 const setPropertyFilterParamMapsFromSearchParams = (searchParams, propertyFilter) => {
+  // Safety check to ensure propertyFilter exists and has the required structure
+  if (!propertyFilter || !propertyFilter.paramSets || !propertyFilter.paramSets.initial || !propertyFilter.paramSets.initial.paramMaps) {
+    console.warn('propertyFilter is missing required structure:', propertyFilter);
+    return false;
+  }
+
   const housingType = searchParams.housingtype;
   const subsidyPrograms = searchParams.subsidyprograms__programname__any;
   const managementPrograms = searchParams.propertyannotation__managementprogram;
@@ -136,9 +142,20 @@ const setPropertyFilterParamMapsFromSearchParams = (searchParams, propertyFilter
 }
 
 const setParamSetParamMapsFromDefaults = (field, comparison, value, propertyFilter) => {
+  // Safety check to ensure propertyFilter exists and has the required structure
+  if (!propertyFilter || !propertyFilter.paramSets) {
+    console.warn('propertyFilter is missing required structure in setParamSetParamMapsFromDefaults:', propertyFilter);
+    return;
+  }
+
   let targetParamSetKey = Object.keys(propertyFilter.paramSets).filter(paramSetKey =>
-    propertyFilter.paramSets[paramSetKey].defaults.some(paramMap => paramMap.field === field)
+    propertyFilter.paramSets[paramSetKey].defaults && propertyFilter.paramSets[paramSetKey].defaults.some(paramMap => paramMap.field === field)
   )[0];
+
+  if (!targetParamSetKey) {
+    console.warn(`No targetParamSetKey found for field: ${field}`);
+    return;
+  }
 
   let targetParamMap;
   if (field === "rsunitslost") {
@@ -159,9 +176,19 @@ const setParamSetParamMapsFromDefaults = (field, comparison, value, propertyFilt
     );
   }
 
+  if (!targetParamMap) {
+    console.warn(`No targetParamMap found for field: ${field}, comparison: ${comparison}`);
+    return;
+  }
+
   let newParamMap = targetParamMap.clone();
   newParamMap.value = value;
   newParamMap.comparison = comparison;
+
+  if (!propertyFilter.paramSets[targetParamSetKey].paramMaps) {
+    propertyFilter.paramSets[targetParamSetKey].paramMaps = [];
+  }
+
   propertyFilter.paramSets[targetParamSetKey].paramMaps.push(newParamMap);
 }
 

@@ -72,10 +72,18 @@ export const handleCatchError = (error, type, dispatch, requestId) => {
     }
   }
 
-  dispatch(errorActions.handleFailure(type, errorStatus, errorMessage))
+  // Suppress 401 errors from displacementalert.org (don't dispatch or show toast)
+  const isDisplacementAlert401 = errorStatus === 401 &&
+    error.config &&
+    error.config.url &&
+    error.config.url.includes('displacementalert.org')
+
+  if (!isDisplacementAlert401) {
+    dispatch(errorActions.handleFailure(type, errorStatus, errorMessage))
+    handleToast(errorStatus, errorMessage)
+  }
 
   dispatch(loadingActions.handleCompletedRequest(type, requestId))
-  handleToast(errorStatus, errorMessage)
 }
 
 export const handleToast = (errorStatus, errorMessage) => {

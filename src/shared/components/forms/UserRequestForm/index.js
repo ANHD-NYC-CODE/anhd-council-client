@@ -95,7 +95,12 @@ class UserRequestForm extends React.Component {
                 <Form.Control
                   required
                   name="email"
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    console.log('Event:', e);
+                    console.log('Target:', e.target);
+                    console.log('Target Type:', e.target.type);
+                    handleChange(e);
+                  }}
                   onBlur={handleBlur}
                   isValid={false}
                   isInvalid={!!this.props.submitCount || (touched.email && errors.email)}

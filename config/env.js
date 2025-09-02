@@ -34,11 +34,13 @@ var dotenvFiles = [
 // https://github.com/motdotla/dotenv-expand
 dotenvFiles.forEach(dotenvFile => {
   if (fs.existsSync(dotenvFile)) {
-    require('dotenv-expand')(
-      require('dotenv').config({
-        path: dotenvFile,
-      })
-    )
+    const dotenvConfig = require('dotenv').config({
+      path: dotenvFile,
+    })
+    if (dotenvConfig.parsed) {
+      const dotenvExpand = require('dotenv-expand')
+      dotenvExpand(dotenvConfig)
+    }
   }
 })
 

@@ -62,6 +62,46 @@ export class FilterComponent extends React.Component {
   }
 
   render() {
+    // Safety check for filter - handle undefined/null filter gracefully
+    if (!this.props.filter) {
+      return (
+        <div className="filter-component">
+          <div className="filter-component__primary-row d-flex">
+            <div className="filter align-content-center">
+              <p>Loading filter...</p>
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+    // Check if filter has the required properties and paramSets
+    if (!this.props.filter.paramSets || typeof this.props.filter.paramSets !== 'object') {
+      return (
+        <div className="filter-component">
+          <div className="filter-component__primary-row d-flex">
+            <div className="filter align-content-center">
+              <p>Initializing filter...</p>
+            </div>
+          </div>
+        </div>
+      )
+    }
+
+    // Check if paramSets has content
+    const paramSetKeys = Object.keys(this.props.filter.paramSets)
+    if (paramSetKeys.length === 0) {
+      return (
+        <div className="filter-component">
+          <div className="filter-component__primary-row d-flex">
+            <div className="filter align-content-center">
+              <p>Setting up filter options...</p>
+            </div>
+          </div>
+        </div>
+      )
+    }
+
     return (
       <div className="filter-component">
         <div className="filter-component__primary-row d-flex">

@@ -10,7 +10,7 @@ const PnpWebpackPlugin = require('pnp-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CompressionPlugin = require('compression-webpack-plugin')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
-const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
+// const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
 const OfflinePlugin = require('offline-plugin')
 const BrotliPlugin = require('brotli-webpack-plugin')
 
@@ -49,7 +49,7 @@ const sassModuleRegex = /\.module\.(scss|sass)$/
 
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
-module.exports = function(webpackEnv) {
+module.exports = function (webpackEnv) {
   const isEnvDevelopment = webpackEnv === 'development'
   const isEnvProduction = webpackEnv === 'production'
 
@@ -203,13 +203,13 @@ module.exports = function(webpackEnv) {
               // https://github.com/facebook/create-react-app/issues/2488
               ascii_only: true,
             },
+            sourceMap: shouldUseSourceMap,
           },
           // Use multi-process parallel running to improve the build speed
           // Default number of concurrent runs: os.cpus().length - 1
           parallel: true,
           // Enable file caching
-          cache: true,
-          sourceMap: shouldUseSourceMap,
+          // cache: true, // Removed as it's not supported in newer versions
         }),
         // This is only used in production mode
         new OptimizeCSSAssetsPlugin({
@@ -217,13 +217,13 @@ module.exports = function(webpackEnv) {
             parser: safePostCssParser,
             map: shouldUseSourceMap
               ? {
-                  // `inline: false` forces the sourcemap to be output into a
-                  // separate file
-                  inline: false,
-                  // `annotation: true` appends the sourceMappingURL to the end of
-                  // the css file, helping the browser find the sourcemap
-                  annotation: true,
-                }
+                // `inline: false` forces the sourcemap to be output into a
+                // separate file
+                inline: false,
+                // `annotation: true` appends the sourceMappingURL to the end of
+                // the css file, helping the browser find the sourcemap
+                annotation: true,
+              }
               : false,
           },
         }),
@@ -357,6 +357,7 @@ module.exports = function(webpackEnv) {
                 cacheDirectory: true,
                 cacheCompression: isEnvProduction,
                 compact: isEnvProduction,
+
               },
             },
             // Process any JS outside of the app with Babel.
@@ -467,6 +468,7 @@ module.exports = function(webpackEnv) {
       ],
     },
     plugins: [
+
       // enable when you want to do some bundle debugging/optimizing
       // isEnvProduction && new BundleAnalyzerPlugin({
       //   analyzerMode: 'static',
@@ -493,19 +495,19 @@ module.exports = function(webpackEnv) {
           },
           isEnvProduction
             ? {
-                minify: {
-                  removeComments: true,
-                  collapseWhitespace: true,
-                  removeRedundantAttributes: true,
-                  useShortDoctype: true,
-                  removeEmptyAttributes: true,
-                  removeStyleLinkTypeAttributes: true,
-                  keepClosingSlash: true,
-                  minifyJS: true,
-                  minifyCSS: true,
-                  minifyURLs: true,
-                },
-              }
+              minify: {
+                removeComments: true,
+                collapseWhitespace: true,
+                removeRedundantAttributes: true,
+                useShortDoctype: true,
+                removeEmptyAttributes: true,
+                removeStyleLinkTypeAttributes: true,
+                keepClosingSlash: true,
+                minifyJS: true,
+                minifyCSS: true,
+                minifyURLs: true,
+              },
+            }
             : undefined
         )
       ),
@@ -540,12 +542,12 @@ module.exports = function(webpackEnv) {
       // See https://github.com/facebook/create-react-app/issues/186
       isEnvDevelopment && new WatchMissingNodeModulesPlugin(paths.appNodeModules),
       isEnvProduction &&
-        new MiniCssExtractPlugin({
-          // Options similar to the same options in webpackOptions.output
-          // both options are optional
-          filename: 'static/css/[name].[contenthash:8].css',
-          chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
-        }),
+      new MiniCssExtractPlugin({
+        // Options similar to the same options in webpackOptions.output
+        // both options are optional
+        filename: 'static/css/[name].[contenthash:8].css',
+        chunkFilename: 'static/css/[name].[contenthash:8].chunk.css',
+      }),
       // Generate a manifest file which contains a mapping of all asset filenames
       // to their corresponding output file so that tools can pick it up without
       // having to parse `index.html`.
@@ -571,33 +573,33 @@ module.exports = function(webpackEnv) {
       //   }),
       // TypeScript type checking
       useTypeScript &&
-        new ForkTsCheckerWebpackPlugin({
-          typescript: resolve.sync('typescript', {
-            basedir: paths.appNodeModules,
-          }),
-          async: false,
-          checkSyntacticErrors: true,
-          tsconfig: paths.appTsConfig,
-          compilerOptions: {
-            module: 'esnext',
-            moduleResolution: 'node',
-            resolveJsonModule: true,
-            isolatedModules: true,
-            noEmit: true,
-            jsx: 'preserve',
-          },
-          reportFiles: [
-            '**',
-            '!**/*.json',
-            '!**/__tests__/**',
-            '!**/?(*.)(spec|test).*',
-            '!**/src/setupProxy.*',
-            '!**/src/setupTests.*',
-          ],
-          watch: paths.appSrc,
-          silent: true,
-          formatter: typescriptFormatter,
+      new ForkTsCheckerWebpackPlugin({
+        typescript: resolve.sync('typescript', {
+          basedir: paths.appNodeModules,
         }),
+        async: false,
+        checkSyntacticErrors: true,
+        tsconfig: paths.appTsConfig,
+        compilerOptions: {
+          module: 'esnext',
+          moduleResolution: 'node',
+          resolveJsonModule: true,
+          isolatedModules: true,
+          noEmit: true,
+          jsx: 'preserve',
+        },
+        reportFiles: [
+          '**',
+          '!**/*.json',
+          '!**/__tests__/**',
+          '!**/?(*.)(spec|test).*',
+          '!**/src/setupProxy.*',
+          '!**/src/setupTests.*',
+        ],
+        watch: paths.appSrc,
+        silent: true,
+        formatter: typescriptFormatter,
+      }),
     ].filter(Boolean),
     // Some libraries import Node modules but don't use them in the browser.
     // Tell Webpack to provide empty mocks for them so importing them works.

@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import debounce from 'lodash/debounce'
+import { debounce } from 'lodash'
 import classnames from 'classnames'
 import { Form, InputGroup, Button } from 'react-bootstrap'
 

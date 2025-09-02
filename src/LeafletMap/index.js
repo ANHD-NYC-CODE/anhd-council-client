@@ -3,8 +3,10 @@ import PropTypes from 'prop-types'
 import * as c from 'shared/constants'
 import * as b from 'shared/constants/geographies'
 import L from 'leaflet'
+import 'leaflet.markercluster'
 import { geographySelectionToString } from 'shared/utilities/languageUtils'
 import { setDashboardMapZoom } from 'Store/DashboardState/actions'
+import { push } from 'connected-react-router'
 
 import { Map, TileLayer, Popup } from 'react-leaflet'
 import { Jumbotron, Button } from 'react-bootstrap'
@@ -23,10 +25,11 @@ export default class LeafletMap extends React.PureComponent {
     this.mapContainerRef = React.createRef()
     this.mapRef = React.createRef()
     this.geoJsonRef = React.createRef()
+    this.clusterGroup = null
     this.state = {
       height: this.props.height,
       hasError: false,
-      overrideWarning: false,
+      showPerformanceWarning: false,
     }
     this.updateDimensions = this.updateDimensions.bind(this)
     this.centerMapOnGeography = this.centerMapOnGeography.bind(this)
@@ -35,26 +38,98 @@ export default class LeafletMap extends React.PureComponent {
     // this.onMapZoom = this.onMapZoom.bind(this)
     this.allGeographiesLoaded = this.allGeographiesLoaded.bind(this)
     this.handleMapClick = this.handleMapClick.bind(this)
+    this.setupClustering = this.setupClustering.bind(this)
+    this.defaultPropertyAction = this.defaultPropertyAction.bind(this)
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     if (!this.mapRef.current) return
 
-    this.mapRef.current.leafletElement.invalidateSize()
+    // Access the underlying Leaflet map instance
+    const mapInstance = this.mapRef.current.leafletElement
+    if (mapInstance && mapInstance.invalidateSize) {
+      mapInstance.invalidateSize()
+    }
 
     if (this.props.loading) return
     this.centerMapOnGeography()
+
+    // Setup clustering when iconConfig is MULTIPLE and results change
+    if (this.props.iconConfig === 'MULTIPLE' &&
+      this.props.results &&
+      this.props.results.length > 0 &&
+      prevProps.results !== this.props.results) {
+
+      // Show performance warning for large datasets
+      if (this.props.results.length > 1000 && !this.state.showPerformanceWarning) {
+        this.setState({ showPerformanceWarning: true });
+      }
+
+      this.setupClustering()
+    }
   }
 
   componentDidMount() {
     window.addEventListener('resize', this.updateDimensions)
     this.updateDimensions()
     this.centerMapOnGeography()
-    this.mapRef.current.leafletElement.setZoom(this.props.zoom)
+    // Access the underlying Leaflet map instance
+    const mapInstance = this.mapRef.current && this.mapRef.current.leafletElement
+    if (mapInstance && mapInstance.setZoom) {
+      mapInstance.setZoom(this.props.zoom)
+    }
+
+    // Setup clustering if we have multiple properties
+    if (this.props.iconConfig === 'MULTIPLE' && this.props.results && this.props.results.length > 0) {
+      this.setupClustering()
+    }
   }
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.updateDimensions)
+    if (this.clusterGroup) {
+      this.clusterGroup.clearLayers()
+    }
+  }
+
+  setupClustering() {
+    if (!this.mapRef.current || !this.mapRef.current.leafletElement) return
+
+    const mapInstance = this.mapRef.current.leafletElement
+
+    // Only create cluster group if it doesn't exist
+    if (!this.clusterGroup) {
+      // Create new cluster group with optimized settings for large datasets
+      this.clusterGroup = L.markerClusterGroup({
+        chunkedLoading: true,
+        maxClusterRadius: 100, // Larger radius for better clustering with 3000+ markers
+        spiderfyOnMaxZoom: false, // Disable spiderfy for better performance
+        showCoverageOnHover: false,
+        zoomToBoundsOnClick: true,
+        removeOutsideVisibleBounds: true,
+        animate: false, // Disable animation for better performance
+        chunkInterval: 100, // Faster chunk processing
+        chunkDelay: 10, // Minimal delay between chunks
+        singleMarkerMode: false,
+        animateAddingMarkers: false, // Disable marker animation
+        maxZoom: 18, // Limit max zoom for clustering
+        disableClusteringAtZoom: 19, // Disable clustering at high zoom levels
+        minClusterSize: 10 // Only form clusters with 10+ markers
+      })
+
+      // Add cluster group to map
+      mapInstance.addLayer(this.clusterGroup)
+    } else {
+      // Clear existing markers but keep the cluster group
+      this.clusterGroup.clearLayers()
+    }
+  }
+
+  defaultPropertyAction(property) {
+    // Default action when a property marker is clicked
+    if (property && property.bbl) {
+      this.props.dispatch(push(`/property/${property.bbl}`))
+    }
   }
 
   static getDerivedStateFromError() {
@@ -184,19 +259,15 @@ export default class LeafletMap extends React.PureComponent {
         className={this.props.className}
         style={{ height: this.props.height || this.state.height, width: this.props.width || '100%' }}
       >
-        {!this.state.overrideWarning && this.props.results.length > c.MAP_MARKER_LIMIT && (
+        {this.state.showPerformanceWarning && (
           <MapAlertModal
-            alertMessage={`More than ${c.MAP_MARKER_LIMIT} properties are selected. Displaying all of them on the map may cause poor browser performance.`}
-            alertMessagePt2={'Apply filters to reduce the number of properties selected to fewer than 1000 or dismiss this message to display the blank map.'}
-            alertMessagePt3={'If the page freezes, refresh your browser to reset.'}
-            alertVariant="light"
-            alertCta2="Proceed Anyway"
+            alertVariant="warning"
+            alertMessage={`More than ${this.props.results.length.toLocaleString()} properties are selected.`}
+            alertMessagePt2="Displaying all of them on the map may cause poor browser performance."
+            alertMessagePt3="Apply filters to reduce the number of properties selected to fewer than 1,000 or dismiss this message to display the map."
             alertCta="Dismiss"
-            action={() =>
-              this.setState({
-                overrideWarning: true,
-              })
-            }
+            alertCta2="Apply Filters"
+            action={() => this.setState({ showPerformanceWarning: false })}
           />
         )}
         <Map
@@ -314,10 +385,11 @@ export default class LeafletMap extends React.PureComponent {
           <PropertyIcons
             dispatch={this.props.dispatch}
             page={this.props.page}
-            overrideWarning={this.state.overrideWarning}
             results={this.props.results}
             iconConfig={this.props.iconConfig}
             visible={!(this.props.changingGeographyType && this.props.changingGeographyId)}
+            clusterGroup={this.clusterGroup}
+            handlePropertyAction={this.props.handlePropertyAction || this.defaultPropertyAction}
           />
         </Map >
       </div >

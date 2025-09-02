@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import groupBy from 'lodash/groupBy'
+import { groupBy } from 'lodash'
 import * as b from 'shared/constants/geographies'
 
 import {

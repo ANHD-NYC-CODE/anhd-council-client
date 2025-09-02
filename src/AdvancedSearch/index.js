@@ -63,9 +63,7 @@ export class AdvancedSearch extends React.Component {
       searchParams
     }
 
-    if (!this.props.appState.advancedSearch) {
-      this.parseSearchParams();
-    }
+
 
     this.cloneAdvancedSearchInstance = this.cloneAdvancedSearchInstance.bind(this);
     this.loadRequest = this.loadRequest.bind(this);
@@ -74,6 +72,10 @@ export class AdvancedSearch extends React.Component {
     this.onSubmit = this.onSubmit.bind(this);
     this.cancelSearch = this.cancelSearch.bind(this);
   }
+
+
+
+
 
   parseSearchParams() {
     const fromSearchParams = parseUrlSearchParams(this.state.searchParams, this.state.advancedSearch);
@@ -111,8 +113,8 @@ export class AdvancedSearch extends React.Component {
   }
 
   componentDidUpdate() {
-    // Form submitted
-    if (this.state.formSubmitted) {
+    // Form submitted - but only if propertyFilter is ready
+    if (this.state.formSubmitted && this.state.advancedSearch.propertyFilter) {
       this.state.formSubmitted = false;
       this.parseSearchParams();
     }
@@ -215,6 +217,31 @@ export class AdvancedSearch extends React.Component {
   }
 
   componentDidMount() {
+    // Ensure propertyFilter is initialized if it doesn't exist
+    if (!this.state.advancedSearch.propertyFilter && this.props.config && this.props.config.resourceModels) {
+      const Filter = require('shared/classes/Filter').default;
+      const newPropertyFilter = new Filter({
+        resourceModel: this.props.config.resourceModels['PROPERTY'],
+        schema: this.props.config.resourceModels['PROPERTY'].ownResourceFilters,
+      });
+
+      // Update the state with the new propertyFilter and then parse search params
+      this.setState(prevState => ({
+        advancedSearch: {
+          ...prevState.advancedSearch,
+          propertyFilter: newPropertyFilter
+        }
+      }), () => {
+        // Parse search params after propertyFilter is initialized
+        if (!this.props.appState.advancedSearch || this.state.formSubmitted) {
+          this.parseSearchParams();
+        }
+      });
+    } else if (!this.props.appState.advancedSearch || this.state.formSubmitted) {
+      // If propertyFilter already exists, parse search params immediately
+      this.parseSearchParams();
+    }
+
     scrollSpy.update()
     scroll.scrollToTop({
       duration: 500,

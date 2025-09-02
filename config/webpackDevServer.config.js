@@ -10,7 +10,7 @@ const fs = require('fs')
 const protocol = process.env.HTTPS === 'true' ? 'https' : 'http'
 const host = process.env.HOST || '0.0.0.0'
 
-module.exports = function(proxy, allowedHost) {
+module.exports = function (proxy, allowedHost) {
   return {
     // WebpackDevServer 2.4.3 introduced a security fix that prevents remote
     // websites from potentially accessing local content through DNS rebinding:
@@ -37,7 +37,7 @@ module.exports = function(proxy, allowedHost) {
     clientLogLevel: 'none',
     // By default WebpackDevServer serves physical files from current directory
     // in addition to all the virtual build products that it serves from memory.
-    // This is confusing because those files won’t automatically be available in
+    // This is confusing because those files won't automatically be available in
     // production build folder unless we copy them. However, copying the whole
     // project directory is dangerous because we may expose sensitive files.
     // Instead, we establish a convention that only files in `public` directory

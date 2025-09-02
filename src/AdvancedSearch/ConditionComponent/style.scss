@@ -1,3 +1,4 @@
+@use "sass:color";
 @import 'shared/styles/bootstrap/_variables.scss';
 
 .condition {
@@ -82,7 +83,7 @@
     }
   }
   .control-button .dropdown-menu {
-    background-color: lighten($success, 20%);
+    background-color: color.adjust($success, $lightness: 20%);
     margin: 0;
     padding-left: 0;
     padding-right: 0;
