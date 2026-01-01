@@ -78,7 +78,7 @@
     "react-bootstrap-table2-paginator": "2.0.7",
     "react-bootstrap-table2-toolkit": "1.4.2",
     "react-bootstrap-toggle": "^2.3.2",
-    "react-dev-utils": "^7.0.5",
+    "react-dev-utils": "^12.0.1",
     "react-dom": "^16.14.0",
     "react-ga": "^2.7.0",
     "react-helmet": "^5.2.1",
@@ -137,7 +137,7 @@
     "enzyme-to-json": "^3.6.1",
     "npm-run-all": "^4.1.5",
     "react-app-rewired": "^2.2.1",
-    "react-scripts": "^4.0.3",
+    "react-scripts": "^5.0.1",
     "redux-mock-store": "^1.5.4",
     "shelving-mock-indexeddb": "^1.1.0"
   },
