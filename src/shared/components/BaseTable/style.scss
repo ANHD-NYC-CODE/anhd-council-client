@@ -261,8 +261,7 @@ table.table,
 .hidden-column,
 th[data-field="jobtype"],
 td[data-field="jobtype"],
-th.hide-filter[data-field="jobtype"],
-th.sortable.hide-filter {
+th.hide-filter[data-field="jobtype"] {
   display: none !important;
 }
 
